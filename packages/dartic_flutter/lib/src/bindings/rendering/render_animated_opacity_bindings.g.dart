@@ -69,7 +69,7 @@ abstract final class RenderAnimatedOpacityBindings {
         'applyPaintTransform#2': (args) { (args[0] as RenderAnimatedOpacity).applyPaintTransform(args[1] as RenderObject, args[2] as Matrix4); return null; },
         'globalToLocal#2': (args) => (args[0] as RenderAnimatedOpacity).globalToLocal(args[1] as ui.Offset, ancestor: identical(args[2], darticAbsent) ? null : args[2] as RenderObject?),
         'localToGlobal#2': (args) => (args[0] as RenderAnimatedOpacity).localToGlobal(args[1] as ui.Offset, ancestor: identical(args[2], darticAbsent) ? null : args[2] as RenderObject?),
-        'handleEvent#2': (args) { (args[0] as RenderAnimatedOpacity).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
+        'handleEvent#2': (args) { (args[0] as RenderAnimatedOpacity).handleEvent(args[1] as PointerEvent, args[2] as BoxHitTestEntry); return null; },
         'debugHandleEvent#2': (args) => (args[0] as RenderAnimatedOpacity).debugHandleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>),
         'debugPaint#2': (args) { (args[0] as RenderAnimatedOpacity).debugPaint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
         'debugPaintSize#2': (args) { (args[0] as RenderAnimatedOpacity).debugPaintSize(args[1] as PaintingContext, args[2] as ui.Offset); return null; },

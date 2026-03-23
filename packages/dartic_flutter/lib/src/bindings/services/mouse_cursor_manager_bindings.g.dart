@@ -12,6 +12,69 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/gestures/events.dart';
 
+class _$MouseCursorManager extends MouseCursorManager implements DarticObjectHolder {
+  _$MouseCursorManager(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as MouseCursor);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  MouseCursor? debugDeviceActiveCursor(int device) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDeviceActiveCursor', [device]);
+    if (identical(r, notOverridden)) return super.debugDeviceActiveCursor(device);
+    return r as MouseCursor?;
+  }
+
+  @override
+  void handleDeviceCursorUpdate(int device, PointerEvent? triggeringEvent, Iterable<MouseCursor> cursorCandidates) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDeviceCursorUpdate', [device, triggeringEvent, cursorCandidates]);
+    if (identical(r, notOverridden)) { super.handleDeviceCursorUpdate(device, triggeringEvent, cursorCandidates); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  MouseCursor get fallbackMouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fallbackMouseCursor');
+    if (identical(r, notOverridden)) return super.fallbackMouseCursor;
+    return r as MouseCursor;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  MouseCursor? _super$debugDeviceActiveCursor(int device) => super.debugDeviceActiveCursor(device);
+  void _super$handleDeviceCursorUpdate(int device, PointerEvent? triggeringEvent, Iterable<MouseCursor> cursorCandidates) { super.handleDeviceCursorUpdate(device, triggeringEvent, cursorCandidates); }
+  String _super$toString() => super.toString();
+  MouseCursor get _super$fallbackMouseCursor => super.fallbackMouseCursor;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMouseCursorManagerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MouseCursorManager(dispatch, obj, superArgs);
+
 abstract final class MouseCursorManagerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,7 +82,14 @@ abstract final class MouseCursorManagerBindings {
       type: MouseCursorManager,
       test: (o) => o is MouseCursorManager,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MouseCursorManager(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/mouse_cursor.dart::MouseCursorManager::\$super\$debugDeviceActiveCursor#1', (args) => (args[0] as _$MouseCursorManager)._super$debugDeviceActiveCursor(args[1] as int));
+    ctx.registerBinding('package:flutter/src/services/mouse_cursor.dart::MouseCursorManager::\$super\$handleDeviceCursorUpdate#3', (args) { (args[0] as _$MouseCursorManager)._super$handleDeviceCursorUpdate(args[1] as int, args[2] as PointerEvent?, (args[3] as Iterable).cast<MouseCursor>()); return null; });
+    ctx.registerBinding('package:flutter/src/services/mouse_cursor.dart::MouseCursorManager::\$super\$toString#0', (args) => (args[0] as _$MouseCursorManager)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/mouse_cursor.dart::MouseCursorManager::\$super\$fallbackMouseCursor#0', (args) => (args[0] as _$MouseCursorManager)._super$fallbackMouseCursor);
+    ctx.registerBinding('package:flutter/src/services/mouse_cursor.dart::MouseCursorManager::\$super\$hashCode#0', (args) => (args[0] as _$MouseCursorManager)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

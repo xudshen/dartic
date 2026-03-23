@@ -21,6 +21,69 @@ import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 
+class _$GappedRangeSliderTrackShape extends GappedRangeSliderTrackShape implements DarticObjectHolder {
+  _$GappedRangeSliderTrackShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void paint(PaintingContext context, Offset offset, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double> enableAnimation, required Offset startThumbCenter, required Offset endThumbCenter, bool isEnabled = false, bool isDiscrete = false, required TextDirection textDirection, double additionalActiveTrackHeight = 2}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, offset, parentBox, sliderTheme, enableAnimation, startThumbCenter, endThumbCenter, isEnabled, isDiscrete, textDirection, additionalActiveTrackHeight]);
+    if (identical(r, notOverridden)) { super.paint(context, offset, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, startThumbCenter: startThumbCenter, endThumbCenter: endThumbCenter, isEnabled: isEnabled, isDiscrete: isDiscrete, textDirection: textDirection, additionalActiveTrackHeight: additionalActiveTrackHeight); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Rect getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) return super.getPreferredRect(parentBox: parentBox, offset: offset, sliderTheme: sliderTheme, isEnabled: isEnabled, isDiscrete: isDiscrete);
+    return r as Rect;
+  }
+
+  @override
+  bool get isRounded {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRounded');
+    if (identical(r, notOverridden)) return super.isRounded;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$paint(PaintingContext context, Offset offset, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double> enableAnimation, required Offset startThumbCenter, required Offset endThumbCenter, bool isEnabled = false, bool isDiscrete = false, required TextDirection textDirection, double additionalActiveTrackHeight = 2}) { super.paint(context, offset, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, startThumbCenter: startThumbCenter, endThumbCenter: endThumbCenter, isEnabled: isEnabled, isDiscrete: isDiscrete, textDirection: textDirection, additionalActiveTrackHeight: additionalActiveTrackHeight); }
+  String _super$toString() => super.toString();
+  Rect _super$getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) => super.getPreferredRect(parentBox: parentBox, offset: offset, sliderTheme: sliderTheme, isEnabled: isEnabled, isDiscrete: isDiscrete);
+  bool get _super$isRounded => super.isRounded;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createGappedRangeSliderTrackShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$GappedRangeSliderTrackShape(dispatch, obj, superArgs);
+
 abstract final class GappedRangeSliderTrackShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,7 +92,14 @@ abstract final class GappedRangeSliderTrackShapeBindings {
       test: (o) => o is GappedRangeSliderTrackShape,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/range_slider_parts.dart::RangeSliderTrackShape', 'package:flutter/src/material/range_slider_parts.dart::BaseRangeSliderTrackShape'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$GappedRangeSliderTrackShape(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::GappedRangeSliderTrackShape::\$super\$paint#11', (args) { (args[0] as _$GappedRangeSliderTrackShape)._super$paint(args[1] as PaintingContext, args[2] as Offset, parentBox: args[3] as RenderBox, sliderTheme: args[4] as SliderThemeData, enableAnimation: args[5] as Animation<double>, startThumbCenter: args[6] as Offset, endThumbCenter: args[7] as Offset, isEnabled: identical(args[8], darticAbsent) ? false : args[8] as bool, isDiscrete: identical(args[9], darticAbsent) ? false : args[9] as bool, textDirection: args[10] as TextDirection, additionalActiveTrackHeight: identical(args[11], darticAbsent) ? 2 : args[11] as double); return null; });
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::GappedRangeSliderTrackShape::\$super\$toString#0', (args) => (args[0] as _$GappedRangeSliderTrackShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::GappedRangeSliderTrackShape::\$super\$getPreferredRect#5', (args) => (args[0] as _$GappedRangeSliderTrackShape)._super$getPreferredRect(parentBox: args[1] as RenderBox, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, sliderTheme: args[3] as SliderThemeData, isEnabled: identical(args[4], darticAbsent) ? false : args[4] as bool, isDiscrete: identical(args[5], darticAbsent) ? false : args[5] as bool));
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::GappedRangeSliderTrackShape::\$super\$isRounded#0', (args) => (args[0] as _$GappedRangeSliderTrackShape)._super$isRounded);
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::GappedRangeSliderTrackShape::\$super\$hashCode#0', (args) => (args[0] as _$GappedRangeSliderTrackShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

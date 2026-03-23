@@ -18,6 +18,62 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$TargetImageSize extends TargetImageSize implements DarticObjectHolder {
+  _$TargetImageSize(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(width: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as int?, height: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as int?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int? get width {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'width');
+    if (identical(r, notOverridden)) return super.width;
+    return r as int?;
+  }
+
+  @override
+  int? get height {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'height');
+    if (identical(r, notOverridden)) return super.height;
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int? get _super$width => super.width;
+  int? get _super$height => super.height;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTargetImageSizeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TargetImageSize(dispatch, obj, superArgs);
+
 abstract final class TargetImageSizeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +81,13 @@ abstract final class TargetImageSizeBindings {
       type: TargetImageSize,
       test: (o) => o is TargetImageSize,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TargetImageSize(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::TargetImageSize::\$super\$toString#0', (args) => (args[0] as _$TargetImageSize)._super$toString());
+    ctx.registerBinding('dart:ui::TargetImageSize::\$super\$width#0', (args) => (args[0] as _$TargetImageSize)._super$width);
+    ctx.registerBinding('dart:ui::TargetImageSize::\$super\$height#0', (args) => (args[0] as _$TargetImageSize)._super$height);
+    ctx.registerBinding('dart:ui::TargetImageSize::\$super\$hashCode#0', (args) => (args[0] as _$TargetImageSize)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

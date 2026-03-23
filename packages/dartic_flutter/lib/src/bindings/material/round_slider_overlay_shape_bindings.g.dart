@@ -22,6 +22,69 @@ import 'package:flutter/src/painting/text_painter.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$RoundSliderOverlayShape extends RoundSliderOverlayShape implements DarticObjectHolder {
+  _$RoundSliderOverlayShape(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(overlayRadius: superArgs[0] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) return super.getPreferredSize(isEnabled, isDiscrete);
+    return r as Size;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, required bool isDiscrete, required TextPainter labelPainter, required RenderBox parentBox, required SliderThemeData sliderTheme, required TextDirection textDirection, required double value, required double textScaleFactor, required Size sizeWithOverflow}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, labelPainter, parentBox, sliderTheme, textDirection, value, textScaleFactor, sizeWithOverflow]);
+    if (identical(r, notOverridden)) { super.paint(context, center, activationAnimation: activationAnimation, enableAnimation: enableAnimation, isDiscrete: isDiscrete, labelPainter: labelPainter, parentBox: parentBox, sliderTheme: sliderTheme, textDirection: textDirection, value: value, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get overlayRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayRadius');
+    if (identical(r, notOverridden)) return super.overlayRadius;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Size _super$getPreferredSize(bool isEnabled, bool isDiscrete) => super.getPreferredSize(isEnabled, isDiscrete);
+  void _super$paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, required bool isDiscrete, required TextPainter labelPainter, required RenderBox parentBox, required SliderThemeData sliderTheme, required TextDirection textDirection, required double value, required double textScaleFactor, required Size sizeWithOverflow}) { super.paint(context, center, activationAnimation: activationAnimation, enableAnimation: enableAnimation, isDiscrete: isDiscrete, labelPainter: labelPainter, parentBox: parentBox, sliderTheme: sliderTheme, textDirection: textDirection, value: value, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow); }
+  String _super$toString() => super.toString();
+  double get _super$overlayRadius => super.overlayRadius;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRoundSliderOverlayShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RoundSliderOverlayShape(dispatch, obj, superArgs);
+
 abstract final class RoundSliderOverlayShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,7 +93,14 @@ abstract final class RoundSliderOverlayShapeBindings {
       test: (o) => o is RoundSliderOverlayShape,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/slider_value_indicator_shape.dart::SliderComponentShape'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RoundSliderOverlayShape(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::RoundSliderOverlayShape::\$super\$getPreferredSize#2', (args) => (args[0] as _$RoundSliderOverlayShape)._super$getPreferredSize(args[1] as bool, args[2] as bool));
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::RoundSliderOverlayShape::\$super\$paint#12', (args) { (args[0] as _$RoundSliderOverlayShape)._super$paint(args[1] as PaintingContext, args[2] as Offset, activationAnimation: args[3] as Animation<double>, enableAnimation: args[4] as Animation<double>, isDiscrete: args[5] as bool, labelPainter: args[6] as TextPainter, parentBox: args[7] as RenderBox, sliderTheme: args[8] as SliderThemeData, textDirection: args[9] as TextDirection, value: args[10] as double, textScaleFactor: args[11] as double, sizeWithOverflow: args[12] as Size); return null; });
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::RoundSliderOverlayShape::\$super\$toString#0', (args) => (args[0] as _$RoundSliderOverlayShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::RoundSliderOverlayShape::\$super\$overlayRadius#0', (args) => (args[0] as _$RoundSliderOverlayShape)._super$overlayRadius);
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::RoundSliderOverlayShape::\$super\$hashCode#0', (args) => (args[0] as _$RoundSliderOverlayShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

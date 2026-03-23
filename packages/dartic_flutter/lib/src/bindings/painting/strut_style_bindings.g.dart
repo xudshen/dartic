@@ -13,6 +13,165 @@ import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
+class _$StrutStyle extends StrutStyle implements DarticObjectHolder {
+  _$StrutStyle(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(fontFamily: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as String?, fontFamilyFallback: identical(superArgs[1], darticAbsent) ? null : superArgs[1] == null ? null : (superArgs[1] as List).cast<String>(), fontSize: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, height: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?, leadingDistribution: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as TextLeadingDistribution?, leading: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as double?, fontWeight: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as FontWeight?, fontStyle: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as FontStyle?, forceStrutHeight: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as bool?, debugLabel: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as String?, package: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as String?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  RenderComparison compareTo(StrutStyle other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(r, notOverridden)) return super.compareTo(other);
+    return r as RenderComparison;
+  }
+
+  @override
+  StrutStyle inheritFromTextStyle(TextStyle? other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inheritFromTextStyle', [other]);
+    if (identical(r, notOverridden)) return super.inheritFromTextStyle(other);
+    return r as StrutStyle;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties, {String prefix = ''}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties, prefix]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties, prefix: prefix); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  String? get fontFamily {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontFamily');
+    if (identical(r, notOverridden)) return super.fontFamily;
+    return r as String?;
+  }
+
+  @override
+  List<String>? get fontFamilyFallback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontFamilyFallback');
+    if (identical(r, notOverridden)) return super.fontFamilyFallback;
+    return r as List<String>?;
+  }
+
+  @override
+  double? get fontSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontSize');
+    if (identical(r, notOverridden)) return super.fontSize;
+    return r as double?;
+  }
+
+  @override
+  double? get height {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'height');
+    if (identical(r, notOverridden)) return super.height;
+    return r as double?;
+  }
+
+  @override
+  TextLeadingDistribution? get leadingDistribution {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leadingDistribution');
+    if (identical(r, notOverridden)) return super.leadingDistribution;
+    return r as TextLeadingDistribution?;
+  }
+
+  @override
+  FontWeight? get fontWeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontWeight');
+    if (identical(r, notOverridden)) return super.fontWeight;
+    return r as FontWeight?;
+  }
+
+  @override
+  FontStyle? get fontStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontStyle');
+    if (identical(r, notOverridden)) return super.fontStyle;
+    return r as FontStyle?;
+  }
+
+  @override
+  double? get leading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leading');
+    if (identical(r, notOverridden)) return super.leading;
+    return r as double?;
+  }
+
+  @override
+  bool? get forceStrutHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'forceStrutHeight');
+    if (identical(r, notOverridden)) return super.forceStrutHeight;
+    return r as bool?;
+  }
+
+  @override
+  String? get debugLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugLabel');
+    if (identical(r, notOverridden)) return super.debugLabel;
+    return r as String?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  RenderComparison _super$compareTo(StrutStyle other) => super.compareTo(other);
+  StrutStyle _super$inheritFromTextStyle(TextStyle? other) => super.inheritFromTextStyle(other);
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties, {String prefix = ''}) { super.debugFillProperties(properties, prefix: prefix); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  String? get _super$fontFamily => super.fontFamily;
+  List<String>? get _super$fontFamilyFallback => super.fontFamilyFallback;
+  double? get _super$fontSize => super.fontSize;
+  double? get _super$height => super.height;
+  TextLeadingDistribution? get _super$leadingDistribution => super.leadingDistribution;
+  FontWeight? get _super$fontWeight => super.fontWeight;
+  FontStyle? get _super$fontStyle => super.fontStyle;
+  double? get _super$leading => super.leading;
+  bool? get _super$forceStrutHeight => super.forceStrutHeight;
+  String? get _super$debugLabel => super.debugLabel;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStrutStyleBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StrutStyle(dispatch, obj, superArgs);
+
 abstract final class StrutStyleBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,8 +180,27 @@ abstract final class StrutStyleBindings {
       test: (o) => o is StrutStyle,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StrutStyle(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::disabled#0', (args) => StrutStyle.disabled);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$compareTo#1', (args) => (args[0] as _$StrutStyle)._super$compareTo(args[1] as StrutStyle));
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$inheritFromTextStyle#1', (args) => (args[0] as _$StrutStyle)._super$inheritFromTextStyle(args[1] as TextStyle?));
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$toStringShort#0', (args) => (args[0] as _$StrutStyle)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$debugFillProperties#2', (args) { (args[0] as _$StrutStyle)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder, prefix: identical(args[2], darticAbsent) ? '' : args[2] as String); return null; });
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$toString#1', (args) => (args[0] as _$StrutStyle)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StrutStyle)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$fontFamily#0', (args) => (args[0] as _$StrutStyle)._super$fontFamily);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$fontFamilyFallback#0', (args) => (args[0] as _$StrutStyle)._super$fontFamilyFallback);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$fontSize#0', (args) => (args[0] as _$StrutStyle)._super$fontSize);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$height#0', (args) => (args[0] as _$StrutStyle)._super$height);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$leadingDistribution#0', (args) => (args[0] as _$StrutStyle)._super$leadingDistribution);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$fontWeight#0', (args) => (args[0] as _$StrutStyle)._super$fontWeight);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$fontStyle#0', (args) => (args[0] as _$StrutStyle)._super$fontStyle);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$leading#0', (args) => (args[0] as _$StrutStyle)._super$leading);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$forceStrutHeight#0', (args) => (args[0] as _$StrutStyle)._super$forceStrutHeight);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$debugLabel#0', (args) => (args[0] as _$StrutStyle)._super$debugLabel);
+    ctx.registerBinding('package:flutter/src/painting/strut_style.dart::StrutStyle::\$super\$hashCode#0', (args) => (args[0] as _$StrutStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -19,6 +19,78 @@ import 'package:flutter/src/painting/text_scaler.dart';
 import 'package:flutter/src/painting/text_span.dart';
 import 'package:flutter/src/painting/text_style.dart';
 
+class _$PlaceholderDimensions extends PlaceholderDimensions implements DarticObjectHolder {
+  _$PlaceholderDimensions(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(size: superArgs[0] as ui.Size, alignment: superArgs[1] as ui.PlaceholderAlignment, baseline: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as ui.TextBaseline?, baselineOffset: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ui.Size get size {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'size');
+    if (identical(r, notOverridden)) return super.size;
+    return r as ui.Size;
+  }
+
+  @override
+  ui.PlaceholderAlignment get alignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alignment');
+    if (identical(r, notOverridden)) return super.alignment;
+    return r as ui.PlaceholderAlignment;
+  }
+
+  @override
+  double? get baselineOffset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'baselineOffset');
+    if (identical(r, notOverridden)) return super.baselineOffset;
+    return r as double?;
+  }
+
+  @override
+  ui.TextBaseline? get baseline {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'baseline');
+    if (identical(r, notOverridden)) return super.baseline;
+    return r as ui.TextBaseline?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  ui.Size get _super$size => super.size;
+  ui.PlaceholderAlignment get _super$alignment => super.alignment;
+  double? get _super$baselineOffset => super.baselineOffset;
+  ui.TextBaseline? get _super$baseline => super.baseline;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPlaceholderDimensionsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PlaceholderDimensions(dispatch, obj, superArgs);
+
 abstract final class PlaceholderDimensionsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,8 +98,16 @@ abstract final class PlaceholderDimensionsBindings {
       type: PlaceholderDimensions,
       test: (o) => o is PlaceholderDimensions,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PlaceholderDimensions(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::empty#0', (args) => PlaceholderDimensions.empty);
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$toString#0', (args) => (args[0] as _$PlaceholderDimensions)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$size#0', (args) => (args[0] as _$PlaceholderDimensions)._super$size);
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$alignment#0', (args) => (args[0] as _$PlaceholderDimensions)._super$alignment);
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$baselineOffset#0', (args) => (args[0] as _$PlaceholderDimensions)._super$baselineOffset);
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$baseline#0', (args) => (args[0] as _$PlaceholderDimensions)._super$baseline);
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::PlaceholderDimensions::\$super\$hashCode#0', (args) => (args[0] as _$PlaceholderDimensions)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

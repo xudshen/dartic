@@ -10,6 +10,55 @@ import 'package:flutter/src/services/autofill.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/text_input.dart';
 
+class _$AutofillScopeMixin implements AutofillScopeMixin, DarticObjectHolder {
+  _$AutofillScopeMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  TextInputConnection attach(TextInputClient trigger, TextInputConfiguration configuration) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [trigger, configuration]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method attach must be overridden in dartic code');
+    }
+    return r as TextInputConnection;
+  }
+
+  @override
+  AutofillClient? getAutofillClient(String autofillId) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAutofillClient', [autofillId]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getAutofillClient must be overridden in dartic code');
+    }
+    return r as AutofillClient?;
+  }
+
+  @override
+  Iterable<AutofillClient> get autofillClients {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofillClients');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter autofillClients must be overridden in dartic code');
+    }
+    return r as Iterable<AutofillClient>;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAutofillScopeMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AutofillScopeMixin(dispatch, obj, superArgs);
+
 abstract final class AutofillScopeMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,6 +67,8 @@ abstract final class AutofillScopeMixinBindings {
       test: (o) => o is AutofillScopeMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/autofill.dart::AutofillScope'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AutofillScopeMixin(dispatch, darticObject, superArgs),
     );
   }
 

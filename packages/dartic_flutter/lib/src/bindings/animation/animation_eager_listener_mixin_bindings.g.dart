@@ -10,6 +10,52 @@ import 'package:flutter/src/animation/listener_helpers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/animation/animation.dart';
 
+class _$AnimationEagerListenerMixin implements AnimationEagerListenerMixin, DarticObjectHolder {
+  _$AnimationEagerListenerMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void didRegisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didUnregisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAnimationEagerListenerMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AnimationEagerListenerMixin(dispatch, obj, superArgs);
+
 abstract final class AnimationEagerListenerMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +63,8 @@ abstract final class AnimationEagerListenerMixinBindings {
       type: AnimationEagerListenerMixin,
       test: (o) => o is AnimationEagerListenerMixin,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AnimationEagerListenerMixin(dispatch, darticObject, superArgs),
     );
   }
 

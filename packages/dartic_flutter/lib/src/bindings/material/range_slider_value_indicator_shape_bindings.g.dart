@@ -23,6 +23,71 @@ import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/rendering/object.dart';
 
+class _$RangeSliderValueIndicatorShape extends RangeSliderValueIndicatorShape implements DarticObjectHolder {
+  _$RangeSliderValueIndicatorShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete, {required TextPainter labelPainter, required double textScaleFactor}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete, labelPainter, textScaleFactor]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPreferredSize must be overridden in dartic code');
+    }
+    return r as Size;
+  }
+
+  @override
+  double getHorizontalShift({RenderBox? parentBox, Offset? center, TextPainter? labelPainter, Animation<double>? activationAnimation, double? textScaleFactor, Size? sizeWithOverflow}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHorizontalShift', [parentBox, center, labelPainter, activationAnimation, textScaleFactor, sizeWithOverflow]);
+    if (identical(r, notOverridden)) return super.getHorizontalShift(parentBox: parentBox, center: center, labelPainter: labelPainter, activationAnimation: activationAnimation, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow);
+    return r as double;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, Object? isDiscrete = darticAbsent, Object? isOnTop = darticAbsent, required TextPainter labelPainter, Object? textScaleFactor = darticAbsent, Object? sizeWithOverflow = darticAbsent, required RenderBox parentBox, required SliderThemeData sliderTheme, Object? textDirection = darticAbsent, Object? value = darticAbsent, Object? thumb = darticAbsent}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isOnTop, labelPainter, textScaleFactor, sizeWithOverflow, parentBox, sliderTheme, textDirection, value, thumb]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double _super$getHorizontalShift({RenderBox? parentBox, Offset? center, TextPainter? labelPainter, Animation<double>? activationAnimation, double? textScaleFactor, Size? sizeWithOverflow}) => super.getHorizontalShift(parentBox: parentBox, center: center, labelPainter: labelPainter, activationAnimation: activationAnimation, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRangeSliderValueIndicatorShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RangeSliderValueIndicatorShape(dispatch, obj, superArgs);
+
 abstract final class RangeSliderValueIndicatorShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,7 +95,12 @@ abstract final class RangeSliderValueIndicatorShapeBindings {
       type: RangeSliderValueIndicatorShape,
       test: (o) => o is RangeSliderValueIndicatorShape,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RangeSliderValueIndicatorShape(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderValueIndicatorShape::\$super\$getHorizontalShift#6', (args) => (args[0] as _$RangeSliderValueIndicatorShape)._super$getHorizontalShift(parentBox: identical(args[1], darticAbsent) ? null : args[1] as RenderBox?, center: identical(args[2], darticAbsent) ? null : args[2] as Offset?, labelPainter: identical(args[3], darticAbsent) ? null : args[3] as TextPainter?, activationAnimation: identical(args[4], darticAbsent) ? null : args[4] as Animation<double>?, textScaleFactor: identical(args[5], darticAbsent) ? null : args[5] as double?, sizeWithOverflow: identical(args[6], darticAbsent) ? null : args[6] as Size?));
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderValueIndicatorShape::\$super\$toString#0', (args) => (args[0] as _$RangeSliderValueIndicatorShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderValueIndicatorShape::\$super\$hashCode#0', (args) => (args[0] as _$RangeSliderValueIndicatorShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -18,6 +18,70 @@ import 'package:flutter/src/material/theme.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$MaterialSlice extends MaterialSlice implements DarticObjectHolder {
+  _$MaterialSlice(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: superArgs[0] as LocalKey, child: superArgs[1] as Widget, color: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Color?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Widget get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget;
+  }
+
+  @override
+  Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  LocalKey get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as LocalKey;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Widget get _super$child => super.child;
+  Color? get _super$color => super.color;
+  int get _super$hashCode => super.hashCode;
+  LocalKey get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMaterialSliceBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MaterialSlice(dispatch, obj, superArgs);
+
 abstract final class MaterialSliceBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +90,14 @@ abstract final class MaterialSliceBindings {
       test: (o) => o is MaterialSlice,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/mergeable_material.dart::MergeableMaterialItem'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MaterialSlice(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialSlice::\$super\$toString#0', (args) => (args[0] as _$MaterialSlice)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialSlice::\$super\$child#0', (args) => (args[0] as _$MaterialSlice)._super$child);
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialSlice::\$super\$color#0', (args) => (args[0] as _$MaterialSlice)._super$color);
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialSlice::\$super\$hashCode#0', (args) => (args[0] as _$MaterialSlice)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialSlice::\$super\$key#0', (args) => (args[0] as _$MaterialSlice)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

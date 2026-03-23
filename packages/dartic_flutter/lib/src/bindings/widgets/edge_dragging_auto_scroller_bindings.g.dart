@@ -22,6 +22,92 @@ import 'package:flutter/src/widgets/scroll_physics.dart';
 import 'package:flutter/src/widgets/scrollable.dart';
 import 'dart:ui';
 
+class _$EdgeDraggingAutoScroller extends EdgeDraggingAutoScroller implements DarticObjectHolder {
+  _$EdgeDraggingAutoScroller(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as ScrollableState, onScrollViewScrolled: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as VoidCallback?, velocityScalar: superArgs[2] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void startAutoScrollIfNecessary(Rect dragTarget) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startAutoScrollIfNecessary', [dragTarget]);
+    if (identical(r, notOverridden)) { super.startAutoScrollIfNecessary(dragTarget); return; }
+  }
+
+  @override
+  void stopAutoScroll() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopAutoScroll', const []);
+    if (identical(r, notOverridden)) { super.stopAutoScroll(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ScrollableState get scrollable {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scrollable');
+    if (identical(r, notOverridden)) return super.scrollable;
+    return r as ScrollableState;
+  }
+
+  @override
+  VoidCallback? get onScrollViewScrolled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onScrollViewScrolled');
+    if (identical(r, notOverridden)) return super.onScrollViewScrolled;
+    return r as VoidCallback?;
+  }
+
+  @override
+  double get velocityScalar {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'velocityScalar');
+    if (identical(r, notOverridden)) return super.velocityScalar;
+    return r as double;
+  }
+
+  @override
+  bool get scrolling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scrolling');
+    if (identical(r, notOverridden)) return super.scrolling;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$startAutoScrollIfNecessary(Rect dragTarget) { super.startAutoScrollIfNecessary(dragTarget); }
+  void _super$stopAutoScroll() { super.stopAutoScroll(); }
+  String _super$toString() => super.toString();
+  ScrollableState get _super$scrollable => super.scrollable;
+  VoidCallback? get _super$onScrollViewScrolled => super.onScrollViewScrolled;
+  double get _super$velocityScalar => super.velocityScalar;
+  bool get _super$scrolling => super.scrolling;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createEdgeDraggingAutoScrollerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$EdgeDraggingAutoScroller(dispatch, obj, superArgs);
+
 abstract final class EdgeDraggingAutoScrollerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,7 +115,17 @@ abstract final class EdgeDraggingAutoScrollerBindings {
       type: EdgeDraggingAutoScroller,
       test: (o) => o is EdgeDraggingAutoScroller,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$EdgeDraggingAutoScroller(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$startAutoScrollIfNecessary#1', (args) { (args[0] as _$EdgeDraggingAutoScroller)._super$startAutoScrollIfNecessary(args[1] as Rect); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$stopAutoScroll#0', (args) { (args[0] as _$EdgeDraggingAutoScroller)._super$stopAutoScroll(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$toString#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$scrollable#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$scrollable);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$onScrollViewScrolled#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$onScrollViewScrolled);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$velocityScalar#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$velocityScalar);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$scrolling#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$scrolling);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::EdgeDraggingAutoScroller::\$super\$hashCode#0', (args) => (args[0] as _$EdgeDraggingAutoScroller)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -29,6 +29,189 @@ import 'package:flutter/src/services/text_input.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$RawAutocomplete extends RawAutocomplete<Object> implements DarticObjectHolder {
+  _$RawAutocomplete(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, optionsViewBuilder: superArgs[1] as Widget Function(BuildContext, void Function(Object), Iterable<Object>), optionsBuilder: superArgs[2] as FutureOr<Iterable<Object>> Function(TextEditingValue), optionsViewOpenDirection: superArgs[3] as OptionsViewOpenDirection, displayStringForOption: superArgs[4] as String Function(Object), fieldViewBuilder: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as AutocompleteFieldViewBuilder?, focusNode: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as FocusNode?, onSelected: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as void Function(Object)?, textEditingController: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as TextEditingController?, initialValue: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as TextEditingValue?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<RawAutocomplete<Object>> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<RawAutocomplete<Object>>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  AutocompleteFieldViewBuilder? get fieldViewBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fieldViewBuilder');
+    if (identical(r, notOverridden)) return super.fieldViewBuilder;
+    return r as AutocompleteFieldViewBuilder?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  Widget Function(BuildContext, void Function(Object), Iterable<Object>) get optionsViewBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'optionsViewBuilder');
+    if (identical(r, notOverridden)) return super.optionsViewBuilder;
+    return r as Widget Function(BuildContext, void Function(Object), Iterable<Object>);
+  }
+
+  @override
+  OptionsViewOpenDirection get optionsViewOpenDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'optionsViewOpenDirection');
+    if (identical(r, notOverridden)) return super.optionsViewOpenDirection;
+    return r as OptionsViewOpenDirection;
+  }
+
+  @override
+  String Function(Object) get displayStringForOption {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'displayStringForOption');
+    if (identical(r, notOverridden)) return super.displayStringForOption;
+    return r as String Function(Object);
+  }
+
+  @override
+  void Function(Object)? get onSelected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSelected');
+    if (identical(r, notOverridden)) return super.onSelected;
+    return r as void Function(Object)?;
+  }
+
+  @override
+  FutureOr<Iterable<Object>> Function(TextEditingValue) get optionsBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'optionsBuilder');
+    if (identical(r, notOverridden)) return super.optionsBuilder;
+    return r as FutureOr<Iterable<Object>> Function(TextEditingValue);
+  }
+
+  @override
+  TextEditingController? get textEditingController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textEditingController');
+    if (identical(r, notOverridden)) return super.textEditingController;
+    return r as TextEditingController?;
+  }
+
+  @override
+  TextEditingValue? get initialValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialValue');
+    if (identical(r, notOverridden)) return super.initialValue;
+    return r as TextEditingValue?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<RawAutocomplete<Object>> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  AutocompleteFieldViewBuilder? get _super$fieldViewBuilder => super.fieldViewBuilder;
+  FocusNode? get _super$focusNode => super.focusNode;
+  Widget Function(BuildContext, void Function(Object), Iterable<Object>) get _super$optionsViewBuilder => super.optionsViewBuilder;
+  OptionsViewOpenDirection get _super$optionsViewOpenDirection => super.optionsViewOpenDirection;
+  String Function(Object) get _super$displayStringForOption => super.displayStringForOption;
+  void Function(Object)? get _super$onSelected => super.onSelected;
+  FutureOr<Iterable<Object>> Function(TextEditingValue) get _super$optionsBuilder => super.optionsBuilder;
+  TextEditingController? get _super$textEditingController => super.textEditingController;
+  TextEditingValue? get _super$initialValue => super.initialValue;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRawAutocompleteBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RawAutocomplete(dispatch, obj, superArgs);
+
 abstract final class RawAutocompleteBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,9 +220,31 @@ abstract final class RawAutocompleteBindings {
       test: (o) => o is RawAutocomplete,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RawAutocomplete(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::onFieldSubmitted#1', (args) { RawAutocomplete.onFieldSubmitted(args[0] as GlobalKey<State<StatefulWidget>>); return null; });
     ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::defaultStringForOption#1', (args) => RawAutocomplete.defaultStringForOption(args[0]));
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$createState#0', (args) => (args[0] as _$RawAutocomplete)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$toString#1', (args) => (args[0] as _$RawAutocomplete)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$createElement#0', (args) => (args[0] as _$RawAutocomplete)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$toStringShort#0', (args) => (args[0] as _$RawAutocomplete)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$debugFillProperties#1', (args) { (args[0] as _$RawAutocomplete)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$toStringShallow#2', (args) => (args[0] as _$RawAutocomplete)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$toStringDeep#4', (args) => (args[0] as _$RawAutocomplete)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RawAutocomplete)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$RawAutocomplete)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$fieldViewBuilder#0', (args) => (args[0] as _$RawAutocomplete)._super$fieldViewBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$focusNode#0', (args) => (args[0] as _$RawAutocomplete)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$optionsViewBuilder#0', (args) => (args[0] as _$RawAutocomplete)._super$optionsViewBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$optionsViewOpenDirection#0', (args) => (args[0] as _$RawAutocomplete)._super$optionsViewOpenDirection);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$displayStringForOption#0', (args) => (args[0] as _$RawAutocomplete)._super$displayStringForOption);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$onSelected#0', (args) => (args[0] as _$RawAutocomplete)._super$onSelected);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$optionsBuilder#0', (args) => (args[0] as _$RawAutocomplete)._super$optionsBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$textEditingController#0', (args) => (args[0] as _$RawAutocomplete)._super$textEditingController);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$initialValue#0', (args) => (args[0] as _$RawAutocomplete)._super$initialValue);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$hashCode#0', (args) => (args[0] as _$RawAutocomplete)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/autocomplete.dart::RawAutocomplete::\$super\$key#0', (args) => (args[0] as _$RawAutocomplete)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

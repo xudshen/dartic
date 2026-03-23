@@ -23,6 +23,94 @@ import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/widgets/transitions.dart';
 
+class _$ZoomPageTransitionsBuilder extends ZoomPageTransitionsBuilder implements DarticObjectHolder {
+  _$ZoomPageTransitionsBuilder(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(allowSnapshotting: superArgs[0] as bool, allowEnterRouteSnapshotting: superArgs[1] as bool, backgroundColor: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as ui.Color?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get allowSnapshotting {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allowSnapshotting');
+    if (identical(r, notOverridden)) return super.allowSnapshotting;
+    return r as bool;
+  }
+
+  @override
+  bool get allowEnterRouteSnapshotting {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allowEnterRouteSnapshotting');
+    if (identical(r, notOverridden)) return super.allowEnterRouteSnapshotting;
+    return r as bool;
+  }
+
+  @override
+  ui.Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as ui.Color?;
+  }
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition');
+    if (identical(r, notOverridden)) return super.delegatedTransition;
+    return r as DelegatedTransitionBuilder?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Duration get transitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transitionDuration');
+    if (identical(r, notOverridden)) return super.transitionDuration;
+    return r as Duration;
+  }
+
+  @override
+  Duration get reverseTransitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'reverseTransitionDuration');
+    if (identical(r, notOverridden)) return super.reverseTransitionDuration;
+    return r as Duration;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$allowSnapshotting => super.allowSnapshotting;
+  bool get _super$allowEnterRouteSnapshotting => super.allowEnterRouteSnapshotting;
+  ui.Color? get _super$backgroundColor => super.backgroundColor;
+  DelegatedTransitionBuilder? get _super$delegatedTransition => super.delegatedTransition;
+  int get _super$hashCode => super.hashCode;
+  Duration get _super$transitionDuration => super.transitionDuration;
+  Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createZoomPageTransitionsBuilderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ZoomPageTransitionsBuilder(dispatch, obj, superArgs);
+
 abstract final class ZoomPageTransitionsBuilderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +119,17 @@ abstract final class ZoomPageTransitionsBuilderBindings {
       test: (o) => o is ZoomPageTransitionsBuilder,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/page_transitions_builder.dart::PageTransitionsBuilder'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ZoomPageTransitionsBuilder(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$toString#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$allowSnapshotting#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$allowSnapshotting);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$allowEnterRouteSnapshotting#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$allowEnterRouteSnapshotting);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$backgroundColor#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$delegatedTransition#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$delegatedTransition);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$transitionDuration#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$transitionDuration);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::ZoomPageTransitionsBuilder::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$ZoomPageTransitionsBuilder)._super$reverseTransitionDuration);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

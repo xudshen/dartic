@@ -32,6 +32,221 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Dialog extends Dialog implements DarticObjectHolder {
+  _$Dialog(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, backgroundColor: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Color?, elevation: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, shadowColor: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as Color?, surfaceTintColor: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Color?, insetAnimationDuration: superArgs[5] as Duration, insetAnimationCurve: superArgs[6] as Curve, insetPadding: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as EdgeInsets?, clipBehavior: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as Clip?, shape: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as ShapeBorder?, alignment: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as AlignmentGeometry?, child: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as Widget?, semanticsRole: superArgs[12] as SemanticsRole, constraints: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as BoxConstraints?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as Color?;
+  }
+
+  @override
+  double? get elevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
+    if (identical(r, notOverridden)) return super.elevation;
+    return r as double?;
+  }
+
+  @override
+  Color? get shadowColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadowColor');
+    if (identical(r, notOverridden)) return super.shadowColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get surfaceTintColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'surfaceTintColor');
+    if (identical(r, notOverridden)) return super.surfaceTintColor;
+    return r as Color?;
+  }
+
+  @override
+  Duration get insetAnimationDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'insetAnimationDuration');
+    if (identical(r, notOverridden)) return super.insetAnimationDuration;
+    return r as Duration;
+  }
+
+  @override
+  Curve get insetAnimationCurve {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'insetAnimationCurve');
+    if (identical(r, notOverridden)) return super.insetAnimationCurve;
+    return r as Curve;
+  }
+
+  @override
+  EdgeInsets? get insetPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'insetPadding');
+    if (identical(r, notOverridden)) return super.insetPadding;
+    return r as EdgeInsets?;
+  }
+
+  @override
+  Clip? get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) return super.clipBehavior;
+    return r as Clip?;
+  }
+
+  @override
+  ShapeBorder? get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) return super.shape;
+    return r as ShapeBorder?;
+  }
+
+  @override
+  AlignmentGeometry? get alignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alignment');
+    if (identical(r, notOverridden)) return super.alignment;
+    return r as AlignmentGeometry?;
+  }
+
+  @override
+  Widget? get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget?;
+  }
+
+  @override
+  SemanticsRole get semanticsRole {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsRole');
+    if (identical(r, notOverridden)) return super.semanticsRole;
+    return r as SemanticsRole;
+  }
+
+  @override
+  BoxConstraints? get constraints {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'constraints');
+    if (identical(r, notOverridden)) return super.constraints;
+    return r as BoxConstraints?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Color? get _super$backgroundColor => super.backgroundColor;
+  double? get _super$elevation => super.elevation;
+  Color? get _super$shadowColor => super.shadowColor;
+  Color? get _super$surfaceTintColor => super.surfaceTintColor;
+  Duration get _super$insetAnimationDuration => super.insetAnimationDuration;
+  Curve get _super$insetAnimationCurve => super.insetAnimationCurve;
+  EdgeInsets? get _super$insetPadding => super.insetPadding;
+  Clip? get _super$clipBehavior => super.clipBehavior;
+  ShapeBorder? get _super$shape => super.shape;
+  AlignmentGeometry? get _super$alignment => super.alignment;
+  Widget? get _super$child => super.child;
+  SemanticsRole get _super$semanticsRole => super.semanticsRole;
+  BoxConstraints? get _super$constraints => super.constraints;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDialogBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Dialog(dispatch, obj, superArgs);
+
 abstract final class DialogBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -40,7 +255,33 @@ abstract final class DialogBindings {
       test: (o) => o is Dialog,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Dialog(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$build#1', (args) => (args[0] as _$Dialog)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$toString#1', (args) => (args[0] as _$Dialog)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$createElement#0', (args) => (args[0] as _$Dialog)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$toStringShort#0', (args) => (args[0] as _$Dialog)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$debugFillProperties#1', (args) { (args[0] as _$Dialog)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$toStringShallow#2', (args) => (args[0] as _$Dialog)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$toStringDeep#4', (args) => (args[0] as _$Dialog)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Dialog)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Dialog)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$backgroundColor#0', (args) => (args[0] as _$Dialog)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$elevation#0', (args) => (args[0] as _$Dialog)._super$elevation);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$shadowColor#0', (args) => (args[0] as _$Dialog)._super$shadowColor);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$surfaceTintColor#0', (args) => (args[0] as _$Dialog)._super$surfaceTintColor);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$insetAnimationDuration#0', (args) => (args[0] as _$Dialog)._super$insetAnimationDuration);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$insetAnimationCurve#0', (args) => (args[0] as _$Dialog)._super$insetAnimationCurve);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$insetPadding#0', (args) => (args[0] as _$Dialog)._super$insetPadding);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$clipBehavior#0', (args) => (args[0] as _$Dialog)._super$clipBehavior);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$shape#0', (args) => (args[0] as _$Dialog)._super$shape);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$alignment#0', (args) => (args[0] as _$Dialog)._super$alignment);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$child#0', (args) => (args[0] as _$Dialog)._super$child);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$semanticsRole#0', (args) => (args[0] as _$Dialog)._super$semanticsRole);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$constraints#0', (args) => (args[0] as _$Dialog)._super$constraints);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$hashCode#0', (args) => (args[0] as _$Dialog)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::Dialog::\$super\$key#0', (args) => (args[0] as _$Dialog)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

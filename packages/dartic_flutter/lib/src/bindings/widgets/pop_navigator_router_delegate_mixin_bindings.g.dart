@@ -21,6 +21,107 @@ import 'package:flutter/src/widgets/restoration.dart';
 import 'package:flutter/src/widgets/restoration_properties.dart';
 import 'dart:ui';
 
+class _$PopNavigatorRouterDelegateMixin implements PopNavigatorRouterDelegateMixin<dynamic>, DarticObjectHolder {
+  _$PopNavigatorRouterDelegateMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<bool> popRoute() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popRoute', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method popRoute must be overridden in dartic code');
+    }
+    return r as Future<bool>;
+  }
+
+  @override
+  Future<void> setInitialRoutePath(dynamic configuration) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setInitialRoutePath', [configuration]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setInitialRoutePath must be overridden in dartic code');
+    }
+    return r as Future<void>;
+  }
+
+  @override
+  Future<void> setRestoredRoutePath(dynamic configuration) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setRestoredRoutePath', [configuration]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setRestoredRoutePath must be overridden in dartic code');
+    }
+    return r as Future<void>;
+  }
+
+  @override
+  Future<void> setNewRoutePath(dynamic configuration) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setNewRoutePath', [configuration]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setNewRoutePath must be overridden in dartic code');
+    }
+    return r as Future<void>;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method build must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  GlobalKey<NavigatorState>? get navigatorKey {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigatorKey');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter navigatorKey must be overridden in dartic code');
+    }
+    return r as GlobalKey<NavigatorState>?;
+  }
+
+  @override
+  dynamic get currentConfiguration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentConfiguration');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter currentConfiguration must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPopNavigatorRouterDelegateMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PopNavigatorRouterDelegateMixin(dispatch, obj, superArgs);
+
 abstract final class PopNavigatorRouterDelegateMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,6 +130,8 @@ abstract final class PopNavigatorRouterDelegateMixinBindings {
       test: (o) => o is PopNavigatorRouterDelegateMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/router.dart::RouterDelegate', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PopNavigatorRouterDelegateMixin(dispatch, darticObject, superArgs),
     );
   }
 

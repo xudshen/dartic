@@ -12,6 +12,86 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/physics/simulation.dart';
 import 'package:flutter/src/physics/utils.dart';
 
+class _$SpringDescription extends SpringDescription implements DarticObjectHolder {
+  _$SpringDescription(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(mass: superArgs[0] as double, stiffness: superArgs[1] as double, damping: superArgs[2] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get mass {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mass');
+    if (identical(r, notOverridden)) return super.mass;
+    return r as double;
+  }
+
+  @override
+  double get stiffness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stiffness');
+    if (identical(r, notOverridden)) return super.stiffness;
+    return r as double;
+  }
+
+  @override
+  double get damping {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'damping');
+    if (identical(r, notOverridden)) return super.damping;
+    return r as double;
+  }
+
+  @override
+  Duration get duration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'duration');
+    if (identical(r, notOverridden)) return super.duration;
+    return r as Duration;
+  }
+
+  @override
+  double get bounce {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bounce');
+    if (identical(r, notOverridden)) return super.bounce;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  double get _super$mass => super.mass;
+  double get _super$stiffness => super.stiffness;
+  double get _super$damping => super.damping;
+  Duration get _super$duration => super.duration;
+  double get _super$bounce => super.bounce;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSpringDescriptionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SpringDescription(dispatch, obj, superArgs);
+
 abstract final class SpringDescriptionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,7 +99,16 @@ abstract final class SpringDescriptionBindings {
       type: SpringDescription,
       test: (o) => o is SpringDescription,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SpringDescription(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$toString#0', (args) => (args[0] as _$SpringDescription)._super$toString());
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$mass#0', (args) => (args[0] as _$SpringDescription)._super$mass);
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$stiffness#0', (args) => (args[0] as _$SpringDescription)._super$stiffness);
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$damping#0', (args) => (args[0] as _$SpringDescription)._super$damping);
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$duration#0', (args) => (args[0] as _$SpringDescription)._super$duration);
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$bounce#0', (args) => (args[0] as _$SpringDescription)._super$bounce);
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringDescription::\$super\$hashCode#0', (args) => (args[0] as _$SpringDescription)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

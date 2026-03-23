@@ -57,7 +57,7 @@ abstract final class RenderSliverAnimatedOpacityBindings {
         'getAbsoluteSizeRelativeToOrigin#0': (args) => (args[0] as RenderSliverAnimatedOpacity).getAbsoluteSizeRelativeToOrigin(),
         'getAbsoluteSize#0': (args) => (args[0] as RenderSliverAnimatedOpacity).getAbsoluteSize(),
         'debugPaint#2': (args) { (args[0] as RenderSliverAnimatedOpacity).debugPaint(args[1] as PaintingContext, args[2] as ui.Offset); return null; },
-        'handleEvent#2': (args) { (args[0] as RenderSliverAnimatedOpacity).handleEvent(args[1] as PointerEvent, args[2] as HitTestEntry<HitTestTarget>); return null; },
+        'handleEvent#2': (args) { (args[0] as RenderSliverAnimatedOpacity).handleEvent(args[1] as PointerEvent, args[2] as SliverHitTestEntry); return null; },
         'debugFillProperties#1': (args) { (args[0] as RenderSliverAnimatedOpacity).debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; },
         'reassemble#0': (args) { (args[0] as RenderSliverAnimatedOpacity).reassemble(); return null; },
         'dispose#0': (args) { (args[0] as RenderSliverAnimatedOpacity).dispose(); return null; },

@@ -25,6 +25,138 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/border_radius.dart';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$InteractiveInkFeature extends InteractiveInkFeature implements DarticObjectHolder {
+  _$InteractiveInkFeature(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(controller: superArgs[0] as MaterialInkController, referenceBox: superArgs[1] as RenderBox, color: superArgs[2] as Color, customBorder: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as ShapeBorder?, onRemoved: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as VoidCallback?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void confirm() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'confirm', const []);
+    if (identical(r, notOverridden)) { super.confirm(); return; }
+  }
+
+  @override
+  void cancel() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    if (identical(r, notOverridden)) { super.cancel(); return; }
+  }
+
+  @override
+  void paintInkCircle({required Canvas canvas, required Matrix4 transform, required Paint paint, required Offset center, required double radius, TextDirection? textDirection, ShapeBorder? customBorder, BorderRadius borderRadius = BorderRadius.zero, RectCallback? clipCallback}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintInkCircle', [canvas, transform, paint, center, radius, textDirection, customBorder, borderRadius, clipCallback]);
+    if (identical(r, notOverridden)) { super.paintInkCircle(canvas: canvas, transform: transform, paint: paint, center: center, radius: radius, textDirection: textDirection, customBorder: customBorder, borderRadius: borderRadius, clipCallback: clipCallback != null ? () => clipCallback() as Rect : null); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void paintFeature(Canvas canvas, Matrix4 transform) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintFeature', [canvas, transform]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paintFeature must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Color get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color;
+  }
+
+  @override
+  ShapeBorder? get customBorder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'customBorder');
+    if (identical(r, notOverridden)) return super.customBorder;
+    return r as ShapeBorder?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  MaterialInkController get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as MaterialInkController;
+  }
+
+  @override
+  RenderBox get referenceBox {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'referenceBox');
+    if (identical(r, notOverridden)) return super.referenceBox;
+    return r as RenderBox;
+  }
+
+  @override
+  VoidCallback? get onRemoved {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onRemoved');
+    if (identical(r, notOverridden)) return super.onRemoved;
+    return r as VoidCallback?;
+  }
+
+  @override
+  set color(Color value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'color', value)) {
+      super.color = value;
+    }
+  }
+
+  @override
+  set customBorder(ShapeBorder? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'customBorder', value)) {
+      super.customBorder = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$confirm() { super.confirm(); }
+  void _super$cancel() { super.cancel(); }
+  void _super$paintInkCircle({required Canvas canvas, required Matrix4 transform, required Paint paint, required Offset center, required double radius, TextDirection? textDirection, ShapeBorder? customBorder, BorderRadius borderRadius = BorderRadius.zero, RectCallback? clipCallback}) { super.paintInkCircle(canvas: canvas, transform: transform, paint: paint, center: center, radius: radius, textDirection: textDirection, customBorder: customBorder, borderRadius: borderRadius, clipCallback: clipCallback); }
+  String _super$toString() => super.toString();
+  void _super$dispose() { super.dispose(); }
+  Color get _super$color => super.color;
+  ShapeBorder? get _super$customBorder => super.customBorder;
+  int get _super$hashCode => super.hashCode;
+  MaterialInkController get _super$controller => super.controller;
+  RenderBox get _super$referenceBox => super.referenceBox;
+  VoidCallback? get _super$onRemoved => super.onRemoved;
+  set _super$color(Color value) { super.color = value; }
+  set _super$customBorder(ShapeBorder? value) { super.customBorder = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createInteractiveInkFeatureBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$InteractiveInkFeature(dispatch, obj, superArgs);
+
 abstract final class InteractiveInkFeatureBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -33,7 +165,22 @@ abstract final class InteractiveInkFeatureBindings {
       test: (o) => o is InteractiveInkFeature,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/material.dart::InkFeature'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$InteractiveInkFeature(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$confirm#0', (args) { (args[0] as _$InteractiveInkFeature)._super$confirm(); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$cancel#0', (args) { (args[0] as _$InteractiveInkFeature)._super$cancel(); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$paintInkCircle#9', (args) { (args[0] as _$InteractiveInkFeature)._super$paintInkCircle(canvas: args[1] as Canvas, transform: args[2] as Matrix4, paint: args[3] as Paint, center: args[4] as Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$toString#0', (args) => (args[0] as _$InteractiveInkFeature)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$dispose#0', (args) { (args[0] as _$InteractiveInkFeature)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$color#0', (args) => (args[0] as _$InteractiveInkFeature)._super$color);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$customBorder#0', (args) => (args[0] as _$InteractiveInkFeature)._super$customBorder);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$hashCode#0', (args) => (args[0] as _$InteractiveInkFeature)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$controller#0', (args) => (args[0] as _$InteractiveInkFeature)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$referenceBox#0', (args) => (args[0] as _$InteractiveInkFeature)._super$referenceBox);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$onRemoved#0', (args) => (args[0] as _$InteractiveInkFeature)._super$onRemoved);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$color=#1', (args) { (args[0] as _$InteractiveInkFeature)._super$color = args[1] as Color; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$customBorder=#1', (args) { (args[0] as _$InteractiveInkFeature)._super$customBorder = args[1] as ShapeBorder?; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -31,6 +31,110 @@ import 'dart:ui';
 import 'package:flutter/src/services/mouse_cursor.dart';
 import 'package:flutter/services.dart';
 
+class _$DataRow extends DataRow implements DarticObjectHolder {
+  _$DataRow(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as LocalKey?, selected: superArgs[1] as bool, onSelectChanged: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as ValueChanged<bool?>?, onLongPress: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as GestureLongPressCallback?, onHover: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as ValueChanged<bool>?, color: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as WidgetStateProperty<Color?>?, mouseCursor: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as WidgetStateProperty<MouseCursor?>?, cells: (superArgs[7] as List).cast<DataCell>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  LocalKey? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as LocalKey?;
+  }
+
+  @override
+  ValueChanged<bool?>? get onSelectChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSelectChanged');
+    if (identical(r, notOverridden)) return super.onSelectChanged;
+    return r as ValueChanged<bool?>?;
+  }
+
+  @override
+  GestureLongPressCallback? get onLongPress {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onLongPress');
+    if (identical(r, notOverridden)) return super.onLongPress;
+    return r as GestureLongPressCallback?;
+  }
+
+  @override
+  ValueChanged<bool>? get onHover {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onHover');
+    if (identical(r, notOverridden)) return super.onHover;
+    return r as ValueChanged<bool>?;
+  }
+
+  @override
+  bool get selected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selected');
+    if (identical(r, notOverridden)) return super.selected;
+    return r as bool;
+  }
+
+  @override
+  List<DataCell> get cells {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cells');
+    if (identical(r, notOverridden)) return super.cells;
+    return r as List<DataCell>;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  WidgetStateProperty<MouseCursor?>? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as WidgetStateProperty<MouseCursor?>?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  LocalKey? get _super$key => super.key;
+  ValueChanged<bool?>? get _super$onSelectChanged => super.onSelectChanged;
+  GestureLongPressCallback? get _super$onLongPress => super.onLongPress;
+  ValueChanged<bool>? get _super$onHover => super.onHover;
+  bool get _super$selected => super.selected;
+  List<DataCell> get _super$cells => super.cells;
+  WidgetStateProperty<Color?>? get _super$color => super.color;
+  WidgetStateProperty<MouseCursor?>? get _super$mouseCursor => super.mouseCursor;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDataRowBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DataRow(dispatch, obj, superArgs);
+
 abstract final class DataRowBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -38,7 +142,19 @@ abstract final class DataRowBindings {
       type: DataRow,
       test: (o) => o is DataRow,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DataRow(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$toString#0', (args) => (args[0] as _$DataRow)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$key#0', (args) => (args[0] as _$DataRow)._super$key);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$onSelectChanged#0', (args) => (args[0] as _$DataRow)._super$onSelectChanged);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$onLongPress#0', (args) => (args[0] as _$DataRow)._super$onLongPress);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$onHover#0', (args) => (args[0] as _$DataRow)._super$onHover);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$selected#0', (args) => (args[0] as _$DataRow)._super$selected);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$cells#0', (args) => (args[0] as _$DataRow)._super$cells);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$color#0', (args) => (args[0] as _$DataRow)._super$color);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$mouseCursor#0', (args) => (args[0] as _$DataRow)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataRow::\$super\$hashCode#0', (args) => (args[0] as _$DataRow)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

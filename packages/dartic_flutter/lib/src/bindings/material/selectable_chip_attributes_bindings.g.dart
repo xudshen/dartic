@@ -30,6 +30,91 @@ import 'dart:ui';
 import 'package:flutter/src/painting/borders.dart';
 import 'package:flutter/painting.dart';
 
+class _$SelectableChipAttributes implements SelectableChipAttributes, DarticObjectHolder {
+  _$SelectableChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool get selected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selected');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter selected must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  ValueChanged<bool>? get onSelected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSelected');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter onSelected must be overridden in dartic code');
+    }
+    return r as ValueChanged<bool>?;
+  }
+
+  @override
+  double? get pressElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pressElevation');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter pressElevation must be overridden in dartic code');
+    }
+    return r as double?;
+  }
+
+  @override
+  Color? get selectedColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectedColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter selectedColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  Color? get selectedShadowColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectedShadowColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter selectedShadowColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  String? get tooltip {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tooltip');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter tooltip must be overridden in dartic code');
+    }
+    return r as String?;
+  }
+
+  @override
+  ShapeBorder get avatarBorder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'avatarBorder');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter avatarBorder must be overridden in dartic code');
+    }
+    return r as ShapeBorder;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSelectableChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SelectableChipAttributes(dispatch, obj, superArgs);
+
 abstract final class SelectableChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,6 +122,8 @@ abstract final class SelectableChipAttributesBindings {
       type: SelectableChipAttributes,
       test: (o) => o is SelectableChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SelectableChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

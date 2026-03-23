@@ -41,6 +41,15 @@ class TypeInfo {
   /// Used to generate explicit type args in constructor calls.
   final String erasedTypeArgs;
 
+  /// The unnamed generative constructor for Bridge `super(...)` forwarding.
+  ///
+  /// Always extracted regardless of whether the class is abstract, because
+  /// Bridge subclasses are concrete and must satisfy the super constructor
+  /// contract. null only when no public unnamed generative constructor exists.
+  /// Separate from [constructors] which excludes abstract-class generative
+  /// constructors (they can't be called directly).
+  final ConstructorInfo? bridgeConstructor;
+
   /// Instance fields (including private ones) for `_#fromFields` generation.
   final List<FieldInfo> fields;
 
@@ -70,6 +79,7 @@ class TypeInfo {
     this.isBase = false,
     this.bridgeSuperTypeArgs,
     this.erasedTypeArgs = '',
+    this.bridgeConstructor,
     this.fields = const [],
     this.sourceImports = const [],
     this.referencedTypes = const {},

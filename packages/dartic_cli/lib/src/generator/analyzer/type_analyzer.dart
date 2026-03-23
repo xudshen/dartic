@@ -166,13 +166,17 @@ class TypeAnalyzer {
     final isFinal = cls is ClassElement &&
         (cls.isFinal || cls.isSealed);
 
-    // Check if the class uses the Dart 3 `interface` modifier.
-    // Interface classes can only be `implements`-ed, not `extends`-ed from
-    // outside their library. Bridge generation uses `implements` for these.
-    final isInterface = cls is ClassElement && cls.isInterface;
+    // Determine whether the Bridge should use `implements` instead of `extends`.
+    // This applies to:
+    // - `interface class`: can only be implemented, not extended from outside
+    // - `mixin` (non-base): can only be `with`-ed or `implements`-ed
+    // Note: `mixin class` uses extends mode (it IS extendable).
+    final isInterface = (cls is ClassElement && cls.isInterface) ||
+        (cls is MixinElement && !cls.isBase);
 
     // Check if the class uses the `base` modifier (Bridge must also be base).
-    final isBase = cls is ClassElement && cls.isBase;
+    final isBase = (cls is ClassElement && cls.isBase) ||
+        (cls is MixinElement && cls.isBase);
 
     // Detect F-bounded type parameters for Bridge self-reference.
     // E.g. LinkedListEntry<E extends LinkedListEntry<E>> needs
@@ -196,6 +200,11 @@ class TypeAnalyzer {
       }
     }
 
+    // Compute concrete ancestors (extends/with chain) for detecting
+    // members that are only inherited via `implements` and thus have
+    // no concrete super implementation for Bridge super calls.
+    final concreteAncestors = _getConcreteAncestors(cls);
+
     // Separate methods into instance, static, and operators
     final methods = <MethodInfo>[];
     final staticMethods = <MethodInfo>[];
@@ -207,6 +216,8 @@ class TypeAnalyzer {
 
       // Skip private methods — they can't be called from outside the library
       if (name.startsWith('_')) continue;
+      // Skip @nonVirtual methods — can't be overridden in Bridge subclass
+      if (!method.isStatic && _hasNonVirtual(method)) continue;
 
       if (method.isStatic) {
         // Skip methods with generic function params (can't wrap them)
@@ -307,7 +318,8 @@ class TypeAnalyzer {
         // Check if an ancestor overrides toString with a different signature
         // (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})).
         // If so, use the inherited signature instead of Object's plain version.
-        final inheritedToString = _findInheritedToString(cls);
+        final inheritedToString = _findInheritedToString(cls,
+            concreteAncestors: concreteAncestors);
         if (inheritedToString != null) {
           methods.add(inheritedToString);
         } else {
@@ -324,22 +336,29 @@ class TypeAnalyzer {
     // Factory constructors on abstract classes are kept (e.g., BigInt.from,
     // Stream.fromIterable, Map.of) since they're callable and needed for CALL_HOST.
     final constructors = <ConstructorInfo>[];
+    ConstructorInfo? bridgeConstructor;
     final isEnum = cls is EnumElement;
     if (!isEnum) {
       for (final ctor in cls.constructors) {
         final ctorName = ctor.name ?? '';
         // Skip private constructors
         if (ctorName.startsWith('_')) continue;
-        // Skip generative constructors on abstract classes (can't instantiate)
-        if (isAbstract && !ctor.isFactory) continue;
-        // 'new' is the unnamed constructor — normalize to empty string
         final normalizedName = ctorName == 'new' ? '' : ctorName;
-        constructors.add(ConstructorInfo(
+        final ctorInfo = ConstructorInfo(
           name: normalizedName,
           params: _toParamInfoList(ctor.formalParameters,
               enclosingClass: cls),
           isFactory: ctor.isFactory,
-        ));
+        );
+        // Always capture the unnamed generative constructor for Bridge
+        // super-forwarding — even on abstract classes, the Bridge subclass
+        // is concrete and must satisfy the super constructor contract.
+        if (normalizedName.isEmpty && !ctor.isFactory) {
+          bridgeConstructor = ctorInfo;
+        }
+        // Skip generative constructors on abstract classes (can't instantiate)
+        if (isAbstract && !ctor.isFactory) continue;
+        constructors.add(ctorInfo);
       }
     }
 
@@ -361,6 +380,7 @@ class TypeAnalyzer {
       getters,
       setters,
       operators,
+      concreteAncestors,
     );
 
     // Collect non-static instance fields (including private ones) for
@@ -435,6 +455,7 @@ class TypeAnalyzer {
       isInterface: isInterface,
       isBase: isBase,
       bridgeSuperTypeArgs: bridgeSuperTypeArgs,
+      bridgeConstructor: bridgeConstructor,
       fields: fields,
       sourceImports: sourceImports,
       referencedTypes: refTypes,
@@ -442,6 +463,11 @@ class TypeAnalyzer {
   }
 
   /// Collects inherited members from supertypes that are not already present.
+  ///
+  /// [concreteAncestors] is the set of ancestors reachable via `extends`/`with`
+  /// (not `implements`). Members whose concrete implementation is only
+  /// reachable via `implements` are marked as abstract, because
+  /// `super.method()` would be invalid in the bridge class.
   void _collectInheritedMembers(
     InterfaceElement cls,
     Set<String> objectMethodNames,
@@ -449,6 +475,7 @@ class TypeAnalyzer {
     List<GetterInfo> getters,
     List<SetterInfo> setters,
     List<OperatorInfo> operators,
+    Set<InterfaceElement> concreteAncestors,
   ) {
     final existingMethodNames = methods.map((m) => m.name).toSet();
     final existingGetterNames = getters.map((g) => g.name).toSet();
@@ -466,6 +493,8 @@ class TypeAnalyzer {
 
       // Skip Object members
       if (objectMethodNames.contains(name.name)) continue;
+      // Skip @nonVirtual members
+      if (_hasNonVirtual(member)) continue;
 
       if (member is MethodElement) {
         if (member.isOperator) {
@@ -476,17 +505,49 @@ class TypeAnalyzer {
           }
         } else if (!member.isStatic) {
           if (!existingMethodNames.contains(member.name)) {
-            methods.add(_toMethodInfo(member));
+            // For methods with covariant parameters, prefer the concrete
+            // ancestor's declaration. interfaceMembers uses the wide
+            // For methods with covariant params, prefer a concrete ancestor's
+            // method that has narrowed types (e.g. BoxHitTestEntry vs HitTestEntry,
+            // OpacityLayer vs OffsetLayer). _findConcreteMethodElement skips
+            // methods with TypeParam params (handled by _resolveCovariantTypeParams).
+            final hasCovariant =
+                member.formalParameters.any((p) => p.isCovariant);
+            final concreteMember = hasCovariant
+                ? _findConcreteMethodElement(member.name!, cls)
+                : null;
+            var info = (concreteMember != null)
+                ? _toMethodInfo(concreteMember)
+                : _toMethodInfo(member);
+            // Resolve unsubstituted TypeParameterType params from
+            // the supertype chain (e.g. T → DismissIntent).
+            info = _resolveCovariantTypeParams(info, member, cls);
+            // If no concrete impl in extends/with chain, mark as abstract.
+            if (!info.isAbstract &&
+                !_hasConcreteSuperMethod(info.name, concreteAncestors)) {
+              methods.add(MethodInfo(
+                name: info.name,
+                paramTypes: info.paramTypes,
+                returnType: info.returnType,
+                isAbstract: true,
+                mustCallSuper: info.mustCallSuper,
+                typeParamDecl: info.typeParamDecl,
+              ));
+            } else {
+              methods.add(info);
+            }
             existingMethodNames.add(member.name!);
           }
         }
       } else if (member is GetterElement) {
         final memberName = member.name;
         if (memberName != null && !existingGetterNames.contains(memberName)) {
+          final isAbstract = member.isAbstract ||
+              !_hasConcreteSuperGetter(memberName, concreteAncestors);
           getters.add(GetterInfo(
             name: memberName,
             returnType: _sanitizeType(member.returnType),
-            isAbstract: member.isAbstract,
+            isAbstract: isAbstract,
           ));
           existingGetterNames.add(memberName);
         }
@@ -501,10 +562,12 @@ class TypeAnalyzer {
             final paramType = params.isNotEmpty
                 ? _sanitizeType(params.first.type)
                 : 'dynamic';
+            final isAbstract = member.isAbstract ||
+                !_hasConcreteSuperSetter(cleanName, concreteAncestors);
             setters.add(SetterInfo(
               name: cleanName,
               paramType: paramType,
-              isAbstract: member.isAbstract,
+              isAbstract: isAbstract,
             ));
             existingSetterNames.add(cleanName);
           }
@@ -544,13 +607,261 @@ class TypeAnalyzer {
     return member.enclosingElement == cls;
   }
 
+  /// Returns the set of ancestor [InterfaceElement]s reachable via the
+  /// `extends`/`with` chain (NOT `implements`).
+  ///
+  /// These are the classes whose concrete method implementations are
+  /// accessible via `super.xxx()` in a subclass. Methods inherited only
+  /// through `implements` do NOT have concrete super implementations —
+  /// calling `super.method()` on them is a compile error.
+  Set<InterfaceElement> _getConcreteAncestors(InterfaceElement cls) {
+    final result = <InterfaceElement>{};
+    final queue = <InterfaceElement>[cls];
+    while (queue.isNotEmpty) {
+      final current = queue.removeLast();
+      // extends chain
+      final supertype = current.supertype;
+      if (supertype != null) {
+        final element = supertype.element;
+        if (result.add(element)) {
+          queue.add(element);
+        }
+      }
+      // with (mixin) chain — mixins provide concrete implementations
+      for (final mixin in current.mixins) {
+        final element = mixin.element;
+        if (result.add(element)) {
+          queue.add(element);
+        }
+      }
+    }
+    return result;
+  }
+
+  /// Resolves covariant type-parameter params using the class's supertype chain.
+  ///
+  /// When a method like `Action<T>.toKeyEventResult(covariant T intent)` is
+  /// inherited by `DismissAction extends Action<DismissIntent>`, the param type
+  /// should be `DismissIntent`, not the erased bound `Intent`.
+  /// Walks `cls.allSupertypes` to find the type argument substitution.
+  /// Resolves type-parameter params using the class's supertype chain.
+  /// `interfaceMembers` returns `SubstitutedMethodElementImpl` but its
+  /// `formalParameters.type` is still the raw TypeParameterType —
+  /// substitution must be done manually. Handles both top-level TypeParams
+  /// (e.g. `T intent`) and nested TypeParams in type arguments
+  /// (e.g. `AbstractLayoutBuilder<T>`).
+  MethodInfo _resolveCovariantTypeParams(
+      MethodInfo info, ExecutableElement member, InterfaceElement cls) {
+    var changed = false;
+    final resolvedParams = <ParamInfo>[];
+    for (var i = 0; i < member.formalParameters.length; i++) {
+      final p = member.formalParameters[i];
+      final pi = info.paramTypes[i];
+      final resolved = _resolveTypeWithSubstitution(p.type, cls);
+      if (resolved != null && resolved != pi.type) {
+        resolvedParams.add(ParamInfo(
+          name: pi.name,
+          type: resolved,
+          isOptional: pi.isOptional,
+          isNamed: pi.isNamed,
+          isRequired: pi.isRequired,
+          callbackArity: pi.callbackArity,
+          callbackReturnType: pi.callbackReturnType,
+          callbackParams: pi.callbackParams,
+          defaultValueCode: pi.defaultValueCode,
+          fullType: pi.fullType,
+        ));
+        changed = true;
+        continue;
+      }
+      resolvedParams.add(pi);
+    }
+    if (!changed) return info;
+    return MethodInfo(
+      name: info.name,
+      paramTypes: resolvedParams,
+      returnType: info.returnType,
+      isAbstract: info.isAbstract,
+      mustCallSuper: info.mustCallSuper,
+      typeParamDecl: info.typeParamDecl,
+    );
+  }
+
+  /// Resolves a type parameter to its concrete type argument via the
+  /// supertype chain. E.g., for `DismissAction extends Action<DismissIntent>`,
+  /// resolves `T` (from `Action<T>`) to `DismissIntent`.
+  String? _resolveTypeParamFromChain(
+      TypeParameterType tpType, InterfaceElement cls) {
+    final tpName = tpType.element.name;
+    // Walk all supertypes looking for one that declares a type parameter
+    // with the same name AND provides a concrete type argument for it.
+    for (final supertype in cls.allSupertypes) {
+      final typeParams = supertype.element.typeParameters;
+      for (var i = 0; i < typeParams.length; i++) {
+        if (typeParams[i].name == tpName) {
+          if (i < supertype.typeArguments.length) {
+            final arg = supertype.typeArguments[i];
+            if (arg is! TypeParameterType) {
+              return _sanitizeType(arg);
+            }
+          }
+        }
+      }
+    }
+    // Fallback: if the type param couldn't be resolved to a concrete type
+    // (e.g. the class itself is generic), use the declared bound.
+    // This gives e.g. 'Constraints' instead of 'dynamic' for
+    // ConstraintType extends Constraints.
+    final bound = tpType.element.bound;
+    if (bound != null && bound is! DynamicType && bound is! VoidType) {
+      return _sanitizeType(bound);
+    }
+    return null;
+  }
+
+  /// Resolves a DartType by substituting TypeParameterType with concrete
+  /// type arguments from the class's supertype chain. Returns null if no
+  /// substitution was needed or possible.
+  ///
+  /// Handles both top-level TypeParams (`T` → `DismissIntent`) and nested
+  /// TypeParams in type arguments (`AbstractLayoutBuilder<T>` →
+  /// `AbstractLayoutBuilder<BoxConstraints>`).
+  String? _resolveTypeWithSubstitution(DartType type, InterfaceElement cls) {
+    if (type is TypeParameterType) {
+      return _resolveTypeParamFromChain(type, cls);
+    }
+    if (type is InterfaceType && type.typeArguments.isNotEmpty) {
+      // Check if any type argument contains a TypeParameterType
+      var anyResolved = false;
+      final resolvedArgs = <String>[];
+      for (final arg in type.typeArguments) {
+        if (arg is TypeParameterType) {
+          final resolved = _resolveTypeParamFromChain(arg, cls);
+          if (resolved != null) {
+            resolvedArgs.add(resolved);
+            anyResolved = true;
+            continue;
+          }
+        }
+        resolvedArgs.add(_sanitizeType(arg));
+      }
+      if (!anyResolved) return null;
+      final name = type.element.name;
+      final suffix =
+          type.nullabilitySuffix == NullabilitySuffix.question ? '?' : '';
+      return '$name<${resolvedArgs.join(', ')}>$suffix';
+    }
+    return null;
+  }
+
+  /// Finds the most-derived concrete [MethodElement] with [name] in the
+  /// extends/with chain. Returns null if no concrete implementation exists.
+  ///
+  /// This is needed because `interfaceMembers` returns the wide interface
+  /// types for covariant parameter overrides (e.g. `HitTestEntry<HitTestTarget>`),
+  /// but the bridge must use the narrowed concrete type (e.g. `BoxHitTestEntry`)
+  /// for `super.method()` calls to compile.
+  MethodElement? _findConcreteMethodElement(
+      String name, InterfaceElement cls) {
+    // Check the class's own mixins FIRST — in Dart's MRO, mixins are
+    // applied on top of the superclass and take priority.
+    for (final mixin in cls.mixins.reversed) {
+      final m = _findMatchingMethod(mixin.element, name);
+      if (m != null) return m;
+    }
+    // Walk extends chain from most-derived to least-derived.
+    InterfaceType? supertype = cls.supertype;
+    while (supertype != null) {
+      final element = supertype.element;
+      // Check mixins of each ancestor (applied on top in MRO).
+      for (final mixin in element.mixins.reversed) {
+        final m = _findMatchingMethod(mixin.element, name);
+        if (m != null) return m;
+      }
+      final m = _findMatchingMethod(element, name);
+      if (m != null) return m;
+      supertype = element.supertype;
+    }
+    return null;
+  }
+
+  /// Finds a concrete method on [cls] with [name], but only if its covariant
+  /// parameters use concrete types (not type parameters).
+  /// Methods with type-parameter covariant params (e.g. `State.didUpdateWidget(covariant T)`)
+  /// should use the type-substituted signature from interfaceMembers instead.
+  MethodElement? _findMatchingMethod(InterfaceElement cls, String name) {
+    for (final m in cls.methods) {
+      if (m.name != name || m.isAbstract) continue;
+      // Skip if any param contains a class type parameter (top-level or
+      // nested in type args). The raw method has unsubstituted types
+      // (e.g. AbstractLayoutBuilder<ConstraintType> instead of
+      // AbstractLayoutBuilder<BoxConstraints>).
+      final hasTypeParam = m.formalParameters.any(
+          (p) => _containsTypeParameter(p.type));
+      if (hasTypeParam) continue;
+      return m;
+    }
+    return null;
+  }
+
+  /// Checks if a DartType contains any TypeParameterType, either directly
+  /// or nested within InterfaceType type arguments.
+  bool _containsTypeParameter(DartType type) {
+    if (type is TypeParameterType) return true;
+    if (type is InterfaceType) {
+      return type.typeArguments.any(_containsTypeParameter);
+    }
+    return false;
+  }
+
+  /// Checks if a method/getter/setter with [name] has a concrete
+  /// implementation in the concrete ancestor chain (extends/with).
+  bool _hasConcreteSuperMethod(
+      String name, Set<InterfaceElement> concreteAncestors) {
+    for (final ancestor in concreteAncestors) {
+      for (final m in ancestor.methods) {
+        if (m.name == name && !m.isAbstract) return true;
+      }
+    }
+    return false;
+  }
+
+  bool _hasConcreteSuperGetter(
+      String name, Set<InterfaceElement> concreteAncestors) {
+    for (final ancestor in concreteAncestors) {
+      for (final g in ancestor.getters) {
+        if (g.name == name && !g.isAbstract) return true;
+      }
+    }
+    return false;
+  }
+
+  bool _hasConcreteSuperSetter(
+      String name, Set<InterfaceElement> concreteAncestors) {
+    for (final ancestor in concreteAncestors) {
+      for (final s in ancestor.setters) {
+        final sName = s.name;
+        if (sName == null) continue;
+        final cleanName =
+            sName.endsWith('=') ? sName.substring(0, sName.length - 1) : sName;
+        if (cleanName == name && !s.isAbstract) return true;
+      }
+    }
+    return false;
+  }
+
   /// Finds an inherited `toString` with a non-Object signature (has parameters).
   ///
   /// Walks the supertype chain looking for `toString` with named/optional
   /// params (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})).
   /// Returns a [MethodInfo] with the correct signature, or null if only
   /// Object's plain `toString()` is found.
-  MethodInfo? _findInheritedToString(InterfaceElement cls) {
+  ///
+  /// If [concreteAncestors] is provided and the found toString's declaring
+  /// class is NOT in the concrete chain, the result is marked as abstract
+  /// (since `super.toString(minLevel:)` would be invalid).
+  MethodInfo? _findInheritedToString(InterfaceElement cls,
+      {Set<InterfaceElement>? concreteAncestors}) {
     // Walk supertypes (skip Object itself).
     for (final supertype in cls.allSupertypes) {
       final superCls = supertype.element;
@@ -558,7 +869,21 @@ class TypeAnalyzer {
       for (final method in superCls.methods) {
         if (method.name == 'toString' &&
             method.formalParameters.isNotEmpty) {
-          return _toMethodInfo(method);
+          final info = _toMethodInfo(method);
+          // If the declaring class is only reachable via `implements`,
+          // super.toString(minLevel:) would fail — mark as abstract.
+          if (concreteAncestors != null &&
+              !concreteAncestors.contains(superCls)) {
+            return MethodInfo(
+              name: info.name,
+              paramTypes: info.paramTypes,
+              returnType: info.returnType,
+              isAbstract: true,
+              mustCallSuper: info.mustCallSuper,
+              typeParamDecl: info.typeParamDecl,
+            );
+          }
+          return info;
         }
       }
     }
@@ -567,11 +892,21 @@ class TypeAnalyzer {
 
   /// Checks if an element has the `@mustCallSuper` annotation.
   bool _hasMustCallSuper(ExecutableElement element) {
+    return _hasAnnotation(element, 'mustCallSuper');
+  }
+
+  /// Checks if an element has the `@nonVirtual` annotation.
+  /// Non-virtual methods cannot be overridden in subclasses.
+  bool _hasNonVirtual(ExecutableElement element) {
+    return _hasAnnotation(element, 'nonVirtual');
+  }
+
+  bool _hasAnnotation(ExecutableElement element, String name) {
     for (final annotation in element.metadata.annotations) {
       final annotElement = annotation.element;
       if (annotElement == null) continue;
       if (annotElement is GetterElement) {
-        if (annotElement.name == 'mustCallSuper') {
+        if (annotElement.name == name) {
           return true;
         }
       }
@@ -788,21 +1123,23 @@ class TypeAnalyzer {
             : 'dynamic';
       }
       final bound = type.bound;
-      if (bound.isDartCoreObject || bound is DynamicType || bound is VoidType) {
-        // When the bound is explicitly `Object` (not dynamic), erase to `Object`
-        // to avoid `Set<dynamic>` → `Set<Object>` type mismatch.
-        // When the bound is dynamic/void (implicit), keep `dynamic` for flexibility.
-        if (bound.isDartCoreObject) {
-          return type.nullabilitySuffix == NullabilitySuffix.question
-              ? 'Object?'
-              : 'Object';
-        }
-        return type.nullabilitySuffix == NullabilitySuffix.question
-            ? 'Object?'
-            : 'dynamic';
+      if (bound is DynamicType || bound is VoidType) {
+        // Implicit bound (dynamic/void) → erase to dynamic.
+        return 'dynamic';
       }
-      return _sanitizeType(bound,
+      // Erase to the actual bound type (e.g. T extends num → num).
+      // Bridge classes use erasedTypeArgs with the same bound, keeping
+      // method signatures consistent with the Bridge's extends clause.
+      final sanitized = _sanitizeType(bound,
           preserveTypeParams: preserveTypeParams, visiting: visited);
+      // Propagate nullable suffix from the usage site (T? vs T).
+      // E.g. T? where T extends num → 'num?', not 'num'.
+      if (type.nullabilitySuffix == NullabilitySuffix.question &&
+          !sanitized.endsWith('?') &&
+          sanitized != 'dynamic') {
+        return '$sanitized?';
+      }
+      return sanitized;
     }
 
     // Function type -> simplify or sanitize
@@ -950,9 +1287,18 @@ class TypeAnalyzer {
   ///
   /// Also resolves import-prefixed references like `math.pi` → `3.141592...`
   /// by detecting the prefix pattern and triggering omission branching instead.
+  ///
   String? _qualifyDefaultValue(
       String? code, InterfaceElement? enclosingClass) {
     if (code == null || enclosingClass == null) return code;
+
+    // Private identifiers (e.g. _kDuration) are not accessible outside the
+    // declaring library. Null them out — the emitter handles missing defaults
+    // with type-appropriate zero values for Bridge overrides and omission
+    // branching for methodMap entries.
+    if (RegExp(r'(?<![a-zA-Z0-9])_[a-zA-Z]').hasMatch(code)) {
+      return null;
+    }
 
     // Collect all static member names of the enclosing class.
     final staticMembers = <String>{};

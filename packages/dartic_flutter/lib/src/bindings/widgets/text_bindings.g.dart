@@ -27,6 +27,253 @@ import 'package:flutter/src/painting/text_painter.dart';
 import 'package:flutter/src/painting/text_scaler.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Text extends Text implements DarticObjectHolder {
+  _$Text(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, key: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Key?, style: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TextStyle?, strutStyle: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as StrutStyle?, textAlign: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as ui.TextAlign?, textDirection: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as ui.TextDirection?, locale: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as ui.Locale?, softWrap: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as bool?, overflow: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as TextOverflow?, textScaleFactor: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as double?, textScaler: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as TextScaler?, maxLines: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as int?, semanticsLabel: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as String?, semanticsIdentifier: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as String?, textWidthBasis: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as TextWidthBasis?, textHeightBehavior: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as ui.TextHeightBehavior?, selectionColor: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as ui.Color?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  String? get data {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'data');
+    if (identical(r, notOverridden)) return super.data;
+    return r as String?;
+  }
+
+  @override
+  InlineSpan? get textSpan {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textSpan');
+    if (identical(r, notOverridden)) return super.textSpan;
+    return r as InlineSpan?;
+  }
+
+  @override
+  TextStyle? get style {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'style');
+    if (identical(r, notOverridden)) return super.style;
+    return r as TextStyle?;
+  }
+
+  @override
+  StrutStyle? get strutStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'strutStyle');
+    if (identical(r, notOverridden)) return super.strutStyle;
+    return r as StrutStyle?;
+  }
+
+  @override
+  ui.TextAlign? get textAlign {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textAlign');
+    if (identical(r, notOverridden)) return super.textAlign;
+    return r as ui.TextAlign?;
+  }
+
+  @override
+  ui.TextDirection? get textDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textDirection');
+    if (identical(r, notOverridden)) return super.textDirection;
+    return r as ui.TextDirection?;
+  }
+
+  @override
+  ui.Locale? get locale {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'locale');
+    if (identical(r, notOverridden)) return super.locale;
+    return r as ui.Locale?;
+  }
+
+  @override
+  bool? get softWrap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'softWrap');
+    if (identical(r, notOverridden)) return super.softWrap;
+    return r as bool?;
+  }
+
+  @override
+  TextOverflow? get overflow {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overflow');
+    if (identical(r, notOverridden)) return super.overflow;
+    return r as TextOverflow?;
+  }
+
+  @override
+  double? get textScaleFactor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textScaleFactor');
+    if (identical(r, notOverridden)) return super.textScaleFactor;
+    return r as double?;
+  }
+
+  @override
+  TextScaler? get textScaler {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textScaler');
+    if (identical(r, notOverridden)) return super.textScaler;
+    return r as TextScaler?;
+  }
+
+  @override
+  int? get maxLines {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maxLines');
+    if (identical(r, notOverridden)) return super.maxLines;
+    return r as int?;
+  }
+
+  @override
+  String? get semanticsLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsLabel');
+    if (identical(r, notOverridden)) return super.semanticsLabel;
+    return r as String?;
+  }
+
+  @override
+  String? get semanticsIdentifier {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsIdentifier');
+    if (identical(r, notOverridden)) return super.semanticsIdentifier;
+    return r as String?;
+  }
+
+  @override
+  TextWidthBasis? get textWidthBasis {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textWidthBasis');
+    if (identical(r, notOverridden)) return super.textWidthBasis;
+    return r as TextWidthBasis?;
+  }
+
+  @override
+  ui.TextHeightBehavior? get textHeightBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textHeightBehavior');
+    if (identical(r, notOverridden)) return super.textHeightBehavior;
+    return r as ui.TextHeightBehavior?;
+  }
+
+  @override
+  ui.Color? get selectionColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionColor');
+    if (identical(r, notOverridden)) return super.selectionColor;
+    return r as ui.Color?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  String? get _super$data => super.data;
+  InlineSpan? get _super$textSpan => super.textSpan;
+  TextStyle? get _super$style => super.style;
+  StrutStyle? get _super$strutStyle => super.strutStyle;
+  ui.TextAlign? get _super$textAlign => super.textAlign;
+  ui.TextDirection? get _super$textDirection => super.textDirection;
+  ui.Locale? get _super$locale => super.locale;
+  bool? get _super$softWrap => super.softWrap;
+  TextOverflow? get _super$overflow => super.overflow;
+  double? get _super$textScaleFactor => super.textScaleFactor;
+  TextScaler? get _super$textScaler => super.textScaler;
+  int? get _super$maxLines => super.maxLines;
+  String? get _super$semanticsLabel => super.semanticsLabel;
+  String? get _super$semanticsIdentifier => super.semanticsIdentifier;
+  TextWidthBasis? get _super$textWidthBasis => super.textWidthBasis;
+  ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
+  ui.Color? get _super$selectionColor => super.selectionColor;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Text(dispatch, obj, superArgs);
+
 abstract final class TextBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -35,7 +282,37 @@ abstract final class TextBindings {
       test: (o) => o is Text,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Text(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$build#1', (args) => (args[0] as _$Text)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$debugFillProperties#1', (args) { (args[0] as _$Text)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$toString#1', (args) => (args[0] as _$Text)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$createElement#0', (args) => (args[0] as _$Text)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$toStringShort#0', (args) => (args[0] as _$Text)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$toStringShallow#2', (args) => (args[0] as _$Text)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$toStringDeep#4', (args) => (args[0] as _$Text)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Text)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Text)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$data#0', (args) => (args[0] as _$Text)._super$data);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textSpan#0', (args) => (args[0] as _$Text)._super$textSpan);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$style#0', (args) => (args[0] as _$Text)._super$style);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$strutStyle#0', (args) => (args[0] as _$Text)._super$strutStyle);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textAlign#0', (args) => (args[0] as _$Text)._super$textAlign);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textDirection#0', (args) => (args[0] as _$Text)._super$textDirection);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$locale#0', (args) => (args[0] as _$Text)._super$locale);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$softWrap#0', (args) => (args[0] as _$Text)._super$softWrap);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$overflow#0', (args) => (args[0] as _$Text)._super$overflow);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textScaleFactor#0', (args) => (args[0] as _$Text)._super$textScaleFactor);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textScaler#0', (args) => (args[0] as _$Text)._super$textScaler);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$maxLines#0', (args) => (args[0] as _$Text)._super$maxLines);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$semanticsLabel#0', (args) => (args[0] as _$Text)._super$semanticsLabel);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$semanticsIdentifier#0', (args) => (args[0] as _$Text)._super$semanticsIdentifier);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textWidthBasis#0', (args) => (args[0] as _$Text)._super$textWidthBasis);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textHeightBehavior#0', (args) => (args[0] as _$Text)._super$textHeightBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$selectionColor#0', (args) => (args[0] as _$Text)._super$selectionColor);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$hashCode#0', (args) => (args[0] as _$Text)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$key#0', (args) => (args[0] as _$Text)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

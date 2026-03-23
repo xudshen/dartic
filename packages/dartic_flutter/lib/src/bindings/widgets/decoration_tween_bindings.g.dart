@@ -24,6 +24,118 @@ import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/animation/tween.dart';
 
+class _$DecorationTween extends DecorationTween implements DarticObjectHolder {
+  _$DecorationTween(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(begin: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Decoration?, end: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Decoration?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Decoration lerp(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(r, notOverridden)) return super.lerp(t);
+    return r as Decoration;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Decoration transform(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(r, notOverridden)) return super.transform(t);
+    return r as Decoration;
+  }
+
+  @override
+  Decoration evaluate(Animation<double> animation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(r, notOverridden)) return super.evaluate(animation);
+    return r as Decoration;
+  }
+
+  @override
+  Animation<Decoration> animate(Animation<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(r, notOverridden)) return super.animate(parent);
+    return r as Animation<Decoration>;
+  }
+
+  @override
+  Animatable<Decoration> chain(Animatable<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(r, notOverridden)) return super.chain(parent);
+    return r as Animatable<Decoration>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Decoration? get begin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
+    if (identical(r, notOverridden)) return super.begin;
+    return r as Decoration?;
+  }
+
+  @override
+  Decoration? get end {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'end');
+    if (identical(r, notOverridden)) return super.end;
+    return r as Decoration?;
+  }
+
+  @override
+  set begin(Decoration? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'begin', value)) {
+      super.begin = value;
+    }
+  }
+
+  @override
+  set end(Decoration? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'end', value)) {
+      super.end = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Decoration _super$lerp(double t) => super.lerp(t);
+  String _super$toString() => super.toString();
+  Decoration _super$transform(double t) => super.transform(t);
+  Decoration _super$evaluate(Animation<double> animation) => super.evaluate(animation);
+  Animation<Decoration> _super$animate(Animation<double> parent) => super.animate(parent);
+  Animatable<Decoration> _super$chain(Animatable<double> parent) => super.chain(parent);
+  int get _super$hashCode => super.hashCode;
+  Decoration? get _super$begin => super.begin;
+  Decoration? get _super$end => super.end;
+  set _super$begin(Decoration? value) { super.begin = value; }
+  set _super$end(Decoration? value) { super.end = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDecorationTweenBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DecorationTween(dispatch, obj, superArgs);
+
 abstract final class DecorationTweenBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -32,7 +144,20 @@ abstract final class DecorationTweenBindings {
       test: (o) => o is DecorationTween,
       methods: methodMap(),
       superclasses: ['package:flutter/src/animation/tween.dart::Tween', 'package:flutter/src/animation/tween.dart::Animatable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DecorationTween(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$lerp#1', (args) => (args[0] as _$DecorationTween)._super$lerp(args[1] as double));
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$toString#0', (args) => (args[0] as _$DecorationTween)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$transform#1', (args) => (args[0] as _$DecorationTween)._super$transform(args[1] as double));
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$evaluate#1', (args) => (args[0] as _$DecorationTween)._super$evaluate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$animate#1', (args) => (args[0] as _$DecorationTween)._super$animate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$chain#1', (args) => (args[0] as _$DecorationTween)._super$chain(args[1] as Animatable<double>));
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$hashCode#0', (args) => (args[0] as _$DecorationTween)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$begin#0', (args) => (args[0] as _$DecorationTween)._super$begin);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$end#0', (args) => (args[0] as _$DecorationTween)._super$end);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$begin=#1', (args) { (args[0] as _$DecorationTween)._super$begin = args[1] as Decoration?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$end=#1', (args) { (args[0] as _$DecorationTween)._super$end = args[1] as Decoration?; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

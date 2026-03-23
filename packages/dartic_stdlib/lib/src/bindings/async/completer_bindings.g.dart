@@ -10,6 +10,62 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
+class _$Completer implements Completer<dynamic>, DarticObjectHolder {
+  _$Completer(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void complete([FutureOr? value]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'complete', [value]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method complete must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void completeError(Object error, [StackTrace? stackTrace]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'completeError', [error, stackTrace]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method completeError must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Future get future {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'future');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter future must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  bool get isCompleted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isCompleted');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isCompleted must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCompleterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Completer(dispatch, obj, superArgs);
+
 abstract final class CompleterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +73,8 @@ abstract final class CompleterBindings {
       type: Completer,
       test: (o) => o is Completer,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Completer(dispatch, darticObject, superArgs),
     );
   }
 

@@ -18,6 +18,46 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$ParagraphStyle extends ParagraphStyle implements DarticObjectHolder {
+  _$ParagraphStyle(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(textAlign: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as TextAlign?, textDirection: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as TextDirection?, maxLines: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as int?, fontFamily: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as String?, fontSize: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as double?, height: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as double?, textHeightBehavior: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as TextHeightBehavior?, fontWeight: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as FontWeight?, fontStyle: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as FontStyle?, strutStyle: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as StrutStyle?, ellipsis: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as String?, locale: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as Locale?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createParagraphStyleBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ParagraphStyle(dispatch, obj, superArgs);
+
 abstract final class ParagraphStyleBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +65,11 @@ abstract final class ParagraphStyleBindings {
       type: ParagraphStyle,
       test: (o) => o is ParagraphStyle,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ParagraphStyle(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::ParagraphStyle::\$super\$toString#0', (args) => (args[0] as _$ParagraphStyle)._super$toString());
+    ctx.registerBinding('dart:ui::ParagraphStyle::\$super\$hashCode#0', (args) => (args[0] as _$ParagraphStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

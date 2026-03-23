@@ -11,7 +11,7 @@ import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, b
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
 
-class _$Iterable extends Iterable implements DarticObjectHolder {
+class _$Iterable extends Iterable<dynamic> implements DarticObjectHolder {
   _$Iterable(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -231,9 +231,15 @@ class _$Iterable extends Iterable implements DarticObjectHolder {
   Iterable _super$takeWhile(dynamic test) => super.takeWhile(test);
   Iterable _super$skip(int count) => super.skip(count);
   Iterable _super$skipWhile(dynamic test) => super.skipWhile(test);
-  dynamic _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
-  dynamic _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
-  dynamic _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  dynamic _super$firstWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.firstWhere(test, orElse: orElse as dynamic Function()?) : super.firstWhere(test);
+  }
+  dynamic _super$lastWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.lastWhere(test, orElse: orElse as dynamic Function()?) : super.lastWhere(test);
+  }
+  dynamic _super$singleWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.singleWhere(test, orElse: orElse as dynamic Function()?) : super.singleWhere(test);
+  }
   dynamic _super$elementAt(int index) => super.elementAt(index);
   String _super$toString() => super.toString();
   int get _super$length => super.length;

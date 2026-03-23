@@ -17,6 +17,54 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/scroll_metrics.dart';
 import 'package:flutter/src/widgets/scroll_notification.dart';
 
+class _$ScrollHoldController extends ScrollHoldController implements DarticObjectHolder {
+  _$ScrollHoldController(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void cancel() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method cancel must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollHoldControllerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollHoldController(dispatch, obj, superArgs);
+
 abstract final class ScrollHoldControllerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +72,11 @@ abstract final class ScrollHoldControllerBindings {
       type: ScrollHoldController,
       test: (o) => o is ScrollHoldController,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollHoldController(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollHoldController::\$super\$toString#0', (args) => (args[0] as _$ScrollHoldController)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollHoldController::\$super\$hashCode#0', (args) => (args[0] as _$ScrollHoldController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -16,6 +16,93 @@ import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/foundation.dart';
 
+class _$UpdateSelectionIntent extends UpdateSelectionIntent implements DarticObjectHolder {
+  _$UpdateSelectionIntent(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as TextEditingValue, superArgs[1] as TextSelection, superArgs[2] as SelectionChangedCause);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  TextEditingValue get currentTextEditingValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentTextEditingValue');
+    if (identical(r, notOverridden)) return super.currentTextEditingValue;
+    return r as TextEditingValue;
+  }
+
+  @override
+  TextSelection get newSelection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'newSelection');
+    if (identical(r, notOverridden)) return super.newSelection;
+    return r as TextSelection;
+  }
+
+  @override
+  SelectionChangedCause get cause {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cause');
+    if (identical(r, notOverridden)) return super.cause;
+    return r as SelectionChangedCause;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  TextEditingValue get _super$currentTextEditingValue => super.currentTextEditingValue;
+  TextSelection get _super$newSelection => super.newSelection;
+  SelectionChangedCause get _super$cause => super.cause;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createUpdateSelectionIntentBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$UpdateSelectionIntent(dispatch, obj, superArgs);
+
 abstract final class UpdateSelectionIntentBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +111,17 @@ abstract final class UpdateSelectionIntentBindings {
       test: (o) => o is UpdateSelectionIntent,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/actions.dart::Intent', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$UpdateSelectionIntent(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$toString#1', (args) => (args[0] as _$UpdateSelectionIntent)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$toStringShort#0', (args) => (args[0] as _$UpdateSelectionIntent)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$UpdateSelectionIntent)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$debugFillProperties#1', (args) { (args[0] as _$UpdateSelectionIntent)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$currentTextEditingValue#0', (args) => (args[0] as _$UpdateSelectionIntent)._super$currentTextEditingValue);
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$newSelection#0', (args) => (args[0] as _$UpdateSelectionIntent)._super$newSelection);
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$cause#0', (args) => (args[0] as _$UpdateSelectionIntent)._super$cause);
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::UpdateSelectionIntent::\$super\$hashCode#0', (args) => (args[0] as _$UpdateSelectionIntent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

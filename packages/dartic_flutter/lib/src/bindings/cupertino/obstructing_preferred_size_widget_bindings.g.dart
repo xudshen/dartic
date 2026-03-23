@@ -16,6 +16,136 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$ObstructingPreferredSizeWidget extends ObstructingPreferredSizeWidget implements DarticObjectHolder {
+  _$ObstructingPreferredSizeWidget(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool shouldFullyObstruct(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldFullyObstruct', [context]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method shouldFullyObstruct must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toString must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  Element createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createElement must be overridden in dartic code');
+    }
+    return r as Element;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringShort must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugFillProperties must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringShallow must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringDeep must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toDiagnosticsNode must be overridden in dartic code');
+    }
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugDescribeChildren must be overridden in dartic code');
+    }
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Size get preferredSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'preferredSize');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter preferredSize must be overridden in dartic code');
+    }
+    return r as Size;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter key must be overridden in dartic code');
+    }
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createObstructingPreferredSizeWidgetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ObstructingPreferredSizeWidget(dispatch, obj, superArgs);
+
 abstract final class ObstructingPreferredSizeWidgetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +154,10 @@ abstract final class ObstructingPreferredSizeWidgetBindings {
       test: (o) => o is ObstructingPreferredSizeWidget,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/preferred_size.dart::PreferredSizeWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ObstructingPreferredSizeWidget(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/cupertino/page_scaffold.dart::ObstructingPreferredSizeWidget::\$super\$hashCode#0', (args) => (args[0] as _$ObstructingPreferredSizeWidget)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

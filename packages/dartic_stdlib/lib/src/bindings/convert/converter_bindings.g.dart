@@ -11,6 +11,71 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:dartic_stdlib/src/bindings/convert/convert_helpers.dart';
 
+class _$Converter extends Converter<dynamic, dynamic> implements DarticObjectHolder {
+  _$Converter(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  dynamic convert(dynamic input) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'convert', [input]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method convert must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  Sink startChunkedConversion(Sink sink) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startChunkedConversion', [sink]);
+    if (identical(r, notOverridden)) return super.startChunkedConversion(sink);
+    return r as Sink;
+  }
+
+  @override
+  Stream bind(Stream stream) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
+    if (identical(r, notOverridden)) return super.bind(stream);
+    return r as Stream;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Sink _super$startChunkedConversion(Sink sink) => super.startChunkedConversion(sink);
+  Stream _super$bind(Stream stream) => super.bind(stream);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createConverterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Converter(dispatch, obj, superArgs);
+
 abstract final class ConverterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,8 +84,14 @@ abstract final class ConverterBindings {
       test: (o) => o is Converter,
       methods: methodMap(),
       superclasses: ['dart:async::StreamTransformerBase', 'dart:async::StreamTransformer'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Converter(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:convert::Converter::castFrom#1', (args) => Converter.castFrom(args[0] as Converter));
+    ctx.registerBinding('dart:convert::Converter::\$super\$startChunkedConversion#1', (args) => (args[0] as _$Converter)._super$startChunkedConversion(args[1] as Sink));
+    ctx.registerBinding('dart:convert::Converter::\$super\$bind#1', (args) => (args[0] as _$Converter)._super$bind(args[1] as Stream));
+    ctx.registerBinding('dart:convert::Converter::\$super\$toString#0', (args) => (args[0] as _$Converter)._super$toString());
+    ctx.registerBinding('dart:convert::Converter::\$super\$hashCode#0', (args) => (args[0] as _$Converter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

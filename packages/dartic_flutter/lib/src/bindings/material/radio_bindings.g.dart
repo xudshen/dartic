@@ -30,6 +30,285 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Radio extends Radio<dynamic> implements DarticObjectHolder {
+  _$Radio(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, value: superArgs[1], groupValue: superArgs[2], onChanged: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as void Function(dynamic)?, mouseCursor: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as MouseCursor?, toggleable: superArgs[5] as bool, activeColor: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Color?, fillColor: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as WidgetStateProperty<Color?>?, focusColor: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as Color?, hoverColor: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Color?, overlayColor: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as WidgetStateProperty<Color?>?, splashRadius: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as double?, materialTapTargetSize: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as MaterialTapTargetSize?, visualDensity: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as VisualDensity?, focusNode: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as FocusNode?, autofocus: superArgs[15] as bool, enabled: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as bool?, groupRegistry: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as RadioGroupRegistry?, backgroundColor: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as WidgetStateProperty<Color?>?, side: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as BorderSide?, innerRadius: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as WidgetStateProperty<double?>?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<Radio> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<Radio>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  dynamic get value {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
+    if (identical(r, notOverridden)) return super.value;
+    return r as dynamic;
+  }
+
+  @override
+  dynamic get groupValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'groupValue');
+    if (identical(r, notOverridden)) return super.groupValue;
+    return r as dynamic;
+  }
+
+  @override
+  void Function(dynamic)? get onChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChanged');
+    if (identical(r, notOverridden)) return super.onChanged;
+    return r as void Function(dynamic)?;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  bool get toggleable {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'toggleable');
+    if (identical(r, notOverridden)) return super.toggleable;
+    return r as bool;
+  }
+
+  @override
+  Color? get activeColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'activeColor');
+    if (identical(r, notOverridden)) return super.activeColor;
+    return r as Color?;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get fillColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fillColor');
+    if (identical(r, notOverridden)) return super.fillColor;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  MaterialTapTargetSize? get materialTapTargetSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'materialTapTargetSize');
+    if (identical(r, notOverridden)) return super.materialTapTargetSize;
+    return r as MaterialTapTargetSize?;
+  }
+
+  @override
+  VisualDensity? get visualDensity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'visualDensity');
+    if (identical(r, notOverridden)) return super.visualDensity;
+    return r as VisualDensity?;
+  }
+
+  @override
+  Color? get focusColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusColor');
+    if (identical(r, notOverridden)) return super.focusColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get hoverColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hoverColor');
+    if (identical(r, notOverridden)) return super.hoverColor;
+    return r as Color?;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get overlayColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayColor');
+    if (identical(r, notOverridden)) return super.overlayColor;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  double? get splashRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'splashRadius');
+    if (identical(r, notOverridden)) return super.splashRadius;
+    return r as double?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  bool get useCupertinoCheckmarkStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'useCupertinoCheckmarkStyle');
+    if (identical(r, notOverridden)) return super.useCupertinoCheckmarkStyle;
+    return r as bool;
+  }
+
+  @override
+  RadioGroupRegistry? get groupRegistry {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'groupRegistry');
+    if (identical(r, notOverridden)) return super.groupRegistry;
+    return r as RadioGroupRegistry?;
+  }
+
+  @override
+  bool? get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool?;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  BorderSide? get side {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'side');
+    if (identical(r, notOverridden)) return super.side;
+    return r as BorderSide?;
+  }
+
+  @override
+  WidgetStateProperty<double?>? get innerRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'innerRadius');
+    if (identical(r, notOverridden)) return super.innerRadius;
+    return r as WidgetStateProperty<double?>?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<Radio> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  dynamic get _super$value => super.value;
+  dynamic get _super$groupValue => super.groupValue;
+  void Function(dynamic)? get _super$onChanged => super.onChanged;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  bool get _super$toggleable => super.toggleable;
+  Color? get _super$activeColor => super.activeColor;
+  WidgetStateProperty<Color?>? get _super$fillColor => super.fillColor;
+  MaterialTapTargetSize? get _super$materialTapTargetSize => super.materialTapTargetSize;
+  VisualDensity? get _super$visualDensity => super.visualDensity;
+  Color? get _super$focusColor => super.focusColor;
+  Color? get _super$hoverColor => super.hoverColor;
+  WidgetStateProperty<Color?>? get _super$overlayColor => super.overlayColor;
+  double? get _super$splashRadius => super.splashRadius;
+  FocusNode? get _super$focusNode => super.focusNode;
+  bool get _super$autofocus => super.autofocus;
+  bool get _super$useCupertinoCheckmarkStyle => super.useCupertinoCheckmarkStyle;
+  RadioGroupRegistry? get _super$groupRegistry => super.groupRegistry;
+  bool? get _super$enabled => super.enabled;
+  WidgetStateProperty<Color?>? get _super$backgroundColor => super.backgroundColor;
+  BorderSide? get _super$side => super.side;
+  WidgetStateProperty<double?>? get _super$innerRadius => super.innerRadius;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRadioBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Radio(dispatch, obj, superArgs);
+
 abstract final class RadioBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -38,7 +317,41 @@ abstract final class RadioBindings {
       test: (o) => o is Radio,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Radio(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$createState#0', (args) => (args[0] as _$Radio)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toString#1', (args) => (args[0] as _$Radio)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$createElement#0', (args) => (args[0] as _$Radio)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toStringShort#0', (args) => (args[0] as _$Radio)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$debugFillProperties#1', (args) { (args[0] as _$Radio)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toStringShallow#2', (args) => (args[0] as _$Radio)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toStringDeep#4', (args) => (args[0] as _$Radio)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Radio)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Radio)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$value#0', (args) => (args[0] as _$Radio)._super$value);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$groupValue#0', (args) => (args[0] as _$Radio)._super$groupValue);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$onChanged#0', (args) => (args[0] as _$Radio)._super$onChanged);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$mouseCursor#0', (args) => (args[0] as _$Radio)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$toggleable#0', (args) => (args[0] as _$Radio)._super$toggleable);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$activeColor#0', (args) => (args[0] as _$Radio)._super$activeColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$fillColor#0', (args) => (args[0] as _$Radio)._super$fillColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$materialTapTargetSize#0', (args) => (args[0] as _$Radio)._super$materialTapTargetSize);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$visualDensity#0', (args) => (args[0] as _$Radio)._super$visualDensity);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$focusColor#0', (args) => (args[0] as _$Radio)._super$focusColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$hoverColor#0', (args) => (args[0] as _$Radio)._super$hoverColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$overlayColor#0', (args) => (args[0] as _$Radio)._super$overlayColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$splashRadius#0', (args) => (args[0] as _$Radio)._super$splashRadius);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$focusNode#0', (args) => (args[0] as _$Radio)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$autofocus#0', (args) => (args[0] as _$Radio)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$useCupertinoCheckmarkStyle#0', (args) => (args[0] as _$Radio)._super$useCupertinoCheckmarkStyle);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$groupRegistry#0', (args) => (args[0] as _$Radio)._super$groupRegistry);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$enabled#0', (args) => (args[0] as _$Radio)._super$enabled);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$backgroundColor#0', (args) => (args[0] as _$Radio)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$side#0', (args) => (args[0] as _$Radio)._super$side);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$innerRadius#0', (args) => (args[0] as _$Radio)._super$innerRadius);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$hashCode#0', (args) => (args[0] as _$Radio)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/radio.dart::Radio::\$super\$key#0', (args) => (args[0] as _$Radio)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

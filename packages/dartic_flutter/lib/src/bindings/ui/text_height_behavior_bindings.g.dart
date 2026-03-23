@@ -18,6 +18,70 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$TextHeightBehavior extends TextHeightBehavior implements DarticObjectHolder {
+  _$TextHeightBehavior(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(applyHeightToFirstAscent: superArgs[0] as bool, applyHeightToLastDescent: superArgs[1] as bool, leadingDistribution: superArgs[2] as TextLeadingDistribution);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get applyHeightToFirstAscent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'applyHeightToFirstAscent');
+    if (identical(r, notOverridden)) return super.applyHeightToFirstAscent;
+    return r as bool;
+  }
+
+  @override
+  bool get applyHeightToLastDescent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'applyHeightToLastDescent');
+    if (identical(r, notOverridden)) return super.applyHeightToLastDescent;
+    return r as bool;
+  }
+
+  @override
+  TextLeadingDistribution get leadingDistribution {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leadingDistribution');
+    if (identical(r, notOverridden)) return super.leadingDistribution;
+    return r as TextLeadingDistribution;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$applyHeightToFirstAscent => super.applyHeightToFirstAscent;
+  bool get _super$applyHeightToLastDescent => super.applyHeightToLastDescent;
+  TextLeadingDistribution get _super$leadingDistribution => super.leadingDistribution;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextHeightBehaviorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextHeightBehavior(dispatch, obj, superArgs);
+
 abstract final class TextHeightBehaviorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +89,14 @@ abstract final class TextHeightBehaviorBindings {
       type: TextHeightBehavior,
       test: (o) => o is TextHeightBehavior,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextHeightBehavior(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::TextHeightBehavior::\$super\$toString#0', (args) => (args[0] as _$TextHeightBehavior)._super$toString());
+    ctx.registerBinding('dart:ui::TextHeightBehavior::\$super\$applyHeightToFirstAscent#0', (args) => (args[0] as _$TextHeightBehavior)._super$applyHeightToFirstAscent);
+    ctx.registerBinding('dart:ui::TextHeightBehavior::\$super\$applyHeightToLastDescent#0', (args) => (args[0] as _$TextHeightBehavior)._super$applyHeightToLastDescent);
+    ctx.registerBinding('dart:ui::TextHeightBehavior::\$super\$leadingDistribution#0', (args) => (args[0] as _$TextHeightBehavior)._super$leadingDistribution);
+    ctx.registerBinding('dart:ui::TextHeightBehavior::\$super\$hashCode#0', (args) => (args[0] as _$TextHeightBehavior)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

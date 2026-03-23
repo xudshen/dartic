@@ -15,6 +15,18 @@ class DiscoveredClass {
   final bool isAbstract;
   final bool isFinal;
   final bool hasGenerativeCtor;
+  final bool isSealed;
+  final bool isBase;
+  final bool isInterface;
+  final bool isMixinClass;
+  final bool isMixinDeclaration;
+
+  /// Number of type parameters (e.g. `List<E>` → 1, `Map<K,V>` → 2).
+  final int typeParamCount;
+
+  /// Whether any type parameter has an F-bounded constraint referencing the
+  /// declaring class (e.g. `E extends LinkedListEntry<E>`).
+  final bool hasFBoundedTypeParam;
 
   DiscoveredClass({
     required this.name,
@@ -22,6 +34,13 @@ class DiscoveredClass {
     this.isAbstract = false,
     this.isFinal = false,
     this.hasGenerativeCtor = true,
+    this.isSealed = false,
+    this.isBase = false,
+    this.isInterface = false,
+    this.isMixinClass = false,
+    this.isMixinDeclaration = false,
+    this.typeParamCount = 0,
+    this.hasFBoundedTypeParam = false,
   });
 
   @override

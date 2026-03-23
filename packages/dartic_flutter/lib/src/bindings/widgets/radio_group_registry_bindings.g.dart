@@ -20,6 +20,80 @@ import 'package:flutter/src/widgets/shortcuts.dart';
 import 'package:flutter/src/foundation/basic_types.dart';
 import 'package:flutter/foundation.dart';
 
+class _$RadioGroupRegistry extends RadioGroupRegistry<dynamic> implements DarticObjectHolder {
+  _$RadioGroupRegistry(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void registerClient(RadioClient radio) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerClient', [radio]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method registerClient must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void unregisterClient(RadioClient radio) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unregisterClient', [radio]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method unregisterClient must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  dynamic get groupValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'groupValue');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter groupValue must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  void Function(dynamic) get onChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChanged');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter onChanged must be overridden in dartic code');
+    }
+    return r as void Function(dynamic);
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRadioGroupRegistryBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RadioGroupRegistry(dispatch, obj, superArgs);
+
 abstract final class RadioGroupRegistryBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +101,11 @@ abstract final class RadioGroupRegistryBindings {
       type: RadioGroupRegistry,
       test: (o) => o is RadioGroupRegistry,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RadioGroupRegistry(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/radio_group.dart::RadioGroupRegistry::\$super\$toString#0', (args) => (args[0] as _$RadioGroupRegistry)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/radio_group.dart::RadioGroupRegistry::\$super\$hashCode#0', (args) => (args[0] as _$RadioGroupRegistry)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

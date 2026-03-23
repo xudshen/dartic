@@ -10,6 +10,78 @@ import 'package:flutter/src/services/keyboard_inserted_content.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
 
+class _$KeyboardInsertedContent extends KeyboardInsertedContent implements DarticObjectHolder {
+  _$KeyboardInsertedContent(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(mimeType: superArgs[0] as String, uri: superArgs[1] as String, data: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Uint8List?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get mimeType {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mimeType');
+    if (identical(r, notOverridden)) return super.mimeType;
+    return r as String;
+  }
+
+  @override
+  String get uri {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'uri');
+    if (identical(r, notOverridden)) return super.uri;
+    return r as String;
+  }
+
+  @override
+  Uint8List? get data {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'data');
+    if (identical(r, notOverridden)) return super.data;
+    return r as Uint8List?;
+  }
+
+  @override
+  bool get hasData {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasData');
+    if (identical(r, notOverridden)) return super.hasData;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  String get _super$mimeType => super.mimeType;
+  String get _super$uri => super.uri;
+  Uint8List? get _super$data => super.data;
+  bool get _super$hasData => super.hasData;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createKeyboardInsertedContentBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$KeyboardInsertedContent(dispatch, obj, superArgs);
+
 abstract final class KeyboardInsertedContentBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +89,15 @@ abstract final class KeyboardInsertedContentBindings {
       type: KeyboardInsertedContent,
       test: (o) => o is KeyboardInsertedContent,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$KeyboardInsertedContent(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$toString#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$mimeType#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$mimeType);
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$uri#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$uri);
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$data#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$data);
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$hasData#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$hasData);
+    ctx.registerBinding('package:flutter/src/services/keyboard_inserted_content.dart::KeyboardInsertedContent::\$super\$hashCode#0', (args) => (args[0] as _$KeyboardInsertedContent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

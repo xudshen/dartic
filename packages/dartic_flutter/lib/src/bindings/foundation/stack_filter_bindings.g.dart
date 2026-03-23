@@ -14,6 +14,54 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/print.dart';
 import 'package:flutter/src/foundation/stack_frame.dart';
 
+class _$StackFilter extends StackFilter implements DarticObjectHolder {
+  _$StackFilter(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void filter(List<StackFrame> stackFrames, List<String?> reasons) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filter', [stackFrames, reasons]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method filter must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStackFilterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StackFilter(dispatch, obj, superArgs);
+
 abstract final class StackFilterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +69,11 @@ abstract final class StackFilterBindings {
       type: StackFilter,
       test: (o) => o is StackFilter,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StackFilter(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/foundation/assertions.dart::StackFilter::\$super\$toString#0', (args) => (args[0] as _$StackFilter)._super$toString());
+    ctx.registerBinding('package:flutter/src/foundation/assertions.dart::StackFilter::\$super\$hashCode#0', (args) => (args[0] as _$StackFilter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

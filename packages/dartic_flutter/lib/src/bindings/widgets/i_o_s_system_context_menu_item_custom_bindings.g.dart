@@ -20,6 +20,93 @@ import 'package:flutter/src/services/text_input.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
+class _$IOSSystemContextMenuItemCustom extends IOSSystemContextMenuItemCustom implements DarticObjectHolder {
+  _$IOSSystemContextMenuItemCustom(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(title: superArgs[0] as String, onPressed: superArgs[1] as VoidCallback);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  IOSSystemContextMenuItemData getData(WidgetsLocalizations localizations) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getData', [localizations]);
+    if (identical(r, notOverridden)) return super.getData(localizations);
+    return r as IOSSystemContextMenuItemData;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  String get title {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'title');
+    if (identical(r, notOverridden)) return super.title;
+    return r as String;
+  }
+
+  @override
+  VoidCallback get onPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPressed');
+    if (identical(r, notOverridden)) return super.onPressed;
+    return r as VoidCallback;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  IOSSystemContextMenuItemData _super$getData(WidgetsLocalizations localizations) => super.getData(localizations);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  String get _super$title => super.title;
+  VoidCallback get _super$onPressed => super.onPressed;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIOSSystemContextMenuItemCustomBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$IOSSystemContextMenuItemCustom(dispatch, obj, superArgs);
+
 abstract final class IOSSystemContextMenuItemCustomBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +115,17 @@ abstract final class IOSSystemContextMenuItemCustomBindings {
       test: (o) => o is IOSSystemContextMenuItemCustom,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItem', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$IOSSystemContextMenuItemCustom(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$getData#1', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$getData(args[1] as WidgetsLocalizations));
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$debugFillProperties#1', (args) { (args[0] as _$IOSSystemContextMenuItemCustom)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$toString#1', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$toStringShort#0', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$title#0', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$title);
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$onPressed#0', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$onPressed);
+    ctx.registerBinding('package:flutter/src/widgets/system_context_menu.dart::IOSSystemContextMenuItemCustom::\$super\$hashCode#0', (args) => (args[0] as _$IOSSystemContextMenuItemCustom)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

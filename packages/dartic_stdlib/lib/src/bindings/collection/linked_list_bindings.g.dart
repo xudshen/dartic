@@ -30,7 +30,7 @@ abstract final class LinkedListBindings {
         'forEach#1': (args) { (args[0] as LinkedList).forEach((a) => (args[1] as Function)(a)); return null; },
         'toString#0': (args) => (args[0] as LinkedList).toString(),
         'cast#0': (args) => (args[0] as LinkedList).cast(),
-        'followedBy#1': (args) => (args[0] as LinkedList).followedBy((args[1] as Iterable).cast<LinkedListEntry>()),
+        'followedBy#1': (args) => (args[0] as LinkedList).followedBy((args[1] as Iterable).cast<LinkedListEntry<LinkedListEntry>>()),
         'map#1': (args) => (args[0] as LinkedList).map((a) => (args[1] as Function)(a)),
         'where#1': (args) => (args[0] as LinkedList).where((a) => (args[1] as Function)(a) as bool),
         'whereType#0': (args) => (args[0] as LinkedList).whereType(),

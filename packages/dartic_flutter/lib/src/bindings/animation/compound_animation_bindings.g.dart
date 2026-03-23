@@ -16,6 +16,213 @@ import 'dart:ui';
 import 'package:flutter/src/animation/tween.dart';
 import 'package:flutter/animation.dart';
 
+class _$CompoundAnimation extends CompoundAnimation<dynamic> implements DarticObjectHolder {
+  _$CompoundAnimation(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(first: superArgs[0] as Animation, next: superArgs[1] as Animation);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void didStartListening() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartListening', const []);
+    if (identical(r, notOverridden)) { super.didStartListening(); return; }
+  }
+
+  @override
+  void didStopListening() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStopListening', const []);
+    if (identical(r, notOverridden)) { super.didStopListening(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void addStatusListener(AnimationStatusListener listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
+    if (identical(r, notOverridden)) { super.addStatusListener((a) => listener(a)); return; }
+  }
+
+  @override
+  void removeStatusListener(AnimationStatusListener listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeStatusListener((a) => listener(a)); return; }
+  }
+
+  @override
+  String toStringDetails() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDetails', const []);
+    if (identical(r, notOverridden)) return super.toStringDetails();
+    return r as String;
+  }
+
+  @override
+  void didRegisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didUnregisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void clearListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListeners', const []);
+    if (identical(r, notOverridden)) { super.clearListeners(); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  void clearStatusListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearStatusListeners', const []);
+    if (identical(r, notOverridden)) { super.clearStatusListeners(); return; }
+  }
+
+  @override
+  void notifyStatusListeners(AnimationStatus status) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyStatusListeners', [status]);
+    if (identical(r, notOverridden)) { super.notifyStatusListeners(status); return; }
+  }
+
+  @override
+  Animation get first {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'first');
+    if (identical(r, notOverridden)) return super.first;
+    return r as Animation;
+  }
+
+  @override
+  Animation get next {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'next');
+    if (identical(r, notOverridden)) return super.next;
+    return r as Animation;
+  }
+
+  @override
+  AnimationStatus get status {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'status');
+    if (identical(r, notOverridden)) return super.status;
+    return r as AnimationStatus;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  dynamic get value {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter value must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  bool get isDismissed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDismissed');
+    if (identical(r, notOverridden)) return super.isDismissed;
+    return r as bool;
+  }
+
+  @override
+  bool get isCompleted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isCompleted');
+    if (identical(r, notOverridden)) return super.isCompleted;
+    return r as bool;
+  }
+
+  @override
+  bool get isAnimating {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isAnimating');
+    if (identical(r, notOverridden)) return super.isAnimating;
+    return r as bool;
+  }
+
+  @override
+  bool get isForwardOrCompleted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isForwardOrCompleted');
+    if (identical(r, notOverridden)) return super.isForwardOrCompleted;
+    return r as bool;
+  }
+
+  @override
+  bool get isListening {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isListening');
+    if (identical(r, notOverridden)) return super.isListening;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$didStartListening() { super.didStartListening(); }
+  void _super$didStopListening() { super.didStopListening(); }
+  String _super$toString() => super.toString();
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$addStatusListener(AnimationStatusListener listener) { super.addStatusListener(listener); }
+  void _super$removeStatusListener(AnimationStatusListener listener) { super.removeStatusListener(listener); }
+  String _super$toStringDetails() => super.toStringDetails();
+  void _super$clearListeners() { super.clearListeners(); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  void _super$clearStatusListeners() { super.clearStatusListeners(); }
+  void _super$notifyStatusListeners(AnimationStatus status) { super.notifyStatusListeners(status); }
+  Animation get _super$first => super.first;
+  Animation get _super$next => super.next;
+  AnimationStatus get _super$status => super.status;
+  int get _super$hashCode => super.hashCode;
+  bool get _super$isDismissed => super.isDismissed;
+  bool get _super$isCompleted => super.isCompleted;
+  bool get _super$isAnimating => super.isAnimating;
+  bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
+  bool get _super$isListening => super.isListening;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCompoundAnimationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CompoundAnimation(dispatch, obj, superArgs);
+
 abstract final class CompoundAnimationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +231,30 @@ abstract final class CompoundAnimationBindings {
       test: (o) => o is CompoundAnimation,
       methods: methodMap(),
       superclasses: ['package:flutter/src/animation/animation.dart::Animation', 'package:flutter/src/foundation/change_notifier.dart::Listenable', 'package:flutter/src/foundation/change_notifier.dart::ValueListenable', 'package:flutter/src/animation/listener_helpers.dart::AnimationLazyListenerMixin', 'package:flutter/src/animation/listener_helpers.dart::AnimationLocalListenersMixin', 'package:flutter/src/animation/listener_helpers.dart::AnimationLocalStatusListenersMixin'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CompoundAnimation(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$didStartListening#0', (args) { (args[0] as _$CompoundAnimation)._super$didStartListening(); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$didStopListening#0', (args) { (args[0] as _$CompoundAnimation)._super$didStopListening(); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$toString#0', (args) => (args[0] as _$CompoundAnimation)._super$toString());
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$addListener#1', (args) { (args[0] as _$CompoundAnimation)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$removeListener#1', (args) { (args[0] as _$CompoundAnimation)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$addStatusListener#1', (args) { (args[0] as _$CompoundAnimation)._super$addStatusListener((a) => (args[1] as Function)(a)); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$removeStatusListener#1', (args) { (args[0] as _$CompoundAnimation)._super$removeStatusListener((a) => (args[1] as Function)(a)); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$toStringDetails#0', (args) => (args[0] as _$CompoundAnimation)._super$toStringDetails());
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$clearListeners#0', (args) { (args[0] as _$CompoundAnimation)._super$clearListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$notifyListeners#0', (args) { (args[0] as _$CompoundAnimation)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$clearStatusListeners#0', (args) { (args[0] as _$CompoundAnimation)._super$clearStatusListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$notifyStatusListeners#1', (args) { (args[0] as _$CompoundAnimation)._super$notifyStatusListeners(args[1] as AnimationStatus); return null; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$first#0', (args) => (args[0] as _$CompoundAnimation)._super$first);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$next#0', (args) => (args[0] as _$CompoundAnimation)._super$next);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$status#0', (args) => (args[0] as _$CompoundAnimation)._super$status);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$hashCode#0', (args) => (args[0] as _$CompoundAnimation)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$CompoundAnimation)._super$isDismissed);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$CompoundAnimation)._super$isCompleted);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isAnimating#0', (args) => (args[0] as _$CompoundAnimation)._super$isAnimating);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$CompoundAnimation)._super$isForwardOrCompleted);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isListening#0', (args) => (args[0] as _$CompoundAnimation)._super$isListening);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

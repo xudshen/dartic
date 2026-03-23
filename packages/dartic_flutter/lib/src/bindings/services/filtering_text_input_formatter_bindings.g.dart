@@ -12,6 +12,78 @@ import 'package:characters/characters.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/text_input.dart';
 
+class _$FilteringTextInputFormatter extends FilteringTextInputFormatter implements DarticObjectHolder {
+  _$FilteringTextInputFormatter(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Pattern, allow: superArgs[1] as bool, replacementString: superArgs[2] as String);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatEditUpdate', [oldValue, newValue]);
+    if (identical(r, notOverridden)) return super.formatEditUpdate(oldValue, newValue);
+    return r as TextEditingValue;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Pattern get filterPattern {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'filterPattern');
+    if (identical(r, notOverridden)) return super.filterPattern;
+    return r as Pattern;
+  }
+
+  @override
+  bool get allow {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allow');
+    if (identical(r, notOverridden)) return super.allow;
+    return r as bool;
+  }
+
+  @override
+  String get replacementString {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'replacementString');
+    if (identical(r, notOverridden)) return super.replacementString;
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  TextEditingValue _super$formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) => super.formatEditUpdate(oldValue, newValue);
+  String _super$toString() => super.toString();
+  Pattern get _super$filterPattern => super.filterPattern;
+  bool get _super$allow => super.allow;
+  String get _super$replacementString => super.replacementString;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFilteringTextInputFormatterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FilteringTextInputFormatter(dispatch, obj, superArgs);
+
 abstract final class FilteringTextInputFormatterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,9 +92,17 @@ abstract final class FilteringTextInputFormatterBindings {
       test: (o) => o is FilteringTextInputFormatter,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/text_formatter.dart::TextInputFormatter'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FilteringTextInputFormatter(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::singleLineFormatter#0', (args) => FilteringTextInputFormatter.singleLineFormatter);
     ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::digitsOnly#0', (args) => FilteringTextInputFormatter.digitsOnly);
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$formatEditUpdate#2', (args) => (args[0] as _$FilteringTextInputFormatter)._super$formatEditUpdate(args[1] as TextEditingValue, args[2] as TextEditingValue));
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$toString#0', (args) => (args[0] as _$FilteringTextInputFormatter)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$filterPattern#0', (args) => (args[0] as _$FilteringTextInputFormatter)._super$filterPattern);
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$allow#0', (args) => (args[0] as _$FilteringTextInputFormatter)._super$allow);
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$replacementString#0', (args) => (args[0] as _$FilteringTextInputFormatter)._super$replacementString);
+    ctx.registerBinding('package:flutter/src/services/text_formatter.dart::FilteringTextInputFormatter::\$super\$hashCode#0', (args) => (args[0] as _$FilteringTextInputFormatter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

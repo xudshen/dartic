@@ -30,6 +30,184 @@ import 'package:flutter/src/widgets/restoration_properties.dart';
 import 'package:flutter/src/widgets/routes.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
 
+class _$RestorableRouteFuture extends RestorableRouteFuture<dynamic> implements DarticObjectHolder {
+  _$RestorableRouteFuture(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(navigatorFinder: superArgs[0] as NavigatorFinderCallback, onPresent: superArgs[1] as RoutePresentationCallback, onComplete: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as void Function(dynamic)?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void present([Object? arguments]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'present', [arguments]);
+    if (identical(r, notOverridden)) { super.present(arguments); return; }
+  }
+
+  @override
+  String? createDefaultValue() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDefaultValue', const []);
+    if (identical(r, notOverridden)) return super.createDefaultValue();
+    return r as String?;
+  }
+
+  @override
+  void initWithValue(String? value) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initWithValue', [value]);
+    if (identical(r, notOverridden)) { super.initWithValue(value); return; }
+  }
+
+  @override
+  Object? toPrimitives() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPrimitives', const []);
+    if (identical(r, notOverridden)) return super.toPrimitives();
+    return r as Object?;
+  }
+
+  @override
+  String fromPrimitives(Object? data) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fromPrimitives', [data]);
+    if (identical(r, notOverridden)) return super.fromPrimitives(data);
+    return r as String;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void addListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  NavigatorFinderCallback get navigatorFinder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigatorFinder');
+    if (identical(r, notOverridden)) return super.navigatorFinder;
+    return r as NavigatorFinderCallback;
+  }
+
+  @override
+  RoutePresentationCallback get onPresent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPresent');
+    if (identical(r, notOverridden)) return super.onPresent;
+    return r as RoutePresentationCallback;
+  }
+
+  @override
+  void Function(dynamic)? get onComplete {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onComplete');
+    if (identical(r, notOverridden)) return super.onComplete;
+    return r as void Function(dynamic)?;
+  }
+
+  @override
+  bool get isPresent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isPresent');
+    if (identical(r, notOverridden)) return super.isPresent;
+    return r as bool;
+  }
+
+  @override
+  Route? get route {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'route');
+    if (identical(r, notOverridden)) return super.route;
+    return r as Route?;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  State<StatefulWidget> get state {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'state');
+    if (identical(r, notOverridden)) return super.state;
+    return r as State<StatefulWidget>;
+  }
+
+  @override
+  bool get isRegistered {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRegistered');
+    if (identical(r, notOverridden)) return super.isRegistered;
+    return r as bool;
+  }
+
+  @override
+  bool get hasListeners {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
+    if (identical(r, notOverridden)) return super.hasListeners;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$present([Object? arguments]) { super.present(arguments); }
+  String? _super$createDefaultValue() => super.createDefaultValue();
+  void _super$initWithValue(String? value) { super.initWithValue(value); }
+  Object? _super$toPrimitives() => super.toPrimitives();
+  String _super$fromPrimitives(Object? data) => super.fromPrimitives(data);
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  void _super$addListener(ui.VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(ui.VoidCallback listener) { super.removeListener(listener); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  NavigatorFinderCallback get _super$navigatorFinder => super.navigatorFinder;
+  RoutePresentationCallback get _super$onPresent => super.onPresent;
+  void Function(dynamic)? get _super$onComplete => super.onComplete;
+  bool get _super$isPresent => super.isPresent;
+  Route? get _super$route => super.route;
+  bool get _super$enabled => super.enabled;
+  int get _super$hashCode => super.hashCode;
+  State<StatefulWidget> get _super$state => super.state;
+  bool get _super$isRegistered => super.isRegistered;
+  bool get _super$hasListeners => super.hasListeners;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRestorableRouteFutureBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RestorableRouteFuture(dispatch, obj, superArgs);
+
 abstract final class RestorableRouteFutureBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -38,7 +216,29 @@ abstract final class RestorableRouteFutureBindings {
       test: (o) => o is RestorableRouteFuture,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/restoration.dart::RestorableProperty', 'package:flutter/src/foundation/change_notifier.dart::ChangeNotifier', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RestorableRouteFuture(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$present#1', (args) { (args[0] as _$RestorableRouteFuture)._super$present(identical(args[1], darticAbsent) ? null : args[1]); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$createDefaultValue#0', (args) => (args[0] as _$RestorableRouteFuture)._super$createDefaultValue());
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$initWithValue#1', (args) { (args[0] as _$RestorableRouteFuture)._super$initWithValue(args[1] as String?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$toPrimitives#0', (args) => (args[0] as _$RestorableRouteFuture)._super$toPrimitives());
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$fromPrimitives#1', (args) => (args[0] as _$RestorableRouteFuture)._super$fromPrimitives(args[1]));
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$dispose#0', (args) { (args[0] as _$RestorableRouteFuture)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$toString#0', (args) => (args[0] as _$RestorableRouteFuture)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$addListener#1', (args) { (args[0] as _$RestorableRouteFuture)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$removeListener#1', (args) { (args[0] as _$RestorableRouteFuture)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$notifyListeners#0', (args) { (args[0] as _$RestorableRouteFuture)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$navigatorFinder#0', (args) => (args[0] as _$RestorableRouteFuture)._super$navigatorFinder);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$onPresent#0', (args) => (args[0] as _$RestorableRouteFuture)._super$onPresent);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$onComplete#0', (args) => (args[0] as _$RestorableRouteFuture)._super$onComplete);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$isPresent#0', (args) => (args[0] as _$RestorableRouteFuture)._super$isPresent);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$route#0', (args) => (args[0] as _$RestorableRouteFuture)._super$route);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$enabled#0', (args) => (args[0] as _$RestorableRouteFuture)._super$enabled);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$hashCode#0', (args) => (args[0] as _$RestorableRouteFuture)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$state#0', (args) => (args[0] as _$RestorableRouteFuture)._super$state);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableRouteFuture)._super$isRegistered);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableRouteFuture)._super$hasListeners);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

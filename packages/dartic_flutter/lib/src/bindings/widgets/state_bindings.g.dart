@@ -20,7 +20,7 @@ import 'package:flutter/src/widgets/widget_inspector.dart';
 import 'dart:ui';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
-class _$State extends State implements DarticObjectHolder {
+class _$State extends State<StatefulWidget> implements DarticObjectHolder {
   _$State(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;

@@ -10,6 +10,73 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
+class _$Future implements Future<dynamic>, DarticObjectHolder {
+  _$Future(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<R> then<R>(FutureOr<R> Function(dynamic) onValue, {Function? onError}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'then', [onValue, onError]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method then must be overridden in dartic code');
+    }
+    return r as Future<R>;
+  }
+
+  @override
+  Future catchError(Function onError, {bool Function(Object)? test}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'catchError', [onError, test]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method catchError must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  Future whenComplete(FutureOr<void> Function() action) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whenComplete', [action]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method whenComplete must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  Stream asStream() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asStream', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method asStream must be overridden in dartic code');
+    }
+    return r as Stream;
+  }
+
+  @override
+  Future timeout(Duration timeLimit, {FutureOr Function()? onTimeout}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method timeout must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFutureBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Future(dispatch, obj, superArgs);
+
 abstract final class FutureBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +84,8 @@ abstract final class FutureBindings {
       type: Future,
       test: (o) => o is Future,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Future(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:async::Future::wait#3', methodMap()['wait#3']!);
     ctx.registerBinding('dart:async::Future::any#1', methodMap()['any#1']!);

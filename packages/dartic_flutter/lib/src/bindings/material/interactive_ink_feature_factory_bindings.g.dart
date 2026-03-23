@@ -24,6 +24,55 @@ import 'package:flutter/src/painting/border_radius.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/borders.dart';
 
+class _$InteractiveInkFeatureFactory extends InteractiveInkFeatureFactory implements DarticObjectHolder {
+  _$InteractiveInkFeatureFactory(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  InteractiveInkFeature create({required MaterialInkController controller, required RenderBox referenceBox, required Offset position, required Color color, required TextDirection textDirection, bool containedInkWell = false, RectCallback? rectCallback, BorderRadius? borderRadius, ShapeBorder? customBorder, double? radius, VoidCallback? onRemoved}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [controller, referenceBox, position, color, textDirection, containedInkWell, rectCallback, borderRadius, customBorder, radius, onRemoved]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method create must be overridden in dartic code');
+    }
+    return r as InteractiveInkFeature;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createInteractiveInkFeatureFactoryBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$InteractiveInkFeatureFactory(dispatch, obj, superArgs);
+
 abstract final class InteractiveInkFeatureFactoryBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +80,11 @@ abstract final class InteractiveInkFeatureFactoryBindings {
       type: InteractiveInkFeatureFactory,
       test: (o) => o is InteractiveInkFeatureFactory,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$InteractiveInkFeatureFactory(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeatureFactory::\$super\$toString#0', (args) => (args[0] as _$InteractiveInkFeatureFactory)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeatureFactory::\$super\$hashCode#0', (args) => (args[0] as _$InteractiveInkFeatureFactory)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

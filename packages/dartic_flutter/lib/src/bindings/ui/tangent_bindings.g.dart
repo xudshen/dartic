@@ -18,6 +18,70 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$Tangent extends Tangent implements DarticObjectHolder {
+  _$Tangent(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Offset, superArgs[1] as Offset);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Offset get position {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'position');
+    if (identical(r, notOverridden)) return super.position;
+    return r as Offset;
+  }
+
+  @override
+  Offset get vector {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'vector');
+    if (identical(r, notOverridden)) return super.vector;
+    return r as Offset;
+  }
+
+  @override
+  double get angle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'angle');
+    if (identical(r, notOverridden)) return super.angle;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Offset get _super$position => super.position;
+  Offset get _super$vector => super.vector;
+  double get _super$angle => super.angle;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTangentBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Tangent(dispatch, obj, superArgs);
+
 abstract final class TangentBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +89,14 @@ abstract final class TangentBindings {
       type: Tangent,
       test: (o) => o is Tangent,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Tangent(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::Tangent::\$super\$toString#0', (args) => (args[0] as _$Tangent)._super$toString());
+    ctx.registerBinding('dart:ui::Tangent::\$super\$position#0', (args) => (args[0] as _$Tangent)._super$position);
+    ctx.registerBinding('dart:ui::Tangent::\$super\$vector#0', (args) => (args[0] as _$Tangent)._super$vector);
+    ctx.registerBinding('dart:ui::Tangent::\$super\$angle#0', (args) => (args[0] as _$Tangent)._super$angle);
+    ctx.registerBinding('dart:ui::Tangent::\$super\$hashCode#0', (args) => (args[0] as _$Tangent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -11,6 +11,91 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/platform_channel.dart';
 import 'dart:typed_data';
 
+class _$MethodCodec extends MethodCodec implements DarticObjectHolder {
+  _$MethodCodec(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ByteData encodeMethodCall(MethodCall methodCall) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMethodCall', [methodCall]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method encodeMethodCall must be overridden in dartic code');
+    }
+    return r as ByteData;
+  }
+
+  @override
+  MethodCall decodeMethodCall(ByteData? methodCall) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMethodCall', [methodCall]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method decodeMethodCall must be overridden in dartic code');
+    }
+    return r as MethodCall;
+  }
+
+  @override
+  dynamic decodeEnvelope(ByteData envelope) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeEnvelope', [envelope]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method decodeEnvelope must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  ByteData encodeSuccessEnvelope(Object? result) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeSuccessEnvelope', [result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method encodeSuccessEnvelope must be overridden in dartic code');
+    }
+    return r as ByteData;
+  }
+
+  @override
+  ByteData encodeErrorEnvelope({required String code, String? message, Object? details}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeErrorEnvelope', [code, message, details]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method encodeErrorEnvelope must be overridden in dartic code');
+    }
+    return r as ByteData;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMethodCodecBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MethodCodec(dispatch, obj, superArgs);
+
 abstract final class MethodCodecBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,7 +103,11 @@ abstract final class MethodCodecBindings {
       type: MethodCodec,
       test: (o) => o is MethodCodec,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MethodCodec(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/message_codec.dart::MethodCodec::\$super\$toString#0', (args) => (args[0] as _$MethodCodec)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/message_codec.dart::MethodCodec::\$super\$hashCode#0', (args) => (args[0] as _$MethodCodec)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

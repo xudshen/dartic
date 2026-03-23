@@ -11,6 +11,64 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/platform_channel.dart';
 import 'dart:typed_data';
 
+class _$MessageCodec extends MessageCodec<dynamic> implements DarticObjectHolder {
+  _$MessageCodec(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ByteData? encodeMessage(dynamic message) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMessage', [message]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method encodeMessage must be overridden in dartic code');
+    }
+    return r as ByteData?;
+  }
+
+  @override
+  dynamic decodeMessage(ByteData? message) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMessage', [message]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method decodeMessage must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMessageCodecBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MessageCodec(dispatch, obj, superArgs);
+
 abstract final class MessageCodecBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,7 +76,11 @@ abstract final class MessageCodecBindings {
       type: MessageCodec,
       test: (o) => o is MessageCodec,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MessageCodec(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/message_codec.dart::MessageCodec::\$super\$toString#0', (args) => (args[0] as _$MessageCodec)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/message_codec.dart::MessageCodec::\$super\$hashCode#0', (args) => (args[0] as _$MessageCodec)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

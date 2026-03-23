@@ -22,6 +22,102 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/services/text_editing_delta.dart';
 
+class _$TextEditingValue extends TextEditingValue implements DarticObjectHolder {
+  _$TextEditingValue(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(text: superArgs[0] as String, selection: superArgs[1] as TextSelection, composing: superArgs[2] as TextRange);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  TextEditingValue copyWith({String? text, TextSelection? selection, TextRange? composing}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [text, selection, composing]);
+    if (identical(r, notOverridden)) return super.copyWith(text: text, selection: selection, composing: composing);
+    return r as TextEditingValue;
+  }
+
+  @override
+  TextEditingValue replaced(TextRange replacementRange, String replacementString) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replaced', [replacementRange, replacementString]);
+    if (identical(r, notOverridden)) return super.replaced(replacementRange, replacementString);
+    return r as TextEditingValue;
+  }
+
+  @override
+  Map<String, dynamic> toJSON() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJSON', const []);
+    if (identical(r, notOverridden)) return super.toJSON();
+    return r as Map<String, dynamic>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get text {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'text');
+    if (identical(r, notOverridden)) return super.text;
+    return r as String;
+  }
+
+  @override
+  TextSelection get selection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selection');
+    if (identical(r, notOverridden)) return super.selection;
+    return r as TextSelection;
+  }
+
+  @override
+  TextRange get composing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'composing');
+    if (identical(r, notOverridden)) return super.composing;
+    return r as TextRange;
+  }
+
+  @override
+  bool get isComposingRangeValid {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isComposingRangeValid');
+    if (identical(r, notOverridden)) return super.isComposingRangeValid;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  TextEditingValue _super$copyWith({String? text, TextSelection? selection, TextRange? composing}) => super.copyWith(text: text, selection: selection, composing: composing);
+  TextEditingValue _super$replaced(TextRange replacementRange, String replacementString) => super.replaced(replacementRange, replacementString);
+  Map<String, dynamic> _super$toJSON() => super.toJSON();
+  String _super$toString() => super.toString();
+  String get _super$text => super.text;
+  TextSelection get _super$selection => super.selection;
+  TextRange get _super$composing => super.composing;
+  bool get _super$isComposingRangeValid => super.isComposingRangeValid;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextEditingValueBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextEditingValue(dispatch, obj, superArgs);
+
 abstract final class TextEditingValueBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,8 +125,19 @@ abstract final class TextEditingValueBindings {
       type: TextEditingValue,
       test: (o) => o is TextEditingValue,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextEditingValue(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::empty#0', (args) => TextEditingValue.empty);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$copyWith#3', (args) => (args[0] as _$TextEditingValue)._super$copyWith(text: identical(args[1], darticAbsent) ? null : args[1] as String?, selection: identical(args[2], darticAbsent) ? null : args[2] as TextSelection?, composing: identical(args[3], darticAbsent) ? null : args[3] as TextRange?));
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$replaced#2', (args) => (args[0] as _$TextEditingValue)._super$replaced(args[1] as TextRange, args[2] as String));
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$toJSON#0', (args) => (args[0] as _$TextEditingValue)._super$toJSON());
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$toString#0', (args) => (args[0] as _$TextEditingValue)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$text#0', (args) => (args[0] as _$TextEditingValue)._super$text);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$selection#0', (args) => (args[0] as _$TextEditingValue)._super$selection);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$composing#0', (args) => (args[0] as _$TextEditingValue)._super$composing);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$isComposingRangeValid#0', (args) => (args[0] as _$TextEditingValue)._super$isComposingRangeValid);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::TextEditingValue::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingValue)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

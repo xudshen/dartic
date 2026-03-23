@@ -19,6 +19,62 @@ import 'package:flutter/src/rendering/sliver.dart';
 import 'package:flutter/src/rendering/viewport_offset.dart';
 import 'dart:ui';
 
+class _$RevealedOffset extends RevealedOffset implements DarticObjectHolder {
+  _$RevealedOffset(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(offset: superArgs[0] as double, rect: superArgs[1] as Rect);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get offset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
+    if (identical(r, notOverridden)) return super.offset;
+    return r as double;
+  }
+
+  @override
+  Rect get rect {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'rect');
+    if (identical(r, notOverridden)) return super.rect;
+    return r as Rect;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  double get _super$offset => super.offset;
+  Rect get _super$rect => super.rect;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRevealedOffsetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RevealedOffset(dispatch, obj, superArgs);
+
 abstract final class RevealedOffsetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,8 +82,14 @@ abstract final class RevealedOffsetBindings {
       type: RevealedOffset,
       test: (o) => o is RevealedOffset,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RevealedOffset(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RevealedOffset::clampOffset#3', (args) => RevealedOffset.clampOffset(leadingEdgeOffset: args[0] as RevealedOffset, trailingEdgeOffset: args[1] as RevealedOffset, currentOffset: args[2] as double));
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RevealedOffset::\$super\$toString#0', (args) => (args[0] as _$RevealedOffset)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RevealedOffset::\$super\$offset#0', (args) => (args[0] as _$RevealedOffset)._super$offset);
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RevealedOffset::\$super\$rect#0', (args) => (args[0] as _$RevealedOffset)._super$rect);
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RevealedOffset::\$super\$hashCode#0', (args) => (args[0] as _$RevealedOffset)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

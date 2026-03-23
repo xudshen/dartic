@@ -21,7 +21,7 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
 class _$StatefulWidget extends StatefulWidget implements DarticObjectHolder {
-  _$StatefulWidget(this._dispatch, this.$darticObject, List<Object?> superArgs);
+  _$StatefulWidget(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?);
 
   final DarticDispatch _dispatch;
 

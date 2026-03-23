@@ -79,6 +79,109 @@ import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$VisualDensity extends VisualDensity implements DarticObjectHolder {
+  _$VisualDensity(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(horizontal: superArgs[0] as double, vertical: superArgs[1] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  VisualDensity copyWith({double? horizontal, double? vertical}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [horizontal, vertical]);
+    if (identical(r, notOverridden)) return super.copyWith(horizontal: horizontal, vertical: vertical);
+    return r as VisualDensity;
+  }
+
+  @override
+  BoxConstraints effectiveConstraints(BoxConstraints constraints) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'effectiveConstraints', [constraints]);
+    if (identical(r, notOverridden)) return super.effectiveConstraints(constraints);
+    return r as BoxConstraints;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  double get horizontal {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'horizontal');
+    if (identical(r, notOverridden)) return super.horizontal;
+    return r as double;
+  }
+
+  @override
+  double get vertical {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'vertical');
+    if (identical(r, notOverridden)) return super.vertical;
+    return r as double;
+  }
+
+  @override
+  Offset get baseSizeAdjustment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'baseSizeAdjustment');
+    if (identical(r, notOverridden)) return super.baseSizeAdjustment;
+    return r as Offset;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  VisualDensity _super$copyWith({double? horizontal, double? vertical}) => super.copyWith(horizontal: horizontal, vertical: vertical);
+  BoxConstraints _super$effectiveConstraints(BoxConstraints constraints) => super.effectiveConstraints(constraints);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  double get _super$horizontal => super.horizontal;
+  double get _super$vertical => super.vertical;
+  Offset get _super$baseSizeAdjustment => super.baseSizeAdjustment;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createVisualDensityBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$VisualDensity(dispatch, obj, superArgs);
+
 abstract final class VisualDensityBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -87,6 +190,8 @@ abstract final class VisualDensityBindings {
       test: (o) => o is VisualDensity,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$VisualDensity(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::defaultDensityForPlatform#1', (args) => VisualDensity.defaultDensityForPlatform(args[0] as TargetPlatform));
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::lerp#3', (args) => VisualDensity.lerp(args[0] as VisualDensity, args[1] as VisualDensity, args[2] as double));
@@ -96,6 +201,16 @@ abstract final class VisualDensityBindings {
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::comfortable#0', (args) => VisualDensity.comfortable);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::compact#0', (args) => VisualDensity.compact);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::adaptivePlatformDensity#0', (args) => VisualDensity.adaptivePlatformDensity);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$copyWith#2', (args) => (args[0] as _$VisualDensity)._super$copyWith(horizontal: identical(args[1], darticAbsent) ? null : args[1] as double?, vertical: identical(args[2], darticAbsent) ? null : args[2] as double?));
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$effectiveConstraints#1', (args) => (args[0] as _$VisualDensity)._super$effectiveConstraints(args[1] as BoxConstraints));
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$debugFillProperties#1', (args) { (args[0] as _$VisualDensity)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$toStringShort#0', (args) => (args[0] as _$VisualDensity)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$toString#1', (args) => (args[0] as _$VisualDensity)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$VisualDensity)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$horizontal#0', (args) => (args[0] as _$VisualDensity)._super$horizontal);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$vertical#0', (args) => (args[0] as _$VisualDensity)._super$vertical);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$baseSizeAdjustment#0', (args) => (args[0] as _$VisualDensity)._super$baseSizeAdjustment);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::VisualDensity::\$super\$hashCode#0', (args) => (args[0] as _$VisualDensity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

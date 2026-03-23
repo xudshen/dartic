@@ -18,6 +18,54 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$SemanticsUpdate extends SemanticsUpdate implements DarticObjectHolder {
+  _$SemanticsUpdate(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSemanticsUpdateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SemanticsUpdate(dispatch, obj, superArgs);
+
 abstract final class SemanticsUpdateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +73,11 @@ abstract final class SemanticsUpdateBindings {
       type: SemanticsUpdate,
       test: (o) => o is SemanticsUpdate,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SemanticsUpdate(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::SemanticsUpdate::\$super\$toString#0', (args) => (args[0] as _$SemanticsUpdate)._super$toString());
+    ctx.registerBinding('dart:ui::SemanticsUpdate::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsUpdate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

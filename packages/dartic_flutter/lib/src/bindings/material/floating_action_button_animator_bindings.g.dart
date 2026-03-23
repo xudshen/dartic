@@ -15,6 +15,81 @@ import 'dart:ui';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 
+class _$FloatingActionButtonAnimator extends FloatingActionButtonAnimator implements DarticObjectHolder {
+  _$FloatingActionButtonAnimator(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Offset getOffset({required Offset begin, required Offset end, required double progress}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [begin, end, progress]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getOffset must be overridden in dartic code');
+    }
+    return r as Offset;
+  }
+
+  @override
+  Animation<double> getScaleAnimation({required Animation<double> parent}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getScaleAnimation', [parent]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getScaleAnimation must be overridden in dartic code');
+    }
+    return r as Animation<double>;
+  }
+
+  @override
+  Animation<double> getRotationAnimation({required Animation<double> parent}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRotationAnimation', [parent]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getRotationAnimation must be overridden in dartic code');
+    }
+    return r as Animation<double>;
+  }
+
+  @override
+  double getAnimationRestart(double previousValue) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAnimationRestart', [previousValue]);
+    if (identical(r, notOverridden)) return super.getAnimationRestart(previousValue);
+    return r as double;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double _super$getAnimationRestart(double previousValue) => super.getAnimationRestart(previousValue);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFloatingActionButtonAnimatorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FloatingActionButtonAnimator(dispatch, obj, superArgs);
+
 abstract final class FloatingActionButtonAnimatorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,9 +97,14 @@ abstract final class FloatingActionButtonAnimatorBindings {
       type: FloatingActionButtonAnimator,
       test: (o) => o is FloatingActionButtonAnimator,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FloatingActionButtonAnimator(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonAnimator::scaling#0', (args) => FloatingActionButtonAnimator.scaling);
     ctx.registerBinding('package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonAnimator::noAnimation#0', (args) => FloatingActionButtonAnimator.noAnimation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonAnimator::\$super\$getAnimationRestart#1', (args) => (args[0] as _$FloatingActionButtonAnimator)._super$getAnimationRestart(args[1] as double));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonAnimator::\$super\$toString#0', (args) => (args[0] as _$FloatingActionButtonAnimator)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonAnimator::\$super\$hashCode#0', (args) => (args[0] as _$FloatingActionButtonAnimator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

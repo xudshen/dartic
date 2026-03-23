@@ -18,6 +18,54 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$PointerDataPacket extends PointerDataPacket implements DarticObjectHolder {
+  _$PointerDataPacket(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(data: (superArgs[0] as List).cast<PointerData>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  List<PointerData> get data {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'data');
+    if (identical(r, notOverridden)) return super.data;
+    return r as List<PointerData>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  List<PointerData> get _super$data => super.data;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPointerDataPacketBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PointerDataPacket(dispatch, obj, superArgs);
+
 abstract final class PointerDataPacketBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +73,12 @@ abstract final class PointerDataPacketBindings {
       type: PointerDataPacket,
       test: (o) => o is PointerDataPacket,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PointerDataPacket(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::PointerDataPacket::\$super\$toString#0', (args) => (args[0] as _$PointerDataPacket)._super$toString());
+    ctx.registerBinding('dart:ui::PointerDataPacket::\$super\$data#0', (args) => (args[0] as _$PointerDataPacket)._super$data);
+    ctx.registerBinding('dart:ui::PointerDataPacket::\$super\$hashCode#0', (args) => (args[0] as _$PointerDataPacket)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

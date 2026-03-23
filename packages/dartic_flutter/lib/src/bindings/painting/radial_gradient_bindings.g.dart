@@ -15,6 +15,150 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/src/painting/alignment.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 
+class _$RadialGradient extends RadialGradient implements DarticObjectHolder {
+  _$RadialGradient(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(center: superArgs[0] as AlignmentGeometry, radius: superArgs[1] as double, colors: (superArgs[2] as List).cast<ui.Color>(), stops: identical(superArgs[3], darticAbsent) ? null : superArgs[3] == null ? null : (superArgs[3] as List).cast<double>(), tileMode: superArgs[4] as ui.TileMode, focal: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as AlignmentGeometry?, focalRadius: superArgs[6] as double, transform: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as GradientTransform?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ui.Shader createShader(ui.Rect rect, {ui.TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createShader', [rect, textDirection]);
+    if (identical(r, notOverridden)) return super.createShader(rect, textDirection: textDirection);
+    return r as ui.Shader;
+  }
+
+  @override
+  RadialGradient scale(double factor) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(r, notOverridden)) return super.scale(factor);
+    return r as RadialGradient;
+  }
+
+  @override
+  Gradient? lerpFrom(Gradient? a, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(r, notOverridden)) return super.lerpFrom(a, t);
+    return r as Gradient?;
+  }
+
+  @override
+  Gradient? lerpTo(Gradient? b, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(r, notOverridden)) return super.lerpTo(b, t);
+    return r as Gradient?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  RadialGradient withOpacity(double opacity) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
+    if (identical(r, notOverridden)) return super.withOpacity(opacity);
+    return r as RadialGradient;
+  }
+
+  @override
+  AlignmentGeometry get center {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'center');
+    if (identical(r, notOverridden)) return super.center;
+    return r as AlignmentGeometry;
+  }
+
+  @override
+  double get radius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'radius');
+    if (identical(r, notOverridden)) return super.radius;
+    return r as double;
+  }
+
+  @override
+  ui.TileMode get tileMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tileMode');
+    if (identical(r, notOverridden)) return super.tileMode;
+    return r as ui.TileMode;
+  }
+
+  @override
+  AlignmentGeometry? get focal {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focal');
+    if (identical(r, notOverridden)) return super.focal;
+    return r as AlignmentGeometry?;
+  }
+
+  @override
+  double get focalRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focalRadius');
+    if (identical(r, notOverridden)) return super.focalRadius;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  List<ui.Color> get colors {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'colors');
+    if (identical(r, notOverridden)) return super.colors;
+    return r as List<ui.Color>;
+  }
+
+  @override
+  List<double>? get stops {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stops');
+    if (identical(r, notOverridden)) return super.stops;
+    return r as List<double>?;
+  }
+
+  @override
+  GradientTransform? get transform {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transform');
+    if (identical(r, notOverridden)) return super.transform;
+    return r as GradientTransform?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  ui.Shader _super$createShader(ui.Rect rect, {ui.TextDirection? textDirection}) => super.createShader(rect, textDirection: textDirection);
+  RadialGradient _super$scale(double factor) => super.scale(factor);
+  Gradient? _super$lerpFrom(Gradient? a, double t) => super.lerpFrom(a, t);
+  Gradient? _super$lerpTo(Gradient? b, double t) => super.lerpTo(b, t);
+  String _super$toString() => super.toString();
+  RadialGradient _super$withOpacity(double opacity) => super.withOpacity(opacity);
+  AlignmentGeometry get _super$center => super.center;
+  double get _super$radius => super.radius;
+  ui.TileMode get _super$tileMode => super.tileMode;
+  AlignmentGeometry? get _super$focal => super.focal;
+  double get _super$focalRadius => super.focalRadius;
+  int get _super$hashCode => super.hashCode;
+  List<ui.Color> get _super$colors => super.colors;
+  List<double>? get _super$stops => super.stops;
+  GradientTransform? get _super$transform => super.transform;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRadialGradientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RadialGradient(dispatch, obj, superArgs);
+
 abstract final class RadialGradientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,8 +167,25 @@ abstract final class RadialGradientBindings {
       test: (o) => o is RadialGradient,
       methods: methodMap(),
       superclasses: ['package:flutter/src/painting/gradient.dart::Gradient'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RadialGradient(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::lerp#3', (args) => RadialGradient.lerp(args[0] as RadialGradient?, args[1] as RadialGradient?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$createShader#2', (args) => (args[0] as _$RadialGradient)._super$createShader(args[1] as ui.Rect, textDirection: identical(args[2], darticAbsent) ? null : args[2] as ui.TextDirection?));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$scale#1', (args) => (args[0] as _$RadialGradient)._super$scale(args[1] as double));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$lerpFrom#2', (args) => (args[0] as _$RadialGradient)._super$lerpFrom(args[1] as Gradient?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$lerpTo#2', (args) => (args[0] as _$RadialGradient)._super$lerpTo(args[1] as Gradient?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$toString#0', (args) => (args[0] as _$RadialGradient)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$withOpacity#1', (args) => (args[0] as _$RadialGradient)._super$withOpacity(args[1] as double));
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$center#0', (args) => (args[0] as _$RadialGradient)._super$center);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$radius#0', (args) => (args[0] as _$RadialGradient)._super$radius);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$tileMode#0', (args) => (args[0] as _$RadialGradient)._super$tileMode);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$focal#0', (args) => (args[0] as _$RadialGradient)._super$focal);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$focalRadius#0', (args) => (args[0] as _$RadialGradient)._super$focalRadius);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$hashCode#0', (args) => (args[0] as _$RadialGradient)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$colors#0', (args) => (args[0] as _$RadialGradient)._super$colors);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$stops#0', (args) => (args[0] as _$RadialGradient)._super$stops);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::RadialGradient::\$super\$transform#0', (args) => (args[0] as _$RadialGradient)._super$transform);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

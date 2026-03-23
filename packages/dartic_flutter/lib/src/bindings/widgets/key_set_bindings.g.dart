@@ -18,6 +18,54 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/platform_menu_bar.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 
+class _$KeySet extends KeySet<KeyboardKey> implements DarticObjectHolder {
+  _$KeySet(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as KeyboardKey, identical(superArgs[1], darticAbsent) ? null : superArgs[1] as KeyboardKey?, identical(superArgs[2], darticAbsent) ? null : superArgs[2] as KeyboardKey?, identical(superArgs[3], darticAbsent) ? null : superArgs[3] as KeyboardKey?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Set<KeyboardKey> get keys {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keys');
+    if (identical(r, notOverridden)) return super.keys;
+    return r as Set<KeyboardKey>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Set<KeyboardKey> get _super$keys => super.keys;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createKeySetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$KeySet(dispatch, obj, superArgs);
+
 abstract final class KeySetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +73,12 @@ abstract final class KeySetBindings {
       type: KeySet,
       test: (o) => o is KeySet,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$KeySet(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::KeySet::\$super\$toString#0', (args) => (args[0] as _$KeySet)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::KeySet::\$super\$keys#0', (args) => (args[0] as _$KeySet)._super$keys);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::KeySet::\$super\$hashCode#0', (args) => (args[0] as _$KeySet)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -33,37 +86,7 @@ abstract final class KeySetBindings {
         'keys#0': (args) => (args[0] as KeySet).keys,
         'hashCode#0': (args) => (args[0] as KeySet).hashCode,
         '==#1': (args) => (args[0] as KeySet) == (args[1] as Object),
-        '#4': (args) {
-          if (identical(args[1], darticAbsent)) {
-            if (identical(args[2], darticAbsent)) {
-              if (identical(args[3], darticAbsent)) {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey);
-              } else {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[3] as KeyboardKey);
-              }
-            } else {
-              if (identical(args[3], darticAbsent)) {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[2] as KeyboardKey);
-              } else {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[2] as KeyboardKey, args[3] as KeyboardKey);
-              }
-            }
-          } else {
-            if (identical(args[2], darticAbsent)) {
-              if (identical(args[3], darticAbsent)) {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[1] as KeyboardKey);
-              } else {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[1] as KeyboardKey, args[3] as KeyboardKey);
-              }
-            } else {
-              if (identical(args[3], darticAbsent)) {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[1] as KeyboardKey, args[2] as KeyboardKey);
-              } else {
-                return KeySet<KeyboardKey>(args[0] as KeyboardKey, args[1] as KeyboardKey, args[2] as KeyboardKey, args[3] as KeyboardKey);
-              }
-            }
-          }
-        },
+        '#4': (args) => KeySet<KeyboardKey>(args[0] as KeyboardKey, identical(args[1], darticAbsent) ? null : args[1] as KeyboardKey?, identical(args[2], darticAbsent) ? null : args[2] as KeyboardKey?, identical(args[3], darticAbsent) ? null : args[3] as KeyboardKey?),
         'fromSet#1': (args) => KeySet<KeyboardKey>.fromSet((args[0] as Set).cast<KeyboardKey>()),
       };
 }

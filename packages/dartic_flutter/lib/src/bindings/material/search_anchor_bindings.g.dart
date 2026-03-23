@@ -50,6 +50,349 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/src/widgets/widget_state.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 
+class _$SearchAnchor extends SearchAnchor implements DarticObjectHolder {
+  _$SearchAnchor(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, isFullScreen: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as bool?, searchController: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as SearchController?, viewBuilder: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as ViewBuilder?, viewLeading: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Widget?, viewTrailing: identical(superArgs[5], darticAbsent) ? null : superArgs[5] == null ? null : (superArgs[5] as Iterable).cast<Widget>(), viewHintText: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as String?, viewBackgroundColor: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as Color?, viewElevation: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as double?, viewSurfaceTintColor: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Color?, viewSide: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as BorderSide?, viewShape: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as OutlinedBorder?, viewBarPadding: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as EdgeInsetsGeometry?, headerHeight: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as double?, headerTextStyle: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as TextStyle?, headerHintStyle: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as TextStyle?, dividerColor: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as Color?, viewConstraints: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as BoxConstraints?, viewPadding: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as EdgeInsetsGeometry?, shrinkWrap: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as bool?, textCapitalization: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as TextCapitalization?, viewOnChanged: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as ValueChanged<String>?, viewOnSubmitted: identical(superArgs[22], darticAbsent) ? null : superArgs[22] as ValueChanged<String>?, viewOnClose: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as VoidCallback?, viewOnOpen: identical(superArgs[24], darticAbsent) ? null : superArgs[24] as VoidCallback?, builder: superArgs[25] as SearchAnchorChildBuilder, suggestionsBuilder: superArgs[26] as SuggestionsBuilder, textInputAction: identical(superArgs[27], darticAbsent) ? null : superArgs[27] as TextInputAction?, keyboardType: identical(superArgs[28], darticAbsent) ? null : superArgs[28] as TextInputType?, enabled: superArgs[29] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<SearchAnchor> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<SearchAnchor>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  bool? get isFullScreen {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isFullScreen');
+    if (identical(r, notOverridden)) return super.isFullScreen;
+    return r as bool?;
+  }
+
+  @override
+  SearchController? get searchController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'searchController');
+    if (identical(r, notOverridden)) return super.searchController;
+    return r as SearchController?;
+  }
+
+  @override
+  ViewBuilder? get viewBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewBuilder');
+    if (identical(r, notOverridden)) return super.viewBuilder;
+    return r as ViewBuilder?;
+  }
+
+  @override
+  Widget? get viewLeading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewLeading');
+    if (identical(r, notOverridden)) return super.viewLeading;
+    return r as Widget?;
+  }
+
+  @override
+  Iterable<Widget>? get viewTrailing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewTrailing');
+    if (identical(r, notOverridden)) return super.viewTrailing;
+    return r as Iterable<Widget>?;
+  }
+
+  @override
+  String? get viewHintText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewHintText');
+    if (identical(r, notOverridden)) return super.viewHintText;
+    return r as String?;
+  }
+
+  @override
+  Color? get viewBackgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewBackgroundColor');
+    if (identical(r, notOverridden)) return super.viewBackgroundColor;
+    return r as Color?;
+  }
+
+  @override
+  double? get viewElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewElevation');
+    if (identical(r, notOverridden)) return super.viewElevation;
+    return r as double?;
+  }
+
+  @override
+  Color? get viewSurfaceTintColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewSurfaceTintColor');
+    if (identical(r, notOverridden)) return super.viewSurfaceTintColor;
+    return r as Color?;
+  }
+
+  @override
+  BorderSide? get viewSide {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewSide');
+    if (identical(r, notOverridden)) return super.viewSide;
+    return r as BorderSide?;
+  }
+
+  @override
+  OutlinedBorder? get viewShape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewShape');
+    if (identical(r, notOverridden)) return super.viewShape;
+    return r as OutlinedBorder?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get viewBarPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewBarPadding');
+    if (identical(r, notOverridden)) return super.viewBarPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  double? get headerHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'headerHeight');
+    if (identical(r, notOverridden)) return super.headerHeight;
+    return r as double?;
+  }
+
+  @override
+  TextStyle? get headerTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'headerTextStyle');
+    if (identical(r, notOverridden)) return super.headerTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  TextStyle? get headerHintStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'headerHintStyle');
+    if (identical(r, notOverridden)) return super.headerHintStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  Color? get dividerColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dividerColor');
+    if (identical(r, notOverridden)) return super.dividerColor;
+    return r as Color?;
+  }
+
+  @override
+  BoxConstraints? get viewConstraints {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewConstraints');
+    if (identical(r, notOverridden)) return super.viewConstraints;
+    return r as BoxConstraints?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get viewPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewPadding');
+    if (identical(r, notOverridden)) return super.viewPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  bool? get shrinkWrap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shrinkWrap');
+    if (identical(r, notOverridden)) return super.shrinkWrap;
+    return r as bool?;
+  }
+
+  @override
+  TextCapitalization? get textCapitalization {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textCapitalization');
+    if (identical(r, notOverridden)) return super.textCapitalization;
+    return r as TextCapitalization?;
+  }
+
+  @override
+  ValueChanged<String>? get viewOnChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewOnChanged');
+    if (identical(r, notOverridden)) return super.viewOnChanged;
+    return r as ValueChanged<String>?;
+  }
+
+  @override
+  ValueChanged<String>? get viewOnSubmitted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewOnSubmitted');
+    if (identical(r, notOverridden)) return super.viewOnSubmitted;
+    return r as ValueChanged<String>?;
+  }
+
+  @override
+  VoidCallback? get viewOnClose {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewOnClose');
+    if (identical(r, notOverridden)) return super.viewOnClose;
+    return r as VoidCallback?;
+  }
+
+  @override
+  VoidCallback? get viewOnOpen {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewOnOpen');
+    if (identical(r, notOverridden)) return super.viewOnOpen;
+    return r as VoidCallback?;
+  }
+
+  @override
+  SearchAnchorChildBuilder get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as SearchAnchorChildBuilder;
+  }
+
+  @override
+  SuggestionsBuilder get suggestionsBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'suggestionsBuilder');
+    if (identical(r, notOverridden)) return super.suggestionsBuilder;
+    return r as SuggestionsBuilder;
+  }
+
+  @override
+  TextInputAction? get textInputAction {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textInputAction');
+    if (identical(r, notOverridden)) return super.textInputAction;
+    return r as TextInputAction?;
+  }
+
+  @override
+  TextInputType? get keyboardType {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keyboardType');
+    if (identical(r, notOverridden)) return super.keyboardType;
+    return r as TextInputType?;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<SearchAnchor> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  bool? get _super$isFullScreen => super.isFullScreen;
+  SearchController? get _super$searchController => super.searchController;
+  ViewBuilder? get _super$viewBuilder => super.viewBuilder;
+  Widget? get _super$viewLeading => super.viewLeading;
+  Iterable<Widget>? get _super$viewTrailing => super.viewTrailing;
+  String? get _super$viewHintText => super.viewHintText;
+  Color? get _super$viewBackgroundColor => super.viewBackgroundColor;
+  double? get _super$viewElevation => super.viewElevation;
+  Color? get _super$viewSurfaceTintColor => super.viewSurfaceTintColor;
+  BorderSide? get _super$viewSide => super.viewSide;
+  OutlinedBorder? get _super$viewShape => super.viewShape;
+  EdgeInsetsGeometry? get _super$viewBarPadding => super.viewBarPadding;
+  double? get _super$headerHeight => super.headerHeight;
+  TextStyle? get _super$headerTextStyle => super.headerTextStyle;
+  TextStyle? get _super$headerHintStyle => super.headerHintStyle;
+  Color? get _super$dividerColor => super.dividerColor;
+  BoxConstraints? get _super$viewConstraints => super.viewConstraints;
+  EdgeInsetsGeometry? get _super$viewPadding => super.viewPadding;
+  bool? get _super$shrinkWrap => super.shrinkWrap;
+  TextCapitalization? get _super$textCapitalization => super.textCapitalization;
+  ValueChanged<String>? get _super$viewOnChanged => super.viewOnChanged;
+  ValueChanged<String>? get _super$viewOnSubmitted => super.viewOnSubmitted;
+  VoidCallback? get _super$viewOnClose => super.viewOnClose;
+  VoidCallback? get _super$viewOnOpen => super.viewOnOpen;
+  SearchAnchorChildBuilder get _super$builder => super.builder;
+  SuggestionsBuilder get _super$suggestionsBuilder => super.suggestionsBuilder;
+  TextInputAction? get _super$textInputAction => super.textInputAction;
+  TextInputType? get _super$keyboardType => super.keyboardType;
+  bool get _super$enabled => super.enabled;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSearchAnchorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SearchAnchor(dispatch, obj, superArgs);
+
 abstract final class SearchAnchorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -58,7 +401,49 @@ abstract final class SearchAnchorBindings {
       test: (o) => o is SearchAnchor,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SearchAnchor(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$createState#0', (args) => (args[0] as _$SearchAnchor)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$toString#1', (args) => (args[0] as _$SearchAnchor)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$createElement#0', (args) => (args[0] as _$SearchAnchor)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$toStringShort#0', (args) => (args[0] as _$SearchAnchor)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$debugFillProperties#1', (args) { (args[0] as _$SearchAnchor)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$toStringShallow#2', (args) => (args[0] as _$SearchAnchor)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$toStringDeep#4', (args) => (args[0] as _$SearchAnchor)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SearchAnchor)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SearchAnchor)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$isFullScreen#0', (args) => (args[0] as _$SearchAnchor)._super$isFullScreen);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$searchController#0', (args) => (args[0] as _$SearchAnchor)._super$searchController);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewBuilder#0', (args) => (args[0] as _$SearchAnchor)._super$viewBuilder);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewLeading#0', (args) => (args[0] as _$SearchAnchor)._super$viewLeading);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewTrailing#0', (args) => (args[0] as _$SearchAnchor)._super$viewTrailing);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewHintText#0', (args) => (args[0] as _$SearchAnchor)._super$viewHintText);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewBackgroundColor#0', (args) => (args[0] as _$SearchAnchor)._super$viewBackgroundColor);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewElevation#0', (args) => (args[0] as _$SearchAnchor)._super$viewElevation);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewSurfaceTintColor#0', (args) => (args[0] as _$SearchAnchor)._super$viewSurfaceTintColor);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewSide#0', (args) => (args[0] as _$SearchAnchor)._super$viewSide);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewShape#0', (args) => (args[0] as _$SearchAnchor)._super$viewShape);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewBarPadding#0', (args) => (args[0] as _$SearchAnchor)._super$viewBarPadding);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$headerHeight#0', (args) => (args[0] as _$SearchAnchor)._super$headerHeight);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$headerTextStyle#0', (args) => (args[0] as _$SearchAnchor)._super$headerTextStyle);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$headerHintStyle#0', (args) => (args[0] as _$SearchAnchor)._super$headerHintStyle);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$dividerColor#0', (args) => (args[0] as _$SearchAnchor)._super$dividerColor);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewConstraints#0', (args) => (args[0] as _$SearchAnchor)._super$viewConstraints);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewPadding#0', (args) => (args[0] as _$SearchAnchor)._super$viewPadding);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$shrinkWrap#0', (args) => (args[0] as _$SearchAnchor)._super$shrinkWrap);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$textCapitalization#0', (args) => (args[0] as _$SearchAnchor)._super$textCapitalization);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewOnChanged#0', (args) => (args[0] as _$SearchAnchor)._super$viewOnChanged);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewOnSubmitted#0', (args) => (args[0] as _$SearchAnchor)._super$viewOnSubmitted);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewOnClose#0', (args) => (args[0] as _$SearchAnchor)._super$viewOnClose);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$viewOnOpen#0', (args) => (args[0] as _$SearchAnchor)._super$viewOnOpen);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$builder#0', (args) => (args[0] as _$SearchAnchor)._super$builder);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$suggestionsBuilder#0', (args) => (args[0] as _$SearchAnchor)._super$suggestionsBuilder);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$textInputAction#0', (args) => (args[0] as _$SearchAnchor)._super$textInputAction);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$keyboardType#0', (args) => (args[0] as _$SearchAnchor)._super$keyboardType);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$enabled#0', (args) => (args[0] as _$SearchAnchor)._super$enabled);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$hashCode#0', (args) => (args[0] as _$SearchAnchor)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$key#0', (args) => (args[0] as _$SearchAnchor)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

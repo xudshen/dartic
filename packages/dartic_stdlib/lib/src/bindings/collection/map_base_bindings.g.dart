@@ -9,7 +9,7 @@ import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
 
-class _$MapBase extends MapBase implements DarticObjectHolder {
+class _$MapBase extends MapBase<dynamic, dynamic> implements DarticObjectHolder {
   _$MapBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -18,12 +18,12 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   final DarticObject $darticObject;
 
   @override
-  Object? remove(Object? key) {
+  dynamic remove(Object? key) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [key]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
-    return r as Object?;
+    return r as dynamic;
   }
 
   @override
@@ -151,10 +151,10 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   }
 
   @override
-  Object? operator [](Object? index) {
+  dynamic operator [](Object? index) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator [] must be overridden in dartic code'); }
-    return r as Object?;
+    return r as dynamic;
   }
 
   @override
@@ -175,7 +175,9 @@ class _$MapBase extends MapBase implements DarticObjectHolder {
   void _super$addAll(Map other) { super.addAll(other); }
   bool _super$containsValue(Object? value) => super.containsValue(value);
   dynamic _super$putIfAbsent(dynamic key, dynamic ifAbsent) => super.putIfAbsent(key, ifAbsent);
-  dynamic _super$update(dynamic key, dynamic update, {dynamic ifAbsent}) => super.update(key, update, ifAbsent: ifAbsent);
+  dynamic _super$update(dynamic key, dynamic update, {dynamic? ifAbsent}) {
+    return (!identical(ifAbsent, darticAbsent)) ? super.update(key, update, ifAbsent: ifAbsent as dynamic Function()?) : super.update(key, update);
+  }
   void _super$updateAll(dynamic update) { super.updateAll(update); }
   void _super$addEntries(Iterable<MapEntry> newEntries) { super.addEntries(newEntries); }
   void _super$removeWhere(dynamic test) { super.removeWhere(test); }

@@ -23,6 +23,70 @@ import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/widgets/transitions.dart';
 
+class _$FadeUpwardsPageTransitionsBuilder extends FadeUpwardsPageTransitionsBuilder implements DarticObjectHolder {
+  _$FadeUpwardsPageTransitionsBuilder(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition');
+    if (identical(r, notOverridden)) return super.delegatedTransition;
+    return r as DelegatedTransitionBuilder?;
+  }
+
+  @override
+  Duration get transitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transitionDuration');
+    if (identical(r, notOverridden)) return super.transitionDuration;
+    return r as Duration;
+  }
+
+  @override
+  Duration get reverseTransitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'reverseTransitionDuration');
+    if (identical(r, notOverridden)) return super.reverseTransitionDuration;
+    return r as Duration;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+  DelegatedTransitionBuilder? get _super$delegatedTransition => super.delegatedTransition;
+  Duration get _super$transitionDuration => super.transitionDuration;
+  Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFadeUpwardsPageTransitionsBuilderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FadeUpwardsPageTransitionsBuilder(dispatch, obj, superArgs);
+
 abstract final class FadeUpwardsPageTransitionsBuilderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +95,14 @@ abstract final class FadeUpwardsPageTransitionsBuilderBindings {
       test: (o) => o is FadeUpwardsPageTransitionsBuilder,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/page_transitions_builder.dart::PageTransitionsBuilder'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FadeUpwardsPageTransitionsBuilder(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$toString#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$delegatedTransition#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$delegatedTransition);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$transitionDuration#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$transitionDuration);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$reverseTransitionDuration);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

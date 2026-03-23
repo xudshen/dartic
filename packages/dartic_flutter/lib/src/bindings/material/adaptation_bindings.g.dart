@@ -76,6 +76,62 @@ import 'package:flutter/src/material/toggle_buttons_theme.dart';
 import 'package:flutter/src/material/tooltip_theme.dart';
 import 'package:flutter/src/material/typography.dart';
 
+class _$Adaptation extends Adaptation<dynamic> implements DarticObjectHolder {
+  _$Adaptation(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  dynamic adapt(ThemeData theme, dynamic defaultValue) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adapt', [theme, defaultValue]);
+    if (identical(r, notOverridden)) return super.adapt(theme, defaultValue);
+    return r as dynamic;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Type get type {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
+    if (identical(r, notOverridden)) return super.type;
+    return r as Type;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  dynamic _super$adapt(ThemeData theme, dynamic defaultValue) => super.adapt(theme, defaultValue);
+  String _super$toString() => super.toString();
+  Type get _super$type => super.type;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAdaptationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Adaptation(dispatch, obj, superArgs);
+
 abstract final class AdaptationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -83,7 +139,13 @@ abstract final class AdaptationBindings {
       type: Adaptation,
       test: (o) => o is Adaptation,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Adaptation(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::Adaptation::\$super\$adapt#2', (args) => (args[0] as _$Adaptation)._super$adapt(args[1] as ThemeData, args[2]));
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::Adaptation::\$super\$toString#0', (args) => (args[0] as _$Adaptation)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::Adaptation::\$super\$type#0', (args) => (args[0] as _$Adaptation)._super$type);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::Adaptation::\$super\$hashCode#0', (args) => (args[0] as _$Adaptation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

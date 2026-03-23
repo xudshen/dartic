@@ -84,15 +84,10 @@ class ClassConfig {
   /// 1. 生成 `_$ClassName` Bridge 类（extends 宿主类 + implements DarticObjectHolder）
   /// 2. 在 registerClass 中添加 bridgeFactory 参数
   /// 3. 注册 super 转发器到 HostBindingRegistry
-  final bool bridge;
-
-  /// 是否生成 interface Bridge 类（implements 模式）。
   ///
-  /// 当为 true 时，代码生成器会：
-  /// 1. 生成 `_$ClassName` Bridge 类（implements 宿主类 + DarticObjectHolder）
-  /// 2. 在 registerClass 中添加 bridgeFactory 参数
-  /// 类似 bridge 但使用 implements 模式，用于 multi-face IS-A。
-  final bool face;
+  /// extends vs implements mode is auto-detected from class modifiers
+  /// by the TypeAnalyzer (interface class, mixin, mixin class).
+  final bool bridge;
 
   /// The actual declaring library URI for this class (from Kernel IR).
   /// Used by directory discovery to resolve the correct library for analysis.
@@ -104,7 +99,6 @@ class ClassConfig {
     this.sourceName,
     this.internalTypes = const [],
     this.bridge = false,
-    this.face = false,
     this.sourceLibraryUri,
   });
 

@@ -20,6 +20,73 @@ import 'package:flutter/src/widgets/view.dart';
 import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter/rendering.dart';
 
+class _$WindowingOwner extends WindowingOwner implements DarticObjectHolder {
+  _$WindowingOwner(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  RegularWindowController createRegularWindowController({required RegularWindowControllerDelegate delegate, Size? preferredSize, BoxConstraints? preferredConstraints, String? title}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRegularWindowController', [delegate, preferredSize, preferredConstraints, title]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createRegularWindowController must be overridden in dartic code');
+    }
+    return r as RegularWindowController;
+  }
+
+  @override
+  DialogWindowController createDialogWindowController({required DialogWindowControllerDelegate delegate, Size? preferredSize, BoxConstraints? preferredConstraints, BaseWindowController? parent, String? title}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDialogWindowController', [delegate, preferredSize, preferredConstraints, parent, title]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createDialogWindowController must be overridden in dartic code');
+    }
+    return r as DialogWindowController;
+  }
+
+  @override
+  bool hasTopLevelWindows() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasTopLevelWindows', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method hasTopLevelWindows must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createWindowingOwnerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$WindowingOwner(dispatch, obj, superArgs);
+
 abstract final class WindowingOwnerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +94,11 @@ abstract final class WindowingOwnerBindings {
       type: WindowingOwner,
       test: (o) => o is WindowingOwner,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$WindowingOwner(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/_window.dart::WindowingOwner::\$super\$toString#0', (args) => (args[0] as _$WindowingOwner)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/_window.dart::WindowingOwner::\$super\$hashCode#0', (args) => (args[0] as _$WindowingOwner)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

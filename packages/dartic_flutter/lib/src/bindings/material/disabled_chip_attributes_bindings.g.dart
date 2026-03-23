@@ -27,6 +27,46 @@ import 'package:flutter/src/material/theme_data.dart';
 import 'package:flutter/src/material/tooltip.dart';
 import 'dart:ui';
 
+class _$DisabledChipAttributes implements DisabledChipAttributes, DarticObjectHolder {
+  _$DisabledChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool get isEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Color? get disabledColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'disabledColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter disabledColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDisabledChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DisabledChipAttributes(dispatch, obj, superArgs);
+
 abstract final class DisabledChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,6 +74,8 @@ abstract final class DisabledChipAttributesBindings {
       type: DisabledChipAttributes,
       test: (o) => o is DisabledChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DisabledChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

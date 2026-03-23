@@ -16,6 +16,114 @@ import 'package:flutter/src/rendering/debug.dart';
 import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/gestures/hit_test.dart';
 
+class _$BoxHitTestResult extends BoxHitTestResult implements DarticObjectHolder {
+  _$BoxHitTestResult(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool addWithPaintTransform({required Matrix4? transform, required ui.Offset position, required BoxHitTest hitTest}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithPaintTransform', [transform, position, hitTest]);
+    if (identical(r, notOverridden)) return super.addWithPaintTransform(transform: transform, position: position, hitTest: (a, b) => hitTest(a, b) as bool);
+    return r as bool;
+  }
+
+  @override
+  bool addWithPaintOffset({required ui.Offset? offset, required ui.Offset position, required BoxHitTest hitTest}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithPaintOffset', [offset, position, hitTest]);
+    if (identical(r, notOverridden)) return super.addWithPaintOffset(offset: offset, position: position, hitTest: (a, b) => hitTest(a, b) as bool);
+    return r as bool;
+  }
+
+  @override
+  bool addWithRawTransform({required Matrix4? transform, required ui.Offset position, required BoxHitTest hitTest}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithRawTransform', [transform, position, hitTest]);
+    if (identical(r, notOverridden)) return super.addWithRawTransform(transform: transform, position: position, hitTest: (a, b) => hitTest(a, b) as bool);
+    return r as bool;
+  }
+
+  @override
+  bool addWithOutOfBandPosition({ui.Offset? paintOffset, Matrix4? paintTransform, Matrix4? rawTransform, required BoxHitTestWithOutOfBandPosition hitTest}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithOutOfBandPosition', [paintOffset, paintTransform, rawTransform, hitTest]);
+    if (identical(r, notOverridden)) return super.addWithOutOfBandPosition(paintOffset: paintOffset, paintTransform: paintTransform, rawTransform: rawTransform, hitTest: (a) => hitTest(a) as bool);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void add(HitTestEntry<HitTestTarget> entry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [entry]);
+    if (identical(r, notOverridden)) { super.add(entry); return; }
+  }
+
+  @override
+  void pushTransform(Matrix4 transform) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushTransform', [transform]);
+    if (identical(r, notOverridden)) { super.pushTransform(transform); return; }
+  }
+
+  @override
+  void pushOffset(ui.Offset offset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushOffset', [offset]);
+    if (identical(r, notOverridden)) { super.pushOffset(offset); return; }
+  }
+
+  @override
+  void popTransform() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popTransform', const []);
+    if (identical(r, notOverridden)) { super.popTransform(); return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Iterable<HitTestEntry<HitTestTarget>> get path {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
+    if (identical(r, notOverridden)) return super.path;
+    return r as Iterable<HitTestEntry<HitTestTarget>>;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  bool _super$addWithPaintTransform({required Matrix4? transform, required ui.Offset position, required BoxHitTest hitTest}) => super.addWithPaintTransform(transform: transform, position: position, hitTest: hitTest);
+  bool _super$addWithPaintOffset({required ui.Offset? offset, required ui.Offset position, required BoxHitTest hitTest}) => super.addWithPaintOffset(offset: offset, position: position, hitTest: hitTest);
+  bool _super$addWithRawTransform({required Matrix4? transform, required ui.Offset position, required BoxHitTest hitTest}) => super.addWithRawTransform(transform: transform, position: position, hitTest: hitTest);
+  bool _super$addWithOutOfBandPosition({ui.Offset? paintOffset, Matrix4? paintTransform, Matrix4? rawTransform, required BoxHitTestWithOutOfBandPosition hitTest}) => super.addWithOutOfBandPosition(paintOffset: paintOffset, paintTransform: paintTransform, rawTransform: rawTransform, hitTest: hitTest);
+  String _super$toString() => super.toString();
+  void _super$add(HitTestEntry<HitTestTarget> entry) { super.add(entry); }
+  void _super$pushTransform(Matrix4 transform) { super.pushTransform(transform); }
+  void _super$pushOffset(ui.Offset offset) { super.pushOffset(offset); }
+  void _super$popTransform() { super.popTransform(); }
+  int get _super$hashCode => super.hashCode;
+  Iterable<HitTestEntry<HitTestTarget>> get _super$path => super.path;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBoxHitTestResultBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BoxHitTestResult(dispatch, obj, superArgs);
+
 abstract final class BoxHitTestResultBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +132,20 @@ abstract final class BoxHitTestResultBindings {
       test: (o) => o is BoxHitTestResult,
       methods: methodMap(),
       superclasses: ['package:flutter/src/gestures/hit_test.dart::HitTestResult'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BoxHitTestResult(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$addWithPaintTransform#3', (args) => (args[0] as _$BoxHitTestResult)._super$addWithPaintTransform(transform: args[1] as Matrix4?, position: args[2] as ui.Offset, hitTest: (a, b) => (args[3] as Function)(a, b) as bool));
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$addWithPaintOffset#3', (args) => (args[0] as _$BoxHitTestResult)._super$addWithPaintOffset(offset: args[1] as ui.Offset?, position: args[2] as ui.Offset, hitTest: (a, b) => (args[3] as Function)(a, b) as bool));
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$addWithRawTransform#3', (args) => (args[0] as _$BoxHitTestResult)._super$addWithRawTransform(transform: args[1] as Matrix4?, position: args[2] as ui.Offset, hitTest: (a, b) => (args[3] as Function)(a, b) as bool));
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$addWithOutOfBandPosition#4', (args) => (args[0] as _$BoxHitTestResult)._super$addWithOutOfBandPosition(paintOffset: identical(args[1], darticAbsent) ? null : args[1] as ui.Offset?, paintTransform: identical(args[2], darticAbsent) ? null : args[2] as Matrix4?, rawTransform: identical(args[3], darticAbsent) ? null : args[3] as Matrix4?, hitTest: (a) => (args[4] as Function)(a) as bool));
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$toString#0', (args) => (args[0] as _$BoxHitTestResult)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$add#1', (args) { (args[0] as _$BoxHitTestResult)._super$add(args[1] as HitTestEntry<HitTestTarget>); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$pushTransform#1', (args) { (args[0] as _$BoxHitTestResult)._super$pushTransform(args[1] as Matrix4); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$pushOffset#1', (args) { (args[0] as _$BoxHitTestResult)._super$pushOffset(args[1] as ui.Offset); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$popTransform#0', (args) { (args[0] as _$BoxHitTestResult)._super$popTransform(); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$hashCode#0', (args) => (args[0] as _$BoxHitTestResult)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$path#0', (args) => (args[0] as _$BoxHitTestResult)._super$path);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

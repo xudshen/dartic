@@ -18,6 +18,79 @@ import 'package:flutter/src/rendering/binding.dart';
 import 'package:flutter/src/rendering/debug.dart';
 import 'package:flutter/src/rendering/layer.dart';
 
+class _$PipelineManifold extends PipelineManifold implements DarticObjectHolder {
+  _$PipelineManifold(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void requestVisualUpdate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestVisualUpdate', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method requestVisualUpdate must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void addListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool get semanticsEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter semanticsEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPipelineManifoldBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PipelineManifold(dispatch, obj, superArgs);
+
 abstract final class PipelineManifoldBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +99,11 @@ abstract final class PipelineManifoldBindings {
       test: (o) => o is PipelineManifold,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PipelineManifold(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineManifold::\$super\$toString#0', (args) => (args[0] as _$PipelineManifold)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineManifold::\$super\$hashCode#0', (args) => (args[0] as _$PipelineManifold)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

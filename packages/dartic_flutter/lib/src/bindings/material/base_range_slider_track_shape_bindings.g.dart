@@ -18,6 +18,37 @@ import 'package:flutter/src/material/slider_value_indicator_shape.dart';
 import 'dart:ui';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$BaseRangeSliderTrackShape implements BaseRangeSliderTrackShape, DarticObjectHolder {
+  _$BaseRangeSliderTrackShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Rect getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPreferredRect must be overridden in dartic code');
+    }
+    return r as Rect;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBaseRangeSliderTrackShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BaseRangeSliderTrackShape(dispatch, obj, superArgs);
+
 abstract final class BaseRangeSliderTrackShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,6 +56,8 @@ abstract final class BaseRangeSliderTrackShapeBindings {
       type: BaseRangeSliderTrackShape,
       test: (o) => o is BaseRangeSliderTrackShape,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BaseRangeSliderTrackShape(dispatch, darticObject, superArgs),
     );
   }
 

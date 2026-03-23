@@ -29,6 +29,149 @@ import 'package:flutter/src/painting/gradient.dart';
 import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$StepStyle extends StepStyle implements DarticObjectHolder {
+  _$StepStyle(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(color: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Color?, errorColor: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Color?, connectorColor: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Color?, connectorThickness: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?, border: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as BoxBorder?, boxShadow: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as BoxShadow?, gradient: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Gradient?, indexStyle: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as TextStyle?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  StepStyle copyWith({Color? color, Color? errorColor, Color? connectorColor, double? connectorThickness, BoxBorder? border, BoxShadow? boxShadow, Gradient? gradient, TextStyle? indexStyle}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, errorColor, connectorColor, connectorThickness, border, boxShadow, gradient, indexStyle]);
+    if (identical(r, notOverridden)) return super.copyWith(color: color, errorColor: errorColor, connectorColor: connectorColor, connectorThickness: connectorThickness, border: border, boxShadow: boxShadow, gradient: gradient, indexStyle: indexStyle);
+    return r as StepStyle;
+  }
+
+  @override
+  StepStyle merge(StepStyle? stepStyle) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [stepStyle]);
+    if (identical(r, notOverridden)) return super.merge(stepStyle);
+    return r as StepStyle;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color?;
+  }
+
+  @override
+  Color? get errorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorColor');
+    if (identical(r, notOverridden)) return super.errorColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get connectorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'connectorColor');
+    if (identical(r, notOverridden)) return super.connectorColor;
+    return r as Color?;
+  }
+
+  @override
+  double? get connectorThickness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'connectorThickness');
+    if (identical(r, notOverridden)) return super.connectorThickness;
+    return r as double?;
+  }
+
+  @override
+  BoxBorder? get border {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'border');
+    if (identical(r, notOverridden)) return super.border;
+    return r as BoxBorder?;
+  }
+
+  @override
+  BoxShadow? get boxShadow {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'boxShadow');
+    if (identical(r, notOverridden)) return super.boxShadow;
+    return r as BoxShadow?;
+  }
+
+  @override
+  Gradient? get gradient {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'gradient');
+    if (identical(r, notOverridden)) return super.gradient;
+    return r as Gradient?;
+  }
+
+  @override
+  TextStyle? get indexStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indexStyle');
+    if (identical(r, notOverridden)) return super.indexStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  StepStyle _super$copyWith({Color? color, Color? errorColor, Color? connectorColor, double? connectorThickness, BoxBorder? border, BoxShadow? boxShadow, Gradient? gradient, TextStyle? indexStyle}) => super.copyWith(color: color, errorColor: errorColor, connectorColor: connectorColor, connectorThickness: connectorThickness, border: border, boxShadow: boxShadow, gradient: gradient, indexStyle: indexStyle);
+  StepStyle _super$merge(StepStyle? stepStyle) => super.merge(stepStyle);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  Color? get _super$color => super.color;
+  Color? get _super$errorColor => super.errorColor;
+  Color? get _super$connectorColor => super.connectorColor;
+  double? get _super$connectorThickness => super.connectorThickness;
+  BoxBorder? get _super$border => super.border;
+  BoxShadow? get _super$boxShadow => super.boxShadow;
+  Gradient? get _super$gradient => super.gradient;
+  TextStyle? get _super$indexStyle => super.indexStyle;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStepStyleBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StepStyle(dispatch, obj, superArgs);
+
 abstract final class StepStyleBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,7 +180,24 @@ abstract final class StepStyleBindings {
       test: (o) => o is StepStyle,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StepStyle(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$copyWith#8', (args) => (args[0] as _$StepStyle)._super$copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as Color?, errorColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, connectorColor: identical(args[3], darticAbsent) ? null : args[3] as Color?, connectorThickness: identical(args[4], darticAbsent) ? null : args[4] as double?, border: identical(args[5], darticAbsent) ? null : args[5] as BoxBorder?, boxShadow: identical(args[6], darticAbsent) ? null : args[6] as BoxShadow?, gradient: identical(args[7], darticAbsent) ? null : args[7] as Gradient?, indexStyle: identical(args[8], darticAbsent) ? null : args[8] as TextStyle?));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$merge#1', (args) => (args[0] as _$StepStyle)._super$merge(args[1] as StepStyle?));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$debugFillProperties#1', (args) { (args[0] as _$StepStyle)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$toString#1', (args) => (args[0] as _$StepStyle)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$toStringShort#0', (args) => (args[0] as _$StepStyle)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StepStyle)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$color#0', (args) => (args[0] as _$StepStyle)._super$color);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$errorColor#0', (args) => (args[0] as _$StepStyle)._super$errorColor);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$connectorColor#0', (args) => (args[0] as _$StepStyle)._super$connectorColor);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$connectorThickness#0', (args) => (args[0] as _$StepStyle)._super$connectorThickness);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$border#0', (args) => (args[0] as _$StepStyle)._super$border);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$boxShadow#0', (args) => (args[0] as _$StepStyle)._super$boxShadow);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$gradient#0', (args) => (args[0] as _$StepStyle)._super$gradient);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$indexStyle#0', (args) => (args[0] as _$StepStyle)._super$indexStyle);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::StepStyle::\$super\$hashCode#0', (args) => (args[0] as _$StepStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

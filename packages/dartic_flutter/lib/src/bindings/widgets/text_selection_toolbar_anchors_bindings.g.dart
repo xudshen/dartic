@@ -13,6 +13,62 @@ import 'dart:ui';
 import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter/src/rendering/editable.dart';
 
+class _$TextSelectionToolbarAnchors extends TextSelectionToolbarAnchors implements DarticObjectHolder {
+  _$TextSelectionToolbarAnchors(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(primaryAnchor: superArgs[0] as Offset, secondaryAnchor: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Offset?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Offset get primaryAnchor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'primaryAnchor');
+    if (identical(r, notOverridden)) return super.primaryAnchor;
+    return r as Offset;
+  }
+
+  @override
+  Offset? get secondaryAnchor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'secondaryAnchor');
+    if (identical(r, notOverridden)) return super.secondaryAnchor;
+    return r as Offset?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Offset get _super$primaryAnchor => super.primaryAnchor;
+  Offset? get _super$secondaryAnchor => super.secondaryAnchor;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextSelectionToolbarAnchorsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextSelectionToolbarAnchors(dispatch, obj, superArgs);
+
 abstract final class TextSelectionToolbarAnchorsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,8 +76,14 @@ abstract final class TextSelectionToolbarAnchorsBindings {
       type: TextSelectionToolbarAnchors,
       test: (o) => o is TextSelectionToolbarAnchors,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextSelectionToolbarAnchors(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/text_selection_toolbar_anchors.dart::TextSelectionToolbarAnchors::getSelectionRect#4', (args) => TextSelectionToolbarAnchors.getSelectionRect(args[0] as RenderBox, args[1] as double, args[2] as double, (args[3] as List).cast<TextSelectionPoint>()));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection_toolbar_anchors.dart::TextSelectionToolbarAnchors::\$super\$toString#0', (args) => (args[0] as _$TextSelectionToolbarAnchors)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/text_selection_toolbar_anchors.dart::TextSelectionToolbarAnchors::\$super\$primaryAnchor#0', (args) => (args[0] as _$TextSelectionToolbarAnchors)._super$primaryAnchor);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection_toolbar_anchors.dart::TextSelectionToolbarAnchors::\$super\$secondaryAnchor#0', (args) => (args[0] as _$TextSelectionToolbarAnchors)._super$secondaryAnchor);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection_toolbar_anchors.dart::TextSelectionToolbarAnchors::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionToolbarAnchors)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

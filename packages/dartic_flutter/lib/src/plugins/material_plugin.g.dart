@@ -6,6 +6,7 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
+import '../bindings/material/popup_menu_divider_bindings.g.dart';
 import '../bindings/material/about_dialog_bindings.g.dart';
 import '../bindings/material/about_list_tile_bindings.g.dart';
 import '../bindings/material/action_chip_bindings.g.dart';
@@ -284,7 +285,6 @@ import '../bindings/material/persistent_bottom_sheet_controller_bindings.g.dart'
 import '../bindings/material/platform_adaptive_icons_bindings.g.dart';
 import '../bindings/material/popup_menu_button_bindings.g.dart';
 import '../bindings/material/popup_menu_button_state_bindings.g.dart';
-import '../bindings/material/popup_menu_divider_bindings.g.dart';
 import '../bindings/material/popup_menu_entry_bindings.g.dart';
 import '../bindings/material/popup_menu_item_bindings.g.dart';
 import '../bindings/material/popup_menu_item_state_bindings.g.dart';
@@ -450,6 +450,7 @@ class MaterialPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext ctx) {
+    PopupMenuDividerBindings.register(ctx);
     AboutDialogBindings.register(ctx);
     AboutListTileBindings.register(ctx);
     ActionChipBindings.register(ctx);
@@ -728,7 +729,6 @@ class MaterialPlugin extends DarticPlugin {
     PlatformAdaptiveIconsBindings.register(ctx);
     PopupMenuButtonBindings.register(ctx);
     PopupMenuButtonStateBindings.register(ctx);
-    PopupMenuDividerBindings.register(ctx);
     PopupMenuEntryBindings.register(ctx);
     PopupMenuItemBindings.register(ctx);
     PopupMenuItemStateBindings.register(ctx);

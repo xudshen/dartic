@@ -18,6 +18,61 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+base class _$Vertices extends Vertices implements DarticObjectHolder {
+  _$Vertices(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as VertexMode, (superArgs[1] as List).cast<Offset>(), colors: identical(superArgs[2], darticAbsent) ? null : superArgs[2] == null ? null : (superArgs[2] as List).cast<Color>(), textureCoordinates: identical(superArgs[3], darticAbsent) ? null : superArgs[3] == null ? null : (superArgs[3] as List).cast<Offset>(), indices: identical(superArgs[4], darticAbsent) ? null : superArgs[4] == null ? null : (superArgs[4] as List).cast<int>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get debugDisposed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugDisposed');
+    if (identical(r, notOverridden)) return super.debugDisposed;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  bool get _super$debugDisposed => super.debugDisposed;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createVerticesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Vertices(dispatch, obj, superArgs);
+
 abstract final class VerticesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +80,13 @@ abstract final class VerticesBindings {
       type: Vertices,
       test: (o) => o is Vertices,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Vertices(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::Vertices::\$super\$dispose#0', (args) { (args[0] as _$Vertices)._super$dispose(); return null; });
+    ctx.registerBinding('dart:ui::Vertices::\$super\$toString#0', (args) => (args[0] as _$Vertices)._super$toString());
+    ctx.registerBinding('dart:ui::Vertices::\$super\$debugDisposed#0', (args) => (args[0] as _$Vertices)._super$debugDisposed);
+    ctx.registerBinding('dart:ui::Vertices::\$super\$hashCode#0', (args) => (args[0] as _$Vertices)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

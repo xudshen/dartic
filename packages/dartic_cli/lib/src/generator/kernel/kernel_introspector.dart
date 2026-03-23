@@ -258,12 +258,24 @@ class KernelIntrospector {
     if (seen.contains(name)) return;
     seen.add(name);
 
+    final hasFBounded = cls.typeParameters.any((tp) {
+      final bound = tp.bound;
+      return bound is ir.InterfaceType && bound.classNode.name == name;
+    });
+
     result.add(DiscoveredClass(
       name: name,
       libraryUri: cls.enclosingLibrary.importUri.toString(),
       isAbstract: cls.isAbstract,
       isFinal: cls.isFinal,
       hasGenerativeCtor: cls.constructors.any((c) => !c.isExternal),
+      isSealed: cls.isSealed,
+      isBase: cls.isBase,
+      isInterface: cls.isInterface,
+      isMixinClass: cls.isMixinClass,
+      isMixinDeclaration: cls.isMixinDeclaration,
+      typeParamCount: cls.typeParameters.length,
+      hasFBoundedTypeParam: hasFBounded,
     ));
   }
 

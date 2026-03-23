@@ -42,6 +42,293 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$DateRangePickerDialog extends DateRangePickerDialog implements DarticObjectHolder {
+  _$DateRangePickerDialog(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, initialDateRange: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as DateTimeRange<DateTime>?, firstDate: superArgs[2] as DateTime, lastDate: superArgs[3] as DateTime, currentDate: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as DateTime?, initialEntryMode: superArgs[5] as DatePickerEntryMode, helpText: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as String?, cancelText: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as String?, confirmText: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as String?, saveText: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as String?, errorInvalidRangeText: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as String?, errorFormatText: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as String?, errorInvalidText: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as String?, fieldStartHintText: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as String?, fieldEndHintText: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as String?, fieldStartLabelText: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as String?, fieldEndLabelText: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as String?, keyboardType: superArgs[17] as TextInputType, restorationId: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as String?, switchToInputEntryModeIcon: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as Icon?, switchToCalendarEntryModeIcon: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as Icon?, selectableDayPredicate: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as SelectableDayForRangePredicate?, calendarDelegate: superArgs[22] as CalendarDelegate<DateTime>);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<DateRangePickerDialog> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<DateRangePickerDialog>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  DateTimeRange<DateTime>? get initialDateRange {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialDateRange');
+    if (identical(r, notOverridden)) return super.initialDateRange;
+    return r as DateTimeRange<DateTime>?;
+  }
+
+  @override
+  DateTime get firstDate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstDate');
+    if (identical(r, notOverridden)) return super.firstDate;
+    return r as DateTime;
+  }
+
+  @override
+  DateTime get lastDate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'lastDate');
+    if (identical(r, notOverridden)) return super.lastDate;
+    return r as DateTime;
+  }
+
+  @override
+  DateTime? get currentDate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentDate');
+    if (identical(r, notOverridden)) return super.currentDate;
+    return r as DateTime?;
+  }
+
+  @override
+  DatePickerEntryMode get initialEntryMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialEntryMode');
+    if (identical(r, notOverridden)) return super.initialEntryMode;
+    return r as DatePickerEntryMode;
+  }
+
+  @override
+  String? get cancelText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cancelText');
+    if (identical(r, notOverridden)) return super.cancelText;
+    return r as String?;
+  }
+
+  @override
+  String? get confirmText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'confirmText');
+    if (identical(r, notOverridden)) return super.confirmText;
+    return r as String?;
+  }
+
+  @override
+  String? get saveText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'saveText');
+    if (identical(r, notOverridden)) return super.saveText;
+    return r as String?;
+  }
+
+  @override
+  String? get helpText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'helpText');
+    if (identical(r, notOverridden)) return super.helpText;
+    return r as String?;
+  }
+
+  @override
+  String? get errorInvalidRangeText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorInvalidRangeText');
+    if (identical(r, notOverridden)) return super.errorInvalidRangeText;
+    return r as String?;
+  }
+
+  @override
+  String? get errorFormatText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorFormatText');
+    if (identical(r, notOverridden)) return super.errorFormatText;
+    return r as String?;
+  }
+
+  @override
+  String? get errorInvalidText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorInvalidText');
+    if (identical(r, notOverridden)) return super.errorInvalidText;
+    return r as String?;
+  }
+
+  @override
+  String? get fieldStartHintText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fieldStartHintText');
+    if (identical(r, notOverridden)) return super.fieldStartHintText;
+    return r as String?;
+  }
+
+  @override
+  String? get fieldEndHintText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fieldEndHintText');
+    if (identical(r, notOverridden)) return super.fieldEndHintText;
+    return r as String?;
+  }
+
+  @override
+  String? get fieldStartLabelText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fieldStartLabelText');
+    if (identical(r, notOverridden)) return super.fieldStartLabelText;
+    return r as String?;
+  }
+
+  @override
+  String? get fieldEndLabelText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fieldEndLabelText');
+    if (identical(r, notOverridden)) return super.fieldEndLabelText;
+    return r as String?;
+  }
+
+  @override
+  TextInputType get keyboardType {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keyboardType');
+    if (identical(r, notOverridden)) return super.keyboardType;
+    return r as TextInputType;
+  }
+
+  @override
+  String? get restorationId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'restorationId');
+    if (identical(r, notOverridden)) return super.restorationId;
+    return r as String?;
+  }
+
+  @override
+  Icon? get switchToInputEntryModeIcon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'switchToInputEntryModeIcon');
+    if (identical(r, notOverridden)) return super.switchToInputEntryModeIcon;
+    return r as Icon?;
+  }
+
+  @override
+  Icon? get switchToCalendarEntryModeIcon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'switchToCalendarEntryModeIcon');
+    if (identical(r, notOverridden)) return super.switchToCalendarEntryModeIcon;
+    return r as Icon?;
+  }
+
+  @override
+  SelectableDayForRangePredicate? get selectableDayPredicate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectableDayPredicate');
+    if (identical(r, notOverridden)) return super.selectableDayPredicate;
+    return r as SelectableDayForRangePredicate?;
+  }
+
+  @override
+  CalendarDelegate<DateTime> get calendarDelegate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'calendarDelegate');
+    if (identical(r, notOverridden)) return super.calendarDelegate;
+    return r as CalendarDelegate<DateTime>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<DateRangePickerDialog> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  DateTimeRange<DateTime>? get _super$initialDateRange => super.initialDateRange;
+  DateTime get _super$firstDate => super.firstDate;
+  DateTime get _super$lastDate => super.lastDate;
+  DateTime? get _super$currentDate => super.currentDate;
+  DatePickerEntryMode get _super$initialEntryMode => super.initialEntryMode;
+  String? get _super$cancelText => super.cancelText;
+  String? get _super$confirmText => super.confirmText;
+  String? get _super$saveText => super.saveText;
+  String? get _super$helpText => super.helpText;
+  String? get _super$errorInvalidRangeText => super.errorInvalidRangeText;
+  String? get _super$errorFormatText => super.errorFormatText;
+  String? get _super$errorInvalidText => super.errorInvalidText;
+  String? get _super$fieldStartHintText => super.fieldStartHintText;
+  String? get _super$fieldEndHintText => super.fieldEndHintText;
+  String? get _super$fieldStartLabelText => super.fieldStartLabelText;
+  String? get _super$fieldEndLabelText => super.fieldEndLabelText;
+  TextInputType get _super$keyboardType => super.keyboardType;
+  String? get _super$restorationId => super.restorationId;
+  Icon? get _super$switchToInputEntryModeIcon => super.switchToInputEntryModeIcon;
+  Icon? get _super$switchToCalendarEntryModeIcon => super.switchToCalendarEntryModeIcon;
+  SelectableDayForRangePredicate? get _super$selectableDayPredicate => super.selectableDayPredicate;
+  CalendarDelegate<DateTime> get _super$calendarDelegate => super.calendarDelegate;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDateRangePickerDialogBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DateRangePickerDialog(dispatch, obj, superArgs);
+
 abstract final class DateRangePickerDialogBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -50,7 +337,42 @@ abstract final class DateRangePickerDialogBindings {
       test: (o) => o is DateRangePickerDialog,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DateRangePickerDialog(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$createState#0', (args) => (args[0] as _$DateRangePickerDialog)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$toString#1', (args) => (args[0] as _$DateRangePickerDialog)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$createElement#0', (args) => (args[0] as _$DateRangePickerDialog)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$toStringShort#0', (args) => (args[0] as _$DateRangePickerDialog)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$debugFillProperties#1', (args) { (args[0] as _$DateRangePickerDialog)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$toStringShallow#2', (args) => (args[0] as _$DateRangePickerDialog)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$toStringDeep#4', (args) => (args[0] as _$DateRangePickerDialog)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DateRangePickerDialog)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DateRangePickerDialog)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$initialDateRange#0', (args) => (args[0] as _$DateRangePickerDialog)._super$initialDateRange);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$firstDate#0', (args) => (args[0] as _$DateRangePickerDialog)._super$firstDate);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$lastDate#0', (args) => (args[0] as _$DateRangePickerDialog)._super$lastDate);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$currentDate#0', (args) => (args[0] as _$DateRangePickerDialog)._super$currentDate);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$initialEntryMode#0', (args) => (args[0] as _$DateRangePickerDialog)._super$initialEntryMode);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$cancelText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$cancelText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$confirmText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$confirmText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$saveText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$saveText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$helpText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$helpText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$errorInvalidRangeText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$errorInvalidRangeText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$errorFormatText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$errorFormatText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$errorInvalidText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$errorInvalidText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$fieldStartHintText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$fieldStartHintText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$fieldEndHintText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$fieldEndHintText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$fieldStartLabelText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$fieldStartLabelText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$fieldEndLabelText#0', (args) => (args[0] as _$DateRangePickerDialog)._super$fieldEndLabelText);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$keyboardType#0', (args) => (args[0] as _$DateRangePickerDialog)._super$keyboardType);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$restorationId#0', (args) => (args[0] as _$DateRangePickerDialog)._super$restorationId);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$switchToInputEntryModeIcon#0', (args) => (args[0] as _$DateRangePickerDialog)._super$switchToInputEntryModeIcon);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$switchToCalendarEntryModeIcon#0', (args) => (args[0] as _$DateRangePickerDialog)._super$switchToCalendarEntryModeIcon);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$selectableDayPredicate#0', (args) => (args[0] as _$DateRangePickerDialog)._super$selectableDayPredicate);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$calendarDelegate#0', (args) => (args[0] as _$DateRangePickerDialog)._super$calendarDelegate);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$hashCode#0', (args) => (args[0] as _$DateRangePickerDialog)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/date_picker.dart::DateRangePickerDialog::\$super\$key#0', (args) => (args[0] as _$DateRangePickerDialog)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

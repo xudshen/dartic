@@ -20,6 +20,70 @@ import 'package:flutter/src/widgets/navigator.dart';
 import 'package:flutter/src/widgets/restoration.dart';
 import 'package:flutter/src/widgets/restoration_properties.dart';
 
+class _$RouteInformationParser extends RouteInformationParser<dynamic> implements DarticObjectHolder {
+  _$RouteInformationParser(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future parseRouteInformation(RouteInformation routeInformation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformation', [routeInformation]);
+    if (identical(r, notOverridden)) return super.parseRouteInformation(routeInformation);
+    return r as Future;
+  }
+
+  @override
+  Future parseRouteInformationWithDependencies(RouteInformation routeInformation, BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformationWithDependencies', [routeInformation, context]);
+    if (identical(r, notOverridden)) return super.parseRouteInformationWithDependencies(routeInformation, context);
+    return r as Future;
+  }
+
+  @override
+  RouteInformation? restoreRouteInformation(dynamic configuration) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreRouteInformation', [configuration]);
+    if (identical(r, notOverridden)) return super.restoreRouteInformation(configuration);
+    return r as RouteInformation?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Future _super$parseRouteInformation(RouteInformation routeInformation) => super.parseRouteInformation(routeInformation);
+  Future _super$parseRouteInformationWithDependencies(RouteInformation routeInformation, BuildContext context) => super.parseRouteInformationWithDependencies(routeInformation, context);
+  RouteInformation? _super$restoreRouteInformation(dynamic configuration) => super.restoreRouteInformation(configuration);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRouteInformationParserBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RouteInformationParser(dispatch, obj, superArgs);
+
 abstract final class RouteInformationParserBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +91,14 @@ abstract final class RouteInformationParserBindings {
       type: RouteInformationParser,
       test: (o) => o is RouteInformationParser,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RouteInformationParser(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RouteInformationParser::\$super\$parseRouteInformation#1', (args) => (args[0] as _$RouteInformationParser)._super$parseRouteInformation(args[1] as RouteInformation));
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RouteInformationParser::\$super\$parseRouteInformationWithDependencies#2', (args) => (args[0] as _$RouteInformationParser)._super$parseRouteInformationWithDependencies(args[1] as RouteInformation, args[2] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RouteInformationParser::\$super\$restoreRouteInformation#1', (args) => (args[0] as _$RouteInformationParser)._super$restoreRouteInformation(args[1]));
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RouteInformationParser::\$super\$toString#0', (args) => (args[0] as _$RouteInformationParser)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RouteInformationParser::\$super\$hashCode#0', (args) => (args[0] as _$RouteInformationParser)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

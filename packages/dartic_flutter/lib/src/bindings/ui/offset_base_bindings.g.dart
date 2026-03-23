@@ -18,6 +18,90 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$OffsetBase extends OffsetBase implements DarticObjectHolder {
+  _$OffsetBase(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, superArgs[1] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get isInfinite {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isInfinite');
+    if (identical(r, notOverridden)) return super.isInfinite;
+    return r as bool;
+  }
+
+  @override
+  bool get isFinite {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isFinite');
+    if (identical(r, notOverridden)) return super.isFinite;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator <(OffsetBase other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<', [other]);
+    if (identical(r, notOverridden)) return super < other;
+    return r as bool;
+  }
+
+  @override
+  bool operator <=(OffsetBase other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<=', [other]);
+    if (identical(r, notOverridden)) return super <= other;
+    return r as bool;
+  }
+
+  @override
+  bool operator >(OffsetBase other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '>', [other]);
+    if (identical(r, notOverridden)) return super > other;
+    return r as bool;
+  }
+
+  @override
+  bool operator >=(OffsetBase other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '>=', [other]);
+    if (identical(r, notOverridden)) return super >= other;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$isInfinite => super.isInfinite;
+  bool get _super$isFinite => super.isFinite;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOffsetBaseBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OffsetBase(dispatch, obj, superArgs);
+
 abstract final class OffsetBaseBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +109,13 @@ abstract final class OffsetBaseBindings {
       type: OffsetBase,
       test: (o) => o is OffsetBase,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OffsetBase(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::OffsetBase::\$super\$toString#0', (args) => (args[0] as _$OffsetBase)._super$toString());
+    ctx.registerBinding('dart:ui::OffsetBase::\$super\$isInfinite#0', (args) => (args[0] as _$OffsetBase)._super$isInfinite);
+    ctx.registerBinding('dart:ui::OffsetBase::\$super\$isFinite#0', (args) => (args[0] as _$OffsetBase)._super$isFinite);
+    ctx.registerBinding('dart:ui::OffsetBase::\$super\$hashCode#0', (args) => (args[0] as _$OffsetBase)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

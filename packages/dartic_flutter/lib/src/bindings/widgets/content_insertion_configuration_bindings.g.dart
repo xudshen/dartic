@@ -59,6 +59,62 @@ import 'package:flutter/src/widgets/widget_span.dart';
 import 'package:flutter/src/foundation/basic_types.dart';
 import 'package:flutter/src/services/keyboard_inserted_content.dart';
 
+class _$ContentInsertionConfiguration extends ContentInsertionConfiguration implements DarticObjectHolder {
+  _$ContentInsertionConfiguration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(onContentInserted: superArgs[0] as ValueChanged<KeyboardInsertedContent>, allowedMimeTypes: (superArgs[1] as List).cast<String>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ValueChanged<KeyboardInsertedContent> get onContentInserted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onContentInserted');
+    if (identical(r, notOverridden)) return super.onContentInserted;
+    return r as ValueChanged<KeyboardInsertedContent>;
+  }
+
+  @override
+  List<String> get allowedMimeTypes {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allowedMimeTypes');
+    if (identical(r, notOverridden)) return super.allowedMimeTypes;
+    return r as List<String>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  ValueChanged<KeyboardInsertedContent> get _super$onContentInserted => super.onContentInserted;
+  List<String> get _super$allowedMimeTypes => super.allowedMimeTypes;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createContentInsertionConfigurationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ContentInsertionConfiguration(dispatch, obj, superArgs);
+
 abstract final class ContentInsertionConfigurationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -66,7 +122,13 @@ abstract final class ContentInsertionConfigurationBindings {
       type: ContentInsertionConfiguration,
       test: (o) => o is ContentInsertionConfiguration,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ContentInsertionConfiguration(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::ContentInsertionConfiguration::\$super\$toString#0', (args) => (args[0] as _$ContentInsertionConfiguration)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::ContentInsertionConfiguration::\$super\$onContentInserted#0', (args) => (args[0] as _$ContentInsertionConfiguration)._super$onContentInserted);
+    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::ContentInsertionConfiguration::\$super\$allowedMimeTypes#0', (args) => (args[0] as _$ContentInsertionConfiguration)._super$allowedMimeTypes);
+    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::ContentInsertionConfiguration::\$super\$hashCode#0', (args) => (args[0] as _$ContentInsertionConfiguration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

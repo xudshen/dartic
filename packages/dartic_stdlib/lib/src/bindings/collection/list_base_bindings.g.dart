@@ -9,7 +9,7 @@ import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
 
-class _$ListBase extends ListBase implements DarticObjectHolder {
+class _$ListBase extends ListBase<dynamic> implements DarticObjectHolder {
   _$ListBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -226,7 +226,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   }
 
   @override
-  void fillRange(int start, int end, [Object? fill]) {
+  void fillRange(int start, int end, [dynamic fill]) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fillRange', [start, end, fill]);
     if (identical(r, notOverridden)) { super.fillRange(start, end, fill); return; }
   }
@@ -423,9 +423,15 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   bool _super$contains(Object? element) => super.contains(element);
   bool _super$every(dynamic test) => super.every(test);
   bool _super$any(dynamic test) => super.any(test);
-  dynamic _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
-  dynamic _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
-  dynamic _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  dynamic _super$firstWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.firstWhere(test, orElse: orElse as dynamic Function()?) : super.firstWhere(test);
+  }
+  dynamic _super$lastWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.lastWhere(test, orElse: orElse as dynamic Function()?) : super.lastWhere(test);
+  }
+  dynamic _super$singleWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.singleWhere(test, orElse: orElse as dynamic Function()?) : super.singleWhere(test);
+  }
   String _super$join([String separator = ""]) => super.join(separator);
   Iterable _super$where(dynamic test) => super.where(test);
   dynamic _super$reduce(dynamic combine) => super.reduce(combine);
@@ -448,7 +454,7 @@ class _$ListBase extends ListBase implements DarticObjectHolder {
   List _super$sublist(int start, [int? end]) => super.sublist(start, end);
   Iterable _super$getRange(int start, int end) => super.getRange(start, end);
   void _super$removeRange(int start, int end) { super.removeRange(start, end); }
-  void _super$fillRange(int start, int end, [Object? fill]) { super.fillRange(start, end, fill); }
+  void _super$fillRange(int start, int end, [dynamic fill]) { super.fillRange(start, end, fill); }
   void _super$setRange(int start, int end, Iterable iterable, [int skipCount = 0]) { super.setRange(start, end, iterable, skipCount); }
   void _super$replaceRange(int start, int end, Iterable newContents) { super.replaceRange(start, end, newContents); }
   int _super$indexOf(Object? element, [int start = 0]) => super.indexOf(element, start);

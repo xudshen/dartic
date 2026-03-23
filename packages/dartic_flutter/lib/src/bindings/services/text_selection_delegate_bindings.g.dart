@@ -22,6 +22,166 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/services/text_editing_delta.dart';
 
+class _$TextSelectionDelegate implements TextSelectionDelegate, DarticObjectHolder {
+  _$TextSelectionDelegate(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause cause) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'userUpdateTextEditingValue', [value, cause]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method userUpdateTextEditingValue must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void hideToolbar([bool hideHandles = true]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', [hideHandles]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method hideToolbar must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void bringIntoView(TextPosition position) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bringIntoView', [position]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method bringIntoView must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void cutSelection(SelectionChangedCause cause) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cutSelection', [cause]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method cutSelection must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Future<void> pasteText(SelectionChangedCause cause) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pasteText', [cause]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method pasteText must be overridden in dartic code');
+    }
+    return r as Future<void>;
+  }
+
+  @override
+  void selectAll(SelectionChangedCause cause) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectAll', [cause]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method selectAll must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void copySelection(SelectionChangedCause cause) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySelection', [cause]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method copySelection must be overridden in dartic code');
+    }
+  }
+
+  @override
+  TextEditingValue get textEditingValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textEditingValue');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter textEditingValue must be overridden in dartic code');
+    }
+    return r as TextEditingValue;
+  }
+
+  @override
+  bool get cutEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cutEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter cutEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get copyEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'copyEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter copyEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get pasteEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pasteEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter pasteEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get selectAllEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectAllEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter selectAllEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get lookUpEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'lookUpEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter lookUpEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get searchWebEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'searchWebEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter searchWebEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get shareEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shareEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter shareEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get liveTextInputEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'liveTextInputEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter liveTextInputEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextSelectionDelegateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextSelectionDelegate(dispatch, obj, superArgs);
+
 abstract final class TextSelectionDelegateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,6 +189,8 @@ abstract final class TextSelectionDelegateBindings {
       type: TextSelectionDelegate,
       test: (o) => o is TextSelectionDelegate,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextSelectionDelegate(dispatch, darticObject, superArgs),
     );
   }
 

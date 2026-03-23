@@ -17,6 +17,85 @@ import 'package:flutter/src/services/debug.dart';
 import 'package:flutter/src/services/message_codec.dart';
 import 'package:flutter/src/services/message_codecs.dart';
 
+class _$BasicMessageChannel extends BasicMessageChannel<dynamic> implements DarticObjectHolder {
+  _$BasicMessageChannel(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as MessageCodec, binaryMessenger: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as BinaryMessenger?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future send(dynamic message) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'send', [message]);
+    if (identical(r, notOverridden)) return super.send(message);
+    return r as Future;
+  }
+
+  @override
+  void setMessageHandler(Future Function(dynamic)? handler) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMessageHandler', [handler]);
+    if (identical(r, notOverridden)) { super.setMessageHandler(handler != null ? (a) => handler(a) as Future : null); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get name {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String;
+  }
+
+  @override
+  MessageCodec get codec {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'codec');
+    if (identical(r, notOverridden)) return super.codec;
+    return r as MessageCodec;
+  }
+
+  @override
+  BinaryMessenger get binaryMessenger {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'binaryMessenger');
+    if (identical(r, notOverridden)) return super.binaryMessenger;
+    return r as BinaryMessenger;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Future _super$send(dynamic message) => super.send(message);
+  void _super$setMessageHandler(dynamic handler) { super.setMessageHandler(handler); }
+  String _super$toString() => super.toString();
+  String get _super$name => super.name;
+  MessageCodec get _super$codec => super.codec;
+  BinaryMessenger get _super$binaryMessenger => super.binaryMessenger;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBasicMessageChannelBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BasicMessageChannel(dispatch, obj, superArgs);
+
 abstract final class BasicMessageChannelBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +103,16 @@ abstract final class BasicMessageChannelBindings {
       type: BasicMessageChannel,
       test: (o) => o is BasicMessageChannel,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BasicMessageChannel(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$send#1', (args) => (args[0] as _$BasicMessageChannel)._super$send(args[1]));
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$setMessageHandler#1', (args) { (args[0] as _$BasicMessageChannel)._super$setMessageHandler((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; });
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$toString#0', (args) => (args[0] as _$BasicMessageChannel)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$name#0', (args) => (args[0] as _$BasicMessageChannel)._super$name);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$codec#0', (args) => (args[0] as _$BasicMessageChannel)._super$codec);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$binaryMessenger#0', (args) => (args[0] as _$BasicMessageChannel)._super$binaryMessenger);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::BasicMessageChannel::\$super\$hashCode#0', (args) => (args[0] as _$BasicMessageChannel)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

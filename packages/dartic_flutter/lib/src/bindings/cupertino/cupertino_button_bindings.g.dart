@@ -28,6 +28,269 @@ import 'package:flutter/src/services/mouse_cursor.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$CupertinoButton extends CupertinoButton implements DarticObjectHolder {
+  _$CupertinoButton(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, child: superArgs[1] as Widget, sizeStyle: superArgs[2] as CupertinoButtonSize, padding: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as EdgeInsetsGeometry?, color: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Color?, foregroundColor: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Color?, disabledColor: superArgs[6] as Color, minSize: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as double?, minimumSize: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as Size?, pressedOpacity: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as double?, borderRadius: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as BorderRadius?, alignment: superArgs[11] as AlignmentGeometry, focusColor: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as Color?, focusNode: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as FocusNode?, onFocusChange: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as ValueChanged<bool>?, autofocus: superArgs[15] as bool, mouseCursor: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as MouseCursor?, onLongPress: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as VoidCallback?, onPressed: superArgs[18] as VoidCallback?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<CupertinoButton> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<CupertinoButton>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color?;
+  }
+
+  @override
+  Color get disabledColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'disabledColor');
+    if (identical(r, notOverridden)) return super.disabledColor;
+    return r as Color;
+  }
+
+  @override
+  Color? get foregroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'foregroundColor');
+    if (identical(r, notOverridden)) return super.foregroundColor;
+    return r as Color?;
+  }
+
+  @override
+  VoidCallback? get onPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPressed');
+    if (identical(r, notOverridden)) return super.onPressed;
+    return r as VoidCallback?;
+  }
+
+  @override
+  VoidCallback? get onLongPress {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onLongPress');
+    if (identical(r, notOverridden)) return super.onLongPress;
+    return r as VoidCallback?;
+  }
+
+  @override
+  double? get minSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minSize');
+    if (identical(r, notOverridden)) return super.minSize;
+    return r as double?;
+  }
+
+  @override
+  Size? get minimumSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minimumSize');
+    if (identical(r, notOverridden)) return super.minimumSize;
+    return r as Size?;
+  }
+
+  @override
+  double? get pressedOpacity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pressedOpacity');
+    if (identical(r, notOverridden)) return super.pressedOpacity;
+    return r as double?;
+  }
+
+  @override
+  BorderRadius? get borderRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'borderRadius');
+    if (identical(r, notOverridden)) return super.borderRadius;
+    return r as BorderRadius?;
+  }
+
+  @override
+  CupertinoButtonSize get sizeStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'sizeStyle');
+    if (identical(r, notOverridden)) return super.sizeStyle;
+    return r as CupertinoButtonSize;
+  }
+
+  @override
+  AlignmentGeometry get alignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alignment');
+    if (identical(r, notOverridden)) return super.alignment;
+    return r as AlignmentGeometry;
+  }
+
+  @override
+  Color? get focusColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusColor');
+    if (identical(r, notOverridden)) return super.focusColor;
+    return r as Color?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  ValueChanged<bool>? get onFocusChange {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onFocusChange');
+    if (identical(r, notOverridden)) return super.onFocusChange;
+    return r as ValueChanged<bool>?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<CupertinoButton> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget get _super$child => super.child;
+  EdgeInsetsGeometry? get _super$padding => super.padding;
+  Color? get _super$color => super.color;
+  Color get _super$disabledColor => super.disabledColor;
+  Color? get _super$foregroundColor => super.foregroundColor;
+  VoidCallback? get _super$onPressed => super.onPressed;
+  VoidCallback? get _super$onLongPress => super.onLongPress;
+  double? get _super$minSize => super.minSize;
+  Size? get _super$minimumSize => super.minimumSize;
+  double? get _super$pressedOpacity => super.pressedOpacity;
+  BorderRadius? get _super$borderRadius => super.borderRadius;
+  CupertinoButtonSize get _super$sizeStyle => super.sizeStyle;
+  AlignmentGeometry get _super$alignment => super.alignment;
+  Color? get _super$focusColor => super.focusColor;
+  FocusNode? get _super$focusNode => super.focusNode;
+  ValueChanged<bool>? get _super$onFocusChange => super.onFocusChange;
+  bool get _super$autofocus => super.autofocus;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  bool get _super$enabled => super.enabled;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCupertinoButtonBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CupertinoButton(dispatch, obj, superArgs);
+
 abstract final class CupertinoButtonBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -36,8 +299,40 @@ abstract final class CupertinoButtonBindings {
       test: (o) => o is CupertinoButton,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CupertinoButton(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::tapMoveSlop#0', (args) => CupertinoButton.tapMoveSlop());
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$createState#0', (args) => (args[0] as _$CupertinoButton)._super$createState());
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$debugFillProperties#1', (args) { (args[0] as _$CupertinoButton)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$toString#1', (args) => (args[0] as _$CupertinoButton)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$createElement#0', (args) => (args[0] as _$CupertinoButton)._super$createElement());
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$toStringShort#0', (args) => (args[0] as _$CupertinoButton)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$toStringShallow#2', (args) => (args[0] as _$CupertinoButton)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$toStringDeep#4', (args) => (args[0] as _$CupertinoButton)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$CupertinoButton)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$CupertinoButton)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$child#0', (args) => (args[0] as _$CupertinoButton)._super$child);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$padding#0', (args) => (args[0] as _$CupertinoButton)._super$padding);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$color#0', (args) => (args[0] as _$CupertinoButton)._super$color);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$disabledColor#0', (args) => (args[0] as _$CupertinoButton)._super$disabledColor);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$foregroundColor#0', (args) => (args[0] as _$CupertinoButton)._super$foregroundColor);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$onPressed#0', (args) => (args[0] as _$CupertinoButton)._super$onPressed);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$onLongPress#0', (args) => (args[0] as _$CupertinoButton)._super$onLongPress);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$minSize#0', (args) => (args[0] as _$CupertinoButton)._super$minSize);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$minimumSize#0', (args) => (args[0] as _$CupertinoButton)._super$minimumSize);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$pressedOpacity#0', (args) => (args[0] as _$CupertinoButton)._super$pressedOpacity);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$borderRadius#0', (args) => (args[0] as _$CupertinoButton)._super$borderRadius);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$sizeStyle#0', (args) => (args[0] as _$CupertinoButton)._super$sizeStyle);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$alignment#0', (args) => (args[0] as _$CupertinoButton)._super$alignment);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$focusColor#0', (args) => (args[0] as _$CupertinoButton)._super$focusColor);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$focusNode#0', (args) => (args[0] as _$CupertinoButton)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$onFocusChange#0', (args) => (args[0] as _$CupertinoButton)._super$onFocusChange);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$autofocus#0', (args) => (args[0] as _$CupertinoButton)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$mouseCursor#0', (args) => (args[0] as _$CupertinoButton)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$enabled#0', (args) => (args[0] as _$CupertinoButton)._super$enabled);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoButton)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/cupertino/button.dart::CupertinoButton::\$super\$key#0', (args) => (args[0] as _$CupertinoButton)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

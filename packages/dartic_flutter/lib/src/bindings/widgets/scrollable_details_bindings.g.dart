@@ -24,6 +24,94 @@ import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/painting.dart';
 import 'dart:ui';
 
+class _$ScrollableDetails extends ScrollableDetails implements DarticObjectHolder {
+  _$ScrollableDetails(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(direction: superArgs[0] as AxisDirection, controller: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as ScrollController?, physics: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as ScrollPhysics?, clipBehavior: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as Clip?, decorationClipBehavior: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Clip?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ScrollableDetails copyWith({AxisDirection? direction, ScrollController? controller, ScrollPhysics? physics, Clip? decorationClipBehavior}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [direction, controller, physics, decorationClipBehavior]);
+    if (identical(r, notOverridden)) return super.copyWith(direction: direction, controller: controller, physics: physics, decorationClipBehavior: decorationClipBehavior);
+    return r as ScrollableDetails;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  AxisDirection get direction {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'direction');
+    if (identical(r, notOverridden)) return super.direction;
+    return r as AxisDirection;
+  }
+
+  @override
+  ScrollController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as ScrollController?;
+  }
+
+  @override
+  ScrollPhysics? get physics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'physics');
+    if (identical(r, notOverridden)) return super.physics;
+    return r as ScrollPhysics?;
+  }
+
+  @override
+  Clip? get decorationClipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'decorationClipBehavior');
+    if (identical(r, notOverridden)) return super.decorationClipBehavior;
+    return r as Clip?;
+  }
+
+  @override
+  Clip? get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) return super.clipBehavior;
+    return r as Clip?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  ScrollableDetails _super$copyWith({AxisDirection? direction, ScrollController? controller, ScrollPhysics? physics, Clip? decorationClipBehavior}) => super.copyWith(direction: direction, controller: controller, physics: physics, decorationClipBehavior: decorationClipBehavior);
+  String _super$toString() => super.toString();
+  AxisDirection get _super$direction => super.direction;
+  ScrollController? get _super$controller => super.controller;
+  ScrollPhysics? get _super$physics => super.physics;
+  Clip? get _super$decorationClipBehavior => super.decorationClipBehavior;
+  Clip? get _super$clipBehavior => super.clipBehavior;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollableDetailsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollableDetails(dispatch, obj, superArgs);
+
 abstract final class ScrollableDetailsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +119,17 @@ abstract final class ScrollableDetailsBindings {
       type: ScrollableDetails,
       test: (o) => o is ScrollableDetails,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollableDetails(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$copyWith#4', (args) => (args[0] as _$ScrollableDetails)._super$copyWith(direction: identical(args[1], darticAbsent) ? null : args[1] as AxisDirection?, controller: identical(args[2], darticAbsent) ? null : args[2] as ScrollController?, physics: identical(args[3], darticAbsent) ? null : args[3] as ScrollPhysics?, decorationClipBehavior: identical(args[4], darticAbsent) ? null : args[4] as Clip?));
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$toString#0', (args) => (args[0] as _$ScrollableDetails)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$direction#0', (args) => (args[0] as _$ScrollableDetails)._super$direction);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$controller#0', (args) => (args[0] as _$ScrollableDetails)._super$controller);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$physics#0', (args) => (args[0] as _$ScrollableDetails)._super$physics);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$decorationClipBehavior#0', (args) => (args[0] as _$ScrollableDetails)._super$decorationClipBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$clipBehavior#0', (args) => (args[0] as _$ScrollableDetails)._super$clipBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable_helpers.dart::ScrollableDetails::\$super\$hashCode#0', (args) => (args[0] as _$ScrollableDetails)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -43,6 +43,221 @@ import 'package:flutter/src/widgets/undo_history.dart';
 import 'package:flutter/src/gestures/recognizer.dart';
 import 'package:flutter/src/widgets/widget_state.dart';
 
+class _$TextFormField extends TextFormField implements DarticObjectHolder {
+  _$TextFormField(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, groupId: superArgs[1] as Object, controller: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TextEditingController?, initialValue: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as String?, focusNode: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as FocusNode?, forceErrorText: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as String?, decoration: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as InputDecoration?, keyboardType: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as TextInputType?, textCapitalization: superArgs[8] as TextCapitalization, textInputAction: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as TextInputAction?, style: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as TextStyle?, strutStyle: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as StrutStyle?, textDirection: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as ui.TextDirection?, textAlign: superArgs[13] as ui.TextAlign, textAlignVertical: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as TextAlignVertical?, autofocus: superArgs[15] as bool, readOnly: superArgs[16] as bool, toolbarOptions: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as ToolbarOptions?, showCursor: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as bool?, obscuringCharacter: superArgs[19] as String, obscureText: superArgs[20] as bool, autocorrect: superArgs[21] as bool, smartDashesType: identical(superArgs[22], darticAbsent) ? null : superArgs[22] as SmartDashesType?, smartQuotesType: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as SmartQuotesType?, enableSuggestions: superArgs[24] as bool, maxLengthEnforcement: identical(superArgs[25], darticAbsent) ? null : superArgs[25] as MaxLengthEnforcement?, maxLines: identical(superArgs[26], darticAbsent) ? null : superArgs[26] as int?, minLines: identical(superArgs[27], darticAbsent) ? null : superArgs[27] as int?, expands: superArgs[28] as bool, maxLength: identical(superArgs[29], darticAbsent) ? null : superArgs[29] as int?, onChanged: identical(superArgs[30], darticAbsent) ? null : superArgs[30] as ValueChanged<String>?, onTap: identical(superArgs[31], darticAbsent) ? null : superArgs[31] as GestureTapCallback?, onTapAlwaysCalled: superArgs[32] as bool, onTapOutside: identical(superArgs[33], darticAbsent) ? null : superArgs[33] as TapRegionCallback?, onTapUpOutside: identical(superArgs[34], darticAbsent) ? null : superArgs[34] as TapRegionUpCallback?, onEditingComplete: identical(superArgs[35], darticAbsent) ? null : superArgs[35] as ui.VoidCallback?, onFieldSubmitted: identical(superArgs[36], darticAbsent) ? null : superArgs[36] as ValueChanged<String>?, onSaved: identical(superArgs[37], darticAbsent) ? null : superArgs[37] as FormFieldSetter<String>?, validator: identical(superArgs[38], darticAbsent) ? null : superArgs[38] as FormFieldValidator<String>?, errorBuilder: identical(superArgs[39], darticAbsent) ? null : superArgs[39] as FormFieldErrorBuilder?, inputFormatters: identical(superArgs[40], darticAbsent) ? null : superArgs[40] == null ? null : (superArgs[40] as List).cast<TextInputFormatter>(), enabled: identical(superArgs[41], darticAbsent) ? null : superArgs[41] as bool?, ignorePointers: identical(superArgs[42], darticAbsent) ? null : superArgs[42] as bool?, cursorWidth: superArgs[43] as double, cursorHeight: identical(superArgs[44], darticAbsent) ? null : superArgs[44] as double?, cursorRadius: identical(superArgs[45], darticAbsent) ? null : superArgs[45] as ui.Radius?, cursorColor: identical(superArgs[46], darticAbsent) ? null : superArgs[46] as ui.Color?, cursorErrorColor: identical(superArgs[47], darticAbsent) ? null : superArgs[47] as ui.Color?, keyboardAppearance: identical(superArgs[48], darticAbsent) ? null : superArgs[48] as ui.Brightness?, scrollPadding: superArgs[49] as EdgeInsets, enableInteractiveSelection: identical(superArgs[50], darticAbsent) ? null : superArgs[50] as bool?, selectAllOnFocus: identical(superArgs[51], darticAbsent) ? null : superArgs[51] as bool?, selectionControls: identical(superArgs[52], darticAbsent) ? null : superArgs[52] as TextSelectionControls?, buildCounter: identical(superArgs[53], darticAbsent) ? null : superArgs[53] as InputCounterWidgetBuilder?, scrollPhysics: identical(superArgs[54], darticAbsent) ? null : superArgs[54] as ScrollPhysics?, autofillHints: identical(superArgs[55], darticAbsent) ? null : superArgs[55] == null ? null : (superArgs[55] as Iterable).cast<String>(), autovalidateMode: identical(superArgs[56], darticAbsent) ? null : superArgs[56] as AutovalidateMode?, scrollController: identical(superArgs[57], darticAbsent) ? null : superArgs[57] as ScrollController?, restorationId: identical(superArgs[58], darticAbsent) ? null : superArgs[58] as String?, enableIMEPersonalizedLearning: superArgs[59] as bool, mouseCursor: identical(superArgs[60], darticAbsent) ? null : superArgs[60] as MouseCursor?, contextMenuBuilder: identical(superArgs[61], darticAbsent) ? null : superArgs[61] as EditableTextContextMenuBuilder?, spellCheckConfiguration: identical(superArgs[62], darticAbsent) ? null : superArgs[62] as SpellCheckConfiguration?, magnifierConfiguration: identical(superArgs[63], darticAbsent) ? null : superArgs[63] as TextMagnifierConfiguration?, undoController: identical(superArgs[64], darticAbsent) ? null : superArgs[64] as UndoHistoryController?, onAppPrivateCommand: identical(superArgs[65], darticAbsent) ? null : superArgs[65] as AppPrivateCommandCallback?, cursorOpacityAnimates: identical(superArgs[66], darticAbsent) ? null : superArgs[66] as bool?, selectionHeightStyle: identical(superArgs[67], darticAbsent) ? null : superArgs[67] as ui.BoxHeightStyle?, selectionWidthStyle: identical(superArgs[68], darticAbsent) ? null : superArgs[68] as ui.BoxWidthStyle?, dragStartBehavior: superArgs[69] as DragStartBehavior, contentInsertionConfiguration: identical(superArgs[70], darticAbsent) ? null : superArgs[70] as ContentInsertionConfiguration?, statesController: identical(superArgs[71], darticAbsent) ? null : superArgs[71] as WidgetStatesController?, clipBehavior: superArgs[72] as ui.Clip, scribbleEnabled: superArgs[73] as bool, stylusHandwritingEnabled: superArgs[74] as bool, canRequestFocus: superArgs[75] as bool, hintLocales: identical(superArgs[76], darticAbsent) ? null : superArgs[76] == null ? null : (superArgs[76] as List).cast<ui.Locale>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  FormFieldState<String> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as FormFieldState<String>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  TextEditingController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as TextEditingController?;
+  }
+
+  @override
+  Object get groupId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'groupId');
+    if (identical(r, notOverridden)) return super.groupId;
+    return r as Object;
+  }
+
+  @override
+  ValueChanged<String>? get onChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChanged');
+    if (identical(r, notOverridden)) return super.onChanged;
+    return r as ValueChanged<String>?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  FormFieldBuilder<String> get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as FormFieldBuilder<String>;
+  }
+
+  @override
+  FormFieldSetter<String>? get onSaved {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSaved');
+    if (identical(r, notOverridden)) return super.onSaved;
+    return r as FormFieldSetter<String>?;
+  }
+
+  @override
+  ui.VoidCallback? get onReset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onReset');
+    if (identical(r, notOverridden)) return super.onReset;
+    return r as ui.VoidCallback?;
+  }
+
+  @override
+  String? get forceErrorText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'forceErrorText');
+    if (identical(r, notOverridden)) return super.forceErrorText;
+    return r as String?;
+  }
+
+  @override
+  FormFieldValidator<String>? get validator {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'validator');
+    if (identical(r, notOverridden)) return super.validator;
+    return r as FormFieldValidator<String>?;
+  }
+
+  @override
+  FormFieldErrorBuilder? get errorBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorBuilder');
+    if (identical(r, notOverridden)) return super.errorBuilder;
+    return r as FormFieldErrorBuilder?;
+  }
+
+  @override
+  String? get initialValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialValue');
+    if (identical(r, notOverridden)) return super.initialValue;
+    return r as String?;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  AutovalidateMode get autovalidateMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autovalidateMode');
+    if (identical(r, notOverridden)) return super.autovalidateMode;
+    return r as AutovalidateMode;
+  }
+
+  @override
+  String? get restorationId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'restorationId');
+    if (identical(r, notOverridden)) return super.restorationId;
+    return r as String?;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  FormFieldState<String> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  TextEditingController? get _super$controller => super.controller;
+  Object get _super$groupId => super.groupId;
+  ValueChanged<String>? get _super$onChanged => super.onChanged;
+  int get _super$hashCode => super.hashCode;
+  FormFieldBuilder<String> get _super$builder => super.builder;
+  FormFieldSetter<String>? get _super$onSaved => super.onSaved;
+  ui.VoidCallback? get _super$onReset => super.onReset;
+  String? get _super$forceErrorText => super.forceErrorText;
+  FormFieldValidator<String>? get _super$validator => super.validator;
+  FormFieldErrorBuilder? get _super$errorBuilder => super.errorBuilder;
+  String? get _super$initialValue => super.initialValue;
+  bool get _super$enabled => super.enabled;
+  AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
+  String? get _super$restorationId => super.restorationId;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextFormFieldBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextFormField(dispatch, obj, superArgs);
+
 abstract final class TextFormFieldBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -51,7 +266,33 @@ abstract final class TextFormFieldBindings {
       test: (o) => o is TextFormField,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/form.dart::FormField', 'package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextFormField(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$createState#0', (args) => (args[0] as _$TextFormField)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$toString#1', (args) => (args[0] as _$TextFormField)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$createElement#0', (args) => (args[0] as _$TextFormField)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$toStringShort#0', (args) => (args[0] as _$TextFormField)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$debugFillProperties#1', (args) { (args[0] as _$TextFormField)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$toStringShallow#2', (args) => (args[0] as _$TextFormField)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$toStringDeep#4', (args) => (args[0] as _$TextFormField)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$TextFormField)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$TextFormField)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$controller#0', (args) => (args[0] as _$TextFormField)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$groupId#0', (args) => (args[0] as _$TextFormField)._super$groupId);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onChanged#0', (args) => (args[0] as _$TextFormField)._super$onChanged);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$hashCode#0', (args) => (args[0] as _$TextFormField)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$builder#0', (args) => (args[0] as _$TextFormField)._super$builder);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onSaved#0', (args) => (args[0] as _$TextFormField)._super$onSaved);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onReset#0', (args) => (args[0] as _$TextFormField)._super$onReset);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$forceErrorText#0', (args) => (args[0] as _$TextFormField)._super$forceErrorText);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$validator#0', (args) => (args[0] as _$TextFormField)._super$validator);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$errorBuilder#0', (args) => (args[0] as _$TextFormField)._super$errorBuilder);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$initialValue#0', (args) => (args[0] as _$TextFormField)._super$initialValue);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$enabled#0', (args) => (args[0] as _$TextFormField)._super$enabled);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$autovalidateMode#0', (args) => (args[0] as _$TextFormField)._super$autovalidateMode);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$restorationId#0', (args) => (args[0] as _$TextFormField)._super$restorationId);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$key#0', (args) => (args[0] as _$TextFormField)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

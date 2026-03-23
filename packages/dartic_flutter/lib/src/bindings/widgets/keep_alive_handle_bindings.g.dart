@@ -16,6 +16,82 @@ import 'package:flutter/src/widgets/notification_listener.dart';
 import 'package:flutter/src/widgets/sliver.dart';
 import 'dart:ui';
 
+class _$KeepAliveHandle extends KeepAliveHandle implements DarticObjectHolder {
+  _$KeepAliveHandle(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool get hasListeners {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
+    if (identical(r, notOverridden)) return super.hasListeners;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  int get _super$hashCode => super.hashCode;
+  bool get _super$hasListeners => super.hasListeners;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createKeepAliveHandleBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$KeepAliveHandle(dispatch, obj, superArgs);
+
 abstract final class KeepAliveHandleBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +100,16 @@ abstract final class KeepAliveHandleBindings {
       test: (o) => o is KeepAliveHandle,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/change_notifier.dart::ChangeNotifier', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$KeepAliveHandle(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$dispose#0', (args) { (args[0] as _$KeepAliveHandle)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$toString#0', (args) => (args[0] as _$KeepAliveHandle)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$addListener#1', (args) { (args[0] as _$KeepAliveHandle)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$removeListener#1', (args) { (args[0] as _$KeepAliveHandle)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$notifyListeners#0', (args) { (args[0] as _$KeepAliveHandle)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$hashCode#0', (args) => (args[0] as _$KeepAliveHandle)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/automatic_keep_alive.dart::KeepAliveHandle::\$super\$hasListeners#0', (args) => (args[0] as _$KeepAliveHandle)._super$hasListeners);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

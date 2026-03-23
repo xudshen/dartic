@@ -24,6 +24,78 @@ import 'package:flutter/src/widgets/scrollable.dart';
 import 'package:flutter/src/widgets/shortcuts.dart';
 import 'package:flutter/src/widgets/tap_region.dart';
 
+class _$RawMenuOverlayInfo extends RawMenuOverlayInfo implements DarticObjectHolder {
+  _$RawMenuOverlayInfo(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(anchorRect: superArgs[0] as ui.Rect, overlaySize: superArgs[1] as ui.Size, tapRegionGroupId: superArgs[2] as Object, position: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as ui.Offset?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ui.Rect get anchorRect {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'anchorRect');
+    if (identical(r, notOverridden)) return super.anchorRect;
+    return r as ui.Rect;
+  }
+
+  @override
+  ui.Size get overlaySize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlaySize');
+    if (identical(r, notOverridden)) return super.overlaySize;
+    return r as ui.Size;
+  }
+
+  @override
+  ui.Offset? get position {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'position');
+    if (identical(r, notOverridden)) return super.position;
+    return r as ui.Offset?;
+  }
+
+  @override
+  Object get tapRegionGroupId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tapRegionGroupId');
+    if (identical(r, notOverridden)) return super.tapRegionGroupId;
+    return r as Object;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  ui.Rect get _super$anchorRect => super.anchorRect;
+  ui.Size get _super$overlaySize => super.overlaySize;
+  ui.Offset? get _super$position => super.position;
+  Object get _super$tapRegionGroupId => super.tapRegionGroupId;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRawMenuOverlayInfoBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RawMenuOverlayInfo(dispatch, obj, superArgs);
+
 abstract final class RawMenuOverlayInfoBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +103,15 @@ abstract final class RawMenuOverlayInfoBindings {
       type: RawMenuOverlayInfo,
       test: (o) => o is RawMenuOverlayInfo,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RawMenuOverlayInfo(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$toString#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$anchorRect#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$anchorRect);
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$overlaySize#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$overlaySize);
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$position#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$position);
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$tapRegionGroupId#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$tapRegionGroupId);
+    ctx.registerBinding('package:flutter/src/widgets/raw_menu_anchor.dart::RawMenuOverlayInfo::\$super\$hashCode#0', (args) => (args[0] as _$RawMenuOverlayInfo)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

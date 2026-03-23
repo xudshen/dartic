@@ -19,6 +19,86 @@ import 'package:flutter/src/rendering/layout_helper.dart';
 import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 
+class _$CustomClipper extends CustomClipper<dynamic> implements DarticObjectHolder {
+  _$CustomClipper(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(reclip: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Listenable?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void addListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  dynamic getClip(ui.Size size) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getClip must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  ui.Rect getApproximateClipRect(ui.Size size) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
+    if (identical(r, notOverridden)) return super.getApproximateClipRect(size);
+    return r as ui.Rect;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper oldClipper) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method shouldReclip must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$addListener(ui.VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(ui.VoidCallback listener) { super.removeListener(listener); }
+  ui.Rect _super$getApproximateClipRect(ui.Size size) => super.getApproximateClipRect(size);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCustomClipperBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CustomClipper(dispatch, obj, superArgs);
+
 abstract final class CustomClipperBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +107,14 @@ abstract final class CustomClipperBindings {
       test: (o) => o is CustomClipper,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CustomClipper(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::CustomClipper::\$super\$addListener#1', (args) { (args[0] as _$CustomClipper)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::CustomClipper::\$super\$removeListener#1', (args) { (args[0] as _$CustomClipper)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::CustomClipper::\$super\$getApproximateClipRect#1', (args) => (args[0] as _$CustomClipper)._super$getApproximateClipRect(args[1] as ui.Size));
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::CustomClipper::\$super\$toString#0', (args) => (args[0] as _$CustomClipper)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::CustomClipper::\$super\$hashCode#0', (args) => (args[0] as _$CustomClipper)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

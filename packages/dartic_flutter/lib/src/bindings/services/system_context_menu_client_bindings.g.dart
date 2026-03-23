@@ -26,6 +26,44 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/system_chrome.dart';
 import 'package:flutter/src/services/text_input.dart';
 
+class _$SystemContextMenuClient implements SystemContextMenuClient, DarticObjectHolder {
+  _$SystemContextMenuClient(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void handleSystemHide() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemHide', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleSystemHide must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleCustomContextMenuAction(String actionId) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCustomContextMenuAction', [actionId]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleCustomContextMenuAction must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSystemContextMenuClientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SystemContextMenuClient(dispatch, obj, superArgs);
+
 abstract final class SystemContextMenuClientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -33,6 +71,8 @@ abstract final class SystemContextMenuClientBindings {
       type: SystemContextMenuClient,
       test: (o) => o is SystemContextMenuClient,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SystemContextMenuClient(dispatch, darticObject, superArgs),
     );
   }
 

@@ -14,6 +14,126 @@ import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/rendering/sliver.dart';
 import 'package:flutter/src/rendering/sliver_fixed_extent_list.dart';
 
+class _$RenderSliverBoxChildManager extends RenderSliverBoxChildManager implements DarticObjectHolder {
+  _$RenderSliverBoxChildManager(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void createChild(int index, {required RenderBox? after}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChild', [index, after]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createChild must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeChild(RenderBox child) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeChild', [child]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeChild must be overridden in dartic code');
+    }
+  }
+
+  @override
+  double estimateMaxScrollOffset(SliverConstraints constraints, {int? firstIndex, int? lastIndex, double? leadingScrollOffset, double? trailingScrollOffset}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [constraints, firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method estimateMaxScrollOffset must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  void didAdoptChild(RenderBox child) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdoptChild', [child]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didAdoptChild must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void setDidUnderflow(bool value) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setDidUnderflow', [value]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setDidUnderflow must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didStartLayout() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartLayout', const []);
+    if (identical(r, notOverridden)) { super.didStartLayout(); return; }
+  }
+
+  @override
+  void didFinishLayout() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', const []);
+    if (identical(r, notOverridden)) { super.didFinishLayout(); return; }
+  }
+
+  @override
+  bool debugAssertChildListLocked() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertChildListLocked', const []);
+    if (identical(r, notOverridden)) return super.debugAssertChildListLocked();
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get childCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'childCount');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter childCount must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int? get estimatedChildCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'estimatedChildCount');
+    if (identical(r, notOverridden)) return super.estimatedChildCount;
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$didStartLayout() { super.didStartLayout(); }
+  void _super$didFinishLayout() { super.didFinishLayout(); }
+  bool _super$debugAssertChildListLocked() => super.debugAssertChildListLocked();
+  String _super$toString() => super.toString();
+  int? get _super$estimatedChildCount => super.estimatedChildCount;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRenderSliverBoxChildManagerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RenderSliverBoxChildManager(dispatch, obj, superArgs);
+
 abstract final class RenderSliverBoxChildManagerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +141,15 @@ abstract final class RenderSliverBoxChildManagerBindings {
       type: RenderSliverBoxChildManager,
       test: (o) => o is RenderSliverBoxChildManager,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RenderSliverBoxChildManager(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$didStartLayout#0', (args) { (args[0] as _$RenderSliverBoxChildManager)._super$didStartLayout(); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$didFinishLayout#0', (args) { (args[0] as _$RenderSliverBoxChildManager)._super$didFinishLayout(); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$debugAssertChildListLocked#0', (args) => (args[0] as _$RenderSliverBoxChildManager)._super$debugAssertChildListLocked());
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$toString#0', (args) => (args[0] as _$RenderSliverBoxChildManager)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$estimatedChildCount#0', (args) => (args[0] as _$RenderSliverBoxChildManager)._super$estimatedChildCount);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::RenderSliverBoxChildManager::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverBoxChildManager)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

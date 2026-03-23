@@ -28,6 +28,29 @@ libraries:
 
       - name: State
         bridge: true
+      # Bridge skipped: generic/covariant type issues in bridge class
+      - name: AutocompleteHighlightedOption
+        bridge: false
+      - name: ConstrainedLayoutBuilder
+        bridge: false
+      - name: LayoutBuilder
+        bridge: false
+      - name: MediaQuery
+        bridge: false
+      - name: SliverLayoutBuilder
+        bridge: false
+      - name: SlottedMultiChildRenderObjectWidget
+        bridge: false
+      - name: WidgetStateMapper
+        bridge: false
+      - name: WidgetStateTextStyle
+        bridge: false
+      - name: WindowScope
+        bridge: false
+      - name: RestorableEnumN
+        bridge: false
+      - name: RestorableNum
+        bridge: false
 
     overrides:
       # ── TweenAnimationBuilder: fromFields needs ValueWidgetBuilder<Object?> ──

@@ -30,6 +30,112 @@ import 'package:flutter/src/widgets/restoration_properties.dart';
 import 'package:flutter/src/widgets/routes.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
 
+class _$RouteTransitionRecord extends RouteTransitionRecord implements DarticObjectHolder {
+  _$RouteTransitionRecord(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void markForPush() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPush', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method markForPush must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void markForAdd() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForAdd', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method markForAdd must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void markForPop([dynamic result]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPop', [result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method markForPop must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void markForComplete([dynamic result]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForComplete', [result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method markForComplete must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void markForRemove() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForRemove', const []);
+    if (identical(r, notOverridden)) { super.markForRemove(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Route<dynamic> get route {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'route');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter route must be overridden in dartic code');
+    }
+    return r as Route<dynamic>;
+  }
+
+  @override
+  bool get isWaitingForEnteringDecision {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isWaitingForEnteringDecision');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isWaitingForEnteringDecision must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isWaitingForExitingDecision {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isWaitingForExitingDecision');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isWaitingForExitingDecision must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$markForRemove() { super.markForRemove(); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRouteTransitionRecordBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RouteTransitionRecord(dispatch, obj, superArgs);
+
 abstract final class RouteTransitionRecordBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,7 +143,12 @@ abstract final class RouteTransitionRecordBindings {
       type: RouteTransitionRecord,
       test: (o) => o is RouteTransitionRecord,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RouteTransitionRecord(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RouteTransitionRecord::\$super\$markForRemove#0', (args) { (args[0] as _$RouteTransitionRecord)._super$markForRemove(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RouteTransitionRecord::\$super\$toString#0', (args) => (args[0] as _$RouteTransitionRecord)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RouteTransitionRecord::\$super\$hashCode#0', (args) => (args[0] as _$RouteTransitionRecord)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

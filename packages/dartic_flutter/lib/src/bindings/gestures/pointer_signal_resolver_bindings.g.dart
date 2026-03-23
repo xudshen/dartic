@@ -10,6 +10,60 @@ import 'package:flutter/src/gestures/pointer_signal_resolver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/gestures/events.dart';
 
+class _$PointerSignalResolver extends PointerSignalResolver implements DarticObjectHolder {
+  _$PointerSignalResolver(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void register(PointerSignalEvent event, PointerSignalResolvedCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'register', [event, callback]);
+    if (identical(r, notOverridden)) { super.register(event, (a) => callback(a)); return; }
+  }
+
+  @override
+  void resolve(PointerSignalEvent event) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [event]);
+    if (identical(r, notOverridden)) { super.resolve(event); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$register(PointerSignalEvent event, PointerSignalResolvedCallback callback) { super.register(event, callback); }
+  void _super$resolve(PointerSignalEvent event) { super.resolve(event); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPointerSignalResolverBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PointerSignalResolver(dispatch, obj, superArgs);
+
 abstract final class PointerSignalResolverBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +71,13 @@ abstract final class PointerSignalResolverBindings {
       type: PointerSignalResolver,
       test: (o) => o is PointerSignalResolver,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PointerSignalResolver(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/gestures/pointer_signal_resolver.dart::PointerSignalResolver::\$super\$register#2', (args) { (args[0] as _$PointerSignalResolver)._super$register(args[1] as PointerSignalEvent, (a) => (args[2] as Function)(a)); return null; });
+    ctx.registerBinding('package:flutter/src/gestures/pointer_signal_resolver.dart::PointerSignalResolver::\$super\$resolve#1', (args) { (args[0] as _$PointerSignalResolver)._super$resolve(args[1] as PointerSignalEvent); return null; });
+    ctx.registerBinding('package:flutter/src/gestures/pointer_signal_resolver.dart::PointerSignalResolver::\$super\$toString#0', (args) => (args[0] as _$PointerSignalResolver)._super$toString());
+    ctx.registerBinding('package:flutter/src/gestures/pointer_signal_resolver.dart::PointerSignalResolver::\$super\$hashCode#0', (args) => (args[0] as _$PointerSignalResolver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

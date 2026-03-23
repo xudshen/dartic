@@ -18,6 +18,103 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$ChannelBuffers extends ChannelBuffers implements DarticObjectHolder {
+  _$ChannelBuffers(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void push(String name, ByteData? data, PlatformMessageResponseCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'push', [name, data, callback]);
+    if (identical(r, notOverridden)) { super.push(name, data, (a) => callback(a)); return; }
+  }
+
+  @override
+  void setListener(String name, ChannelCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setListener', [name, callback]);
+    if (identical(r, notOverridden)) { super.setListener(name, (a, b) => callback(a, b)); return; }
+  }
+
+  @override
+  void clearListener(String name) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListener', [name]);
+    if (identical(r, notOverridden)) { super.clearListener(name); return; }
+  }
+
+  @override
+  void sendChannelUpdate(String name, {required bool listening}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendChannelUpdate', [name, listening]);
+    if (identical(r, notOverridden)) { super.sendChannelUpdate(name, listening: listening); return; }
+  }
+
+  @override
+  Future<void> drain(String name, DrainChannelCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drain', [name, callback]);
+    if (identical(r, notOverridden)) return super.drain(name, (a, b) => callback(a, b) as Future<void>);
+    return r as Future<void>;
+  }
+
+  @override
+  void handleMessage(ByteData data) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMessage', [data]);
+    if (identical(r, notOverridden)) { super.handleMessage(data); return; }
+  }
+
+  @override
+  void resize(String name, int newSize) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resize', [name, newSize]);
+    if (identical(r, notOverridden)) { super.resize(name, newSize); return; }
+  }
+
+  @override
+  void allowOverflow(String name, bool allowed) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allowOverflow', [name, allowed]);
+    if (identical(r, notOverridden)) { super.allowOverflow(name, allowed); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$push(String name, ByteData? data, PlatformMessageResponseCallback callback) { super.push(name, data, callback); }
+  void _super$setListener(String name, ChannelCallback callback) { super.setListener(name, callback); }
+  void _super$clearListener(String name) { super.clearListener(name); }
+  void _super$sendChannelUpdate(String name, {required bool listening}) { super.sendChannelUpdate(name, listening: listening); }
+  Future<void> _super$drain(String name, DrainChannelCallback callback) => super.drain(name, callback);
+  void _super$handleMessage(ByteData data) { super.handleMessage(data); }
+  void _super$resize(String name, int newSize) { super.resize(name, newSize); }
+  void _super$allowOverflow(String name, bool allowed) { super.allowOverflow(name, allowed); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createChannelBuffersBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ChannelBuffers(dispatch, obj, superArgs);
+
 abstract final class ChannelBuffersBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,9 +122,21 @@ abstract final class ChannelBuffersBindings {
       type: ChannelBuffers,
       test: (o) => o is ChannelBuffers,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ChannelBuffers(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:ui::ChannelBuffers::kDefaultBufferSize#0', (args) => ChannelBuffers.kDefaultBufferSize);
     ctx.registerBinding('dart:ui::ChannelBuffers::kControlChannelName#0', (args) => ChannelBuffers.kControlChannelName);
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$push#3', (args) { (args[0] as _$ChannelBuffers)._super$push(args[1] as String, args[2] as ByteData?, (a) => (args[3] as Function)(a)); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$setListener#2', (args) { (args[0] as _$ChannelBuffers)._super$setListener(args[1] as String, (a, b) => (args[2] as Function)(a, b)); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$clearListener#1', (args) { (args[0] as _$ChannelBuffers)._super$clearListener(args[1] as String); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$sendChannelUpdate#2', (args) { (args[0] as _$ChannelBuffers)._super$sendChannelUpdate(args[1] as String, listening: args[2] as bool); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$drain#2', (args) => (args[0] as _$ChannelBuffers)._super$drain(args[1] as String, (a, b) => (args[2] as Function)(a, b) as Future<void>));
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$handleMessage#1', (args) { (args[0] as _$ChannelBuffers)._super$handleMessage(args[1] as ByteData); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$resize#2', (args) { (args[0] as _$ChannelBuffers)._super$resize(args[1] as String, args[2] as int); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$allowOverflow#2', (args) { (args[0] as _$ChannelBuffers)._super$allowOverflow(args[1] as String, args[2] as bool); return null; });
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$toString#0', (args) => (args[0] as _$ChannelBuffers)._super$toString());
+    ctx.registerBinding('dart:ui::ChannelBuffers::\$super\$hashCode#0', (args) => (args[0] as _$ChannelBuffers)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -16,6 +16,63 @@ import 'package:flutter/src/foundation/constants.dart';
 import 'package:flutter/src/foundation/debug.dart';
 import 'package:flutter/src/foundation/object.dart';
 
+class _$Diagnosticable implements Diagnosticable, DarticObjectHolder {
+  _$Diagnosticable(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringShort must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toString must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toDiagnosticsNode must be overridden in dartic code');
+    }
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugFillProperties must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDiagnosticableBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Diagnosticable(dispatch, obj, superArgs);
+
 abstract final class DiagnosticableBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,6 +80,8 @@ abstract final class DiagnosticableBindings {
       type: Diagnosticable,
       test: (o) => o is Diagnosticable,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Diagnosticable(dispatch, darticObject, superArgs),
     );
   }
 

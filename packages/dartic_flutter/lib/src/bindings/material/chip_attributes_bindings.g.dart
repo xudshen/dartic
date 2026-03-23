@@ -38,6 +38,217 @@ import 'package:flutter/src/rendering/box.dart';
 import 'package:flutter/src/services/mouse_cursor.dart';
 import 'package:flutter/services.dart';
 
+class _$ChipAttributes implements ChipAttributes, DarticObjectHolder {
+  _$ChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget get label {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter label must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  Widget? get avatar {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'avatar');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter avatar must be overridden in dartic code');
+    }
+    return r as Widget?;
+  }
+
+  @override
+  TextStyle? get labelStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'labelStyle');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter labelStyle must be overridden in dartic code');
+    }
+    return r as TextStyle?;
+  }
+
+  @override
+  BorderSide? get side {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'side');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter side must be overridden in dartic code');
+    }
+    return r as BorderSide?;
+  }
+
+  @override
+  OutlinedBorder? get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter shape must be overridden in dartic code');
+    }
+    return r as OutlinedBorder?;
+  }
+
+  @override
+  Clip get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter clipBehavior must be overridden in dartic code');
+    }
+    return r as Clip;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter focusNode must be overridden in dartic code');
+    }
+    return r as FocusNode?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter autofocus must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter color must be overridden in dartic code');
+    }
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter backgroundColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter padding must be overridden in dartic code');
+    }
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  VisualDensity? get visualDensity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'visualDensity');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter visualDensity must be overridden in dartic code');
+    }
+    return r as VisualDensity?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get labelPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'labelPadding');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter labelPadding must be overridden in dartic code');
+    }
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  MaterialTapTargetSize? get materialTapTargetSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'materialTapTargetSize');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter materialTapTargetSize must be overridden in dartic code');
+    }
+    return r as MaterialTapTargetSize?;
+  }
+
+  @override
+  double? get elevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter elevation must be overridden in dartic code');
+    }
+    return r as double?;
+  }
+
+  @override
+  Color? get shadowColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadowColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter shadowColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  Color? get surfaceTintColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'surfaceTintColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter surfaceTintColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  IconThemeData? get iconTheme {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'iconTheme');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter iconTheme must be overridden in dartic code');
+    }
+    return r as IconThemeData?;
+  }
+
+  @override
+  BoxConstraints? get avatarBoxConstraints {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'avatarBoxConstraints');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter avatarBoxConstraints must be overridden in dartic code');
+    }
+    return r as BoxConstraints?;
+  }
+
+  @override
+  ChipAnimationStyle? get chipAnimationStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'chipAnimationStyle');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter chipAnimationStyle must be overridden in dartic code');
+    }
+    return r as ChipAnimationStyle?;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter mouseCursor must be overridden in dartic code');
+    }
+    return r as MouseCursor?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ChipAttributes(dispatch, obj, superArgs);
+
 abstract final class ChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -45,6 +256,8 @@ abstract final class ChipAttributesBindings {
       type: ChipAttributes,
       test: (o) => o is ChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

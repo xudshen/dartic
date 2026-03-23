@@ -20,6 +20,194 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 import 'package:flutter/src/scheduler/ticker.dart';
 
+class _$OverlayState extends OverlayState implements DarticObjectHolder {
+  _$OverlayState(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void initState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
+    if (identical(r, notOverridden)) { super.initState(); return; }
+  }
+
+  @override
+  void insert(OverlayEntry entry, {OverlayEntry? below, OverlayEntry? above}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insert', [entry, below, above]);
+    if (identical(r, notOverridden)) { super.insert(entry, below: below, above: above); return; }
+  }
+
+  @override
+  void insertAll(Iterable<OverlayEntry> entries, {OverlayEntry? below, OverlayEntry? above}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertAll', [entries, below, above]);
+    if (identical(r, notOverridden)) { super.insertAll(entries, below: below, above: above); return; }
+  }
+
+  @override
+  void rearrange(Iterable<OverlayEntry> newEntries, {OverlayEntry? below, OverlayEntry? above}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rearrange', [newEntries, below, above]);
+    if (identical(r, notOverridden)) { super.rearrange(newEntries, below: below, above: above); return; }
+  }
+
+  @override
+  bool debugIsVisible(OverlayEntry entry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugIsVisible', [entry]);
+    if (identical(r, notOverridden)) return super.debugIsVisible(entry);
+    return r as bool;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  void didUpdateWidget(Overlay oldWidget) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
+    if (identical(r, notOverridden)) { super.didUpdateWidget(oldWidget); return; }
+  }
+
+  @override
+  void reassemble() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
+    if (identical(r, notOverridden)) { super.reassemble(); return; }
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
+    if (identical(r, notOverridden)) { super.setState(() => fn()); return; }
+  }
+
+  @override
+  void deactivate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
+    if (identical(r, notOverridden)) { super.deactivate(); return; }
+  }
+
+  @override
+  void activate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
+    if (identical(r, notOverridden)) { super.activate(); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void didChangeDependencies() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
+    if (identical(r, notOverridden)) { super.didChangeDependencies(); return; }
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  Ticker createTicker(TickerCallback onTick) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
+    if (identical(r, notOverridden)) return super.createTicker((a) => onTick(a));
+    return r as Ticker;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Overlay get widget {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
+    if (identical(r, notOverridden)) return super.widget;
+    return r as Overlay;
+  }
+
+  @override
+  BuildContext get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) return super.context;
+    return r as BuildContext;
+  }
+
+  @override
+  bool get mounted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mounted');
+    if (identical(r, notOverridden)) return super.mounted;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$initState() { super.initState(); }
+  void _super$insert(OverlayEntry entry, {OverlayEntry? below, OverlayEntry? above}) { super.insert(entry, below: below, above: above); }
+  void _super$insertAll(Iterable<OverlayEntry> entries, {OverlayEntry? below, OverlayEntry? above}) { super.insertAll(entries, below: below, above: above); }
+  void _super$rearrange(Iterable<OverlayEntry> newEntries, {OverlayEntry? below, OverlayEntry? above}) { super.rearrange(newEntries, below: below, above: above); }
+  bool _super$debugIsVisible(OverlayEntry entry) => super.debugIsVisible(entry);
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  void _super$didUpdateWidget(Overlay oldWidget) { super.didUpdateWidget(oldWidget); }
+  void _super$reassemble() { super.reassemble(); }
+  void _super$setState(VoidCallback fn) { super.setState(fn); }
+  void _super$deactivate() { super.deactivate(); }
+  void _super$activate() { super.activate(); }
+  void _super$dispose() { super.dispose(); }
+  void _super$didChangeDependencies() { super.didChangeDependencies(); }
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  Ticker _super$createTicker(TickerCallback onTick) => super.createTicker(onTick);
+  int get _super$hashCode => super.hashCode;
+  Overlay get _super$widget => super.widget;
+  BuildContext get _super$context => super.context;
+  bool get _super$mounted => super.mounted;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOverlayStateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OverlayState(dispatch, obj, superArgs);
+
 abstract final class OverlayStateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +216,31 @@ abstract final class OverlayStateBindings {
       test: (o) => o is OverlayState,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::State', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/widgets/ticker_provider.dart::TickerProviderStateMixin', 'package:flutter/src/scheduler/ticker.dart::TickerProvider'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OverlayState(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$initState#0', (args) { (args[0] as _$OverlayState)._super$initState(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$insert#3', (args) { (args[0] as _$OverlayState)._super$insert(args[1] as OverlayEntry, below: identical(args[2], darticAbsent) ? null : args[2] as OverlayEntry?, above: identical(args[3], darticAbsent) ? null : args[3] as OverlayEntry?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$insertAll#3', (args) { (args[0] as _$OverlayState)._super$insertAll((args[1] as Iterable).cast<OverlayEntry>(), below: identical(args[2], darticAbsent) ? null : args[2] as OverlayEntry?, above: identical(args[3], darticAbsent) ? null : args[3] as OverlayEntry?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$rearrange#3', (args) { (args[0] as _$OverlayState)._super$rearrange((args[1] as Iterable).cast<OverlayEntry>(), below: identical(args[2], darticAbsent) ? null : args[2] as OverlayEntry?, above: identical(args[3], darticAbsent) ? null : args[3] as OverlayEntry?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$debugIsVisible#1', (args) => (args[0] as _$OverlayState)._super$debugIsVisible(args[1] as OverlayEntry));
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$build#1', (args) => (args[0] as _$OverlayState)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$debugFillProperties#1', (args) { (args[0] as _$OverlayState)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$toString#1', (args) => (args[0] as _$OverlayState)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$didUpdateWidget#1', (args) { (args[0] as _$OverlayState)._super$didUpdateWidget(args[1] as Overlay); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$reassemble#0', (args) { (args[0] as _$OverlayState)._super$reassemble(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$setState#1', (args) { (args[0] as _$OverlayState)._super$setState(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$deactivate#0', (args) { (args[0] as _$OverlayState)._super$deactivate(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$activate#0', (args) { (args[0] as _$OverlayState)._super$activate(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$dispose#0', (args) { (args[0] as _$OverlayState)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$didChangeDependencies#0', (args) { (args[0] as _$OverlayState)._super$didChangeDependencies(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$toStringShort#0', (args) => (args[0] as _$OverlayState)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$OverlayState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$createTicker#1', (args) => (args[0] as _$OverlayState)._super$createTicker((a) => (args[1] as Function)(a)));
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$hashCode#0', (args) => (args[0] as _$OverlayState)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$widget#0', (args) => (args[0] as _$OverlayState)._super$widget);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$context#0', (args) => (args[0] as _$OverlayState)._super$context);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayState::\$super\$mounted#0', (args) => (args[0] as _$OverlayState)._super$mounted);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

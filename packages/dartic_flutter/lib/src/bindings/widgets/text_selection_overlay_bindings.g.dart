@@ -37,6 +37,234 @@ import 'package:flutter/src/rendering/editable.dart';
 import 'package:flutter/src/rendering/layer.dart';
 import 'package:flutter/src/gestures/recognizer.dart';
 
+class _$TextSelectionOverlay extends TextSelectionOverlay implements DarticObjectHolder {
+  _$TextSelectionOverlay(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(value: superArgs[0] as TextEditingValue, context: superArgs[1] as BuildContext, debugRequiredFor: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Widget?, toolbarLayerLink: superArgs[3] as LayerLink, startHandleLayerLink: superArgs[4] as LayerLink, endHandleLayerLink: superArgs[5] as LayerLink, renderObject: superArgs[6] as RenderEditable, selectionControls: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as TextSelectionControls?, handlesVisible: superArgs[8] as bool, selectionDelegate: superArgs[9] as TextSelectionDelegate, dragStartBehavior: superArgs[10] as DragStartBehavior, onSelectionHandleTapped: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as VoidCallback?, clipboardStatus: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as ClipboardStatusNotifier?, contextMenuBuilder: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as WidgetBuilder?, magnifierConfiguration: superArgs[14] as TextMagnifierConfiguration);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void showHandles() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showHandles', const []);
+    if (identical(r, notOverridden)) { super.showHandles(); return; }
+  }
+
+  @override
+  void hideHandles() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideHandles', const []);
+    if (identical(r, notOverridden)) { super.hideHandles(); return; }
+  }
+
+  @override
+  void showToolbar() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
+    if (identical(r, notOverridden)) { super.showToolbar(); return; }
+  }
+
+  @override
+  void showSpellCheckSuggestionsToolbar(WidgetBuilder spellCheckSuggestionsToolbarBuilder) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSpellCheckSuggestionsToolbar', [spellCheckSuggestionsToolbarBuilder]);
+    if (identical(r, notOverridden)) { super.showSpellCheckSuggestionsToolbar((a) => spellCheckSuggestionsToolbarBuilder(a) as Widget); return; }
+  }
+
+  @override
+  void showMagnifier(Offset positionToShow) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showMagnifier', [positionToShow]);
+    if (identical(r, notOverridden)) { super.showMagnifier(positionToShow); return; }
+  }
+
+  @override
+  void updateMagnifier(Offset positionToShow) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateMagnifier', [positionToShow]);
+    if (identical(r, notOverridden)) { super.updateMagnifier(positionToShow); return; }
+  }
+
+  @override
+  void hideMagnifier() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideMagnifier', const []);
+    if (identical(r, notOverridden)) { super.hideMagnifier(); return; }
+  }
+
+  @override
+  void update(TextEditingValue newValue) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'update', [newValue]);
+    if (identical(r, notOverridden)) { super.update(newValue); return; }
+  }
+
+  @override
+  void updateForScroll() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateForScroll', const []);
+    if (identical(r, notOverridden)) { super.updateForScroll(); return; }
+  }
+
+  @override
+  void hide() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(r, notOverridden)) { super.hide(); return; }
+  }
+
+  @override
+  void hideToolbar() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', const []);
+    if (identical(r, notOverridden)) { super.hideToolbar(); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  BuildContext get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) return super.context;
+    return r as BuildContext;
+  }
+
+  @override
+  RenderEditable get renderObject {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'renderObject');
+    if (identical(r, notOverridden)) return super.renderObject;
+    return r as RenderEditable;
+  }
+
+  @override
+  TextSelectionControls? get selectionControls {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionControls');
+    if (identical(r, notOverridden)) return super.selectionControls;
+    return r as TextSelectionControls?;
+  }
+
+  @override
+  TextSelectionDelegate get selectionDelegate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionDelegate');
+    if (identical(r, notOverridden)) return super.selectionDelegate;
+    return r as TextSelectionDelegate;
+  }
+
+  @override
+  WidgetBuilder? get contextMenuBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'contextMenuBuilder');
+    if (identical(r, notOverridden)) return super.contextMenuBuilder;
+    return r as WidgetBuilder?;
+  }
+
+  @override
+  TextEditingValue get value {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
+    if (identical(r, notOverridden)) return super.value;
+    return r as TextEditingValue;
+  }
+
+  @override
+  bool get handlesVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'handlesVisible');
+    if (identical(r, notOverridden)) return super.handlesVisible;
+    return r as bool;
+  }
+
+  @override
+  bool get handlesAreVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'handlesAreVisible');
+    if (identical(r, notOverridden)) return super.handlesAreVisible;
+    return r as bool;
+  }
+
+  @override
+  bool get toolbarIsVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'toolbarIsVisible');
+    if (identical(r, notOverridden)) return super.toolbarIsVisible;
+    return r as bool;
+  }
+
+  @override
+  bool get magnifierIsVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'magnifierIsVisible');
+    if (identical(r, notOverridden)) return super.magnifierIsVisible;
+    return r as bool;
+  }
+
+  @override
+  bool get magnifierExists {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'magnifierExists');
+    if (identical(r, notOverridden)) return super.magnifierExists;
+    return r as bool;
+  }
+
+  @override
+  bool get spellCheckToolbarIsVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spellCheckToolbarIsVisible');
+    if (identical(r, notOverridden)) return super.spellCheckToolbarIsVisible;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  set handlesVisible(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'handlesVisible', value)) {
+      super.handlesVisible = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$showHandles() { super.showHandles(); }
+  void _super$hideHandles() { super.hideHandles(); }
+  void _super$showToolbar() { super.showToolbar(); }
+  void _super$showSpellCheckSuggestionsToolbar(WidgetBuilder spellCheckSuggestionsToolbarBuilder) { super.showSpellCheckSuggestionsToolbar(spellCheckSuggestionsToolbarBuilder); }
+  void _super$showMagnifier(Offset positionToShow) { super.showMagnifier(positionToShow); }
+  void _super$updateMagnifier(Offset positionToShow) { super.updateMagnifier(positionToShow); }
+  void _super$hideMagnifier() { super.hideMagnifier(); }
+  void _super$update(TextEditingValue newValue) { super.update(newValue); }
+  void _super$updateForScroll() { super.updateForScroll(); }
+  void _super$hide() { super.hide(); }
+  void _super$hideToolbar() { super.hideToolbar(); }
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  BuildContext get _super$context => super.context;
+  RenderEditable get _super$renderObject => super.renderObject;
+  TextSelectionControls? get _super$selectionControls => super.selectionControls;
+  TextSelectionDelegate get _super$selectionDelegate => super.selectionDelegate;
+  WidgetBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
+  TextEditingValue get _super$value => super.value;
+  bool get _super$handlesVisible => super.handlesVisible;
+  bool get _super$handlesAreVisible => super.handlesAreVisible;
+  bool get _super$toolbarIsVisible => super.toolbarIsVisible;
+  bool get _super$magnifierIsVisible => super.magnifierIsVisible;
+  bool get _super$magnifierExists => super.magnifierExists;
+  bool get _super$spellCheckToolbarIsVisible => super.spellCheckToolbarIsVisible;
+  int get _super$hashCode => super.hashCode;
+  set _super$handlesVisible(bool value) { super.handlesVisible = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextSelectionOverlayBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextSelectionOverlay(dispatch, obj, superArgs);
+
 abstract final class TextSelectionOverlayBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -44,7 +272,36 @@ abstract final class TextSelectionOverlayBindings {
       type: TextSelectionOverlay,
       test: (o) => o is TextSelectionOverlay,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextSelectionOverlay(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$showHandles#0', (args) { (args[0] as _$TextSelectionOverlay)._super$showHandles(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hideHandles#0', (args) { (args[0] as _$TextSelectionOverlay)._super$hideHandles(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$showToolbar#0', (args) { (args[0] as _$TextSelectionOverlay)._super$showToolbar(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$showSpellCheckSuggestionsToolbar#1', (args) { (args[0] as _$TextSelectionOverlay)._super$showSpellCheckSuggestionsToolbar((a) => (args[1] as Function)(a) as Widget); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$showMagnifier#1', (args) { (args[0] as _$TextSelectionOverlay)._super$showMagnifier(args[1] as Offset); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$updateMagnifier#1', (args) { (args[0] as _$TextSelectionOverlay)._super$updateMagnifier(args[1] as Offset); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hideMagnifier#0', (args) { (args[0] as _$TextSelectionOverlay)._super$hideMagnifier(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$update#1', (args) { (args[0] as _$TextSelectionOverlay)._super$update(args[1] as TextEditingValue); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$updateForScroll#0', (args) { (args[0] as _$TextSelectionOverlay)._super$updateForScroll(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hide#0', (args) { (args[0] as _$TextSelectionOverlay)._super$hide(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hideToolbar#0', (args) { (args[0] as _$TextSelectionOverlay)._super$hideToolbar(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$dispose#0', (args) { (args[0] as _$TextSelectionOverlay)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$toString#0', (args) => (args[0] as _$TextSelectionOverlay)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$context#0', (args) => (args[0] as _$TextSelectionOverlay)._super$context);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$renderObject#0', (args) => (args[0] as _$TextSelectionOverlay)._super$renderObject);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$selectionControls#0', (args) => (args[0] as _$TextSelectionOverlay)._super$selectionControls);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$selectionDelegate#0', (args) => (args[0] as _$TextSelectionOverlay)._super$selectionDelegate);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$TextSelectionOverlay)._super$contextMenuBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$value#0', (args) => (args[0] as _$TextSelectionOverlay)._super$value);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$handlesVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$handlesVisible);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$handlesAreVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$handlesAreVisible);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$toolbarIsVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$toolbarIsVisible);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$magnifierIsVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$magnifierIsVisible);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$magnifierExists#0', (args) => (args[0] as _$TextSelectionOverlay)._super$magnifierExists);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$spellCheckToolbarIsVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$spellCheckToolbarIsVisible);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionOverlay)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$handlesVisible=#1', (args) { (args[0] as _$TextSelectionOverlay)._super$handlesVisible = args[1] as bool; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

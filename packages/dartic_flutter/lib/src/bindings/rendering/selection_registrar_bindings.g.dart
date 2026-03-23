@@ -12,6 +12,62 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/src/rendering/layer.dart';
 import 'package:flutter/src/rendering/object.dart';
 
+class _$SelectionRegistrar extends SelectionRegistrar implements DarticObjectHolder {
+  _$SelectionRegistrar(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void add(Selectable selectable) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method add must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void remove(Selectable selectable) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method remove must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSelectionRegistrarBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SelectionRegistrar(dispatch, obj, superArgs);
+
 abstract final class SelectionRegistrarBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,7 +75,11 @@ abstract final class SelectionRegistrarBindings {
       type: SelectionRegistrar,
       test: (o) => o is SelectionRegistrar,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SelectionRegistrar(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectionRegistrar::\$super\$toString#0', (args) => (args[0] as _$SelectionRegistrar)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectionRegistrar::\$super\$hashCode#0', (args) => (args[0] as _$SelectionRegistrar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -13,6 +13,71 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/painting/debug.dart';
 import 'dart:async';
 
+class _$ShaderWarmUp extends ShaderWarmUp implements DarticObjectHolder {
+  _$ShaderWarmUp(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<void> warmUpOnCanvas(ui.Canvas canvas) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'warmUpOnCanvas', [canvas]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method warmUpOnCanvas must be overridden in dartic code');
+    }
+    return r as Future<void>;
+  }
+
+  @override
+  Future<void> execute() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'execute', const []);
+    if (identical(r, notOverridden)) return super.execute();
+    return r as Future<void>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ui.Size get size {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'size');
+    if (identical(r, notOverridden)) return super.size;
+    return r as ui.Size;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Future<void> _super$execute() => super.execute();
+  String _super$toString() => super.toString();
+  ui.Size get _super$size => super.size;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createShaderWarmUpBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ShaderWarmUp(dispatch, obj, superArgs);
+
 abstract final class ShaderWarmUpBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,7 +85,13 @@ abstract final class ShaderWarmUpBindings {
       type: ShaderWarmUp,
       test: (o) => o is ShaderWarmUp,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ShaderWarmUp(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/painting/shader_warm_up.dart::ShaderWarmUp::\$super\$execute#0', (args) => (args[0] as _$ShaderWarmUp)._super$execute());
+    ctx.registerBinding('package:flutter/src/painting/shader_warm_up.dart::ShaderWarmUp::\$super\$toString#0', (args) => (args[0] as _$ShaderWarmUp)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/shader_warm_up.dart::ShaderWarmUp::\$super\$size#0', (args) => (args[0] as _$ShaderWarmUp)._super$size);
+    ctx.registerBinding('package:flutter/src/painting/shader_warm_up.dart::ShaderWarmUp::\$super\$hashCode#0', (args) => (args[0] as _$ShaderWarmUp)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

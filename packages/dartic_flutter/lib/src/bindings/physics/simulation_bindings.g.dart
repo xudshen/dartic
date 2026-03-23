@@ -10,6 +10,89 @@ import 'package:flutter/src/physics/simulation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/physics/tolerance.dart';
 
+class _$Simulation extends Simulation implements DarticObjectHolder {
+  _$Simulation(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(tolerance: superArgs[0] as Tolerance);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double x(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method x must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double dx(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dx must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool isDone(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isDone must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Tolerance get tolerance {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance');
+    if (identical(r, notOverridden)) return super.tolerance;
+    return r as Tolerance;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  set tolerance(Tolerance value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance', value)) {
+      super.tolerance = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Tolerance get _super$tolerance => super.tolerance;
+  int get _super$hashCode => super.hashCode;
+  set _super$tolerance(Tolerance value) { super.tolerance = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSimulationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Simulation(dispatch, obj, superArgs);
+
 abstract final class SimulationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +100,13 @@ abstract final class SimulationBindings {
       type: Simulation,
       test: (o) => o is Simulation,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Simulation(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$toString#0', (args) => (args[0] as _$Simulation)._super$toString());
+    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$tolerance#0', (args) => (args[0] as _$Simulation)._super$tolerance);
+    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$hashCode#0', (args) => (args[0] as _$Simulation)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$tolerance=#1', (args) { (args[0] as _$Simulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

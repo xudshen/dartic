@@ -11,6 +11,36 @@ import 'package:flutter/foundation.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/src/gestures/events.dart';
 
+class _$HitTestTarget implements HitTestTarget, DarticObjectHolder {
+  _$HitTestTarget(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void handleEvent(PointerEvent event, HitTestEntry<HitTestTarget> entry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleEvent must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createHitTestTargetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$HitTestTarget(dispatch, obj, superArgs);
+
 abstract final class HitTestTargetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,6 +48,8 @@ abstract final class HitTestTargetBindings {
       type: HitTestTarget,
       test: (o) => o is HitTestTarget,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$HitTestTarget(dispatch, darticObject, superArgs),
     );
   }
 

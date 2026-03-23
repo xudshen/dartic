@@ -22,6 +22,102 @@ import 'package:flutter/src/painting/borders.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/edge_insets.dart';
 
+class _$NavigationRailDestination extends NavigationRailDestination implements DarticObjectHolder {
+  _$NavigationRailDestination(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(icon: superArgs[0] as Widget, selectedIcon: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Widget?, indicatorColor: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Color?, indicatorShape: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as ShapeBorder?, label: superArgs[4] as Widget, padding: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as EdgeInsetsGeometry?, disabled: superArgs[6] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Widget get icon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'icon');
+    if (identical(r, notOverridden)) return super.icon;
+    return r as Widget;
+  }
+
+  @override
+  Widget get selectedIcon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectedIcon');
+    if (identical(r, notOverridden)) return super.selectedIcon;
+    return r as Widget;
+  }
+
+  @override
+  Color? get indicatorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorColor');
+    if (identical(r, notOverridden)) return super.indicatorColor;
+    return r as Color?;
+  }
+
+  @override
+  ShapeBorder? get indicatorShape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorShape');
+    if (identical(r, notOverridden)) return super.indicatorShape;
+    return r as ShapeBorder?;
+  }
+
+  @override
+  Widget get label {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
+    if (identical(r, notOverridden)) return super.label;
+    return r as Widget;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  bool get disabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'disabled');
+    if (identical(r, notOverridden)) return super.disabled;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Widget get _super$icon => super.icon;
+  Widget get _super$selectedIcon => super.selectedIcon;
+  Color? get _super$indicatorColor => super.indicatorColor;
+  ShapeBorder? get _super$indicatorShape => super.indicatorShape;
+  Widget get _super$label => super.label;
+  EdgeInsetsGeometry? get _super$padding => super.padding;
+  bool get _super$disabled => super.disabled;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createNavigationRailDestinationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$NavigationRailDestination(dispatch, obj, superArgs);
+
 abstract final class NavigationRailDestinationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,7 +125,18 @@ abstract final class NavigationRailDestinationBindings {
       type: NavigationRailDestination,
       test: (o) => o is NavigationRailDestination,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$NavigationRailDestination(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$toString#0', (args) => (args[0] as _$NavigationRailDestination)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$icon#0', (args) => (args[0] as _$NavigationRailDestination)._super$icon);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$selectedIcon#0', (args) => (args[0] as _$NavigationRailDestination)._super$selectedIcon);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$indicatorColor#0', (args) => (args[0] as _$NavigationRailDestination)._super$indicatorColor);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$indicatorShape#0', (args) => (args[0] as _$NavigationRailDestination)._super$indicatorShape);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$label#0', (args) => (args[0] as _$NavigationRailDestination)._super$label);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$padding#0', (args) => (args[0] as _$NavigationRailDestination)._super$padding);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$disabled#0', (args) => (args[0] as _$NavigationRailDestination)._super$disabled);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRailDestination::\$super\$hashCode#0', (args) => (args[0] as _$NavigationRailDestination)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

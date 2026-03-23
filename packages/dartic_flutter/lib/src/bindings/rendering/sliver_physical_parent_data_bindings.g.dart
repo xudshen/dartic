@@ -18,6 +18,92 @@ import 'package:flutter/src/rendering/viewport_offset.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:ui';
 
+class _$SliverPhysicalParentData extends SliverPhysicalParentData implements DarticObjectHolder {
+  _$SliverPhysicalParentData(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void applyPaintTransform(Matrix4 transform) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPaintTransform', [transform]);
+    if (identical(r, notOverridden)) { super.applyPaintTransform(transform); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void detach() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(r, notOverridden)) { super.detach(); return; }
+  }
+
+  @override
+  Offset get paintOffset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'paintOffset');
+    if (identical(r, notOverridden)) return super.paintOffset;
+    return r as Offset;
+  }
+
+  @override
+  int? get crossAxisFlex {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'crossAxisFlex');
+    if (identical(r, notOverridden)) return super.crossAxisFlex;
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  set paintOffset(Offset value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'paintOffset', value)) {
+      super.paintOffset = value;
+    }
+  }
+
+  @override
+  set crossAxisFlex(int? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'crossAxisFlex', value)) {
+      super.crossAxisFlex = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$applyPaintTransform(Matrix4 transform) { super.applyPaintTransform(transform); }
+  String _super$toString() => super.toString();
+  void _super$detach() { super.detach(); }
+  Offset get _super$paintOffset => super.paintOffset;
+  int? get _super$crossAxisFlex => super.crossAxisFlex;
+  int get _super$hashCode => super.hashCode;
+  set _super$paintOffset(Offset value) { super.paintOffset = value; }
+  set _super$crossAxisFlex(int? value) { super.crossAxisFlex = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSliverPhysicalParentDataBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SliverPhysicalParentData(dispatch, obj, superArgs);
+
 abstract final class SliverPhysicalParentDataBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +112,17 @@ abstract final class SliverPhysicalParentDataBindings {
       test: (o) => o is SliverPhysicalParentData,
       methods: methodMap(),
       superclasses: ['package:flutter/src/rendering/object.dart::ParentData'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SliverPhysicalParentData(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$applyPaintTransform#1', (args) { (args[0] as _$SliverPhysicalParentData)._super$applyPaintTransform(args[1] as Matrix4); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$toString#0', (args) => (args[0] as _$SliverPhysicalParentData)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$detach#0', (args) { (args[0] as _$SliverPhysicalParentData)._super$detach(); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$paintOffset#0', (args) => (args[0] as _$SliverPhysicalParentData)._super$paintOffset);
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$crossAxisFlex#0', (args) => (args[0] as _$SliverPhysicalParentData)._super$crossAxisFlex);
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverPhysicalParentData)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$paintOffset=#1', (args) { (args[0] as _$SliverPhysicalParentData)._super$paintOffset = args[1] as Offset; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalParentData::\$super\$crossAxisFlex=#1', (args) { (args[0] as _$SliverPhysicalParentData)._super$crossAxisFlex = args[1] as int?; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -35,6 +35,9 @@ libraries:
       - name: SetBase
         bridge: true
       - DoubleLinkedQueueEntry
+      # F-bounded generic: bridge can't satisfy LinkedList<E extends LinkedListEntry<E>>
+      - name: LinkedList
+        bridge: false
       # Cross-namespace: UnmodifiableMapBase from dart:_internal
       - UnmodifiableMapBase
 

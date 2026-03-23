@@ -10,6 +10,69 @@ import 'package:flutter/src/animation/listener_helpers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/animation/animation.dart';
 
+class _$AnimationLazyListenerMixin implements AnimationLazyListenerMixin, DarticObjectHolder {
+  _$AnimationLazyListenerMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void didRegisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didUnregisterListener() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didStartListening() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartListening', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didStartListening must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didStopListening() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStopListening', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didStopListening must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool get isListening {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isListening');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isListening must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAnimationLazyListenerMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AnimationLazyListenerMixin(dispatch, obj, superArgs);
+
 abstract final class AnimationLazyListenerMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +80,8 @@ abstract final class AnimationLazyListenerMixinBindings {
       type: AnimationLazyListenerMixin,
       test: (o) => o is AnimationLazyListenerMixin,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AnimationLazyListenerMixin(dispatch, darticObject, superArgs),
     );
   }
 

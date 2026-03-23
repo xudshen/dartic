@@ -20,6 +20,137 @@ import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 
+class _$ShortcutManager extends ShortcutManager implements DarticObjectHolder {
+  _$ShortcutManager(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(shortcuts: (superArgs[0] as Map).cast<ShortcutActivator, Intent>(), modal: superArgs[1] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  KeyEventResult handleKeypress(BuildContext context, KeyEvent event) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleKeypress', [context, event]);
+    if (identical(r, notOverridden)) return super.handleKeypress(context, event);
+    return r as KeyEventResult;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  bool get modal {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'modal');
+    if (identical(r, notOverridden)) return super.modal;
+    return r as bool;
+  }
+
+  @override
+  Map<ShortcutActivator, Intent> get shortcuts {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shortcuts');
+    if (identical(r, notOverridden)) return super.shortcuts;
+    return r as Map<ShortcutActivator, Intent>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool get hasListeners {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
+    if (identical(r, notOverridden)) return super.hasListeners;
+    return r as bool;
+  }
+
+  @override
+  set shortcuts(Map<ShortcutActivator, Intent> value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'shortcuts', value)) {
+      super.shortcuts = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  KeyEventResult _super$handleKeypress(BuildContext context, KeyEvent event) => super.handleKeypress(context, event);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$dispose() { super.dispose(); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  bool get _super$modal => super.modal;
+  Map<ShortcutActivator, Intent> get _super$shortcuts => super.shortcuts;
+  int get _super$hashCode => super.hashCode;
+  bool get _super$hasListeners => super.hasListeners;
+  set _super$shortcuts(Map<ShortcutActivator, Intent> value) { super.shortcuts = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createShortcutManagerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ShortcutManager(dispatch, obj, superArgs);
+
 abstract final class ShortcutManagerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +159,23 @@ abstract final class ShortcutManagerBindings {
       test: (o) => o is ShortcutManager,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/foundation/change_notifier.dart::ChangeNotifier', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ShortcutManager(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$handleKeypress#2', (args) => (args[0] as _$ShortcutManager)._super$handleKeypress(args[1] as BuildContext, args[2] as KeyEvent));
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$debugFillProperties#1', (args) { (args[0] as _$ShortcutManager)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$toString#1', (args) => (args[0] as _$ShortcutManager)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$toStringShort#0', (args) => (args[0] as _$ShortcutManager)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ShortcutManager)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$addListener#1', (args) { (args[0] as _$ShortcutManager)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$removeListener#1', (args) { (args[0] as _$ShortcutManager)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$dispose#0', (args) { (args[0] as _$ShortcutManager)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$notifyListeners#0', (args) { (args[0] as _$ShortcutManager)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$modal#0', (args) => (args[0] as _$ShortcutManager)._super$modal);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$shortcuts#0', (args) => (args[0] as _$ShortcutManager)._super$shortcuts);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$hashCode#0', (args) => (args[0] as _$ShortcutManager)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$hasListeners#0', (args) => (args[0] as _$ShortcutManager)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutManager::\$super\$shortcuts=#1', (args) { (args[0] as _$ShortcutManager)._super$shortcuts = (args[1] as Map).cast<ShortcutActivator, Intent>(); return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -36,6 +36,285 @@ import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Slider extends Slider implements DarticObjectHolder {
+  _$Slider(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, value: superArgs[1] as double, secondaryTrackValue: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, onChanged: superArgs[3] as ValueChanged<double>?, onChangeStart: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as ValueChanged<double>?, onChangeEnd: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as ValueChanged<double>?, min: superArgs[6] as double, max: superArgs[7] as double, divisions: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as int?, label: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as String?, activeColor: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as Color?, inactiveColor: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as Color?, secondaryActiveColor: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as Color?, thumbColor: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as Color?, overlayColor: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as WidgetStateProperty<Color?>?, mouseCursor: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as MouseCursor?, semanticFormatterCallback: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as SemanticFormatterCallback?, focusNode: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as FocusNode?, autofocus: superArgs[18] as bool, allowedInteraction: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as SliderInteraction?, padding: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as EdgeInsetsGeometry?, year2023: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as bool?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<Slider> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<Slider>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  double get value {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
+    if (identical(r, notOverridden)) return super.value;
+    return r as double;
+  }
+
+  @override
+  double? get secondaryTrackValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'secondaryTrackValue');
+    if (identical(r, notOverridden)) return super.secondaryTrackValue;
+    return r as double?;
+  }
+
+  @override
+  ValueChanged<double>? get onChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChanged');
+    if (identical(r, notOverridden)) return super.onChanged;
+    return r as ValueChanged<double>?;
+  }
+
+  @override
+  ValueChanged<double>? get onChangeStart {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChangeStart');
+    if (identical(r, notOverridden)) return super.onChangeStart;
+    return r as ValueChanged<double>?;
+  }
+
+  @override
+  ValueChanged<double>? get onChangeEnd {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onChangeEnd');
+    if (identical(r, notOverridden)) return super.onChangeEnd;
+    return r as ValueChanged<double>?;
+  }
+
+  @override
+  double get min {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'min');
+    if (identical(r, notOverridden)) return super.min;
+    return r as double;
+  }
+
+  @override
+  double get max {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'max');
+    if (identical(r, notOverridden)) return super.max;
+    return r as double;
+  }
+
+  @override
+  int? get divisions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'divisions');
+    if (identical(r, notOverridden)) return super.divisions;
+    return r as int?;
+  }
+
+  @override
+  String? get label {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
+    if (identical(r, notOverridden)) return super.label;
+    return r as String?;
+  }
+
+  @override
+  Color? get activeColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'activeColor');
+    if (identical(r, notOverridden)) return super.activeColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get inactiveColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inactiveColor');
+    if (identical(r, notOverridden)) return super.inactiveColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get secondaryActiveColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'secondaryActiveColor');
+    if (identical(r, notOverridden)) return super.secondaryActiveColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get thumbColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'thumbColor');
+    if (identical(r, notOverridden)) return super.thumbColor;
+    return r as Color?;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get overlayColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayColor');
+    if (identical(r, notOverridden)) return super.overlayColor;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  SemanticFormatterCallback? get semanticFormatterCallback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticFormatterCallback');
+    if (identical(r, notOverridden)) return super.semanticFormatterCallback;
+    return r as SemanticFormatterCallback?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  SliderInteraction? get allowedInteraction {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allowedInteraction');
+    if (identical(r, notOverridden)) return super.allowedInteraction;
+    return r as SliderInteraction?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  bool? get year2023 {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'year2023');
+    if (identical(r, notOverridden)) return super.year2023;
+    return r as bool?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<Slider> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  double get _super$value => super.value;
+  double? get _super$secondaryTrackValue => super.secondaryTrackValue;
+  ValueChanged<double>? get _super$onChanged => super.onChanged;
+  ValueChanged<double>? get _super$onChangeStart => super.onChangeStart;
+  ValueChanged<double>? get _super$onChangeEnd => super.onChangeEnd;
+  double get _super$min => super.min;
+  double get _super$max => super.max;
+  int? get _super$divisions => super.divisions;
+  String? get _super$label => super.label;
+  Color? get _super$activeColor => super.activeColor;
+  Color? get _super$inactiveColor => super.inactiveColor;
+  Color? get _super$secondaryActiveColor => super.secondaryActiveColor;
+  Color? get _super$thumbColor => super.thumbColor;
+  WidgetStateProperty<Color?>? get _super$overlayColor => super.overlayColor;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  SemanticFormatterCallback? get _super$semanticFormatterCallback => super.semanticFormatterCallback;
+  FocusNode? get _super$focusNode => super.focusNode;
+  bool get _super$autofocus => super.autofocus;
+  SliderInteraction? get _super$allowedInteraction => super.allowedInteraction;
+  EdgeInsetsGeometry? get _super$padding => super.padding;
+  bool? get _super$year2023 => super.year2023;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSliderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Slider(dispatch, obj, superArgs);
+
 abstract final class SliderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -44,7 +323,41 @@ abstract final class SliderBindings {
       test: (o) => o is Slider,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Slider(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$createState#0', (args) => (args[0] as _$Slider)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$debugFillProperties#1', (args) { (args[0] as _$Slider)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$toString#1', (args) => (args[0] as _$Slider)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$createElement#0', (args) => (args[0] as _$Slider)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$toStringShort#0', (args) => (args[0] as _$Slider)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$toStringShallow#2', (args) => (args[0] as _$Slider)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$toStringDeep#4', (args) => (args[0] as _$Slider)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Slider)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Slider)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$value#0', (args) => (args[0] as _$Slider)._super$value);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$secondaryTrackValue#0', (args) => (args[0] as _$Slider)._super$secondaryTrackValue);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$onChanged#0', (args) => (args[0] as _$Slider)._super$onChanged);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$onChangeStart#0', (args) => (args[0] as _$Slider)._super$onChangeStart);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$onChangeEnd#0', (args) => (args[0] as _$Slider)._super$onChangeEnd);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$min#0', (args) => (args[0] as _$Slider)._super$min);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$max#0', (args) => (args[0] as _$Slider)._super$max);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$divisions#0', (args) => (args[0] as _$Slider)._super$divisions);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$label#0', (args) => (args[0] as _$Slider)._super$label);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$activeColor#0', (args) => (args[0] as _$Slider)._super$activeColor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$inactiveColor#0', (args) => (args[0] as _$Slider)._super$inactiveColor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$secondaryActiveColor#0', (args) => (args[0] as _$Slider)._super$secondaryActiveColor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$thumbColor#0', (args) => (args[0] as _$Slider)._super$thumbColor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$overlayColor#0', (args) => (args[0] as _$Slider)._super$overlayColor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$mouseCursor#0', (args) => (args[0] as _$Slider)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$semanticFormatterCallback#0', (args) => (args[0] as _$Slider)._super$semanticFormatterCallback);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$focusNode#0', (args) => (args[0] as _$Slider)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$autofocus#0', (args) => (args[0] as _$Slider)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$allowedInteraction#0', (args) => (args[0] as _$Slider)._super$allowedInteraction);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$padding#0', (args) => (args[0] as _$Slider)._super$padding);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$year2023#0', (args) => (args[0] as _$Slider)._super$year2023);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$hashCode#0', (args) => (args[0] as _$Slider)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$key#0', (args) => (args[0] as _$Slider)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

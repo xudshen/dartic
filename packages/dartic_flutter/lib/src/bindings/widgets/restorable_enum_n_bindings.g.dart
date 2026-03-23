@@ -29,7 +29,7 @@ abstract final class RestorableEnumNBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'createDefaultValue#0': (args) => (args[0] as RestorableEnumN).createDefaultValue(),
-        'didUpdateValue#1': (args) { (args[0] as RestorableEnumN).didUpdateValue(args[1] as Enum); return null; },
+        'didUpdateValue#1': (args) { (args[0] as RestorableEnumN).didUpdateValue(args[1] as Enum?); return null; },
         'fromPrimitives#1': (args) => (args[0] as RestorableEnumN).fromPrimitives(args[1]),
         'toPrimitives#0': (args) => (args[0] as RestorableEnumN).toPrimitives(),
         'toString#0': (args) => (args[0] as RestorableEnumN).toString(),
@@ -45,9 +45,9 @@ abstract final class RestorableEnumNBindings {
         'state#0': (args) => (args[0] as RestorableEnumN).state,
         'isRegistered#0': (args) => (args[0] as RestorableEnumN).isRegistered,
         'hasListeners#0': (args) => (args[0] as RestorableEnumN).hasListeners,
-        'value=#1': (args) { (args[0] as RestorableEnumN).value = args[1] as Enum; return args[1]; },
+        'value=#1': (args) { (args[0] as RestorableEnumN).value = args[1] as Enum?; return args[1]; },
         'values=#1': (args) { (args[0] as RestorableEnumN).values = (args[1] as Set).cast<Enum>(); return args[1]; },
         '==#1': (args) => (args[0] as RestorableEnumN) == (args[1] as Object),
-        '#2': (args) => RestorableEnumN<Enum>(args[0] as Enum, values: (args[1] as Iterable).cast<Enum>()),
+        '#2': (args) => RestorableEnumN<Enum>(args[0] as Enum?, values: (args[1] as Iterable).cast<Enum>()),
       };
 }

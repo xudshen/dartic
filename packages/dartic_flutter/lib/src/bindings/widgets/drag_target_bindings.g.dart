@@ -22,6 +22,181 @@ import 'package:flutter/src/rendering/proxy_box.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$DragTarget extends DragTarget<Object> implements DarticObjectHolder {
+  _$DragTarget(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, builder: superArgs[1] as Widget Function(BuildContext, List, List<dynamic>), onWillAccept: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as bool Function(Object?)?, onWillAcceptWithDetails: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as bool Function(DragTargetDetails<Object>)?, onAccept: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as void Function(Object)?, onAcceptWithDetails: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as void Function(DragTargetDetails<Object>)?, onLeave: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as void Function(Object?)?, onMove: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as void Function(DragTargetDetails<Object>)?, hitTestBehavior: superArgs[8] as HitTestBehavior);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<DragTarget<Object>> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<DragTarget<Object>>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget Function(BuildContext, List, List<dynamic>) get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as Widget Function(BuildContext, List, List<dynamic>);
+  }
+
+  @override
+  bool Function(Object?)? get onWillAccept {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onWillAccept');
+    if (identical(r, notOverridden)) return super.onWillAccept;
+    return r as bool Function(Object?)?;
+  }
+
+  @override
+  bool Function(DragTargetDetails<Object>)? get onWillAcceptWithDetails {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onWillAcceptWithDetails');
+    if (identical(r, notOverridden)) return super.onWillAcceptWithDetails;
+    return r as bool Function(DragTargetDetails<Object>)?;
+  }
+
+  @override
+  void Function(Object)? get onAccept {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onAccept');
+    if (identical(r, notOverridden)) return super.onAccept;
+    return r as void Function(Object)?;
+  }
+
+  @override
+  void Function(DragTargetDetails<Object>)? get onAcceptWithDetails {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onAcceptWithDetails');
+    if (identical(r, notOverridden)) return super.onAcceptWithDetails;
+    return r as void Function(DragTargetDetails<Object>)?;
+  }
+
+  @override
+  void Function(Object?)? get onLeave {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onLeave');
+    if (identical(r, notOverridden)) return super.onLeave;
+    return r as void Function(Object?)?;
+  }
+
+  @override
+  void Function(DragTargetDetails<Object>)? get onMove {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onMove');
+    if (identical(r, notOverridden)) return super.onMove;
+    return r as void Function(DragTargetDetails<Object>)?;
+  }
+
+  @override
+  HitTestBehavior get hitTestBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestBehavior');
+    if (identical(r, notOverridden)) return super.hitTestBehavior;
+    return r as HitTestBehavior;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<DragTarget<Object>> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget Function(BuildContext, List, List<dynamic>) get _super$builder => super.builder;
+  bool Function(Object?)? get _super$onWillAccept => super.onWillAccept;
+  bool Function(DragTargetDetails<Object>)? get _super$onWillAcceptWithDetails => super.onWillAcceptWithDetails;
+  void Function(Object)? get _super$onAccept => super.onAccept;
+  void Function(DragTargetDetails<Object>)? get _super$onAcceptWithDetails => super.onAcceptWithDetails;
+  void Function(Object?)? get _super$onLeave => super.onLeave;
+  void Function(DragTargetDetails<Object>)? get _super$onMove => super.onMove;
+  HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDragTargetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DragTarget(dispatch, obj, superArgs);
+
 abstract final class DragTargetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,7 +205,28 @@ abstract final class DragTargetBindings {
       test: (o) => o is DragTarget,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DragTarget(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$createState#0', (args) => (args[0] as _$DragTarget)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$toString#1', (args) => (args[0] as _$DragTarget)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$createElement#0', (args) => (args[0] as _$DragTarget)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$toStringShort#0', (args) => (args[0] as _$DragTarget)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$debugFillProperties#1', (args) { (args[0] as _$DragTarget)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$toStringShallow#2', (args) => (args[0] as _$DragTarget)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$toStringDeep#4', (args) => (args[0] as _$DragTarget)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DragTarget)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DragTarget)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$builder#0', (args) => (args[0] as _$DragTarget)._super$builder);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onWillAccept#0', (args) => (args[0] as _$DragTarget)._super$onWillAccept);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onWillAcceptWithDetails#0', (args) => (args[0] as _$DragTarget)._super$onWillAcceptWithDetails);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onAccept#0', (args) => (args[0] as _$DragTarget)._super$onAccept);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onAcceptWithDetails#0', (args) => (args[0] as _$DragTarget)._super$onAcceptWithDetails);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onLeave#0', (args) => (args[0] as _$DragTarget)._super$onLeave);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$onMove#0', (args) => (args[0] as _$DragTarget)._super$onMove);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$hitTestBehavior#0', (args) => (args[0] as _$DragTarget)._super$hitTestBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$hashCode#0', (args) => (args[0] as _$DragTarget)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DragTarget::\$super\$key#0', (args) => (args[0] as _$DragTarget)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

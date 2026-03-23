@@ -18,6 +18,132 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/image_provider.dart';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$InkDecoration extends InkDecoration implements DarticObjectHolder {
+  _$InkDecoration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(decoration: superArgs[0] as Decoration?, isVisible: superArgs[1] as bool, configuration: superArgs[2] as ImageConfiguration, controller: superArgs[3] as MaterialInkController, referenceBox: superArgs[4] as RenderBox, onRemoved: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as VoidCallback?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void paintFeature(Canvas canvas, Matrix4 transform) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintFeature', [canvas, transform]);
+    if (identical(r, notOverridden)) { super.paintFeature(canvas, transform); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Decoration? get decoration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'decoration');
+    if (identical(r, notOverridden)) return super.decoration;
+    return r as Decoration?;
+  }
+
+  @override
+  bool get isVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isVisible');
+    if (identical(r, notOverridden)) return super.isVisible;
+    return r as bool;
+  }
+
+  @override
+  ImageConfiguration get configuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'configuration');
+    if (identical(r, notOverridden)) return super.configuration;
+    return r as ImageConfiguration;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  MaterialInkController get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as MaterialInkController;
+  }
+
+  @override
+  RenderBox get referenceBox {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'referenceBox');
+    if (identical(r, notOverridden)) return super.referenceBox;
+    return r as RenderBox;
+  }
+
+  @override
+  VoidCallback? get onRemoved {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onRemoved');
+    if (identical(r, notOverridden)) return super.onRemoved;
+    return r as VoidCallback?;
+  }
+
+  @override
+  set decoration(Decoration? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'decoration', value)) {
+      super.decoration = value;
+    }
+  }
+
+  @override
+  set isVisible(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'isVisible', value)) {
+      super.isVisible = value;
+    }
+  }
+
+  @override
+  set configuration(ImageConfiguration value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'configuration', value)) {
+      super.configuration = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$dispose() { super.dispose(); }
+  void _super$paintFeature(Canvas canvas, Matrix4 transform) { super.paintFeature(canvas, transform); }
+  String _super$toString() => super.toString();
+  Decoration? get _super$decoration => super.decoration;
+  bool get _super$isVisible => super.isVisible;
+  ImageConfiguration get _super$configuration => super.configuration;
+  int get _super$hashCode => super.hashCode;
+  MaterialInkController get _super$controller => super.controller;
+  RenderBox get _super$referenceBox => super.referenceBox;
+  VoidCallback? get _super$onRemoved => super.onRemoved;
+  set _super$decoration(Decoration? value) { super.decoration = value; }
+  set _super$isVisible(bool value) { super.isVisible = value; }
+  set _super$configuration(ImageConfiguration value) { super.configuration = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createInkDecorationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$InkDecoration(dispatch, obj, superArgs);
+
 abstract final class InkDecorationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +152,22 @@ abstract final class InkDecorationBindings {
       test: (o) => o is InkDecoration,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/material.dart::InkFeature'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$InkDecoration(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$dispose#0', (args) { (args[0] as _$InkDecoration)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$paintFeature#2', (args) { (args[0] as _$InkDecoration)._super$paintFeature(args[1] as Canvas, args[2] as Matrix4); return null; });
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$toString#0', (args) => (args[0] as _$InkDecoration)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$decoration#0', (args) => (args[0] as _$InkDecoration)._super$decoration);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$isVisible#0', (args) => (args[0] as _$InkDecoration)._super$isVisible);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$configuration#0', (args) => (args[0] as _$InkDecoration)._super$configuration);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$hashCode#0', (args) => (args[0] as _$InkDecoration)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$controller#0', (args) => (args[0] as _$InkDecoration)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$referenceBox#0', (args) => (args[0] as _$InkDecoration)._super$referenceBox);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$onRemoved#0', (args) => (args[0] as _$InkDecoration)._super$onRemoved);
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$decoration=#1', (args) { (args[0] as _$InkDecoration)._super$decoration = args[1] as Decoration?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$isVisible=#1', (args) { (args[0] as _$InkDecoration)._super$isVisible = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$configuration=#1', (args) { (args[0] as _$InkDecoration)._super$configuration = args[1] as ImageConfiguration; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

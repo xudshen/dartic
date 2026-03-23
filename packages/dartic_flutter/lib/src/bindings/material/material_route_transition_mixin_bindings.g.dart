@@ -30,6 +30,764 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:flutter/foundation.dart';
 
+class _$MaterialRouteTransitionMixin implements MaterialRouteTransitionMixin<dynamic>, DarticObjectHolder {
+  _$MaterialRouteTransitionMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget buildContent(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildContent', [context]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildContent must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  TickerFuture didPush() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didPush must be overridden in dartic code');
+    }
+    return r as TickerFuture;
+  }
+
+  @override
+  bool didPop(dynamic result) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', [result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didPop must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canTransitionTo', [nextRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method canTransitionTo must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool canTransitionFrom(TransitionRoute<dynamic> previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canTransitionFrom', [previousRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method canTransitionFrom must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildPage', [context, animation, secondaryAnimation]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildPage must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildTransitions', [context, animation, secondaryAnimation, child]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildTransitions must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void install() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'install', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method install must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didAdd() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdd', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didAdd must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Future<RoutePopDisposition> willPop() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'willPop', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method willPop must be overridden in dartic code');
+    }
+    return r as Future<RoutePopDisposition>;
+  }
+
+  @override
+  void onPopInvokedWithResult(bool didPop, dynamic result) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvokedWithResult', [didPop, result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method onPopInvokedWithResult must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void addScopedWillPopCallback(WillPopCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addScopedWillPopCallback', [callback]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addScopedWillPopCallback must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeScopedWillPopCallback(WillPopCallback callback) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeScopedWillPopCallback', [callback]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeScopedWillPopCallback must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void registerPopEntry(PopEntry<Object?> popEntry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerPopEntry', [popEntry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method registerPopEntry must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void unregisterPopEntry(PopEntry<Object?> popEntry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unregisterPopEntry', [popEntry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method unregisterPopEntry must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didChangePrevious(Route<dynamic>? previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangePrevious', [previousRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didChangePrevious must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didChangeNext(Route<dynamic>? nextRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeNext', [nextRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didChangeNext must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didPopNext(Route<dynamic> nextRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', [nextRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didPopNext must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void changedInternalState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedInternalState', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method changedInternalState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void changedExternalState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedExternalState', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method changedExternalState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Widget buildModalBarrier() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildModalBarrier', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildModalBarrier must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  Iterable<OverlayEntry> createOverlayEntries() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createOverlayEntries', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createOverlayEntries must be overridden in dartic code');
+    }
+    return r as Iterable<OverlayEntry>;
+  }
+
+  @override
+  bool debugTransitionCompleted() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugTransitionCompleted', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugTransitionCompleted must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  AnimationController createAnimationController() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createAnimationController', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createAnimationController must be overridden in dartic code');
+    }
+    return r as AnimationController;
+  }
+
+  @override
+  Animation<double> createAnimation() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createAnimation', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createAnimation must be overridden in dartic code');
+    }
+    return r as Animation<double>;
+  }
+
+  @override
+  Simulation? createSimulation({required bool forward}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSimulation', [forward]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createSimulation must be overridden in dartic code');
+    }
+    return r as Simulation?;
+  }
+
+  @override
+  void didReplace(Route<dynamic>? oldRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReplace', [oldRoute]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didReplace must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleStartBackGesture({double progress = 0.0}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [progress]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleStartBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleUpdateBackGestureProgress({required double progress}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [progress]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleUpdateBackGestureProgress must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleCancelBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleCommitBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void onPopInvoked(bool didPop) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvoked', [didPop]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method onPopInvoked must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didComplete(dynamic result) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didComplete', [result]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didComplete must be overridden in dartic code');
+    }
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'noSuchMethod', [invocation]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method noSuchMethod must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  void addLocalHistoryEntry(LocalHistoryEntry entry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLocalHistoryEntry', [entry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addLocalHistoryEntry must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeLocalHistoryEntry(LocalHistoryEntry entry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeLocalHistoryEntry', [entry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeLocalHistoryEntry must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Duration get transitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transitionDuration');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter transitionDuration must be overridden in dartic code');
+    }
+    return r as Duration;
+  }
+
+  @override
+  Duration get reverseTransitionDuration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'reverseTransitionDuration');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter reverseTransitionDuration must be overridden in dartic code');
+    }
+    return r as Duration;
+  }
+
+  @override
+  Color? get barrierColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'barrierColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter barrierColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  String? get barrierLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'barrierLabel');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter barrierLabel must be overridden in dartic code');
+    }
+    return r as String?;
+  }
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter delegatedTransition must be overridden in dartic code');
+    }
+    return r as DelegatedTransitionBuilder?;
+  }
+
+  @override
+  bool get fullscreenDialog {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fullscreenDialog');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter fullscreenDialog must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get allowSnapshotting {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'allowSnapshotting');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter allowSnapshotting must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get opaque {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter opaque must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get barrierDismissible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'barrierDismissible');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter barrierDismissible must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get popGestureEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'popGestureEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter popGestureEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  ImageFilter? get filter {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'filter');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter filter must be overridden in dartic code');
+    }
+    return r as ImageFilter?;
+  }
+
+  @override
+  TraversalEdgeBehavior? get traversalEdgeBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'traversalEdgeBehavior');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter traversalEdgeBehavior must be overridden in dartic code');
+    }
+    return r as TraversalEdgeBehavior?;
+  }
+
+  @override
+  TraversalEdgeBehavior? get directionalTraversalEdgeBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'directionalTraversalEdgeBehavior');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter directionalTraversalEdgeBehavior must be overridden in dartic code');
+    }
+    return r as TraversalEdgeBehavior?;
+  }
+
+  @override
+  DelegatedTransitionBuilder? get receivedTransition {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'receivedTransition');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter receivedTransition must be overridden in dartic code');
+    }
+    return r as DelegatedTransitionBuilder?;
+  }
+
+  @override
+  bool get semanticsDismissible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsDismissible');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter semanticsDismissible must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Curve get barrierCurve {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'barrierCurve');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter barrierCurve must be overridden in dartic code');
+    }
+    return r as Curve;
+  }
+
+  @override
+  bool get maintainState {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainState');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter maintainState must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get popGestureInProgress {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'popGestureInProgress');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter popGestureInProgress must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get offstage {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offstage');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter offstage must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  BuildContext? get subtreeContext {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtreeContext');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter subtreeContext must be overridden in dartic code');
+    }
+    return r as BuildContext?;
+  }
+
+  @override
+  Animation<double>? get animation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'animation');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter animation must be overridden in dartic code');
+    }
+    return r as Animation<double>?;
+  }
+
+  @override
+  Animation<double>? get secondaryAnimation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'secondaryAnimation');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter secondaryAnimation must be overridden in dartic code');
+    }
+    return r as Animation<double>?;
+  }
+
+  @override
+  RoutePopDisposition get popDisposition {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'popDisposition');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter popDisposition must be overridden in dartic code');
+    }
+    return r as RoutePopDisposition;
+  }
+
+  @override
+  bool get hasScopedWillPopCallback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasScopedWillPopCallback');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter hasScopedWillPopCallback must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get canPop {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canPop');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter canPop must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get impliesAppBarDismissal {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'impliesAppBarDismissal');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter impliesAppBarDismissal must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Future get completed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'completed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter completed must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  bool get finishedWhenPopped {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'finishedWhenPopped');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter finishedWhenPopped must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  AnimationController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter controller must be overridden in dartic code');
+    }
+    return r as AnimationController?;
+  }
+
+  @override
+  bool get willDisposeAnimationController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'willDisposeAnimationController');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter willDisposeAnimationController must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String get debugLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugLabel');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter debugLabel must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  List<OverlayEntry> get overlayEntries {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayEntries');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter overlayEntries must be overridden in dartic code');
+    }
+    return r as List<OverlayEntry>;
+  }
+
+  @override
+  bool get requestFocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocus');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter requestFocus must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  NavigatorState? get navigator {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigator');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter navigator must be overridden in dartic code');
+    }
+    return r as NavigatorState?;
+  }
+
+  @override
+  RouteSettings get settings {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'settings');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter settings must be overridden in dartic code');
+    }
+    return r as RouteSettings;
+  }
+
+  @override
+  ValueListenable<String?> get restorationScopeId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'restorationScopeId');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter restorationScopeId must be overridden in dartic code');
+    }
+    return r as ValueListenable<String?>;
+  }
+
+  @override
+  bool get willHandlePopInternally {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'willHandlePopInternally');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter willHandlePopInternally must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  dynamic get currentResult {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentResult');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter currentResult must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  Future get popped {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'popped');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter popped must be overridden in dartic code');
+    }
+    return r as Future;
+  }
+
+  @override
+  bool get isCurrent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isCurrent');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isCurrent must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isFirst {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isFirst');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isFirst must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get hasActiveRouteBelow {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasActiveRouteBelow');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter hasActiveRouteBelow must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isActive {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isActive');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isActive must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Type get runtimeType {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'runtimeType');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter runtimeType must be overridden in dartic code');
+    }
+    return r as Type;
+  }
+
+  @override
+  set receivedTransition(DelegatedTransitionBuilder? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'receivedTransition', value)) {
+      throw UnsupportedError('Abstract setter receivedTransition must be overridden in dartic code');
+    }
+  }
+
+  @override
+  set offstage(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'offstage', value)) {
+      throw UnsupportedError('Abstract setter offstage must be overridden in dartic code');
+    }
+  }
+
+  @override
+  set willDisposeAnimationController(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'willDisposeAnimationController', value)) {
+      throw UnsupportedError('Abstract setter willDisposeAnimationController must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMaterialRouteTransitionMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MaterialRouteTransitionMixin(dispatch, obj, superArgs);
+
 abstract final class MaterialRouteTransitionMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -38,6 +796,8 @@ abstract final class MaterialRouteTransitionMixinBindings {
       test: (o) => o is MaterialRouteTransitionMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/pages.dart::PageRoute', 'package:flutter/src/widgets/routes.dart::ModalRoute', 'package:flutter/src/widgets/routes.dart::TransitionRoute', 'package:flutter/src/widgets/routes.dart::OverlayRoute', 'package:flutter/src/widgets/navigator.dart::Route', 'package:flutter/src/widgets/navigator.dart::_RoutePlaceholder', 'package:flutter/src/widgets/routes.dart::PredictiveBackRoute', 'package:flutter/src/widgets/routes.dart::LocalHistoryRoute'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MaterialRouteTransitionMixin(dispatch, darticObject, superArgs),
     );
   }
 

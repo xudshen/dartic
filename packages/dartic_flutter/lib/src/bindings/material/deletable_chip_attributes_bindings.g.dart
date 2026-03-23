@@ -29,6 +29,73 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$DeletableChipAttributes implements DeletableChipAttributes, DarticObjectHolder {
+  _$DeletableChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget? get deleteIcon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'deleteIcon');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter deleteIcon must be overridden in dartic code');
+    }
+    return r as Widget?;
+  }
+
+  @override
+  VoidCallback? get onDeleted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onDeleted');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter onDeleted must be overridden in dartic code');
+    }
+    return r as VoidCallback?;
+  }
+
+  @override
+  Color? get deleteIconColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'deleteIconColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter deleteIconColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  String? get deleteButtonTooltipMessage {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'deleteButtonTooltipMessage');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter deleteButtonTooltipMessage must be overridden in dartic code');
+    }
+    return r as String?;
+  }
+
+  @override
+  BoxConstraints? get deleteIconBoxConstraints {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'deleteIconBoxConstraints');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter deleteIconBoxConstraints must be overridden in dartic code');
+    }
+    return r as BoxConstraints?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDeletableChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DeletableChipAttributes(dispatch, obj, superArgs);
+
 abstract final class DeletableChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -36,6 +103,8 @@ abstract final class DeletableChipAttributesBindings {
       type: DeletableChipAttributes,
       test: (o) => o is DeletableChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DeletableChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

@@ -14,6 +14,78 @@ import 'package:flutter/src/animation/curves.dart';
 import 'package:flutter/src/animation/listener_helpers.dart';
 import 'dart:ui';
 
+class _$AnimationWithParentMixin implements AnimationWithParentMixin<dynamic>, DarticObjectHolder {
+  _$AnimationWithParentMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void addStatusListener(AnimationStatusListener listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addStatusListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeStatusListener(AnimationStatusListener listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeStatusListener must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Animation get parent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter parent must be overridden in dartic code');
+    }
+    return r as Animation;
+  }
+
+  @override
+  AnimationStatus get status {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'status');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter status must be overridden in dartic code');
+    }
+    return r as AnimationStatus;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAnimationWithParentMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AnimationWithParentMixin(dispatch, obj, superArgs);
+
 abstract final class AnimationWithParentMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,6 +93,8 @@ abstract final class AnimationWithParentMixinBindings {
       type: AnimationWithParentMixin,
       test: (o) => o is AnimationWithParentMixin,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AnimationWithParentMixin(dispatch, darticObject, superArgs),
     );
   }
 

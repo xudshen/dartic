@@ -20,6 +20,100 @@ import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/painting/borders.dart';
 import 'package:flutter/painting.dart';
 
+class _$ShapeBorderClipper extends ShapeBorderClipper implements DarticObjectHolder {
+  _$ShapeBorderClipper(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(shape: superArgs[0] as ShapeBorder, textDirection: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as ui.TextDirection?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ui.Path getClip(ui.Size size) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
+    if (identical(r, notOverridden)) return super.getClip(size);
+    return r as ui.Path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<ui.Path> oldClipper) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
+    if (identical(r, notOverridden)) return super.shouldReclip(oldClipper);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void addListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(ui.VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  ui.Rect getApproximateClipRect(ui.Size size) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
+    if (identical(r, notOverridden)) return super.getApproximateClipRect(size);
+    return r as ui.Rect;
+  }
+
+  @override
+  ShapeBorder get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) return super.shape;
+    return r as ShapeBorder;
+  }
+
+  @override
+  ui.TextDirection? get textDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textDirection');
+    if (identical(r, notOverridden)) return super.textDirection;
+    return r as ui.TextDirection?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  ui.Path _super$getClip(ui.Size size) => super.getClip(size);
+  bool _super$shouldReclip(CustomClipper<ui.Path> oldClipper) => super.shouldReclip(oldClipper);
+  String _super$toString() => super.toString();
+  void _super$addListener(ui.VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(ui.VoidCallback listener) { super.removeListener(listener); }
+  ui.Rect _super$getApproximateClipRect(ui.Size size) => super.getApproximateClipRect(size);
+  ShapeBorder get _super$shape => super.shape;
+  ui.TextDirection? get _super$textDirection => super.textDirection;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createShapeBorderClipperBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ShapeBorderClipper(dispatch, obj, superArgs);
+
 abstract final class ShapeBorderClipperBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +122,18 @@ abstract final class ShapeBorderClipperBindings {
       test: (o) => o is ShapeBorderClipper,
       methods: methodMap(),
       superclasses: ['package:flutter/src/rendering/proxy_box.dart::CustomClipper', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ShapeBorderClipper(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$getClip#1', (args) => (args[0] as _$ShapeBorderClipper)._super$getClip(args[1] as ui.Size));
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$shouldReclip#1', (args) => (args[0] as _$ShapeBorderClipper)._super$shouldReclip(args[1] as CustomClipper<ui.Path>));
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$toString#0', (args) => (args[0] as _$ShapeBorderClipper)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$addListener#1', (args) { (args[0] as _$ShapeBorderClipper)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$removeListener#1', (args) { (args[0] as _$ShapeBorderClipper)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$getApproximateClipRect#1', (args) => (args[0] as _$ShapeBorderClipper)._super$getApproximateClipRect(args[1] as ui.Size));
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$shape#0', (args) => (args[0] as _$ShapeBorderClipper)._super$shape);
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$textDirection#0', (args) => (args[0] as _$ShapeBorderClipper)._super$textDirection);
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::ShapeBorderClipper::\$super\$hashCode#0', (args) => (args[0] as _$ShapeBorderClipper)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

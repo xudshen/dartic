@@ -28,6 +28,261 @@ import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:flutter/src/widgets/overflow_bar.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$MaterialBanner extends MaterialBanner implements DarticObjectHolder {
+  _$MaterialBanner(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, content: superArgs[1] as Widget, contentTextStyle: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TextStyle?, actions: (superArgs[3] as List).cast<Widget>(), elevation: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as double?, leading: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Widget?, backgroundColor: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Color?, surfaceTintColor: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as Color?, shadowColor: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as Color?, dividerColor: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Color?, padding: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as EdgeInsetsGeometry?, margin: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as EdgeInsetsGeometry?, leadingPadding: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as EdgeInsetsGeometry?, forceActionsBelow: superArgs[13] as bool, overflowAlignment: superArgs[14] as OverflowBarAlignment, animation: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as Animation<double>?, onVisible: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as VoidCallback?, minActionBarHeight: superArgs[17] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  MaterialBanner withAnimation(Animation<double> newAnimation, {Key? fallbackKey}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withAnimation', [newAnimation, fallbackKey]);
+    if (identical(r, notOverridden)) return super.withAnimation(newAnimation, fallbackKey: fallbackKey);
+    return r as MaterialBanner;
+  }
+
+  @override
+  State<MaterialBanner> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<MaterialBanner>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget get content {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'content');
+    if (identical(r, notOverridden)) return super.content;
+    return r as Widget;
+  }
+
+  @override
+  TextStyle? get contentTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'contentTextStyle');
+    if (identical(r, notOverridden)) return super.contentTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  List<Widget> get actions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'actions');
+    if (identical(r, notOverridden)) return super.actions;
+    return r as List<Widget>;
+  }
+
+  @override
+  double? get elevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
+    if (identical(r, notOverridden)) return super.elevation;
+    return r as double?;
+  }
+
+  @override
+  Widget? get leading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leading');
+    if (identical(r, notOverridden)) return super.leading;
+    return r as Widget?;
+  }
+
+  @override
+  double get minActionBarHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minActionBarHeight');
+    if (identical(r, notOverridden)) return super.minActionBarHeight;
+    return r as double;
+  }
+
+  @override
+  Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get surfaceTintColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'surfaceTintColor');
+    if (identical(r, notOverridden)) return super.surfaceTintColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get shadowColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadowColor');
+    if (identical(r, notOverridden)) return super.shadowColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get dividerColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dividerColor');
+    if (identical(r, notOverridden)) return super.dividerColor;
+    return r as Color?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get margin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'margin');
+    if (identical(r, notOverridden)) return super.margin;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get leadingPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leadingPadding');
+    if (identical(r, notOverridden)) return super.leadingPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  bool get forceActionsBelow {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'forceActionsBelow');
+    if (identical(r, notOverridden)) return super.forceActionsBelow;
+    return r as bool;
+  }
+
+  @override
+  OverflowBarAlignment get overflowAlignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overflowAlignment');
+    if (identical(r, notOverridden)) return super.overflowAlignment;
+    return r as OverflowBarAlignment;
+  }
+
+  @override
+  Animation<double>? get animation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'animation');
+    if (identical(r, notOverridden)) return super.animation;
+    return r as Animation<double>?;
+  }
+
+  @override
+  VoidCallback? get onVisible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onVisible');
+    if (identical(r, notOverridden)) return super.onVisible;
+    return r as VoidCallback?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  MaterialBanner _super$withAnimation(Animation<double> newAnimation, {Key? fallbackKey}) => super.withAnimation(newAnimation, fallbackKey: fallbackKey);
+  State<MaterialBanner> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget get _super$content => super.content;
+  TextStyle? get _super$contentTextStyle => super.contentTextStyle;
+  List<Widget> get _super$actions => super.actions;
+  double? get _super$elevation => super.elevation;
+  Widget? get _super$leading => super.leading;
+  double get _super$minActionBarHeight => super.minActionBarHeight;
+  Color? get _super$backgroundColor => super.backgroundColor;
+  Color? get _super$surfaceTintColor => super.surfaceTintColor;
+  Color? get _super$shadowColor => super.shadowColor;
+  Color? get _super$dividerColor => super.dividerColor;
+  EdgeInsetsGeometry? get _super$padding => super.padding;
+  EdgeInsetsGeometry? get _super$margin => super.margin;
+  EdgeInsetsGeometry? get _super$leadingPadding => super.leadingPadding;
+  bool get _super$forceActionsBelow => super.forceActionsBelow;
+  OverflowBarAlignment get _super$overflowAlignment => super.overflowAlignment;
+  Animation<double>? get _super$animation => super.animation;
+  VoidCallback? get _super$onVisible => super.onVisible;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMaterialBannerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MaterialBanner(dispatch, obj, superArgs);
+
 abstract final class MaterialBannerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -36,8 +291,39 @@ abstract final class MaterialBannerBindings {
       test: (o) => o is MaterialBanner,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MaterialBanner(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::createAnimationController#1', (args) => MaterialBanner.createAnimationController(vsync: args[0] as TickerProvider));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$withAnimation#2', (args) => (args[0] as _$MaterialBanner)._super$withAnimation(args[1] as Animation<double>, fallbackKey: identical(args[2], darticAbsent) ? null : args[2] as Key?));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$createState#0', (args) => (args[0] as _$MaterialBanner)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$toString#1', (args) => (args[0] as _$MaterialBanner)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$createElement#0', (args) => (args[0] as _$MaterialBanner)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$toStringShort#0', (args) => (args[0] as _$MaterialBanner)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$debugFillProperties#1', (args) { (args[0] as _$MaterialBanner)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$toStringShallow#2', (args) => (args[0] as _$MaterialBanner)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$toStringDeep#4', (args) => (args[0] as _$MaterialBanner)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$MaterialBanner)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$MaterialBanner)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$content#0', (args) => (args[0] as _$MaterialBanner)._super$content);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$contentTextStyle#0', (args) => (args[0] as _$MaterialBanner)._super$contentTextStyle);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$actions#0', (args) => (args[0] as _$MaterialBanner)._super$actions);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$elevation#0', (args) => (args[0] as _$MaterialBanner)._super$elevation);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$leading#0', (args) => (args[0] as _$MaterialBanner)._super$leading);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$minActionBarHeight#0', (args) => (args[0] as _$MaterialBanner)._super$minActionBarHeight);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$backgroundColor#0', (args) => (args[0] as _$MaterialBanner)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$surfaceTintColor#0', (args) => (args[0] as _$MaterialBanner)._super$surfaceTintColor);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$shadowColor#0', (args) => (args[0] as _$MaterialBanner)._super$shadowColor);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$dividerColor#0', (args) => (args[0] as _$MaterialBanner)._super$dividerColor);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$padding#0', (args) => (args[0] as _$MaterialBanner)._super$padding);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$margin#0', (args) => (args[0] as _$MaterialBanner)._super$margin);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$leadingPadding#0', (args) => (args[0] as _$MaterialBanner)._super$leadingPadding);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$forceActionsBelow#0', (args) => (args[0] as _$MaterialBanner)._super$forceActionsBelow);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$overflowAlignment#0', (args) => (args[0] as _$MaterialBanner)._super$overflowAlignment);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$animation#0', (args) => (args[0] as _$MaterialBanner)._super$animation);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$onVisible#0', (args) => (args[0] as _$MaterialBanner)._super$onVisible);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$hashCode#0', (args) => (args[0] as _$MaterialBanner)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/banner.dart::MaterialBanner::\$super\$key#0', (args) => (args[0] as _$MaterialBanner)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

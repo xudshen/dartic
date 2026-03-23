@@ -12,6 +12,175 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/painting/alignment.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 
+class _$FractionalOffset extends FractionalOffset implements DarticObjectHolder {
+  _$FractionalOffset(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, superArgs[1] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  AlignmentGeometry add(AlignmentGeometry other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(r, notOverridden)) return super.add(other);
+    return r as AlignmentGeometry;
+  }
+
+  @override
+  ui.Offset alongOffset(ui.Offset other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongOffset', [other]);
+    if (identical(r, notOverridden)) return super.alongOffset(other);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Offset alongSize(ui.Size other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongSize', [other]);
+    if (identical(r, notOverridden)) return super.alongSize(other);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Offset withinRect(ui.Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withinRect', [rect]);
+    if (identical(r, notOverridden)) return super.withinRect(rect);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Rect inscribe(ui.Size size, ui.Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inscribe', [size, rect]);
+    if (identical(r, notOverridden)) return super.inscribe(size, rect);
+    return r as ui.Rect;
+  }
+
+  @override
+  Alignment resolve(ui.TextDirection? direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(r, notOverridden)) return super.resolve(direction);
+    return r as Alignment;
+  }
+
+  @override
+  double get dx {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dx');
+    if (identical(r, notOverridden)) return super.dx;
+    return r as double;
+  }
+
+  @override
+  double get dy {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dy');
+    if (identical(r, notOverridden)) return super.dy;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  double get x {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'x');
+    if (identical(r, notOverridden)) return super.x;
+    return r as double;
+  }
+
+  @override
+  double get y {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'y');
+    if (identical(r, notOverridden)) return super.y;
+    return r as double;
+  }
+
+  @override
+  Alignment operator -(Alignment other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '-', [other]);
+    if (identical(r, notOverridden)) return super - other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator +(Alignment other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
+    if (identical(r, notOverridden)) return super + other;
+    return r as Alignment;
+  }
+
+  @override
+  FractionalOffset operator -() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unary-', const []);
+    if (identical(r, notOverridden)) return -super;
+    return r as FractionalOffset;
+  }
+
+  @override
+  FractionalOffset operator *(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '*', [other]);
+    if (identical(r, notOverridden)) return super * other;
+    return r as FractionalOffset;
+  }
+
+  @override
+  FractionalOffset operator /(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '/', [other]);
+    if (identical(r, notOverridden)) return super / other;
+    return r as FractionalOffset;
+  }
+
+  @override
+  FractionalOffset operator ~/(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '~/', [other]);
+    if (identical(r, notOverridden)) return super ~/ other;
+    return r as FractionalOffset;
+  }
+
+  @override
+  FractionalOffset operator %(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '%', [other]);
+    if (identical(r, notOverridden)) return super % other;
+    return r as FractionalOffset;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  AlignmentGeometry _super$add(AlignmentGeometry other) => super.add(other);
+  ui.Offset _super$alongOffset(ui.Offset other) => super.alongOffset(other);
+  ui.Offset _super$alongSize(ui.Size other) => super.alongSize(other);
+  ui.Offset _super$withinRect(ui.Rect rect) => super.withinRect(rect);
+  ui.Rect _super$inscribe(ui.Size size, ui.Rect rect) => super.inscribe(size, rect);
+  Alignment _super$resolve(ui.TextDirection? direction) => super.resolve(direction);
+  double get _super$dx => super.dx;
+  double get _super$dy => super.dy;
+  int get _super$hashCode => super.hashCode;
+  double get _super$x => super.x;
+  double get _super$y => super.y;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFractionalOffsetBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FractionalOffset(dispatch, obj, superArgs);
+
 abstract final class FractionalOffsetBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,6 +189,8 @@ abstract final class FractionalOffsetBindings {
       test: (o) => o is FractionalOffset,
       methods: methodMap(),
       superclasses: ['package:flutter/src/painting/alignment.dart::Alignment', 'package:flutter/src/painting/alignment.dart::AlignmentGeometry'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FractionalOffset(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::lerp#3', (args) => FractionalOffset.lerp(args[0] as FractionalOffset?, args[1] as FractionalOffset?, args[2] as double));
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::topLeft#0', (args) => FractionalOffset.topLeft);
@@ -31,6 +202,18 @@ abstract final class FractionalOffsetBindings {
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::bottomLeft#0', (args) => FractionalOffset.bottomLeft);
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::bottomCenter#0', (args) => FractionalOffset.bottomCenter);
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::bottomRight#0', (args) => FractionalOffset.bottomRight);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$toString#0', (args) => (args[0] as _$FractionalOffset)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$add#1', (args) => (args[0] as _$FractionalOffset)._super$add(args[1] as AlignmentGeometry));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$alongOffset#1', (args) => (args[0] as _$FractionalOffset)._super$alongOffset(args[1] as ui.Offset));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$alongSize#1', (args) => (args[0] as _$FractionalOffset)._super$alongSize(args[1] as ui.Size));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$withinRect#1', (args) => (args[0] as _$FractionalOffset)._super$withinRect(args[1] as ui.Rect));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$inscribe#2', (args) => (args[0] as _$FractionalOffset)._super$inscribe(args[1] as ui.Size, args[2] as ui.Rect));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$resolve#1', (args) => (args[0] as _$FractionalOffset)._super$resolve(args[1] as ui.TextDirection?));
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$dx#0', (args) => (args[0] as _$FractionalOffset)._super$dx);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$dy#0', (args) => (args[0] as _$FractionalOffset)._super$dy);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$hashCode#0', (args) => (args[0] as _$FractionalOffset)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$x#0', (args) => (args[0] as _$FractionalOffset)._super$x);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$y#0', (args) => (args[0] as _$FractionalOffset)._super$y);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

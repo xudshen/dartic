@@ -37,6 +37,143 @@ import 'package:flutter/src/rendering/editable.dart';
 import 'package:flutter/src/services/text_input.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 
+class _$TextSelectionControls extends TextSelectionControls implements DarticObjectHolder {
+  _$TextSelectionControls(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget buildHandle(BuildContext context, TextSelectionHandleType type, double textLineHeight, [VoidCallback? onTap]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildHandle', [context, type, textLineHeight, onTap]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildHandle must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  Offset getHandleAnchor(TextSelectionHandleType type, double textLineHeight) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleAnchor', [type, textLineHeight]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getHandleAnchor must be overridden in dartic code');
+    }
+    return r as Offset;
+  }
+
+  @override
+  Widget buildToolbar(BuildContext context, Rect globalEditableRegion, double textLineHeight, Offset selectionMidpoint, List<TextSelectionPoint> endpoints, TextSelectionDelegate delegate, ValueListenable<ClipboardStatus>? clipboardStatus, Offset? lastSecondaryTapDownPosition) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildToolbar', [context, globalEditableRegion, textLineHeight, selectionMidpoint, endpoints, delegate, clipboardStatus, lastSecondaryTapDownPosition]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method buildToolbar must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  Size getHandleSize(double textLineHeight) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleSize', [textLineHeight]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getHandleSize must be overridden in dartic code');
+    }
+    return r as Size;
+  }
+
+  @override
+  bool canCut(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCut', [delegate]);
+    if (identical(r, notOverridden)) return super.canCut(delegate);
+    return r as bool;
+  }
+
+  @override
+  bool canCopy(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCopy', [delegate]);
+    if (identical(r, notOverridden)) return super.canCopy(delegate);
+    return r as bool;
+  }
+
+  @override
+  bool canPaste(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canPaste', [delegate]);
+    if (identical(r, notOverridden)) return super.canPaste(delegate);
+    return r as bool;
+  }
+
+  @override
+  bool canSelectAll(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canSelectAll', [delegate]);
+    if (identical(r, notOverridden)) return super.canSelectAll(delegate);
+    return r as bool;
+  }
+
+  @override
+  void handleCut(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCut', [delegate]);
+    if (identical(r, notOverridden)) { super.handleCut(delegate); return; }
+  }
+
+  @override
+  void handleCopy(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCopy', [delegate]);
+    if (identical(r, notOverridden)) { super.handleCopy(delegate); return; }
+  }
+
+  @override
+  Future<void> handlePaste(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePaste', [delegate]);
+    if (identical(r, notOverridden)) return super.handlePaste(delegate);
+    return r as Future<void>;
+  }
+
+  @override
+  void handleSelectAll(TextSelectionDelegate delegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectAll', [delegate]);
+    if (identical(r, notOverridden)) { super.handleSelectAll(delegate); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  bool _super$canCut(TextSelectionDelegate delegate) => super.canCut(delegate);
+  bool _super$canCopy(TextSelectionDelegate delegate) => super.canCopy(delegate);
+  bool _super$canPaste(TextSelectionDelegate delegate) => super.canPaste(delegate);
+  bool _super$canSelectAll(TextSelectionDelegate delegate) => super.canSelectAll(delegate);
+  void _super$handleCut(TextSelectionDelegate delegate) { super.handleCut(delegate); }
+  void _super$handleCopy(TextSelectionDelegate delegate) { super.handleCopy(delegate); }
+  Future<void> _super$handlePaste(TextSelectionDelegate delegate) => super.handlePaste(delegate);
+  void _super$handleSelectAll(TextSelectionDelegate delegate) { super.handleSelectAll(delegate); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextSelectionControlsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextSelectionControls(dispatch, obj, superArgs);
+
 abstract final class TextSelectionControlsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -44,7 +181,19 @@ abstract final class TextSelectionControlsBindings {
       type: TextSelectionControls,
       test: (o) => o is TextSelectionControls,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextSelectionControls(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$canCut#1', (args) => (args[0] as _$TextSelectionControls)._super$canCut(args[1] as TextSelectionDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$canCopy#1', (args) => (args[0] as _$TextSelectionControls)._super$canCopy(args[1] as TextSelectionDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$canPaste#1', (args) => (args[0] as _$TextSelectionControls)._super$canPaste(args[1] as TextSelectionDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$canSelectAll#1', (args) => (args[0] as _$TextSelectionControls)._super$canSelectAll(args[1] as TextSelectionDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$handleCut#1', (args) { (args[0] as _$TextSelectionControls)._super$handleCut(args[1] as TextSelectionDelegate); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$handleCopy#1', (args) { (args[0] as _$TextSelectionControls)._super$handleCopy(args[1] as TextSelectionDelegate); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$handlePaste#1', (args) => (args[0] as _$TextSelectionControls)._super$handlePaste(args[1] as TextSelectionDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$handleSelectAll#1', (args) { (args[0] as _$TextSelectionControls)._super$handleSelectAll(args[1] as TextSelectionDelegate); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$toString#0', (args) => (args[0] as _$TextSelectionControls)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionControls::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionControls)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

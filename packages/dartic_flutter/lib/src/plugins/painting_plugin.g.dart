@@ -7,6 +7,7 @@
 
 import 'package:dartic/dartic.dart';
 import '../bindings/painting/notched_shape_bindings.g.dart';
+import '../bindings/painting/decoration_bindings.g.dart';
 import '../bindings/painting/accumulator_bindings.g.dart';
 import '../bindings/painting/alignment_bindings.g.dart';
 import '../bindings/painting/alignment_directional_bindings.g.dart';
@@ -37,7 +38,6 @@ import '../bindings/painting/clip_context_bindings.g.dart';
 import '../bindings/painting/color_property_bindings.g.dart';
 import '../bindings/painting/color_swatch_bindings.g.dart';
 import '../bindings/painting/continuous_rectangle_border_bindings.g.dart';
-import '../bindings/painting/decoration_bindings.g.dart';
 import '../bindings/painting/decoration_image_bindings.g.dart';
 import '../bindings/painting/decoration_image_painter_bindings.g.dart';
 import '../bindings/painting/edge_insets_bindings.g.dart';
@@ -116,6 +116,7 @@ class PaintingPlugin extends DarticPlugin {
   @override
   void register(DarticPluginContext ctx) {
     NotchedShapeBindings.register(ctx);
+    DecorationBindings.register(ctx);
     AccumulatorBindings.register(ctx);
     AlignmentBindings.register(ctx);
     AlignmentDirectionalBindings.register(ctx);
@@ -146,7 +147,6 @@ class PaintingPlugin extends DarticPlugin {
     ColorPropertyBindings.register(ctx);
     ColorSwatchBindings.register(ctx);
     ContinuousRectangleBorderBindings.register(ctx);
-    DecorationBindings.register(ctx);
     DecorationImageBindings.register(ctx);
     DecorationImagePainterBindings.register(ctx);
     EdgeInsetsBindings.register(ctx);

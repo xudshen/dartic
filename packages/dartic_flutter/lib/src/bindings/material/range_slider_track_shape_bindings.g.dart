@@ -21,6 +21,71 @@ import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 
+class _$RangeSliderTrackShape extends RangeSliderTrackShape implements DarticObjectHolder {
+  _$RangeSliderTrackShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Rect getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, Object? isEnabled = darticAbsent, Object? isDiscrete = darticAbsent}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPreferredRect must be overridden in dartic code');
+    }
+    return r as Rect;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double> enableAnimation, required Offset startThumbCenter, required Offset endThumbCenter, bool isEnabled = false, bool isDiscrete = false, required TextDirection textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, offset, parentBox, sliderTheme, enableAnimation, startThumbCenter, endThumbCenter, isEnabled, isDiscrete, textDirection]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get isRounded {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRounded');
+    if (identical(r, notOverridden)) return super.isRounded;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$isRounded => super.isRounded;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRangeSliderTrackShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RangeSliderTrackShape(dispatch, obj, superArgs);
+
 abstract final class RangeSliderTrackShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +93,12 @@ abstract final class RangeSliderTrackShapeBindings {
       type: RangeSliderTrackShape,
       test: (o) => o is RangeSliderTrackShape,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RangeSliderTrackShape(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderTrackShape::\$super\$toString#0', (args) => (args[0] as _$RangeSliderTrackShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderTrackShape::\$super\$isRounded#0', (args) => (args[0] as _$RangeSliderTrackShape)._super$isRounded);
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeSliderTrackShape::\$super\$hashCode#0', (args) => (args[0] as _$RangeSliderTrackShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

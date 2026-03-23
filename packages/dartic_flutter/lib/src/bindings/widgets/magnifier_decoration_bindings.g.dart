@@ -21,6 +21,70 @@ import 'package:flutter/src/painting/box_shadow.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/borders.dart';
 
+class _$MagnifierDecoration extends MagnifierDecoration implements DarticObjectHolder {
+  _$MagnifierDecoration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(opacity: superArgs[0] as double, shadows: identical(superArgs[1], darticAbsent) ? null : superArgs[1] == null ? null : (superArgs[1] as List).cast<BoxShadow>(), shape: superArgs[2] as ShapeBorder);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get opacity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opacity');
+    if (identical(r, notOverridden)) return super.opacity;
+    return r as double;
+  }
+
+  @override
+  List<BoxShadow>? get shadows {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadows');
+    if (identical(r, notOverridden)) return super.shadows;
+    return r as List<BoxShadow>?;
+  }
+
+  @override
+  ShapeBorder get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) return super.shape;
+    return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  double get _super$opacity => super.opacity;
+  List<BoxShadow>? get _super$shadows => super.shadows;
+  ShapeBorder get _super$shape => super.shape;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMagnifierDecorationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MagnifierDecoration(dispatch, obj, superArgs);
+
 abstract final class MagnifierDecorationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +92,14 @@ abstract final class MagnifierDecorationBindings {
       type: MagnifierDecoration,
       test: (o) => o is MagnifierDecoration,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MagnifierDecoration(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierDecoration::\$super\$toString#0', (args) => (args[0] as _$MagnifierDecoration)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierDecoration::\$super\$opacity#0', (args) => (args[0] as _$MagnifierDecoration)._super$opacity);
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierDecoration::\$super\$shadows#0', (args) => (args[0] as _$MagnifierDecoration)._super$shadows);
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierDecoration::\$super\$shape#0', (args) => (args[0] as _$MagnifierDecoration)._super$shape);
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierDecoration::\$super\$hashCode#0', (args) => (args[0] as _$MagnifierDecoration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

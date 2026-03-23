@@ -10,6 +10,60 @@ import 'package:flutter/src/widgets/notification_listener.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+class _$Notification extends Notification implements DarticObjectHolder {
+  _$Notification(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispatch(BuildContext? target) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
+    if (identical(r, notOverridden)) { super.dispatch(target); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void debugFillDescription(List<String> description) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$dispatch(BuildContext? target) { super.dispatch(target); }
+  String _super$toString() => super.toString();
+  void _super$debugFillDescription(List<String> description) { super.debugFillDescription(description); }
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createNotificationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Notification(dispatch, obj, superArgs);
+
 abstract final class NotificationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +71,13 @@ abstract final class NotificationBindings {
       type: Notification,
       test: (o) => o is Notification,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Notification(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/notification_listener.dart::Notification::\$super\$dispatch#1', (args) { (args[0] as _$Notification)._super$dispatch(args[1] as BuildContext?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/notification_listener.dart::Notification::\$super\$toString#0', (args) => (args[0] as _$Notification)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/notification_listener.dart::Notification::\$super\$debugFillDescription#1', (args) { (args[0] as _$Notification)._super$debugFillDescription((args[1] as List).cast<String>()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/notification_listener.dart::Notification::\$super\$hashCode#0', (args) => (args[0] as _$Notification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -6,6 +6,10 @@
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports
 
 import 'package:dartic/dartic.dart';
+import '../bindings/rendering/render_animated_opacity_bindings.g.dart';
+import '../bindings/rendering/render_editable_bindings.g.dart';
+import '../bindings/rendering/render_paragraph_bindings.g.dart';
+import '../bindings/rendering/render_sliver_animated_opacity_bindings.g.dart';
 import '../bindings/rendering/alignment_geometry_tween_bindings.g.dart';
 import '../bindings/rendering/alignment_tween_bindings.g.dart';
 import '../bindings/rendering/annotated_region_layer_bindings.g.dart';
@@ -91,7 +95,6 @@ import '../bindings/rendering/render_absorb_pointer_bindings.g.dart';
 import '../bindings/rendering/render_abstract_viewport_bindings.g.dart';
 import '../bindings/rendering/render_aligning_shifted_box_bindings.g.dart';
 import '../bindings/rendering/render_android_view_bindings.g.dart';
-import '../bindings/rendering/render_animated_opacity_bindings.g.dart';
 import '../bindings/rendering/render_animated_opacity_mixin_bindings.g.dart';
 import '../bindings/rendering/render_animated_size_bindings.g.dart';
 import '../bindings/rendering/render_animated_size_state_bindings.g.dart';
@@ -117,7 +120,6 @@ import '../bindings/rendering/render_custom_single_child_layout_box_bindings.g.d
 import '../bindings/rendering/render_darwin_platform_view_bindings.g.dart';
 import '../bindings/rendering/render_decorated_box_bindings.g.dart';
 import '../bindings/rendering/render_decorated_sliver_bindings.g.dart';
-import '../bindings/rendering/render_editable_bindings.g.dart';
 import '../bindings/rendering/render_editable_painter_bindings.g.dart';
 import '../bindings/rendering/render_error_box_bindings.g.dart';
 import '../bindings/rendering/render_exclude_semantics_bindings.g.dart';
@@ -148,7 +150,6 @@ import '../bindings/rendering/render_object_with_layout_callback_mixin_bindings.
 import '../bindings/rendering/render_offstage_bindings.g.dart';
 import '../bindings/rendering/render_opacity_bindings.g.dart';
 import '../bindings/rendering/render_padding_bindings.g.dart';
-import '../bindings/rendering/render_paragraph_bindings.g.dart';
 import '../bindings/rendering/render_performance_overlay_bindings.g.dart';
 import '../bindings/rendering/render_physical_model_bindings.g.dart';
 import '../bindings/rendering/render_physical_shape_bindings.g.dart';
@@ -167,7 +168,6 @@ import '../bindings/rendering/render_shifted_box_bindings.g.dart';
 import '../bindings/rendering/render_shrink_wrapping_viewport_bindings.g.dart';
 import '../bindings/rendering/render_sized_overflow_box_bindings.g.dart';
 import '../bindings/rendering/render_sliver_bindings.g.dart';
-import '../bindings/rendering/render_sliver_animated_opacity_bindings.g.dart';
 import '../bindings/rendering/render_sliver_box_child_manager_bindings.g.dart';
 import '../bindings/rendering/render_sliver_constrained_cross_axis_bindings.g.dart';
 import '../bindings/rendering/render_sliver_cross_axis_group_bindings.g.dart';
@@ -280,6 +280,10 @@ class RenderingPlugin extends DarticPlugin {
 
   @override
   void register(DarticPluginContext ctx) {
+    RenderAnimatedOpacityBindings.register(ctx);
+    RenderEditableBindings.register(ctx);
+    RenderParagraphBindings.register(ctx);
+    RenderSliverAnimatedOpacityBindings.register(ctx);
     AlignmentGeometryTweenBindings.register(ctx);
     AlignmentTweenBindings.register(ctx);
     AnnotatedRegionLayerBindings.register(ctx);
@@ -365,7 +369,6 @@ class RenderingPlugin extends DarticPlugin {
     RenderAbstractViewportBindings.register(ctx);
     RenderAligningShiftedBoxBindings.register(ctx);
     RenderAndroidViewBindings.register(ctx);
-    RenderAnimatedOpacityBindings.register(ctx);
     RenderAnimatedOpacityMixinBindings.register(ctx);
     RenderAnimatedSizeBindings.register(ctx);
     RenderAnimatedSizeStateBindings.register(ctx);
@@ -391,7 +394,6 @@ class RenderingPlugin extends DarticPlugin {
     RenderDarwinPlatformViewBindings.register(ctx);
     RenderDecoratedBoxBindings.register(ctx);
     RenderDecoratedSliverBindings.register(ctx);
-    RenderEditableBindings.register(ctx);
     RenderEditablePainterBindings.register(ctx);
     RenderErrorBoxBindings.register(ctx);
     RenderExcludeSemanticsBindings.register(ctx);
@@ -422,7 +424,6 @@ class RenderingPlugin extends DarticPlugin {
     RenderOffstageBindings.register(ctx);
     RenderOpacityBindings.register(ctx);
     RenderPaddingBindings.register(ctx);
-    RenderParagraphBindings.register(ctx);
     RenderPerformanceOverlayBindings.register(ctx);
     RenderPhysicalModelBindings.register(ctx);
     RenderPhysicalShapeBindings.register(ctx);
@@ -441,7 +442,6 @@ class RenderingPlugin extends DarticPlugin {
     RenderShrinkWrappingViewportBindings.register(ctx);
     RenderSizedOverflowBoxBindings.register(ctx);
     RenderSliverBindings.register(ctx);
-    RenderSliverAnimatedOpacityBindings.register(ctx);
     RenderSliverBoxChildManagerBindings.register(ctx);
     RenderSliverConstrainedCrossAxisBindings.register(ctx);
     RenderSliverCrossAxisGroupBindings.register(ctx);

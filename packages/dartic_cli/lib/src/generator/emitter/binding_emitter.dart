@@ -36,13 +36,16 @@ String emitBindingFile(
   // Build body first to detect required imports
   final body = StringBuffer();
 
-  // Effective bridge flag: skip final, private, or factory-only classes.
-  final hasGenerativeCtor =
-      info.constructors.any((c) => !c.isFactory) || info.isAbstract;
+  // Effective bridge flag: skip final, private, or un-extendable classes.
+  // Bridge requires either:
+  //   - isInterface: uses `implements`, no super() needed
+  //   - bridgeConstructor != null: has unnamed generative ctor for super()
+  // Classes with only factory/named constructors can't be extended.
+  final canBridge = info.isInterface || info.bridgeConstructor != null;
   final effectiveBridge = bridge &&
       !info.isFinal &&
       !info.className.startsWith('_') &&
-      hasGenerativeCtor;
+      canBridge;
 
   // Preamble (e.g. private helper classes / hand-written Bridge class).
   // For custom_bridge, auto-append missing super trampolines so that
@@ -107,13 +110,12 @@ String emitBindingFileWithInternalTypes(
   // Build body first to detect required imports
   final body = StringBuffer();
 
-  // Effective bridge flag: skip final, private, or factory-only classes.
-  final hasGenerativeCtor =
-      mainInfo.constructors.any((c) => !c.isFactory) || mainInfo.isAbstract;
+  // Effective bridge flag: skip final, private, or un-extendable classes.
+  final canBridge = mainInfo.isInterface || mainInfo.bridgeConstructor != null;
   final effectiveBridge = bridge &&
       !mainInfo.isFinal &&
       !mainInfo.className.startsWith('_') &&
-      hasGenerativeCtor;
+      canBridge;
 
   if (effectiveBridge) {
     _writeBridgeClass(body, mainInfo, methodOverrides: methodOverrides);
@@ -1697,7 +1699,9 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   final classModifier = info.isBase ? 'base ' : '';
   // For F-bounded types (e.g. LinkedListEntry<E extends LinkedListEntry<E>>),
   // use self-referencing type args so the bridge satisfies the bound.
-  final superTypeArgs = info.bridgeSuperTypeArgs ?? '';
+  // For non-F-bounded generics, use erasedTypeArgs so the bridge extends
+  // e.g. Tween<Object?> instead of raw Tween (= Tween<dynamic>).
+  final superTypeArgs = info.bridgeSuperTypeArgs ?? info.erasedTypeArgs;
   if (info.isInterface) {
     buf.writeln(
         '${classModifier}class $bridgeClassName implements ${info.className}$superTypeArgs, DarticObjectHolder {');
@@ -1715,9 +1719,9 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln(
         '  $bridgeClassName(this._dispatch, this.\$darticObject, List<Object?> superArgs);');
   } else {
-    final unnamedCtor = info.constructors
-        .where((c) => c.name.isEmpty && !c.isFactory)
-        .firstOrNull;
+    // Use bridgeConstructor (always extracted, even for abstract classes)
+    // so the bridge can satisfy the super constructor contract.
+    final unnamedCtor = info.bridgeConstructor;
     final allParams = unnamedCtor?.params ?? const <ParamInfo>[];
     final positionalParams = allParams.where((p) => !p.isNamed).toList();
     final namedParams = allParams.where((p) => p.isNamed).toList();
@@ -1774,7 +1778,12 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   final overriddenMethods = <String>{};
   for (final method in info.methods) {
     if (method.typeParamDecl != null && !method.isAbstract) continue;
-    if (info.isInterface && objectMethodNames.contains(method.name)) continue;
+    // For interface bridges, skip Object methods only when they have the
+    // plain Object signature (no params). If the inherited version has a
+    // different signature (e.g. Diagnosticable.toString({DiagnosticLevel minLevel})),
+    // it MUST be generated to satisfy the interface.
+    if (info.isInterface && objectMethodNames.contains(method.name) &&
+        method.paramTypes.isEmpty) continue;
     overriddenMethods.add(method.name);
     buf.writeln();
     _writeBridgeMethodOverride(buf, info.className, method,
@@ -1794,43 +1803,48 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   // Override setters with dispatch delegation
   for (final setter in info.setters) {
     buf.writeln();
-    _writeBridgeSetterOverride(buf, setter);
+    _writeBridgeSetterOverride(buf, setter,
+        isInterfaceBridge: info.isInterface);
   }
 
   // Override operators with dispatch delegation
   for (final op in info.operators) {
     buf.writeln();
-    _writeBridgeOperatorOverride(buf, info.className, op);
+    _writeBridgeOperatorOverride(buf, info.className, op,
+        isInterfaceBridge: info.isInterface);
   }
 
-  // Always generate Object method overrides for Bridge classes.
-  // Scripts may override toString() or hashCode even if the host class
-  // doesn't declare them. Without these, Dart-side calls (e.g. string
-  // interpolation calling toString()) bypass DarticDispatch entirely.
-  if (!overriddenMethods.contains('toString')) {
-    buf.writeln();
-    buf.writeln('  @override');
-    buf.writeln('  String toString() {');
-    buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
-    buf.writeln(
-        '    if (identical(r, notOverridden)) return super.toString();');
-    buf.writeln('    return r as String;');
-    buf.writeln('  }');
+  // Generate Object method overrides for non-interface Bridge classes.
+  // Interface bridges already have inherited method overrides that handle
+  // dispatch (and may have different signatures, e.g. toString({minLevel})).
+  // For extends-based bridges, these ensure Dart-side calls (e.g. string
+  // interpolation) go through DarticDispatch.
+  if (!info.isInterface) {
+    if (!overriddenMethods.contains('toString')) {
+      buf.writeln();
+      buf.writeln('  @override');
+      buf.writeln('  String toString() {');
+      buf.writeln(
+          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
+      buf.writeln(
+          '    if (identical(r, notOverridden)) return super.toString();');
+      buf.writeln('    return r as String;');
+      buf.writeln('  }');
+    }
+    if (!overriddenGetters.contains('hashCode')) {
+      buf.writeln();
+      buf.writeln('  @override');
+      buf.writeln('  int get hashCode {');
+      buf.writeln(
+          "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
+      buf.writeln(
+          '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
+      buf.writeln('    return r as int;');
+      buf.writeln('  }');
+    }
   }
-  if (!overriddenGetters.contains('hashCode')) {
-    buf.writeln();
-    buf.writeln('  @override');
-    buf.writeln('  int get hashCode {');
-    buf.writeln(
-        "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
-    buf.writeln(
-        '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
-    buf.writeln('    return r as int;');
-    buf.writeln('  }');
-  }
-  // Generate == override to satisfy hash_and_equals lint (paired with
-  // hashCode) and allow scripts to override equality.
+  // Generate == override for all bridge types (always needed for correct
+  // identity semantics and hash_and_equals lint).
   final overriddenOperators = info.operators.map((o) => o.name).toSet();
   if (!overriddenOperators.contains('==')) {
     buf.writeln();
@@ -1838,8 +1852,13 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  bool operator ==(Object other) {');
     buf.writeln(
         "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '==', [other]);");
-    buf.writeln(
-        '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : super == other; }');
+    if (info.isInterface) {
+      buf.writeln(
+          '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : identical(this, other); }');
+    } else {
+      buf.writeln(
+          '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : super == other; }');
+    }
     buf.writeln('    return r == true;');
     buf.writeln('  }');
   }
@@ -1990,10 +2009,10 @@ void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
   final namedParams = <String>[];
   final argNames = <String>[];
 
+  final nullifiedParams = <String>{};
   for (final p in method.paramTypes) {
     var paramType = p.fullType ?? p.type;
     // Erase Function-typed params to dynamic to avoid super call type mismatch.
-    // The base type (without ?) determines if it's a Function type.
     final baseType = paramType.endsWith('?')
         ? paramType.substring(0, paramType.length - 1)
         : paramType;
@@ -2002,9 +2021,15 @@ void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
     }
     if (p.isNamed) {
       final prefix = p.isRequired ? 'required ' : '';
-      final defaultSuffix =
-          p.defaultValueCode != null ? ' = ${p.defaultValueCode}' : '';
-      namedParams.add('$prefix$paramType ${p.name}$defaultSuffix');
+      if (p.defaultValueCode != null) {
+        namedParams.add(
+            '$prefix$paramType ${p.name} = ${p.defaultValueCode}');
+      } else if (!p.isRequired && !paramType.endsWith('?')) {
+        namedParams.add('$paramType? ${p.name}');
+        nullifiedParams.add(p.name);
+      } else {
+        namedParams.add('$prefix$paramType ${p.name}');
+      }
       argNames.add('${p.name}: ${p.name}');
     } else if (p.isOptional) {
       final defaultSuffix =
@@ -2028,7 +2053,41 @@ void _writeSuperMethodTrampoline(StringBuffer buf, MethodInfo method) {
   final argsStr = argNames.join(', ');
   final trampolineName = '_super\$${method.name}';
 
-  if (method.isVoid) {
+  if (nullifiedParams.isNotEmpty) {
+    // Build super call with casts for nullified params (Object? → original type).
+    final nullifiedTypes = <String, String>{};
+    for (final p in method.paramTypes) {
+      if (nullifiedParams.contains(p.name)) {
+        nullifiedTypes[p.name] = p.fullType ?? p.type;
+      }
+    }
+    final argsCasted = argNames.map((a) {
+      for (final entry in nullifiedTypes.entries) {
+        if (a.startsWith('${entry.key}:')) {
+          return '${entry.key}: ${entry.key} as ${entry.value}';
+        }
+      }
+      return a;
+    }).join(', ');
+    // Build super call without nullified params for the "omit" branch.
+    final argsWithout = argNames
+        .where((a) => !nullifiedParams.any((n) => a.startsWith('$n:')))
+        .join(', ');
+    final condition = nullifiedParams
+        .map((p) => '!identical($p, darticAbsent)')
+        .join(' || ');
+    if (method.isVoid) {
+      buf.writeln('  void $trampolineName($paramStr) {');
+      buf.writeln(
+          '    if ($condition) { super.${method.name}($argsCasted); } else { super.${method.name}($argsWithout); }');
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} $trampolineName($paramStr) {');
+      buf.writeln(
+          '    return ($condition) ? super.${method.name}($argsCasted) : super.${method.name}($argsWithout);');
+      buf.writeln('  }');
+    }
+  } else if (method.isVoid) {
     buf.writeln(
         '  void $trampolineName($paramStr) { super.${method.name}($argsStr); }');
   } else {
@@ -2057,6 +2116,10 @@ void _writeBridgeMethodOverride(
   final optionalPosParams = <String>[];
   final namedParams = <String>[];
   final argNames = <String>[];
+  // Track named params whose private default was dropped → made nullable.
+  // These need conditional omission in the super call to preserve the
+  // host's real default value.
+  final nullifiedParams = <String>{};
   for (final p in method.paramTypes) {
     argNames.add(p.name);
     // Use fullType (preserving method type params) for Bridge param
@@ -2064,9 +2127,17 @@ void _writeBridgeMethodOverride(
     final paramType = p.fullType ?? p.type;
     if (p.isNamed) {
       final prefix = p.isRequired ? 'required ' : '';
-      final defaultSuffix =
-          p.defaultValueCode != null ? ' = ${p.defaultValueCode}' : '';
-      namedParams.add('$prefix$paramType ${p.name}$defaultSuffix');
+      if (p.defaultValueCode != null) {
+        namedParams.add(
+            '$prefix$paramType ${p.name} = ${p.defaultValueCode}');
+      } else if (!p.isRequired && !paramType.endsWith('?')) {
+        // Private default lost (e.g. _kDuration): use darticAbsent sentinel
+        // so the Bridge can detect omission and let super use its real default.
+        namedParams.add('Object? ${p.name} = darticAbsent');
+        nullifiedParams.add(p.name);
+      } else {
+        namedParams.add('$prefix$paramType ${p.name}');
+      }
     } else if (p.isOptional) {
       final defaultSuffix =
           p.defaultValueCode != null ? ' = ${p.defaultValueCode}' : '';
@@ -2090,12 +2161,21 @@ void _writeBridgeMethodOverride(
   // wrappers for function-typed params (Function can't be passed directly
   // where a specific function type like `bool Function(dynamic)` is expected).
   final superCallArgs = <String>[];
+  final superCallArgsWithoutNullified = <String>[];
   for (final p in method.paramTypes) {
     final argExpr = _emitBridgeSuperArg(p);
     if (p.isNamed) {
-      superCallArgs.add('${p.name}: $argExpr');
+      if (nullifiedParams.contains(p.name)) {
+        // Nullified param: declared as Object? in Bridge, needs cast for super.
+        final paramType = p.fullType ?? p.type;
+        superCallArgs.add('${p.name}: ${p.name} as $paramType');
+      } else {
+        superCallArgs.add('${p.name}: $argExpr');
+        superCallArgsWithoutNullified.add('${p.name}: $argExpr');
+      }
     } else {
       superCallArgs.add(argExpr);
+      superCallArgsWithoutNullified.add(argExpr);
     }
   }
   final superCall = 'super.${method.name}(${superCallArgs.join(', ')})';
@@ -2104,6 +2184,10 @@ void _writeBridgeMethodOverride(
 
   final typeParamDecl = method.typeParamDecl ?? '';
 
+  // Avoid shadowing: if any parameter is named 'r', use '$r' for the
+  // dispatch result variable to prevent "referenced before declaration".
+  final resultVar = argNames.contains('r') ? r'$r' : 'r';
+
   buf.writeln('  @override');
 
   if (method.isAbstract || isInterfaceBridge) {
@@ -2111,20 +2195,20 @@ void _writeBridgeMethodOverride(
     // No super call; throw if dartic code didn't override.
     if (method.isVoid) {
       buf.writeln('  void ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
-      buf.writeln('    if (identical(r, notOverridden)) {');
+      buf.writeln('    final $resultVar = $dispatchCall;');
+      buf.writeln('    if (identical($resultVar, notOverridden)) {');
       buf.writeln(
           "      throw UnsupportedError('Abstract method ${method.name} must be overridden in dartic code');");
       buf.writeln('    }');
       buf.writeln('  }');
     } else {
       buf.writeln('  ${method.returnType} ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
-      buf.writeln('    if (identical(r, notOverridden)) {');
+      buf.writeln('    final $resultVar = $dispatchCall;');
+      buf.writeln('    if (identical($resultVar, notOverridden)) {');
       buf.writeln(
           "      throw UnsupportedError('Abstract method ${method.name} must be overridden in dartic code');");
       buf.writeln('    }');
-      buf.writeln('    return r as ${method.returnType};');
+      buf.writeln('    return $resultVar as ${method.returnType};');
       buf.writeln('  }');
     }
   } else if (overrideConfig?.defaultReturn != null) {
@@ -2133,16 +2217,42 @@ void _writeBridgeMethodOverride(
     final defaultReturn = overrideConfig!.defaultReturn!;
     if (method.isVoid) {
       buf.writeln('  void ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    final $resultVar = $dispatchCall;');
       buf.writeln(
-          '    if (identical(r, notOverridden)) return;');
+          '    if (identical($resultVar, notOverridden)) return;');
       buf.writeln('  }');
     } else {
       buf.writeln('  ${method.returnType} ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    final $resultVar = $dispatchCall;');
       buf.writeln(
-          '    if (identical(r, notOverridden)) return $defaultReturn;');
-      buf.writeln('    return r as ${method.returnType};');
+          '    if (identical($resultVar, notOverridden)) return $defaultReturn;');
+      buf.writeln('    return $resultVar as ${method.returnType};');
+      buf.writeln('  }');
+    }
+  } else if (nullifiedParams.isNotEmpty) {
+    // ── Pattern: normal with nullified defaults ──
+    // Some named params had private defaults (e.g. _kDuration) that were
+    // made nullable. Branch the super call to preserve host defaults.
+    final superCallOmitted =
+        'super.${method.name}(${superCallArgsWithoutNullified.join(', ')})';
+    final condition = nullifiedParams
+        .map((p) => '!identical($p, darticAbsent)')
+        .join(' || ');
+    if (method.isVoid) {
+      buf.writeln('  void ${method.name}$typeParamDecl($paramStr) {');
+      buf.writeln('    final $resultVar = $dispatchCall;');
+      buf.writeln('    if (identical($resultVar, notOverridden)) {');
+      buf.writeln('      if ($condition) { $superCall; } else { $superCallOmitted; }');
+      buf.writeln('      return;');
+      buf.writeln('    }');
+      buf.writeln('  }');
+    } else {
+      buf.writeln('  ${method.returnType} ${method.name}$typeParamDecl($paramStr) {');
+      buf.writeln('    final $resultVar = $dispatchCall;');
+      buf.writeln('    if (identical($resultVar, notOverridden)) {');
+      buf.writeln('      return ($condition) ? $superCall : $superCallOmitted;');
+      buf.writeln('    }');
+      buf.writeln('    return $resultVar as ${method.returnType};');
       buf.writeln('  }');
     }
   } else {
@@ -2150,16 +2260,16 @@ void _writeBridgeMethodOverride(
     // Dispatch first, fallback to super if notOverridden.
     if (method.isVoid) {
       buf.writeln('  void ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    final $resultVar = $dispatchCall;');
       buf.writeln(
-          '    if (identical(r, notOverridden)) { $superCall; return; }');
+          '    if (identical($resultVar, notOverridden)) { $superCall; return; }');
       buf.writeln('  }');
     } else {
       buf.writeln('  ${method.returnType} ${method.name}$typeParamDecl($paramStr) {');
-      buf.writeln('    final r = $dispatchCall;');
+      buf.writeln('    final $resultVar = $dispatchCall;');
       buf.writeln(
-          '    if (identical(r, notOverridden)) return $superCall;');
-      buf.writeln('    return r as ${method.returnType};');
+          '    if (identical($resultVar, notOverridden)) return $superCall;');
+      buf.writeln('    return $resultVar as ${method.returnType};');
       buf.writeln('  }');
     }
   }
@@ -2175,28 +2285,76 @@ void _writeBridgeMethodOverride(
 String _emitBridgeSuperArg(ParamInfo p) {
   if (!p.isFunctionType) return p.name;
 
-  final arity = p.callbackArity!;
   final returnType = p.callbackReturnType ?? 'dynamic';
   final isNullable = p.type.endsWith('?');
+  final cbParams = p.callbackParams;
 
-  // Build positional arg names: (a), (a, b), (a, b, c), ...
+  // When callbackParams is available (has named params info), use it
+  // to generate correct closures with named parameters.
+  // E.g. SliverHitTest: (result, {required mainAxisPosition, required crossAxisPosition})
+  if (cbParams != null && cbParams.any((cp) => cp.isNamed)) {
+    final positional = cbParams.where((cp) => !cp.isNamed).toList();
+    final named = cbParams.where((cp) => cp.isNamed).toList();
+
+    // Closure parameter list
+    final closureParams = <String>[];
+    for (var i = 0; i < positional.length; i++) {
+      closureParams.add(String.fromCharCode(0x61 + i)); // a, b, c...
+    }
+    final namedParamDecls = named.map((cp) {
+      final prefix = cp.isRequired ? 'required ' : '';
+      // Non-required non-nullable params need a default value.
+      var defaultSuffix = '';
+      if (!cp.isRequired && !cp.type.endsWith('?') && cp.type != 'dynamic') {
+        defaultSuffix = switch (cp.type) {
+          'bool' => ' = false',
+          'int' => ' = 0',
+          'double' => ' = 0.0',
+          'String' => " = ''",
+          _ => '',
+        };
+      }
+      return '$prefix${cp.type} ${cp.name}$defaultSuffix';
+    }).join(', ');
+
+    final paramStr = [
+      ...closureParams,
+      if (named.isNotEmpty) '{$namedParamDecls}',
+    ].join(', ');
+
+    // Call expression: forward positional + named args
+    final callArgs = <String>[];
+    for (var i = 0; i < positional.length; i++) {
+      callArgs.add(String.fromCharCode(0x61 + i));
+    }
+    for (final cp in named) {
+      callArgs.add('${cp.name}: ${cp.name}');
+    }
+    var callExpr = '${p.name}(${callArgs.join(', ')})';
+    if (returnType != 'void' && returnType != 'dynamic') {
+      callExpr = '$callExpr as $returnType';
+    }
+
+    final wrapper = '($paramStr) => $callExpr';
+    if (isNullable) {
+      return '${p.name} != null ? $wrapper : null';
+    }
+    return wrapper;
+  }
+
+  // Fallback: all-positional params (no named params or no callbackParams).
+  final arity = p.callbackArity!;
   final argNames = [
     for (var i = 0; i < arity; i++) String.fromCharCode(0x61 + i), // a, b, c...
   ];
   final argList = argNames.join(', ');
 
-  // Build the call expression.
-  // No `!` needed — inside `p != null ? ...`, Dart promotes p to non-null.
   var callExpr = '${p.name}($argList)';
-
-  // Add return type cast if needed
   if (returnType != 'void' && returnType != 'dynamic') {
     callExpr = '$callExpr as $returnType';
   }
 
-  // Build the wrapper closure
   final wrapper = '($argList) => $callExpr';
-
   if (isNullable) {
     return '${p.name} != null ? $wrapper : null';
   }
@@ -2205,6 +2363,7 @@ String _emitBridgeSuperArg(ParamInfo p) {
 
 /// Generates a dispatch-delegating getter override for Bridge.
 void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter, {bool isInterfaceBridge = false}) {
+  final isVoid = getter.returnType == 'void';
   buf.writeln('  @override');
   buf.writeln('  ${getter.returnType} get ${getter.name} {');
   buf.writeln(
@@ -2218,17 +2377,21 @@ void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter, {bool isInt
     buf.writeln(
         '    if (identical(r, notOverridden)) return super.${getter.name};');
   }
-  buf.writeln('    return r as ${getter.returnType};');
+  // void getters (e.g. DiagnosticsProperty<void>.value) can't use `as void`.
+  if (!isVoid) {
+    buf.writeln('    return r as ${getter.returnType};');
+  }
   buf.writeln('  }');
 }
 
 /// Generates a dispatch-delegating setter override for Bridge.
-void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter) {
+void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter,
+    {bool isInterfaceBridge = false}) {
   buf.writeln('  @override');
   buf.writeln('  set ${setter.name}(${setter.paramType} value) {');
   buf.writeln(
       "    if (!_dispatch.set(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${setter.name}', value)) {");
-  if (setter.isAbstract) {
+  if (setter.isAbstract || isInterfaceBridge) {
     buf.writeln(
         "      throw UnsupportedError('Abstract setter ${setter.name} must be overridden in dartic code');");
   } else {
@@ -2240,16 +2403,18 @@ void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter) {
 
 /// Generates a dispatch-delegating operator override for Bridge.
 void _writeBridgeOperatorOverride(
-    StringBuffer buf, String className, OperatorInfo op) {
+    StringBuffer buf, String className, OperatorInfo op,
+    {bool isInterfaceBridge = false}) {
   final abstractThrow =
       "throw UnsupportedError('Abstract operator ${op.name} must be overridden in dartic code')";
+  final isAbstract = op.isAbstract || isInterfaceBridge;
   buf.writeln('  @override');
   if (op.isUnary) {
     if (op.name == '~') {
       buf.writeln('  ${op.returnType} operator ~() {');
       buf.writeln(
           "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '~', const []);");
-      if (op.isAbstract) {
+      if (isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
         buf.writeln('    if (identical(r, notOverridden)) return ~super;');
@@ -2259,7 +2424,7 @@ void _writeBridgeOperatorOverride(
       buf.writeln('  ${op.returnType} operator -() {');
       buf.writeln(
           "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'unary-', const []);");
-      if (op.isAbstract) {
+      if (isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
         buf.writeln('    if (identical(r, notOverridden)) return -super;');
@@ -2271,7 +2436,7 @@ void _writeBridgeOperatorOverride(
     buf.writeln('  ${op.returnType} operator [](${op.paramType} index) {');
     buf.writeln(
         "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]', [index]);");
-    if (op.isAbstract) {
+    if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
       buf.writeln(
@@ -2284,7 +2449,7 @@ void _writeBridgeOperatorOverride(
         '  void operator []=(${op.paramType} index, dynamic value) {');
     buf.writeln(
         "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]=', [index, value]);");
-    if (op.isAbstract) {
+    if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
       buf.writeln(
@@ -2297,7 +2462,7 @@ void _writeBridgeOperatorOverride(
         '  ${op.returnType} operator ${op.name}(${op.paramType} other) {');
     buf.writeln(
         "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${op.name}', [other]);");
-    if (op.isAbstract) {
+    if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
       buf.writeln(

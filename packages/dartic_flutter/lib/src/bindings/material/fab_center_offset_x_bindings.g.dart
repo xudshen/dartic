@@ -13,6 +13,64 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/src/material/scaffold.dart';
 import 'dart:ui';
 
+class _$FabCenterOffsetX implements FabCenterOffsetX, DarticObjectHolder {
+  _$FabCenterOffsetX(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double getOffsetX(ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetX', [scaffoldGeometry, adjustment]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getOffsetX must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double getOffsetY(ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetY', [scaffoldGeometry, adjustment]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getOffsetY must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool isMini() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isMini', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isMini must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [scaffoldGeometry]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getOffset must be overridden in dartic code');
+    }
+    return r as Offset;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFabCenterOffsetXBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FabCenterOffsetX(dispatch, obj, superArgs);
+
 abstract final class FabCenterOffsetXBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,6 +79,8 @@ abstract final class FabCenterOffsetXBindings {
       test: (o) => o is FabCenterOffsetX,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/floating_action_button_location.dart::StandardFabLocation', 'package:flutter/src/material/floating_action_button_location.dart::FloatingActionButtonLocation'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FabCenterOffsetX(dispatch, darticObject, superArgs),
     );
   }
 

@@ -32,6 +32,261 @@ import 'package:flutter/src/widgets/widget_state.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Stepper extends Stepper implements DarticObjectHolder {
+  _$Stepper(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, steps: (superArgs[1] as List).cast<Step>(), controller: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as ScrollController?, physics: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as ScrollPhysics?, type: superArgs[4] as StepperType, currentStep: superArgs[5] as int, onStepTapped: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as ValueChanged<int>?, onStepContinue: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as VoidCallback?, onStepCancel: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as VoidCallback?, controlsBuilder: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as ControlsWidgetBuilder?, elevation: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as double?, margin: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as EdgeInsetsGeometry?, connectorColor: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as WidgetStateProperty<Color>?, connectorThickness: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as double?, stepIconBuilder: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as StepIconBuilder?, stepIconHeight: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as double?, stepIconWidth: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as double?, stepIconMargin: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as EdgeInsets?, clipBehavior: superArgs[18] as Clip);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<Stepper> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<Stepper>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  List<Step> get steps {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'steps');
+    if (identical(r, notOverridden)) return super.steps;
+    return r as List<Step>;
+  }
+
+  @override
+  ScrollPhysics? get physics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'physics');
+    if (identical(r, notOverridden)) return super.physics;
+    return r as ScrollPhysics?;
+  }
+
+  @override
+  ScrollController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as ScrollController?;
+  }
+
+  @override
+  StepperType get type {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
+    if (identical(r, notOverridden)) return super.type;
+    return r as StepperType;
+  }
+
+  @override
+  int get currentStep {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentStep');
+    if (identical(r, notOverridden)) return super.currentStep;
+    return r as int;
+  }
+
+  @override
+  ValueChanged<int>? get onStepTapped {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onStepTapped');
+    if (identical(r, notOverridden)) return super.onStepTapped;
+    return r as ValueChanged<int>?;
+  }
+
+  @override
+  VoidCallback? get onStepContinue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onStepContinue');
+    if (identical(r, notOverridden)) return super.onStepContinue;
+    return r as VoidCallback?;
+  }
+
+  @override
+  VoidCallback? get onStepCancel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onStepCancel');
+    if (identical(r, notOverridden)) return super.onStepCancel;
+    return r as VoidCallback?;
+  }
+
+  @override
+  ControlsWidgetBuilder? get controlsBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controlsBuilder');
+    if (identical(r, notOverridden)) return super.controlsBuilder;
+    return r as ControlsWidgetBuilder?;
+  }
+
+  @override
+  double? get elevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
+    if (identical(r, notOverridden)) return super.elevation;
+    return r as double?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get margin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'margin');
+    if (identical(r, notOverridden)) return super.margin;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  WidgetStateProperty<Color>? get connectorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'connectorColor');
+    if (identical(r, notOverridden)) return super.connectorColor;
+    return r as WidgetStateProperty<Color>?;
+  }
+
+  @override
+  double? get connectorThickness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'connectorThickness');
+    if (identical(r, notOverridden)) return super.connectorThickness;
+    return r as double?;
+  }
+
+  @override
+  StepIconBuilder? get stepIconBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stepIconBuilder');
+    if (identical(r, notOverridden)) return super.stepIconBuilder;
+    return r as StepIconBuilder?;
+  }
+
+  @override
+  double? get stepIconHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stepIconHeight');
+    if (identical(r, notOverridden)) return super.stepIconHeight;
+    return r as double?;
+  }
+
+  @override
+  double? get stepIconWidth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stepIconWidth');
+    if (identical(r, notOverridden)) return super.stepIconWidth;
+    return r as double?;
+  }
+
+  @override
+  EdgeInsets? get stepIconMargin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stepIconMargin');
+    if (identical(r, notOverridden)) return super.stepIconMargin;
+    return r as EdgeInsets?;
+  }
+
+  @override
+  Clip get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) return super.clipBehavior;
+    return r as Clip;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<Stepper> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  List<Step> get _super$steps => super.steps;
+  ScrollPhysics? get _super$physics => super.physics;
+  ScrollController? get _super$controller => super.controller;
+  StepperType get _super$type => super.type;
+  int get _super$currentStep => super.currentStep;
+  ValueChanged<int>? get _super$onStepTapped => super.onStepTapped;
+  VoidCallback? get _super$onStepContinue => super.onStepContinue;
+  VoidCallback? get _super$onStepCancel => super.onStepCancel;
+  ControlsWidgetBuilder? get _super$controlsBuilder => super.controlsBuilder;
+  double? get _super$elevation => super.elevation;
+  EdgeInsetsGeometry? get _super$margin => super.margin;
+  WidgetStateProperty<Color>? get _super$connectorColor => super.connectorColor;
+  double? get _super$connectorThickness => super.connectorThickness;
+  StepIconBuilder? get _super$stepIconBuilder => super.stepIconBuilder;
+  double? get _super$stepIconHeight => super.stepIconHeight;
+  double? get _super$stepIconWidth => super.stepIconWidth;
+  EdgeInsets? get _super$stepIconMargin => super.stepIconMargin;
+  Clip get _super$clipBehavior => super.clipBehavior;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStepperBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Stepper(dispatch, obj, superArgs);
+
 abstract final class StepperBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -40,7 +295,38 @@ abstract final class StepperBindings {
       test: (o) => o is Stepper,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Stepper(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$createState#0', (args) => (args[0] as _$Stepper)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$toString#1', (args) => (args[0] as _$Stepper)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$createElement#0', (args) => (args[0] as _$Stepper)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$toStringShort#0', (args) => (args[0] as _$Stepper)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$debugFillProperties#1', (args) { (args[0] as _$Stepper)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$toStringShallow#2', (args) => (args[0] as _$Stepper)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$toStringDeep#4', (args) => (args[0] as _$Stepper)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Stepper)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Stepper)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$steps#0', (args) => (args[0] as _$Stepper)._super$steps);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$physics#0', (args) => (args[0] as _$Stepper)._super$physics);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$controller#0', (args) => (args[0] as _$Stepper)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$type#0', (args) => (args[0] as _$Stepper)._super$type);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$currentStep#0', (args) => (args[0] as _$Stepper)._super$currentStep);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$onStepTapped#0', (args) => (args[0] as _$Stepper)._super$onStepTapped);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$onStepContinue#0', (args) => (args[0] as _$Stepper)._super$onStepContinue);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$onStepCancel#0', (args) => (args[0] as _$Stepper)._super$onStepCancel);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$controlsBuilder#0', (args) => (args[0] as _$Stepper)._super$controlsBuilder);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$elevation#0', (args) => (args[0] as _$Stepper)._super$elevation);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$margin#0', (args) => (args[0] as _$Stepper)._super$margin);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$connectorColor#0', (args) => (args[0] as _$Stepper)._super$connectorColor);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$connectorThickness#0', (args) => (args[0] as _$Stepper)._super$connectorThickness);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$stepIconBuilder#0', (args) => (args[0] as _$Stepper)._super$stepIconBuilder);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$stepIconHeight#0', (args) => (args[0] as _$Stepper)._super$stepIconHeight);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$stepIconWidth#0', (args) => (args[0] as _$Stepper)._super$stepIconWidth);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$stepIconMargin#0', (args) => (args[0] as _$Stepper)._super$stepIconMargin);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$clipBehavior#0', (args) => (args[0] as _$Stepper)._super$clipBehavior);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$hashCode#0', (args) => (args[0] as _$Stepper)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Stepper::\$super\$key#0', (args) => (args[0] as _$Stepper)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

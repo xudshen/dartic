@@ -42,6 +42,413 @@ import 'package:flutter/src/widgets/focus_manager.dart';
 import 'package:flutter/src/widgets/widget_state.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$ListTile extends ListTile implements DarticObjectHolder {
+  _$ListTile(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, leading: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Widget?, title: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Widget?, subtitle: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as Widget?, trailing: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Widget?, isThreeLine: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as bool?, dense: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as bool?, visualDensity: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as VisualDensity?, shape: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as ShapeBorder?, style: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as ListTileStyle?, selectedColor: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as Color?, iconColor: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as Color?, textColor: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as Color?, titleTextStyle: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as TextStyle?, subtitleTextStyle: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as TextStyle?, leadingAndTrailingTextStyle: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as TextStyle?, contentPadding: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as EdgeInsetsGeometry?, enabled: superArgs[17] as bool, onTap: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as GestureTapCallback?, onLongPress: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as GestureLongPressCallback?, onFocusChange: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as ValueChanged<bool>?, mouseCursor: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as MouseCursor?, selected: superArgs[22] as bool, focusColor: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as Color?, hoverColor: identical(superArgs[24], darticAbsent) ? null : superArgs[24] as Color?, splashColor: identical(superArgs[25], darticAbsent) ? null : superArgs[25] as Color?, focusNode: identical(superArgs[26], darticAbsent) ? null : superArgs[26] as FocusNode?, autofocus: superArgs[27] as bool, tileColor: identical(superArgs[28], darticAbsent) ? null : superArgs[28] as Color?, selectedTileColor: identical(superArgs[29], darticAbsent) ? null : superArgs[29] as Color?, enableFeedback: identical(superArgs[30], darticAbsent) ? null : superArgs[30] as bool?, horizontalTitleGap: identical(superArgs[31], darticAbsent) ? null : superArgs[31] as double?, minVerticalPadding: identical(superArgs[32], darticAbsent) ? null : superArgs[32] as double?, minLeadingWidth: identical(superArgs[33], darticAbsent) ? null : superArgs[33] as double?, minTileHeight: identical(superArgs[34], darticAbsent) ? null : superArgs[34] as double?, titleAlignment: identical(superArgs[35], darticAbsent) ? null : superArgs[35] as ListTileTitleAlignment?, internalAddSemanticForOnTap: superArgs[36] as bool, statesController: identical(superArgs[37], darticAbsent) ? null : superArgs[37] as WidgetStatesController?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget? get leading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leading');
+    if (identical(r, notOverridden)) return super.leading;
+    return r as Widget?;
+  }
+
+  @override
+  Widget? get title {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'title');
+    if (identical(r, notOverridden)) return super.title;
+    return r as Widget?;
+  }
+
+  @override
+  Widget? get subtitle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtitle');
+    if (identical(r, notOverridden)) return super.subtitle;
+    return r as Widget?;
+  }
+
+  @override
+  Widget? get trailing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'trailing');
+    if (identical(r, notOverridden)) return super.trailing;
+    return r as Widget?;
+  }
+
+  @override
+  bool? get isThreeLine {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isThreeLine');
+    if (identical(r, notOverridden)) return super.isThreeLine;
+    return r as bool?;
+  }
+
+  @override
+  bool? get dense {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dense');
+    if (identical(r, notOverridden)) return super.dense;
+    return r as bool?;
+  }
+
+  @override
+  VisualDensity? get visualDensity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'visualDensity');
+    if (identical(r, notOverridden)) return super.visualDensity;
+    return r as VisualDensity?;
+  }
+
+  @override
+  ShapeBorder? get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) return super.shape;
+    return r as ShapeBorder?;
+  }
+
+  @override
+  Color? get selectedColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectedColor');
+    if (identical(r, notOverridden)) return super.selectedColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get iconColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'iconColor');
+    if (identical(r, notOverridden)) return super.iconColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get textColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textColor');
+    if (identical(r, notOverridden)) return super.textColor;
+    return r as Color?;
+  }
+
+  @override
+  TextStyle? get titleTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'titleTextStyle');
+    if (identical(r, notOverridden)) return super.titleTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  TextStyle? get subtitleTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtitleTextStyle');
+    if (identical(r, notOverridden)) return super.subtitleTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  TextStyle? get leadingAndTrailingTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leadingAndTrailingTextStyle');
+    if (identical(r, notOverridden)) return super.leadingAndTrailingTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  ListTileStyle? get style {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'style');
+    if (identical(r, notOverridden)) return super.style;
+    return r as ListTileStyle?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get contentPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'contentPadding');
+    if (identical(r, notOverridden)) return super.contentPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  GestureTapCallback? get onTap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onTap');
+    if (identical(r, notOverridden)) return super.onTap;
+    return r as GestureTapCallback?;
+  }
+
+  @override
+  GestureLongPressCallback? get onLongPress {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onLongPress');
+    if (identical(r, notOverridden)) return super.onLongPress;
+    return r as GestureLongPressCallback?;
+  }
+
+  @override
+  ValueChanged<bool>? get onFocusChange {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onFocusChange');
+    if (identical(r, notOverridden)) return super.onFocusChange;
+    return r as ValueChanged<bool>?;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  bool get selected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selected');
+    if (identical(r, notOverridden)) return super.selected;
+    return r as bool;
+  }
+
+  @override
+  Color? get focusColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusColor');
+    if (identical(r, notOverridden)) return super.focusColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get hoverColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hoverColor');
+    if (identical(r, notOverridden)) return super.hoverColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get splashColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'splashColor');
+    if (identical(r, notOverridden)) return super.splashColor;
+    return r as Color?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  Color? get tileColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tileColor');
+    if (identical(r, notOverridden)) return super.tileColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get selectedTileColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectedTileColor');
+    if (identical(r, notOverridden)) return super.selectedTileColor;
+    return r as Color?;
+  }
+
+  @override
+  bool? get enableFeedback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enableFeedback');
+    if (identical(r, notOverridden)) return super.enableFeedback;
+    return r as bool?;
+  }
+
+  @override
+  double? get horizontalTitleGap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'horizontalTitleGap');
+    if (identical(r, notOverridden)) return super.horizontalTitleGap;
+    return r as double?;
+  }
+
+  @override
+  double? get minVerticalPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minVerticalPadding');
+    if (identical(r, notOverridden)) return super.minVerticalPadding;
+    return r as double?;
+  }
+
+  @override
+  double? get minLeadingWidth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minLeadingWidth');
+    if (identical(r, notOverridden)) return super.minLeadingWidth;
+    return r as double?;
+  }
+
+  @override
+  double? get minTileHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minTileHeight');
+    if (identical(r, notOverridden)) return super.minTileHeight;
+    return r as double?;
+  }
+
+  @override
+  ListTileTitleAlignment? get titleAlignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'titleAlignment');
+    if (identical(r, notOverridden)) return super.titleAlignment;
+    return r as ListTileTitleAlignment?;
+  }
+
+  @override
+  bool get internalAddSemanticForOnTap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'internalAddSemanticForOnTap');
+    if (identical(r, notOverridden)) return super.internalAddSemanticForOnTap;
+    return r as bool;
+  }
+
+  @override
+  WidgetStatesController? get statesController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'statesController');
+    if (identical(r, notOverridden)) return super.statesController;
+    return r as WidgetStatesController?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget? get _super$leading => super.leading;
+  Widget? get _super$title => super.title;
+  Widget? get _super$subtitle => super.subtitle;
+  Widget? get _super$trailing => super.trailing;
+  bool? get _super$isThreeLine => super.isThreeLine;
+  bool? get _super$dense => super.dense;
+  VisualDensity? get _super$visualDensity => super.visualDensity;
+  ShapeBorder? get _super$shape => super.shape;
+  Color? get _super$selectedColor => super.selectedColor;
+  Color? get _super$iconColor => super.iconColor;
+  Color? get _super$textColor => super.textColor;
+  TextStyle? get _super$titleTextStyle => super.titleTextStyle;
+  TextStyle? get _super$subtitleTextStyle => super.subtitleTextStyle;
+  TextStyle? get _super$leadingAndTrailingTextStyle => super.leadingAndTrailingTextStyle;
+  ListTileStyle? get _super$style => super.style;
+  EdgeInsetsGeometry? get _super$contentPadding => super.contentPadding;
+  bool get _super$enabled => super.enabled;
+  GestureTapCallback? get _super$onTap => super.onTap;
+  GestureLongPressCallback? get _super$onLongPress => super.onLongPress;
+  ValueChanged<bool>? get _super$onFocusChange => super.onFocusChange;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  bool get _super$selected => super.selected;
+  Color? get _super$focusColor => super.focusColor;
+  Color? get _super$hoverColor => super.hoverColor;
+  Color? get _super$splashColor => super.splashColor;
+  FocusNode? get _super$focusNode => super.focusNode;
+  bool get _super$autofocus => super.autofocus;
+  Color? get _super$tileColor => super.tileColor;
+  Color? get _super$selectedTileColor => super.selectedTileColor;
+  bool? get _super$enableFeedback => super.enableFeedback;
+  double? get _super$horizontalTitleGap => super.horizontalTitleGap;
+  double? get _super$minVerticalPadding => super.minVerticalPadding;
+  double? get _super$minLeadingWidth => super.minLeadingWidth;
+  double? get _super$minTileHeight => super.minTileHeight;
+  ListTileTitleAlignment? get _super$titleAlignment => super.titleAlignment;
+  bool get _super$internalAddSemanticForOnTap => super.internalAddSemanticForOnTap;
+  WidgetStatesController? get _super$statesController => super.statesController;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createListTileBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ListTile(dispatch, obj, superArgs);
+
 abstract final class ListTileBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -50,8 +457,58 @@ abstract final class ListTileBindings {
       test: (o) => o is ListTile,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ListTile(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::divideTiles#3', (args) => ListTile.divideTiles(context: identical(args[0], darticAbsent) ? null : args[0] as BuildContext?, tiles: (args[1] as Iterable).cast<Widget>(), color: identical(args[2], darticAbsent) ? null : args[2] as Color?));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$build#1', (args) => (args[0] as _$ListTile)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$debugFillProperties#1', (args) { (args[0] as _$ListTile)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$toString#1', (args) => (args[0] as _$ListTile)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$createElement#0', (args) => (args[0] as _$ListTile)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$toStringShort#0', (args) => (args[0] as _$ListTile)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$toStringShallow#2', (args) => (args[0] as _$ListTile)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$toStringDeep#4', (args) => (args[0] as _$ListTile)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ListTile)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$ListTile)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$leading#0', (args) => (args[0] as _$ListTile)._super$leading);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$title#0', (args) => (args[0] as _$ListTile)._super$title);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$subtitle#0', (args) => (args[0] as _$ListTile)._super$subtitle);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$trailing#0', (args) => (args[0] as _$ListTile)._super$trailing);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$isThreeLine#0', (args) => (args[0] as _$ListTile)._super$isThreeLine);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$dense#0', (args) => (args[0] as _$ListTile)._super$dense);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$visualDensity#0', (args) => (args[0] as _$ListTile)._super$visualDensity);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$shape#0', (args) => (args[0] as _$ListTile)._super$shape);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$selectedColor#0', (args) => (args[0] as _$ListTile)._super$selectedColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$iconColor#0', (args) => (args[0] as _$ListTile)._super$iconColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$textColor#0', (args) => (args[0] as _$ListTile)._super$textColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$titleTextStyle#0', (args) => (args[0] as _$ListTile)._super$titleTextStyle);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$subtitleTextStyle#0', (args) => (args[0] as _$ListTile)._super$subtitleTextStyle);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$leadingAndTrailingTextStyle#0', (args) => (args[0] as _$ListTile)._super$leadingAndTrailingTextStyle);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$style#0', (args) => (args[0] as _$ListTile)._super$style);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$contentPadding#0', (args) => (args[0] as _$ListTile)._super$contentPadding);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$enabled#0', (args) => (args[0] as _$ListTile)._super$enabled);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$onTap#0', (args) => (args[0] as _$ListTile)._super$onTap);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$onLongPress#0', (args) => (args[0] as _$ListTile)._super$onLongPress);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$onFocusChange#0', (args) => (args[0] as _$ListTile)._super$onFocusChange);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$mouseCursor#0', (args) => (args[0] as _$ListTile)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$selected#0', (args) => (args[0] as _$ListTile)._super$selected);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$focusColor#0', (args) => (args[0] as _$ListTile)._super$focusColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$hoverColor#0', (args) => (args[0] as _$ListTile)._super$hoverColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$splashColor#0', (args) => (args[0] as _$ListTile)._super$splashColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$focusNode#0', (args) => (args[0] as _$ListTile)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$autofocus#0', (args) => (args[0] as _$ListTile)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$tileColor#0', (args) => (args[0] as _$ListTile)._super$tileColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$selectedTileColor#0', (args) => (args[0] as _$ListTile)._super$selectedTileColor);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$enableFeedback#0', (args) => (args[0] as _$ListTile)._super$enableFeedback);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$horizontalTitleGap#0', (args) => (args[0] as _$ListTile)._super$horizontalTitleGap);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$minVerticalPadding#0', (args) => (args[0] as _$ListTile)._super$minVerticalPadding);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$minLeadingWidth#0', (args) => (args[0] as _$ListTile)._super$minLeadingWidth);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$minTileHeight#0', (args) => (args[0] as _$ListTile)._super$minTileHeight);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$titleAlignment#0', (args) => (args[0] as _$ListTile)._super$titleAlignment);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$internalAddSemanticForOnTap#0', (args) => (args[0] as _$ListTile)._super$internalAddSemanticForOnTap);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$statesController#0', (args) => (args[0] as _$ListTile)._super$statesController);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$hashCode#0', (args) => (args[0] as _$ListTile)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$key#0', (args) => (args[0] as _$ListTile)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

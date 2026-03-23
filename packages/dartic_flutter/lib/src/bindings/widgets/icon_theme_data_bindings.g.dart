@@ -13,6 +13,173 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/src/widgets/framework.dart' show BuildContext;
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$IconThemeData extends IconThemeData implements DarticObjectHolder {
+  _$IconThemeData(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(size: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as double?, fill: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as double?, weight: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, grade: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?, opticalSize: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as double?, color: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as ui.Color?, opacity: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as double?, shadows: identical(superArgs[7], darticAbsent) ? null : superArgs[7] == null ? null : (superArgs[7] as List).cast<ui.Shadow>(), applyTextScaling: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as bool?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  IconThemeData copyWith({double? size, double? fill, double? weight, double? grade, double? opticalSize, ui.Color? color, double? opacity, List<ui.Shadow>? shadows, bool? applyTextScaling}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [size, fill, weight, grade, opticalSize, color, opacity, shadows, applyTextScaling]);
+    if (identical(r, notOverridden)) return super.copyWith(size: size, fill: fill, weight: weight, grade: grade, opticalSize: opticalSize, color: color, opacity: opacity, shadows: shadows, applyTextScaling: applyTextScaling);
+    return r as IconThemeData;
+  }
+
+  @override
+  IconThemeData merge(IconThemeData? other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
+    if (identical(r, notOverridden)) return super.merge(other);
+    return r as IconThemeData;
+  }
+
+  @override
+  IconThemeData resolve(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [context]);
+    if (identical(r, notOverridden)) return super.resolve(context);
+    return r as IconThemeData;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  bool get isConcrete {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isConcrete');
+    if (identical(r, notOverridden)) return super.isConcrete;
+    return r as bool;
+  }
+
+  @override
+  double? get size {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'size');
+    if (identical(r, notOverridden)) return super.size;
+    return r as double?;
+  }
+
+  @override
+  double? get fill {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fill');
+    if (identical(r, notOverridden)) return super.fill;
+    return r as double?;
+  }
+
+  @override
+  double? get weight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'weight');
+    if (identical(r, notOverridden)) return super.weight;
+    return r as double?;
+  }
+
+  @override
+  double? get grade {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'grade');
+    if (identical(r, notOverridden)) return super.grade;
+    return r as double?;
+  }
+
+  @override
+  double? get opticalSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opticalSize');
+    if (identical(r, notOverridden)) return super.opticalSize;
+    return r as double?;
+  }
+
+  @override
+  ui.Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as ui.Color?;
+  }
+
+  @override
+  double? get opacity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opacity');
+    if (identical(r, notOverridden)) return super.opacity;
+    return r as double?;
+  }
+
+  @override
+  List<ui.Shadow>? get shadows {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadows');
+    if (identical(r, notOverridden)) return super.shadows;
+    return r as List<ui.Shadow>?;
+  }
+
+  @override
+  bool? get applyTextScaling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'applyTextScaling');
+    if (identical(r, notOverridden)) return super.applyTextScaling;
+    return r as bool?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  IconThemeData _super$copyWith({double? size, double? fill, double? weight, double? grade, double? opticalSize, ui.Color? color, double? opacity, List<ui.Shadow>? shadows, bool? applyTextScaling}) => super.copyWith(size: size, fill: fill, weight: weight, grade: grade, opticalSize: opticalSize, color: color, opacity: opacity, shadows: shadows, applyTextScaling: applyTextScaling);
+  IconThemeData _super$merge(IconThemeData? other) => super.merge(other);
+  IconThemeData _super$resolve(BuildContext context) => super.resolve(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  bool get _super$isConcrete => super.isConcrete;
+  double? get _super$size => super.size;
+  double? get _super$fill => super.fill;
+  double? get _super$weight => super.weight;
+  double? get _super$grade => super.grade;
+  double? get _super$opticalSize => super.opticalSize;
+  ui.Color? get _super$color => super.color;
+  double? get _super$opacity => super.opacity;
+  List<ui.Shadow>? get _super$shadows => super.shadows;
+  bool? get _super$applyTextScaling => super.applyTextScaling;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIconThemeDataBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$IconThemeData(dispatch, obj, superArgs);
+
 abstract final class IconThemeDataBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,8 +188,28 @@ abstract final class IconThemeDataBindings {
       test: (o) => o is IconThemeData,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$IconThemeData(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::lerp#3', (args) => IconThemeData.lerp(args[0] as IconThemeData?, args[1] as IconThemeData?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$copyWith#9', (args) => (args[0] as _$IconThemeData)._super$copyWith(size: identical(args[1], darticAbsent) ? null : args[1] as double?, fill: identical(args[2], darticAbsent) ? null : args[2] as double?, weight: identical(args[3], darticAbsent) ? null : args[3] as double?, grade: identical(args[4], darticAbsent) ? null : args[4] as double?, opticalSize: identical(args[5], darticAbsent) ? null : args[5] as double?, color: identical(args[6], darticAbsent) ? null : args[6] as ui.Color?, opacity: identical(args[7], darticAbsent) ? null : args[7] as double?, shadows: identical(args[8], darticAbsent) ? null : args[8] == null ? null : (args[8] as List).cast<ui.Shadow>(), applyTextScaling: identical(args[9], darticAbsent) ? null : args[9] as bool?));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$merge#1', (args) => (args[0] as _$IconThemeData)._super$merge(args[1] as IconThemeData?));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$resolve#1', (args) => (args[0] as _$IconThemeData)._super$resolve(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$debugFillProperties#1', (args) { (args[0] as _$IconThemeData)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$toString#1', (args) => (args[0] as _$IconThemeData)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$toStringShort#0', (args) => (args[0] as _$IconThemeData)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$IconThemeData)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$isConcrete#0', (args) => (args[0] as _$IconThemeData)._super$isConcrete);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$size#0', (args) => (args[0] as _$IconThemeData)._super$size);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$fill#0', (args) => (args[0] as _$IconThemeData)._super$fill);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$weight#0', (args) => (args[0] as _$IconThemeData)._super$weight);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$grade#0', (args) => (args[0] as _$IconThemeData)._super$grade);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$opticalSize#0', (args) => (args[0] as _$IconThemeData)._super$opticalSize);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$color#0', (args) => (args[0] as _$IconThemeData)._super$color);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$opacity#0', (args) => (args[0] as _$IconThemeData)._super$opacity);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$shadows#0', (args) => (args[0] as _$IconThemeData)._super$shadows);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$applyTextScaling#0', (args) => (args[0] as _$IconThemeData)._super$applyTextScaling);
+    ctx.registerBinding('package:flutter/src/widgets/icon_theme_data.dart::IconThemeData::\$super\$hashCode#0', (args) => (args[0] as _$IconThemeData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

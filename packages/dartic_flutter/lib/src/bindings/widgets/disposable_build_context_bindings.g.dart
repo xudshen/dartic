@@ -10,6 +10,61 @@ import 'package:flutter/src/widgets/disposable_build_context.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+class _$DisposableBuildContext extends DisposableBuildContext<State<StatefulWidget>> implements DarticObjectHolder {
+  _$DisposableBuildContext(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as State<StatefulWidget>);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  BuildContext? get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) return super.context;
+    return r as BuildContext?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  BuildContext? get _super$context => super.context;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDisposableBuildContextBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DisposableBuildContext(dispatch, obj, superArgs);
+
 abstract final class DisposableBuildContextBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +72,13 @@ abstract final class DisposableBuildContextBindings {
       type: DisposableBuildContext,
       test: (o) => o is DisposableBuildContext,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DisposableBuildContext(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/disposable_build_context.dart::DisposableBuildContext::\$super\$dispose#0', (args) { (args[0] as _$DisposableBuildContext)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/disposable_build_context.dart::DisposableBuildContext::\$super\$toString#0', (args) => (args[0] as _$DisposableBuildContext)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/disposable_build_context.dart::DisposableBuildContext::\$super\$context#0', (args) => (args[0] as _$DisposableBuildContext)._super$context);
+    ctx.registerBinding('package:flutter/src/widgets/disposable_build_context.dart::DisposableBuildContext::\$super\$hashCode#0', (args) => (args[0] as _$DisposableBuildContext)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

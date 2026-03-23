@@ -11,6 +11,64 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/system_channels.dart';
 import 'dart:async';
 
+class _$ProcessTextService extends ProcessTextService implements DarticObjectHolder {
+  _$ProcessTextService(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<List<ProcessTextAction>> queryTextActions() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method queryTextActions must be overridden in dartic code');
+    }
+    return r as Future<List<ProcessTextAction>>;
+  }
+
+  @override
+  Future<String?> processTextAction(String id, String text, bool readOnly) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method processTextAction must be overridden in dartic code');
+    }
+    return r as Future<String?>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createProcessTextServiceBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ProcessTextService(dispatch, obj, superArgs);
+
 abstract final class ProcessTextServiceBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,7 +76,11 @@ abstract final class ProcessTextServiceBindings {
       type: ProcessTextService,
       test: (o) => o is ProcessTextService,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ProcessTextService(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::ProcessTextService::\$super\$toString#0', (args) => (args[0] as _$ProcessTextService)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::ProcessTextService::\$super\$hashCode#0', (args) => (args[0] as _$ProcessTextService)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

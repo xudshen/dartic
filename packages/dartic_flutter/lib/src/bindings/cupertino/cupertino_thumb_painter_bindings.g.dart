@@ -12,6 +12,69 @@ import 'package:flutter/src/cupertino/colors.dart';
 import 'dart:ui';
 import 'package:flutter/src/painting/box_shadow.dart';
 
+class _$CupertinoThumbPainter extends CupertinoThumbPainter implements DarticObjectHolder {
+  _$CupertinoThumbPainter(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(color: superArgs[0] as Color, shadows: (superArgs[1] as List).cast<BoxShadow>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void paint(Canvas canvas, Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect]);
+    if (identical(r, notOverridden)) { super.paint(canvas, rect); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Color get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color;
+  }
+
+  @override
+  List<BoxShadow> get shadows {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadows');
+    if (identical(r, notOverridden)) return super.shadows;
+    return r as List<BoxShadow>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$paint(Canvas canvas, Rect rect) { super.paint(canvas, rect); }
+  String _super$toString() => super.toString();
+  Color get _super$color => super.color;
+  List<BoxShadow> get _super$shadows => super.shadows;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCupertinoThumbPainterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CupertinoThumbPainter(dispatch, obj, superArgs);
+
 abstract final class CupertinoThumbPainterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,9 +82,16 @@ abstract final class CupertinoThumbPainterBindings {
       type: CupertinoThumbPainter,
       test: (o) => o is CupertinoThumbPainter,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CupertinoThumbPainter(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::radius#0', (args) => CupertinoThumbPainter.radius);
     ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::extension#0', (args) => CupertinoThumbPainter.extension);
+    ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::\$super\$paint#2', (args) { (args[0] as _$CupertinoThumbPainter)._super$paint(args[1] as Canvas, args[2] as Rect); return null; });
+    ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::\$super\$toString#0', (args) => (args[0] as _$CupertinoThumbPainter)._super$toString());
+    ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::\$super\$color#0', (args) => (args[0] as _$CupertinoThumbPainter)._super$color);
+    ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::\$super\$shadows#0', (args) => (args[0] as _$CupertinoThumbPainter)._super$shadows);
+    ctx.registerBinding('package:flutter/src/cupertino/thumb_painter.dart::CupertinoThumbPainter::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoThumbPainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

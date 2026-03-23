@@ -27,6 +27,181 @@ import 'package:flutter/src/services/message_codec.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$AndroidView extends AndroidView implements DarticObjectHolder {
+  _$AndroidView(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, viewType: superArgs[1] as String, onPlatformViewCreated: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as PlatformViewCreatedCallback?, hitTestBehavior: superArgs[3] as PlatformViewHitTestBehavior, layoutDirection: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as TextDirection?, gestureRecognizers: identical(superArgs[5], darticAbsent) ? null : superArgs[5] == null ? null : (superArgs[5] as Set).cast<Factory<OneSequenceGestureRecognizer>>(), creationParams: superArgs[6], creationParamsCodec: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as MessageCodec<dynamic>?, clipBehavior: superArgs[8] as Clip);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<AndroidView> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<AndroidView>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  String get viewType {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewType');
+    if (identical(r, notOverridden)) return super.viewType;
+    return r as String;
+  }
+
+  @override
+  PlatformViewCreatedCallback? get onPlatformViewCreated {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPlatformViewCreated');
+    if (identical(r, notOverridden)) return super.onPlatformViewCreated;
+    return r as PlatformViewCreatedCallback?;
+  }
+
+  @override
+  PlatformViewHitTestBehavior get hitTestBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestBehavior');
+    if (identical(r, notOverridden)) return super.hitTestBehavior;
+    return r as PlatformViewHitTestBehavior;
+  }
+
+  @override
+  TextDirection? get layoutDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'layoutDirection');
+    if (identical(r, notOverridden)) return super.layoutDirection;
+    return r as TextDirection?;
+  }
+
+  @override
+  Set<Factory<OneSequenceGestureRecognizer>>? get gestureRecognizers {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'gestureRecognizers');
+    if (identical(r, notOverridden)) return super.gestureRecognizers;
+    return r as Set<Factory<OneSequenceGestureRecognizer>>?;
+  }
+
+  @override
+  dynamic get creationParams {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'creationParams');
+    if (identical(r, notOverridden)) return super.creationParams;
+    return r as dynamic;
+  }
+
+  @override
+  MessageCodec<dynamic>? get creationParamsCodec {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'creationParamsCodec');
+    if (identical(r, notOverridden)) return super.creationParamsCodec;
+    return r as MessageCodec<dynamic>?;
+  }
+
+  @override
+  Clip get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) return super.clipBehavior;
+    return r as Clip;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<AndroidView> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  String get _super$viewType => super.viewType;
+  PlatformViewCreatedCallback? get _super$onPlatformViewCreated => super.onPlatformViewCreated;
+  PlatformViewHitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
+  TextDirection? get _super$layoutDirection => super.layoutDirection;
+  Set<Factory<OneSequenceGestureRecognizer>>? get _super$gestureRecognizers => super.gestureRecognizers;
+  dynamic get _super$creationParams => super.creationParams;
+  MessageCodec<dynamic>? get _super$creationParamsCodec => super.creationParamsCodec;
+  Clip get _super$clipBehavior => super.clipBehavior;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAndroidViewBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AndroidView(dispatch, obj, superArgs);
+
 abstract final class AndroidViewBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -35,7 +210,28 @@ abstract final class AndroidViewBindings {
       test: (o) => o is AndroidView,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AndroidView(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$createState#0', (args) => (args[0] as _$AndroidView)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$toString#1', (args) => (args[0] as _$AndroidView)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$createElement#0', (args) => (args[0] as _$AndroidView)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$toStringShort#0', (args) => (args[0] as _$AndroidView)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$debugFillProperties#1', (args) { (args[0] as _$AndroidView)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$toStringShallow#2', (args) => (args[0] as _$AndroidView)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$toStringDeep#4', (args) => (args[0] as _$AndroidView)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$AndroidView)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$AndroidView)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$viewType#0', (args) => (args[0] as _$AndroidView)._super$viewType);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$onPlatformViewCreated#0', (args) => (args[0] as _$AndroidView)._super$onPlatformViewCreated);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$AndroidView)._super$hitTestBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$layoutDirection#0', (args) => (args[0] as _$AndroidView)._super$layoutDirection);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$gestureRecognizers#0', (args) => (args[0] as _$AndroidView)._super$gestureRecognizers);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$creationParams#0', (args) => (args[0] as _$AndroidView)._super$creationParams);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$creationParamsCodec#0', (args) => (args[0] as _$AndroidView)._super$creationParamsCodec);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$clipBehavior#0', (args) => (args[0] as _$AndroidView)._super$clipBehavior);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$hashCode#0', (args) => (args[0] as _$AndroidView)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/platform_view.dart::AndroidView::\$super\$key#0', (args) => (args[0] as _$AndroidView)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

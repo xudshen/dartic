@@ -20,6 +20,8 @@ libraries:
     classes:
       - name: NotchedShape
         bridge: true
+      - name: Decoration
+        bridge: false
 
     overrides:
       # ── NotchedShape: abstract getOuterPath — prevent bridge recursion ──

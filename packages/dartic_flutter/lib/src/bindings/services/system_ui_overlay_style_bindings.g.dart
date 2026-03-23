@@ -14,6 +14,141 @@ import 'package:flutter/src/services/binding.dart';
 import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$SystemUiOverlayStyle extends SystemUiOverlayStyle implements DarticObjectHolder {
+  _$SystemUiOverlayStyle(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(systemNavigationBarColor: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Color?, systemNavigationBarDividerColor: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Color?, systemNavigationBarIconBrightness: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Brightness?, systemNavigationBarContrastEnforced: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as bool?, statusBarColor: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Color?, statusBarBrightness: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Brightness?, statusBarIconBrightness: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Brightness?, systemStatusBarContrastEnforced: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as bool?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  SystemUiOverlayStyle copyWith({Color? systemNavigationBarColor, Color? systemNavigationBarDividerColor, bool? systemNavigationBarContrastEnforced, Color? statusBarColor, Brightness? statusBarBrightness, Brightness? statusBarIconBrightness, bool? systemStatusBarContrastEnforced, Brightness? systemNavigationBarIconBrightness}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [systemNavigationBarColor, systemNavigationBarDividerColor, systemNavigationBarContrastEnforced, statusBarColor, statusBarBrightness, statusBarIconBrightness, systemStatusBarContrastEnforced, systemNavigationBarIconBrightness]);
+    if (identical(r, notOverridden)) return super.copyWith(systemNavigationBarColor: systemNavigationBarColor, systemNavigationBarDividerColor: systemNavigationBarDividerColor, systemNavigationBarContrastEnforced: systemNavigationBarContrastEnforced, statusBarColor: statusBarColor, statusBarBrightness: statusBarBrightness, statusBarIconBrightness: statusBarIconBrightness, systemStatusBarContrastEnforced: systemStatusBarContrastEnforced, systemNavigationBarIconBrightness: systemNavigationBarIconBrightness);
+    return r as SystemUiOverlayStyle;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  Color? get systemNavigationBarColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'systemNavigationBarColor');
+    if (identical(r, notOverridden)) return super.systemNavigationBarColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get systemNavigationBarDividerColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'systemNavigationBarDividerColor');
+    if (identical(r, notOverridden)) return super.systemNavigationBarDividerColor;
+    return r as Color?;
+  }
+
+  @override
+  Brightness? get systemNavigationBarIconBrightness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'systemNavigationBarIconBrightness');
+    if (identical(r, notOverridden)) return super.systemNavigationBarIconBrightness;
+    return r as Brightness?;
+  }
+
+  @override
+  bool? get systemNavigationBarContrastEnforced {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'systemNavigationBarContrastEnforced');
+    if (identical(r, notOverridden)) return super.systemNavigationBarContrastEnforced;
+    return r as bool?;
+  }
+
+  @override
+  Color? get statusBarColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'statusBarColor');
+    if (identical(r, notOverridden)) return super.statusBarColor;
+    return r as Color?;
+  }
+
+  @override
+  Brightness? get statusBarBrightness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'statusBarBrightness');
+    if (identical(r, notOverridden)) return super.statusBarBrightness;
+    return r as Brightness?;
+  }
+
+  @override
+  Brightness? get statusBarIconBrightness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'statusBarIconBrightness');
+    if (identical(r, notOverridden)) return super.statusBarIconBrightness;
+    return r as Brightness?;
+  }
+
+  @override
+  bool? get systemStatusBarContrastEnforced {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'systemStatusBarContrastEnforced');
+    if (identical(r, notOverridden)) return super.systemStatusBarContrastEnforced;
+    return r as bool?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  SystemUiOverlayStyle _super$copyWith({Color? systemNavigationBarColor, Color? systemNavigationBarDividerColor, bool? systemNavigationBarContrastEnforced, Color? statusBarColor, Brightness? statusBarBrightness, Brightness? statusBarIconBrightness, bool? systemStatusBarContrastEnforced, Brightness? systemNavigationBarIconBrightness}) => super.copyWith(systemNavigationBarColor: systemNavigationBarColor, systemNavigationBarDividerColor: systemNavigationBarDividerColor, systemNavigationBarContrastEnforced: systemNavigationBarContrastEnforced, statusBarColor: statusBarColor, statusBarBrightness: statusBarBrightness, statusBarIconBrightness: statusBarIconBrightness, systemStatusBarContrastEnforced: systemStatusBarContrastEnforced, systemNavigationBarIconBrightness: systemNavigationBarIconBrightness);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  Color? get _super$systemNavigationBarColor => super.systemNavigationBarColor;
+  Color? get _super$systemNavigationBarDividerColor => super.systemNavigationBarDividerColor;
+  Brightness? get _super$systemNavigationBarIconBrightness => super.systemNavigationBarIconBrightness;
+  bool? get _super$systemNavigationBarContrastEnforced => super.systemNavigationBarContrastEnforced;
+  Color? get _super$statusBarColor => super.statusBarColor;
+  Brightness? get _super$statusBarBrightness => super.statusBarBrightness;
+  Brightness? get _super$statusBarIconBrightness => super.statusBarIconBrightness;
+  bool? get _super$systemStatusBarContrastEnforced => super.systemStatusBarContrastEnforced;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSystemUiOverlayStyleBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SystemUiOverlayStyle(dispatch, obj, superArgs);
+
 abstract final class SystemUiOverlayStyleBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,9 +157,25 @@ abstract final class SystemUiOverlayStyleBindings {
       test: (o) => o is SystemUiOverlayStyle,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SystemUiOverlayStyle(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::light#0', (args) => SystemUiOverlayStyle.light);
     ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::dark#0', (args) => SystemUiOverlayStyle.dark);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$copyWith#8', (args) => (args[0] as _$SystemUiOverlayStyle)._super$copyWith(systemNavigationBarColor: identical(args[1], darticAbsent) ? null : args[1] as Color?, systemNavigationBarDividerColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, systemNavigationBarContrastEnforced: identical(args[3], darticAbsent) ? null : args[3] as bool?, statusBarColor: identical(args[4], darticAbsent) ? null : args[4] as Color?, statusBarBrightness: identical(args[5], darticAbsent) ? null : args[5] as Brightness?, statusBarIconBrightness: identical(args[6], darticAbsent) ? null : args[6] as Brightness?, systemStatusBarContrastEnforced: identical(args[7], darticAbsent) ? null : args[7] as bool?, systemNavigationBarIconBrightness: identical(args[8], darticAbsent) ? null : args[8] as Brightness?));
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$debugFillProperties#1', (args) { (args[0] as _$SystemUiOverlayStyle)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$toString#1', (args) => (args[0] as _$SystemUiOverlayStyle)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$toStringShort#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SystemUiOverlayStyle)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$systemNavigationBarColor#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$systemNavigationBarColor);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$systemNavigationBarDividerColor#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$systemNavigationBarDividerColor);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$systemNavigationBarIconBrightness#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$systemNavigationBarIconBrightness);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$systemNavigationBarContrastEnforced#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$systemNavigationBarContrastEnforced);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$statusBarColor#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$statusBarColor);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$statusBarBrightness#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$statusBarBrightness);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$statusBarIconBrightness#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$statusBarIconBrightness);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$systemStatusBarContrastEnforced#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$systemStatusBarContrastEnforced);
+    ctx.registerBinding('package:flutter/src/services/system_chrome.dart::SystemUiOverlayStyle::\$super\$hashCode#0', (args) => (args[0] as _$SystemUiOverlayStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

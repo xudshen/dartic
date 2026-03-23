@@ -23,6 +23,102 @@ import 'package:flutter/src/material/text_theme.dart';
 import 'package:flutter/src/material/theme.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+class _$Step extends Step implements DarticObjectHolder {
+  _$Step(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(title: superArgs[0] as Widget, subtitle: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Widget?, content: superArgs[2] as Widget, state: superArgs[3] as StepState, isActive: superArgs[4] as bool, label: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Widget?, stepStyle: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as StepStyle?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Widget get title {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'title');
+    if (identical(r, notOverridden)) return super.title;
+    return r as Widget;
+  }
+
+  @override
+  Widget? get subtitle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtitle');
+    if (identical(r, notOverridden)) return super.subtitle;
+    return r as Widget?;
+  }
+
+  @override
+  Widget get content {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'content');
+    if (identical(r, notOverridden)) return super.content;
+    return r as Widget;
+  }
+
+  @override
+  StepState get state {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'state');
+    if (identical(r, notOverridden)) return super.state;
+    return r as StepState;
+  }
+
+  @override
+  bool get isActive {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isActive');
+    if (identical(r, notOverridden)) return super.isActive;
+    return r as bool;
+  }
+
+  @override
+  Widget? get label {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
+    if (identical(r, notOverridden)) return super.label;
+    return r as Widget?;
+  }
+
+  @override
+  StepStyle? get stepStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stepStyle');
+    if (identical(r, notOverridden)) return super.stepStyle;
+    return r as StepStyle?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Widget get _super$title => super.title;
+  Widget? get _super$subtitle => super.subtitle;
+  Widget get _super$content => super.content;
+  StepState get _super$state => super.state;
+  bool get _super$isActive => super.isActive;
+  Widget? get _super$label => super.label;
+  StepStyle? get _super$stepStyle => super.stepStyle;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStepBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Step(dispatch, obj, superArgs);
+
 abstract final class StepBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,7 +126,18 @@ abstract final class StepBindings {
       type: Step,
       test: (o) => o is Step,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Step(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$toString#0', (args) => (args[0] as _$Step)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$title#0', (args) => (args[0] as _$Step)._super$title);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$subtitle#0', (args) => (args[0] as _$Step)._super$subtitle);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$content#0', (args) => (args[0] as _$Step)._super$content);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$state#0', (args) => (args[0] as _$Step)._super$state);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$isActive#0', (args) => (args[0] as _$Step)._super$isActive);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$label#0', (args) => (args[0] as _$Step)._super$label);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$stepStyle#0', (args) => (args[0] as _$Step)._super$stepStyle);
+    ctx.registerBinding('package:flutter/src/material/stepper.dart::Step::\$super\$hashCode#0', (args) => (args[0] as _$Step)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

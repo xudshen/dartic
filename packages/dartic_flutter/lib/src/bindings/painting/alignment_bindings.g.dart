@@ -12,6 +12,159 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/src/painting/debug.dart';
 
+class _$Alignment extends Alignment implements DarticObjectHolder {
+  _$Alignment(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, superArgs[1] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  AlignmentGeometry add(AlignmentGeometry other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(r, notOverridden)) return super.add(other);
+    return r as AlignmentGeometry;
+  }
+
+  @override
+  ui.Offset alongOffset(ui.Offset other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongOffset', [other]);
+    if (identical(r, notOverridden)) return super.alongOffset(other);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Offset alongSize(ui.Size other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongSize', [other]);
+    if (identical(r, notOverridden)) return super.alongSize(other);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Offset withinRect(ui.Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withinRect', [rect]);
+    if (identical(r, notOverridden)) return super.withinRect(rect);
+    return r as ui.Offset;
+  }
+
+  @override
+  ui.Rect inscribe(ui.Size size, ui.Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inscribe', [size, rect]);
+    if (identical(r, notOverridden)) return super.inscribe(size, rect);
+    return r as ui.Rect;
+  }
+
+  @override
+  Alignment resolve(ui.TextDirection? direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(r, notOverridden)) return super.resolve(direction);
+    return r as Alignment;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get x {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'x');
+    if (identical(r, notOverridden)) return super.x;
+    return r as double;
+  }
+
+  @override
+  double get y {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'y');
+    if (identical(r, notOverridden)) return super.y;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Alignment operator -(Alignment other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '-', [other]);
+    if (identical(r, notOverridden)) return super - other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator +(Alignment other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
+    if (identical(r, notOverridden)) return super + other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator -() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unary-', const []);
+    if (identical(r, notOverridden)) return -super;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator *(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '*', [other]);
+    if (identical(r, notOverridden)) return super * other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator /(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '/', [other]);
+    if (identical(r, notOverridden)) return super / other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator ~/(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '~/', [other]);
+    if (identical(r, notOverridden)) return super ~/ other;
+    return r as Alignment;
+  }
+
+  @override
+  Alignment operator %(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '%', [other]);
+    if (identical(r, notOverridden)) return super % other;
+    return r as Alignment;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  AlignmentGeometry _super$add(AlignmentGeometry other) => super.add(other);
+  ui.Offset _super$alongOffset(ui.Offset other) => super.alongOffset(other);
+  ui.Offset _super$alongSize(ui.Size other) => super.alongSize(other);
+  ui.Offset _super$withinRect(ui.Rect rect) => super.withinRect(rect);
+  ui.Rect _super$inscribe(ui.Size size, ui.Rect rect) => super.inscribe(size, rect);
+  Alignment _super$resolve(ui.TextDirection? direction) => super.resolve(direction);
+  String _super$toString() => super.toString();
+  double get _super$x => super.x;
+  double get _super$y => super.y;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAlignmentBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Alignment(dispatch, obj, superArgs);
+
 abstract final class AlignmentBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,6 +173,8 @@ abstract final class AlignmentBindings {
       test: (o) => o is Alignment,
       methods: methodMap(),
       superclasses: ['package:flutter/src/painting/alignment.dart::AlignmentGeometry'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Alignment(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::lerp#3', (args) => Alignment.lerp(args[0] as Alignment?, args[1] as Alignment?, args[2] as double));
     ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::topLeft#0', (args) => Alignment.topLeft);
@@ -31,6 +186,16 @@ abstract final class AlignmentBindings {
     ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::bottomLeft#0', (args) => Alignment.bottomLeft);
     ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::bottomCenter#0', (args) => Alignment.bottomCenter);
     ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::bottomRight#0', (args) => Alignment.bottomRight);
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$add#1', (args) => (args[0] as _$Alignment)._super$add(args[1] as AlignmentGeometry));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$alongOffset#1', (args) => (args[0] as _$Alignment)._super$alongOffset(args[1] as ui.Offset));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$alongSize#1', (args) => (args[0] as _$Alignment)._super$alongSize(args[1] as ui.Size));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$withinRect#1', (args) => (args[0] as _$Alignment)._super$withinRect(args[1] as ui.Rect));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$inscribe#2', (args) => (args[0] as _$Alignment)._super$inscribe(args[1] as ui.Size, args[2] as ui.Rect));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$resolve#1', (args) => (args[0] as _$Alignment)._super$resolve(args[1] as ui.TextDirection?));
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$toString#0', (args) => (args[0] as _$Alignment)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$x#0', (args) => (args[0] as _$Alignment)._super$x);
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$y#0', (args) => (args[0] as _$Alignment)._super$y);
+    ctx.registerBinding('package:flutter/src/painting/alignment.dart::Alignment::\$super\$hashCode#0', (args) => (args[0] as _$Alignment)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -11,6 +11,60 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/notification_listener.dart';
 
+class _$SizeChangedLayoutNotification extends SizeChangedLayoutNotification implements DarticObjectHolder {
+  _$SizeChangedLayoutNotification(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void dispatch(BuildContext? target) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
+    if (identical(r, notOverridden)) { super.dispatch(target); return; }
+  }
+
+  @override
+  void debugFillDescription(List<String> description) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  void _super$dispatch(BuildContext? target) { super.dispatch(target); }
+  void _super$debugFillDescription(List<String> description) { super.debugFillDescription(description); }
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSizeChangedLayoutNotificationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SizeChangedLayoutNotification(dispatch, obj, superArgs);
+
 abstract final class SizeChangedLayoutNotificationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,7 +73,13 @@ abstract final class SizeChangedLayoutNotificationBindings {
       test: (o) => o is SizeChangedLayoutNotification,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/notification_listener.dart::LayoutChangedNotification', 'package:flutter/src/widgets/notification_listener.dart::Notification'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SizeChangedLayoutNotification(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/size_changed_layout_notifier.dart::SizeChangedLayoutNotification::\$super\$toString#0', (args) => (args[0] as _$SizeChangedLayoutNotification)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/size_changed_layout_notifier.dart::SizeChangedLayoutNotification::\$super\$dispatch#1', (args) { (args[0] as _$SizeChangedLayoutNotification)._super$dispatch(args[1] as BuildContext?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/size_changed_layout_notifier.dart::SizeChangedLayoutNotification::\$super\$debugFillDescription#1', (args) { (args[0] as _$SizeChangedLayoutNotification)._super$debugFillDescription((args[1] as List).cast<String>()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/size_changed_layout_notifier.dart::SizeChangedLayoutNotification::\$super\$hashCode#0', (args) => (args[0] as _$SizeChangedLayoutNotification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

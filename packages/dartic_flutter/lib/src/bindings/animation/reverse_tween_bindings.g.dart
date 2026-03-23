@@ -13,6 +13,126 @@ import 'package:flutter/src/animation/animations.dart';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 
+class _$ReverseTween extends ReverseTween<Object?> implements DarticObjectHolder {
+  _$ReverseTween(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Tween);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Object? lerp(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(r, notOverridden)) return super.lerp(t);
+    return r as Object?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Object? transform(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(r, notOverridden)) return super.transform(t);
+    return r as Object?;
+  }
+
+  @override
+  Object? evaluate(Animation<double> animation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(r, notOverridden)) return super.evaluate(animation);
+    return r as Object?;
+  }
+
+  @override
+  Animation animate(Animation<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(r, notOverridden)) return super.animate(parent);
+    return r as Animation;
+  }
+
+  @override
+  Animatable chain(Animatable<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(r, notOverridden)) return super.chain(parent);
+    return r as Animatable;
+  }
+
+  @override
+  Tween get parent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
+    if (identical(r, notOverridden)) return super.parent;
+    return r as Tween;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Object? get begin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
+    if (identical(r, notOverridden)) return super.begin;
+    return r as Object?;
+  }
+
+  @override
+  Object? get end {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'end');
+    if (identical(r, notOverridden)) return super.end;
+    return r as Object?;
+  }
+
+  @override
+  set begin(Object? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'begin', value)) {
+      super.begin = value;
+    }
+  }
+
+  @override
+  set end(Object? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'end', value)) {
+      super.end = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Object? _super$lerp(double t) => super.lerp(t);
+  String _super$toString() => super.toString();
+  Object? _super$transform(double t) => super.transform(t);
+  Object? _super$evaluate(Animation<double> animation) => super.evaluate(animation);
+  Animation _super$animate(Animation<double> parent) => super.animate(parent);
+  Animatable _super$chain(Animatable<double> parent) => super.chain(parent);
+  Tween get _super$parent => super.parent;
+  int get _super$hashCode => super.hashCode;
+  Object? get _super$begin => super.begin;
+  Object? get _super$end => super.end;
+  set _super$begin(Object? value) { super.begin = value; }
+  set _super$end(Object? value) { super.end = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createReverseTweenBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ReverseTween(dispatch, obj, superArgs);
+
 abstract final class ReverseTweenBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +141,21 @@ abstract final class ReverseTweenBindings {
       test: (o) => o is ReverseTween,
       methods: methodMap(),
       superclasses: ['package:flutter/src/animation/tween.dart::Tween', 'package:flutter/src/animation/tween.dart::Animatable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ReverseTween(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$lerp#1', (args) => (args[0] as _$ReverseTween)._super$lerp(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$toString#0', (args) => (args[0] as _$ReverseTween)._super$toString());
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$transform#1', (args) => (args[0] as _$ReverseTween)._super$transform(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$evaluate#1', (args) => (args[0] as _$ReverseTween)._super$evaluate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$animate#1', (args) => (args[0] as _$ReverseTween)._super$animate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$chain#1', (args) => (args[0] as _$ReverseTween)._super$chain(args[1] as Animatable<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$parent#0', (args) => (args[0] as _$ReverseTween)._super$parent);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$hashCode#0', (args) => (args[0] as _$ReverseTween)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$begin#0', (args) => (args[0] as _$ReverseTween)._super$begin);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$end#0', (args) => (args[0] as _$ReverseTween)._super$end);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$begin=#1', (args) { (args[0] as _$ReverseTween)._super$begin = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ReverseTween::\$super\$end=#1', (args) { (args[0] as _$ReverseTween)._super$end = args[1]; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
@@ -38,6 +172,6 @@ abstract final class ReverseTweenBindings {
         'begin=#1': (args) { (args[0] as ReverseTween).begin = args[1]; return args[1]; },
         'end=#1': (args) { (args[0] as ReverseTween).end = args[1]; return args[1]; },
         '==#1': (args) => (args[0] as ReverseTween) == (args[1] as Object),
-        '#1': (args) => ReverseTween<Object?>(args[0] as Tween<Object>),
+        '#1': (args) => ReverseTween<Object?>(args[0] as Tween),
       };
 }

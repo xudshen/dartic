@@ -19,6 +19,151 @@ import 'package:flutter/src/animation/curves.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$DirectionalFocusTraversalPolicyMixin implements DirectionalFocusTraversalPolicyMixin, DarticObjectHolder {
+  _$DirectionalFocusTraversalPolicyMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void invalidateScopeData(FocusScopeNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invalidateScopeData', [node]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method invalidateScopeData must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void changedScope({FocusNode? node, FocusScopeNode? oldScope}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedScope', [node, oldScope]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method changedScope must be overridden in dartic code');
+    }
+  }
+
+  @override
+  FocusNode? findFirstFocusInDirection(FocusNode currentNode, TraversalDirection direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findFirstFocusInDirection', [currentNode, direction]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method findFirstFocusInDirection must be overridden in dartic code');
+    }
+    return r as FocusNode?;
+  }
+
+  @override
+  bool inDirection(FocusNode currentNode, TraversalDirection direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inDirection', [currentNode, direction]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method inDirection must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toString must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  FocusNode? findFirstFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findFirstFocus', [currentNode, ignoreCurrentFocus]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method findFirstFocus must be overridden in dartic code');
+    }
+    return r as FocusNode?;
+  }
+
+  @override
+  FocusNode findLastFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findLastFocus', [currentNode, ignoreCurrentFocus]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method findLastFocus must be overridden in dartic code');
+    }
+    return r as FocusNode;
+  }
+
+  @override
+  bool next(FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'next', [currentNode]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method next must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool previous(FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'previous', [currentNode]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method previous must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  Iterable<FocusNode> sortDescendants(Iterable<FocusNode> descendants, FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sortDescendants', [descendants, currentNode]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method sortDescendants must be overridden in dartic code');
+    }
+    return r as Iterable<FocusNode>;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringShort must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toDiagnosticsNode must be overridden in dartic code');
+    }
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugFillProperties must be overridden in dartic code');
+    }
+  }
+
+  @override
+  TraversalRequestFocusCallback get requestFocusCallback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocusCallback');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter requestFocusCallback must be overridden in dartic code');
+    }
+    return r as TraversalRequestFocusCallback;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDirectionalFocusTraversalPolicyMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DirectionalFocusTraversalPolicyMixin(dispatch, obj, superArgs);
+
 abstract final class DirectionalFocusTraversalPolicyMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,6 +172,8 @@ abstract final class DirectionalFocusTraversalPolicyMixinBindings {
       test: (o) => o is DirectionalFocusTraversalPolicyMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/focus_traversal.dart::FocusTraversalPolicy', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DirectionalFocusTraversalPolicyMixin(dispatch, darticObject, superArgs),
     );
   }
 

@@ -15,6 +15,284 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'dart:ui';
 
+class _$MaterialStateMixin implements MaterialStateMixin<StatefulWidget>, DarticObjectHolder {
+  _$MaterialStateMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ValueChanged<bool> updateMaterialState(WidgetState key, {ValueChanged<bool>? onChanged}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateMaterialState', [key, onChanged]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method updateMaterialState must be overridden in dartic code');
+    }
+    return r as ValueChanged<bool>;
+  }
+
+  @override
+  void setMaterialState(WidgetState state, bool isSet) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMaterialState', [state, isSet]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setMaterialState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void addMaterialState(WidgetState state) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addMaterialState', [state]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addMaterialState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeMaterialState(WidgetState state) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeMaterialState', [state]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeMaterialState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugFillProperties must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toString must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  void initState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method initState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didUpdateWidget(StatefulWidget oldWidget) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didUpdateWidget must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void reassemble() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method reassemble must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setState must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void deactivate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method deactivate must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void activate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method activate must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method build must be overridden in dartic code');
+    }
+    return r as Widget;
+  }
+
+  @override
+  void didChangeDependencies() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didChangeDependencies must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toStringShort must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toDiagnosticsNode must be overridden in dartic code');
+    }
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  Set<WidgetState> get materialStates {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'materialStates');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter materialStates must be overridden in dartic code');
+    }
+    return r as Set<WidgetState>;
+  }
+
+  @override
+  bool get isDisabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDisabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isDisabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isDragged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDragged');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isDragged must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isErrored {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isErrored');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isErrored must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isFocused {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isFocused');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isFocused must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isHovered {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isHovered');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isHovered must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isPressed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isPressed must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isScrolledUnder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isScrolledUnder');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isScrolledUnder must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isSelected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isSelected');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isSelected must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  StatefulWidget get widget {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter widget must be overridden in dartic code');
+    }
+    return r as StatefulWidget;
+  }
+
+  @override
+  BuildContext get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter context must be overridden in dartic code');
+    }
+    return r as BuildContext;
+  }
+
+  @override
+  bool get mounted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mounted');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter mounted must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  set materialStates(Set<WidgetState> value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'materialStates', value)) {
+      throw UnsupportedError('Abstract setter materialStates must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMaterialStateMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MaterialStateMixin(dispatch, obj, superArgs);
+
 abstract final class MaterialStateMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,6 +301,8 @@ abstract final class MaterialStateMixinBindings {
       test: (o) => o is MaterialStateMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::State', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MaterialStateMixin(dispatch, darticObject, superArgs),
     );
   }
 

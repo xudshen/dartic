@@ -18,6 +18,137 @@ import 'package:flutter/src/widgets/lookup_boundary.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
 import 'dart:ui';
 
+class _$OverlayEntry extends OverlayEntry implements DarticObjectHolder {
+  _$OverlayEntry(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(builder: superArgs[0] as WidgetBuilder, opaque: superArgs[1] as bool, maintainState: superArgs[2] as bool, canSizeOverlay: superArgs[3] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void remove() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', const []);
+    if (identical(r, notOverridden)) { super.remove(); return; }
+  }
+
+  @override
+  void markNeedsBuild() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsBuild', const []);
+    if (identical(r, notOverridden)) { super.markNeedsBuild(); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  WidgetBuilder get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as WidgetBuilder;
+  }
+
+  @override
+  bool get opaque {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
+    if (identical(r, notOverridden)) return super.opaque;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainState {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainState');
+    if (identical(r, notOverridden)) return super.maintainState;
+    return r as bool;
+  }
+
+  @override
+  bool get canSizeOverlay {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canSizeOverlay');
+    if (identical(r, notOverridden)) return super.canSizeOverlay;
+    return r as bool;
+  }
+
+  @override
+  bool get mounted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mounted');
+    if (identical(r, notOverridden)) return super.mounted;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  set opaque(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'opaque', value)) {
+      super.opaque = value;
+    }
+  }
+
+  @override
+  set maintainState(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'maintainState', value)) {
+      super.maintainState = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$remove() { super.remove(); }
+  void _super$markNeedsBuild() { super.markNeedsBuild(); }
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  WidgetBuilder get _super$builder => super.builder;
+  bool get _super$opaque => super.opaque;
+  bool get _super$maintainState => super.maintainState;
+  bool get _super$canSizeOverlay => super.canSizeOverlay;
+  bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
+  set _super$opaque(bool value) { super.opaque = value; }
+  set _super$maintainState(bool value) { super.maintainState = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOverlayEntryBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OverlayEntry(dispatch, obj, superArgs);
+
 abstract final class OverlayEntryBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +157,23 @@ abstract final class OverlayEntryBindings {
       test: (o) => o is OverlayEntry,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OverlayEntry(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$addListener#1', (args) { (args[0] as _$OverlayEntry)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$removeListener#1', (args) { (args[0] as _$OverlayEntry)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$remove#0', (args) { (args[0] as _$OverlayEntry)._super$remove(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$markNeedsBuild#0', (args) { (args[0] as _$OverlayEntry)._super$markNeedsBuild(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$dispose#0', (args) { (args[0] as _$OverlayEntry)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$toString#0', (args) => (args[0] as _$OverlayEntry)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$builder#0', (args) => (args[0] as _$OverlayEntry)._super$builder);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$opaque#0', (args) => (args[0] as _$OverlayEntry)._super$opaque);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$maintainState#0', (args) => (args[0] as _$OverlayEntry)._super$maintainState);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$canSizeOverlay#0', (args) => (args[0] as _$OverlayEntry)._super$canSizeOverlay);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$mounted#0', (args) => (args[0] as _$OverlayEntry)._super$mounted);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$hashCode#0', (args) => (args[0] as _$OverlayEntry)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$opaque=#1', (args) { (args[0] as _$OverlayEntry)._super$opaque = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$maintainState=#1', (args) { (args[0] as _$OverlayEntry)._super$maintainState = args[1] as bool; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

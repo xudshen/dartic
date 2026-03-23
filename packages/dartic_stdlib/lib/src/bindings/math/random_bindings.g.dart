@@ -8,6 +8,55 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:math';
 
+class _$Random implements Random, DarticObjectHolder {
+  _$Random(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  int nextInt(int max) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextInt', [max]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method nextInt must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  double nextDouble() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextDouble', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method nextDouble must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool nextBool() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextBool', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method nextBool must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRandomBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Random(dispatch, obj, superArgs);
+
 abstract final class RandomBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -15,6 +64,8 @@ abstract final class RandomBindings {
       type: Random,
       test: (o) => o is Random,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Random(dispatch, darticObject, superArgs),
     );
   }
 

@@ -23,6 +23,118 @@ import 'package:flutter/src/animation/tween.dart';
 import 'package:flutter/animation.dart';
 import 'dart:ui';
 
+class _$HeroController extends HeroController implements DarticObjectHolder {
+  _$HeroController(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(createRectTween: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as CreateRectTween?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void didChangeTop(Route<dynamic> topRoute, Route<dynamic>? previousTopRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeTop', [topRoute, previousTopRoute]);
+    if (identical(r, notOverridden)) { super.didChangeTop(topRoute, previousTopRoute); return; }
+  }
+
+  @override
+  void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartUserGesture', [route, previousRoute]);
+    if (identical(r, notOverridden)) { super.didStartUserGesture(route, previousRoute); return; }
+  }
+
+  @override
+  void didStopUserGesture() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStopUserGesture', const []);
+    if (identical(r, notOverridden)) { super.didStopUserGesture(); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', [route, previousRoute]);
+    if (identical(r, notOverridden)) { super.didPush(route, previousRoute); return; }
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', [route, previousRoute]);
+    if (identical(r, notOverridden)) { super.didPop(route, previousRoute); return; }
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRemove', [route, previousRoute]);
+    if (identical(r, notOverridden)) { super.didRemove(route, previousRoute); return; }
+  }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReplace', [newRoute, oldRoute]);
+    if (identical(r, notOverridden)) { super.didReplace(newRoute: newRoute, oldRoute: oldRoute); return; }
+  }
+
+  @override
+  CreateRectTween? get createRectTween {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'createRectTween');
+    if (identical(r, notOverridden)) return super.createRectTween;
+    return r as CreateRectTween?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  NavigatorState? get navigator {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigator');
+    if (identical(r, notOverridden)) return super.navigator;
+    return r as NavigatorState?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$didChangeTop(Route<dynamic> topRoute, Route<dynamic>? previousTopRoute) { super.didChangeTop(topRoute, previousTopRoute); }
+  void _super$didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didStartUserGesture(route, previousRoute); }
+  void _super$didStopUserGesture() { super.didStopUserGesture(); }
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  void _super$didPush(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didPush(route, previousRoute); }
+  void _super$didPop(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didPop(route, previousRoute); }
+  void _super$didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didRemove(route, previousRoute); }
+  void _super$didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) { super.didReplace(newRoute: newRoute, oldRoute: oldRoute); }
+  CreateRectTween? get _super$createRectTween => super.createRectTween;
+  int get _super$hashCode => super.hashCode;
+  NavigatorState? get _super$navigator => super.navigator;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createHeroControllerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$HeroController(dispatch, obj, superArgs);
+
 abstract final class HeroControllerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +143,21 @@ abstract final class HeroControllerBindings {
       test: (o) => o is HeroController,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/navigator.dart::NavigatorObserver'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$HeroController(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didChangeTop#2', (args) { (args[0] as _$HeroController)._super$didChangeTop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didStartUserGesture#2', (args) { (args[0] as _$HeroController)._super$didStartUserGesture(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didStopUserGesture#0', (args) { (args[0] as _$HeroController)._super$didStopUserGesture(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$dispose#0', (args) { (args[0] as _$HeroController)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$toString#0', (args) => (args[0] as _$HeroController)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didPush#2', (args) { (args[0] as _$HeroController)._super$didPush(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didPop#2', (args) { (args[0] as _$HeroController)._super$didPop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didRemove#2', (args) { (args[0] as _$HeroController)._super$didRemove(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didReplace#2', (args) { (args[0] as _$HeroController)._super$didReplace(newRoute: identical(args[1], darticAbsent) ? null : args[1] as Route<dynamic>?, oldRoute: identical(args[2], darticAbsent) ? null : args[2] as Route<dynamic>?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$createRectTween#0', (args) => (args[0] as _$HeroController)._super$createRectTween);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$hashCode#0', (args) => (args[0] as _$HeroController)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$navigator#0', (args) => (args[0] as _$HeroController)._super$navigator);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

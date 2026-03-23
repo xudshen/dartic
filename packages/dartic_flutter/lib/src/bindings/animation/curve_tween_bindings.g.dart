@@ -14,6 +14,94 @@ import 'package:flutter/src/animation/curves.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/animation/animation.dart';
 
+class _$CurveTween extends CurveTween implements DarticObjectHolder {
+  _$CurveTween(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(curve: superArgs[0] as Curve);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double transform(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(r, notOverridden)) return super.transform(t);
+    return r as double;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double evaluate(Animation<double> animation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(r, notOverridden)) return super.evaluate(animation);
+    return r as double;
+  }
+
+  @override
+  Animation<double> animate(Animation<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(r, notOverridden)) return super.animate(parent);
+    return r as Animation<double>;
+  }
+
+  @override
+  Animatable<double> chain(Animatable<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(r, notOverridden)) return super.chain(parent);
+    return r as Animatable<double>;
+  }
+
+  @override
+  Curve get curve {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
+    if (identical(r, notOverridden)) return super.curve;
+    return r as Curve;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  set curve(Curve value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'curve', value)) {
+      super.curve = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double _super$transform(double t) => super.transform(t);
+  String _super$toString() => super.toString();
+  double _super$evaluate(Animation<double> animation) => super.evaluate(animation);
+  Animation<double> _super$animate(Animation<double> parent) => super.animate(parent);
+  Animatable<double> _super$chain(Animatable<double> parent) => super.chain(parent);
+  Curve get _super$curve => super.curve;
+  int get _super$hashCode => super.hashCode;
+  set _super$curve(Curve value) { super.curve = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCurveTweenBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CurveTween(dispatch, obj, superArgs);
+
 abstract final class CurveTweenBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,7 +110,17 @@ abstract final class CurveTweenBindings {
       test: (o) => o is CurveTween,
       methods: methodMap(),
       superclasses: ['package:flutter/src/animation/tween.dart::Animatable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CurveTween(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$transform#1', (args) => (args[0] as _$CurveTween)._super$transform(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$toString#0', (args) => (args[0] as _$CurveTween)._super$toString());
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$evaluate#1', (args) => (args[0] as _$CurveTween)._super$evaluate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$animate#1', (args) => (args[0] as _$CurveTween)._super$animate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$chain#1', (args) => (args[0] as _$CurveTween)._super$chain(args[1] as Animatable<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$curve#0', (args) => (args[0] as _$CurveTween)._super$curve);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$hashCode#0', (args) => (args[0] as _$CurveTween)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$curve=#1', (args) { (args[0] as _$CurveTween)._super$curve = args[1] as Curve; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

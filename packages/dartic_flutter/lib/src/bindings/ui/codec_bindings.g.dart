@@ -18,6 +18,81 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$Codec extends Codec implements DarticObjectHolder {
+  _$Codec(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<FrameInfo> getNextFrame() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNextFrame', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getNextFrame must be overridden in dartic code');
+    }
+    return r as Future<FrameInfo>;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get frameCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'frameCount');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter frameCount must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int get repetitionCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'repetitionCount');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter repetitionCount must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCodecBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Codec(dispatch, obj, superArgs);
+
 abstract final class CodecBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +100,11 @@ abstract final class CodecBindings {
       type: Codec,
       test: (o) => o is Codec,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Codec(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::Codec::\$super\$toString#0', (args) => (args[0] as _$Codec)._super$toString());
+    ctx.registerBinding('dart:ui::Codec::\$super\$hashCode#0', (args) => (args[0] as _$Codec)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -27,6 +27,55 @@ import 'package:flutter/src/material/theme_data.dart';
 import 'package:flutter/src/material/tooltip.dart';
 import 'dart:ui';
 
+class _$TappableChipAttributes implements TappableChipAttributes, DarticObjectHolder {
+  _$TappableChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  VoidCallback? get onPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPressed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter onPressed must be overridden in dartic code');
+    }
+    return r as VoidCallback?;
+  }
+
+  @override
+  double? get pressElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pressElevation');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter pressElevation must be overridden in dartic code');
+    }
+    return r as double?;
+  }
+
+  @override
+  String? get tooltip {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tooltip');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter tooltip must be overridden in dartic code');
+    }
+    return r as String?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTappableChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TappableChipAttributes(dispatch, obj, superArgs);
+
 abstract final class TappableChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,6 +83,8 @@ abstract final class TappableChipAttributesBindings {
       type: TappableChipAttributes,
       test: (o) => o is TappableChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TappableChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

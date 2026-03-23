@@ -12,6 +12,37 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+class _$WidgetStatesConstraint implements WidgetStatesConstraint, DarticObjectHolder {
+  _$WidgetStatesConstraint(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool isSatisfiedBy(Set<WidgetState> states) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [states]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isSatisfiedBy must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createWidgetStatesConstraintBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$WidgetStatesConstraint(dispatch, obj, superArgs);
+
 abstract final class WidgetStatesConstraintBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,6 +50,8 @@ abstract final class WidgetStatesConstraintBindings {
       type: WidgetStatesConstraint,
       test: (o) => o is WidgetStatesConstraint,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$WidgetStatesConstraint(dispatch, darticObject, superArgs),
     );
   }
 

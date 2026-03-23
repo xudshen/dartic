@@ -13,6 +13,102 @@ import 'package:flutter/src/physics/simulation.dart';
 import 'package:flutter/src/physics/tolerance.dart';
 import 'package:flutter/physics.dart';
 
+class _$BoundedFrictionSimulation extends BoundedFrictionSimulation implements DarticObjectHolder {
+  _$BoundedFrictionSimulation(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, superArgs[1] as double, superArgs[2] as double, superArgs[3] as double, superArgs[4] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double x(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
+    if (identical(r, notOverridden)) return super.x(time);
+    return r as double;
+  }
+
+  @override
+  bool isDone(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
+    if (identical(r, notOverridden)) return super.isDone(time);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double dx(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
+    if (identical(r, notOverridden)) return super.dx(time);
+    return r as double;
+  }
+
+  @override
+  double timeAtX(double x) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeAtX', [x]);
+    if (identical(r, notOverridden)) return super.timeAtX(x);
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  double get finalX {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'finalX');
+    if (identical(r, notOverridden)) return super.finalX;
+    return r as double;
+  }
+
+  @override
+  Tolerance get tolerance {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance');
+    if (identical(r, notOverridden)) return super.tolerance;
+    return r as Tolerance;
+  }
+
+  @override
+  set tolerance(Tolerance value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance', value)) {
+      super.tolerance = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double _super$x(double time) => super.x(time);
+  bool _super$isDone(double time) => super.isDone(time);
+  String _super$toString() => super.toString();
+  double _super$dx(double time) => super.dx(time);
+  double _super$timeAtX(double x) => super.timeAtX(x);
+  int get _super$hashCode => super.hashCode;
+  double get _super$finalX => super.finalX;
+  Tolerance get _super$tolerance => super.tolerance;
+  set _super$tolerance(Tolerance value) { super.tolerance = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBoundedFrictionSimulationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BoundedFrictionSimulation(dispatch, obj, superArgs);
+
 abstract final class BoundedFrictionSimulationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +117,18 @@ abstract final class BoundedFrictionSimulationBindings {
       test: (o) => o is BoundedFrictionSimulation,
       methods: methodMap(),
       superclasses: ['package:flutter/src/physics/friction_simulation.dart::FrictionSimulation', 'package:flutter/src/physics/simulation.dart::Simulation'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BoundedFrictionSimulation(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$x#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$x(args[1] as double));
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$isDone#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$isDone(args[1] as double));
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$toString#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$toString());
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$dx#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$dx(args[1] as double));
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$timeAtX#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$timeAtX(args[1] as double));
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$hashCode#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$finalX#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$finalX);
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$tolerance#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$tolerance);
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$BoundedFrictionSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

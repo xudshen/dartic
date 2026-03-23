@@ -13,6 +13,197 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$StreamBuilder extends StreamBuilder<dynamic> implements DarticObjectHolder {
+  _$StreamBuilder(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, initialData: superArgs[1], stream: superArgs[2] as Stream?, builder: superArgs[3] as Widget Function(BuildContext, AsyncSnapshot));
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  AsyncSnapshot initial() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initial', const []);
+    if (identical(r, notOverridden)) return super.initial();
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  AsyncSnapshot afterConnected(AsyncSnapshot current) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'afterConnected', [current]);
+    if (identical(r, notOverridden)) return super.afterConnected(current);
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  AsyncSnapshot afterData(AsyncSnapshot current, dynamic data) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'afterData', [current, data]);
+    if (identical(r, notOverridden)) return super.afterData(current, data);
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  AsyncSnapshot afterError(AsyncSnapshot current, Object error, StackTrace stackTrace) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'afterError', [current, error, stackTrace]);
+    if (identical(r, notOverridden)) return super.afterError(current, error, stackTrace);
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  AsyncSnapshot afterDone(AsyncSnapshot current) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'afterDone', [current]);
+    if (identical(r, notOverridden)) return super.afterDone(current);
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  AsyncSnapshot afterDisconnected(AsyncSnapshot current) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'afterDisconnected', [current]);
+    if (identical(r, notOverridden)) return super.afterDisconnected(current);
+    return r as AsyncSnapshot;
+  }
+
+  @override
+  Widget build(BuildContext context, AsyncSnapshot currentSummary) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, currentSummary]);
+    if (identical(r, notOverridden)) return super.build(context, currentSummary);
+    return r as Widget;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  State<StreamBuilderBase<dynamic, AsyncSnapshot>> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<StreamBuilderBase<dynamic, AsyncSnapshot>>;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget Function(BuildContext, AsyncSnapshot) get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as Widget Function(BuildContext, AsyncSnapshot);
+  }
+
+  @override
+  dynamic get initialData {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialData');
+    if (identical(r, notOverridden)) return super.initialData;
+    return r as dynamic;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Stream? get stream {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stream');
+    if (identical(r, notOverridden)) return super.stream;
+    return r as Stream?;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  AsyncSnapshot _super$initial() => super.initial();
+  AsyncSnapshot _super$afterConnected(AsyncSnapshot current) => super.afterConnected(current);
+  AsyncSnapshot _super$afterData(AsyncSnapshot current, dynamic data) => super.afterData(current, data);
+  AsyncSnapshot _super$afterError(AsyncSnapshot current, Object error, StackTrace stackTrace) => super.afterError(current, error, stackTrace);
+  AsyncSnapshot _super$afterDone(AsyncSnapshot current) => super.afterDone(current);
+  AsyncSnapshot _super$afterDisconnected(AsyncSnapshot current) => super.afterDisconnected(current);
+  Widget _super$build(BuildContext context, AsyncSnapshot currentSummary) => super.build(context, currentSummary);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  State<StreamBuilderBase<dynamic, AsyncSnapshot>> _super$createState() => super.createState();
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget Function(BuildContext, AsyncSnapshot) get _super$builder => super.builder;
+  dynamic get _super$initialData => super.initialData;
+  int get _super$hashCode => super.hashCode;
+  Stream? get _super$stream => super.stream;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamBuilderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StreamBuilder(dispatch, obj, superArgs);
+
 abstract final class StreamBuilderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +212,30 @@ abstract final class StreamBuilderBindings {
       test: (o) => o is StreamBuilder,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/async.dart::StreamBuilderBase', 'package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StreamBuilder(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$initial#0', (args) => (args[0] as _$StreamBuilder)._super$initial());
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$afterConnected#1', (args) => (args[0] as _$StreamBuilder)._super$afterConnected(args[1] as AsyncSnapshot));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$afterData#2', (args) => (args[0] as _$StreamBuilder)._super$afterData(args[1] as AsyncSnapshot, args[2]));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$afterError#3', (args) => (args[0] as _$StreamBuilder)._super$afterError(args[1] as AsyncSnapshot, args[2] as Object, args[3] as StackTrace));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$afterDone#1', (args) => (args[0] as _$StreamBuilder)._super$afterDone(args[1] as AsyncSnapshot));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$afterDisconnected#1', (args) => (args[0] as _$StreamBuilder)._super$afterDisconnected(args[1] as AsyncSnapshot));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$build#2', (args) => (args[0] as _$StreamBuilder)._super$build(args[1] as BuildContext, args[2] as AsyncSnapshot));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$toString#1', (args) => (args[0] as _$StreamBuilder)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$createState#0', (args) => (args[0] as _$StreamBuilder)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$createElement#0', (args) => (args[0] as _$StreamBuilder)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$toStringShort#0', (args) => (args[0] as _$StreamBuilder)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$debugFillProperties#1', (args) { (args[0] as _$StreamBuilder)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$toStringShallow#2', (args) => (args[0] as _$StreamBuilder)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$toStringDeep#4', (args) => (args[0] as _$StreamBuilder)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$StreamBuilder)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$StreamBuilder)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$builder#0', (args) => (args[0] as _$StreamBuilder)._super$builder);
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$initialData#0', (args) => (args[0] as _$StreamBuilder)._super$initialData);
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$hashCode#0', (args) => (args[0] as _$StreamBuilder)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$stream#0', (args) => (args[0] as _$StreamBuilder)._super$stream);
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::StreamBuilder::\$super\$key#0', (args) => (args[0] as _$StreamBuilder)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -40,6 +40,389 @@ import 'package:flutter/src/services/text_input.dart';
 import 'package:flutter/src/widgets/magnifier.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$SelectableText extends SelectableText implements DarticObjectHolder {
+  _$SelectableText(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, key: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Key?, focusNode: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as FocusNode?, style: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as TextStyle?, strutStyle: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as StrutStyle?, textAlign: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as ui.TextAlign?, textDirection: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as ui.TextDirection?, textScaleFactor: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as double?, textScaler: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as TextScaler?, showCursor: superArgs[9] as bool, autofocus: superArgs[10] as bool, toolbarOptions: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as ToolbarOptions?, minLines: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as int?, maxLines: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as int?, cursorWidth: superArgs[14] as double, cursorHeight: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as double?, cursorRadius: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as ui.Radius?, cursorColor: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as ui.Color?, selectionColor: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as ui.Color?, selectionHeightStyle: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as ui.BoxHeightStyle?, selectionWidthStyle: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as ui.BoxWidthStyle?, dragStartBehavior: superArgs[21] as DragStartBehavior, enableInteractiveSelection: superArgs[22] as bool, selectionControls: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as TextSelectionControls?, onTap: identical(superArgs[24], darticAbsent) ? null : superArgs[24] as GestureTapCallback?, scrollPhysics: identical(superArgs[25], darticAbsent) ? null : superArgs[25] as ScrollPhysics?, scrollBehavior: identical(superArgs[26], darticAbsent) ? null : superArgs[26] as ScrollBehavior?, semanticsLabel: identical(superArgs[27], darticAbsent) ? null : superArgs[27] as String?, textHeightBehavior: identical(superArgs[28], darticAbsent) ? null : superArgs[28] as ui.TextHeightBehavior?, textWidthBasis: identical(superArgs[29], darticAbsent) ? null : superArgs[29] as TextWidthBasis?, onSelectionChanged: identical(superArgs[30], darticAbsent) ? null : superArgs[30] as SelectionChangedCallback?, contextMenuBuilder: identical(superArgs[31], darticAbsent) ? null : superArgs[31] as EditableTextContextMenuBuilder?, magnifierConfiguration: identical(superArgs[32], darticAbsent) ? null : superArgs[32] as TextMagnifierConfiguration?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<SelectableText> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<SelectableText>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  String? get data {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'data');
+    if (identical(r, notOverridden)) return super.data;
+    return r as String?;
+  }
+
+  @override
+  TextSpan? get textSpan {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textSpan');
+    if (identical(r, notOverridden)) return super.textSpan;
+    return r as TextSpan?;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  TextStyle? get style {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'style');
+    if (identical(r, notOverridden)) return super.style;
+    return r as TextStyle?;
+  }
+
+  @override
+  StrutStyle? get strutStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'strutStyle');
+    if (identical(r, notOverridden)) return super.strutStyle;
+    return r as StrutStyle?;
+  }
+
+  @override
+  ui.TextAlign? get textAlign {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textAlign');
+    if (identical(r, notOverridden)) return super.textAlign;
+    return r as ui.TextAlign?;
+  }
+
+  @override
+  ui.TextDirection? get textDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textDirection');
+    if (identical(r, notOverridden)) return super.textDirection;
+    return r as ui.TextDirection?;
+  }
+
+  @override
+  double? get textScaleFactor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textScaleFactor');
+    if (identical(r, notOverridden)) return super.textScaleFactor;
+    return r as double?;
+  }
+
+  @override
+  TextScaler? get textScaler {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textScaler');
+    if (identical(r, notOverridden)) return super.textScaler;
+    return r as TextScaler?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  int? get minLines {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minLines');
+    if (identical(r, notOverridden)) return super.minLines;
+    return r as int?;
+  }
+
+  @override
+  int? get maxLines {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maxLines');
+    if (identical(r, notOverridden)) return super.maxLines;
+    return r as int?;
+  }
+
+  @override
+  bool get showCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'showCursor');
+    if (identical(r, notOverridden)) return super.showCursor;
+    return r as bool;
+  }
+
+  @override
+  double get cursorWidth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cursorWidth');
+    if (identical(r, notOverridden)) return super.cursorWidth;
+    return r as double;
+  }
+
+  @override
+  double? get cursorHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cursorHeight');
+    if (identical(r, notOverridden)) return super.cursorHeight;
+    return r as double?;
+  }
+
+  @override
+  ui.Radius? get cursorRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cursorRadius');
+    if (identical(r, notOverridden)) return super.cursorRadius;
+    return r as ui.Radius?;
+  }
+
+  @override
+  ui.Color? get cursorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cursorColor');
+    if (identical(r, notOverridden)) return super.cursorColor;
+    return r as ui.Color?;
+  }
+
+  @override
+  ui.Color? get selectionColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionColor');
+    if (identical(r, notOverridden)) return super.selectionColor;
+    return r as ui.Color?;
+  }
+
+  @override
+  ui.BoxHeightStyle? get selectionHeightStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionHeightStyle');
+    if (identical(r, notOverridden)) return super.selectionHeightStyle;
+    return r as ui.BoxHeightStyle?;
+  }
+
+  @override
+  ui.BoxWidthStyle? get selectionWidthStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionWidthStyle');
+    if (identical(r, notOverridden)) return super.selectionWidthStyle;
+    return r as ui.BoxWidthStyle?;
+  }
+
+  @override
+  bool get enableInteractiveSelection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enableInteractiveSelection');
+    if (identical(r, notOverridden)) return super.enableInteractiveSelection;
+    return r as bool;
+  }
+
+  @override
+  TextSelectionControls? get selectionControls {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionControls');
+    if (identical(r, notOverridden)) return super.selectionControls;
+    return r as TextSelectionControls?;
+  }
+
+  @override
+  DragStartBehavior get dragStartBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragStartBehavior');
+    if (identical(r, notOverridden)) return super.dragStartBehavior;
+    return r as DragStartBehavior;
+  }
+
+  @override
+  ToolbarOptions? get toolbarOptions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'toolbarOptions');
+    if (identical(r, notOverridden)) return super.toolbarOptions;
+    return r as ToolbarOptions?;
+  }
+
+  @override
+  bool get selectionEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectionEnabled');
+    if (identical(r, notOverridden)) return super.selectionEnabled;
+    return r as bool;
+  }
+
+  @override
+  GestureTapCallback? get onTap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onTap');
+    if (identical(r, notOverridden)) return super.onTap;
+    return r as GestureTapCallback?;
+  }
+
+  @override
+  ScrollPhysics? get scrollPhysics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scrollPhysics');
+    if (identical(r, notOverridden)) return super.scrollPhysics;
+    return r as ScrollPhysics?;
+  }
+
+  @override
+  ScrollBehavior? get scrollBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scrollBehavior');
+    if (identical(r, notOverridden)) return super.scrollBehavior;
+    return r as ScrollBehavior?;
+  }
+
+  @override
+  String? get semanticsLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsLabel');
+    if (identical(r, notOverridden)) return super.semanticsLabel;
+    return r as String?;
+  }
+
+  @override
+  ui.TextHeightBehavior? get textHeightBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textHeightBehavior');
+    if (identical(r, notOverridden)) return super.textHeightBehavior;
+    return r as ui.TextHeightBehavior?;
+  }
+
+  @override
+  TextWidthBasis? get textWidthBasis {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textWidthBasis');
+    if (identical(r, notOverridden)) return super.textWidthBasis;
+    return r as TextWidthBasis?;
+  }
+
+  @override
+  SelectionChangedCallback? get onSelectionChanged {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSelectionChanged');
+    if (identical(r, notOverridden)) return super.onSelectionChanged;
+    return r as SelectionChangedCallback?;
+  }
+
+  @override
+  EditableTextContextMenuBuilder? get contextMenuBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'contextMenuBuilder');
+    if (identical(r, notOverridden)) return super.contextMenuBuilder;
+    return r as EditableTextContextMenuBuilder?;
+  }
+
+  @override
+  TextMagnifierConfiguration? get magnifierConfiguration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'magnifierConfiguration');
+    if (identical(r, notOverridden)) return super.magnifierConfiguration;
+    return r as TextMagnifierConfiguration?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<SelectableText> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  String? get _super$data => super.data;
+  TextSpan? get _super$textSpan => super.textSpan;
+  FocusNode? get _super$focusNode => super.focusNode;
+  TextStyle? get _super$style => super.style;
+  StrutStyle? get _super$strutStyle => super.strutStyle;
+  ui.TextAlign? get _super$textAlign => super.textAlign;
+  ui.TextDirection? get _super$textDirection => super.textDirection;
+  double? get _super$textScaleFactor => super.textScaleFactor;
+  TextScaler? get _super$textScaler => super.textScaler;
+  bool get _super$autofocus => super.autofocus;
+  int? get _super$minLines => super.minLines;
+  int? get _super$maxLines => super.maxLines;
+  bool get _super$showCursor => super.showCursor;
+  double get _super$cursorWidth => super.cursorWidth;
+  double? get _super$cursorHeight => super.cursorHeight;
+  ui.Radius? get _super$cursorRadius => super.cursorRadius;
+  ui.Color? get _super$cursorColor => super.cursorColor;
+  ui.Color? get _super$selectionColor => super.selectionColor;
+  ui.BoxHeightStyle? get _super$selectionHeightStyle => super.selectionHeightStyle;
+  ui.BoxWidthStyle? get _super$selectionWidthStyle => super.selectionWidthStyle;
+  bool get _super$enableInteractiveSelection => super.enableInteractiveSelection;
+  TextSelectionControls? get _super$selectionControls => super.selectionControls;
+  DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
+  ToolbarOptions? get _super$toolbarOptions => super.toolbarOptions;
+  bool get _super$selectionEnabled => super.selectionEnabled;
+  GestureTapCallback? get _super$onTap => super.onTap;
+  ScrollPhysics? get _super$scrollPhysics => super.scrollPhysics;
+  ScrollBehavior? get _super$scrollBehavior => super.scrollBehavior;
+  String? get _super$semanticsLabel => super.semanticsLabel;
+  ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
+  TextWidthBasis? get _super$textWidthBasis => super.textWidthBasis;
+  SelectionChangedCallback? get _super$onSelectionChanged => super.onSelectionChanged;
+  EditableTextContextMenuBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
+  TextMagnifierConfiguration? get _super$magnifierConfiguration => super.magnifierConfiguration;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSelectableTextBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SelectableText(dispatch, obj, superArgs);
+
 abstract final class SelectableTextBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -48,7 +431,54 @@ abstract final class SelectableTextBindings {
       test: (o) => o is SelectableText,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SelectableText(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$createState#0', (args) => (args[0] as _$SelectableText)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$debugFillProperties#1', (args) { (args[0] as _$SelectableText)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toString#1', (args) => (args[0] as _$SelectableText)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$createElement#0', (args) => (args[0] as _$SelectableText)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toStringShort#0', (args) => (args[0] as _$SelectableText)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toStringShallow#2', (args) => (args[0] as _$SelectableText)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toStringDeep#4', (args) => (args[0] as _$SelectableText)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SelectableText)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SelectableText)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$data#0', (args) => (args[0] as _$SelectableText)._super$data);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textSpan#0', (args) => (args[0] as _$SelectableText)._super$textSpan);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$focusNode#0', (args) => (args[0] as _$SelectableText)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$style#0', (args) => (args[0] as _$SelectableText)._super$style);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$strutStyle#0', (args) => (args[0] as _$SelectableText)._super$strutStyle);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textAlign#0', (args) => (args[0] as _$SelectableText)._super$textAlign);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textDirection#0', (args) => (args[0] as _$SelectableText)._super$textDirection);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textScaleFactor#0', (args) => (args[0] as _$SelectableText)._super$textScaleFactor);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textScaler#0', (args) => (args[0] as _$SelectableText)._super$textScaler);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$autofocus#0', (args) => (args[0] as _$SelectableText)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$minLines#0', (args) => (args[0] as _$SelectableText)._super$minLines);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$maxLines#0', (args) => (args[0] as _$SelectableText)._super$maxLines);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$showCursor#0', (args) => (args[0] as _$SelectableText)._super$showCursor);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$cursorWidth#0', (args) => (args[0] as _$SelectableText)._super$cursorWidth);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$cursorHeight#0', (args) => (args[0] as _$SelectableText)._super$cursorHeight);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$cursorRadius#0', (args) => (args[0] as _$SelectableText)._super$cursorRadius);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$cursorColor#0', (args) => (args[0] as _$SelectableText)._super$cursorColor);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$selectionColor#0', (args) => (args[0] as _$SelectableText)._super$selectionColor);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$selectionHeightStyle#0', (args) => (args[0] as _$SelectableText)._super$selectionHeightStyle);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$selectionWidthStyle#0', (args) => (args[0] as _$SelectableText)._super$selectionWidthStyle);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$enableInteractiveSelection#0', (args) => (args[0] as _$SelectableText)._super$enableInteractiveSelection);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$selectionControls#0', (args) => (args[0] as _$SelectableText)._super$selectionControls);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$dragStartBehavior#0', (args) => (args[0] as _$SelectableText)._super$dragStartBehavior);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$toolbarOptions#0', (args) => (args[0] as _$SelectableText)._super$toolbarOptions);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$selectionEnabled#0', (args) => (args[0] as _$SelectableText)._super$selectionEnabled);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$onTap#0', (args) => (args[0] as _$SelectableText)._super$onTap);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$scrollPhysics#0', (args) => (args[0] as _$SelectableText)._super$scrollPhysics);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$scrollBehavior#0', (args) => (args[0] as _$SelectableText)._super$scrollBehavior);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$semanticsLabel#0', (args) => (args[0] as _$SelectableText)._super$semanticsLabel);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textHeightBehavior#0', (args) => (args[0] as _$SelectableText)._super$textHeightBehavior);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$textWidthBasis#0', (args) => (args[0] as _$SelectableText)._super$textWidthBasis);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$onSelectionChanged#0', (args) => (args[0] as _$SelectableText)._super$onSelectionChanged);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$SelectableText)._super$contextMenuBuilder);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$magnifierConfiguration#0', (args) => (args[0] as _$SelectableText)._super$magnifierConfiguration);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$hashCode#0', (args) => (args[0] as _$SelectableText)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$key#0', (args) => (args[0] as _$SelectableText)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

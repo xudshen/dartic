@@ -18,6 +18,78 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$RSTransform extends RSTransform implements DarticObjectHolder {
+  _$RSTransform(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, superArgs[1] as double, superArgs[2] as double, superArgs[3] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get scos {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scos');
+    if (identical(r, notOverridden)) return super.scos;
+    return r as double;
+  }
+
+  @override
+  double get ssin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ssin');
+    if (identical(r, notOverridden)) return super.ssin;
+    return r as double;
+  }
+
+  @override
+  double get tx {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tx');
+    if (identical(r, notOverridden)) return super.tx;
+    return r as double;
+  }
+
+  @override
+  double get ty {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ty');
+    if (identical(r, notOverridden)) return super.ty;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  double get _super$scos => super.scos;
+  double get _super$ssin => super.ssin;
+  double get _super$tx => super.tx;
+  double get _super$ty => super.ty;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRSTransformBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RSTransform(dispatch, obj, superArgs);
+
 abstract final class RSTransformBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +97,15 @@ abstract final class RSTransformBindings {
       type: RSTransform,
       test: (o) => o is RSTransform,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RSTransform(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$toString#0', (args) => (args[0] as _$RSTransform)._super$toString());
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$scos#0', (args) => (args[0] as _$RSTransform)._super$scos);
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$ssin#0', (args) => (args[0] as _$RSTransform)._super$ssin);
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$tx#0', (args) => (args[0] as _$RSTransform)._super$tx);
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$ty#0', (args) => (args[0] as _$RSTransform)._super$ty);
+    ctx.registerBinding('dart:ui::RSTransform::\$super\$hashCode#0', (args) => (args[0] as _$RSTransform)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -10,7 +10,7 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
-class _$Stream extends Stream implements DarticObjectHolder {
+class _$Stream extends Stream<dynamic> implements DarticObjectHolder {
   _$Stream(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -245,9 +245,13 @@ class _$Stream extends Stream implements DarticObjectHolder {
   }
 
   // ── Super trampolines ──
-  Stream _super$asBroadcastStream({dynamic onListen, dynamic onCancel}) => super.asBroadcastStream(onListen: onListen, onCancel: onCancel);
+  Stream _super$asBroadcastStream({dynamic? onListen, dynamic? onCancel}) {
+    return (!identical(onListen, darticAbsent) || !identical(onCancel, darticAbsent)) ? super.asBroadcastStream(onListen: onListen as void Function(StreamSubscription)?, onCancel: onCancel as void Function(StreamSubscription)?) : super.asBroadcastStream();
+  }
   Stream _super$where(dynamic test) => super.where(test);
-  Stream _super$handleError(dynamic onError, {dynamic test}) => super.handleError(onError, test: test);
+  Stream _super$handleError(dynamic onError, {dynamic? test}) {
+    return (!identical(test, darticAbsent)) ? super.handleError(onError, test: test as bool Function(dynamic)?) : super.handleError(onError);
+  }
   Future<dynamic> _super$pipe(StreamConsumer streamConsumer) => super.pipe(streamConsumer);
   Future _super$reduce(dynamic combine) => super.reduce(combine);
   Future<String> _super$join([String separator = ""]) => super.join(separator);
@@ -262,11 +266,19 @@ class _$Stream extends Stream implements DarticObjectHolder {
   Stream _super$skip(int count) => super.skip(count);
   Stream _super$skipWhile(dynamic test) => super.skipWhile(test);
   Stream _super$distinct([dynamic equals]) => super.distinct(equals);
-  Future _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
-  Future _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
-  Future _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  Future _super$firstWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.firstWhere(test, orElse: orElse as dynamic Function()?) : super.firstWhere(test);
+  }
+  Future _super$lastWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.lastWhere(test, orElse: orElse as dynamic Function()?) : super.lastWhere(test);
+  }
+  Future _super$singleWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.singleWhere(test, orElse: orElse as dynamic Function()?) : super.singleWhere(test);
+  }
   Future _super$elementAt(int index) => super.elementAt(index);
-  Stream _super$timeout(Duration timeLimit, {dynamic onTimeout}) => super.timeout(timeLimit, onTimeout: onTimeout);
+  Stream _super$timeout(Duration timeLimit, {dynamic? onTimeout}) {
+    return (!identical(onTimeout, darticAbsent)) ? super.timeout(timeLimit, onTimeout: onTimeout as void Function(EventSink)?) : super.timeout(timeLimit);
+  }
   String _super$toString() => super.toString();
   bool get _super$isBroadcast => super.isBroadcast;
   Future<int> get _super$length => super.length;

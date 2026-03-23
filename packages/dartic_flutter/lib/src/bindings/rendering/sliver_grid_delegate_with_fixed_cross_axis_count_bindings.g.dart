@@ -14,6 +14,102 @@ import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/rendering/sliver.dart';
 import 'package:flutter/src/rendering/sliver_multi_box_adaptor.dart';
 
+class _$SliverGridDelegateWithFixedCrossAxisCount extends SliverGridDelegateWithFixedCrossAxisCount implements DarticObjectHolder {
+  _$SliverGridDelegateWithFixedCrossAxisCount(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(crossAxisCount: superArgs[0] as int, mainAxisSpacing: superArgs[1] as double, crossAxisSpacing: superArgs[2] as double, childAspectRatio: superArgs[3] as double, mainAxisExtent: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as double?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  SliverGridLayout getLayout(SliverConstraints constraints) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLayout', [constraints]);
+    if (identical(r, notOverridden)) return super.getLayout(constraints);
+    return r as SliverGridLayout;
+  }
+
+  @override
+  bool shouldRelayout(SliverGridDelegateWithFixedCrossAxisCount oldDelegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
+    if (identical(r, notOverridden)) return super.shouldRelayout(oldDelegate);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get crossAxisCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'crossAxisCount');
+    if (identical(r, notOverridden)) return super.crossAxisCount;
+    return r as int;
+  }
+
+  @override
+  double get mainAxisSpacing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mainAxisSpacing');
+    if (identical(r, notOverridden)) return super.mainAxisSpacing;
+    return r as double;
+  }
+
+  @override
+  double get crossAxisSpacing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'crossAxisSpacing');
+    if (identical(r, notOverridden)) return super.crossAxisSpacing;
+    return r as double;
+  }
+
+  @override
+  double get childAspectRatio {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'childAspectRatio');
+    if (identical(r, notOverridden)) return super.childAspectRatio;
+    return r as double;
+  }
+
+  @override
+  double? get mainAxisExtent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mainAxisExtent');
+    if (identical(r, notOverridden)) return super.mainAxisExtent;
+    return r as double?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  SliverGridLayout _super$getLayout(SliverConstraints constraints) => super.getLayout(constraints);
+  bool _super$shouldRelayout(SliverGridDelegateWithFixedCrossAxisCount oldDelegate) => super.shouldRelayout(oldDelegate);
+  String _super$toString() => super.toString();
+  int get _super$crossAxisCount => super.crossAxisCount;
+  double get _super$mainAxisSpacing => super.mainAxisSpacing;
+  double get _super$crossAxisSpacing => super.crossAxisSpacing;
+  double get _super$childAspectRatio => super.childAspectRatio;
+  double? get _super$mainAxisExtent => super.mainAxisExtent;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSliverGridDelegateWithFixedCrossAxisCountBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SliverGridDelegateWithFixedCrossAxisCount(dispatch, obj, superArgs);
+
 abstract final class SliverGridDelegateWithFixedCrossAxisCountBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,7 +118,18 @@ abstract final class SliverGridDelegateWithFixedCrossAxisCountBindings {
       test: (o) => o is SliverGridDelegateWithFixedCrossAxisCount,
       methods: methodMap(),
       superclasses: ['package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegate'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SliverGridDelegateWithFixedCrossAxisCount(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$getLayout#1', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$getLayout(args[1] as SliverConstraints));
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$shouldRelayout#1', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$shouldRelayout(args[1] as SliverGridDelegateWithFixedCrossAxisCount));
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$toString#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$toString());
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$crossAxisCount#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$crossAxisCount);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$mainAxisSpacing#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$mainAxisSpacing);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$crossAxisSpacing#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$crossAxisSpacing);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$childAspectRatio#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$childAspectRatio);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$mainAxisExtent#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$mainAxisExtent);
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridDelegateWithFixedCrossAxisCount::\$super\$hashCode#0', (args) => (args[0] as _$SliverGridDelegateWithFixedCrossAxisCount)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

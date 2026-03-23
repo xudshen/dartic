@@ -26,6 +26,221 @@ import 'package:flutter/src/widgets/focus_manager.dart';
 import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:flutter/src/services/text_formatter.dart';
 
+class _$DropdownMenuFormField extends DropdownMenuFormField<dynamic> implements DarticObjectHolder {
+  _$DropdownMenuFormField(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, enabled: superArgs[1] as bool, width: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, menuHeight: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?, leadingIcon: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Widget?, trailingIcon: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Widget?, label: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Widget?, hintText: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as String?, helperText: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as String?, selectedTrailingIcon: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Widget?, enableFilter: superArgs[10] as bool, enableSearch: superArgs[11] as bool, keyboardType: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as TextInputType?, textStyle: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as TextStyle?, textAlign: superArgs[14] as TextAlign, inputDecorationTheme: identical(superArgs[15], darticAbsent) ? null : superArgs[15], menuStyle: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as MenuStyle?, controller: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as TextEditingController?, initialSelection: superArgs[18], onSelected: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as void Function(dynamic)?, focusNode: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as FocusNode?, requestFocusOnTap: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as bool?, expandedInsets: identical(superArgs[22], darticAbsent) ? null : superArgs[22] as EdgeInsetsGeometry?, alignmentOffset: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as Offset?, filterCallback: identical(superArgs[24], darticAbsent) ? null : superArgs[24] as List<DropdownMenuEntry> Function(List<DropdownMenuEntry>, String)?, searchCallback: identical(superArgs[25], darticAbsent) ? null : superArgs[25] as int? Function(List<DropdownMenuEntry>, String)?, dropdownMenuEntries: (superArgs[26] as List).cast<DropdownMenuEntry>(), inputFormatters: identical(superArgs[27], darticAbsent) ? null : superArgs[27] == null ? null : (superArgs[27] as List).cast<TextInputFormatter>(), closeBehavior: superArgs[28] as DropdownMenuCloseBehavior, maxLines: superArgs[29] as int, textInputAction: identical(superArgs[30], darticAbsent) ? null : superArgs[30] as TextInputAction?, restorationId: identical(superArgs[31], darticAbsent) ? null : superArgs[31] as String?, onSaved: identical(superArgs[32], darticAbsent) ? null : superArgs[32] as void Function(dynamic)?, autovalidateMode: superArgs[33] as AutovalidateMode, validator: identical(superArgs[34], darticAbsent) ? null : superArgs[34] as String? Function(dynamic)?, forceErrorText: identical(superArgs[35], darticAbsent) ? null : superArgs[35] as String?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  FormFieldState createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as FormFieldState;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  void Function(dynamic)? get onSelected {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSelected');
+    if (identical(r, notOverridden)) return super.onSelected;
+    return r as void Function(dynamic)?;
+  }
+
+  @override
+  TextEditingController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as TextEditingController?;
+  }
+
+  @override
+  List<DropdownMenuEntry> get dropdownMenuEntries {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dropdownMenuEntries');
+    if (identical(r, notOverridden)) return super.dropdownMenuEntries;
+    return r as List<DropdownMenuEntry>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Widget Function(FormFieldState) get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as Widget Function(FormFieldState);
+  }
+
+  @override
+  void Function(dynamic)? get onSaved {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSaved');
+    if (identical(r, notOverridden)) return super.onSaved;
+    return r as void Function(dynamic)?;
+  }
+
+  @override
+  VoidCallback? get onReset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onReset');
+    if (identical(r, notOverridden)) return super.onReset;
+    return r as VoidCallback?;
+  }
+
+  @override
+  String? get forceErrorText {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'forceErrorText');
+    if (identical(r, notOverridden)) return super.forceErrorText;
+    return r as String?;
+  }
+
+  @override
+  String? Function(dynamic)? get validator {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'validator');
+    if (identical(r, notOverridden)) return super.validator;
+    return r as String? Function(dynamic)?;
+  }
+
+  @override
+  FormFieldErrorBuilder? get errorBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorBuilder');
+    if (identical(r, notOverridden)) return super.errorBuilder;
+    return r as FormFieldErrorBuilder?;
+  }
+
+  @override
+  dynamic get initialValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialValue');
+    if (identical(r, notOverridden)) return super.initialValue;
+    return r as dynamic;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  AutovalidateMode get autovalidateMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autovalidateMode');
+    if (identical(r, notOverridden)) return super.autovalidateMode;
+    return r as AutovalidateMode;
+  }
+
+  @override
+  String? get restorationId {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'restorationId');
+    if (identical(r, notOverridden)) return super.restorationId;
+    return r as String?;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  FormFieldState _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  void Function(dynamic)? get _super$onSelected => super.onSelected;
+  TextEditingController? get _super$controller => super.controller;
+  List<DropdownMenuEntry> get _super$dropdownMenuEntries => super.dropdownMenuEntries;
+  int get _super$hashCode => super.hashCode;
+  Widget Function(FormFieldState) get _super$builder => super.builder;
+  void Function(dynamic)? get _super$onSaved => super.onSaved;
+  VoidCallback? get _super$onReset => super.onReset;
+  String? get _super$forceErrorText => super.forceErrorText;
+  String? Function(dynamic)? get _super$validator => super.validator;
+  FormFieldErrorBuilder? get _super$errorBuilder => super.errorBuilder;
+  dynamic get _super$initialValue => super.initialValue;
+  bool get _super$enabled => super.enabled;
+  AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
+  String? get _super$restorationId => super.restorationId;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDropdownMenuFormFieldBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DropdownMenuFormField(dispatch, obj, superArgs);
+
 abstract final class DropdownMenuFormFieldBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,7 +249,33 @@ abstract final class DropdownMenuFormFieldBindings {
       test: (o) => o is DropdownMenuFormField,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/form.dart::FormField', 'package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DropdownMenuFormField(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$createState#0', (args) => (args[0] as _$DropdownMenuFormField)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$toString#1', (args) => (args[0] as _$DropdownMenuFormField)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$createElement#0', (args) => (args[0] as _$DropdownMenuFormField)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$toStringShort#0', (args) => (args[0] as _$DropdownMenuFormField)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$debugFillProperties#1', (args) { (args[0] as _$DropdownMenuFormField)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$toStringShallow#2', (args) => (args[0] as _$DropdownMenuFormField)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$toStringDeep#4', (args) => (args[0] as _$DropdownMenuFormField)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DropdownMenuFormField)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DropdownMenuFormField)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$onSelected#0', (args) => (args[0] as _$DropdownMenuFormField)._super$onSelected);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$controller#0', (args) => (args[0] as _$DropdownMenuFormField)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$dropdownMenuEntries#0', (args) => (args[0] as _$DropdownMenuFormField)._super$dropdownMenuEntries);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$hashCode#0', (args) => (args[0] as _$DropdownMenuFormField)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$builder#0', (args) => (args[0] as _$DropdownMenuFormField)._super$builder);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$onSaved#0', (args) => (args[0] as _$DropdownMenuFormField)._super$onSaved);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$onReset#0', (args) => (args[0] as _$DropdownMenuFormField)._super$onReset);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$forceErrorText#0', (args) => (args[0] as _$DropdownMenuFormField)._super$forceErrorText);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$validator#0', (args) => (args[0] as _$DropdownMenuFormField)._super$validator);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$errorBuilder#0', (args) => (args[0] as _$DropdownMenuFormField)._super$errorBuilder);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$initialValue#0', (args) => (args[0] as _$DropdownMenuFormField)._super$initialValue);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$enabled#0', (args) => (args[0] as _$DropdownMenuFormField)._super$enabled);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$autovalidateMode#0', (args) => (args[0] as _$DropdownMenuFormField)._super$autovalidateMode);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$restorationId#0', (args) => (args[0] as _$DropdownMenuFormField)._super$restorationId);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu_form_field.dart::DropdownMenuFormField::\$super\$key#0', (args) => (args[0] as _$DropdownMenuFormField)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

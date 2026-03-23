@@ -17,6 +17,77 @@ import 'package:flutter/src/services/debug.dart';
 import 'package:flutter/src/services/message_codec.dart';
 import 'package:flutter/src/services/message_codecs.dart';
 
+class _$MethodChannel extends MethodChannel implements DarticObjectHolder {
+  _$MethodChannel(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as MethodCodec, identical(superArgs[2], darticAbsent) ? null : superArgs[2] as BinaryMessenger?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void setMethodCallHandler(Future<dynamic> Function(MethodCall)? handler) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMethodCallHandler', [handler]);
+    if (identical(r, notOverridden)) { super.setMethodCallHandler(handler != null ? (a) => handler(a) as Future<dynamic> : null); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get name {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String;
+  }
+
+  @override
+  MethodCodec get codec {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'codec');
+    if (identical(r, notOverridden)) return super.codec;
+    return r as MethodCodec;
+  }
+
+  @override
+  BinaryMessenger get binaryMessenger {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'binaryMessenger');
+    if (identical(r, notOverridden)) return super.binaryMessenger;
+    return r as BinaryMessenger;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$setMethodCallHandler(dynamic handler) { super.setMethodCallHandler(handler); }
+  String _super$toString() => super.toString();
+  String get _super$name => super.name;
+  MethodCodec get _super$codec => super.codec;
+  BinaryMessenger get _super$binaryMessenger => super.binaryMessenger;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMethodChannelBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MethodChannel(dispatch, obj, superArgs);
+
 abstract final class MethodChannelBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +95,15 @@ abstract final class MethodChannelBindings {
       type: MethodChannel,
       test: (o) => o is MethodChannel,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MethodChannel(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$setMethodCallHandler#1', (args) { (args[0] as _$MethodChannel)._super$setMethodCallHandler((args[1] as Function?) == null ? null : (a) => (args[1] as Function?)!(a)); return null; });
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$toString#0', (args) => (args[0] as _$MethodChannel)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$name#0', (args) => (args[0] as _$MethodChannel)._super$name);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$codec#0', (args) => (args[0] as _$MethodChannel)._super$codec);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$binaryMessenger#0', (args) => (args[0] as _$MethodChannel)._super$binaryMessenger);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::MethodChannel::\$super\$hashCode#0', (args) => (args[0] as _$MethodChannel)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

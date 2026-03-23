@@ -20,6 +20,88 @@ import 'package:flutter/src/widgets/sliver.dart';
 import 'package:flutter/src/widgets/text.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
 
+class _$TreeSliverStateMixin implements TreeSliverStateMixin<dynamic>, DarticObjectHolder {
+  _$TreeSliverStateMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool isExpanded(TreeSliverNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isExpanded', [node]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isExpanded must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool isActive(TreeSliverNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isActive', [node]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isActive must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  void toggleNode(TreeSliverNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleNode', [node]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toggleNode must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void collapseAll() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseAll', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method collapseAll must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void expandAll() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandAll', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method expandAll must be overridden in dartic code');
+    }
+  }
+
+  @override
+  TreeSliverNode? getNodeFor(dynamic content) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNodeFor', [content]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getNodeFor must be overridden in dartic code');
+    }
+    return r as TreeSliverNode?;
+  }
+
+  @override
+  int? getActiveIndexFor(TreeSliverNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActiveIndexFor', [node]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getActiveIndexFor must be overridden in dartic code');
+    }
+    return r as int?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTreeSliverStateMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TreeSliverStateMixin(dispatch, obj, superArgs);
+
 abstract final class TreeSliverStateMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,6 +109,8 @@ abstract final class TreeSliverStateMixinBindings {
       type: TreeSliverStateMixin,
       test: (o) => o is TreeSliverStateMixin,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TreeSliverStateMixin(dispatch, darticObject, superArgs),
     );
   }
 

@@ -26,6 +26,85 @@ import 'package:flutter/src/foundation/platform.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/widgets/page_transitions_builder.dart';
 
+class _$PageTransitionsTheme extends PageTransitionsTheme implements DarticObjectHolder {
+  _$PageTransitionsTheme(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(builders: (superArgs[0] as Map).cast<TargetPlatform, PageTransitionsBuilder>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  DelegatedTransitionBuilder? delegatedTransition(TargetPlatform platform) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition', [platform]);
+    if (identical(r, notOverridden)) return super.delegatedTransition(platform);
+    return r as DelegatedTransitionBuilder?;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  Map<TargetPlatform, PageTransitionsBuilder> get builders {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builders');
+    if (identical(r, notOverridden)) return super.builders;
+    return r as Map<TargetPlatform, PageTransitionsBuilder>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  DelegatedTransitionBuilder? _super$delegatedTransition(TargetPlatform platform) => super.delegatedTransition(platform);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  Map<TargetPlatform, PageTransitionsBuilder> get _super$builders => super.builders;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPageTransitionsThemeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PageTransitionsTheme(dispatch, obj, superArgs);
+
 abstract final class PageTransitionsThemeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,7 +113,16 @@ abstract final class PageTransitionsThemeBindings {
       test: (o) => o is PageTransitionsTheme,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PageTransitionsTheme(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$delegatedTransition#1', (args) => (args[0] as _$PageTransitionsTheme)._super$delegatedTransition(args[1] as TargetPlatform));
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$debugFillProperties#1', (args) { (args[0] as _$PageTransitionsTheme)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$toString#1', (args) => (args[0] as _$PageTransitionsTheme)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$toStringShort#0', (args) => (args[0] as _$PageTransitionsTheme)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$PageTransitionsTheme)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$builders#0', (args) => (args[0] as _$PageTransitionsTheme)._super$builders);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::PageTransitionsTheme::\$super\$hashCode#0', (args) => (args[0] as _$PageTransitionsTheme)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

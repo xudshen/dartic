@@ -32,6 +32,293 @@ import 'package:flutter/src/foundation/basic_types.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$CupertinoSliverNavigationBar extends CupertinoSliverNavigationBar implements DarticObjectHolder {
+  _$CupertinoSliverNavigationBar(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, largeTitle: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Widget?, leading: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Widget?, automaticallyImplyLeading: superArgs[3] as bool, automaticallyImplyTitle: superArgs[4] as bool, alwaysShowMiddle: superArgs[5] as bool, previousPageTitle: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as String?, middle: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as Widget?, trailing: identical(superArgs[8], darticAbsent) ? null : superArgs[8] as Widget?, border: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Border?, backgroundColor: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as Color?, automaticBackgroundVisibility: superArgs[11] as bool, enableBackgroundFilterBlur: superArgs[12] as bool, brightness: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as Brightness?, padding: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as EdgeInsetsDirectional?, transitionBetweenRoutes: superArgs[15] as bool, heroTag: superArgs[16] as Object, stretch: superArgs[17] as bool, bottom: identical(superArgs[18], darticAbsent) ? null : superArgs[18] as PreferredSizeWidget?, bottomMode: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as NavigationBarBottomMode?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<CupertinoSliverNavigationBar> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<CupertinoSliverNavigationBar>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget? get largeTitle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'largeTitle');
+    if (identical(r, notOverridden)) return super.largeTitle;
+    return r as Widget?;
+  }
+
+  @override
+  Widget? get leading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leading');
+    if (identical(r, notOverridden)) return super.leading;
+    return r as Widget?;
+  }
+
+  @override
+  bool get automaticallyImplyLeading {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'automaticallyImplyLeading');
+    if (identical(r, notOverridden)) return super.automaticallyImplyLeading;
+    return r as bool;
+  }
+
+  @override
+  bool get automaticallyImplyTitle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'automaticallyImplyTitle');
+    if (identical(r, notOverridden)) return super.automaticallyImplyTitle;
+    return r as bool;
+  }
+
+  @override
+  bool get alwaysShowMiddle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alwaysShowMiddle');
+    if (identical(r, notOverridden)) return super.alwaysShowMiddle;
+    return r as bool;
+  }
+
+  @override
+  String? get previousPageTitle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'previousPageTitle');
+    if (identical(r, notOverridden)) return super.previousPageTitle;
+    return r as String?;
+  }
+
+  @override
+  Widget? get middle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'middle');
+    if (identical(r, notOverridden)) return super.middle;
+    return r as Widget?;
+  }
+
+  @override
+  Widget? get trailing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'trailing');
+    if (identical(r, notOverridden)) return super.trailing;
+    return r as Widget?;
+  }
+
+  @override
+  Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as Color?;
+  }
+
+  @override
+  bool get automaticBackgroundVisibility {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'automaticBackgroundVisibility');
+    if (identical(r, notOverridden)) return super.automaticBackgroundVisibility;
+    return r as bool;
+  }
+
+  @override
+  bool get enableBackgroundFilterBlur {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enableBackgroundFilterBlur');
+    if (identical(r, notOverridden)) return super.enableBackgroundFilterBlur;
+    return r as bool;
+  }
+
+  @override
+  Brightness? get brightness {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'brightness');
+    if (identical(r, notOverridden)) return super.brightness;
+    return r as Brightness?;
+  }
+
+  @override
+  EdgeInsetsDirectional? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsDirectional?;
+  }
+
+  @override
+  Border? get border {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'border');
+    if (identical(r, notOverridden)) return super.border;
+    return r as Border?;
+  }
+
+  @override
+  bool get transitionBetweenRoutes {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transitionBetweenRoutes');
+    if (identical(r, notOverridden)) return super.transitionBetweenRoutes;
+    return r as bool;
+  }
+
+  @override
+  Object get heroTag {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'heroTag');
+    if (identical(r, notOverridden)) return super.heroTag;
+    return r as Object;
+  }
+
+  @override
+  PreferredSizeWidget? get bottom {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bottom');
+    if (identical(r, notOverridden)) return super.bottom;
+    return r as PreferredSizeWidget?;
+  }
+
+  @override
+  NavigationBarBottomMode? get bottomMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bottomMode');
+    if (identical(r, notOverridden)) return super.bottomMode;
+    return r as NavigationBarBottomMode?;
+  }
+
+  @override
+  ValueChanged<bool>? get onSearchableBottomTap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onSearchableBottomTap');
+    if (identical(r, notOverridden)) return super.onSearchableBottomTap;
+    return r as ValueChanged<bool>?;
+  }
+
+  @override
+  bool get opaque {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
+    if (identical(r, notOverridden)) return super.opaque;
+    return r as bool;
+  }
+
+  @override
+  bool get stretch {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stretch');
+    if (identical(r, notOverridden)) return super.stretch;
+    return r as bool;
+  }
+
+  @override
+  Widget? get searchField {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'searchField');
+    if (identical(r, notOverridden)) return super.searchField;
+    return r as Widget?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<CupertinoSliverNavigationBar> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget? get _super$largeTitle => super.largeTitle;
+  Widget? get _super$leading => super.leading;
+  bool get _super$automaticallyImplyLeading => super.automaticallyImplyLeading;
+  bool get _super$automaticallyImplyTitle => super.automaticallyImplyTitle;
+  bool get _super$alwaysShowMiddle => super.alwaysShowMiddle;
+  String? get _super$previousPageTitle => super.previousPageTitle;
+  Widget? get _super$middle => super.middle;
+  Widget? get _super$trailing => super.trailing;
+  Color? get _super$backgroundColor => super.backgroundColor;
+  bool get _super$automaticBackgroundVisibility => super.automaticBackgroundVisibility;
+  bool get _super$enableBackgroundFilterBlur => super.enableBackgroundFilterBlur;
+  Brightness? get _super$brightness => super.brightness;
+  EdgeInsetsDirectional? get _super$padding => super.padding;
+  Border? get _super$border => super.border;
+  bool get _super$transitionBetweenRoutes => super.transitionBetweenRoutes;
+  Object get _super$heroTag => super.heroTag;
+  PreferredSizeWidget? get _super$bottom => super.bottom;
+  NavigationBarBottomMode? get _super$bottomMode => super.bottomMode;
+  ValueChanged<bool>? get _super$onSearchableBottomTap => super.onSearchableBottomTap;
+  bool get _super$opaque => super.opaque;
+  bool get _super$stretch => super.stretch;
+  Widget? get _super$searchField => super.searchField;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCupertinoSliverNavigationBarBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CupertinoSliverNavigationBar(dispatch, obj, superArgs);
+
 abstract final class CupertinoSliverNavigationBarBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -40,7 +327,42 @@ abstract final class CupertinoSliverNavigationBarBindings {
       test: (o) => o is CupertinoSliverNavigationBar,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CupertinoSliverNavigationBar(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$createState#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$createState());
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$toString#1', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$createElement#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$createElement());
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$toStringShort#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$debugFillProperties#1', (args) { (args[0] as _$CupertinoSliverNavigationBar)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$toStringShallow#2', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$toStringDeep#4', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$largeTitle#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$largeTitle);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$leading#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$leading);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$automaticallyImplyLeading#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$automaticallyImplyLeading);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$automaticallyImplyTitle#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$automaticallyImplyTitle);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$alwaysShowMiddle#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$alwaysShowMiddle);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$previousPageTitle#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$previousPageTitle);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$middle#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$middle);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$trailing#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$trailing);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$backgroundColor#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$automaticBackgroundVisibility#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$automaticBackgroundVisibility);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$enableBackgroundFilterBlur#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$enableBackgroundFilterBlur);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$brightness#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$brightness);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$padding#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$padding);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$border#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$border);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$transitionBetweenRoutes#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$transitionBetweenRoutes);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$heroTag#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$heroTag);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$bottom#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$bottom);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$bottomMode#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$bottomMode);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$onSearchableBottomTap#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$onSearchableBottomTap);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$opaque#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$opaque);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$stretch#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$stretch);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$searchField#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$searchField);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$key#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

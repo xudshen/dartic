@@ -15,6 +15,62 @@ import 'package:flutter/src/widgets/focus_manager.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/text_editing_intents.dart';
 
+class _$UndoHistoryValue extends UndoHistoryValue implements DarticObjectHolder {
+  _$UndoHistoryValue(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(canUndo: superArgs[0] as bool, canRedo: superArgs[1] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get canUndo {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canUndo');
+    if (identical(r, notOverridden)) return super.canUndo;
+    return r as bool;
+  }
+
+  @override
+  bool get canRedo {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canRedo');
+    if (identical(r, notOverridden)) return super.canRedo;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$canUndo => super.canUndo;
+  bool get _super$canRedo => super.canRedo;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createUndoHistoryValueBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$UndoHistoryValue(dispatch, obj, superArgs);
+
 abstract final class UndoHistoryValueBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,8 +78,14 @@ abstract final class UndoHistoryValueBindings {
       type: UndoHistoryValue,
       test: (o) => o is UndoHistoryValue,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$UndoHistoryValue(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryValue::empty#0', (args) => UndoHistoryValue.empty);
+    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryValue::\$super\$toString#0', (args) => (args[0] as _$UndoHistoryValue)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryValue::\$super\$canUndo#0', (args) => (args[0] as _$UndoHistoryValue)._super$canUndo);
+    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryValue::\$super\$canRedo#0', (args) => (args[0] as _$UndoHistoryValue)._super$canRedo);
+    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryValue::\$super\$hashCode#0', (args) => (args[0] as _$UndoHistoryValue)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

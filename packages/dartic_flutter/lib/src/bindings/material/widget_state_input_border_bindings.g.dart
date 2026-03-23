@@ -15,6 +15,159 @@ import 'dart:ui';
 import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:flutter/src/widgets/widget_state.dart';
 
+class _$WidgetStateInputBorder implements WidgetStateInputBorder, DarticObjectHolder {
+  _$WidgetStateInputBorder(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  InputBorder copyWith({BorderSide? borderSide}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [borderSide]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method copyWith must be overridden in dartic code');
+    }
+    return r as InputBorder;
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {double? gapStart, double gapExtent = 0.0, double gapPercentage = 0.0, TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, gapStart, gapExtent, gapPercentage, textDirection]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  ShapeBorder? add(ShapeBorder other, {bool reversed = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other, reversed]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method add must be overridden in dartic code');
+    }
+    return r as ShapeBorder?;
+  }
+
+  @override
+  ShapeBorder scale(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [t]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method scale must be overridden in dartic code');
+    }
+    return r as ShapeBorder;
+  }
+
+  @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method lerpFrom must be overridden in dartic code');
+    }
+    return r as ShapeBorder?;
+  }
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method lerpTo must be overridden in dartic code');
+    }
+    return r as ShapeBorder?;
+  }
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [rect, textDirection]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getOuterPath must be overridden in dartic code');
+    }
+    return r as Path;
+  }
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInnerPath', [rect, textDirection]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getInnerPath must be overridden in dartic code');
+    }
+    return r as Path;
+  }
+
+  @override
+  void paintInterior(Canvas canvas, Rect rect, Paint paint, {TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintInterior', [canvas, rect, paint, textDirection]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paintInterior must be overridden in dartic code');
+    }
+  }
+
+  @override
+  InputBorder resolve(Set<WidgetState> states) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
+    }
+    return r as InputBorder;
+  }
+
+  @override
+  BorderSide get borderSide {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'borderSide');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter borderSide must be overridden in dartic code');
+    }
+    return r as BorderSide;
+  }
+
+  @override
+  bool get isOutline {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isOutline');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isOutline must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  EdgeInsetsGeometry get dimensions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dimensions');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter dimensions must be overridden in dartic code');
+    }
+    return r as EdgeInsetsGeometry;
+  }
+
+  @override
+  bool get preferPaintInterior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'preferPaintInterior');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter preferPaintInterior must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+
+  @override
+  ShapeBorder operator +(ShapeBorder other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator + must be overridden in dartic code'); }
+    return r as ShapeBorder;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createWidgetStateInputBorderBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$WidgetStateInputBorder(dispatch, obj, superArgs);
+
 abstract final class WidgetStateInputBorderBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,6 +176,8 @@ abstract final class WidgetStateInputBorderBindings {
       test: (o) => o is WidgetStateInputBorder,
       methods: methodMap(),
       superclasses: ['package:flutter/src/material/input_border.dart::InputBorder', 'package:flutter/src/painting/borders.dart::ShapeBorder', 'package:flutter/src/widgets/widget_state.dart::WidgetStateProperty'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$WidgetStateInputBorder(dispatch, darticObject, superArgs),
     );
   }
 

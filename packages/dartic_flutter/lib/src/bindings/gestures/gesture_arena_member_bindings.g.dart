@@ -11,6 +11,62 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/gestures/debug.dart';
 
+class _$GestureArenaMember extends GestureArenaMember implements DarticObjectHolder {
+  _$GestureArenaMember(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void acceptGesture(int pointer) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', [pointer]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method acceptGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void rejectGesture(int pointer) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', [pointer]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method rejectGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createGestureArenaMemberBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$GestureArenaMember(dispatch, obj, superArgs);
+
 abstract final class GestureArenaMemberBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,7 +74,11 @@ abstract final class GestureArenaMemberBindings {
       type: GestureArenaMember,
       test: (o) => o is GestureArenaMember,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$GestureArenaMember(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/gestures/arena.dart::GestureArenaMember::\$super\$toString#0', (args) => (args[0] as _$GestureArenaMember)._super$toString());
+    ctx.registerBinding('package:flutter/src/gestures/arena.dart::GestureArenaMember::\$super\$hashCode#0', (args) => (args[0] as _$GestureArenaMember)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

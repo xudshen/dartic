@@ -18,6 +18,62 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$TextPosition extends TextPosition implements DarticObjectHolder {
+  _$TextPosition(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(offset: superArgs[0] as int, affinity: superArgs[1] as TextAffinity);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get offset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
+    if (identical(r, notOverridden)) return super.offset;
+    return r as int;
+  }
+
+  @override
+  TextAffinity get affinity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'affinity');
+    if (identical(r, notOverridden)) return super.affinity;
+    return r as TextAffinity;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$offset => super.offset;
+  TextAffinity get _super$affinity => super.affinity;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTextPositionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TextPosition(dispatch, obj, superArgs);
+
 abstract final class TextPositionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +81,13 @@ abstract final class TextPositionBindings {
       type: TextPosition,
       test: (o) => o is TextPosition,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TextPosition(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::TextPosition::\$super\$toString#0', (args) => (args[0] as _$TextPosition)._super$toString());
+    ctx.registerBinding('dart:ui::TextPosition::\$super\$offset#0', (args) => (args[0] as _$TextPosition)._super$offset);
+    ctx.registerBinding('dart:ui::TextPosition::\$super\$affinity#0', (args) => (args[0] as _$TextPosition)._super$affinity);
+    ctx.registerBinding('dart:ui::TextPosition::\$super\$hashCode#0', (args) => (args[0] as _$TextPosition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

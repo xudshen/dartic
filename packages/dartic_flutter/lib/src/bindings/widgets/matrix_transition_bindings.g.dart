@@ -24,6 +24,173 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$MatrixTransition extends MatrixTransition implements DarticObjectHolder {
+  _$MatrixTransition(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, animation: superArgs[1] as Animation<double>, onTransform: superArgs[2] as TransformCallback, alignment: superArgs[3] as Alignment, filterQuality: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as FilterQuality?, child: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Widget?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  State<AnimatedWidget> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<AnimatedWidget>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  TransformCallback get onTransform {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onTransform');
+    if (identical(r, notOverridden)) return super.onTransform;
+    return r as TransformCallback;
+  }
+
+  @override
+  Animation<double> get animation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'animation');
+    if (identical(r, notOverridden)) return super.animation;
+    return r as Animation<double>;
+  }
+
+  @override
+  Alignment get alignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alignment');
+    if (identical(r, notOverridden)) return super.alignment;
+    return r as Alignment;
+  }
+
+  @override
+  FilterQuality? get filterQuality {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'filterQuality');
+    if (identical(r, notOverridden)) return super.filterQuality;
+    return r as FilterQuality?;
+  }
+
+  @override
+  Widget? get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Listenable get listenable {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'listenable');
+    if (identical(r, notOverridden)) return super.listenable;
+    return r as Listenable;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  State<AnimatedWidget> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  TransformCallback get _super$onTransform => super.onTransform;
+  Animation<double> get _super$animation => super.animation;
+  Alignment get _super$alignment => super.alignment;
+  FilterQuality? get _super$filterQuality => super.filterQuality;
+  Widget? get _super$child => super.child;
+  int get _super$hashCode => super.hashCode;
+  Listenable get _super$listenable => super.listenable;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMatrixTransitionBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MatrixTransition(dispatch, obj, superArgs);
+
 abstract final class MatrixTransitionBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -32,7 +199,27 @@ abstract final class MatrixTransitionBindings {
       test: (o) => o is MatrixTransition,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/transitions.dart::AnimatedWidget', 'package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MatrixTransition(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$build#1', (args) => (args[0] as _$MatrixTransition)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$toString#1', (args) => (args[0] as _$MatrixTransition)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$createState#0', (args) => (args[0] as _$MatrixTransition)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$debugFillProperties#1', (args) { (args[0] as _$MatrixTransition)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$createElement#0', (args) => (args[0] as _$MatrixTransition)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$toStringShort#0', (args) => (args[0] as _$MatrixTransition)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$toStringShallow#2', (args) => (args[0] as _$MatrixTransition)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$toStringDeep#4', (args) => (args[0] as _$MatrixTransition)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$MatrixTransition)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$MatrixTransition)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$onTransform#0', (args) => (args[0] as _$MatrixTransition)._super$onTransform);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$animation#0', (args) => (args[0] as _$MatrixTransition)._super$animation);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$alignment#0', (args) => (args[0] as _$MatrixTransition)._super$alignment);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$filterQuality#0', (args) => (args[0] as _$MatrixTransition)._super$filterQuality);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$child#0', (args) => (args[0] as _$MatrixTransition)._super$child);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$hashCode#0', (args) => (args[0] as _$MatrixTransition)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$listenable#0', (args) => (args[0] as _$MatrixTransition)._super$listenable);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::MatrixTransition::\$super\$key#0', (args) => (args[0] as _$MatrixTransition)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

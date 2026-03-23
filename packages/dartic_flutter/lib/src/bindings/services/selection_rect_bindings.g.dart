@@ -22,6 +22,70 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/services/text_editing_delta.dart';
 
+class _$SelectionRect extends SelectionRect implements DarticObjectHolder {
+  _$SelectionRect(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(position: superArgs[0] as int, bounds: superArgs[1] as Rect, direction: superArgs[2] as TextDirection);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get position {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'position');
+    if (identical(r, notOverridden)) return super.position;
+    return r as int;
+  }
+
+  @override
+  Rect get bounds {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bounds');
+    if (identical(r, notOverridden)) return super.bounds;
+    return r as Rect;
+  }
+
+  @override
+  TextDirection get direction {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'direction');
+    if (identical(r, notOverridden)) return super.direction;
+    return r as TextDirection;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$position => super.position;
+  Rect get _super$bounds => super.bounds;
+  TextDirection get _super$direction => super.direction;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSelectionRectBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SelectionRect(dispatch, obj, superArgs);
+
 abstract final class SelectionRectBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,7 +93,14 @@ abstract final class SelectionRectBindings {
       type: SelectionRect,
       test: (o) => o is SelectionRect,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SelectionRect(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::SelectionRect::\$super\$toString#0', (args) => (args[0] as _$SelectionRect)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::SelectionRect::\$super\$position#0', (args) => (args[0] as _$SelectionRect)._super$position);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::SelectionRect::\$super\$bounds#0', (args) => (args[0] as _$SelectionRect)._super$bounds);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::SelectionRect::\$super\$direction#0', (args) => (args[0] as _$SelectionRect)._super$direction);
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::SelectionRect::\$super\$hashCode#0', (args) => (args[0] as _$SelectionRect)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

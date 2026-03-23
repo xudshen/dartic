@@ -15,6 +15,70 @@ import 'package:flutter/src/widgets/scroll_delegate.dart';
 import 'package:flutter/src/widgets/scroll_notification.dart';
 import 'package:flutter/src/widgets/scroll_position.dart';
 
+class _$ChildVicinity extends ChildVicinity implements DarticObjectHolder {
+  _$ChildVicinity(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(xIndex: superArgs[0] as int, yIndex: superArgs[1] as int);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  int compareTo(ChildVicinity other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(r, notOverridden)) return super.compareTo(other);
+    return r as int;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get xIndex {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'xIndex');
+    if (identical(r, notOverridden)) return super.xIndex;
+    return r as int;
+  }
+
+  @override
+  int get yIndex {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'yIndex');
+    if (identical(r, notOverridden)) return super.yIndex;
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  int _super$compareTo(ChildVicinity other) => super.compareTo(other);
+  String _super$toString() => super.toString();
+  int get _super$xIndex => super.xIndex;
+  int get _super$yIndex => super.yIndex;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createChildVicinityBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ChildVicinity(dispatch, obj, superArgs);
+
 abstract final class ChildVicinityBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,8 +87,15 @@ abstract final class ChildVicinityBindings {
       test: (o) => o is ChildVicinity,
       methods: methodMap(),
       superclasses: ['dart:core::Comparable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ChildVicinity(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::invalid#0', (args) => ChildVicinity.invalid);
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::\$super\$compareTo#1', (args) => (args[0] as _$ChildVicinity)._super$compareTo(args[1] as ChildVicinity));
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::\$super\$toString#0', (args) => (args[0] as _$ChildVicinity)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::\$super\$xIndex#0', (args) => (args[0] as _$ChildVicinity)._super$xIndex);
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::\$super\$yIndex#0', (args) => (args[0] as _$ChildVicinity)._super$yIndex);
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::ChildVicinity::\$super\$hashCode#0', (args) => (args[0] as _$ChildVicinity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

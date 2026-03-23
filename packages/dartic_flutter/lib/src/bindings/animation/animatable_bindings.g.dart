@@ -13,6 +13,79 @@ import 'package:flutter/src/animation/animations.dart';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/animation.dart';
 
+class _$Animatable extends Animatable<dynamic> implements DarticObjectHolder {
+  _$Animatable(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  dynamic transform(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method transform must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  dynamic evaluate(Animation<double> animation) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(r, notOverridden)) return super.evaluate(animation);
+    return r as dynamic;
+  }
+
+  @override
+  Animation animate(Animation<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(r, notOverridden)) return super.animate(parent);
+    return r as Animation;
+  }
+
+  @override
+  Animatable chain(Animatable<double> parent) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(r, notOverridden)) return super.chain(parent);
+    return r as Animatable;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  dynamic _super$evaluate(Animation<double> animation) => super.evaluate(animation);
+  Animation _super$animate(Animation<double> parent) => super.animate(parent);
+  Animatable _super$chain(Animatable<double> parent) => super.chain(parent);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAnimatableBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Animatable(dispatch, obj, superArgs);
+
 abstract final class AnimatableBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,7 +93,14 @@ abstract final class AnimatableBindings {
       type: Animatable,
       test: (o) => o is Animatable,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Animatable(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Animatable::\$super\$evaluate#1', (args) => (args[0] as _$Animatable)._super$evaluate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Animatable::\$super\$animate#1', (args) => (args[0] as _$Animatable)._super$animate(args[1] as Animation<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Animatable::\$super\$chain#1', (args) => (args[0] as _$Animatable)._super$chain(args[1] as Animatable<double>));
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Animatable::\$super\$toString#0', (args) => (args[0] as _$Animatable)._super$toString());
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Animatable::\$super\$hashCode#0', (args) => (args[0] as _$Animatable)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

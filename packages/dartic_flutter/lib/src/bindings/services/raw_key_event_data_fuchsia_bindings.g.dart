@@ -14,6 +14,181 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:flutter/services.dart';
 
+class _$RawKeyEventDataFuchsia extends RawKeyEventDataFuchsia implements DarticObjectHolder {
+  _$RawKeyEventDataFuchsia(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(hidUsage: superArgs[0] as int, codePoint: superArgs[1] as int, modifiers: superArgs[2] as int);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool isModifierPressed(ModifierKey key, {KeyboardSide side = KeyboardSide.any}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isModifierPressed', [key, side]);
+    if (identical(r, notOverridden)) return super.isModifierPressed(key, side: side);
+    return r as bool;
+  }
+
+  @override
+  KeyboardSide? getModifierSide(ModifierKey key) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getModifierSide', [key]);
+    if (identical(r, notOverridden)) return super.getModifierSide(key);
+    return r as KeyboardSide?;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  bool shouldDispatchEvent() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldDispatchEvent', const []);
+    if (identical(r, notOverridden)) return super.shouldDispatchEvent();
+    return r as bool;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  int get hidUsage {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hidUsage');
+    if (identical(r, notOverridden)) return super.hidUsage;
+    return r as int;
+  }
+
+  @override
+  int get codePoint {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'codePoint');
+    if (identical(r, notOverridden)) return super.codePoint;
+    return r as int;
+  }
+
+  @override
+  int get modifiers {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'modifiers');
+    if (identical(r, notOverridden)) return super.modifiers;
+    return r as int;
+  }
+
+  @override
+  String get keyLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keyLabel');
+    if (identical(r, notOverridden)) return super.keyLabel;
+    return r as String;
+  }
+
+  @override
+  LogicalKeyboardKey get logicalKey {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'logicalKey');
+    if (identical(r, notOverridden)) return super.logicalKey;
+    return r as LogicalKeyboardKey;
+  }
+
+  @override
+  PhysicalKeyboardKey get physicalKey {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'physicalKey');
+    if (identical(r, notOverridden)) return super.physicalKey;
+    return r as PhysicalKeyboardKey;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool get isControlPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isControlPressed');
+    if (identical(r, notOverridden)) return super.isControlPressed;
+    return r as bool;
+  }
+
+  @override
+  bool get isShiftPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isShiftPressed');
+    if (identical(r, notOverridden)) return super.isShiftPressed;
+    return r as bool;
+  }
+
+  @override
+  bool get isAltPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isAltPressed');
+    if (identical(r, notOverridden)) return super.isAltPressed;
+    return r as bool;
+  }
+
+  @override
+  bool get isMetaPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isMetaPressed');
+    if (identical(r, notOverridden)) return super.isMetaPressed;
+    return r as bool;
+  }
+
+  @override
+  Map<ModifierKey, KeyboardSide> get modifiersPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'modifiersPressed');
+    if (identical(r, notOverridden)) return super.modifiersPressed;
+    return r as Map<ModifierKey, KeyboardSide>;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  bool _super$isModifierPressed(ModifierKey key, {KeyboardSide side = KeyboardSide.any}) => super.isModifierPressed(key, side: side);
+  KeyboardSide? _super$getModifierSide(ModifierKey key) => super.getModifierSide(key);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  bool _super$shouldDispatchEvent() => super.shouldDispatchEvent();
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  int get _super$hidUsage => super.hidUsage;
+  int get _super$codePoint => super.codePoint;
+  int get _super$modifiers => super.modifiers;
+  String get _super$keyLabel => super.keyLabel;
+  LogicalKeyboardKey get _super$logicalKey => super.logicalKey;
+  PhysicalKeyboardKey get _super$physicalKey => super.physicalKey;
+  int get _super$hashCode => super.hashCode;
+  bool get _super$isControlPressed => super.isControlPressed;
+  bool get _super$isShiftPressed => super.isShiftPressed;
+  bool get _super$isAltPressed => super.isAltPressed;
+  bool get _super$isMetaPressed => super.isMetaPressed;
+  Map<ModifierKey, KeyboardSide> get _super$modifiersPressed => super.modifiersPressed;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRawKeyEventDataFuchsiaBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RawKeyEventDataFuchsia(dispatch, obj, superArgs);
+
 abstract final class RawKeyEventDataFuchsiaBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,6 +197,8 @@ abstract final class RawKeyEventDataFuchsiaBindings {
       test: (o) => o is RawKeyEventDataFuchsia,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/raw_keyboard.dart::RawKeyEventData', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RawKeyEventDataFuchsia(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::modifierNone#0', (args) => RawKeyEventDataFuchsia.modifierNone);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::modifierCapsLock#0', (args) => RawKeyEventDataFuchsia.modifierCapsLock);
@@ -37,6 +214,25 @@ abstract final class RawKeyEventDataFuchsiaBindings {
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::modifierLeftMeta#0', (args) => RawKeyEventDataFuchsia.modifierLeftMeta);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::modifierRightMeta#0', (args) => RawKeyEventDataFuchsia.modifierRightMeta);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::modifierMeta#0', (args) => RawKeyEventDataFuchsia.modifierMeta);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isModifierPressed#2', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isModifierPressed(args[1] as ModifierKey, side: identical(args[2], darticAbsent) ? KeyboardSide.any : args[2] as KeyboardSide));
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$getModifierSide#1', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$getModifierSide(args[1] as ModifierKey));
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$debugFillProperties#1', (args) { (args[0] as _$RawKeyEventDataFuchsia)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$toString#1', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$shouldDispatchEvent#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$shouldDispatchEvent());
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$toStringShort#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$hidUsage#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$hidUsage);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$codePoint#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$codePoint);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$modifiers#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$modifiers);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$keyLabel#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$keyLabel);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$logicalKey#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$logicalKey);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$physicalKey#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$physicalKey);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isControlPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isControlPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isShiftPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isShiftPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isAltPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isAltPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isMetaPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isMetaPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$modifiersPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$modifiersPressed);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

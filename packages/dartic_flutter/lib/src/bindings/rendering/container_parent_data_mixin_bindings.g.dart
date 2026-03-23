@@ -18,6 +18,68 @@ import 'package:flutter/src/rendering/binding.dart';
 import 'package:flutter/src/rendering/debug.dart';
 import 'package:flutter/src/rendering/layer.dart';
 
+class _$ContainerParentDataMixin implements ContainerParentDataMixin<RenderObject>, DarticObjectHolder {
+  _$ContainerParentDataMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void detach() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method detach must be overridden in dartic code');
+    }
+  }
+
+  @override
+  RenderObject? get previousSibling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'previousSibling');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter previousSibling must be overridden in dartic code');
+    }
+    return r as RenderObject?;
+  }
+
+  @override
+  RenderObject? get nextSibling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'nextSibling');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter nextSibling must be overridden in dartic code');
+    }
+    return r as RenderObject?;
+  }
+
+  @override
+  set previousSibling(RenderObject? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'previousSibling', value)) {
+      throw UnsupportedError('Abstract setter previousSibling must be overridden in dartic code');
+    }
+  }
+
+  @override
+  set nextSibling(RenderObject? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'nextSibling', value)) {
+      throw UnsupportedError('Abstract setter nextSibling must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createContainerParentDataMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ContainerParentDataMixin(dispatch, obj, superArgs);
+
 abstract final class ContainerParentDataMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,6 +88,8 @@ abstract final class ContainerParentDataMixinBindings {
       test: (o) => o is ContainerParentDataMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/rendering/object.dart::ParentData'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ContainerParentDataMixin(dispatch, darticObject, superArgs),
     );
   }
 
@@ -35,8 +99,8 @@ abstract final class ContainerParentDataMixinBindings {
         'previousSibling#0': (args) => (args[0] as ContainerParentDataMixin).previousSibling,
         'nextSibling#0': (args) => (args[0] as ContainerParentDataMixin).nextSibling,
         'hashCode#0': (args) => (args[0] as ContainerParentDataMixin).hashCode,
-        'previousSibling=#1': (args) { (args[0] as ContainerParentDataMixin).previousSibling = args[1] as RenderObject; return args[1]; },
-        'nextSibling=#1': (args) { (args[0] as ContainerParentDataMixin).nextSibling = args[1] as RenderObject; return args[1]; },
+        'previousSibling=#1': (args) { (args[0] as ContainerParentDataMixin).previousSibling = args[1] as RenderObject?; return args[1]; },
+        'nextSibling=#1': (args) { (args[0] as ContainerParentDataMixin).nextSibling = args[1] as RenderObject?; return args[1]; },
         '==#1': (args) => (args[0] as ContainerParentDataMixin) == (args[1] as Object),
       };
 }

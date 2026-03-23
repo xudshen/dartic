@@ -77,6 +77,54 @@ import 'package:flutter/src/material/tooltip_theme.dart';
 import 'package:flutter/src/material/typography.dart';
 import 'package:flutter/src/cupertino/theme.dart';
 
+class _$CupertinoBasedMaterialThemeData extends CupertinoBasedMaterialThemeData implements DarticObjectHolder {
+  _$CupertinoBasedMaterialThemeData(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(themeData: superArgs[0] as CupertinoThemeData);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ThemeData get materialTheme {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'materialTheme');
+    if (identical(r, notOverridden)) return super.materialTheme;
+    return r as ThemeData;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  ThemeData get _super$materialTheme => super.materialTheme;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCupertinoBasedMaterialThemeDataBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CupertinoBasedMaterialThemeData(dispatch, obj, superArgs);
+
 abstract final class CupertinoBasedMaterialThemeDataBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -84,7 +132,12 @@ abstract final class CupertinoBasedMaterialThemeDataBindings {
       type: CupertinoBasedMaterialThemeData,
       test: (o) => o is CupertinoBasedMaterialThemeData,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CupertinoBasedMaterialThemeData(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::CupertinoBasedMaterialThemeData::\$super\$toString#0', (args) => (args[0] as _$CupertinoBasedMaterialThemeData)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::CupertinoBasedMaterialThemeData::\$super\$materialTheme#0', (args) => (args[0] as _$CupertinoBasedMaterialThemeData)._super$materialTheme);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::CupertinoBasedMaterialThemeData::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoBasedMaterialThemeData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -14,6 +14,82 @@ import 'package:flutter/src/foundation/debug.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/memory_allocations.dart';
 
+class _$ChangeNotifier extends ChangeNotifier implements DarticObjectHolder {
+  _$ChangeNotifier(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get hasListeners {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
+    if (identical(r, notOverridden)) return super.hasListeners;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$dispose() { super.dispose(); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  String _super$toString() => super.toString();
+  bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createChangeNotifierBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ChangeNotifier(dispatch, obj, superArgs);
+
 abstract final class ChangeNotifierBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,9 +98,18 @@ abstract final class ChangeNotifierBindings {
       test: (o) => o is ChangeNotifier,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ChangeNotifier(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::debugAssertNotDisposed#1', (args) => ChangeNotifier.debugAssertNotDisposed(args[0] as ChangeNotifier));
     ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::maybeDispatchObjectCreation#1', (args) { ChangeNotifier.maybeDispatchObjectCreation(args[0] as ChangeNotifier); return null; });
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$addListener#1', (args) { (args[0] as _$ChangeNotifier)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$removeListener#1', (args) { (args[0] as _$ChangeNotifier)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$dispose#0', (args) { (args[0] as _$ChangeNotifier)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$notifyListeners#0', (args) { (args[0] as _$ChangeNotifier)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$toString#0', (args) => (args[0] as _$ChangeNotifier)._super$toString());
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$hasListeners#0', (args) => (args[0] as _$ChangeNotifier)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/foundation/change_notifier.dart::ChangeNotifier::\$super\$hashCode#0', (args) => (args[0] as _$ChangeNotifier)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

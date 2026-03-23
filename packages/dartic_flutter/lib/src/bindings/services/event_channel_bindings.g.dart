@@ -17,6 +17,78 @@ import 'package:flutter/src/services/debug.dart';
 import 'package:flutter/src/services/message_codec.dart';
 import 'package:flutter/src/services/message_codecs.dart';
 
+class _$EventChannel extends EventChannel implements DarticObjectHolder {
+  _$EventChannel(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as MethodCodec, identical(superArgs[2], darticAbsent) ? null : superArgs[2] as BinaryMessenger?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Stream<dynamic> receiveBroadcastStream([dynamic arguments]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'receiveBroadcastStream', [arguments]);
+    if (identical(r, notOverridden)) return super.receiveBroadcastStream(arguments);
+    return r as Stream<dynamic>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get name {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String;
+  }
+
+  @override
+  MethodCodec get codec {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'codec');
+    if (identical(r, notOverridden)) return super.codec;
+    return r as MethodCodec;
+  }
+
+  @override
+  BinaryMessenger get binaryMessenger {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'binaryMessenger');
+    if (identical(r, notOverridden)) return super.binaryMessenger;
+    return r as BinaryMessenger;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Stream<dynamic> _super$receiveBroadcastStream([dynamic arguments]) => super.receiveBroadcastStream(arguments);
+  String _super$toString() => super.toString();
+  String get _super$name => super.name;
+  MethodCodec get _super$codec => super.codec;
+  BinaryMessenger get _super$binaryMessenger => super.binaryMessenger;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createEventChannelBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$EventChannel(dispatch, obj, superArgs);
+
 abstract final class EventChannelBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +96,15 @@ abstract final class EventChannelBindings {
       type: EventChannel,
       test: (o) => o is EventChannel,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$EventChannel(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$receiveBroadcastStream#1', (args) => (args[0] as _$EventChannel)._super$receiveBroadcastStream(identical(args[1], darticAbsent) ? null : args[1]));
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$toString#0', (args) => (args[0] as _$EventChannel)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$name#0', (args) => (args[0] as _$EventChannel)._super$name);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$codec#0', (args) => (args[0] as _$EventChannel)._super$codec);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$binaryMessenger#0', (args) => (args[0] as _$EventChannel)._super$binaryMessenger);
+    ctx.registerBinding('package:flutter/src/services/platform_channel.dart::EventChannel::\$super\$hashCode#0', (args) => (args[0] as _$EventChannel)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

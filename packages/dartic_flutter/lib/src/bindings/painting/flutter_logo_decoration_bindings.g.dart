@@ -22,6 +22,157 @@ import 'package:flutter/src/painting/text_span.dart';
 import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$FlutterLogoDecoration extends FlutterLogoDecoration implements DarticObjectHolder {
+  _$FlutterLogoDecoration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(textColor: superArgs[0] as ui.Color, style: superArgs[1] as FlutterLogoStyle, margin: superArgs[2] as EdgeInsets);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool debugAssertIsValid() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', const []);
+    if (identical(r, notOverridden)) return super.debugAssertIsValid();
+    return r as bool;
+  }
+
+  @override
+  FlutterLogoDecoration? lerpFrom(Decoration? a, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(r, notOverridden)) return super.lerpFrom(a, t);
+    return r as FlutterLogoDecoration?;
+  }
+
+  @override
+  FlutterLogoDecoration? lerpTo(Decoration? b, double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(r, notOverridden)) return super.lerpTo(b, t);
+    return r as FlutterLogoDecoration?;
+  }
+
+  @override
+  bool hitTest(ui.Size size, ui.Offset position, {ui.TextDirection? textDirection}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [size, position, textDirection]);
+    if (identical(r, notOverridden)) return super.hitTest(size, position, textDirection: textDirection);
+    return r as bool;
+  }
+
+  @override
+  BoxPainter createBoxPainter([ui.VoidCallback? onChanged]) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createBoxPainter', [onChanged]);
+    if (identical(r, notOverridden)) return super.createBoxPainter(onChanged != null ? () => onChanged() : null);
+    return r as BoxPainter;
+  }
+
+  @override
+  ui.Path getClipPath(ui.Rect rect, ui.TextDirection textDirection) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClipPath', [rect, textDirection]);
+    if (identical(r, notOverridden)) return super.getClipPath(rect, textDirection);
+    return r as ui.Path;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  ui.Color get textColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textColor');
+    if (identical(r, notOverridden)) return super.textColor;
+    return r as ui.Color;
+  }
+
+  @override
+  FlutterLogoStyle get style {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'style');
+    if (identical(r, notOverridden)) return super.style;
+    return r as FlutterLogoStyle;
+  }
+
+  @override
+  EdgeInsets get margin {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'margin');
+    if (identical(r, notOverridden)) return super.margin;
+    return r as EdgeInsets;
+  }
+
+  @override
+  bool get isComplex {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isComplex');
+    if (identical(r, notOverridden)) return super.isComplex;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  EdgeInsetsGeometry get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  bool _super$debugAssertIsValid() => super.debugAssertIsValid();
+  FlutterLogoDecoration? _super$lerpFrom(Decoration? a, double t) => super.lerpFrom(a, t);
+  FlutterLogoDecoration? _super$lerpTo(Decoration? b, double t) => super.lerpTo(b, t);
+  bool _super$hitTest(ui.Size size, ui.Offset position, {ui.TextDirection? textDirection}) => super.hitTest(size, position, textDirection: textDirection);
+  BoxPainter _super$createBoxPainter([ui.VoidCallback? onChanged]) => super.createBoxPainter(onChanged);
+  ui.Path _super$getClipPath(ui.Rect rect, ui.TextDirection textDirection) => super.getClipPath(rect, textDirection);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  ui.Color get _super$textColor => super.textColor;
+  FlutterLogoStyle get _super$style => super.style;
+  EdgeInsets get _super$margin => super.margin;
+  bool get _super$isComplex => super.isComplex;
+  int get _super$hashCode => super.hashCode;
+  EdgeInsetsGeometry get _super$padding => super.padding;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFlutterLogoDecorationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FlutterLogoDecoration(dispatch, obj, superArgs);
+
 abstract final class FlutterLogoDecorationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,8 +181,26 @@ abstract final class FlutterLogoDecorationBindings {
       test: (o) => o is FlutterLogoDecoration,
       methods: methodMap(),
       superclasses: ['package:flutter/src/painting/decoration.dart::Decoration', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FlutterLogoDecoration(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::lerp#3', (args) => FlutterLogoDecoration.lerp(args[0] as FlutterLogoDecoration?, args[1] as FlutterLogoDecoration?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$debugAssertIsValid#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$debugAssertIsValid());
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$lerpFrom#2', (args) => (args[0] as _$FlutterLogoDecoration)._super$lerpFrom(args[1] as Decoration?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$lerpTo#2', (args) => (args[0] as _$FlutterLogoDecoration)._super$lerpTo(args[1] as Decoration?, args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$hitTest#3', (args) => (args[0] as _$FlutterLogoDecoration)._super$hitTest(args[1] as ui.Size, args[2] as ui.Offset, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$createBoxPainter#1', (args) => (args[0] as _$FlutterLogoDecoration)._super$createBoxPainter(identical(args[1], darticAbsent) ? null : (args[1] as Function?) == null ? null : () => (args[1] as Function?)!()));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$getClipPath#2', (args) => (args[0] as _$FlutterLogoDecoration)._super$getClipPath(args[1] as ui.Rect, args[2] as ui.TextDirection));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$debugFillProperties#1', (args) { (args[0] as _$FlutterLogoDecoration)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$toString#1', (args) => (args[0] as _$FlutterLogoDecoration)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$toStringShort#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$FlutterLogoDecoration)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$textColor#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$textColor);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$style#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$style);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$margin#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$margin);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$isComplex#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$isComplex);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$hashCode#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$padding#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$padding);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

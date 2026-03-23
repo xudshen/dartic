@@ -15,6 +15,62 @@ import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:flutter/src/services/raw_keyboard_android.dart';
 import 'package:flutter/src/services/system_channels.dart';
 
+class _$KeyMessage extends KeyMessage implements DarticObjectHolder {
+  _$KeyMessage(this._dispatch, this.$darticObject, List<Object?> superArgs) : super((superArgs[0] as List).cast<KeyEvent>(), superArgs[1] as RawKeyEvent?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  List<KeyEvent> get events {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'events');
+    if (identical(r, notOverridden)) return super.events;
+    return r as List<KeyEvent>;
+  }
+
+  @override
+  RawKeyEvent? get rawEvent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'rawEvent');
+    if (identical(r, notOverridden)) return super.rawEvent;
+    return r as RawKeyEvent?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  List<KeyEvent> get _super$events => super.events;
+  RawKeyEvent? get _super$rawEvent => super.rawEvent;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createKeyMessageBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$KeyMessage(dispatch, obj, superArgs);
+
 abstract final class KeyMessageBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,7 +78,13 @@ abstract final class KeyMessageBindings {
       type: KeyMessage,
       test: (o) => o is KeyMessage,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$KeyMessage(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyMessage::\$super\$toString#0', (args) => (args[0] as _$KeyMessage)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyMessage::\$super\$events#0', (args) => (args[0] as _$KeyMessage)._super$events);
+    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyMessage::\$super\$rawEvent#0', (args) => (args[0] as _$KeyMessage)._super$rawEvent);
+    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyMessage::\$super\$hashCode#0', (args) => (args[0] as _$KeyMessage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

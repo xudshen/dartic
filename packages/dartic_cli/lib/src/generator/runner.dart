@@ -12,6 +12,7 @@ import 'package:path/path.dart' as p;
 
 import 'config/yaml_parser.dart';
 import 'config/binding_config.dart';
+import 'kernel/discovery_result.dart' show DiscoveredClass;
 import 'analyzer/type_analyzer.dart';
 import 'analyzer/type_info.dart';
 import 'emitter/binding_emitter.dart' as binding_emitter;
@@ -21,6 +22,55 @@ import 'audit/audit_result.dart';
 import 'kernel/kernel_introspector.dart';
 import 'kernel/stub_dill_compiler.dart';
 import 'verify/verify_emitter.dart' as verify_emitter;
+
+/// Bridge generation mode for a host class.
+enum BridgeMode {
+  /// Bridge generated (extends or implements mode auto-detected by TypeAnalyzer).
+  bridge,
+
+  /// No bridge generated (final/sealed/base-mixin classes).
+  skip,
+}
+
+/// Dart special types that cannot be extended or implemented.
+const _disallowedBridgeTypes = {'FutureOr', 'Null', 'Never'};
+
+/// Infers bridge generation mode from host class modifiers.
+///
+/// Compiler lowering handles `with` (mixin application); bridges only serve
+/// `extends` and `implements`.
+///
+/// Returns [BridgeMode.skip] with a non-null [reason] in the record when the
+/// class is detected as unbridgeable (callers should print a warning).
+({BridgeMode mode, String? skipReason}) inferBridgeModeWithReason(
+    DiscoveredClass cls) {
+  if (_disallowedBridgeTypes.contains(cls.name)) {
+    return (
+      mode: BridgeMode.skip,
+      skipReason: '${cls.name} is a special Dart type that cannot be subclassed'
+    );
+  }
+  if (cls.isSealed || cls.isFinal) return (mode: BridgeMode.skip, skipReason: null);
+  // standalone base mixin: only `with`, bridge can't help
+  if (cls.isMixinDeclaration && cls.isBase) {
+    return (mode: BridgeMode.skip, skipReason: null);
+  }
+  // F-bounded type params → type erasure breaks overrides
+  if (cls.hasFBoundedTypeParam) {
+    return (
+      mode: BridgeMode.skip,
+      skipReason:
+          '${cls.name} has F-bounded type parameters — extends bridge would have invalid override signatures'
+    );
+  }
+  // extends vs implements mode is auto-detected by TypeAnalyzer from
+  // class modifiers (interface, mixin, mixin class).
+  return (mode: BridgeMode.bridge, skipReason: null);
+}
+
+/// Convenience wrapper that returns only the mode (for tests and simple use).
+BridgeMode inferBridgeMode(DiscoveredClass cls) =>
+    inferBridgeModeWithReason(cls).mode;
 
 /// Orchestrates the code generation pipeline.
 class Runner {
@@ -186,37 +236,13 @@ class Runner {
 
         for (final library in resolvedLibraries) {
           for (final classConfig in library.classes) {
-            if (!classConfig.bridge && !classConfig.face) continue;
+            if (!classConfig.bridge) continue;
 
             final resolvedName = classConfig.resolvedName;
             final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
             var info =
                 await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
-            // For face configs, force isInterface so bridge gen uses
-            // `implements` mode and interface bridge registration.
-            if (classConfig.face && !info.isInterface) {
-              info = TypeInfo(
-                className: info.className,
-                libraryUri: info.libraryUri,
-                methods: info.methods,
-                getters: info.getters,
-                setters: info.setters,
-                operators: info.operators,
-                staticMethods: info.staticMethods,
-                staticGetters: info.staticGetters,
-                constructors: info.constructors,
-                superclasses: info.superclasses,
-                isAbstract: info.isAbstract,
-                isFinal: info.isFinal,
-                isInterface: true,
-                isBase: info.isBase,
-                bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
-                fields: info.fields,
-                sourceImports: info.sourceImports,
-                referencedTypes: info.referencedTypes,
-              );
-            }
 
             classConfigs.add((
               name: classConfig.name,
@@ -461,7 +487,7 @@ class Runner {
           mainExtraMethods: _nullIfEmpty(mainExtraMethods),
           extraBindings: _nullIfEmpty(mainOverrides?.extraBindings),
           ignoreForFile: _mergeIgnoreForFile(mainOverrides?.ignoreForFile),
-          bridge: classConfig.bridge || classConfig.face,
+          bridge: classConfig.bridge,
           methodOverrides: _nullIfEmpty(mainOverrides?.methodOverrides),
           kernelInfo: _kernelIntrospector?.lookup(library.uri, resolvedName),
           extraImports: _nullIfEmpty(library.extraImports),
@@ -491,29 +517,25 @@ class Runner {
             continue;
           }
         }
-        // For face configs, force isInterface so bridge gen uses
-        // `implements` mode.
-        if (classConfig.face && !info.isInterface) {
-          info = TypeInfo(
-            className: info.className,
-            libraryUri: info.libraryUri,
-            methods: info.methods,
-            getters: info.getters,
-            setters: info.setters,
-            operators: info.operators,
-            staticMethods: info.staticMethods,
-            staticGetters: info.staticGetters,
-            constructors: info.constructors,
-            superclasses: info.superclasses,
-            isAbstract: info.isAbstract,
-            isFinal: info.isFinal,
-            isInterface: true,
-            isBase: info.isBase,
-            bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
-            fields: info.fields,
-            sourceImports: info.sourceImports,
-            referencedTypes: info.referencedTypes,
-          );
+
+        // Detect bridge issues that would cause compile errors.
+        var effectiveBridge = classConfig.bridge;
+        if (effectiveBridge) {
+          if (!info.isInterface && info.bridgeSuperTypeArgs != null) {
+            // F-bounded generic in extends mode → type erasure breaks overrides.
+            stderr.writeln(
+                '  SKIP bridge: $resolvedName has F-bounded type parameters'
+                ' — extends bridge would have invalid override signatures');
+            effectiveBridge = false;
+          } else if (info.isInterface && info.methods.any(
+              (m) => m.typeParamDecl != null && !m.isAbstract)) {
+            // Interface bridge (implements) with inherited non-abstract generic
+            // methods — emitter skips them, leaving missing implementations.
+            stderr.writeln(
+                '  SKIP bridge: $resolvedName has generic methods'
+                ' that the interface bridge cannot implement');
+            effectiveBridge = false;
+          }
         }
         // Check for overrides on this class
         final overrides = library.overrides[resolvedName];
@@ -525,7 +547,7 @@ class Runner {
           extraMethods: _nullIfEmpty(extraMethods),
           extraBindings: _nullIfEmpty(extraBindings),
           preamble: preamble,
-          bridge: classConfig.bridge || classConfig.face,
+          bridge: effectiveBridge,
           customBridge: overrides?.customBridge ?? false,
           ignoreForFile: _mergeIgnoreForFile(overrides?.ignoreForFile),
 
@@ -668,37 +690,13 @@ class Runner {
     for (var library in config.libraries) {
       library = _resolveDiscovery(library);
       for (final classConfig in library.classes) {
-        if (!classConfig.bridge && !classConfig.face) continue;
+        if (!classConfig.bridge) continue;
 
         final resolvedName = classConfig.resolvedName;
         final analysisUri = classConfig.sourceLibraryUri ?? library.uri;
         var info =
             await _analyzeOrEmpty(analyzer, analysisUri, resolvedName);
 
-        // For face configs, force isInterface so bridge gen uses
-        // `implements` mode.
-        if (classConfig.face && !info.isInterface) {
-          info = TypeInfo(
-            className: info.className,
-            libraryUri: info.libraryUri,
-            methods: info.methods,
-            getters: info.getters,
-            setters: info.setters,
-            operators: info.operators,
-            staticMethods: info.staticMethods,
-            staticGetters: info.staticGetters,
-            constructors: info.constructors,
-            superclasses: info.superclasses,
-            isAbstract: info.isAbstract,
-            isFinal: info.isFinal,
-            isInterface: true,
-            isBase: info.isBase,
-            bridgeSuperTypeArgs: info.bridgeSuperTypeArgs,
-            fields: info.fields,
-            sourceImports: info.sourceImports,
-            referencedTypes: info.referencedTypes,
-          );
-        }
 
         classConfigs.add((
           name: classConfig.name,
@@ -1002,6 +1000,7 @@ class Runner {
 
   /// Converts a class name to a binding file name.
   ///
+
   // ── Auto-discovery ─────────────────────────────────────────────────
 
   /// Resolves `discover: all` on a [LibraryConfig] by merging
@@ -1039,7 +1038,6 @@ class Runner {
           sourceName: cls.sourceName,
           internalTypes: cls.internalTypes,
           bridge: cls.bridge,
-          face: cls.face,
           sourceLibraryUri: discoveredUris[cls.name],
         ));
       } else {
@@ -1049,14 +1047,20 @@ class Runner {
 
     // Add discovered classes not already explicit and not excluded.
     // Exclude uses qualified format: 'libraryUri::ClassName'.
+    // Auto-infer bridge mode from class modifiers.
     var addedCount = 0;
     for (final cls in discovered) {
       if (explicitNames.contains(cls.name)) continue;
       if (excludeSet.contains('${cls.libraryUri}::${cls.name}')) continue;
 
+      final (:mode, :skipReason) = inferBridgeModeWithReason(cls);
+      if (skipReason != null) {
+        stderr.writeln('  SKIP bridge: $skipReason');
+      }
       merged.add(ClassConfig(
         name: cls.name,
         sourceLibraryUri: cls.libraryUri,
+        bridge: mode != BridgeMode.skip,
       ));
       addedCount++;
     }

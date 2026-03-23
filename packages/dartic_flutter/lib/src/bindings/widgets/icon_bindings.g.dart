@@ -20,6 +20,221 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'dart:ui';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Icon extends Icon implements DarticObjectHolder {
+  _$Icon(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as IconData?, key: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Key?, size: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as double?, fill: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as double?, weight: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as double?, grade: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as double?, opticalSize: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as double?, color: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as Color?, shadows: identical(superArgs[8], darticAbsent) ? null : superArgs[8] == null ? null : (superArgs[8] as List).cast<Shadow>(), semanticLabel: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as String?, textDirection: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as TextDirection?, applyTextScaling: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as bool?, blendMode: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as BlendMode?, fontWeight: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as FontWeight?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  IconData? get icon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'icon');
+    if (identical(r, notOverridden)) return super.icon;
+    return r as IconData?;
+  }
+
+  @override
+  double? get size {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'size');
+    if (identical(r, notOverridden)) return super.size;
+    return r as double?;
+  }
+
+  @override
+  double? get fill {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fill');
+    if (identical(r, notOverridden)) return super.fill;
+    return r as double?;
+  }
+
+  @override
+  double? get weight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'weight');
+    if (identical(r, notOverridden)) return super.weight;
+    return r as double?;
+  }
+
+  @override
+  double? get grade {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'grade');
+    if (identical(r, notOverridden)) return super.grade;
+    return r as double?;
+  }
+
+  @override
+  double? get opticalSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opticalSize');
+    if (identical(r, notOverridden)) return super.opticalSize;
+    return r as double?;
+  }
+
+  @override
+  Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as Color?;
+  }
+
+  @override
+  List<Shadow>? get shadows {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shadows');
+    if (identical(r, notOverridden)) return super.shadows;
+    return r as List<Shadow>?;
+  }
+
+  @override
+  String? get semanticLabel {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticLabel');
+    if (identical(r, notOverridden)) return super.semanticLabel;
+    return r as String?;
+  }
+
+  @override
+  TextDirection? get textDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textDirection');
+    if (identical(r, notOverridden)) return super.textDirection;
+    return r as TextDirection?;
+  }
+
+  @override
+  bool? get applyTextScaling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'applyTextScaling');
+    if (identical(r, notOverridden)) return super.applyTextScaling;
+    return r as bool?;
+  }
+
+  @override
+  BlendMode? get blendMode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'blendMode');
+    if (identical(r, notOverridden)) return super.blendMode;
+    return r as BlendMode?;
+  }
+
+  @override
+  FontWeight? get fontWeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fontWeight');
+    if (identical(r, notOverridden)) return super.fontWeight;
+    return r as FontWeight?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  IconData? get _super$icon => super.icon;
+  double? get _super$size => super.size;
+  double? get _super$fill => super.fill;
+  double? get _super$weight => super.weight;
+  double? get _super$grade => super.grade;
+  double? get _super$opticalSize => super.opticalSize;
+  Color? get _super$color => super.color;
+  List<Shadow>? get _super$shadows => super.shadows;
+  String? get _super$semanticLabel => super.semanticLabel;
+  TextDirection? get _super$textDirection => super.textDirection;
+  bool? get _super$applyTextScaling => super.applyTextScaling;
+  BlendMode? get _super$blendMode => super.blendMode;
+  FontWeight? get _super$fontWeight => super.fontWeight;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createIconBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Icon(dispatch, obj, superArgs);
+
 abstract final class IconBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +243,33 @@ abstract final class IconBindings {
       test: (o) => o is Icon,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Icon(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$build#1', (args) => (args[0] as _$Icon)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$debugFillProperties#1', (args) { (args[0] as _$Icon)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$toString#1', (args) => (args[0] as _$Icon)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$createElement#0', (args) => (args[0] as _$Icon)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$toStringShort#0', (args) => (args[0] as _$Icon)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$toStringShallow#2', (args) => (args[0] as _$Icon)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$toStringDeep#4', (args) => (args[0] as _$Icon)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Icon)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Icon)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$icon#0', (args) => (args[0] as _$Icon)._super$icon);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$size#0', (args) => (args[0] as _$Icon)._super$size);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$fill#0', (args) => (args[0] as _$Icon)._super$fill);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$weight#0', (args) => (args[0] as _$Icon)._super$weight);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$grade#0', (args) => (args[0] as _$Icon)._super$grade);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$opticalSize#0', (args) => (args[0] as _$Icon)._super$opticalSize);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$color#0', (args) => (args[0] as _$Icon)._super$color);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$shadows#0', (args) => (args[0] as _$Icon)._super$shadows);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$semanticLabel#0', (args) => (args[0] as _$Icon)._super$semanticLabel);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$textDirection#0', (args) => (args[0] as _$Icon)._super$textDirection);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$applyTextScaling#0', (args) => (args[0] as _$Icon)._super$applyTextScaling);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$blendMode#0', (args) => (args[0] as _$Icon)._super$blendMode);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$fontWeight#0', (args) => (args[0] as _$Icon)._super$fontWeight);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$hashCode#0', (args) => (args[0] as _$Icon)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$key#0', (args) => (args[0] as _$Icon)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

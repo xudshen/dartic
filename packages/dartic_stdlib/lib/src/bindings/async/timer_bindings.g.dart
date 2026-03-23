@@ -10,6 +10,54 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
+class _$Timer implements Timer, DarticObjectHolder {
+  _$Timer(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void cancel() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method cancel must be overridden in dartic code');
+    }
+  }
+
+  @override
+  int get tick {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tick');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter tick must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  bool get isActive {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isActive');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isActive must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTimerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Timer(dispatch, obj, superArgs);
+
 abstract final class TimerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +65,8 @@ abstract final class TimerBindings {
       type: Timer,
       test: (o) => o is Timer,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Timer(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:async::Timer::run#1', (args) { Timer.run(() => (args[0] as Function)()); return null; });
   }

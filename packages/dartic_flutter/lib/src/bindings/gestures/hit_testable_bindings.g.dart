@@ -12,6 +12,44 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/src/gestures/events.dart';
 import 'dart:ui';
 
+class _$HitTestable implements HitTestable, DarticObjectHolder {
+  _$HitTestable(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void hitTest(HitTestResult result, Offset position) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, position]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method hitTest must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void hitTestInView(HitTestResult result, Offset position, int viewId) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestInView', [result, position, viewId]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method hitTestInView must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createHitTestableBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$HitTestable(dispatch, obj, superArgs);
+
 abstract final class HitTestableBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,6 +57,8 @@ abstract final class HitTestableBindings {
       type: HitTestable,
       test: (o) => o is HitTestable,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$HitTestable(dispatch, darticObject, superArgs),
     );
   }
 

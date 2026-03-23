@@ -19,6 +19,88 @@ import 'package:flutter/src/widgets/scroll_notification.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/painting.dart';
 
+class _$ScrollActivityDelegate extends ScrollActivityDelegate implements DarticObjectHolder {
+  _$ScrollActivityDelegate(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double setPixels(double pixels) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPixels', [pixels]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method setPixels must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  void applyUserOffset(double delta) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyUserOffset', [delta]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method applyUserOffset must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void goIdle() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goIdle', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method goIdle must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void goBallistic(double velocity) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goBallistic', [velocity]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method goBallistic must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  AxisDirection get axisDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axisDirection');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter axisDirection must be overridden in dartic code');
+    }
+    return r as AxisDirection;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollActivityDelegateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollActivityDelegate(dispatch, obj, superArgs);
+
 abstract final class ScrollActivityDelegateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +108,11 @@ abstract final class ScrollActivityDelegateBindings {
       type: ScrollActivityDelegate,
       test: (o) => o is ScrollActivityDelegate,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollActivityDelegate(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivityDelegate::\$super\$toString#0', (args) => (args[0] as _$ScrollActivityDelegate)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivityDelegate::\$super\$hashCode#0', (args) => (args[0] as _$ScrollActivityDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -13,6 +13,69 @@ import 'package:flutter/src/services/platform_channel.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
+class _$DefaultProcessTextService extends DefaultProcessTextService implements DarticObjectHolder {
+  _$DefaultProcessTextService(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void setChannel(MethodChannel newChannel) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setChannel', [newChannel]);
+    if (identical(r, notOverridden)) { super.setChannel(newChannel); return; }
+  }
+
+  @override
+  Future<List<ProcessTextAction>> queryTextActions() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
+    if (identical(r, notOverridden)) return super.queryTextActions();
+    return r as Future<List<ProcessTextAction>>;
+  }
+
+  @override
+  Future<String?> processTextAction(String id, String text, bool readOnly) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
+    if (identical(r, notOverridden)) return super.processTextAction(id, text, readOnly);
+    return r as Future<String?>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$setChannel(MethodChannel newChannel) { super.setChannel(newChannel); }
+  Future<List<ProcessTextAction>> _super$queryTextActions() => super.queryTextActions();
+  Future<String?> _super$processTextAction(String id, String text, bool readOnly) => super.processTextAction(id, text, readOnly);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDefaultProcessTextServiceBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DefaultProcessTextService(dispatch, obj, superArgs);
+
 abstract final class DefaultProcessTextServiceBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,7 +84,14 @@ abstract final class DefaultProcessTextServiceBindings {
       test: (o) => o is DefaultProcessTextService,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/process_text.dart::ProcessTextService'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DefaultProcessTextService(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::DefaultProcessTextService::\$super\$setChannel#1', (args) { (args[0] as _$DefaultProcessTextService)._super$setChannel(args[1] as MethodChannel); return null; });
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::DefaultProcessTextService::\$super\$queryTextActions#0', (args) => (args[0] as _$DefaultProcessTextService)._super$queryTextActions());
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::DefaultProcessTextService::\$super\$processTextAction#3', (args) => (args[0] as _$DefaultProcessTextService)._super$processTextAction(args[1] as String, args[2] as String, args[3] as bool));
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::DefaultProcessTextService::\$super\$toString#0', (args) => (args[0] as _$DefaultProcessTextService)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/process_text.dart::DefaultProcessTextService::\$super\$hashCode#0', (args) => (args[0] as _$DefaultProcessTextService)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

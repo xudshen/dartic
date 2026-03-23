@@ -23,6 +23,92 @@ import 'package:flutter/src/widgets/scroll_metrics.dart';
 import 'package:flutter/src/widgets/scroll_notification.dart';
 import 'package:flutter/src/widgets/scroll_physics.dart';
 
+class _$ScrollMetricsNotification extends ScrollMetricsNotification implements DarticObjectHolder {
+  _$ScrollMetricsNotification(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(metrics: superArgs[0] as ScrollMetrics, context: superArgs[1] as BuildContext);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ScrollUpdateNotification asScrollUpdate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asScrollUpdate', const []);
+    if (identical(r, notOverridden)) return super.asScrollUpdate();
+    return r as ScrollUpdateNotification;
+  }
+
+  @override
+  void debugFillDescription(List<String> description) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void dispatch(BuildContext? target) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
+    if (identical(r, notOverridden)) { super.dispatch(target); return; }
+  }
+
+  @override
+  ScrollMetrics get metrics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'metrics');
+    if (identical(r, notOverridden)) return super.metrics;
+    return r as ScrollMetrics;
+  }
+
+  @override
+  BuildContext get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) return super.context;
+    return r as BuildContext;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  int get depth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'depth');
+    if (identical(r, notOverridden)) return super.depth;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  ScrollUpdateNotification _super$asScrollUpdate() => super.asScrollUpdate();
+  void _super$debugFillDescription(List<String> description) { super.debugFillDescription(description); }
+  String _super$toString() => super.toString();
+  void _super$dispatch(BuildContext? target) { super.dispatch(target); }
+  ScrollMetrics get _super$metrics => super.metrics;
+  BuildContext get _super$context => super.context;
+  int get _super$hashCode => super.hashCode;
+  int get _super$depth => super.depth;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollMetricsNotificationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollMetricsNotification(dispatch, obj, superArgs);
+
 abstract final class ScrollMetricsNotificationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -31,7 +117,17 @@ abstract final class ScrollMetricsNotificationBindings {
       test: (o) => o is ScrollMetricsNotification,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/notification_listener.dart::Notification', 'package:flutter/src/widgets/scroll_notification.dart::ViewportNotificationMixin'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollMetricsNotification(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$asScrollUpdate#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$asScrollUpdate());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$debugFillDescription#1', (args) { (args[0] as _$ScrollMetricsNotification)._super$debugFillDescription((args[1] as List).cast<String>()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$toString#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$dispatch#1', (args) { (args[0] as _$ScrollMetricsNotification)._super$dispatch(args[1] as BuildContext?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$metrics#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$metrics);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$context#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$context);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$hashCode#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$depth#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$depth);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

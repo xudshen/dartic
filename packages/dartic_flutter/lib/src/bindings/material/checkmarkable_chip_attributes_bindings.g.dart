@@ -27,6 +27,46 @@ import 'package:flutter/src/material/theme_data.dart';
 import 'package:flutter/src/material/tooltip.dart';
 import 'dart:ui';
 
+class _$CheckmarkableChipAttributes implements CheckmarkableChipAttributes, DarticObjectHolder {
+  _$CheckmarkableChipAttributes(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool? get showCheckmark {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'showCheckmark');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter showCheckmark must be overridden in dartic code');
+    }
+    return r as bool?;
+  }
+
+  @override
+  Color? get checkmarkColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'checkmarkColor');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter checkmarkColor must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCheckmarkableChipAttributesBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CheckmarkableChipAttributes(dispatch, obj, superArgs);
+
 abstract final class CheckmarkableChipAttributesBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,6 +74,8 @@ abstract final class CheckmarkableChipAttributesBindings {
       type: CheckmarkableChipAttributes,
       test: (o) => o is CheckmarkableChipAttributes,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CheckmarkableChipAttributes(dispatch, darticObject, superArgs),
     );
   }
 

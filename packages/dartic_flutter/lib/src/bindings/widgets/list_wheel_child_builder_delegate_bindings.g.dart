@@ -25,6 +25,94 @@ import 'package:flutter/src/widgets/scroll_position.dart';
 import 'package:flutter/src/widgets/scroll_position_with_single_context.dart';
 import 'package:flutter/src/widgets/scrollable.dart';
 
+class _$ListWheelChildBuilderDelegate extends ListWheelChildBuilderDelegate implements DarticObjectHolder {
+  _$ListWheelChildBuilderDelegate(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(builder: superArgs[0] as NullableIndexedWidgetBuilder, childCount: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as int?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget? build(BuildContext context, int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
+    if (identical(r, notOverridden)) return super.build(context, index);
+    return r as Widget?;
+  }
+
+  @override
+  bool shouldRebuild(ListWheelChildBuilderDelegate oldDelegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(r, notOverridden)) return super.shouldRebuild(oldDelegate);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int trueIndexOf(int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'trueIndexOf', [index]);
+    if (identical(r, notOverridden)) return super.trueIndexOf(index);
+    return r as int;
+  }
+
+  @override
+  NullableIndexedWidgetBuilder get builder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
+    if (identical(r, notOverridden)) return super.builder;
+    return r as NullableIndexedWidgetBuilder;
+  }
+
+  @override
+  int? get childCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'childCount');
+    if (identical(r, notOverridden)) return super.childCount;
+    return r as int?;
+  }
+
+  @override
+  int? get estimatedChildCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'estimatedChildCount');
+    if (identical(r, notOverridden)) return super.estimatedChildCount;
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget? _super$build(BuildContext context, int index) => super.build(context, index);
+  bool _super$shouldRebuild(ListWheelChildBuilderDelegate oldDelegate) => super.shouldRebuild(oldDelegate);
+  String _super$toString() => super.toString();
+  int _super$trueIndexOf(int index) => super.trueIndexOf(index);
+  NullableIndexedWidgetBuilder get _super$builder => super.builder;
+  int? get _super$childCount => super.childCount;
+  int? get _super$estimatedChildCount => super.estimatedChildCount;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createListWheelChildBuilderDelegateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ListWheelChildBuilderDelegate(dispatch, obj, superArgs);
+
 abstract final class ListWheelChildBuilderDelegateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -33,7 +121,17 @@ abstract final class ListWheelChildBuilderDelegateBindings {
       test: (o) => o is ListWheelChildBuilderDelegate,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildDelegate'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ListWheelChildBuilderDelegate(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$build#2', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$build(args[1] as BuildContext, args[2] as int));
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$shouldRebuild#1', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$shouldRebuild(args[1] as ListWheelChildBuilderDelegate));
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$toString#0', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$trueIndexOf#1', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$trueIndexOf(args[1] as int));
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$builder#0', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$builder);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$childCount#0', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$childCount);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$estimatedChildCount#0', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$estimatedChildCount);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildBuilderDelegate::\$super\$hashCode#0', (args) => (args[0] as _$ListWheelChildBuilderDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

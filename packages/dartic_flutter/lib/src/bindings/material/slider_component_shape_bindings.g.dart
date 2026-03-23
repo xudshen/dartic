@@ -22,6 +22,63 @@ import 'package:flutter/src/painting/text_painter.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$SliderComponentShape extends SliderComponentShape implements DarticObjectHolder {
+  _$SliderComponentShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPreferredSize must be overridden in dartic code');
+    }
+    return r as Size;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, required bool isDiscrete, required TextPainter labelPainter, required RenderBox parentBox, required SliderThemeData sliderTheme, required TextDirection textDirection, required double value, required double textScaleFactor, required Size sizeWithOverflow}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, labelPainter, parentBox, sliderTheme, textDirection, value, textScaleFactor, sizeWithOverflow]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSliderComponentShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SliderComponentShape(dispatch, obj, superArgs);
+
 abstract final class SliderComponentShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,9 +86,13 @@ abstract final class SliderComponentShapeBindings {
       type: SliderComponentShape,
       test: (o) => o is SliderComponentShape,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SliderComponentShape(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::SliderComponentShape::noThumb#0', (args) => SliderComponentShape.noThumb);
     ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::SliderComponentShape::noOverlay#0', (args) => SliderComponentShape.noOverlay);
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::SliderComponentShape::\$super\$toString#0', (args) => (args[0] as _$SliderComponentShape)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/slider_value_indicator_shape.dart::SliderComponentShape::\$super\$hashCode#0', (args) => (args[0] as _$SliderComponentShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

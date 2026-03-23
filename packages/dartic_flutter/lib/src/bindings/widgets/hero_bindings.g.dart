@@ -26,6 +26,165 @@ import 'dart:ui';
 import 'package:flutter/src/animation/animation.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Hero extends Hero implements DarticObjectHolder {
+  _$Hero(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, tag: superArgs[1] as Object, createRectTween: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as CreateRectTween?, flightShuttleBuilder: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as HeroFlightShuttleBuilder?, placeholderBuilder: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as HeroPlaceholderBuilder?, transitionOnUserGestures: superArgs[5] as bool, child: superArgs[6] as Widget);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<Hero> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<Hero>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Object get tag {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tag');
+    if (identical(r, notOverridden)) return super.tag;
+    return r as Object;
+  }
+
+  @override
+  CreateRectTween? get createRectTween {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'createRectTween');
+    if (identical(r, notOverridden)) return super.createRectTween;
+    return r as CreateRectTween?;
+  }
+
+  @override
+  Widget get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget;
+  }
+
+  @override
+  HeroFlightShuttleBuilder? get flightShuttleBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'flightShuttleBuilder');
+    if (identical(r, notOverridden)) return super.flightShuttleBuilder;
+    return r as HeroFlightShuttleBuilder?;
+  }
+
+  @override
+  HeroPlaceholderBuilder? get placeholderBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'placeholderBuilder');
+    if (identical(r, notOverridden)) return super.placeholderBuilder;
+    return r as HeroPlaceholderBuilder?;
+  }
+
+  @override
+  bool get transitionOnUserGestures {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'transitionOnUserGestures');
+    if (identical(r, notOverridden)) return super.transitionOnUserGestures;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<Hero> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Object get _super$tag => super.tag;
+  CreateRectTween? get _super$createRectTween => super.createRectTween;
+  Widget get _super$child => super.child;
+  HeroFlightShuttleBuilder? get _super$flightShuttleBuilder => super.flightShuttleBuilder;
+  HeroPlaceholderBuilder? get _super$placeholderBuilder => super.placeholderBuilder;
+  bool get _super$transitionOnUserGestures => super.transitionOnUserGestures;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createHeroBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Hero(dispatch, obj, superArgs);
+
 abstract final class HeroBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -34,7 +193,26 @@ abstract final class HeroBindings {
       test: (o) => o is Hero,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Hero(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$createState#0', (args) => (args[0] as _$Hero)._super$createState());
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$debugFillProperties#1', (args) { (args[0] as _$Hero)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$toString#1', (args) => (args[0] as _$Hero)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$createElement#0', (args) => (args[0] as _$Hero)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$toStringShort#0', (args) => (args[0] as _$Hero)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$toStringShallow#2', (args) => (args[0] as _$Hero)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$toStringDeep#4', (args) => (args[0] as _$Hero)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Hero)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Hero)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$tag#0', (args) => (args[0] as _$Hero)._super$tag);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$createRectTween#0', (args) => (args[0] as _$Hero)._super$createRectTween);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$child#0', (args) => (args[0] as _$Hero)._super$child);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$flightShuttleBuilder#0', (args) => (args[0] as _$Hero)._super$flightShuttleBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$placeholderBuilder#0', (args) => (args[0] as _$Hero)._super$placeholderBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$transitionOnUserGestures#0', (args) => (args[0] as _$Hero)._super$transitionOnUserGestures);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$hashCode#0', (args) => (args[0] as _$Hero)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$key#0', (args) => (args[0] as _$Hero)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

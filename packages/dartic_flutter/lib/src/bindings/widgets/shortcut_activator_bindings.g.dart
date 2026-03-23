@@ -19,6 +19,72 @@ import 'package:flutter/src/widgets/platform_menu_bar.dart';
 import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 
+class _$ShortcutActivator extends ShortcutActivator implements DarticObjectHolder {
+  _$ShortcutActivator(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool accepts(KeyEvent event, HardwareKeyboard state) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepts', [event, state]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method accepts must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String debugDescribeKeys() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeKeys', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugDescribeKeys must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Iterable<LogicalKeyboardKey>? get triggers {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'triggers');
+    if (identical(r, notOverridden)) return super.triggers;
+    return r as Iterable<LogicalKeyboardKey>?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  Iterable<LogicalKeyboardKey>? get _super$triggers => super.triggers;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createShortcutActivatorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ShortcutActivator(dispatch, obj, superArgs);
+
 abstract final class ShortcutActivatorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,8 +92,13 @@ abstract final class ShortcutActivatorBindings {
       type: ShortcutActivator,
       test: (o) => o is ShortcutActivator,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ShortcutActivator(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutActivator::isActivatedBy#2', (args) => ShortcutActivator.isActivatedBy(args[0] as ShortcutActivator, args[1] as KeyEvent));
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutActivator::\$super\$toString#0', (args) => (args[0] as _$ShortcutActivator)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutActivator::\$super\$triggers#0', (args) => (args[0] as _$ShortcutActivator)._super$triggers);
+    ctx.registerBinding('package:flutter/src/widgets/shortcuts.dart::ShortcutActivator::\$super\$hashCode#0', (args) => (args[0] as _$ShortcutActivator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

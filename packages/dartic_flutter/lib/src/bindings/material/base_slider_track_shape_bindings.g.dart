@@ -18,6 +18,46 @@ import 'package:flutter/src/material/theme.dart';
 import 'dart:ui';
 import 'package:flutter/src/rendering/box.dart';
 
+class _$BaseSliderTrackShape implements BaseSliderTrackShape, DarticObjectHolder {
+  _$BaseSliderTrackShape(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Rect getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPreferredRect must be overridden in dartic code');
+    }
+    return r as Rect;
+  }
+
+  @override
+  bool get isRounded {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRounded');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isRounded must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBaseSliderTrackShapeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BaseSliderTrackShape(dispatch, obj, superArgs);
+
 abstract final class BaseSliderTrackShapeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,6 +65,8 @@ abstract final class BaseSliderTrackShapeBindings {
       type: BaseSliderTrackShape,
       test: (o) => o is BaseSliderTrackShape,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BaseSliderTrackShape(dispatch, darticObject, superArgs),
     );
   }
 

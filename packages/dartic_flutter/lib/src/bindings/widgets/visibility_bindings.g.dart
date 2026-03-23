@@ -17,6 +17,189 @@ import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$Visibility extends Visibility implements DarticObjectHolder {
+  _$Visibility(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, child: superArgs[1] as Widget, replacement: superArgs[2] as Widget, visible: superArgs[3] as bool, maintainState: superArgs[4] as bool, maintainAnimation: superArgs[5] as bool, maintainSize: superArgs[6] as bool, maintainSemantics: superArgs[7] as bool, maintainInteractivity: superArgs[8] as bool, maintainFocusability: superArgs[9] as bool);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget;
+  }
+
+  @override
+  Widget get replacement {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'replacement');
+    if (identical(r, notOverridden)) return super.replacement;
+    return r as Widget;
+  }
+
+  @override
+  bool get visible {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'visible');
+    if (identical(r, notOverridden)) return super.visible;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainState {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainState');
+    if (identical(r, notOverridden)) return super.maintainState;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainAnimation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainAnimation');
+    if (identical(r, notOverridden)) return super.maintainAnimation;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainSize');
+    if (identical(r, notOverridden)) return super.maintainSize;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainSemantics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainSemantics');
+    if (identical(r, notOverridden)) return super.maintainSemantics;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainInteractivity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainInteractivity');
+    if (identical(r, notOverridden)) return super.maintainInteractivity;
+    return r as bool;
+  }
+
+  @override
+  bool get maintainFocusability {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maintainFocusability');
+    if (identical(r, notOverridden)) return super.maintainFocusability;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget get _super$child => super.child;
+  Widget get _super$replacement => super.replacement;
+  bool get _super$visible => super.visible;
+  bool get _super$maintainState => super.maintainState;
+  bool get _super$maintainAnimation => super.maintainAnimation;
+  bool get _super$maintainSize => super.maintainSize;
+  bool get _super$maintainSemantics => super.maintainSemantics;
+  bool get _super$maintainInteractivity => super.maintainInteractivity;
+  bool get _super$maintainFocusability => super.maintainFocusability;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createVisibilityBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Visibility(dispatch, obj, superArgs);
+
 abstract final class VisibilityBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,8 +208,30 @@ abstract final class VisibilityBindings {
       test: (o) => o is Visibility,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Visibility(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::of#1', (args) => Visibility.of(args[0] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$build#1', (args) => (args[0] as _$Visibility)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$debugFillProperties#1', (args) { (args[0] as _$Visibility)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$toString#1', (args) => (args[0] as _$Visibility)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$createElement#0', (args) => (args[0] as _$Visibility)._super$createElement());
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$toStringShort#0', (args) => (args[0] as _$Visibility)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$toStringShallow#2', (args) => (args[0] as _$Visibility)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$toStringDeep#4', (args) => (args[0] as _$Visibility)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$Visibility)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Visibility)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$child#0', (args) => (args[0] as _$Visibility)._super$child);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$replacement#0', (args) => (args[0] as _$Visibility)._super$replacement);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$visible#0', (args) => (args[0] as _$Visibility)._super$visible);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainState#0', (args) => (args[0] as _$Visibility)._super$maintainState);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainAnimation#0', (args) => (args[0] as _$Visibility)._super$maintainAnimation);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainSize#0', (args) => (args[0] as _$Visibility)._super$maintainSize);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainSemantics#0', (args) => (args[0] as _$Visibility)._super$maintainSemantics);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainInteractivity#0', (args) => (args[0] as _$Visibility)._super$maintainInteractivity);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainFocusability#0', (args) => (args[0] as _$Visibility)._super$maintainFocusability);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$hashCode#0', (args) => (args[0] as _$Visibility)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$key#0', (args) => (args[0] as _$Visibility)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

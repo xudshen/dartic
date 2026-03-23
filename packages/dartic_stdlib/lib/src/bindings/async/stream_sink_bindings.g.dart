@@ -10,7 +10,7 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
-class _$StreamSink implements StreamSink, DarticObjectHolder {
+class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
   _$StreamSink(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -64,22 +64,8 @@ class _$StreamSink implements StreamSink, DarticObjectHolder {
   @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
     return r as bool;
-  }
-
-  @override
-  String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
-  }
-
-  @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return identityHashCode($darticObject);
-    return r as int;
   }
 }
 

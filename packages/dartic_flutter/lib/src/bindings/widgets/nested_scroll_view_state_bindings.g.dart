@@ -28,6 +28,173 @@ import 'package:flutter/src/widgets/viewport.dart';
 import 'dart:ui';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$NestedScrollViewState extends NestedScrollViewState implements DarticObjectHolder {
+  _$NestedScrollViewState(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void initState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
+    if (identical(r, notOverridden)) { super.initState(); return; }
+  }
+
+  @override
+  void didChangeDependencies() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
+    if (identical(r, notOverridden)) { super.didChangeDependencies(); return; }
+  }
+
+  @override
+  void didUpdateWidget(NestedScrollView oldWidget) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
+    if (identical(r, notOverridden)) { super.didUpdateWidget(oldWidget); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  void reassemble() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
+    if (identical(r, notOverridden)) { super.reassemble(); return; }
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
+    if (identical(r, notOverridden)) { super.setState(() => fn()); return; }
+  }
+
+  @override
+  void deactivate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
+    if (identical(r, notOverridden)) { super.deactivate(); return; }
+  }
+
+  @override
+  void activate() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
+    if (identical(r, notOverridden)) { super.activate(); return; }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  ScrollController get innerController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'innerController');
+    if (identical(r, notOverridden)) return super.innerController;
+    return r as ScrollController;
+  }
+
+  @override
+  ScrollController get outerController {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'outerController');
+    if (identical(r, notOverridden)) return super.outerController;
+    return r as ScrollController;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  NestedScrollView get widget {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
+    if (identical(r, notOverridden)) return super.widget;
+    return r as NestedScrollView;
+  }
+
+  @override
+  BuildContext get context {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'context');
+    if (identical(r, notOverridden)) return super.context;
+    return r as BuildContext;
+  }
+
+  @override
+  bool get mounted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mounted');
+    if (identical(r, notOverridden)) return super.mounted;
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$initState() { super.initState(); }
+  void _super$didChangeDependencies() { super.didChangeDependencies(); }
+  void _super$didUpdateWidget(NestedScrollView oldWidget) { super.didUpdateWidget(oldWidget); }
+  void _super$dispose() { super.dispose(); }
+  Widget _super$build(BuildContext context) => super.build(context);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  void _super$reassemble() { super.reassemble(); }
+  void _super$setState(VoidCallback fn) { super.setState(fn); }
+  void _super$deactivate() { super.deactivate(); }
+  void _super$activate() { super.activate(); }
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  ScrollController get _super$innerController => super.innerController;
+  ScrollController get _super$outerController => super.outerController;
+  int get _super$hashCode => super.hashCode;
+  NestedScrollView get _super$widget => super.widget;
+  BuildContext get _super$context => super.context;
+  bool get _super$mounted => super.mounted;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createNestedScrollViewStateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$NestedScrollViewState(dispatch, obj, superArgs);
+
 abstract final class NestedScrollViewStateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -36,7 +203,28 @@ abstract final class NestedScrollViewStateBindings {
       test: (o) => o is NestedScrollViewState,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::State', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$NestedScrollViewState(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$initState#0', (args) { (args[0] as _$NestedScrollViewState)._super$initState(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$didChangeDependencies#0', (args) { (args[0] as _$NestedScrollViewState)._super$didChangeDependencies(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$didUpdateWidget#1', (args) { (args[0] as _$NestedScrollViewState)._super$didUpdateWidget(args[1] as NestedScrollView); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$dispose#0', (args) { (args[0] as _$NestedScrollViewState)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$build#1', (args) => (args[0] as _$NestedScrollViewState)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$toString#1', (args) => (args[0] as _$NestedScrollViewState)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$reassemble#0', (args) { (args[0] as _$NestedScrollViewState)._super$reassemble(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$setState#1', (args) { (args[0] as _$NestedScrollViewState)._super$setState(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$deactivate#0', (args) { (args[0] as _$NestedScrollViewState)._super$deactivate(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$activate#0', (args) { (args[0] as _$NestedScrollViewState)._super$activate(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$debugFillProperties#1', (args) { (args[0] as _$NestedScrollViewState)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$toStringShort#0', (args) => (args[0] as _$NestedScrollViewState)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$NestedScrollViewState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$innerController#0', (args) => (args[0] as _$NestedScrollViewState)._super$innerController);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$outerController#0', (args) => (args[0] as _$NestedScrollViewState)._super$outerController);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$hashCode#0', (args) => (args[0] as _$NestedScrollViewState)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$widget#0', (args) => (args[0] as _$NestedScrollViewState)._super$widget);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$context#0', (args) => (args[0] as _$NestedScrollViewState)._super$context);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewState::\$super\$mounted#0', (args) => (args[0] as _$NestedScrollViewState)._super$mounted);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

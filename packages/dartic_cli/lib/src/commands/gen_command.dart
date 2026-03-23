@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:path/path.dart' as p;
 import '../generator/audit/audit_reporter.dart';
+import '../generator/config/yaml_parser.dart';
 import '../generator/discover/discover_runner.dart';
 import '../generator/kernel/kernel_introspector.dart';
 import '../generator/kernel/stub_dill_compiler.dart';
@@ -55,6 +57,11 @@ class GenCommand extends Command<int> {
         help: 'Audit strict mode: fail on missing or stale bindings.',
         negatable: false,
       )
+      ..addFlag(
+        'clean',
+        help: 'Delete output_bindings directories before generating.',
+        negatable: false,
+      )
       ..addOption(
         'discover',
         help: 'Run auto-discovery for a library URI and compare against YAML.\n'
@@ -80,6 +87,7 @@ class GenCommand extends Command<int> {
     final emitTests = argResults!['emit-tests'] as bool;
     final testOutputDir = argResults!['test-output'] as String?;
     final strict = argResults!['strict'] as bool;
+    final clean = argResults!['clean'] as bool;
     final discoverUri = argResults!['discover'] as String?;
 
     try {
@@ -94,6 +102,7 @@ class GenCommand extends Command<int> {
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
           strict: strict,
+          clean: clean,
         );
       }
 
@@ -176,6 +185,7 @@ class GenCommand extends Command<int> {
     bool emitTests = false,
     String? testOutputDir,
     bool strict = false,
+    bool clean = false,
   }) async {
     final rest = argResults!.rest;
 
@@ -203,6 +213,39 @@ class GenCommand extends Command<int> {
       ('packages/dartic_stdlib/configs', null),
       ('packages/dartic_flutter/configs', 'packages/dartic_flutter'),
     ];
+
+    // Clean output_bindings directories before generation if requested.
+    if (clean) {
+      final cleaned = <String>{};
+      for (final (dirPath, _) in configsDirs) {
+        final dir = Directory(dirPath);
+        if (!dir.existsSync()) continue;
+        final yamlFiles = dir
+            .listSync()
+            .whereType<File>()
+            .where((f) => f.path.endsWith('.yaml'));
+        for (final f in yamlFiles) {
+          final config = parseConfigFile(f.path);
+          final absPath = p.normalize(p.absolute(config.outputBindings));
+          if (cleaned.add(absPath)) {
+            final outDir = Directory(absPath);
+            if (outDir.existsSync()) {
+              // Only delete generated .g.dart files, preserve hand-written helpers.
+              final gFiles = outDir
+                  .listSync()
+                  .whereType<File>()
+                  .where((f) => f.path.endsWith('.g.dart'));
+              if (gFiles.isNotEmpty) {
+                _logger.info('Cleaning ${gFiles.length} .g.dart files in $absPath');
+                for (final gf in gFiles) {
+                  gf.deleteSync();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 
     // Collect results across all runners.
     final allWrittenFiles = <String, String>{};

@@ -30,6 +30,78 @@ import 'package:flutter/src/widgets/restoration.dart';
 import 'package:flutter/src/widgets/scroll_controller.dart';
 import 'package:flutter/src/widgets/transitions.dart';
 
+class _$PredictiveBackRoute implements PredictiveBackRoute, DarticObjectHolder {
+  _$PredictiveBackRoute(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void handleStartBackGesture({double progress = 0.0}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [progress]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleStartBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleUpdateBackGestureProgress({required double progress}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [progress]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleUpdateBackGestureProgress must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleCommitBackGesture() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleCommitBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void handleCancelBackGesture() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handleCancelBackGesture must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool get isCurrent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isCurrent');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isCurrent must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get popGestureEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'popGestureEnabled');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter popGestureEnabled must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPredictiveBackRouteBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$PredictiveBackRoute(dispatch, obj, superArgs);
+
 abstract final class PredictiveBackRouteBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,6 +109,8 @@ abstract final class PredictiveBackRouteBindings {
       type: PredictiveBackRoute,
       test: (o) => o is PredictiveBackRoute,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$PredictiveBackRoute(dispatch, darticObject, superArgs),
     );
   }
 

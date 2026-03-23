@@ -16,6 +16,102 @@ import 'package:flutter/src/widgets/selection_container.dart';
 import 'package:flutter/src/widgets/two_dimensional_viewport.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$SliverChildDelegate extends SliverChildDelegate implements DarticObjectHolder {
+  _$SliverChildDelegate(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget? build(BuildContext context, int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method build must be overridden in dartic code');
+    }
+    return r as Widget?;
+  }
+
+  @override
+  double? estimateMaxScrollOffset(int firstIndex, int lastIndex, double leadingScrollOffset, double trailingScrollOffset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
+    if (identical(r, notOverridden)) return super.estimateMaxScrollOffset(firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset);
+    return r as double?;
+  }
+
+  @override
+  void didFinishLayout(int firstIndex, int lastIndex) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', [firstIndex, lastIndex]);
+    if (identical(r, notOverridden)) { super.didFinishLayout(firstIndex, lastIndex); return; }
+  }
+
+  @override
+  bool shouldRebuild(SliverChildDelegate oldDelegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method shouldRebuild must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int? findIndexByKey(Key key) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findIndexByKey', [key]);
+    if (identical(r, notOverridden)) return super.findIndexByKey(key);
+    return r as int?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  void debugFillDescription(List<String> description) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+  }
+
+  @override
+  int? get estimatedChildCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'estimatedChildCount');
+    if (identical(r, notOverridden)) return super.estimatedChildCount;
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double? _super$estimateMaxScrollOffset(int firstIndex, int lastIndex, double leadingScrollOffset, double trailingScrollOffset) => super.estimateMaxScrollOffset(firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset);
+  void _super$didFinishLayout(int firstIndex, int lastIndex) { super.didFinishLayout(firstIndex, lastIndex); }
+  int? _super$findIndexByKey(Key key) => super.findIndexByKey(key);
+  String _super$toString() => super.toString();
+  void _super$debugFillDescription(List<String> description) { super.debugFillDescription(description); }
+  int? get _super$estimatedChildCount => super.estimatedChildCount;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSliverChildDelegateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SliverChildDelegate(dispatch, obj, superArgs);
+
 abstract final class SliverChildDelegateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,7 +119,16 @@ abstract final class SliverChildDelegateBindings {
       type: SliverChildDelegate,
       test: (o) => o is SliverChildDelegate,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SliverChildDelegate(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$estimateMaxScrollOffset#4', (args) => (args[0] as _$SliverChildDelegate)._super$estimateMaxScrollOffset(args[1] as int, args[2] as int, args[3] as double, args[4] as double));
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$didFinishLayout#2', (args) { (args[0] as _$SliverChildDelegate)._super$didFinishLayout(args[1] as int, args[2] as int); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$findIndexByKey#1', (args) => (args[0] as _$SliverChildDelegate)._super$findIndexByKey(args[1] as Key));
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$toString#0', (args) => (args[0] as _$SliverChildDelegate)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$debugFillDescription#1', (args) { (args[0] as _$SliverChildDelegate)._super$debugFillDescription((args[1] as List).cast<String>()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$estimatedChildCount#0', (args) => (args[0] as _$SliverChildDelegate)._super$estimatedChildCount);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::SliverChildDelegate::\$super\$hashCode#0', (args) => (args[0] as _$SliverChildDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

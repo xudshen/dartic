@@ -18,6 +18,62 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+base class _$SpellOutStringAttribute extends SpellOutStringAttribute implements DarticObjectHolder {
+  _$SpellOutStringAttribute(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(range: superArgs[0] as TextRange);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  StringAttribute copy({required TextRange range}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', [range]);
+    if (identical(r, notOverridden)) return super.copy(range: range);
+    return r as StringAttribute;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  TextRange get range {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'range');
+    if (identical(r, notOverridden)) return super.range;
+    return r as TextRange;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  StringAttribute _super$copy({required TextRange range}) => super.copy(range: range);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+  TextRange get _super$range => super.range;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSpellOutStringAttributeBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SpellOutStringAttribute(dispatch, obj, superArgs);
+
 abstract final class SpellOutStringAttributeBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +82,13 @@ abstract final class SpellOutStringAttributeBindings {
       test: (o) => o is SpellOutStringAttribute,
       methods: methodMap(),
       superclasses: ['dart:ui::StringAttribute'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SpellOutStringAttribute(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$copy#1', (args) => (args[0] as _$SpellOutStringAttribute)._super$copy(range: args[1] as TextRange));
+    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$toString#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$toString());
+    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$hashCode#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$hashCode);
+    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$range#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$range);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

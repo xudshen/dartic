@@ -10,6 +10,70 @@ import 'package:flutter/src/services/undo_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+class _$UndoManagerClient implements UndoManagerClient, DarticObjectHolder {
+  _$UndoManagerClient(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void handlePlatformUndo(UndoDirection direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformUndo', [direction]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method handlePlatformUndo must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void undo() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'undo', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method undo must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void redo() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redo', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method redo must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool get canUndo {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canUndo');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter canUndo must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get canRedo {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'canRedo');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter canRedo must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createUndoManagerClientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$UndoManagerClient(dispatch, obj, superArgs);
+
 abstract final class UndoManagerClientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,6 +81,8 @@ abstract final class UndoManagerClientBindings {
       type: UndoManagerClient,
       test: (o) => o is UndoManagerClient,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$UndoManagerClient(dispatch, darticObject, superArgs),
     );
   }
 

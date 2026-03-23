@@ -42,6 +42,373 @@ import 'package:flutter/src/painting/text_scaler.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$TabBar extends TabBar implements DarticObjectHolder {
+  _$TabBar(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, tabs: (superArgs[1] as List).cast<Widget>(), controller: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TabController?, isScrollable: superArgs[3] as bool, padding: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as EdgeInsetsGeometry?, indicatorColor: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Color?, automaticIndicatorColorAdjustment: superArgs[6] as bool, indicatorWeight: superArgs[7] as double, indicatorPadding: superArgs[8] as EdgeInsetsGeometry, indicator: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Decoration?, indicatorSize: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as TabBarIndicatorSize?, dividerColor: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as Color?, dividerHeight: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as double?, labelColor: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as Color?, labelStyle: identical(superArgs[14], darticAbsent) ? null : superArgs[14] as TextStyle?, labelPadding: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as EdgeInsetsGeometry?, unselectedLabelColor: identical(superArgs[16], darticAbsent) ? null : superArgs[16] as Color?, unselectedLabelStyle: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as TextStyle?, dragStartBehavior: superArgs[18] as DragStartBehavior, overlayColor: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as WidgetStateProperty<Color?>?, mouseCursor: identical(superArgs[20], darticAbsent) ? null : superArgs[20] as MouseCursor?, enableFeedback: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as bool?, onTap: identical(superArgs[22], darticAbsent) ? null : superArgs[22] as ValueChanged<int>?, onHover: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as TabValueChanged<bool>?, onFocusChange: identical(superArgs[24], darticAbsent) ? null : superArgs[24] as TabValueChanged<bool>?, physics: identical(superArgs[25], darticAbsent) ? null : superArgs[25] as ScrollPhysics?, splashFactory: identical(superArgs[26], darticAbsent) ? null : superArgs[26] as InteractiveInkFeatureFactory?, splashBorderRadius: identical(superArgs[27], darticAbsent) ? null : superArgs[27] as BorderRadius?, tabAlignment: identical(superArgs[28], darticAbsent) ? null : superArgs[28] as TabAlignment?, textScaler: identical(superArgs[29], darticAbsent) ? null : superArgs[29] as TextScaler?, indicatorAnimation: identical(superArgs[30], darticAbsent) ? null : superArgs[30] as TabIndicatorAnimation?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<TabBar> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<TabBar>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  List<Widget> get tabs {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tabs');
+    if (identical(r, notOverridden)) return super.tabs;
+    return r as List<Widget>;
+  }
+
+  @override
+  TabController? get controller {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
+    if (identical(r, notOverridden)) return super.controller;
+    return r as TabController?;
+  }
+
+  @override
+  bool get isScrollable {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isScrollable');
+    if (identical(r, notOverridden)) return super.isScrollable;
+    return r as bool;
+  }
+
+  @override
+  EdgeInsetsGeometry? get padding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
+    if (identical(r, notOverridden)) return super.padding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  Color? get indicatorColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorColor');
+    if (identical(r, notOverridden)) return super.indicatorColor;
+    return r as Color?;
+  }
+
+  @override
+  double get indicatorWeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorWeight');
+    if (identical(r, notOverridden)) return super.indicatorWeight;
+    return r as double;
+  }
+
+  @override
+  EdgeInsetsGeometry get indicatorPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorPadding');
+    if (identical(r, notOverridden)) return super.indicatorPadding;
+    return r as EdgeInsetsGeometry;
+  }
+
+  @override
+  Decoration? get indicator {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicator');
+    if (identical(r, notOverridden)) return super.indicator;
+    return r as Decoration?;
+  }
+
+  @override
+  bool get automaticIndicatorColorAdjustment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'automaticIndicatorColorAdjustment');
+    if (identical(r, notOverridden)) return super.automaticIndicatorColorAdjustment;
+    return r as bool;
+  }
+
+  @override
+  TabBarIndicatorSize? get indicatorSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorSize');
+    if (identical(r, notOverridden)) return super.indicatorSize;
+    return r as TabBarIndicatorSize?;
+  }
+
+  @override
+  Color? get dividerColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dividerColor');
+    if (identical(r, notOverridden)) return super.dividerColor;
+    return r as Color?;
+  }
+
+  @override
+  double? get dividerHeight {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dividerHeight');
+    if (identical(r, notOverridden)) return super.dividerHeight;
+    return r as double?;
+  }
+
+  @override
+  Color? get labelColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'labelColor');
+    if (identical(r, notOverridden)) return super.labelColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get unselectedLabelColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'unselectedLabelColor');
+    if (identical(r, notOverridden)) return super.unselectedLabelColor;
+    return r as Color?;
+  }
+
+  @override
+  TextStyle? get labelStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'labelStyle');
+    if (identical(r, notOverridden)) return super.labelStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  TextStyle? get unselectedLabelStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'unselectedLabelStyle');
+    if (identical(r, notOverridden)) return super.unselectedLabelStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get labelPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'labelPadding');
+    if (identical(r, notOverridden)) return super.labelPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  WidgetStateProperty<Color?>? get overlayColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayColor');
+    if (identical(r, notOverridden)) return super.overlayColor;
+    return r as WidgetStateProperty<Color?>?;
+  }
+
+  @override
+  DragStartBehavior get dragStartBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragStartBehavior');
+    if (identical(r, notOverridden)) return super.dragStartBehavior;
+    return r as DragStartBehavior;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  bool? get enableFeedback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enableFeedback');
+    if (identical(r, notOverridden)) return super.enableFeedback;
+    return r as bool?;
+  }
+
+  @override
+  ValueChanged<int>? get onTap {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onTap');
+    if (identical(r, notOverridden)) return super.onTap;
+    return r as ValueChanged<int>?;
+  }
+
+  @override
+  TabValueChanged<bool>? get onHover {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onHover');
+    if (identical(r, notOverridden)) return super.onHover;
+    return r as TabValueChanged<bool>?;
+  }
+
+  @override
+  TabValueChanged<bool>? get onFocusChange {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onFocusChange');
+    if (identical(r, notOverridden)) return super.onFocusChange;
+    return r as TabValueChanged<bool>?;
+  }
+
+  @override
+  ScrollPhysics? get physics {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'physics');
+    if (identical(r, notOverridden)) return super.physics;
+    return r as ScrollPhysics?;
+  }
+
+  @override
+  InteractiveInkFeatureFactory? get splashFactory {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'splashFactory');
+    if (identical(r, notOverridden)) return super.splashFactory;
+    return r as InteractiveInkFeatureFactory?;
+  }
+
+  @override
+  BorderRadius? get splashBorderRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'splashBorderRadius');
+    if (identical(r, notOverridden)) return super.splashBorderRadius;
+    return r as BorderRadius?;
+  }
+
+  @override
+  TabAlignment? get tabAlignment {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tabAlignment');
+    if (identical(r, notOverridden)) return super.tabAlignment;
+    return r as TabAlignment?;
+  }
+
+  @override
+  TextScaler? get textScaler {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textScaler');
+    if (identical(r, notOverridden)) return super.textScaler;
+    return r as TextScaler?;
+  }
+
+  @override
+  TabIndicatorAnimation? get indicatorAnimation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indicatorAnimation');
+    if (identical(r, notOverridden)) return super.indicatorAnimation;
+    return r as TabIndicatorAnimation?;
+  }
+
+  @override
+  Size get preferredSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'preferredSize');
+    if (identical(r, notOverridden)) return super.preferredSize;
+    return r as Size;
+  }
+
+  @override
+  bool get tabHasTextAndIcon {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tabHasTextAndIcon');
+    if (identical(r, notOverridden)) return super.tabHasTextAndIcon;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<TabBar> _super$createState() => super.createState();
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  List<Widget> get _super$tabs => super.tabs;
+  TabController? get _super$controller => super.controller;
+  bool get _super$isScrollable => super.isScrollable;
+  EdgeInsetsGeometry? get _super$padding => super.padding;
+  Color? get _super$indicatorColor => super.indicatorColor;
+  double get _super$indicatorWeight => super.indicatorWeight;
+  EdgeInsetsGeometry get _super$indicatorPadding => super.indicatorPadding;
+  Decoration? get _super$indicator => super.indicator;
+  bool get _super$automaticIndicatorColorAdjustment => super.automaticIndicatorColorAdjustment;
+  TabBarIndicatorSize? get _super$indicatorSize => super.indicatorSize;
+  Color? get _super$dividerColor => super.dividerColor;
+  double? get _super$dividerHeight => super.dividerHeight;
+  Color? get _super$labelColor => super.labelColor;
+  Color? get _super$unselectedLabelColor => super.unselectedLabelColor;
+  TextStyle? get _super$labelStyle => super.labelStyle;
+  TextStyle? get _super$unselectedLabelStyle => super.unselectedLabelStyle;
+  EdgeInsetsGeometry? get _super$labelPadding => super.labelPadding;
+  WidgetStateProperty<Color?>? get _super$overlayColor => super.overlayColor;
+  DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  bool? get _super$enableFeedback => super.enableFeedback;
+  ValueChanged<int>? get _super$onTap => super.onTap;
+  TabValueChanged<bool>? get _super$onHover => super.onHover;
+  TabValueChanged<bool>? get _super$onFocusChange => super.onFocusChange;
+  ScrollPhysics? get _super$physics => super.physics;
+  InteractiveInkFeatureFactory? get _super$splashFactory => super.splashFactory;
+  BorderRadius? get _super$splashBorderRadius => super.splashBorderRadius;
+  TabAlignment? get _super$tabAlignment => super.tabAlignment;
+  TextScaler? get _super$textScaler => super.textScaler;
+  TabIndicatorAnimation? get _super$indicatorAnimation => super.indicatorAnimation;
+  Size get _super$preferredSize => super.preferredSize;
+  bool get _super$tabHasTextAndIcon => super.tabHasTextAndIcon;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createTabBarBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$TabBar(dispatch, obj, superArgs);
+
 abstract final class TabBarBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -50,7 +417,52 @@ abstract final class TabBarBindings {
       test: (o) => o is TabBar,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/widgets/preferred_size.dart::PreferredSizeWidget'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$TabBar(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$createState#0', (args) => (args[0] as _$TabBar)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$toString#1', (args) => (args[0] as _$TabBar)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$createElement#0', (args) => (args[0] as _$TabBar)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$toStringShort#0', (args) => (args[0] as _$TabBar)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$debugFillProperties#1', (args) { (args[0] as _$TabBar)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$toStringShallow#2', (args) => (args[0] as _$TabBar)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$toStringDeep#4', (args) => (args[0] as _$TabBar)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$TabBar)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$TabBar)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$tabs#0', (args) => (args[0] as _$TabBar)._super$tabs);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$controller#0', (args) => (args[0] as _$TabBar)._super$controller);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$isScrollable#0', (args) => (args[0] as _$TabBar)._super$isScrollable);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$padding#0', (args) => (args[0] as _$TabBar)._super$padding);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorColor#0', (args) => (args[0] as _$TabBar)._super$indicatorColor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorWeight#0', (args) => (args[0] as _$TabBar)._super$indicatorWeight);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorPadding#0', (args) => (args[0] as _$TabBar)._super$indicatorPadding);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicator#0', (args) => (args[0] as _$TabBar)._super$indicator);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$automaticIndicatorColorAdjustment#0', (args) => (args[0] as _$TabBar)._super$automaticIndicatorColorAdjustment);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorSize#0', (args) => (args[0] as _$TabBar)._super$indicatorSize);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$dividerColor#0', (args) => (args[0] as _$TabBar)._super$dividerColor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$dividerHeight#0', (args) => (args[0] as _$TabBar)._super$dividerHeight);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$labelColor#0', (args) => (args[0] as _$TabBar)._super$labelColor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$unselectedLabelColor#0', (args) => (args[0] as _$TabBar)._super$unselectedLabelColor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$labelStyle#0', (args) => (args[0] as _$TabBar)._super$labelStyle);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$unselectedLabelStyle#0', (args) => (args[0] as _$TabBar)._super$unselectedLabelStyle);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$labelPadding#0', (args) => (args[0] as _$TabBar)._super$labelPadding);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$overlayColor#0', (args) => (args[0] as _$TabBar)._super$overlayColor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$dragStartBehavior#0', (args) => (args[0] as _$TabBar)._super$dragStartBehavior);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$mouseCursor#0', (args) => (args[0] as _$TabBar)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$enableFeedback#0', (args) => (args[0] as _$TabBar)._super$enableFeedback);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$onTap#0', (args) => (args[0] as _$TabBar)._super$onTap);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$onHover#0', (args) => (args[0] as _$TabBar)._super$onHover);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$onFocusChange#0', (args) => (args[0] as _$TabBar)._super$onFocusChange);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$physics#0', (args) => (args[0] as _$TabBar)._super$physics);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$splashFactory#0', (args) => (args[0] as _$TabBar)._super$splashFactory);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$splashBorderRadius#0', (args) => (args[0] as _$TabBar)._super$splashBorderRadius);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$tabAlignment#0', (args) => (args[0] as _$TabBar)._super$tabAlignment);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$textScaler#0', (args) => (args[0] as _$TabBar)._super$textScaler);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorAnimation#0', (args) => (args[0] as _$TabBar)._super$indicatorAnimation);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$preferredSize#0', (args) => (args[0] as _$TabBar)._super$preferredSize);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$tabHasTextAndIcon#0', (args) => (args[0] as _$TabBar)._super$tabHasTextAndIcon);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$hashCode#0', (args) => (args[0] as _$TabBar)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$key#0', (args) => (args[0] as _$TabBar)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

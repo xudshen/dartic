@@ -25,6 +25,81 @@ import 'package:flutter/src/widgets/scroll_position.dart';
 import 'package:flutter/src/widgets/scroll_position_with_single_context.dart';
 import 'package:flutter/src/widgets/scrollable.dart';
 
+class _$ListWheelChildDelegate extends ListWheelChildDelegate implements DarticObjectHolder {
+  _$ListWheelChildDelegate(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget? build(BuildContext context, int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method build must be overridden in dartic code');
+    }
+    return r as Widget?;
+  }
+
+  @override
+  int trueIndexOf(int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'trueIndexOf', [index]);
+    if (identical(r, notOverridden)) return super.trueIndexOf(index);
+    return r as int;
+  }
+
+  @override
+  bool shouldRebuild(ListWheelChildDelegate oldDelegate) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method shouldRebuild must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int? get estimatedChildCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'estimatedChildCount');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter estimatedChildCount must be overridden in dartic code');
+    }
+    return r as int?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  int _super$trueIndexOf(int index) => super.trueIndexOf(index);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createListWheelChildDelegateBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ListWheelChildDelegate(dispatch, obj, superArgs);
+
 abstract final class ListWheelChildDelegateBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -32,7 +107,12 @@ abstract final class ListWheelChildDelegateBindings {
       type: ListWheelChildDelegate,
       test: (o) => o is ListWheelChildDelegate,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ListWheelChildDelegate(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildDelegate::\$super\$trueIndexOf#1', (args) => (args[0] as _$ListWheelChildDelegate)._super$trueIndexOf(args[1] as int));
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildDelegate::\$super\$toString#0', (args) => (args[0] as _$ListWheelChildDelegate)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelChildDelegate::\$super\$hashCode#0', (args) => (args[0] as _$ListWheelChildDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

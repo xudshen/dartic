@@ -9,7 +9,7 @@ import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
 
-class _$SetBase extends SetBase implements DarticObjectHolder {
+class _$SetBase extends SetBase<dynamic> implements DarticObjectHolder {
   _$SetBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
 
   final DarticDispatch _dispatch;
@@ -36,12 +36,12 @@ class _$SetBase extends SetBase implements DarticObjectHolder {
   }
 
   @override
-  Object? lookup(Object? element) {
+  dynamic lookup(Object? element) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lookup', [element]);
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract method lookup must be overridden in dartic code');
     }
-    return r as Object?;
+    return r as dynamic;
   }
 
   @override
@@ -335,9 +335,15 @@ class _$SetBase extends SetBase implements DarticObjectHolder {
   Iterable _super$takeWhile(dynamic test) => super.takeWhile(test);
   Iterable _super$skip(int n) => super.skip(n);
   Iterable _super$skipWhile(dynamic test) => super.skipWhile(test);
-  dynamic _super$firstWhere(dynamic test, {dynamic orElse}) => super.firstWhere(test, orElse: orElse);
-  dynamic _super$lastWhere(dynamic test, {dynamic orElse}) => super.lastWhere(test, orElse: orElse);
-  dynamic _super$singleWhere(dynamic test, {dynamic orElse}) => super.singleWhere(test, orElse: orElse);
+  dynamic _super$firstWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.firstWhere(test, orElse: orElse as dynamic Function()?) : super.firstWhere(test);
+  }
+  dynamic _super$lastWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.lastWhere(test, orElse: orElse as dynamic Function()?) : super.lastWhere(test);
+  }
+  dynamic _super$singleWhere(dynamic test, {dynamic? orElse}) {
+    return (!identical(orElse, darticAbsent)) ? super.singleWhere(test, orElse: orElse as dynamic Function()?) : super.singleWhere(test);
+  }
   dynamic _super$elementAt(int index) => super.elementAt(index);
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;

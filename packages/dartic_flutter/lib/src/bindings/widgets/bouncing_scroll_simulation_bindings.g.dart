@@ -13,6 +13,110 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/src/physics/spring_simulation.dart';
 import 'package:flutter/src/physics/tolerance.dart';
 
+class _$BouncingScrollSimulation extends BouncingScrollSimulation implements DarticObjectHolder {
+  _$BouncingScrollSimulation(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(position: superArgs[0] as double, velocity: superArgs[1] as double, leadingExtent: superArgs[2] as double, trailingExtent: superArgs[3] as double, spring: superArgs[4] as SpringDescription, constantDeceleration: superArgs[5] as double, tolerance: superArgs[6] as Tolerance);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  double x(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
+    if (identical(r, notOverridden)) return super.x(time);
+    return r as double;
+  }
+
+  @override
+  double dx(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
+    if (identical(r, notOverridden)) return super.dx(time);
+    return r as double;
+  }
+
+  @override
+  bool isDone(double time) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
+    if (identical(r, notOverridden)) return super.isDone(time);
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get leadingExtent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'leadingExtent');
+    if (identical(r, notOverridden)) return super.leadingExtent;
+    return r as double;
+  }
+
+  @override
+  double get trailingExtent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'trailingExtent');
+    if (identical(r, notOverridden)) return super.trailingExtent;
+    return r as double;
+  }
+
+  @override
+  SpringDescription get spring {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spring');
+    if (identical(r, notOverridden)) return super.spring;
+    return r as SpringDescription;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Tolerance get tolerance {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance');
+    if (identical(r, notOverridden)) return super.tolerance;
+    return r as Tolerance;
+  }
+
+  @override
+  set tolerance(Tolerance value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance', value)) {
+      super.tolerance = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  double _super$x(double time) => super.x(time);
+  double _super$dx(double time) => super.dx(time);
+  bool _super$isDone(double time) => super.isDone(time);
+  String _super$toString() => super.toString();
+  double get _super$leadingExtent => super.leadingExtent;
+  double get _super$trailingExtent => super.trailingExtent;
+  SpringDescription get _super$spring => super.spring;
+  int get _super$hashCode => super.hashCode;
+  Tolerance get _super$tolerance => super.tolerance;
+  set _super$tolerance(Tolerance value) { super.tolerance = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBouncingScrollSimulationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BouncingScrollSimulation(dispatch, obj, superArgs);
+
 abstract final class BouncingScrollSimulationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,8 +125,20 @@ abstract final class BouncingScrollSimulationBindings {
       test: (o) => o is BouncingScrollSimulation,
       methods: methodMap(),
       superclasses: ['package:flutter/src/physics/simulation.dart::Simulation'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BouncingScrollSimulation(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::maxSpringTransferVelocity#0', (args) => BouncingScrollSimulation.maxSpringTransferVelocity);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$x#1', (args) => (args[0] as _$BouncingScrollSimulation)._super$x(args[1] as double));
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$dx#1', (args) => (args[0] as _$BouncingScrollSimulation)._super$dx(args[1] as double));
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$isDone#1', (args) => (args[0] as _$BouncingScrollSimulation)._super$isDone(args[1] as double));
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$toString#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$leadingExtent#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$leadingExtent);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$trailingExtent#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$trailingExtent);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$spring#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$spring);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$hashCode#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$tolerance#0', (args) => (args[0] as _$BouncingScrollSimulation)._super$tolerance);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::BouncingScrollSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$BouncingScrollSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

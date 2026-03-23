@@ -19,6 +19,155 @@ import 'package:flutter/src/animation/curves.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$OrderedTraversalPolicy extends OrderedTraversalPolicy implements DarticObjectHolder {
+  _$OrderedTraversalPolicy(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(secondary: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as FocusTraversalPolicy?, requestFocusCallback: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as TraversalRequestFocusCallback?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Iterable<FocusNode> sortDescendants(Iterable<FocusNode> descendants, FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sortDescendants', [descendants, currentNode]);
+    if (identical(r, notOverridden)) return super.sortDescendants(descendants, currentNode);
+    return r as Iterable<FocusNode>;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  FocusNode? findFirstFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findFirstFocus', [currentNode, ignoreCurrentFocus]);
+    if (identical(r, notOverridden)) return super.findFirstFocus(currentNode, ignoreCurrentFocus: ignoreCurrentFocus);
+    return r as FocusNode?;
+  }
+
+  @override
+  FocusNode findLastFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findLastFocus', [currentNode, ignoreCurrentFocus]);
+    if (identical(r, notOverridden)) return super.findLastFocus(currentNode, ignoreCurrentFocus: ignoreCurrentFocus);
+    return r as FocusNode;
+  }
+
+  @override
+  FocusNode? findFirstFocusInDirection(FocusNode currentNode, TraversalDirection direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findFirstFocusInDirection', [currentNode, direction]);
+    if (identical(r, notOverridden)) return super.findFirstFocusInDirection(currentNode, direction);
+    return r as FocusNode?;
+  }
+
+  @override
+  void invalidateScopeData(FocusScopeNode node) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invalidateScopeData', [node]);
+    if (identical(r, notOverridden)) { super.invalidateScopeData(node); return; }
+  }
+
+  @override
+  void changedScope({FocusNode? node, FocusScopeNode? oldScope}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedScope', [node, oldScope]);
+    if (identical(r, notOverridden)) { super.changedScope(node: node, oldScope: oldScope); return; }
+  }
+
+  @override
+  bool next(FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'next', [currentNode]);
+    if (identical(r, notOverridden)) return super.next(currentNode);
+    return r as bool;
+  }
+
+  @override
+  bool previous(FocusNode currentNode) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'previous', [currentNode]);
+    if (identical(r, notOverridden)) return super.previous(currentNode);
+    return r as bool;
+  }
+
+  @override
+  bool inDirection(FocusNode currentNode, TraversalDirection direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inDirection', [currentNode, direction]);
+    if (identical(r, notOverridden)) return super.inDirection(currentNode, direction);
+    return r as bool;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  FocusTraversalPolicy? get secondary {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'secondary');
+    if (identical(r, notOverridden)) return super.secondary;
+    return r as FocusTraversalPolicy?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  TraversalRequestFocusCallback get requestFocusCallback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocusCallback');
+    if (identical(r, notOverridden)) return super.requestFocusCallback;
+    return r as TraversalRequestFocusCallback;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Iterable<FocusNode> _super$sortDescendants(Iterable<FocusNode> descendants, FocusNode currentNode) => super.sortDescendants(descendants, currentNode);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  FocusNode? _super$findFirstFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) => super.findFirstFocus(currentNode, ignoreCurrentFocus: ignoreCurrentFocus);
+  FocusNode _super$findLastFocus(FocusNode currentNode, {bool ignoreCurrentFocus = false}) => super.findLastFocus(currentNode, ignoreCurrentFocus: ignoreCurrentFocus);
+  FocusNode? _super$findFirstFocusInDirection(FocusNode currentNode, TraversalDirection direction) => super.findFirstFocusInDirection(currentNode, direction);
+  void _super$invalidateScopeData(FocusScopeNode node) { super.invalidateScopeData(node); }
+  void _super$changedScope({FocusNode? node, FocusScopeNode? oldScope}) { super.changedScope(node: node, oldScope: oldScope); }
+  bool _super$next(FocusNode currentNode) => super.next(currentNode);
+  bool _super$previous(FocusNode currentNode) => super.previous(currentNode);
+  bool _super$inDirection(FocusNode currentNode, TraversalDirection direction) => super.inDirection(currentNode, direction);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  FocusTraversalPolicy? get _super$secondary => super.secondary;
+  int get _super$hashCode => super.hashCode;
+  TraversalRequestFocusCallback get _super$requestFocusCallback => super.requestFocusCallback;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOrderedTraversalPolicyBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OrderedTraversalPolicy(dispatch, obj, superArgs);
+
 abstract final class OrderedTraversalPolicyBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +176,25 @@ abstract final class OrderedTraversalPolicyBindings {
       test: (o) => o is OrderedTraversalPolicy,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/focus_traversal.dart::FocusTraversalPolicy', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/widgets/focus_traversal.dart::DirectionalFocusTraversalPolicyMixin'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OrderedTraversalPolicy(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$sortDescendants#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$sortDescendants((args[1] as Iterable).cast<FocusNode>(), args[2] as FocusNode));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$toString#1', (args) => (args[0] as _$OrderedTraversalPolicy)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$findFirstFocus#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$findFirstFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$findLastFocus#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$findLastFocus(args[1] as FocusNode, ignoreCurrentFocus: identical(args[2], darticAbsent) ? false : args[2] as bool));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$findFirstFocusInDirection#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$findFirstFocusInDirection(args[1] as FocusNode, args[2] as TraversalDirection));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$invalidateScopeData#1', (args) { (args[0] as _$OrderedTraversalPolicy)._super$invalidateScopeData(args[1] as FocusScopeNode); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$changedScope#2', (args) { (args[0] as _$OrderedTraversalPolicy)._super$changedScope(node: identical(args[1], darticAbsent) ? null : args[1] as FocusNode?, oldScope: identical(args[2], darticAbsent) ? null : args[2] as FocusScopeNode?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$next#1', (args) => (args[0] as _$OrderedTraversalPolicy)._super$next(args[1] as FocusNode));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$previous#1', (args) => (args[0] as _$OrderedTraversalPolicy)._super$previous(args[1] as FocusNode));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$inDirection#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$inDirection(args[1] as FocusNode, args[2] as TraversalDirection));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$toStringShort#0', (args) => (args[0] as _$OrderedTraversalPolicy)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$OrderedTraversalPolicy)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$debugFillProperties#1', (args) { (args[0] as _$OrderedTraversalPolicy)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$secondary#0', (args) => (args[0] as _$OrderedTraversalPolicy)._super$secondary);
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$hashCode#0', (args) => (args[0] as _$OrderedTraversalPolicy)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/focus_traversal.dart::OrderedTraversalPolicy::\$super\$requestFocusCallback#0', (args) => (args[0] as _$OrderedTraversalPolicy)._super$requestFocusCallback);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -17,6 +17,75 @@ import 'package:flutter/src/widgets/layout_builder.dart';
 import 'package:flutter/src/widgets/lookup_boundary.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
 
+class _$OverlayPortalController extends OverlayPortalController implements DarticObjectHolder {
+  _$OverlayPortalController(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(debugLabel: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as String?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void show() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', const []);
+    if (identical(r, notOverridden)) { super.show(); return; }
+  }
+
+  @override
+  void hide() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(r, notOverridden)) { super.hide(); return; }
+  }
+
+  @override
+  void toggle() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggle', const []);
+    if (identical(r, notOverridden)) { super.toggle(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get isShowing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isShowing');
+    if (identical(r, notOverridden)) return super.isShowing;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$show() { super.show(); }
+  void _super$hide() { super.hide(); }
+  void _super$toggle() { super.toggle(); }
+  String _super$toString() => super.toString();
+  bool get _super$isShowing => super.isShowing;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOverlayPortalControllerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OverlayPortalController(dispatch, obj, superArgs);
+
 abstract final class OverlayPortalControllerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +93,15 @@ abstract final class OverlayPortalControllerBindings {
       type: OverlayPortalController,
       test: (o) => o is OverlayPortalController,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OverlayPortalController(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$show#0', (args) { (args[0] as _$OverlayPortalController)._super$show(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$hide#0', (args) { (args[0] as _$OverlayPortalController)._super$hide(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$toggle#0', (args) { (args[0] as _$OverlayPortalController)._super$toggle(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$toString#0', (args) => (args[0] as _$OverlayPortalController)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$isShowing#0', (args) => (args[0] as _$OverlayPortalController)._super$isShowing);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayPortalController::\$super\$hashCode#0', (args) => (args[0] as _$OverlayPortalController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

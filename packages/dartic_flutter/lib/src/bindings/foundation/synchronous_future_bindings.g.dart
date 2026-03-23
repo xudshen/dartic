@@ -9,6 +9,82 @@ import 'package:dartic/dartic_internal.dart';
 import 'package:flutter/src/foundation/synchronous_future.dart';
 import 'dart:async';
 
+class _$SynchronousFuture extends SynchronousFuture<dynamic> implements DarticObjectHolder {
+  _$SynchronousFuture(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0]);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Stream asStream() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asStream', const []);
+    if (identical(r, notOverridden)) return super.asStream();
+    return r as Stream;
+  }
+
+  @override
+  Future catchError(Function onError, {bool Function(Object)? test}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'catchError', [onError, test]);
+    if (identical(r, notOverridden)) return super.catchError(onError, test: test != null ? (a) => test(a) as bool : null);
+    return r as Future;
+  }
+
+  @override
+  Future timeout(Duration timeLimit, {FutureOr Function()? onTimeout}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
+    if (identical(r, notOverridden)) return super.timeout(timeLimit, onTimeout: onTimeout != null ? () => onTimeout() as FutureOr : null);
+    return r as Future;
+  }
+
+  @override
+  Future whenComplete(FutureOr<dynamic> Function() action) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whenComplete', [action]);
+    if (identical(r, notOverridden)) return super.whenComplete(() => action() as FutureOr<dynamic>);
+    return r as Future;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Stream _super$asStream() => super.asStream();
+  Future _super$catchError(dynamic onError, {dynamic? test}) {
+    return (!identical(test, darticAbsent)) ? super.catchError(onError, test: test as bool Function(Object)?) : super.catchError(onError);
+  }
+  Future _super$timeout(Duration timeLimit, {dynamic? onTimeout}) {
+    return (!identical(onTimeout, darticAbsent)) ? super.timeout(timeLimit, onTimeout: onTimeout as FutureOr Function()?) : super.timeout(timeLimit);
+  }
+  Future _super$whenComplete(dynamic action) => super.whenComplete(action);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSynchronousFutureBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SynchronousFuture(dispatch, obj, superArgs);
+
 abstract final class SynchronousFutureBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -17,7 +93,15 @@ abstract final class SynchronousFutureBindings {
       test: (o) => o is SynchronousFuture,
       methods: methodMap(),
       superclasses: ['dart:async::Future'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SynchronousFuture(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$asStream#0', (args) => (args[0] as _$SynchronousFuture)._super$asStream());
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$catchError#2', (args) => (args[0] as _$SynchronousFuture)._super$catchError(args[1] as Function, test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$timeout#2', (args) => (args[0] as _$SynchronousFuture)._super$timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$whenComplete#1', (args) => (args[0] as _$SynchronousFuture)._super$whenComplete(() => (args[1] as Function)() as FutureOr<dynamic>));
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$toString#0', (args) => (args[0] as _$SynchronousFuture)._super$toString());
+    ctx.registerBinding('package:flutter/src/foundation/synchronous_future.dart::SynchronousFuture::\$super\$hashCode#0', (args) => (args[0] as _$SynchronousFuture)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

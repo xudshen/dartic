@@ -19,6 +19,64 @@ import 'package:flutter/src/widgets/shortcuts.dart';
 import 'package:flutter/src/services/hardware_keyboard.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 
+class _$MenuSerializableShortcut implements MenuSerializableShortcut, DarticObjectHolder {
+  _$MenuSerializableShortcut(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ShortcutSerialization serializeForMenu() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'serializeForMenu', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method serializeForMenu must be overridden in dartic code');
+    }
+    return r as ShortcutSerialization;
+  }
+
+  @override
+  bool accepts(KeyEvent event, HardwareKeyboard state) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepts', [event, state]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method accepts must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String debugDescribeKeys() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeKeys', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method debugDescribeKeys must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  Iterable<LogicalKeyboardKey>? get triggers {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'triggers');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter triggers must be overridden in dartic code');
+    }
+    return r as Iterable<LogicalKeyboardKey>?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMenuSerializableShortcutBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MenuSerializableShortcut(dispatch, obj, superArgs);
+
 abstract final class MenuSerializableShortcutBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,6 +85,8 @@ abstract final class MenuSerializableShortcutBindings {
       test: (o) => o is MenuSerializableShortcut,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/shortcuts.dart::ShortcutActivator'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MenuSerializableShortcut(dispatch, darticObject, superArgs),
     );
   }
 

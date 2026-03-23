@@ -22,6 +22,81 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/services/text_editing_delta.dart';
 
+class _$ScribbleClient extends ScribbleClient implements DarticObjectHolder {
+  _$ScribbleClient(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void onScribbleFocus(Offset offset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onScribbleFocus', [offset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method onScribbleFocus must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool isInScribbleRect(Rect rect) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isInScribbleRect', [rect]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method isInScribbleRect must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get elementIdentifier {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elementIdentifier');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter elementIdentifier must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  Rect get bounds {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bounds');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter bounds must be overridden in dartic code');
+    }
+    return r as Rect;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScribbleClientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScribbleClient(dispatch, obj, superArgs);
+
 abstract final class ScribbleClientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -29,7 +104,11 @@ abstract final class ScribbleClientBindings {
       type: ScribbleClient,
       test: (o) => o is ScribbleClient,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScribbleClient(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::ScribbleClient::\$super\$toString#0', (args) => (args[0] as _$ScribbleClient)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/text_input.dart::ScribbleClient::\$super\$hashCode#0', (args) => (args[0] as _$ScribbleClient)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

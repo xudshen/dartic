@@ -32,6 +32,325 @@ import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$FloatingActionButton extends FloatingActionButton implements DarticObjectHolder {
+  _$FloatingActionButton(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, child: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Widget?, tooltip: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as String?, foregroundColor: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as Color?, backgroundColor: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as Color?, focusColor: identical(superArgs[5], darticAbsent) ? null : superArgs[5] as Color?, hoverColor: identical(superArgs[6], darticAbsent) ? null : superArgs[6] as Color?, splashColor: identical(superArgs[7], darticAbsent) ? null : superArgs[7] as Color?, heroTag: identical(superArgs[8], darticAbsent) ? null : superArgs[8], elevation: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as double?, focusElevation: identical(superArgs[10], darticAbsent) ? null : superArgs[10] as double?, hoverElevation: identical(superArgs[11], darticAbsent) ? null : superArgs[11] as double?, highlightElevation: identical(superArgs[12], darticAbsent) ? null : superArgs[12] as double?, disabledElevation: identical(superArgs[13], darticAbsent) ? null : superArgs[13] as double?, onPressed: superArgs[14] as VoidCallback?, mouseCursor: identical(superArgs[15], darticAbsent) ? null : superArgs[15] as MouseCursor?, mini: superArgs[16] as bool, shape: identical(superArgs[17], darticAbsent) ? null : superArgs[17] as ShapeBorder?, clipBehavior: superArgs[18] as Clip, focusNode: identical(superArgs[19], darticAbsent) ? null : superArgs[19] as FocusNode?, autofocus: superArgs[20] as bool, materialTapTargetSize: identical(superArgs[21], darticAbsent) ? null : superArgs[21] as MaterialTapTargetSize?, isExtended: superArgs[22] as bool, enableFeedback: identical(superArgs[23], darticAbsent) ? null : superArgs[23] as bool?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Widget build(BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(r, notOverridden)) return super.build(context);
+    return r as Widget;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatelessElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatelessElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  Widget? get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget?;
+  }
+
+  @override
+  String? get tooltip {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tooltip');
+    if (identical(r, notOverridden)) return super.tooltip;
+    return r as String?;
+  }
+
+  @override
+  Color? get foregroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'foregroundColor');
+    if (identical(r, notOverridden)) return super.foregroundColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get backgroundColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'backgroundColor');
+    if (identical(r, notOverridden)) return super.backgroundColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get focusColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusColor');
+    if (identical(r, notOverridden)) return super.focusColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get hoverColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hoverColor');
+    if (identical(r, notOverridden)) return super.hoverColor;
+    return r as Color?;
+  }
+
+  @override
+  Color? get splashColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'splashColor');
+    if (identical(r, notOverridden)) return super.splashColor;
+    return r as Color?;
+  }
+
+  @override
+  Object? get heroTag {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'heroTag');
+    if (identical(r, notOverridden)) return super.heroTag;
+    return r as Object?;
+  }
+
+  @override
+  VoidCallback? get onPressed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPressed');
+    if (identical(r, notOverridden)) return super.onPressed;
+    return r as VoidCallback?;
+  }
+
+  @override
+  MouseCursor? get mouseCursor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mouseCursor');
+    if (identical(r, notOverridden)) return super.mouseCursor;
+    return r as MouseCursor?;
+  }
+
+  @override
+  double? get elevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
+    if (identical(r, notOverridden)) return super.elevation;
+    return r as double?;
+  }
+
+  @override
+  double? get focusElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusElevation');
+    if (identical(r, notOverridden)) return super.focusElevation;
+    return r as double?;
+  }
+
+  @override
+  double? get hoverElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hoverElevation');
+    if (identical(r, notOverridden)) return super.hoverElevation;
+    return r as double?;
+  }
+
+  @override
+  double? get highlightElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'highlightElevation');
+    if (identical(r, notOverridden)) return super.highlightElevation;
+    return r as double?;
+  }
+
+  @override
+  double? get disabledElevation {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'disabledElevation');
+    if (identical(r, notOverridden)) return super.disabledElevation;
+    return r as double?;
+  }
+
+  @override
+  bool get mini {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'mini');
+    if (identical(r, notOverridden)) return super.mini;
+    return r as bool;
+  }
+
+  @override
+  ShapeBorder? get shape {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shape');
+    if (identical(r, notOverridden)) return super.shape;
+    return r as ShapeBorder?;
+  }
+
+  @override
+  Clip get clipBehavior {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipBehavior');
+    if (identical(r, notOverridden)) return super.clipBehavior;
+    return r as Clip;
+  }
+
+  @override
+  bool get isExtended {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isExtended');
+    if (identical(r, notOverridden)) return super.isExtended;
+    return r as bool;
+  }
+
+  @override
+  FocusNode? get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) return super.focusNode;
+    return r as FocusNode?;
+  }
+
+  @override
+  bool get autofocus {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'autofocus');
+    if (identical(r, notOverridden)) return super.autofocus;
+    return r as bool;
+  }
+
+  @override
+  MaterialTapTargetSize? get materialTapTargetSize {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'materialTapTargetSize');
+    if (identical(r, notOverridden)) return super.materialTapTargetSize;
+    return r as MaterialTapTargetSize?;
+  }
+
+  @override
+  bool? get enableFeedback {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enableFeedback');
+    if (identical(r, notOverridden)) return super.enableFeedback;
+    return r as bool?;
+  }
+
+  @override
+  double? get extendedIconLabelSpacing {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extendedIconLabelSpacing');
+    if (identical(r, notOverridden)) return super.extendedIconLabelSpacing;
+    return r as double?;
+  }
+
+  @override
+  EdgeInsetsGeometry? get extendedPadding {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extendedPadding');
+    if (identical(r, notOverridden)) return super.extendedPadding;
+    return r as EdgeInsetsGeometry?;
+  }
+
+  @override
+  TextStyle? get extendedTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extendedTextStyle');
+    if (identical(r, notOverridden)) return super.extendedTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Widget _super$build(BuildContext context) => super.build(context);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatelessElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  Widget? get _super$child => super.child;
+  String? get _super$tooltip => super.tooltip;
+  Color? get _super$foregroundColor => super.foregroundColor;
+  Color? get _super$backgroundColor => super.backgroundColor;
+  Color? get _super$focusColor => super.focusColor;
+  Color? get _super$hoverColor => super.hoverColor;
+  Color? get _super$splashColor => super.splashColor;
+  Object? get _super$heroTag => super.heroTag;
+  VoidCallback? get _super$onPressed => super.onPressed;
+  MouseCursor? get _super$mouseCursor => super.mouseCursor;
+  double? get _super$elevation => super.elevation;
+  double? get _super$focusElevation => super.focusElevation;
+  double? get _super$hoverElevation => super.hoverElevation;
+  double? get _super$highlightElevation => super.highlightElevation;
+  double? get _super$disabledElevation => super.disabledElevation;
+  bool get _super$mini => super.mini;
+  ShapeBorder? get _super$shape => super.shape;
+  Clip get _super$clipBehavior => super.clipBehavior;
+  bool get _super$isExtended => super.isExtended;
+  FocusNode? get _super$focusNode => super.focusNode;
+  bool get _super$autofocus => super.autofocus;
+  MaterialTapTargetSize? get _super$materialTapTargetSize => super.materialTapTargetSize;
+  bool? get _super$enableFeedback => super.enableFeedback;
+  double? get _super$extendedIconLabelSpacing => super.extendedIconLabelSpacing;
+  EdgeInsetsGeometry? get _super$extendedPadding => super.extendedPadding;
+  TextStyle? get _super$extendedTextStyle => super.extendedTextStyle;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createFloatingActionButtonBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$FloatingActionButton(dispatch, obj, superArgs);
+
 abstract final class FloatingActionButtonBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -40,7 +359,46 @@ abstract final class FloatingActionButtonBindings {
       test: (o) => o is FloatingActionButton,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatelessWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$FloatingActionButton(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$build#1', (args) => (args[0] as _$FloatingActionButton)._super$build(args[1] as BuildContext));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$debugFillProperties#1', (args) { (args[0] as _$FloatingActionButton)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$toString#1', (args) => (args[0] as _$FloatingActionButton)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$createElement#0', (args) => (args[0] as _$FloatingActionButton)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$toStringShort#0', (args) => (args[0] as _$FloatingActionButton)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$toStringShallow#2', (args) => (args[0] as _$FloatingActionButton)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$toStringDeep#4', (args) => (args[0] as _$FloatingActionButton)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$FloatingActionButton)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$FloatingActionButton)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$child#0', (args) => (args[0] as _$FloatingActionButton)._super$child);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$tooltip#0', (args) => (args[0] as _$FloatingActionButton)._super$tooltip);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$foregroundColor#0', (args) => (args[0] as _$FloatingActionButton)._super$foregroundColor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$backgroundColor#0', (args) => (args[0] as _$FloatingActionButton)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$focusColor#0', (args) => (args[0] as _$FloatingActionButton)._super$focusColor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$hoverColor#0', (args) => (args[0] as _$FloatingActionButton)._super$hoverColor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$splashColor#0', (args) => (args[0] as _$FloatingActionButton)._super$splashColor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$heroTag#0', (args) => (args[0] as _$FloatingActionButton)._super$heroTag);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$onPressed#0', (args) => (args[0] as _$FloatingActionButton)._super$onPressed);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$mouseCursor#0', (args) => (args[0] as _$FloatingActionButton)._super$mouseCursor);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$elevation#0', (args) => (args[0] as _$FloatingActionButton)._super$elevation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$focusElevation#0', (args) => (args[0] as _$FloatingActionButton)._super$focusElevation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$hoverElevation#0', (args) => (args[0] as _$FloatingActionButton)._super$hoverElevation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$highlightElevation#0', (args) => (args[0] as _$FloatingActionButton)._super$highlightElevation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$disabledElevation#0', (args) => (args[0] as _$FloatingActionButton)._super$disabledElevation);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$mini#0', (args) => (args[0] as _$FloatingActionButton)._super$mini);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$shape#0', (args) => (args[0] as _$FloatingActionButton)._super$shape);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$clipBehavior#0', (args) => (args[0] as _$FloatingActionButton)._super$clipBehavior);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$isExtended#0', (args) => (args[0] as _$FloatingActionButton)._super$isExtended);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$focusNode#0', (args) => (args[0] as _$FloatingActionButton)._super$focusNode);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$autofocus#0', (args) => (args[0] as _$FloatingActionButton)._super$autofocus);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$materialTapTargetSize#0', (args) => (args[0] as _$FloatingActionButton)._super$materialTapTargetSize);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$enableFeedback#0', (args) => (args[0] as _$FloatingActionButton)._super$enableFeedback);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedIconLabelSpacing#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedIconLabelSpacing);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedPadding#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedPadding);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedTextStyle#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedTextStyle);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$hashCode#0', (args) => (args[0] as _$FloatingActionButton)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$key#0', (args) => (args[0] as _$FloatingActionButton)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

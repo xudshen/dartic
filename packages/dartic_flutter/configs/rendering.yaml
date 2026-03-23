@@ -14,6 +14,16 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: package:flutter/src/rendering
     discover: all
+    classes:
+      # Bridge skipped: generic/covariant type issues in bridge class
+      - name: RenderAnimatedOpacity
+        bridge: false
+      - name: RenderEditable
+        bridge: false
+      - name: RenderParagraph
+        bridge: false
+      - name: RenderSliverAnimatedOpacity
+        bridge: false
 
     overrides:
       # SelectionEdgeUpdateEvent: 2 ctors (.forStart, .forEnd), discriminate by type

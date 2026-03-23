@@ -30,6 +30,74 @@ import 'package:flutter/src/widgets/restoration.dart';
 import 'package:flutter/src/widgets/scroll_controller.dart';
 import 'package:flutter/src/widgets/transitions.dart';
 
+class _$RouteAware extends RouteAware implements DarticObjectHolder {
+  _$RouteAware(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void didPopNext() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', const []);
+    if (identical(r, notOverridden)) { super.didPopNext(); return; }
+  }
+
+  @override
+  void didPush() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
+    if (identical(r, notOverridden)) { super.didPush(); return; }
+  }
+
+  @override
+  void didPop() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', const []);
+    if (identical(r, notOverridden)) { super.didPop(); return; }
+  }
+
+  @override
+  void didPushNext() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushNext', const []);
+    if (identical(r, notOverridden)) { super.didPushNext(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$didPopNext() { super.didPopNext(); }
+  void _super$didPush() { super.didPush(); }
+  void _super$didPop() { super.didPop(); }
+  void _super$didPushNext() { super.didPushNext(); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRouteAwareBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RouteAware(dispatch, obj, superArgs);
+
 abstract final class RouteAwareBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -37,7 +105,15 @@ abstract final class RouteAwareBindings {
       type: RouteAware,
       test: (o) => o is RouteAware,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RouteAware(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$didPopNext#0', (args) { (args[0] as _$RouteAware)._super$didPopNext(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$didPush#0', (args) { (args[0] as _$RouteAware)._super$didPush(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$didPop#0', (args) { (args[0] as _$RouteAware)._super$didPop(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$didPushNext#0', (args) { (args[0] as _$RouteAware)._super$didPushNext(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$toString#0', (args) => (args[0] as _$RouteAware)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteAware::\$super\$hashCode#0', (args) => (args[0] as _$RouteAware)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

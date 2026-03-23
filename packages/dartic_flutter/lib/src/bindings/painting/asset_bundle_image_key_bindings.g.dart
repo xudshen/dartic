@@ -19,6 +19,70 @@ import 'package:flutter/src/painting/image_cache.dart';
 import 'package:flutter/src/painting/image_stream.dart';
 import 'package:flutter/src/services/asset_bundle.dart';
 
+class _$AssetBundleImageKey extends AssetBundleImageKey implements DarticObjectHolder {
+  _$AssetBundleImageKey(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(bundle: superArgs[0] as AssetBundle, name: superArgs[1] as String, scale: superArgs[2] as double);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  AssetBundle get bundle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bundle');
+    if (identical(r, notOverridden)) return super.bundle;
+    return r as AssetBundle;
+  }
+
+  @override
+  String get name {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String;
+  }
+
+  @override
+  double get scale {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'scale');
+    if (identical(r, notOverridden)) return super.scale;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  AssetBundle get _super$bundle => super.bundle;
+  String get _super$name => super.name;
+  double get _super$scale => super.scale;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createAssetBundleImageKeyBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$AssetBundleImageKey(dispatch, obj, superArgs);
+
 abstract final class AssetBundleImageKeyBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +90,14 @@ abstract final class AssetBundleImageKeyBindings {
       type: AssetBundleImageKey,
       test: (o) => o is AssetBundleImageKey,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$AssetBundleImageKey(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::AssetBundleImageKey::\$super\$toString#0', (args) => (args[0] as _$AssetBundleImageKey)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::AssetBundleImageKey::\$super\$bundle#0', (args) => (args[0] as _$AssetBundleImageKey)._super$bundle);
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::AssetBundleImageKey::\$super\$name#0', (args) => (args[0] as _$AssetBundleImageKey)._super$name);
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::AssetBundleImageKey::\$super\$scale#0', (args) => (args[0] as _$AssetBundleImageKey)._super$scale);
+    ctx.registerBinding('package:flutter/src/painting/image_provider.dart::AssetBundleImageKey::\$super\$hashCode#0', (args) => (args[0] as _$AssetBundleImageKey)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

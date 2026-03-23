@@ -21,6 +21,70 @@ import 'package:flutter/src/widgets/view.dart';
 import 'package:flutter/src/gestures/velocity_tracker.dart';
 import 'dart:ui';
 
+class _$DraggableDetails extends DraggableDetails implements DarticObjectHolder {
+  _$DraggableDetails(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(wasAccepted: superArgs[0] as bool, velocity: superArgs[1] as Velocity, offset: superArgs[2] as Offset);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get wasAccepted {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'wasAccepted');
+    if (identical(r, notOverridden)) return super.wasAccepted;
+    return r as bool;
+  }
+
+  @override
+  Velocity get velocity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'velocity');
+    if (identical(r, notOverridden)) return super.velocity;
+    return r as Velocity;
+  }
+
+  @override
+  Offset get offset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
+    if (identical(r, notOverridden)) return super.offset;
+    return r as Offset;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  bool get _super$wasAccepted => super.wasAccepted;
+  Velocity get _super$velocity => super.velocity;
+  Offset get _super$offset => super.offset;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDraggableDetailsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DraggableDetails(dispatch, obj, superArgs);
+
 abstract final class DraggableDetailsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,7 +92,14 @@ abstract final class DraggableDetailsBindings {
       type: DraggableDetails,
       test: (o) => o is DraggableDetails,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DraggableDetails(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DraggableDetails::\$super\$toString#0', (args) => (args[0] as _$DraggableDetails)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DraggableDetails::\$super\$wasAccepted#0', (args) => (args[0] as _$DraggableDetails)._super$wasAccepted);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DraggableDetails::\$super\$velocity#0', (args) => (args[0] as _$DraggableDetails)._super$velocity);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DraggableDetails::\$super\$offset#0', (args) => (args[0] as _$DraggableDetails)._super$offset);
+    ctx.registerBinding('package:flutter/src/widgets/drag_target.dart::DraggableDetails::\$super\$hashCode#0', (args) => (args[0] as _$DraggableDetails)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

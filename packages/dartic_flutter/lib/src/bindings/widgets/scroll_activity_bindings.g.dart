@@ -17,6 +17,137 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/scroll_metrics.dart';
 import 'package:flutter/src/widgets/scroll_notification.dart';
 
+class _$ScrollActivity extends ScrollActivity implements DarticObjectHolder {
+  _$ScrollActivity(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as ScrollActivityDelegate);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void updateDelegate(ScrollActivityDelegate value) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateDelegate', [value]);
+    if (identical(r, notOverridden)) { super.updateDelegate(value); return; }
+  }
+
+  @override
+  void resetActivity() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetActivity', const []);
+    if (identical(r, notOverridden)) { super.resetActivity(); return; }
+  }
+
+  @override
+  void dispatchScrollStartNotification(ScrollMetrics metrics, BuildContext? context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchScrollStartNotification', [metrics, context]);
+    if (identical(r, notOverridden)) { super.dispatchScrollStartNotification(metrics, context); return; }
+  }
+
+  @override
+  void dispatchScrollUpdateNotification(ScrollMetrics metrics, BuildContext context, double scrollDelta) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchScrollUpdateNotification', [metrics, context, scrollDelta]);
+    if (identical(r, notOverridden)) { super.dispatchScrollUpdateNotification(metrics, context, scrollDelta); return; }
+  }
+
+  @override
+  void dispatchOverscrollNotification(ScrollMetrics metrics, BuildContext context, double overscroll) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchOverscrollNotification', [metrics, context, overscroll]);
+    if (identical(r, notOverridden)) { super.dispatchOverscrollNotification(metrics, context, overscroll); return; }
+  }
+
+  @override
+  void dispatchScrollEndNotification(ScrollMetrics metrics, BuildContext context) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchScrollEndNotification', [metrics, context]);
+    if (identical(r, notOverridden)) { super.dispatchScrollEndNotification(metrics, context); return; }
+  }
+
+  @override
+  void applyNewDimensions() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyNewDimensions', const []);
+    if (identical(r, notOverridden)) { super.applyNewDimensions(); return; }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  ScrollActivityDelegate get delegate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegate');
+    if (identical(r, notOverridden)) return super.delegate;
+    return r as ScrollActivityDelegate;
+  }
+
+  @override
+  bool get shouldIgnorePointer {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'shouldIgnorePointer');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter shouldIgnorePointer must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get isScrolling {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isScrolling');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter isScrolling must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  double get velocity {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'velocity');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter velocity must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$updateDelegate(ScrollActivityDelegate value) { super.updateDelegate(value); }
+  void _super$resetActivity() { super.resetActivity(); }
+  void _super$dispatchScrollStartNotification(ScrollMetrics metrics, BuildContext? context) { super.dispatchScrollStartNotification(metrics, context); }
+  void _super$dispatchScrollUpdateNotification(ScrollMetrics metrics, BuildContext context, double scrollDelta) { super.dispatchScrollUpdateNotification(metrics, context, scrollDelta); }
+  void _super$dispatchOverscrollNotification(ScrollMetrics metrics, BuildContext context, double overscroll) { super.dispatchOverscrollNotification(metrics, context, overscroll); }
+  void _super$dispatchScrollEndNotification(ScrollMetrics metrics, BuildContext context) { super.dispatchScrollEndNotification(metrics, context); }
+  void _super$applyNewDimensions() { super.applyNewDimensions(); }
+  void _super$dispose() { super.dispose(); }
+  String _super$toString() => super.toString();
+  ScrollActivityDelegate get _super$delegate => super.delegate;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollActivityBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollActivity(dispatch, obj, superArgs);
+
 abstract final class ScrollActivityBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +155,20 @@ abstract final class ScrollActivityBindings {
       type: ScrollActivity,
       test: (o) => o is ScrollActivity,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollActivity(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$updateDelegate#1', (args) { (args[0] as _$ScrollActivity)._super$updateDelegate(args[1] as ScrollActivityDelegate); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$resetActivity#0', (args) { (args[0] as _$ScrollActivity)._super$resetActivity(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$dispatchScrollStartNotification#2', (args) { (args[0] as _$ScrollActivity)._super$dispatchScrollStartNotification(args[1] as ScrollMetrics, args[2] as BuildContext?); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$dispatchScrollUpdateNotification#3', (args) { (args[0] as _$ScrollActivity)._super$dispatchScrollUpdateNotification(args[1] as ScrollMetrics, args[2] as BuildContext, args[3] as double); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$dispatchOverscrollNotification#3', (args) { (args[0] as _$ScrollActivity)._super$dispatchOverscrollNotification(args[1] as ScrollMetrics, args[2] as BuildContext, args[3] as double); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$dispatchScrollEndNotification#2', (args) { (args[0] as _$ScrollActivity)._super$dispatchScrollEndNotification(args[1] as ScrollMetrics, args[2] as BuildContext); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$applyNewDimensions#0', (args) { (args[0] as _$ScrollActivity)._super$applyNewDimensions(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$dispose#0', (args) { (args[0] as _$ScrollActivity)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$toString#0', (args) => (args[0] as _$ScrollActivity)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$delegate#0', (args) => (args[0] as _$ScrollActivity)._super$delegate);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::ScrollActivity::\$super\$hashCode#0', (args) => (args[0] as _$ScrollActivity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

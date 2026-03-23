@@ -19,6 +19,77 @@ import 'package:flutter/src/gestures/recognizer.dart';
 import 'package:flutter/src/gestures/tap.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$SerialTapCancelDetails extends SerialTapCancelDetails implements DarticObjectHolder {
+  _$SerialTapCancelDetails(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(count: superArgs[0] as int);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  int get count {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'count');
+    if (identical(r, notOverridden)) return super.count;
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  int get _super$count => super.count;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSerialTapCancelDetailsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SerialTapCancelDetails(dispatch, obj, superArgs);
+
 abstract final class SerialTapCancelDetailsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -27,7 +98,15 @@ abstract final class SerialTapCancelDetailsBindings {
       test: (o) => o is SerialTapCancelDetails,
       methods: methodMap(),
       superclasses: ['package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SerialTapCancelDetails(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$debugFillProperties#1', (args) { (args[0] as _$SerialTapCancelDetails)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$toString#1', (args) => (args[0] as _$SerialTapCancelDetails)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$toStringShort#0', (args) => (args[0] as _$SerialTapCancelDetails)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SerialTapCancelDetails)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$count#0', (args) => (args[0] as _$SerialTapCancelDetails)._super$count);
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapCancelDetails::\$super\$hashCode#0', (args) => (args[0] as _$SerialTapCancelDetails)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

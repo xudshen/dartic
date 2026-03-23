@@ -21,6 +21,44 @@ import 'package:flutter/src/painting/debug.dart';
 import 'package:flutter/src/painting/image_provider.dart';
 import 'package:flutter/src/painting/image_stream.dart';
 
+class _$DecorationImagePainter implements DecorationImagePainter, DarticObjectHolder {
+  _$DecorationImagePainter(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void paint(ui.Canvas canvas, ui.Rect rect, ui.Path? clipPath, ImageConfiguration configuration, {double blend = 1.0, ui.BlendMode blendMode = BlendMode.srcOver}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, clipPath, configuration, blend, blendMode]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method paint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDecorationImagePainterBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DecorationImagePainter(dispatch, obj, superArgs);
+
 abstract final class DecorationImagePainterBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -28,6 +66,8 @@ abstract final class DecorationImagePainterBindings {
       type: DecorationImagePainter,
       test: (o) => o is DecorationImagePainter,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DecorationImagePainter(dispatch, darticObject, superArgs),
     );
   }
 

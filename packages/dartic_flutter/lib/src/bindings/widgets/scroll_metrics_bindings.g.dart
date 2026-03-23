@@ -13,6 +13,181 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/painting.dart';
 
+class _$ScrollMetrics implements ScrollMetrics, DarticObjectHolder {
+  _$ScrollMetrics(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ScrollMetrics copyWith({double? minScrollExtent, double? maxScrollExtent, double? pixels, double? viewportDimension, AxisDirection? axisDirection, double? devicePixelRatio}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minScrollExtent, maxScrollExtent, pixels, viewportDimension, axisDirection, devicePixelRatio]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method copyWith must be overridden in dartic code');
+    }
+    return r as ScrollMetrics;
+  }
+
+  @override
+  double get minScrollExtent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minScrollExtent');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter minScrollExtent must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get maxScrollExtent {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maxScrollExtent');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter maxScrollExtent must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool get hasContentDimensions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasContentDimensions');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter hasContentDimensions must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  double get pixels {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pixels');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter pixels must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool get hasPixels {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasPixels');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter hasPixels must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  double get viewportDimension {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewportDimension');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter viewportDimension must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool get hasViewportDimension {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasViewportDimension');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter hasViewportDimension must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  AxisDirection get axisDirection {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axisDirection');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter axisDirection must be overridden in dartic code');
+    }
+    return r as AxisDirection;
+  }
+
+  @override
+  Axis get axis {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axis');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter axis must be overridden in dartic code');
+    }
+    return r as Axis;
+  }
+
+  @override
+  bool get outOfRange {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'outOfRange');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter outOfRange must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get atEdge {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'atEdge');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter atEdge must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  double get extentBefore {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extentBefore');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter extentBefore must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get extentInside {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extentInside');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter extentInside must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get extentAfter {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extentAfter');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter extentAfter must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get extentTotal {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'extentTotal');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter extentTotal must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get devicePixelRatio {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'devicePixelRatio');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter devicePixelRatio must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createScrollMetricsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$ScrollMetrics(dispatch, obj, superArgs);
+
 abstract final class ScrollMetricsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,6 +195,8 @@ abstract final class ScrollMetricsBindings {
       type: ScrollMetrics,
       test: (o) => o is ScrollMetrics,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$ScrollMetrics(dispatch, darticObject, superArgs),
     );
   }
 

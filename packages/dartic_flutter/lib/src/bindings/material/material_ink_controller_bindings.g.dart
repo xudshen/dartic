@@ -17,6 +17,80 @@ import 'dart:ui';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter/scheduler.dart';
 
+class _$MaterialInkController extends MaterialInkController implements DarticObjectHolder {
+  _$MaterialInkController(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void addInkFeature(InkFeature feature) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addInkFeature', [feature]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method addInkFeature must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void markNeedsPaint() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsPaint', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method markNeedsPaint must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Color? get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter color must be overridden in dartic code');
+    }
+    return r as Color?;
+  }
+
+  @override
+  TickerProvider get vsync {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'vsync');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter vsync must be overridden in dartic code');
+    }
+    return r as TickerProvider;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMaterialInkControllerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$MaterialInkController(dispatch, obj, superArgs);
+
 abstract final class MaterialInkControllerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +98,11 @@ abstract final class MaterialInkControllerBindings {
       type: MaterialInkController,
       test: (o) => o is MaterialInkController,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$MaterialInkController(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/material.dart::MaterialInkController::\$super\$toString#0', (args) => (args[0] as _$MaterialInkController)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/material.dart::MaterialInkController::\$super\$hashCode#0', (args) => (args[0] as _$MaterialInkController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

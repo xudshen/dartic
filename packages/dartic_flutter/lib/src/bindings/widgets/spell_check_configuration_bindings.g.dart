@@ -18,6 +18,94 @@ import 'package:flutter/src/painting/text_style.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 
+class _$SpellCheckConfiguration extends SpellCheckConfiguration implements DarticObjectHolder {
+  _$SpellCheckConfiguration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(spellCheckService: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as SpellCheckService?, misspelledSelectionColor: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as Color?, misspelledTextStyle: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TextStyle?, spellCheckSuggestionsToolbarBuilder: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as EditableTextContextMenuBuilder?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  SpellCheckConfiguration copyWith({SpellCheckService? spellCheckService, Color? misspelledSelectionColor, TextStyle? misspelledTextStyle, EditableTextContextMenuBuilder? spellCheckSuggestionsToolbarBuilder}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [spellCheckService, misspelledSelectionColor, misspelledTextStyle, spellCheckSuggestionsToolbarBuilder]);
+    if (identical(r, notOverridden)) return super.copyWith(spellCheckService: spellCheckService, misspelledSelectionColor: misspelledSelectionColor, misspelledTextStyle: misspelledTextStyle, spellCheckSuggestionsToolbarBuilder: spellCheckSuggestionsToolbarBuilder != null ? (a, b) => spellCheckSuggestionsToolbarBuilder(a, b) as Widget : null);
+    return r as SpellCheckConfiguration;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  SpellCheckService? get spellCheckService {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spellCheckService');
+    if (identical(r, notOverridden)) return super.spellCheckService;
+    return r as SpellCheckService?;
+  }
+
+  @override
+  Color? get misspelledSelectionColor {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'misspelledSelectionColor');
+    if (identical(r, notOverridden)) return super.misspelledSelectionColor;
+    return r as Color?;
+  }
+
+  @override
+  TextStyle? get misspelledTextStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'misspelledTextStyle');
+    if (identical(r, notOverridden)) return super.misspelledTextStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  EditableTextContextMenuBuilder? get spellCheckSuggestionsToolbarBuilder {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spellCheckSuggestionsToolbarBuilder');
+    if (identical(r, notOverridden)) return super.spellCheckSuggestionsToolbarBuilder;
+    return r as EditableTextContextMenuBuilder?;
+  }
+
+  @override
+  bool get spellCheckEnabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spellCheckEnabled');
+    if (identical(r, notOverridden)) return super.spellCheckEnabled;
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  SpellCheckConfiguration _super$copyWith({SpellCheckService? spellCheckService, Color? misspelledSelectionColor, TextStyle? misspelledTextStyle, EditableTextContextMenuBuilder? spellCheckSuggestionsToolbarBuilder}) => super.copyWith(spellCheckService: spellCheckService, misspelledSelectionColor: misspelledSelectionColor, misspelledTextStyle: misspelledTextStyle, spellCheckSuggestionsToolbarBuilder: spellCheckSuggestionsToolbarBuilder);
+  String _super$toString() => super.toString();
+  SpellCheckService? get _super$spellCheckService => super.spellCheckService;
+  Color? get _super$misspelledSelectionColor => super.misspelledSelectionColor;
+  TextStyle? get _super$misspelledTextStyle => super.misspelledTextStyle;
+  EditableTextContextMenuBuilder? get _super$spellCheckSuggestionsToolbarBuilder => super.spellCheckSuggestionsToolbarBuilder;
+  bool get _super$spellCheckEnabled => super.spellCheckEnabled;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSpellCheckConfigurationBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SpellCheckConfiguration(dispatch, obj, superArgs);
+
 abstract final class SpellCheckConfigurationBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +113,17 @@ abstract final class SpellCheckConfigurationBindings {
       type: SpellCheckConfiguration,
       test: (o) => o is SpellCheckConfiguration,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SpellCheckConfiguration(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$copyWith#4', (args) => (args[0] as _$SpellCheckConfiguration)._super$copyWith(spellCheckService: identical(args[1], darticAbsent) ? null : args[1] as SpellCheckService?, misspelledSelectionColor: identical(args[2], darticAbsent) ? null : args[2] as Color?, misspelledTextStyle: identical(args[3], darticAbsent) ? null : args[3] as TextStyle?, spellCheckSuggestionsToolbarBuilder: identical(args[4], darticAbsent) ? null : (args[4] as Function?) == null ? null : (a, b) => (args[4] as Function?)!(a, b)));
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$toString#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$spellCheckService#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$spellCheckService);
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$misspelledSelectionColor#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$misspelledSelectionColor);
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$misspelledTextStyle#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$misspelledTextStyle);
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$spellCheckSuggestionsToolbarBuilder#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$spellCheckSuggestionsToolbarBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$spellCheckEnabled#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$spellCheckEnabled);
+    ctx.registerBinding('package:flutter/src/widgets/spell_check.dart::SpellCheckConfiguration::\$super\$hashCode#0', (args) => (args[0] as _$SpellCheckConfiguration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

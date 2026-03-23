@@ -18,6 +18,71 @@ import 'package:flutter/src/widgets/focus_traversal.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/shortcuts.dart';
 
+class _$RadioClient implements RadioClient<dynamic>, DarticObjectHolder {
+  _$RadioClient(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  bool get tristate {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tristate');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter tristate must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  dynamic get radioValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'radioValue');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter radioValue must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  FocusNode get focusNode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'focusNode');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter focusNode must be overridden in dartic code');
+    }
+    return r as FocusNode;
+  }
+
+  @override
+  RadioGroupRegistry? get registry {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'registry');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter registry must be overridden in dartic code');
+    }
+    return r as RadioGroupRegistry?;
+  }
+
+  @override
+  set registry(RadioGroupRegistry? value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'registry', value)) {
+      throw UnsupportedError('Abstract setter registry must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRadioClientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RadioClient(dispatch, obj, superArgs);
+
 abstract final class RadioClientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,6 +90,8 @@ abstract final class RadioClientBindings {
       type: RadioClient,
       test: (o) => o is RadioClient,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RadioClient(dispatch, darticObject, superArgs),
     );
   }
 

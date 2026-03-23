@@ -16,6 +16,62 @@ import 'package:flutter/src/material/slider.dart';
 import 'package:flutter/src/material/slider_theme.dart';
 import 'package:flutter/src/material/slider_value_indicator_shape.dart';
 
+class _$RangeLabels extends RangeLabels implements DarticObjectHolder {
+  _$RangeLabels(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1] as String);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  String get start {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'start');
+    if (identical(r, notOverridden)) return super.start;
+    return r as String;
+  }
+
+  @override
+  String get end {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'end');
+    if (identical(r, notOverridden)) return super.end;
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  String get _super$start => super.start;
+  String get _super$end => super.end;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRangeLabelsBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RangeLabels(dispatch, obj, superArgs);
+
 abstract final class RangeLabelsBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,7 +79,13 @@ abstract final class RangeLabelsBindings {
       type: RangeLabels,
       test: (o) => o is RangeLabels,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RangeLabels(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeLabels::\$super\$toString#0', (args) => (args[0] as _$RangeLabels)._super$toString());
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeLabels::\$super\$start#0', (args) => (args[0] as _$RangeLabels)._super$start);
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeLabels::\$super\$end#0', (args) => (args[0] as _$RangeLabels)._super$end);
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RangeLabels::\$super\$hashCode#0', (args) => (args[0] as _$RangeLabels)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

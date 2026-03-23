@@ -13,6 +13,118 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/src/painting/debug.dart';
 
+class _$BoxShadow extends BoxShadow implements DarticObjectHolder {
+  _$BoxShadow(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(color: superArgs[0] as ui.Color, offset: superArgs[1] as ui.Offset, blurRadius: superArgs[2] as double, spreadRadius: superArgs[3] as double, blurStyle: superArgs[4] as ui.BlurStyle);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  ui.Paint toPaint() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPaint', const []);
+    if (identical(r, notOverridden)) return super.toPaint();
+    return r as ui.Paint;
+  }
+
+  @override
+  BoxShadow scale(double factor) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(r, notOverridden)) return super.scale(factor);
+    return r as BoxShadow;
+  }
+
+  @override
+  BoxShadow copyWith({ui.Color? color, ui.Offset? offset, double? blurRadius, double? spreadRadius, ui.BlurStyle? blurStyle}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, offset, blurRadius, spreadRadius, blurStyle]);
+    if (identical(r, notOverridden)) return super.copyWith(color: color, offset: offset, blurRadius: blurRadius, spreadRadius: spreadRadius, blurStyle: blurStyle);
+    return r as BoxShadow;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get spreadRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'spreadRadius');
+    if (identical(r, notOverridden)) return super.spreadRadius;
+    return r as double;
+  }
+
+  @override
+  ui.BlurStyle get blurStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'blurStyle');
+    if (identical(r, notOverridden)) return super.blurStyle;
+    return r as ui.BlurStyle;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  ui.Color get color {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
+    if (identical(r, notOverridden)) return super.color;
+    return r as ui.Color;
+  }
+
+  @override
+  ui.Offset get offset {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
+    if (identical(r, notOverridden)) return super.offset;
+    return r as ui.Offset;
+  }
+
+  @override
+  double get blurRadius {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'blurRadius');
+    if (identical(r, notOverridden)) return super.blurRadius;
+    return r as double;
+  }
+
+  @override
+  double get blurSigma {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'blurSigma');
+    if (identical(r, notOverridden)) return super.blurSigma;
+    return r as double;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  ui.Paint _super$toPaint() => super.toPaint();
+  BoxShadow _super$scale(double factor) => super.scale(factor);
+  BoxShadow _super$copyWith({ui.Color? color, ui.Offset? offset, double? blurRadius, double? spreadRadius, ui.BlurStyle? blurStyle}) => super.copyWith(color: color, offset: offset, blurRadius: blurRadius, spreadRadius: spreadRadius, blurStyle: blurStyle);
+  String _super$toString() => super.toString();
+  double get _super$spreadRadius => super.spreadRadius;
+  ui.BlurStyle get _super$blurStyle => super.blurStyle;
+  int get _super$hashCode => super.hashCode;
+  ui.Color get _super$color => super.color;
+  ui.Offset get _super$offset => super.offset;
+  double get _super$blurRadius => super.blurRadius;
+  double get _super$blurSigma => super.blurSigma;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBoxShadowBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BoxShadow(dispatch, obj, superArgs);
+
 abstract final class BoxShadowBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,9 +133,22 @@ abstract final class BoxShadowBindings {
       test: (o) => o is BoxShadow,
       methods: methodMap(),
       superclasses: ['dart:ui::Shadow'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BoxShadow(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::lerp#3', (args) => BoxShadow.lerp(args[0] as BoxShadow?, args[1] as BoxShadow?, args[2] as double));
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::lerpList#3', (args) => BoxShadow.lerpList(args[0] == null ? null : (args[0] as List).cast<BoxShadow>(), args[1] == null ? null : (args[1] as List).cast<BoxShadow>(), args[2] as double));
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$toPaint#0', (args) => (args[0] as _$BoxShadow)._super$toPaint());
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$scale#1', (args) => (args[0] as _$BoxShadow)._super$scale(args[1] as double));
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$copyWith#5', (args) => (args[0] as _$BoxShadow)._super$copyWith(color: identical(args[1], darticAbsent) ? null : args[1] as ui.Color?, offset: identical(args[2], darticAbsent) ? null : args[2] as ui.Offset?, blurRadius: identical(args[3], darticAbsent) ? null : args[3] as double?, spreadRadius: identical(args[4], darticAbsent) ? null : args[4] as double?, blurStyle: identical(args[5], darticAbsent) ? null : args[5] as ui.BlurStyle?));
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$toString#0', (args) => (args[0] as _$BoxShadow)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$spreadRadius#0', (args) => (args[0] as _$BoxShadow)._super$spreadRadius);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurStyle#0', (args) => (args[0] as _$BoxShadow)._super$blurStyle);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$hashCode#0', (args) => (args[0] as _$BoxShadow)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$color#0', (args) => (args[0] as _$BoxShadow)._super$color);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$offset#0', (args) => (args[0] as _$BoxShadow)._super$offset);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurRadius#0', (args) => (args[0] as _$BoxShadow)._super$blurRadius);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurSigma#0', (args) => (args[0] as _$BoxShadow)._super$blurSigma);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

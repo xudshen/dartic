@@ -16,6 +16,164 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui';
 
+class _$RestorableValue extends RestorableValue<dynamic> implements DarticObjectHolder {
+  _$RestorableValue(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void initWithValue(dynamic value) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initWithValue', [value]);
+    if (identical(r, notOverridden)) { super.initWithValue(value); return; }
+  }
+
+  @override
+  void didUpdateValue(dynamic oldValue) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateValue', [oldValue]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didUpdateValue must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  dynamic createDefaultValue() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDefaultValue', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method createDefaultValue must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  dynamic fromPrimitives(Object? data) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fromPrimitives', [data]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method fromPrimitives must be overridden in dartic code');
+    }
+    return r as dynamic;
+  }
+
+  @override
+  Object? toPrimitives() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPrimitives', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toPrimitives must be overridden in dartic code');
+    }
+    return r as Object?;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) { super.dispose(); return; }
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+  }
+
+  @override
+  void notifyListeners() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+  }
+
+  @override
+  dynamic get value {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
+    if (identical(r, notOverridden)) return super.value;
+    return r as dynamic;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool get enabled {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'enabled');
+    if (identical(r, notOverridden)) return super.enabled;
+    return r as bool;
+  }
+
+  @override
+  State<StatefulWidget> get state {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'state');
+    if (identical(r, notOverridden)) return super.state;
+    return r as State<StatefulWidget>;
+  }
+
+  @override
+  bool get isRegistered {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRegistered');
+    if (identical(r, notOverridden)) return super.isRegistered;
+    return r as bool;
+  }
+
+  @override
+  bool get hasListeners {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
+    if (identical(r, notOverridden)) return super.hasListeners;
+    return r as bool;
+  }
+
+  @override
+  set value(dynamic value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'value', value)) {
+      super.value = value;
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  void _super$initWithValue(dynamic value) { super.initWithValue(value); }
+  String _super$toString() => super.toString();
+  void _super$dispose() { super.dispose(); }
+  void _super$addListener(VoidCallback listener) { super.addListener(listener); }
+  void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
+  void _super$notifyListeners() { super.notifyListeners(); }
+  dynamic get _super$value => super.value;
+  int get _super$hashCode => super.hashCode;
+  bool get _super$enabled => super.enabled;
+  State<StatefulWidget> get _super$state => super.state;
+  bool get _super$isRegistered => super.isRegistered;
+  bool get _super$hasListeners => super.hasListeners;
+  set _super$value(dynamic value) { super.value = value; }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createRestorableValueBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$RestorableValue(dispatch, obj, superArgs);
+
 abstract final class RestorableValueBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +182,22 @@ abstract final class RestorableValueBindings {
       test: (o) => o is RestorableValue,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/restoration.dart::RestorableProperty', 'package:flutter/src/foundation/change_notifier.dart::ChangeNotifier', 'package:flutter/src/foundation/change_notifier.dart::Listenable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$RestorableValue(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$initWithValue#1', (args) { (args[0] as _$RestorableValue)._super$initWithValue(args[1]); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$toString#0', (args) => (args[0] as _$RestorableValue)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$dispose#0', (args) { (args[0] as _$RestorableValue)._super$dispose(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$addListener#1', (args) { (args[0] as _$RestorableValue)._super$addListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$removeListener#1', (args) { (args[0] as _$RestorableValue)._super$removeListener(() => (args[1] as Function)()); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$notifyListeners#0', (args) { (args[0] as _$RestorableValue)._super$notifyListeners(); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$value#0', (args) => (args[0] as _$RestorableValue)._super$value);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$hashCode#0', (args) => (args[0] as _$RestorableValue)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$enabled#0', (args) => (args[0] as _$RestorableValue)._super$enabled);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$state#0', (args) => (args[0] as _$RestorableValue)._super$state);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableValue)._super$isRegistered);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableValue)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableValue::\$super\$value=#1', (args) { (args[0] as _$RestorableValue)._super$value = args[1]; return args[1]; });
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

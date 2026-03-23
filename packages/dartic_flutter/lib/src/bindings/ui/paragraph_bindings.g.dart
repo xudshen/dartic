@@ -18,6 +18,242 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$Paragraph extends Paragraph implements DarticObjectHolder {
+  _$Paragraph(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void layout(ParagraphConstraints constraints) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layout', [constraints]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method layout must be overridden in dartic code');
+    }
+  }
+
+  @override
+  List<TextBox> getBoxesForRange(int start, int end, {BoxHeightStyle boxHeightStyle = BoxHeightStyle.tight, BoxWidthStyle boxWidthStyle = BoxWidthStyle.tight}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxesForRange', [start, end, boxHeightStyle, boxWidthStyle]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getBoxesForRange must be overridden in dartic code');
+    }
+    return r as List<TextBox>;
+  }
+
+  @override
+  List<TextBox> getBoxesForPlaceholders() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxesForPlaceholders', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getBoxesForPlaceholders must be overridden in dartic code');
+    }
+    return r as List<TextBox>;
+  }
+
+  @override
+  TextPosition getPositionForOffset(Offset offset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPositionForOffset', [offset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getPositionForOffset must be overridden in dartic code');
+    }
+    return r as TextPosition;
+  }
+
+  @override
+  GlyphInfo? getClosestGlyphInfoForOffset(Offset offset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClosestGlyphInfoForOffset', [offset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getClosestGlyphInfoForOffset must be overridden in dartic code');
+    }
+    return r as GlyphInfo?;
+  }
+
+  @override
+  GlyphInfo? getGlyphInfoAt(int codeUnitOffset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGlyphInfoAt', [codeUnitOffset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getGlyphInfoAt must be overridden in dartic code');
+    }
+    return r as GlyphInfo?;
+  }
+
+  @override
+  TextRange getWordBoundary(TextPosition position) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getWordBoundary', [position]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getWordBoundary must be overridden in dartic code');
+    }
+    return r as TextRange;
+  }
+
+  @override
+  TextRange getLineBoundary(TextPosition position) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLineBoundary', [position]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getLineBoundary must be overridden in dartic code');
+    }
+    return r as TextRange;
+  }
+
+  @override
+  List<LineMetrics> computeLineMetrics() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeLineMetrics', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method computeLineMetrics must be overridden in dartic code');
+    }
+    return r as List<LineMetrics>;
+  }
+
+  @override
+  LineMetrics? getLineMetricsAt(int lineNumber) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLineMetricsAt', [lineNumber]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getLineMetricsAt must be overridden in dartic code');
+    }
+    return r as LineMetrics?;
+  }
+
+  @override
+  int? getLineNumberAt(int codeUnitOffset) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLineNumberAt', [codeUnitOffset]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method getLineNumberAt must be overridden in dartic code');
+    }
+    return r as int?;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  double get width {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'width');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter width must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get height {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'height');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter height must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get longestLine {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'longestLine');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter longestLine must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get minIntrinsicWidth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minIntrinsicWidth');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter minIntrinsicWidth must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get maxIntrinsicWidth {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maxIntrinsicWidth');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter maxIntrinsicWidth must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get alphabeticBaseline {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alphabeticBaseline');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter alphabeticBaseline must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  double get ideographicBaseline {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ideographicBaseline');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter ideographicBaseline must be overridden in dartic code');
+    }
+    return r as double;
+  }
+
+  @override
+  bool get didExceedMaxLines {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'didExceedMaxLines');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter didExceedMaxLines must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int get numberOfLines {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'numberOfLines');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter numberOfLines must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  bool get debugDisposed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugDisposed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter debugDisposed must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createParagraphBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Paragraph(dispatch, obj, superArgs);
+
 abstract final class ParagraphBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,7 +261,11 @@ abstract final class ParagraphBindings {
       type: Paragraph,
       test: (o) => o is Paragraph,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Paragraph(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('dart:ui::Paragraph::\$super\$toString#0', (args) => (args[0] as _$Paragraph)._super$toString());
+    ctx.registerBinding('dart:ui::Paragraph::\$super\$hashCode#0', (args) => (args[0] as _$Paragraph)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -16,6 +16,61 @@ import 'package:flutter/src/widgets/media_query.dart';
 import 'package:flutter/src/widgets/scroll_configuration.dart';
 import 'package:flutter/src/gestures/recognizer.dart';
 
+class _$GestureRecognizerFactoryWithHandlers extends GestureRecognizerFactoryWithHandlers<GestureRecognizer> implements DarticObjectHolder {
+  _$GestureRecognizerFactoryWithHandlers(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as GestureRecognizer Function(), superArgs[1] as void Function(GestureRecognizer));
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  GestureRecognizer constructor() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constructor', const []);
+    if (identical(r, notOverridden)) return super.constructor();
+    return r as GestureRecognizer;
+  }
+
+  @override
+  void initializer(GestureRecognizer instance) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initializer', [instance]);
+    if (identical(r, notOverridden)) { super.initializer(instance); return; }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  GestureRecognizer _super$constructor() => super.constructor();
+  void _super$initializer(GestureRecognizer instance) { super.initializer(instance); }
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createGestureRecognizerFactoryWithHandlersBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$GestureRecognizerFactoryWithHandlers(dispatch, obj, superArgs);
+
 abstract final class GestureRecognizerFactoryWithHandlersBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -24,7 +79,13 @@ abstract final class GestureRecognizerFactoryWithHandlersBindings {
       test: (o) => o is GestureRecognizerFactoryWithHandlers,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/gesture_detector.dart::GestureRecognizerFactory'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$GestureRecognizerFactoryWithHandlers(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::GestureRecognizerFactoryWithHandlers::\$super\$constructor#0', (args) => (args[0] as _$GestureRecognizerFactoryWithHandlers)._super$constructor());
+    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::GestureRecognizerFactoryWithHandlers::\$super\$initializer#1', (args) { (args[0] as _$GestureRecognizerFactoryWithHandlers)._super$initializer(args[1] as GestureRecognizer); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::GestureRecognizerFactoryWithHandlers::\$super\$toString#0', (args) => (args[0] as _$GestureRecognizerFactoryWithHandlers)._super$toString());
+    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::GestureRecognizerFactoryWithHandlers::\$super\$hashCode#0', (args) => (args[0] as _$GestureRecognizerFactoryWithHandlers)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

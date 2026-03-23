@@ -18,6 +18,101 @@ import 'package:flutter/src/semantics/binding.dart' show SemanticsBinding;
 import 'package:flutter/src/semantics/semantics_event.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$OrdinalSortKey extends OrdinalSortKey implements DarticObjectHolder {
+  _$OrdinalSortKey(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as double, name: identical(superArgs[1], darticAbsent) ? null : superArgs[1] as String?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  int doCompare(OrdinalSortKey other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'doCompare', [other]);
+    if (identical(r, notOverridden)) return super.doCompare(other);
+    return r as int;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  int compareTo(SemanticsSortKey other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(r, notOverridden)) return super.compareTo(other);
+    return r as int;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  double get order {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'order');
+    if (identical(r, notOverridden)) return super.order;
+    return r as double;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  String? get name {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    if (identical(r, notOverridden)) return super.name;
+    return r as String?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  int _super$doCompare(OrdinalSortKey other) => super.doCompare(other);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  int _super$compareTo(SemanticsSortKey other) => super.compareTo(other);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  double get _super$order => super.order;
+  int get _super$hashCode => super.hashCode;
+  String? get _super$name => super.name;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createOrdinalSortKeyBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$OrdinalSortKey(dispatch, obj, superArgs);
+
 abstract final class OrdinalSortKeyBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -26,7 +121,18 @@ abstract final class OrdinalSortKeyBindings {
       test: (o) => o is OrdinalSortKey,
       methods: methodMap(),
       superclasses: ['package:flutter/src/semantics/semantics.dart::SemanticsSortKey', 'dart:core::Comparable', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$OrdinalSortKey(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$doCompare#1', (args) => (args[0] as _$OrdinalSortKey)._super$doCompare(args[1] as OrdinalSortKey));
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$debugFillProperties#1', (args) { (args[0] as _$OrdinalSortKey)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$toString#1', (args) => (args[0] as _$OrdinalSortKey)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$compareTo#1', (args) => (args[0] as _$OrdinalSortKey)._super$compareTo(args[1] as SemanticsSortKey));
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$toStringShort#0', (args) => (args[0] as _$OrdinalSortKey)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$OrdinalSortKey)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$order#0', (args) => (args[0] as _$OrdinalSortKey)._super$order);
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$hashCode#0', (args) => (args[0] as _$OrdinalSortKey)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::OrdinalSortKey::\$super\$name#0', (args) => (args[0] as _$OrdinalSortKey)._super$name);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

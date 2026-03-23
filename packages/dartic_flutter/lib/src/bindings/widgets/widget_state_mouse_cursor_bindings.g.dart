@@ -14,6 +14,95 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/services/mouse_cursor.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 
+class _$WidgetStateMouseCursor extends WidgetStateMouseCursor implements DarticObjectHolder {
+  _$WidgetStateMouseCursor(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  MouseCursorSession createSession(int device) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSession', [device]);
+    if (identical(r, notOverridden)) return super.createSession(device);
+    return r as MouseCursorSession;
+  }
+
+  @override
+  MouseCursor resolve(Set<WidgetState> states) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
+    }
+    return r as MouseCursor;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  String get debugDescription {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescription');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter debugDescription must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  MouseCursorSession _super$createSession(int device) => super.createSession(device);
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  String _super$toStringShort() => super.toStringShort();
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createWidgetStateMouseCursorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$WidgetStateMouseCursor(dispatch, obj, superArgs);
+
 abstract final class WidgetStateMouseCursorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,9 +111,17 @@ abstract final class WidgetStateMouseCursorBindings {
       test: (o) => o is WidgetStateMouseCursor,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/mouse_cursor.dart::MouseCursor', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable', 'package:flutter/src/widgets/widget_state.dart::WidgetStateProperty'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$WidgetStateMouseCursor(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::clickable#0', (args) => WidgetStateMouseCursor.clickable);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::textable#0', (args) => WidgetStateMouseCursor.textable);
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$createSession#1', (args) => (args[0] as _$WidgetStateMouseCursor)._super$createSession(args[1] as int));
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$toString#1', (args) => (args[0] as _$WidgetStateMouseCursor)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$toStringShort#0', (args) => (args[0] as _$WidgetStateMouseCursor)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$WidgetStateMouseCursor)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$debugFillProperties#1', (args) { (args[0] as _$WidgetStateMouseCursor)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateMouseCursor::\$super\$hashCode#0', (args) => (args[0] as _$WidgetStateMouseCursor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

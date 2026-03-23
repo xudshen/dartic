@@ -14,6 +14,61 @@ import 'package:flutter/src/rendering/object.dart';
 import 'package:flutter/src/rendering/sliver.dart';
 import 'package:flutter/src/rendering/sliver_fixed_extent_list.dart';
 
+class _$KeepAliveParentDataMixin implements KeepAliveParentDataMixin, DarticObjectHolder {
+  _$KeepAliveParentDataMixin(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void detach() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method detach must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool get keepAlive {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keepAlive');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter keepAlive must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  bool get keptAlive {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keptAlive');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter keptAlive must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  set keepAlive(bool value) {
+    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'keepAlive', value)) {
+      throw UnsupportedError('Abstract setter keepAlive must be overridden in dartic code');
+    }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createKeepAliveParentDataMixinBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$KeepAliveParentDataMixin(dispatch, obj, superArgs);
+
 abstract final class KeepAliveParentDataMixinBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -22,6 +77,8 @@ abstract final class KeepAliveParentDataMixinBindings {
       test: (o) => o is KeepAliveParentDataMixin,
       methods: methodMap(),
       superclasses: ['package:flutter/src/rendering/object.dart::ParentData'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$KeepAliveParentDataMixin(dispatch, darticObject, superArgs),
     );
   }
 

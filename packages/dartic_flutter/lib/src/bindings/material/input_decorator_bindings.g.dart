@@ -31,6 +31,189 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/src/painting/alignment.dart';
 import 'package:flutter/src/foundation/key.dart';
 
+class _$InputDecorator extends InputDecorator implements DarticObjectHolder {
+  _$InputDecorator(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(key: identical(superArgs[0], darticAbsent) ? null : superArgs[0] as Key?, decoration: superArgs[1] as InputDecoration, baseStyle: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as TextStyle?, textAlign: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as TextAlign?, textAlignVertical: identical(superArgs[4], darticAbsent) ? null : superArgs[4] as TextAlignVertical?, isFocused: superArgs[5] as bool, isHovering: superArgs[6] as bool, expands: superArgs[7] as bool, isEmpty: superArgs[8] as bool, child: identical(superArgs[9], darticAbsent) ? null : superArgs[9] as Widget?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  State<InputDecorator> createState() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createState', const []);
+    if (identical(r, notOverridden)) return super.createState();
+    return r as State<InputDecorator>;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  StatefulElement createElement() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(r, notOverridden)) return super.createElement();
+    return r as StatefulElement;
+  }
+
+  @override
+  String toStringShort() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(r, notOverridden)) return super.toStringShort();
+    return r as String;
+  }
+
+  @override
+  String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return r as String;
+  }
+
+  @override
+  String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return r as String;
+  }
+
+  @override
+  DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return r as DiagnosticsNode;
+  }
+
+  @override
+  List<DiagnosticsNode> debugDescribeChildren() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(r, notOverridden)) return super.debugDescribeChildren();
+    return r as List<DiagnosticsNode>;
+  }
+
+  @override
+  InputDecoration get decoration {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'decoration');
+    if (identical(r, notOverridden)) return super.decoration;
+    return r as InputDecoration;
+  }
+
+  @override
+  TextStyle? get baseStyle {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'baseStyle');
+    if (identical(r, notOverridden)) return super.baseStyle;
+    return r as TextStyle?;
+  }
+
+  @override
+  TextAlign? get textAlign {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textAlign');
+    if (identical(r, notOverridden)) return super.textAlign;
+    return r as TextAlign?;
+  }
+
+  @override
+  TextAlignVertical? get textAlignVertical {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textAlignVertical');
+    if (identical(r, notOverridden)) return super.textAlignVertical;
+    return r as TextAlignVertical?;
+  }
+
+  @override
+  bool get isFocused {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isFocused');
+    if (identical(r, notOverridden)) return super.isFocused;
+    return r as bool;
+  }
+
+  @override
+  bool get isHovering {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isHovering');
+    if (identical(r, notOverridden)) return super.isHovering;
+    return r as bool;
+  }
+
+  @override
+  bool get expands {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'expands');
+    if (identical(r, notOverridden)) return super.expands;
+    return r as bool;
+  }
+
+  @override
+  bool get isEmpty {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
+    if (identical(r, notOverridden)) return super.isEmpty;
+    return r as bool;
+  }
+
+  @override
+  Widget? get child {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
+    if (identical(r, notOverridden)) return super.child;
+    return r as Widget?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  Key? get key {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
+    if (identical(r, notOverridden)) return super.key;
+    return r as Key?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  State<InputDecorator> _super$createState() => super.createState();
+  void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
+  String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
+  StatefulElement _super$createElement() => super.createElement();
+  String _super$toStringShort() => super.toStringShort();
+  String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
+  String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+  DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
+  List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
+  InputDecoration get _super$decoration => super.decoration;
+  TextStyle? get _super$baseStyle => super.baseStyle;
+  TextAlign? get _super$textAlign => super.textAlign;
+  TextAlignVertical? get _super$textAlignVertical => super.textAlignVertical;
+  bool get _super$isFocused => super.isFocused;
+  bool get _super$isHovering => super.isHovering;
+  bool get _super$expands => super.expands;
+  bool get _super$isEmpty => super.isEmpty;
+  Widget? get _super$child => super.child;
+  int get _super$hashCode => super.hashCode;
+  Key? get _super$key => super.key;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createInputDecoratorBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$InputDecorator(dispatch, obj, superArgs);
+
 abstract final class InputDecoratorBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -39,8 +222,30 @@ abstract final class InputDecoratorBindings {
       test: (o) => o is InputDecorator,
       methods: methodMap(),
       superclasses: ['package:flutter/src/widgets/framework.dart::StatefulWidget', 'package:flutter/src/widgets/framework.dart::Widget', 'package:flutter/src/foundation/diagnostics.dart::DiagnosticableTree', 'package:flutter/src/foundation/diagnostics.dart::Diagnosticable'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$InputDecorator(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::containerOf#1', (args) => InputDecorator.containerOf(args[0] as BuildContext));
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$createState#0', (args) => (args[0] as _$InputDecorator)._super$createState());
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$debugFillProperties#1', (args) { (args[0] as _$InputDecorator)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$toString#1', (args) => (args[0] as _$InputDecorator)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$createElement#0', (args) => (args[0] as _$InputDecorator)._super$createElement());
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$toStringShort#0', (args) => (args[0] as _$InputDecorator)._super$toStringShort());
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$toStringShallow#2', (args) => (args[0] as _$InputDecorator)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$toStringDeep#4', (args) => (args[0] as _$InputDecorator)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$InputDecorator)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$InputDecorator)._super$debugDescribeChildren());
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$decoration#0', (args) => (args[0] as _$InputDecorator)._super$decoration);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$baseStyle#0', (args) => (args[0] as _$InputDecorator)._super$baseStyle);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$textAlign#0', (args) => (args[0] as _$InputDecorator)._super$textAlign);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$textAlignVertical#0', (args) => (args[0] as _$InputDecorator)._super$textAlignVertical);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$isFocused#0', (args) => (args[0] as _$InputDecorator)._super$isFocused);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$isHovering#0', (args) => (args[0] as _$InputDecorator)._super$isHovering);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$expands#0', (args) => (args[0] as _$InputDecorator)._super$expands);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$isEmpty#0', (args) => (args[0] as _$InputDecorator)._super$isEmpty);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$child#0', (args) => (args[0] as _$InputDecorator)._super$child);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$hashCode#0', (args) => (args[0] as _$InputDecorator)._super$hashCode);
+    ctx.registerBinding('package:flutter/src/material/input_decorator.dart::InputDecorator::\$super\$key#0', (args) => (args[0] as _$InputDecorator)._super$key);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

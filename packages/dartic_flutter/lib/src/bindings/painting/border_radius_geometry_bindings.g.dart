@@ -12,6 +12,106 @@ import 'package:flutter/src/painting/basic_types.dart';
 import 'package:flutter/src/painting/debug.dart';
 import 'dart:ui';
 
+class _$BorderRadiusGeometry extends BorderRadiusGeometry implements DarticObjectHolder {
+  _$BorderRadiusGeometry(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  BorderRadiusGeometry subtract(BorderRadiusGeometry other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'subtract', [other]);
+    if (identical(r, notOverridden)) return super.subtract(other);
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadiusGeometry add(BorderRadiusGeometry other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(r, notOverridden)) return super.add(other);
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadius resolve(TextDirection? direction) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
+    }
+    return r as BorderRadius;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  BorderRadiusGeometry operator -() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unary-', const []);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator - must be overridden in dartic code'); }
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadiusGeometry operator *(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '*', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator * must be overridden in dartic code'); }
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadiusGeometry operator /(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '/', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator / must be overridden in dartic code'); }
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadiusGeometry operator ~/(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '~/', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator ~/ must be overridden in dartic code'); }
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  BorderRadiusGeometry operator %(double other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '%', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator % must be overridden in dartic code'); }
+    return r as BorderRadiusGeometry;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  BorderRadiusGeometry _super$subtract(BorderRadiusGeometry other) => super.subtract(other);
+  BorderRadiusGeometry _super$add(BorderRadiusGeometry other) => super.add(other);
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createBorderRadiusGeometryBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$BorderRadiusGeometry(dispatch, obj, superArgs);
+
 abstract final class BorderRadiusGeometryBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -19,9 +119,15 @@ abstract final class BorderRadiusGeometryBindings {
       type: BorderRadiusGeometry,
       test: (o) => o is BorderRadiusGeometry,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$BorderRadiusGeometry(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::lerp#3', (args) => BorderRadiusGeometry.lerp(args[0] as BorderRadiusGeometry?, args[1] as BorderRadiusGeometry?, args[2] as double));
     ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::zero#0', (args) => BorderRadiusGeometry.zero);
+    ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::\$super\$subtract#1', (args) => (args[0] as _$BorderRadiusGeometry)._super$subtract(args[1] as BorderRadiusGeometry));
+    ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::\$super\$add#1', (args) => (args[0] as _$BorderRadiusGeometry)._super$add(args[1] as BorderRadiusGeometry));
+    ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::\$super\$toString#0', (args) => (args[0] as _$BorderRadiusGeometry)._super$toString());
+    ctx.registerBinding('package:flutter/src/painting/border_radius.dart::BorderRadiusGeometry::\$super\$hashCode#0', (args) => (args[0] as _$BorderRadiusGeometry)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

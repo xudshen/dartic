@@ -22,6 +22,150 @@ import 'package:flutter/src/services/system_channels.dart';
 import 'package:flutter/src/services/text_editing.dart';
 import 'package:flutter/src/services/text_editing_delta.dart';
 
+class _$DeltaTextInputClient implements DeltaTextInputClient, DarticObjectHolder {
+  _$DeltaTextInputClient(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  void updateEditingValueWithDeltas(List<TextEditingDelta> textEditingDeltas) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValueWithDeltas', [textEditingDeltas]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method updateEditingValueWithDeltas must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void updateEditingValue(TextEditingValue value) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValue', [value]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method updateEditingValue must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void performAction(TextInputAction action) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performAction', [action]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method performAction must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void insertContent(KeyboardInsertedContent content) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertContent', [content]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method insertContent must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void performPrivateCommand(String action, Map<String, dynamic> data) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performPrivateCommand', [action, data]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method performPrivateCommand must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void updateFloatingCursor(RawFloatingCursorPoint point) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateFloatingCursor', [point]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method updateFloatingCursor must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void showAutocorrectionPromptRect(int start, int end) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showAutocorrectionPromptRect', [start, end]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method showAutocorrectionPromptRect must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void connectionClosed() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'connectionClosed', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method connectionClosed must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void didChangeInputControl(TextInputControl? oldControl, TextInputControl? newControl) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeInputControl', [oldControl, newControl]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method didChangeInputControl must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void showToolbar() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method showToolbar must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void insertTextPlaceholder(Size size) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertTextPlaceholder', [size]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method insertTextPlaceholder must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void removeTextPlaceholder() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTextPlaceholder', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method removeTextPlaceholder must be overridden in dartic code');
+    }
+  }
+
+  @override
+  void performSelector(String selectorName) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSelector', [selectorName]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method performSelector must be overridden in dartic code');
+    }
+  }
+
+  @override
+  TextEditingValue? get currentTextEditingValue {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentTextEditingValue');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter currentTextEditingValue must be overridden in dartic code');
+    }
+    return r as TextEditingValue?;
+  }
+
+  @override
+  AutofillScope? get currentAutofillScope {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentAutofillScope');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter currentAutofillScope must be overridden in dartic code');
+    }
+    return r as AutofillScope?;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator == must be overridden in dartic code'); }
+    return r as bool;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createDeltaTextInputClientBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$DeltaTextInputClient(dispatch, obj, superArgs);
+
 abstract final class DeltaTextInputClientBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -30,6 +174,8 @@ abstract final class DeltaTextInputClientBindings {
       test: (o) => o is DeltaTextInputClient,
       methods: methodMap(),
       superclasses: ['package:flutter/src/services/text_input.dart::TextInputClient'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$DeltaTextInputClient(dispatch, darticObject, superArgs),
     );
   }
 

@@ -127,12 +127,15 @@ ClassConfig _parseClass(dynamic value) {
           .toList() ??
       [];
 
+  // `face:` is a legacy alias for `bridge:` (implements mode is now
+  // auto-detected from class modifiers by the TypeAnalyzer).
+  final bridge = (map['bridge'] as bool? ?? false) ||
+      (map['face'] as bool? ?? false);
   return ClassConfig(
     name: map['name'] as String,
     sourceName: map['source_name'] as String?,
     internalTypes: internalTypes,
-    bridge: map['bridge'] as bool? ?? false,
-    face: map['face'] as bool? ?? false,
+    bridge: bridge,
   );
 }
 

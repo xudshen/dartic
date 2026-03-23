@@ -18,6 +18,90 @@ import 'dart:math' as math;
 import 'dart:nativewrappers';
 import 'dart:typed_data';
 
+class _$Picture extends Picture implements DarticObjectHolder {
+  _$Picture(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Future<Image> toImage(int width, int height) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImage', [width, height]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toImage must be overridden in dartic code');
+    }
+    return r as Future<Image>;
+  }
+
+  @override
+  Image toImageSync(int width, int height) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImageSync', [width, height]);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method toImageSync must be overridden in dartic code');
+    }
+    return r as Image;
+  }
+
+  @override
+  void dispose() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
+    }
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  bool get debugDisposed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugDisposed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter debugDisposed must be overridden in dartic code');
+    }
+    return r as bool;
+  }
+
+  @override
+  int get approximateBytesUsed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'approximateBytesUsed');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter approximateBytesUsed must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createPictureBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Picture(dispatch, obj, superArgs);
+
 abstract final class PictureBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -25,9 +109,13 @@ abstract final class PictureBindings {
       type: Picture,
       test: (o) => o is Picture,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Picture(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:ui::Picture::onCreate#0', (args) => Picture.onCreate);
     ctx.registerBinding('dart:ui::Picture::onDispose#0', (args) => Picture.onDispose);
+    ctx.registerBinding('dart:ui::Picture::\$super\$toString#0', (args) => (args[0] as _$Picture)._super$toString());
+    ctx.registerBinding('dart:ui::Picture::\$super\$hashCode#0', (args) => (args[0] as _$Picture)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

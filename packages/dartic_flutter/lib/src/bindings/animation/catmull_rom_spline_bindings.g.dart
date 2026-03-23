@@ -12,6 +12,86 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+class _$CatmullRomSpline extends CatmullRomSpline implements DarticObjectHolder {
+  _$CatmullRomSpline(this._dispatch, this.$darticObject, List<Object?> superArgs) : super((superArgs[0] as List).cast<Offset>(), tension: superArgs[1] as double, startHandle: identical(superArgs[2], darticAbsent) ? null : superArgs[2] as Offset?, endHandle: identical(superArgs[3], darticAbsent) ? null : superArgs[3] as Offset?);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Offset transformInternal(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transformInternal', [t]);
+    if (identical(r, notOverridden)) return super.transformInternal(t);
+    return r as Offset;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  Iterable<Curve2DSample> generateSamples({double start = 0.0, double end = 1.0, double tolerance = 1e-10}) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'generateSamples', [start, end, tolerance]);
+    if (identical(r, notOverridden)) return super.generateSamples(start: start, end: end, tolerance: tolerance);
+    return r as Iterable<Curve2DSample>;
+  }
+
+  @override
+  double findInverse(double x) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findInverse', [x]);
+    if (identical(r, notOverridden)) return super.findInverse(x);
+    return r as double;
+  }
+
+  @override
+  Offset transform(double t) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(r, notOverridden)) return super.transform(t);
+    return r as Offset;
+  }
+
+  @override
+  int get samplingSeed {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'samplingSeed');
+    if (identical(r, notOverridden)) return super.samplingSeed;
+    return r as int;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  Offset _super$transformInternal(double t) => super.transformInternal(t);
+  String _super$toString() => super.toString();
+  Iterable<Curve2DSample> _super$generateSamples({double start = 0.0, double end = 1.0, double tolerance = 1e-10}) => super.generateSamples(start: start, end: end, tolerance: tolerance);
+  double _super$findInverse(double x) => super.findInverse(x);
+  Offset _super$transform(double t) => super.transform(t);
+  int get _super$samplingSeed => super.samplingSeed;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createCatmullRomSplineBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$CatmullRomSpline(dispatch, obj, superArgs);
+
 abstract final class CatmullRomSplineBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -20,7 +100,16 @@ abstract final class CatmullRomSplineBindings {
       test: (o) => o is CatmullRomSpline,
       methods: methodMap(),
       superclasses: ['package:flutter/src/animation/curves.dart::Curve2D', 'package:flutter/src/animation/curves.dart::ParametricCurve'],
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$CatmullRomSpline(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$transformInternal#1', (args) => (args[0] as _$CatmullRomSpline)._super$transformInternal(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$toString#0', (args) => (args[0] as _$CatmullRomSpline)._super$toString());
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$generateSamples#3', (args) => (args[0] as _$CatmullRomSpline)._super$generateSamples(start: identical(args[1], darticAbsent) ? 0.0 : args[1] as double, end: identical(args[2], darticAbsent) ? 1.0 : args[2] as double, tolerance: identical(args[3], darticAbsent) ? 1e-10 : args[3] as double));
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$findInverse#1', (args) => (args[0] as _$CatmullRomSpline)._super$findInverse(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$transform#1', (args) => (args[0] as _$CatmullRomSpline)._super$transform(args[1] as double));
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$samplingSeed#0', (args) => (args[0] as _$CatmullRomSpline)._super$samplingSeed);
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomSpline::\$super\$hashCode#0', (args) => (args[0] as _$CatmullRomSpline)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -11,6 +11,62 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/services/system_channels.dart';
 
+class _$SuggestionSpan extends SuggestionSpan implements DarticObjectHolder {
+  _$SuggestionSpan(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as TextRange, (superArgs[1] as List).cast<String>());
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return super.toString();
+    return r as String;
+  }
+
+  @override
+  TextRange get range {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'range');
+    if (identical(r, notOverridden)) return super.range;
+    return r as TextRange;
+  }
+
+  @override
+  List<String> get suggestions {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'suggestions');
+    if (identical(r, notOverridden)) return super.suggestions;
+    return r as List<String>;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) return super == other;
+    return r as bool;
+  }
+
+  // ── Super trampolines ──
+  String _super$toString() => super.toString();
+  TextRange get _super$range => super.range;
+  List<String> get _super$suggestions => super.suggestions;
+  int get _super$hashCode => super.hashCode;
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createSuggestionSpanBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$SuggestionSpan(dispatch, obj, superArgs);
+
 abstract final class SuggestionSpanBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -18,7 +74,13 @@ abstract final class SuggestionSpanBindings {
       type: SuggestionSpan,
       test: (o) => o is SuggestionSpan,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$SuggestionSpan(dispatch, darticObject, superArgs),
     );
+    ctx.registerBinding('package:flutter/src/services/spell_check.dart::SuggestionSpan::\$super\$toString#0', (args) => (args[0] as _$SuggestionSpan)._super$toString());
+    ctx.registerBinding('package:flutter/src/services/spell_check.dart::SuggestionSpan::\$super\$range#0', (args) => (args[0] as _$SuggestionSpan)._super$range);
+    ctx.registerBinding('package:flutter/src/services/spell_check.dart::SuggestionSpan::\$super\$suggestions#0', (args) => (args[0] as _$SuggestionSpan)._super$suggestions);
+    ctx.registerBinding('package:flutter/src/services/spell_check.dart::SuggestionSpan::\$super\$hashCode#0', (args) => (args[0] as _$SuggestionSpan)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
