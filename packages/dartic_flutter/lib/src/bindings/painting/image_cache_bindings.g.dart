@@ -22,49 +22,49 @@ class _$ImageCache extends ImageCache implements DarticObjectHolder {
 
   @override
   void clear() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
-    if (identical(r, notOverridden)) { super.clear(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
+    if (identical(_$r, notOverridden)) { super.clear(); return; }
   }
 
   @override
   bool evict(Object key, {bool includeLive = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [key, includeLive]);
-    if (identical(r, notOverridden)) return super.evict(key, includeLive: includeLive);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [key, includeLive]);
+    if (identical(_$r, notOverridden)) return super.evict(key, includeLive: includeLive);
+    return _$r as bool;
   }
 
   @override
   ImageStreamCompleter? putIfAbsent(Object key, ImageStreamCompleter Function() loader, {ImageErrorListener? onError}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'putIfAbsent', [key, loader, onError]);
-    if (identical(r, notOverridden)) return super.putIfAbsent(key, () => loader() as ImageStreamCompleter, onError: onError != null ? (a, b) => onError(a, b) : null);
-    return r as ImageStreamCompleter?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'putIfAbsent', [key, loader, onError]);
+    if (identical(_$r, notOverridden)) return super.putIfAbsent(key, () => loader() as ImageStreamCompleter, onError: onError != null ? (a, b) => onError(a, b) : null);
+    return _$r as ImageStreamCompleter?;
   }
 
   @override
   ImageCacheStatus statusForKey(Object key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'statusForKey', [key]);
-    if (identical(r, notOverridden)) return super.statusForKey(key);
-    return r as ImageCacheStatus;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'statusForKey', [key]);
+    if (identical(_$r, notOverridden)) return super.statusForKey(key);
+    return _$r as ImageCacheStatus;
   }
 
   @override
   bool containsKey(Object key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsKey', [key]);
-    if (identical(r, notOverridden)) return super.containsKey(key);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsKey', [key]);
+    if (identical(_$r, notOverridden)) return super.containsKey(key);
+    return _$r as bool;
   }
 
   @override
   void clearLiveImages() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearLiveImages', const []);
-    if (identical(r, notOverridden)) { super.clearLiveImages(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearLiveImages', const []);
+    if (identical(_$r, notOverridden)) { super.clearLiveImages(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

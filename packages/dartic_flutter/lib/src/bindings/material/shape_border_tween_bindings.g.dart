@@ -29,44 +29,44 @@ class _$ShapeBorderTween extends ShapeBorderTween implements DarticObjectHolder 
 
   @override
   ShapeBorder? lerp(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
-    if (identical(r, notOverridden)) return super.lerp(t);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(_$r, notOverridden)) return super.lerp(t);
+    return _$r as ShapeBorder?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   ShapeBorder? transform(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
-    if (identical(r, notOverridden)) return super.transform(t);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(_$r, notOverridden)) return super.transform(t);
+    return _$r as ShapeBorder?;
   }
 
   @override
   ShapeBorder? evaluate(Animation<double> animation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
-    if (identical(r, notOverridden)) return super.evaluate(animation);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(_$r, notOverridden)) return super.evaluate(animation);
+    return _$r as ShapeBorder?;
   }
 
   @override
   Animation<ShapeBorder?> animate(Animation<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
-    if (identical(r, notOverridden)) return super.animate(parent);
-    return r as Animation<ShapeBorder?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(_$r, notOverridden)) return super.animate(parent);
+    return _$r as Animation<ShapeBorder?>;
   }
 
   @override
   Animatable<ShapeBorder?> chain(Animatable<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
-    if (identical(r, notOverridden)) return super.chain(parent);
-    return r as Animatable<ShapeBorder?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(_$r, notOverridden)) return super.chain(parent);
+    return _$r as Animatable<ShapeBorder?>;
   }
 
   @override

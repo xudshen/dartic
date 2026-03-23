@@ -19,84 +19,84 @@ class _$MapBase extends MapBase<dynamic, dynamic> implements DarticObjectHolder 
 
   @override
   dynamic remove(Object? key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [key]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [key]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   void clear() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clear must be overridden in dartic code');
     }
   }
 
   @override
   void forEach(void Function(dynamic, dynamic) action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
-    if (identical(r, notOverridden)) { super.forEach((a, b) => action(a, b)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
+    if (identical(_$r, notOverridden)) { super.forEach((a, b) => action(a, b)); return; }
   }
 
   @override
   void addAll(Map other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAll', [other]);
-    if (identical(r, notOverridden)) { super.addAll(other); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAll', [other]);
+    if (identical(_$r, notOverridden)) { super.addAll(other); return; }
   }
 
   @override
   bool containsValue(Object? value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsValue', [value]);
-    if (identical(r, notOverridden)) return super.containsValue(value);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsValue', [value]);
+    if (identical(_$r, notOverridden)) return super.containsValue(value);
+    return _$r as bool;
   }
 
   @override
   dynamic putIfAbsent(dynamic key, dynamic Function() ifAbsent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'putIfAbsent', [key, ifAbsent]);
-    if (identical(r, notOverridden)) return super.putIfAbsent(key, () => ifAbsent());
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'putIfAbsent', [key, ifAbsent]);
+    if (identical(_$r, notOverridden)) return super.putIfAbsent(key, () => ifAbsent());
+    return _$r as dynamic;
   }
 
   @override
   dynamic update(dynamic key, dynamic Function(dynamic) update, {dynamic Function()? ifAbsent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'update', [key, update, ifAbsent]);
-    if (identical(r, notOverridden)) return super.update(key, (a) => update(a), ifAbsent: ifAbsent != null ? () => ifAbsent() : null);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'update', [key, update, ifAbsent]);
+    if (identical(_$r, notOverridden)) return super.update(key, (a) => update(a), ifAbsent: ifAbsent != null ? () => ifAbsent() : null);
+    return _$r as dynamic;
   }
 
   @override
   void updateAll(dynamic Function(dynamic, dynamic) update) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateAll', [update]);
-    if (identical(r, notOverridden)) { super.updateAll((a, b) => update(a, b)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateAll', [update]);
+    if (identical(_$r, notOverridden)) { super.updateAll((a, b) => update(a, b)); return; }
   }
 
   @override
   void addEntries(Iterable<MapEntry> newEntries) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEntries', [newEntries]);
-    if (identical(r, notOverridden)) { super.addEntries(newEntries); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEntries', [newEntries]);
+    if (identical(_$r, notOverridden)) { super.addEntries(newEntries); return; }
   }
 
   @override
   void removeWhere(bool Function(dynamic, dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeWhere', [test]);
-    if (identical(r, notOverridden)) { super.removeWhere((a, b) => test(a, b) as bool); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeWhere', [test]);
+    if (identical(_$r, notOverridden)) { super.removeWhere((a, b) => test(a, b) as bool); return; }
   }
 
   @override
   bool containsKey(Object? key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsKey', [key]);
-    if (identical(r, notOverridden)) return super.containsKey(key);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsKey', [key]);
+    if (identical(_$r, notOverridden)) return super.containsKey(key);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

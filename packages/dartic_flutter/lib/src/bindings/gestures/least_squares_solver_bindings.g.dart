@@ -20,16 +20,16 @@ class _$LeastSquaresSolver extends LeastSquaresSolver implements DarticObjectHol
 
   @override
   PolynomialFit? solve(int degree) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'solve', [degree]);
-    if (identical(r, notOverridden)) return super.solve(degree);
-    return r as PolynomialFit?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'solve', [degree]);
+    if (identical(_$r, notOverridden)) return super.solve(degree);
+    return _$r as PolynomialFit?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

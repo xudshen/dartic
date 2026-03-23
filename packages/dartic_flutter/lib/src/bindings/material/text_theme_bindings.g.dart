@@ -26,50 +26,50 @@ class _$TextTheme extends TextTheme implements DarticObjectHolder {
 
   @override
   TextTheme copyWith({TextStyle? displayLarge, TextStyle? displayMedium, TextStyle? displaySmall, TextStyle? headlineLarge, TextStyle? headlineMedium, TextStyle? headlineSmall, TextStyle? titleLarge, TextStyle? titleMedium, TextStyle? titleSmall, TextStyle? bodyLarge, TextStyle? bodyMedium, TextStyle? bodySmall, TextStyle? labelLarge, TextStyle? labelMedium, TextStyle? labelSmall}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [displayLarge, displayMedium, displaySmall, headlineLarge, headlineMedium, headlineSmall, titleLarge, titleMedium, titleSmall, bodyLarge, bodyMedium, bodySmall, labelLarge, labelMedium, labelSmall]);
-    if (identical(r, notOverridden)) return super.copyWith(displayLarge: displayLarge, displayMedium: displayMedium, displaySmall: displaySmall, headlineLarge: headlineLarge, headlineMedium: headlineMedium, headlineSmall: headlineSmall, titleLarge: titleLarge, titleMedium: titleMedium, titleSmall: titleSmall, bodyLarge: bodyLarge, bodyMedium: bodyMedium, bodySmall: bodySmall, labelLarge: labelLarge, labelMedium: labelMedium, labelSmall: labelSmall);
-    return r as TextTheme;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [displayLarge, displayMedium, displaySmall, headlineLarge, headlineMedium, headlineSmall, titleLarge, titleMedium, titleSmall, bodyLarge, bodyMedium, bodySmall, labelLarge, labelMedium, labelSmall]);
+    if (identical(_$r, notOverridden)) return super.copyWith(displayLarge: displayLarge, displayMedium: displayMedium, displaySmall: displaySmall, headlineLarge: headlineLarge, headlineMedium: headlineMedium, headlineSmall: headlineSmall, titleLarge: titleLarge, titleMedium: titleMedium, titleSmall: titleSmall, bodyLarge: bodyLarge, bodyMedium: bodyMedium, bodySmall: bodySmall, labelLarge: labelLarge, labelMedium: labelMedium, labelSmall: labelSmall);
+    return _$r as TextTheme;
   }
 
   @override
   TextTheme merge(TextTheme? other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
-    if (identical(r, notOverridden)) return super.merge(other);
-    return r as TextTheme;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
+    if (identical(_$r, notOverridden)) return super.merge(other);
+    return _$r as TextTheme;
   }
 
   @override
   TextTheme apply({String? fontFamily, List<String>? fontFamilyFallback, String? package, double fontSizeFactor = 1.0, double fontSizeDelta = 0.0, double letterSpacingFactor = 1.0, double letterSpacingDelta = 0.0, double wordSpacingFactor = 1.0, double wordSpacingDelta = 0.0, double heightFactor = 1.0, double heightDelta = 0.0, Color? displayColor, Color? bodyColor, TextDecoration? decoration, Color? decorationColor, TextDecorationStyle? decorationStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'apply', [fontFamily, fontFamilyFallback, package, fontSizeFactor, fontSizeDelta, letterSpacingFactor, letterSpacingDelta, wordSpacingFactor, wordSpacingDelta, heightFactor, heightDelta, displayColor, bodyColor, decoration, decorationColor, decorationStyle]);
-    if (identical(r, notOverridden)) return super.apply(fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, package: package, fontSizeFactor: fontSizeFactor, fontSizeDelta: fontSizeDelta, letterSpacingFactor: letterSpacingFactor, letterSpacingDelta: letterSpacingDelta, wordSpacingFactor: wordSpacingFactor, wordSpacingDelta: wordSpacingDelta, heightFactor: heightFactor, heightDelta: heightDelta, displayColor: displayColor, bodyColor: bodyColor, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle);
-    return r as TextTheme;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'apply', [fontFamily, fontFamilyFallback, package, fontSizeFactor, fontSizeDelta, letterSpacingFactor, letterSpacingDelta, wordSpacingFactor, wordSpacingDelta, heightFactor, heightDelta, displayColor, bodyColor, decoration, decorationColor, decorationStyle]);
+    if (identical(_$r, notOverridden)) return super.apply(fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, package: package, fontSizeFactor: fontSizeFactor, fontSizeDelta: fontSizeDelta, letterSpacingFactor: letterSpacingFactor, letterSpacingDelta: letterSpacingDelta, wordSpacingFactor: wordSpacingFactor, wordSpacingDelta: wordSpacingDelta, heightFactor: heightFactor, heightDelta: heightDelta, displayColor: displayColor, bodyColor: bodyColor, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle);
+    return _$r as TextTheme;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

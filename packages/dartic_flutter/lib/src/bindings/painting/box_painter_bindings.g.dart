@@ -23,23 +23,23 @@ class _$BoxPainter extends BoxPainter implements DarticObjectHolder {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, offset, configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, offset, configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paint must be overridden in dartic code');
     }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

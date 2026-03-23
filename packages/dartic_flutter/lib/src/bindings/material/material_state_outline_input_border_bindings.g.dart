@@ -26,79 +26,79 @@ class _$MaterialStateOutlineInputBorder extends MaterialStateOutlineInputBorder 
 
   @override
   InputBorder resolve(Set<WidgetState> states) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
     }
-    return r as InputBorder;
+    return _$r as InputBorder;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   OutlineInputBorder copyWith({BorderSide? borderSide, BorderRadius? borderRadius, double? gapPadding}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [borderSide, borderRadius, gapPadding]);
-    if (identical(r, notOverridden)) return super.copyWith(borderSide: borderSide, borderRadius: borderRadius, gapPadding: gapPadding);
-    return r as OutlineInputBorder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [borderSide, borderRadius, gapPadding]);
+    if (identical(_$r, notOverridden)) return super.copyWith(borderSide: borderSide, borderRadius: borderRadius, gapPadding: gapPadding);
+    return _$r as OutlineInputBorder;
   }
 
   @override
   OutlineInputBorder scale(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [t]);
-    if (identical(r, notOverridden)) return super.scale(t);
-    return r as OutlineInputBorder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [t]);
+    if (identical(_$r, notOverridden)) return super.scale(t);
+    return _$r as OutlineInputBorder;
   }
 
   @override
   ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
-    if (identical(r, notOverridden)) return super.lerpFrom(a, t);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(_$r, notOverridden)) return super.lerpFrom(a, t);
+    return _$r as ShapeBorder?;
   }
 
   @override
   ShapeBorder? lerpTo(ShapeBorder? b, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
-    if (identical(r, notOverridden)) return super.lerpTo(b, t);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(_$r, notOverridden)) return super.lerpTo(b, t);
+    return _$r as ShapeBorder?;
   }
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInnerPath', [rect, textDirection]);
-    if (identical(r, notOverridden)) return super.getInnerPath(rect, textDirection: textDirection);
-    return r as Path;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInnerPath', [rect, textDirection]);
+    if (identical(_$r, notOverridden)) return super.getInnerPath(rect, textDirection: textDirection);
+    return _$r as Path;
   }
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [rect, textDirection]);
-    if (identical(r, notOverridden)) return super.getOuterPath(rect, textDirection: textDirection);
-    return r as Path;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [rect, textDirection]);
+    if (identical(_$r, notOverridden)) return super.getOuterPath(rect, textDirection: textDirection);
+    return _$r as Path;
   }
 
   @override
   void paintInterior(Canvas canvas, Rect rect, Paint paint, {TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintInterior', [canvas, rect, paint, textDirection]);
-    if (identical(r, notOverridden)) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintInterior', [canvas, rect, paint, textDirection]);
+    if (identical(_$r, notOverridden)) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); return; }
   }
 
   @override
   void paint(Canvas canvas, Rect rect, {double? gapStart, double gapExtent = 0.0, double gapPercentage = 0.0, TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, gapStart, gapExtent, gapPercentage, textDirection]);
-    if (identical(r, notOverridden)) { super.paint(canvas, rect, gapStart: gapStart, gapExtent: gapExtent, gapPercentage: gapPercentage, textDirection: textDirection); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, gapStart, gapExtent, gapPercentage, textDirection]);
+    if (identical(_$r, notOverridden)) { super.paint(canvas, rect, gapStart: gapStart, gapExtent: gapExtent, gapPercentage: gapPercentage, textDirection: textDirection); return; }
   }
 
   @override
   ShapeBorder? add(ShapeBorder other, {bool reversed = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other, reversed]);
-    if (identical(r, notOverridden)) return super.add(other, reversed: reversed);
-    return r as ShapeBorder?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other, reversed]);
+    if (identical(_$r, notOverridden)) return super.add(other, reversed: reversed);
+    return _$r as ShapeBorder?;
   }
 
   @override

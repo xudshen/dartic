@@ -30,30 +30,30 @@ class _$SliverConstraints extends SliverConstraints implements DarticObjectHolde
 
   @override
   SliverConstraints copyWith({AxisDirection? axisDirection, GrowthDirection? growthDirection, ScrollDirection? userScrollDirection, double? scrollOffset, double? precedingScrollExtent, double? overlap, double? remainingPaintExtent, double? crossAxisExtent, AxisDirection? crossAxisDirection, double? viewportMainAxisExtent, double? remainingCacheExtent, double? cacheOrigin}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [axisDirection, growthDirection, userScrollDirection, scrollOffset, precedingScrollExtent, overlap, remainingPaintExtent, crossAxisExtent, crossAxisDirection, viewportMainAxisExtent, remainingCacheExtent, cacheOrigin]);
-    if (identical(r, notOverridden)) return super.copyWith(axisDirection: axisDirection, growthDirection: growthDirection, userScrollDirection: userScrollDirection, scrollOffset: scrollOffset, precedingScrollExtent: precedingScrollExtent, overlap: overlap, remainingPaintExtent: remainingPaintExtent, crossAxisExtent: crossAxisExtent, crossAxisDirection: crossAxisDirection, viewportMainAxisExtent: viewportMainAxisExtent, remainingCacheExtent: remainingCacheExtent, cacheOrigin: cacheOrigin);
-    return r as SliverConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [axisDirection, growthDirection, userScrollDirection, scrollOffset, precedingScrollExtent, overlap, remainingPaintExtent, crossAxisExtent, crossAxisDirection, viewportMainAxisExtent, remainingCacheExtent, cacheOrigin]);
+    if (identical(_$r, notOverridden)) return super.copyWith(axisDirection: axisDirection, growthDirection: growthDirection, userScrollDirection: userScrollDirection, scrollOffset: scrollOffset, precedingScrollExtent: precedingScrollExtent, overlap: overlap, remainingPaintExtent: remainingPaintExtent, crossAxisExtent: crossAxisExtent, crossAxisDirection: crossAxisDirection, viewportMainAxisExtent: viewportMainAxisExtent, remainingCacheExtent: remainingCacheExtent, cacheOrigin: cacheOrigin);
+    return _$r as SliverConstraints;
   }
 
   @override
   BoxConstraints asBoxConstraints({double minExtent = 0.0, double maxExtent = double.infinity, double? crossAxisExtent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asBoxConstraints', [minExtent, maxExtent, crossAxisExtent]);
-    if (identical(r, notOverridden)) return super.asBoxConstraints(minExtent: minExtent, maxExtent: maxExtent, crossAxisExtent: crossAxisExtent);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asBoxConstraints', [minExtent, maxExtent, crossAxisExtent]);
+    if (identical(_$r, notOverridden)) return super.asBoxConstraints(minExtent: minExtent, maxExtent: maxExtent, crossAxisExtent: crossAxisExtent);
+    return _$r as BoxConstraints;
   }
 
   @override
   bool debugAssertIsValid({bool isAppliedConstraint = false, InformationCollector? informationCollector}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
-    if (identical(r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
+    if (identical(_$r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

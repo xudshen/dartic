@@ -49,516 +49,516 @@ class _$RenderingFlutterBinding extends RenderingFlutterBinding implements Darti
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void initInstances() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
-    if (identical(r, notOverridden)) { super.initInstances(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
+    if (identical(_$r, notOverridden)) { super.initInstances(); return; }
   }
 
   @override
   bool debugCheckZone(String entryPoint) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
-    if (identical(r, notOverridden)) return super.debugCheckZone(entryPoint);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
+    if (identical(_$r, notOverridden)) return super.debugCheckZone(entryPoint);
+    return _$r as bool;
   }
 
   @override
   void initServiceExtensions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
-    if (identical(r, notOverridden)) { super.initServiceExtensions(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
+    if (identical(_$r, notOverridden)) { super.initServiceExtensions(); return; }
   }
 
   @override
   Future<void> lockEvents(Future<void> Function() callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
-    if (identical(r, notOverridden)) return super.lockEvents(() => callback() as Future<void>);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
+    if (identical(_$r, notOverridden)) return super.lockEvents(() => callback() as Future<void>);
+    return _$r as Future<void>;
   }
 
   @override
   void unlocked() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
-    if (identical(r, notOverridden)) { super.unlocked(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
+    if (identical(_$r, notOverridden)) { super.unlocked(); return; }
   }
 
   @override
   Future<void> reassembleApplication() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
-    if (identical(r, notOverridden)) return super.reassembleApplication();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
+    if (identical(_$r, notOverridden)) return super.reassembleApplication();
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> performReassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
-    if (identical(r, notOverridden)) return super.performReassemble();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
+    if (identical(_$r, notOverridden)) return super.performReassemble();
+    return _$r as Future<void>;
   }
 
   @override
   void registerSignalServiceExtension({required String name, required AsyncCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) { super.registerSignalServiceExtension(name: name, callback: () => callback() as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) { super.registerSignalServiceExtension(name: name, callback: () => callback() as Future<void>); return; }
   }
 
   @override
   void registerBoolServiceExtension({required String name, required AsyncValueGetter<bool> getter, required AsyncValueSetter<bool> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerBoolServiceExtension(name: name, getter: () => getter() as Future<bool>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerBoolServiceExtension(name: name, getter: () => getter() as Future<bool>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void registerNumericServiceExtension({required String name, required AsyncValueGetter<double> getter, required AsyncValueSetter<double> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerNumericServiceExtension(name: name, getter: () => getter() as Future<double>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerNumericServiceExtension(name: name, getter: () => getter() as Future<double>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void postEvent(String eventKind, Map<String, dynamic> eventData) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
-    if (identical(r, notOverridden)) { super.postEvent(eventKind, eventData); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
+    if (identical(_$r, notOverridden)) { super.postEvent(eventKind, eventData); return; }
   }
 
   @override
   void registerStringServiceExtension({required String name, required AsyncValueGetter<String> getter, required AsyncValueSetter<String> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerStringServiceExtension(name: name, getter: () => getter() as Future<String>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerStringServiceExtension(name: name, getter: () => getter() as Future<String>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void registerServiceExtension({required String name, required ServiceExtensionCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) { super.registerServiceExtension(name: name, callback: (a) => callback(a) as Future<Map<String, dynamic>>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) { super.registerServiceExtension(name: name, callback: (a) => callback(a) as Future<Map<String, dynamic>>); return; }
   }
 
   @override
   void cancelPointer(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancelPointer', [pointer]);
-    if (identical(r, notOverridden)) { super.cancelPointer(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancelPointer', [pointer]);
+    if (identical(_$r, notOverridden)) { super.cancelPointer(pointer); return; }
   }
 
   @override
   void handlePointerEvent(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePointerEvent', [event]);
-    if (identical(r, notOverridden)) { super.handlePointerEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePointerEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.handlePointerEvent(event); return; }
   }
 
   @override
   void hitTestInView(HitTestResult result, ui.Offset position, int viewId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestInView', [result, position, viewId]);
-    if (identical(r, notOverridden)) { super.hitTestInView(result, position, viewId); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestInView', [result, position, viewId]);
+    if (identical(_$r, notOverridden)) { super.hitTestInView(result, position, viewId); return; }
   }
 
   @override
   void hitTest(HitTestResult result, ui.Offset position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, position]);
-    if (identical(r, notOverridden)) { super.hitTest(result, position); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, position]);
+    if (identical(_$r, notOverridden)) { super.hitTest(result, position); return; }
   }
 
   @override
   void dispatchEvent(PointerEvent event, HitTestResult? hitTestResult) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchEvent', [event, hitTestResult]);
-    if (identical(r, notOverridden)) { super.dispatchEvent(event, hitTestResult); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchEvent', [event, hitTestResult]);
+    if (identical(_$r, notOverridden)) { super.dispatchEvent(event, hitTestResult); return; }
   }
 
   @override
   void handleEvent(PointerEvent event, HitTestEntry<HitTestTarget> entry) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
-    if (identical(r, notOverridden)) { super.handleEvent(event, entry); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
+    if (identical(_$r, notOverridden)) { super.handleEvent(event, entry); return; }
   }
 
   @override
   void resetGestureBinding() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetGestureBinding', const []);
-    if (identical(r, notOverridden)) { super.resetGestureBinding(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetGestureBinding', const []);
+    if (identical(_$r, notOverridden)) { super.resetGestureBinding(); return; }
   }
 
   @override
   void addTimingsCallback(ui.TimingsCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addTimingsCallback', [callback]);
-    if (identical(r, notOverridden)) { super.addTimingsCallback((a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addTimingsCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.addTimingsCallback((a) => callback(a)); return; }
   }
 
   @override
   void removeTimingsCallback(ui.TimingsCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTimingsCallback', [callback]);
-    if (identical(r, notOverridden)) { super.removeTimingsCallback((a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTimingsCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.removeTimingsCallback((a) => callback(a)); return; }
   }
 
   @override
   void resetInternalState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetInternalState', const []);
-    if (identical(r, notOverridden)) { super.resetInternalState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetInternalState', const []);
+    if (identical(_$r, notOverridden)) { super.resetInternalState(); return; }
   }
 
   @override
   void handleAppLifecycleStateChanged(ui.AppLifecycleState state) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAppLifecycleStateChanged', [state]);
-    if (identical(r, notOverridden)) { super.handleAppLifecycleStateChanged(state); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAppLifecycleStateChanged', [state]);
+    if (identical(_$r, notOverridden)) { super.handleAppLifecycleStateChanged(state); return; }
   }
 
   @override
   bool handleEventLoopCallback() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEventLoopCallback', const []);
-    if (identical(r, notOverridden)) return super.handleEventLoopCallback();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEventLoopCallback', const []);
+    if (identical(_$r, notOverridden)) return super.handleEventLoopCallback();
+    return _$r as bool;
   }
 
   @override
   int scheduleFrameCallback(FrameCallback callback, {bool rescheduling = false, bool scheduleNewFrame = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleFrameCallback', [callback, rescheduling, scheduleNewFrame]);
-    if (identical(r, notOverridden)) return super.scheduleFrameCallback((a) => callback(a), rescheduling: rescheduling, scheduleNewFrame: scheduleNewFrame);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleFrameCallback', [callback, rescheduling, scheduleNewFrame]);
+    if (identical(_$r, notOverridden)) return super.scheduleFrameCallback((a) => callback(a), rescheduling: rescheduling, scheduleNewFrame: scheduleNewFrame);
+    return _$r as int;
   }
 
   @override
   void cancelFrameCallbackWithId(int id) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancelFrameCallbackWithId', [id]);
-    if (identical(r, notOverridden)) { super.cancelFrameCallbackWithId(id); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancelFrameCallbackWithId', [id]);
+    if (identical(_$r, notOverridden)) { super.cancelFrameCallbackWithId(id); return; }
   }
 
   @override
   bool debugAssertNoTransientCallbacks(String reason) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoTransientCallbacks', [reason]);
-    if (identical(r, notOverridden)) return super.debugAssertNoTransientCallbacks(reason);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoTransientCallbacks', [reason]);
+    if (identical(_$r, notOverridden)) return super.debugAssertNoTransientCallbacks(reason);
+    return _$r as bool;
   }
 
   @override
   bool debugAssertNoPendingPerformanceModeRequests(String reason) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoPendingPerformanceModeRequests', [reason]);
-    if (identical(r, notOverridden)) return super.debugAssertNoPendingPerformanceModeRequests(reason);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoPendingPerformanceModeRequests', [reason]);
+    if (identical(_$r, notOverridden)) return super.debugAssertNoPendingPerformanceModeRequests(reason);
+    return _$r as bool;
   }
 
   @override
   bool debugAssertNoTimeDilation(String reason) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoTimeDilation', [reason]);
-    if (identical(r, notOverridden)) return super.debugAssertNoTimeDilation(reason);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertNoTimeDilation', [reason]);
+    if (identical(_$r, notOverridden)) return super.debugAssertNoTimeDilation(reason);
+    return _$r as bool;
   }
 
   @override
   void addPersistentFrameCallback(FrameCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPersistentFrameCallback', [callback]);
-    if (identical(r, notOverridden)) { super.addPersistentFrameCallback((a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPersistentFrameCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.addPersistentFrameCallback((a) => callback(a)); return; }
   }
 
   @override
   void addPostFrameCallback(FrameCallback callback, {String debugLabel = 'callback'}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPostFrameCallback', [callback, debugLabel]);
-    if (identical(r, notOverridden)) { super.addPostFrameCallback((a) => callback(a), debugLabel: debugLabel); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPostFrameCallback', [callback, debugLabel]);
+    if (identical(_$r, notOverridden)) { super.addPostFrameCallback((a) => callback(a), debugLabel: debugLabel); return; }
   }
 
   @override
   void ensureFrameCallbacksRegistered() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureFrameCallbacksRegistered', const []);
-    if (identical(r, notOverridden)) { super.ensureFrameCallbacksRegistered(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureFrameCallbacksRegistered', const []);
+    if (identical(_$r, notOverridden)) { super.ensureFrameCallbacksRegistered(); return; }
   }
 
   @override
   void ensureVisualUpdate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureVisualUpdate', const []);
-    if (identical(r, notOverridden)) { super.ensureVisualUpdate(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureVisualUpdate', const []);
+    if (identical(_$r, notOverridden)) { super.ensureVisualUpdate(); return; }
   }
 
   @override
   void scheduleFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleFrame', const []);
-    if (identical(r, notOverridden)) { super.scheduleFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleFrame', const []);
+    if (identical(_$r, notOverridden)) { super.scheduleFrame(); return; }
   }
 
   @override
   void scheduleForcedFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleForcedFrame', const []);
-    if (identical(r, notOverridden)) { super.scheduleForcedFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleForcedFrame', const []);
+    if (identical(_$r, notOverridden)) { super.scheduleForcedFrame(); return; }
   }
 
   @override
   void scheduleWarmUpFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleWarmUpFrame', const []);
-    if (identical(r, notOverridden)) { super.scheduleWarmUpFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleWarmUpFrame', const []);
+    if (identical(_$r, notOverridden)) { super.scheduleWarmUpFrame(); return; }
   }
 
   @override
   void resetEpoch() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetEpoch', const []);
-    if (identical(r, notOverridden)) { super.resetEpoch(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetEpoch', const []);
+    if (identical(_$r, notOverridden)) { super.resetEpoch(); return; }
   }
 
   @override
   void handleBeginFrame(Duration? rawTimeStamp) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleBeginFrame', [rawTimeStamp]);
-    if (identical(r, notOverridden)) { super.handleBeginFrame(rawTimeStamp); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleBeginFrame', [rawTimeStamp]);
+    if (identical(_$r, notOverridden)) { super.handleBeginFrame(rawTimeStamp); return; }
   }
 
   @override
   PerformanceModeRequestHandle? requestPerformanceMode(ui.DartPerformanceMode mode) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestPerformanceMode', [mode]);
-    if (identical(r, notOverridden)) return super.requestPerformanceMode(mode);
-    return r as PerformanceModeRequestHandle?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestPerformanceMode', [mode]);
+    if (identical(_$r, notOverridden)) return super.requestPerformanceMode(mode);
+    return _$r as PerformanceModeRequestHandle?;
   }
 
   @override
   ui.DartPerformanceMode? debugGetRequestedPerformanceMode() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugGetRequestedPerformanceMode', const []);
-    if (identical(r, notOverridden)) return super.debugGetRequestedPerformanceMode();
-    return r as ui.DartPerformanceMode?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugGetRequestedPerformanceMode', const []);
+    if (identical(_$r, notOverridden)) return super.debugGetRequestedPerformanceMode();
+    return _$r as ui.DartPerformanceMode?;
   }
 
   @override
   void handleDrawFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDrawFrame', const []);
-    if (identical(r, notOverridden)) { super.handleDrawFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDrawFrame', const []);
+    if (identical(_$r, notOverridden)) { super.handleDrawFrame(); return; }
   }
 
   @override
   BinaryMessenger createBinaryMessenger() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createBinaryMessenger', const []);
-    if (identical(r, notOverridden)) return super.createBinaryMessenger();
-    return r as BinaryMessenger;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createBinaryMessenger', const []);
+    if (identical(_$r, notOverridden)) return super.createBinaryMessenger();
+    return _$r as BinaryMessenger;
   }
 
   @override
   void handleMemoryPressure() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMemoryPressure', const []);
-    if (identical(r, notOverridden)) { super.handleMemoryPressure(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMemoryPressure', const []);
+    if (identical(_$r, notOverridden)) { super.handleMemoryPressure(); return; }
   }
 
   @override
   Future<void> handleSystemMessage(Object systemMessage) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemMessage', [systemMessage]);
-    if (identical(r, notOverridden)) return super.handleSystemMessage(systemMessage);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemMessage', [systemMessage]);
+    if (identical(_$r, notOverridden)) return super.handleSystemMessage(systemMessage);
+    return _$r as Future<void>;
   }
 
   @override
   void initLicenses() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initLicenses', const []);
-    if (identical(r, notOverridden)) { super.initLicenses(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initLicenses', const []);
+    if (identical(_$r, notOverridden)) { super.initLicenses(); return; }
   }
 
   @override
   void evict(String asset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [asset]);
-    if (identical(r, notOverridden)) { super.evict(asset); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [asset]);
+    if (identical(_$r, notOverridden)) { super.evict(asset); return; }
   }
 
   @override
   void readInitialLifecycleStateFromNativeWindow() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readInitialLifecycleStateFromNativeWindow', const []);
-    if (identical(r, notOverridden)) { super.readInitialLifecycleStateFromNativeWindow(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readInitialLifecycleStateFromNativeWindow', const []);
+    if (identical(_$r, notOverridden)) { super.readInitialLifecycleStateFromNativeWindow(); return; }
   }
 
   @override
   void handleViewFocusChanged(ui.ViewFocusEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleViewFocusChanged', [event]);
-    if (identical(r, notOverridden)) { super.handleViewFocusChanged(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleViewFocusChanged', [event]);
+    if (identical(_$r, notOverridden)) { super.handleViewFocusChanged(event); return; }
   }
 
   @override
   Future<ui.AppExitResponse> handleRequestAppExit() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRequestAppExit', const []);
-    if (identical(r, notOverridden)) return super.handleRequestAppExit();
-    return r as Future<ui.AppExitResponse>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRequestAppExit', const []);
+    if (identical(_$r, notOverridden)) return super.handleRequestAppExit();
+    return _$r as Future<ui.AppExitResponse>;
   }
 
   @override
   Future<ui.AppExitResponse> exitApplication(ui.AppExitType exitType, [int exitCode = 0]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'exitApplication', [exitType, exitCode]);
-    if (identical(r, notOverridden)) return super.exitApplication(exitType, exitCode);
-    return r as Future<ui.AppExitResponse>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'exitApplication', [exitType, exitCode]);
+    if (identical(_$r, notOverridden)) return super.exitApplication(exitType, exitCode);
+    return _$r as Future<ui.AppExitResponse>;
   }
 
   @override
   RestorationManager createRestorationManager() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRestorationManager', const []);
-    if (identical(r, notOverridden)) return super.createRestorationManager();
-    return r as RestorationManager;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRestorationManager', const []);
+    if (identical(_$r, notOverridden)) return super.createRestorationManager();
+    return _$r as RestorationManager;
   }
 
   @override
   void setSystemUiChangeCallback(SystemUiChangeCallback? callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSystemUiChangeCallback', [callback]);
-    if (identical(r, notOverridden)) { super.setSystemUiChangeCallback(callback != null ? (a) => callback(a) as Future<void> : null); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSystemUiChangeCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.setSystemUiChangeCallback(callback != null ? (a) => callback(a) as Future<void> : null); return; }
   }
 
   @override
   Future<void> initializationComplete() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initializationComplete', const []);
-    if (identical(r, notOverridden)) return super.initializationComplete();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initializationComplete', const []);
+    if (identical(_$r, notOverridden)) return super.initializationComplete();
+    return _$r as Future<void>;
   }
 
   @override
   void addSemanticsEnabledListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsEnabledListener', [listener]);
-    if (identical(r, notOverridden)) { super.addSemanticsEnabledListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsEnabledListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addSemanticsEnabledListener(() => listener()); return; }
   }
 
   @override
   void removeSemanticsEnabledListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsEnabledListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeSemanticsEnabledListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsEnabledListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeSemanticsEnabledListener(() => listener()); return; }
   }
 
   @override
   void addSemanticsActionListener(ValueSetter<ui.SemanticsActionEvent> listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsActionListener', [listener]);
-    if (identical(r, notOverridden)) { super.addSemanticsActionListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsActionListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addSemanticsActionListener((a) => listener(a)); return; }
   }
 
   @override
   void removeSemanticsActionListener(ValueSetter<ui.SemanticsActionEvent> listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsActionListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeSemanticsActionListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsActionListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeSemanticsActionListener((a) => listener(a)); return; }
   }
 
   @override
   SemanticsHandle ensureSemantics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics', const []);
-    if (identical(r, notOverridden)) return super.ensureSemantics();
-    return r as SemanticsHandle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics', const []);
+    if (identical(_$r, notOverridden)) return super.ensureSemantics();
+    return _$r as SemanticsHandle;
   }
 
   @override
   void performSemanticsAction(ui.SemanticsActionEvent action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSemanticsAction', [action]);
-    if (identical(r, notOverridden)) { super.performSemanticsAction(action); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSemanticsAction', [action]);
+    if (identical(_$r, notOverridden)) { super.performSemanticsAction(action); return; }
   }
 
   @override
   void handleAccessibilityFeaturesChanged() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAccessibilityFeaturesChanged', const []);
-    if (identical(r, notOverridden)) { super.handleAccessibilityFeaturesChanged(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAccessibilityFeaturesChanged', const []);
+    if (identical(_$r, notOverridden)) { super.handleAccessibilityFeaturesChanged(); return; }
   }
 
   @override
   ui.SemanticsUpdateBuilder createSemanticsUpdateBuilder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSemanticsUpdateBuilder', const []);
-    if (identical(r, notOverridden)) return super.createSemanticsUpdateBuilder();
-    return r as ui.SemanticsUpdateBuilder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSemanticsUpdateBuilder', const []);
+    if (identical(_$r, notOverridden)) return super.createSemanticsUpdateBuilder();
+    return _$r as ui.SemanticsUpdateBuilder;
   }
 
   @override
   ImageCache createImageCache() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createImageCache', const []);
-    if (identical(r, notOverridden)) return super.createImageCache();
-    return r as ImageCache;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createImageCache', const []);
+    if (identical(_$r, notOverridden)) return super.createImageCache();
+    return _$r as ImageCache;
   }
 
   @override
   Future<ui.Codec> instantiateImageCodecFromBuffer(ui.ImmutableBuffer buffer, {int? cacheWidth, int? cacheHeight, bool allowUpscaling = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'instantiateImageCodecFromBuffer', [buffer, cacheWidth, cacheHeight, allowUpscaling]);
-    if (identical(r, notOverridden)) return super.instantiateImageCodecFromBuffer(buffer, cacheWidth: cacheWidth, cacheHeight: cacheHeight, allowUpscaling: allowUpscaling);
-    return r as Future<ui.Codec>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'instantiateImageCodecFromBuffer', [buffer, cacheWidth, cacheHeight, allowUpscaling]);
+    if (identical(_$r, notOverridden)) return super.instantiateImageCodecFromBuffer(buffer, cacheWidth: cacheWidth, cacheHeight: cacheHeight, allowUpscaling: allowUpscaling);
+    return _$r as Future<ui.Codec>;
   }
 
   @override
   Future<ui.Codec> instantiateImageCodecWithSize(ui.ImmutableBuffer buffer, {ui.TargetImageSizeCallback? getTargetSize}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'instantiateImageCodecWithSize', [buffer, getTargetSize]);
-    if (identical(r, notOverridden)) return super.instantiateImageCodecWithSize(buffer, getTargetSize: getTargetSize != null ? (a, b) => getTargetSize(a, b) as ui.TargetImageSize : null);
-    return r as Future<ui.Codec>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'instantiateImageCodecWithSize', [buffer, getTargetSize]);
+    if (identical(_$r, notOverridden)) return super.instantiateImageCodecWithSize(buffer, getTargetSize: getTargetSize != null ? (a, b) => getTargetSize(a, b) as ui.TargetImageSize : null);
+    return _$r as Future<ui.Codec>;
   }
 
   @override
   PipelineOwner createRootPipelineOwner() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRootPipelineOwner', const []);
-    if (identical(r, notOverridden)) return super.createRootPipelineOwner();
-    return r as PipelineOwner;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRootPipelineOwner', const []);
+    if (identical(_$r, notOverridden)) return super.createRootPipelineOwner();
+    return _$r as PipelineOwner;
   }
 
   @override
   void addRenderView(RenderView view) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addRenderView', [view]);
-    if (identical(r, notOverridden)) { super.addRenderView(view); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addRenderView', [view]);
+    if (identical(_$r, notOverridden)) { super.addRenderView(view); return; }
   }
 
   @override
   void removeRenderView(RenderView view) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeRenderView', [view]);
-    if (identical(r, notOverridden)) { super.removeRenderView(view); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeRenderView', [view]);
+    if (identical(_$r, notOverridden)) { super.removeRenderView(view); return; }
   }
 
   @override
   ViewConfiguration createViewConfigurationFor(RenderView renderView) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createViewConfigurationFor', [renderView]);
-    if (identical(r, notOverridden)) return super.createViewConfigurationFor(renderView);
-    return r as ViewConfiguration;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createViewConfigurationFor', [renderView]);
+    if (identical(_$r, notOverridden)) return super.createViewConfigurationFor(renderView);
+    return _$r as ViewConfiguration;
   }
 
   @override
   ui.SceneBuilder createSceneBuilder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSceneBuilder', const []);
-    if (identical(r, notOverridden)) return super.createSceneBuilder();
-    return r as ui.SceneBuilder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSceneBuilder', const []);
+    if (identical(_$r, notOverridden)) return super.createSceneBuilder();
+    return _$r as ui.SceneBuilder;
   }
 
   @override
   ui.PictureRecorder createPictureRecorder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createPictureRecorder', const []);
-    if (identical(r, notOverridden)) return super.createPictureRecorder();
-    return r as ui.PictureRecorder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createPictureRecorder', const []);
+    if (identical(_$r, notOverridden)) return super.createPictureRecorder();
+    return _$r as ui.PictureRecorder;
   }
 
   @override
   ui.Canvas createCanvas(ui.PictureRecorder recorder) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createCanvas', [recorder]);
-    if (identical(r, notOverridden)) return super.createCanvas(recorder);
-    return r as ui.Canvas;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createCanvas', [recorder]);
+    if (identical(_$r, notOverridden)) return super.createCanvas(recorder);
+    return _$r as ui.Canvas;
   }
 
   @override
   void handleMetricsChanged() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMetricsChanged', const []);
-    if (identical(r, notOverridden)) { super.handleMetricsChanged(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMetricsChanged', const []);
+    if (identical(_$r, notOverridden)) { super.handleMetricsChanged(); return; }
   }
 
   @override
   void handleTextScaleFactorChanged() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTextScaleFactorChanged', const []);
-    if (identical(r, notOverridden)) { super.handleTextScaleFactorChanged(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTextScaleFactorChanged', const []);
+    if (identical(_$r, notOverridden)) { super.handleTextScaleFactorChanged(); return; }
   }
 
   @override
   void handlePlatformBrightnessChanged() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformBrightnessChanged', const []);
-    if (identical(r, notOverridden)) { super.handlePlatformBrightnessChanged(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformBrightnessChanged', const []);
+    if (identical(_$r, notOverridden)) { super.handlePlatformBrightnessChanged(); return; }
   }
 
   @override
   void initMouseTracker([MouseTracker? tracker]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initMouseTracker', [tracker]);
-    if (identical(r, notOverridden)) { super.initMouseTracker(tracker); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initMouseTracker', [tracker]);
+    if (identical(_$r, notOverridden)) { super.initMouseTracker(tracker); return; }
   }
 
   @override
   void deferFirstFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deferFirstFrame', const []);
-    if (identical(r, notOverridden)) { super.deferFirstFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deferFirstFrame', const []);
+    if (identical(_$r, notOverridden)) { super.deferFirstFrame(); return; }
   }
 
   @override
   void allowFirstFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allowFirstFrame', const []);
-    if (identical(r, notOverridden)) { super.allowFirstFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allowFirstFrame', const []);
+    if (identical(_$r, notOverridden)) { super.allowFirstFrame(); return; }
   }
 
   @override
   void resetFirstFrameSent() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetFirstFrameSent', const []);
-    if (identical(r, notOverridden)) { super.resetFirstFrameSent(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetFirstFrameSent', const []);
+    if (identical(_$r, notOverridden)) { super.resetFirstFrameSent(); return; }
   }
 
   @override
   void drawFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drawFrame', const []);
-    if (identical(r, notOverridden)) { super.drawFrame(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drawFrame', const []);
+    if (identical(_$r, notOverridden)) { super.drawFrame(); return; }
   }
 
   @override

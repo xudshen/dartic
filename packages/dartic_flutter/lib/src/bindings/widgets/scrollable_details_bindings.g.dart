@@ -34,16 +34,16 @@ class _$ScrollableDetails extends ScrollableDetails implements DarticObjectHolde
 
   @override
   ScrollableDetails copyWith({AxisDirection? direction, ScrollController? controller, ScrollPhysics? physics, Clip? decorationClipBehavior}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [direction, controller, physics, decorationClipBehavior]);
-    if (identical(r, notOverridden)) return super.copyWith(direction: direction, controller: controller, physics: physics, decorationClipBehavior: decorationClipBehavior);
-    return r as ScrollableDetails;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [direction, controller, physics, decorationClipBehavior]);
+    if (identical(_$r, notOverridden)) return super.copyWith(direction: direction, controller: controller, physics: physics, decorationClipBehavior: decorationClipBehavior);
+    return _$r as ScrollableDetails;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

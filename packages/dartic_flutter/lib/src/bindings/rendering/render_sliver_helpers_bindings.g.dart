@@ -37,529 +37,529 @@ class _$RenderSliverHelpers implements RenderSliverHelpers, DarticObjectHolder {
 
   @override
   bool hitTestBoxChild(BoxHitTestResult result, RenderBox child, {required double mainAxisPosition, required double crossAxisPosition}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestBoxChild', [result, child, mainAxisPosition, crossAxisPosition]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestBoxChild', [result, child, mainAxisPosition, crossAxisPosition]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTestBoxChild must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void applyPaintTransformForBoxChild(RenderBox child, Matrix4 transform) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPaintTransformForBoxChild', [child, transform]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPaintTransformForBoxChild', [child, transform]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method applyPaintTransformForBoxChild must be overridden in dartic code');
     }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toString must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   void debugResetSize() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugResetSize', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugResetSize', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugResetSize must be overridden in dartic code');
     }
   }
 
   @override
   void debugAssertDoesMeetConstraints() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertDoesMeetConstraints', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertDoesMeetConstraints', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugAssertDoesMeetConstraints must be overridden in dartic code');
     }
   }
 
   @override
   void performResize() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performResize', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performResize', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performResize must be overridden in dartic code');
     }
   }
 
   @override
   bool hitTest(SliverHitTestResult result, {required double mainAxisPosition, required double crossAxisPosition}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, mainAxisPosition, crossAxisPosition]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, mainAxisPosition, crossAxisPosition]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTest must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool hitTestSelf({required double mainAxisPosition, required double crossAxisPosition}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestSelf', [mainAxisPosition, crossAxisPosition]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestSelf', [mainAxisPosition, crossAxisPosition]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTestSelf must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool hitTestChildren(SliverHitTestResult result, {required double mainAxisPosition, required double crossAxisPosition}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestChildren', [result, mainAxisPosition, crossAxisPosition]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestChildren', [result, mainAxisPosition, crossAxisPosition]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTestChildren must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   double calculatePaintOffset(SliverConstraints constraints, {required double from, required double to}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'calculatePaintOffset', [constraints, from, to]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'calculatePaintOffset', [constraints, from, to]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method calculatePaintOffset must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double calculateCacheOffset(SliverConstraints constraints, {required double from, required double to}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'calculateCacheOffset', [constraints, from, to]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'calculateCacheOffset', [constraints, from, to]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method calculateCacheOffset must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double childMainAxisPosition(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childMainAxisPosition', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childMainAxisPosition', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method childMainAxisPosition must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double childCrossAxisPosition(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childCrossAxisPosition', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childCrossAxisPosition', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method childCrossAxisPosition must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double? childScrollOffset(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childScrollOffset', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'childScrollOffset', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method childScrollOffset must be overridden in dartic code');
     }
-    return r as double?;
+    return _$r as double?;
   }
 
   @override
   void applyPaintTransform(RenderObject child, Matrix4 transform) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPaintTransform', [child, transform]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPaintTransform', [child, transform]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method applyPaintTransform must be overridden in dartic code');
     }
   }
 
   @override
   Size getAbsoluteSizeRelativeToOrigin() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAbsoluteSizeRelativeToOrigin', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAbsoluteSizeRelativeToOrigin', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getAbsoluteSizeRelativeToOrigin must be overridden in dartic code');
     }
-    return r as Size;
+    return _$r as Size;
   }
 
   @override
   Size getAbsoluteSize() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAbsoluteSize', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAbsoluteSize', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getAbsoluteSize must be overridden in dartic code');
     }
-    return r as Size;
+    return _$r as Size;
   }
 
   @override
   void debugPaint(PaintingContext context, Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugPaint', [context, offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugPaint', [context, offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugPaint must be overridden in dartic code');
     }
   }
 
   @override
   void handleEvent(PointerEvent event, SliverHitTestEntry entry) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleEvent must be overridden in dartic code');
     }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugFillProperties must be overridden in dartic code');
     }
   }
 
   @override
   void reassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reassemble must be overridden in dartic code');
     }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }
 
   @override
   void setupParentData(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setupParentData', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setupParentData', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setupParentData must be overridden in dartic code');
     }
   }
 
   @override
   void redepthChild(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method redepthChild must be overridden in dartic code');
     }
   }
 
   @override
   void redepthChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChildren', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChildren', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method redepthChildren must be overridden in dartic code');
     }
   }
 
   @override
   void adoptChild(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adoptChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adoptChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method adoptChild must be overridden in dartic code');
     }
   }
 
   @override
   void dropChild(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dropChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dropChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dropChild must be overridden in dartic code');
     }
   }
 
   @override
   void visitChildren(RenderObjectVisitor visitor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method visitChildren must be overridden in dartic code');
     }
   }
 
   @override
   void attach(PipelineOwner owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method attach must be overridden in dartic code');
     }
   }
 
   @override
   void detach() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method detach must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayout', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayout', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsLayout must be overridden in dartic code');
     }
   }
 
   @override
   void markParentNeedsLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markParentNeedsLayout', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markParentNeedsLayout', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markParentNeedsLayout must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsLayoutForSizedByParentChange() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayoutForSizedByParentChange', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayoutForSizedByParentChange', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsLayoutForSizedByParentChange must be overridden in dartic code');
     }
   }
 
   @override
   void scheduleInitialLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialLayout', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialLayout', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scheduleInitialLayout must be overridden in dartic code');
     }
   }
 
   @override
   void layout(Constraints constraints, {bool parentUsesSize = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layout', [constraints, parentUsesSize]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layout', [constraints, parentUsesSize]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method layout must be overridden in dartic code');
     }
   }
 
   @override
   void performLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performLayout', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performLayout', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performLayout must be overridden in dartic code');
     }
   }
 
   @override
   void invokeLayoutCallback<T extends Constraints>(LayoutCallback<T> callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invokeLayoutCallback', [callback]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invokeLayoutCallback', [callback]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method invokeLayoutCallback must be overridden in dartic code');
     }
   }
 
   @override
   void debugRegisterRepaintBoundaryPaint({bool includedParent = true, bool includedChild = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugRegisterRepaintBoundaryPaint', [includedParent, includedChild]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugRegisterRepaintBoundaryPaint', [includedParent, includedChild]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugRegisterRepaintBoundaryPaint must be overridden in dartic code');
     }
   }
 
   @override
   OffsetLayer updateCompositedLayer({required OffsetLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateCompositedLayer', [oldLayer]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateCompositedLayer', [oldLayer]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method updateCompositedLayer must be overridden in dartic code');
     }
-    return r as OffsetLayer;
+    return _$r as OffsetLayer;
   }
 
   @override
   void markNeedsCompositingBitsUpdate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsCompositingBitsUpdate', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsCompositingBitsUpdate', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsCompositingBitsUpdate must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsPaint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsPaint', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsPaint', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsPaint must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsCompositedLayerUpdate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsCompositedLayerUpdate', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsCompositedLayerUpdate', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsCompositedLayerUpdate must be overridden in dartic code');
     }
   }
 
   @override
   void scheduleInitialPaint(ContainerLayer rootLayer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialPaint', [rootLayer]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialPaint', [rootLayer]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scheduleInitialPaint must be overridden in dartic code');
     }
   }
 
   @override
   void replaceRootLayer(OffsetLayer rootLayer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replaceRootLayer', [rootLayer]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replaceRootLayer', [rootLayer]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method replaceRootLayer must be overridden in dartic code');
     }
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paint must be overridden in dartic code');
     }
   }
 
   @override
   bool paintsChild(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintsChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintsChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paintsChild must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   Matrix4 getTransformTo(RenderObject? target) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [target]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [target]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getTransformTo must be overridden in dartic code');
     }
-    return r as Matrix4;
+    return _$r as Matrix4;
   }
 
   @override
   Rect? describeApproximatePaintClip(RenderObject child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeApproximatePaintClip', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeApproximatePaintClip', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method describeApproximatePaintClip must be overridden in dartic code');
     }
-    return r as Rect?;
+    return _$r as Rect?;
   }
 
   @override
   Rect? describeSemanticsClip(RenderObject? child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeSemanticsClip', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeSemanticsClip', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method describeSemanticsClip must be overridden in dartic code');
     }
-    return r as Rect?;
+    return _$r as Rect?;
   }
 
   @override
   void scheduleInitialSemantics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialSemantics', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleInitialSemantics', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scheduleInitialSemantics must be overridden in dartic code');
     }
   }
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeSemanticsConfiguration', [config]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeSemanticsConfiguration', [config]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method describeSemanticsConfiguration must be overridden in dartic code');
     }
   }
 
   @override
   void sendSemanticsEvent(SemanticsEvent semanticsEvent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendSemanticsEvent', [semanticsEvent]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendSemanticsEvent', [semanticsEvent]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method sendSemanticsEvent must be overridden in dartic code');
     }
   }
 
   @override
   void clearSemantics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearSemantics', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearSemantics', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clearSemantics must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsSemanticsUpdate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsSemanticsUpdate', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsSemanticsUpdate', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsSemanticsUpdate must be overridden in dartic code');
     }
   }
 
   @override
   void visitChildrenForSemantics(RenderObjectVisitor visitor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildrenForSemantics', [visitor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildrenForSemantics', [visitor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method visitChildrenForSemantics must be overridden in dartic code');
     }
   }
 
   @override
   void assembleSemanticsNode(SemanticsNode node, SemanticsConfiguration config, Iterable<SemanticsNode> children) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'assembleSemanticsNode', [node, config, children]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'assembleSemanticsNode', [node, config, children]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method assembleSemanticsNode must be overridden in dartic code');
     }
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toStringShort must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines = '', DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toStringDeep must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toStringShallow must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugDescribeChildren must be overridden in dartic code');
     }
-    return r as List<DiagnosticsNode>;
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   void showOnScreen({RenderObject? descendant, Rect? rect, Duration duration = Duration.zero, Curve curve = Curves.ease}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showOnScreen', [descendant, rect, duration, curve]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showOnScreen', [descendant, rect, duration, curve]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method showOnScreen must be overridden in dartic code');
     }
   }
 
   @override
   DiagnosticsNode describeForError(String name, {DiagnosticsTreeStyle style = DiagnosticsTreeStyle.shallow}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeForError', [name, style]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeForError', [name, style]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method describeForError must be overridden in dartic code');
     }
-    return r as DiagnosticsNode;
+    return _$r as DiagnosticsNode;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toDiagnosticsNode must be overridden in dartic code');
     }
-    return r as DiagnosticsNode;
+    return _$r as DiagnosticsNode;
   }
 
   @override

@@ -25,88 +25,88 @@ class _$SelectionContainerDelegate extends SelectionContainerDelegate implements
 
   @override
   Matrix4 getTransformFrom(Selectable child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformFrom', [child]);
-    if (identical(r, notOverridden)) return super.getTransformFrom(child);
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformFrom', [child]);
+    if (identical(_$r, notOverridden)) return super.getTransformFrom(child);
+    return _$r as Matrix4;
   }
 
   @override
   Matrix4 getTransformTo(RenderObject? ancestor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
-    if (identical(r, notOverridden)) return super.getTransformTo(ancestor);
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
+    if (identical(_$r, notOverridden)) return super.getTransformTo(ancestor);
+    return _$r as Matrix4;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void pushHandleLayers(LayerLink? startHandle, LayerLink? endHandle) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pushHandleLayers must be overridden in dartic code');
     }
   }
 
   @override
   SelectedContent? getSelectedContent() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelectedContent must be overridden in dartic code');
     }
-    return r as SelectedContent?;
+    return _$r as SelectedContent?;
   }
 
   @override
   SelectedContentRange? getSelection() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelection must be overridden in dartic code');
     }
-    return r as SelectedContentRange?;
+    return _$r as SelectedContentRange?;
   }
 
   @override
   SelectionResult dispatchSelectionEvent(SelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispatchSelectionEvent must be overridden in dartic code');
     }
-    return r as SelectionResult;
+    return _$r as SelectionResult;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
     }
   }
 
   @override
   void add(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
   }
 
   @override
   void remove(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
   }

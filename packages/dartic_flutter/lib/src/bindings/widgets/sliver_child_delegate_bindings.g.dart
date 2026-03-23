@@ -26,53 +26,53 @@ class _$SliverChildDelegate extends SliverChildDelegate implements DarticObjectH
 
   @override
   Widget? build(BuildContext context, int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method build must be overridden in dartic code');
     }
-    return r as Widget?;
+    return _$r as Widget?;
   }
 
   @override
   double? estimateMaxScrollOffset(int firstIndex, int lastIndex, double leadingScrollOffset, double trailingScrollOffset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
-    if (identical(r, notOverridden)) return super.estimateMaxScrollOffset(firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset);
-    return r as double?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
+    if (identical(_$r, notOverridden)) return super.estimateMaxScrollOffset(firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset);
+    return _$r as double?;
   }
 
   @override
   void didFinishLayout(int firstIndex, int lastIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', [firstIndex, lastIndex]);
-    if (identical(r, notOverridden)) { super.didFinishLayout(firstIndex, lastIndex); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', [firstIndex, lastIndex]);
+    if (identical(_$r, notOverridden)) { super.didFinishLayout(firstIndex, lastIndex); return; }
   }
 
   @override
   bool shouldRebuild(SliverChildDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldRebuild must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   int? findIndexByKey(Key key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findIndexByKey', [key]);
-    if (identical(r, notOverridden)) return super.findIndexByKey(key);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findIndexByKey', [key]);
+    if (identical(_$r, notOverridden)) return super.findIndexByKey(key);
+    return _$r as int?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void debugFillDescription(List<String> description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
-    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(_$r, notOverridden)) { super.debugFillDescription(description); return; }
   }
 
   @override

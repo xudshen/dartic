@@ -37,76 +37,76 @@ class _$Wrap extends Wrap implements DarticObjectHolder {
 
   @override
   RenderWrap createRenderObject(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRenderObject', [context]);
-    if (identical(r, notOverridden)) return super.createRenderObject(context);
-    return r as RenderWrap;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRenderObject', [context]);
+    if (identical(_$r, notOverridden)) return super.createRenderObject(context);
+    return _$r as RenderWrap;
   }
 
   @override
   void updateRenderObject(BuildContext context, RenderWrap renderObject) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateRenderObject', [context, renderObject]);
-    if (identical(r, notOverridden)) { super.updateRenderObject(context, renderObject); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateRenderObject', [context, renderObject]);
+    if (identical(_$r, notOverridden)) { super.updateRenderObject(context, renderObject); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   MultiChildRenderObjectElement createElement() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
-    if (identical(r, notOverridden)) return super.createElement();
-    return r as MultiChildRenderObjectElement;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createElement', const []);
+    if (identical(_$r, notOverridden)) return super.createElement();
+    return _$r as MultiChildRenderObjectElement;
   }
 
   @override
   void didUnmountRenderObject(RenderObject renderObject) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnmountRenderObject', [renderObject]);
-    if (identical(r, notOverridden)) { super.didUnmountRenderObject(renderObject); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnmountRenderObject', [renderObject]);
+    if (identical(_$r, notOverridden)) { super.didUnmountRenderObject(renderObject); return; }
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
-    if (identical(r, notOverridden)) return super.debugDescribeChildren();
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(_$r, notOverridden)) return super.debugDescribeChildren();
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override

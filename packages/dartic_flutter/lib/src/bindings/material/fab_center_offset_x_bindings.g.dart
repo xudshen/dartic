@@ -23,38 +23,38 @@ class _$FabCenterOffsetX implements FabCenterOffsetX, DarticObjectHolder {
 
   @override
   double getOffsetX(ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetX', [scaffoldGeometry, adjustment]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetX', [scaffoldGeometry, adjustment]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getOffsetX must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double getOffsetY(ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetY', [scaffoldGeometry, adjustment]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetY', [scaffoldGeometry, adjustment]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getOffsetY must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   bool isMini() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isMini', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isMini', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isMini must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [scaffoldGeometry]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [scaffoldGeometry]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getOffset must be overridden in dartic code');
     }
-    return r as Offset;
+    return _$r as Offset;
   }
 
   @override

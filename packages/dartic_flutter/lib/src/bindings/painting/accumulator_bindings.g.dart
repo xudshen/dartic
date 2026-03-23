@@ -26,15 +26,15 @@ class _$Accumulator extends Accumulator implements DarticObjectHolder {
 
   @override
   void increment(int addend) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'increment', [addend]);
-    if (identical(r, notOverridden)) { super.increment(addend); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'increment', [addend]);
+    if (identical(_$r, notOverridden)) { super.increment(addend); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

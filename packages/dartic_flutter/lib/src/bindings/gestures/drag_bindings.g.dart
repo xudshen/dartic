@@ -19,27 +19,27 @@ class _$Drag extends Drag implements DarticObjectHolder {
 
   @override
   void update(DragUpdateDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'update', [details]);
-    if (identical(r, notOverridden)) { super.update(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'update', [details]);
+    if (identical(_$r, notOverridden)) { super.update(details); return; }
   }
 
   @override
   void end(DragEndDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'end', [details]);
-    if (identical(r, notOverridden)) { super.end(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'end', [details]);
+    if (identical(_$r, notOverridden)) { super.end(details); return; }
   }
 
   @override
   void cancel() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
-    if (identical(r, notOverridden)) { super.cancel(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    if (identical(_$r, notOverridden)) { super.cancel(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

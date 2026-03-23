@@ -24,37 +24,37 @@ class _$DarwinPlatformViewController extends DarwinPlatformViewController implem
 
   @override
   Future<void> setLayoutDirection(TextDirection layoutDirection) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLayoutDirection', [layoutDirection]);
-    if (identical(r, notOverridden)) return super.setLayoutDirection(layoutDirection);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLayoutDirection', [layoutDirection]);
+    if (identical(_$r, notOverridden)) return super.setLayoutDirection(layoutDirection);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> acceptGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', const []);
-    if (identical(r, notOverridden)) return super.acceptGesture();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', const []);
+    if (identical(_$r, notOverridden)) return super.acceptGesture();
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> rejectGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', const []);
-    if (identical(r, notOverridden)) return super.rejectGesture();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', const []);
+    if (identical(_$r, notOverridden)) return super.rejectGesture();
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) return super.dispose();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) return super.dispose();
+    return _$r as Future<void>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

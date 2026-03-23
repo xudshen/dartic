@@ -24,15 +24,15 @@ class _$RepetitiveStackFrameFilter extends RepetitiveStackFrameFilter implements
 
   @override
   void filter(List<StackFrame> stackFrames, List<String?> reasons) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filter', [stackFrames, reasons]);
-    if (identical(r, notOverridden)) { super.filter(stackFrames, reasons); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filter', [stackFrames, reasons]);
+    if (identical(_$r, notOverridden)) { super.filter(stackFrames, reasons); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

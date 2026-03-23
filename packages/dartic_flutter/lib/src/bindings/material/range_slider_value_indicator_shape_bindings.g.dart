@@ -33,33 +33,33 @@ class _$RangeSliderValueIndicatorShape extends RangeSliderValueIndicatorShape im
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete, {required TextPainter labelPainter, required double textScaleFactor}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete, labelPainter, textScaleFactor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete, labelPainter, textScaleFactor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getPreferredSize must be overridden in dartic code');
     }
-    return r as Size;
+    return _$r as Size;
   }
 
   @override
   double getHorizontalShift({RenderBox? parentBox, Offset? center, TextPainter? labelPainter, Animation<double>? activationAnimation, double? textScaleFactor, Size? sizeWithOverflow}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHorizontalShift', [parentBox, center, labelPainter, activationAnimation, textScaleFactor, sizeWithOverflow]);
-    if (identical(r, notOverridden)) return super.getHorizontalShift(parentBox: parentBox, center: center, labelPainter: labelPainter, activationAnimation: activationAnimation, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHorizontalShift', [parentBox, center, labelPainter, activationAnimation, textScaleFactor, sizeWithOverflow]);
+    if (identical(_$r, notOverridden)) return super.getHorizontalShift(parentBox: parentBox, center: center, labelPainter: labelPainter, activationAnimation: activationAnimation, textScaleFactor: textScaleFactor, sizeWithOverflow: sizeWithOverflow);
+    return _$r as double;
   }
 
   @override
   void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, Object? isDiscrete = darticAbsent, Object? isOnTop = darticAbsent, required TextPainter labelPainter, Object? textScaleFactor = darticAbsent, Object? sizeWithOverflow = darticAbsent, required RenderBox parentBox, required SliderThemeData sliderTheme, Object? textDirection = darticAbsent, Object? value = darticAbsent, Object? thumb = darticAbsent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isOnTop, labelPainter, textScaleFactor, sizeWithOverflow, parentBox, sliderTheme, textDirection, value, thumb]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isOnTop, labelPainter, textScaleFactor, sizeWithOverflow, parentBox, sliderTheme, textDirection, value, thumb]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paint must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

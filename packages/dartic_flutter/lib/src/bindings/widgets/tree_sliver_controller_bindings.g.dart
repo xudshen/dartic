@@ -30,67 +30,67 @@ class _$TreeSliverController extends TreeSliverController implements DarticObjec
 
   @override
   bool isExpanded(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isExpanded', [node]);
-    if (identical(r, notOverridden)) return super.isExpanded(node);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isExpanded', [node]);
+    if (identical(_$r, notOverridden)) return super.isExpanded(node);
+    return _$r as bool;
   }
 
   @override
   bool isActive(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isActive', [node]);
-    if (identical(r, notOverridden)) return super.isActive(node);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isActive', [node]);
+    if (identical(_$r, notOverridden)) return super.isActive(node);
+    return _$r as bool;
   }
 
   @override
   TreeSliverNode<Object?>? getNodeFor(Object? content) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNodeFor', [content]);
-    if (identical(r, notOverridden)) return super.getNodeFor(content);
-    return r as TreeSliverNode<Object?>?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNodeFor', [content]);
+    if (identical(_$r, notOverridden)) return super.getNodeFor(content);
+    return _$r as TreeSliverNode<Object?>?;
   }
 
   @override
   void toggleNode(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleNode', [node]);
-    if (identical(r, notOverridden)) { super.toggleNode(node); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleNode', [node]);
+    if (identical(_$r, notOverridden)) { super.toggleNode(node); return; }
   }
 
   @override
   void expandNode(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandNode', [node]);
-    if (identical(r, notOverridden)) { super.expandNode(node); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandNode', [node]);
+    if (identical(_$r, notOverridden)) { super.expandNode(node); return; }
   }
 
   @override
   void expandAll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandAll', const []);
-    if (identical(r, notOverridden)) { super.expandAll(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandAll', const []);
+    if (identical(_$r, notOverridden)) { super.expandAll(); return; }
   }
 
   @override
   void collapseAll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseAll', const []);
-    if (identical(r, notOverridden)) { super.collapseAll(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseAll', const []);
+    if (identical(_$r, notOverridden)) { super.collapseAll(); return; }
   }
 
   @override
   void collapseNode(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseNode', [node]);
-    if (identical(r, notOverridden)) { super.collapseNode(node); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseNode', [node]);
+    if (identical(_$r, notOverridden)) { super.collapseNode(node); return; }
   }
 
   @override
   int? getActiveIndexFor(TreeSliverNode<Object?> node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActiveIndexFor', [node]);
-    if (identical(r, notOverridden)) return super.getActiveIndexFor(node);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActiveIndexFor', [node]);
+    if (identical(_$r, notOverridden)) return super.getActiveIndexFor(node);
+    return _$r as int?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

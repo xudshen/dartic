@@ -21,190 +21,190 @@ class _$CalendarDelegate extends CalendarDelegate<DateTime> implements DarticObj
 
   @override
   DateTime now() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'now', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'now', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method now must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   DateTime dateOnly(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateOnly', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateOnly', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dateOnly must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   DateTimeRange<DateTime> datesOnly(DateTimeRange<DateTime> range) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datesOnly', [range]);
-    if (identical(r, notOverridden)) return super.datesOnly(range);
-    return r as DateTimeRange<DateTime>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datesOnly', [range]);
+    if (identical(_$r, notOverridden)) return super.datesOnly(range);
+    return _$r as DateTimeRange<DateTime>;
   }
 
   @override
   bool isSameDay(DateTime? dateA, DateTime? dateB) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSameDay', [dateA, dateB]);
-    if (identical(r, notOverridden)) return super.isSameDay(dateA, dateB);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSameDay', [dateA, dateB]);
+    if (identical(_$r, notOverridden)) return super.isSameDay(dateA, dateB);
+    return _$r as bool;
   }
 
   @override
   bool isSameMonth(DateTime? dateA, DateTime? dateB) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSameMonth', [dateA, dateB]);
-    if (identical(r, notOverridden)) return super.isSameMonth(dateA, dateB);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSameMonth', [dateA, dateB]);
+    if (identical(_$r, notOverridden)) return super.isSameMonth(dateA, dateB);
+    return _$r as bool;
   }
 
   @override
   int monthDelta(DateTime startDate, DateTime endDate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'monthDelta', [startDate, endDate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'monthDelta', [startDate, endDate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method monthDelta must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   DateTime addMonthsToMonthDate(DateTime monthDate, int monthsToAdd) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addMonthsToMonthDate', [monthDate, monthsToAdd]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addMonthsToMonthDate', [monthDate, monthsToAdd]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addMonthsToMonthDate must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   DateTime addDaysToDate(DateTime date, int days) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addDaysToDate', [date, days]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addDaysToDate', [date, days]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addDaysToDate must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   int firstDayOffset(int year, int month, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstDayOffset', [year, month, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstDayOffset', [year, month, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method firstDayOffset must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   int getDaysInMonth(int year, int month) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDaysInMonth', [year, month]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDaysInMonth', [year, month]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getDaysInMonth must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   DateTime getMonth(int year, int month) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMonth', [year, month]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMonth', [year, month]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getMonth must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   DateTime getDay(int year, int month, int day) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDay', [year, month, day]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDay', [year, month, day]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getDay must be overridden in dartic code');
     }
-    return r as DateTime;
+    return _$r as DateTime;
   }
 
   @override
   String formatMonthYear(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatMonthYear must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatYear(int year, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [year, localizations]);
-    if (identical(r, notOverridden)) return super.formatYear(year, localizations);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [year, localizations]);
+    if (identical(_$r, notOverridden)) return super.formatYear(year, localizations);
+    return _$r as String;
   }
 
   @override
   String formatMediumDate(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatMediumDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatShortMonthDay(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatShortMonthDay must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatShortDate(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatShortDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatFullDate(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatFullDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatCompactDate(DateTime date, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatCompactDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   DateTime? parseCompactDate(String? inputString, MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString, localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString, localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method parseCompactDate must be overridden in dartic code');
     }
-    return r as DateTime?;
+    return _$r as DateTime?;
   }
 
   @override
   String dateHelpText(MaterialLocalizations localizations) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateHelpText', [localizations]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateHelpText', [localizations]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dateHelpText must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

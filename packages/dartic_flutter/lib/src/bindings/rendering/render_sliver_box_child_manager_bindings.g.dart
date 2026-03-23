@@ -24,69 +24,69 @@ class _$RenderSliverBoxChildManager extends RenderSliverBoxChildManager implemen
 
   @override
   void createChild(int index, {required RenderBox? after}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChild', [index, after]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChild', [index, after]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createChild must be overridden in dartic code');
     }
   }
 
   @override
   void removeChild(RenderBox child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeChild must be overridden in dartic code');
     }
   }
 
   @override
   double estimateMaxScrollOffset(SliverConstraints constraints, {int? firstIndex, int? lastIndex, double? leadingScrollOffset, double? trailingScrollOffset}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [constraints, firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'estimateMaxScrollOffset', [constraints, firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method estimateMaxScrollOffset must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   void didAdoptChild(RenderBox child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdoptChild', [child]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdoptChild', [child]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didAdoptChild must be overridden in dartic code');
     }
   }
 
   @override
   void setDidUnderflow(bool value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setDidUnderflow', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setDidUnderflow', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setDidUnderflow must be overridden in dartic code');
     }
   }
 
   @override
   void didStartLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartLayout', const []);
-    if (identical(r, notOverridden)) { super.didStartLayout(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartLayout', const []);
+    if (identical(_$r, notOverridden)) { super.didStartLayout(); return; }
   }
 
   @override
   void didFinishLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', const []);
-    if (identical(r, notOverridden)) { super.didFinishLayout(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didFinishLayout', const []);
+    if (identical(_$r, notOverridden)) { super.didFinishLayout(); return; }
   }
 
   @override
   bool debugAssertChildListLocked() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertChildListLocked', const []);
-    if (identical(r, notOverridden)) return super.debugAssertChildListLocked();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertChildListLocked', const []);
+    if (identical(_$r, notOverridden)) return super.debugAssertChildListLocked();
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

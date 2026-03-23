@@ -23,207 +23,207 @@ class _$MaterialLocalizations extends MaterialLocalizations implements DarticObj
 
   @override
   String aboutListTileTitle(String applicationName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'aboutListTileTitle', [applicationName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'aboutListTileTitle', [applicationName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method aboutListTileTitle must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String licensesPackageDetailText(int licenseCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'licensesPackageDetailText', [licenseCount]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'licensesPackageDetailText', [licenseCount]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method licensesPackageDetailText must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String pageRowsInfoTitle(int firstRow, int lastRow, int rowCount, bool rowCountIsApproximate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pageRowsInfoTitle', [firstRow, lastRow, rowCount, rowCountIsApproximate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pageRowsInfoTitle', [firstRow, lastRow, rowCount, rowCountIsApproximate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pageRowsInfoTitle must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String tabLabel({required int tabIndex, required int tabCount}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabLabel', [tabIndex, tabCount]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabLabel', [tabIndex, tabCount]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method tabLabel must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String selectedRowCountTitle(int selectedRowCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectedRowCountTitle', [selectedRowCount]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectedRowCountTitle', [selectedRowCount]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method selectedRowCountTitle must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String scrimOnTapHint(String modalRouteContentName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scrimOnTapHint', [modalRouteContentName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scrimOnTapHint', [modalRouteContentName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scrimOnTapHint must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   TimeOfDayFormat timeOfDayFormat({bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeOfDayFormat', [alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeOfDayFormat', [alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timeOfDayFormat must be overridden in dartic code');
     }
-    return r as TimeOfDayFormat;
+    return _$r as TimeOfDayFormat;
   }
 
   @override
   String formatDecimal(int number) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatDecimal', [number]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatDecimal', [number]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatDecimal must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatHour(TimeOfDay timeOfDay, {bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatHour', [timeOfDay, alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatHour', [timeOfDay, alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatHour must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatMinute(TimeOfDay timeOfDay) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMinute', [timeOfDay]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMinute', [timeOfDay]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatMinute must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatTimeOfDay(TimeOfDay timeOfDay, {bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatTimeOfDay', [timeOfDay, alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatTimeOfDay', [timeOfDay, alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatTimeOfDay must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatYear(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatYear must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatCompactDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatCompactDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatShortDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatShortDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatMediumDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatMediumDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatFullDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatFullDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatMonthYear(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatMonthYear must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String formatShortMonthDay(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method formatShortMonthDay must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   DateTime? parseCompactDate(String? inputString) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method parseCompactDate must be overridden in dartic code');
     }
-    return r as DateTime?;
+    return _$r as DateTime?;
   }
 
   @override
   String dateRangeStartDateSemanticLabel(String formattedDate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeStartDateSemanticLabel', [formattedDate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeStartDateSemanticLabel', [formattedDate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dateRangeStartDateSemanticLabel must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String dateRangeEndDateSemanticLabel(String formattedDate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeEndDateSemanticLabel', [formattedDate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeEndDateSemanticLabel', [formattedDate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dateRangeEndDateSemanticLabel must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String remainingTextFieldCharacterCount(int remaining) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remainingTextFieldCharacterCount', [remaining]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remainingTextFieldCharacterCount', [remaining]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remainingTextFieldCharacterCount must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

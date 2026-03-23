@@ -25,44 +25,44 @@ class _$RadialGradient extends RadialGradient implements DarticObjectHolder {
 
   @override
   ui.Shader createShader(ui.Rect rect, {ui.TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createShader', [rect, textDirection]);
-    if (identical(r, notOverridden)) return super.createShader(rect, textDirection: textDirection);
-    return r as ui.Shader;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createShader', [rect, textDirection]);
+    if (identical(_$r, notOverridden)) return super.createShader(rect, textDirection: textDirection);
+    return _$r as ui.Shader;
   }
 
   @override
   RadialGradient scale(double factor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
-    if (identical(r, notOverridden)) return super.scale(factor);
-    return r as RadialGradient;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(_$r, notOverridden)) return super.scale(factor);
+    return _$r as RadialGradient;
   }
 
   @override
   Gradient? lerpFrom(Gradient? a, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
-    if (identical(r, notOverridden)) return super.lerpFrom(a, t);
-    return r as Gradient?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(_$r, notOverridden)) return super.lerpFrom(a, t);
+    return _$r as Gradient?;
   }
 
   @override
   Gradient? lerpTo(Gradient? b, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
-    if (identical(r, notOverridden)) return super.lerpTo(b, t);
-    return r as Gradient?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(_$r, notOverridden)) return super.lerpTo(b, t);
+    return _$r as Gradient?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   RadialGradient withOpacity(double opacity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
-    if (identical(r, notOverridden)) return super.withOpacity(opacity);
-    return r as RadialGradient;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
+    if (identical(_$r, notOverridden)) return super.withOpacity(opacity);
+    return _$r as RadialGradient;
   }
 
   @override

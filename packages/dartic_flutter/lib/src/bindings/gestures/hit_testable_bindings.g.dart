@@ -22,16 +22,16 @@ class _$HitTestable implements HitTestable, DarticObjectHolder {
 
   @override
   void hitTest(HitTestResult result, Offset position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, position]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTest', [result, position]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTest must be overridden in dartic code');
     }
   }
 
   @override
   void hitTestInView(HitTestResult result, Offset position, int viewId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestInView', [result, position, viewId]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hitTestInView', [result, position, viewId]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hitTestInView must be overridden in dartic code');
     }
   }

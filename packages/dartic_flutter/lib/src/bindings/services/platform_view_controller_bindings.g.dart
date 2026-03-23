@@ -25,43 +25,43 @@ class _$PlatformViewController extends PlatformViewController implements DarticO
 
   @override
   Future<void> dispatchPointerEvent(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchPointerEvent', [event]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchPointerEvent', [event]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispatchPointerEvent must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> create({Size? size, Offset? position}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [size, position]);
-    if (identical(r, notOverridden)) return super.create(size: size, position: position);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [size, position]);
+    if (identical(_$r, notOverridden)) return super.create(size: size, position: position);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> clearFocus() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearFocus', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearFocus', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clearFocus must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -28,11 +28,11 @@ class _$BaseSliderTrackShape implements BaseSliderTrackShape, DarticObjectHolder
 
   @override
   Rect getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredRect', [parentBox, offset, sliderTheme, isEnabled, isDiscrete]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getPreferredRect must be overridden in dartic code');
     }
-    return r as Rect;
+    return _$r as Rect;
   }
 
   @override

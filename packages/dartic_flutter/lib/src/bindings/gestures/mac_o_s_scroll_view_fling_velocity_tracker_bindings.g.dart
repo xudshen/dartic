@@ -23,29 +23,29 @@ class _$MacOSScrollViewFlingVelocityTracker extends MacOSScrollViewFlingVelocity
 
   @override
   VelocityEstimate getVelocityEstimate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getVelocityEstimate', const []);
-    if (identical(r, notOverridden)) return super.getVelocityEstimate();
-    return r as VelocityEstimate;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getVelocityEstimate', const []);
+    if (identical(_$r, notOverridden)) return super.getVelocityEstimate();
+    return _$r as VelocityEstimate;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addPosition(Duration time, Offset position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPosition', [time, position]);
-    if (identical(r, notOverridden)) { super.addPosition(time, position); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPosition', [time, position]);
+    if (identical(_$r, notOverridden)) { super.addPosition(time, position); return; }
   }
 
   @override
   Velocity getVelocity() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getVelocity', const []);
-    if (identical(r, notOverridden)) return super.getVelocity();
-    return r as Velocity;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getVelocity', const []);
+    if (identical(_$r, notOverridden)) return super.getVelocity();
+    return _$r as Velocity;
   }
 
   @override

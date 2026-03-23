@@ -40,32 +40,32 @@ class _$PredictiveBackRoute implements PredictiveBackRoute, DarticObjectHolder {
 
   @override
   void handleStartBackGesture({double progress = 0.0}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [progress]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [progress]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleStartBackGesture must be overridden in dartic code');
     }
   }
 
   @override
   void handleUpdateBackGestureProgress({required double progress}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [progress]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [progress]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleUpdateBackGestureProgress must be overridden in dartic code');
     }
   }
 
   @override
   void handleCommitBackGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleCommitBackGesture must be overridden in dartic code');
     }
   }
 
   @override
   void handleCancelBackGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleCancelBackGesture must be overridden in dartic code');
     }
   }

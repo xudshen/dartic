@@ -26,9 +26,9 @@ class _$LayerLink extends LayerLink implements DarticObjectHolder {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override

@@ -22,16 +22,16 @@ class _$CircularNotchedRectangle extends CircularNotchedRectangle implements Dar
 
   @override
   Path getOuterPath(Rect host, Rect? guest) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [host, guest]);
-    if (identical(r, notOverridden)) return super.getOuterPath(host, guest);
-    return r as Path;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [host, guest]);
+    if (identical(_$r, notOverridden)) return super.getOuterPath(host, guest);
+    return _$r as Path;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

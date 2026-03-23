@@ -21,11 +21,11 @@ class _$Iterator implements Iterator<dynamic>, DarticObjectHolder {
 
   @override
   bool moveNext() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveNext', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveNext', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method moveNext must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override

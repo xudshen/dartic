@@ -28,22 +28,22 @@ class _$PointerData extends PointerData implements DarticObjectHolder {
 
   @override
   void respond({required bool allowPlatformDefault}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'respond', [allowPlatformDefault]);
-    if (identical(r, notOverridden)) { super.respond(allowPlatformDefault: allowPlatformDefault); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'respond', [allowPlatformDefault]);
+    if (identical(_$r, notOverridden)) { super.respond(allowPlatformDefault: allowPlatformDefault); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   String toStringFull() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringFull', const []);
-    if (identical(r, notOverridden)) return super.toStringFull();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringFull', const []);
+    if (identical(_$r, notOverridden)) return super.toStringFull();
+    return _$r as String;
   }
 
   @override

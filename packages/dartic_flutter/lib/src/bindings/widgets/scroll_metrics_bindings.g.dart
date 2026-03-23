@@ -23,11 +23,11 @@ class _$ScrollMetrics implements ScrollMetrics, DarticObjectHolder {
 
   @override
   ScrollMetrics copyWith({double? minScrollExtent, double? maxScrollExtent, double? pixels, double? viewportDimension, AxisDirection? axisDirection, double? devicePixelRatio}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minScrollExtent, maxScrollExtent, pixels, viewportDimension, axisDirection, devicePixelRatio]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minScrollExtent, maxScrollExtent, pixels, viewportDimension, axisDirection, devicePixelRatio]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method copyWith must be overridden in dartic code');
     }
-    return r as ScrollMetrics;
+    return _$r as ScrollMetrics;
   }
 
   @override

@@ -22,11 +22,11 @@ class _$WidgetStatesConstraint implements WidgetStatesConstraint, DarticObjectHo
 
   @override
   bool isSatisfiedBy(Set<WidgetState> states) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [states]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [states]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isSatisfiedBy must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override

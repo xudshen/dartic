@@ -22,30 +22,30 @@ class _$CharacterBoundary extends CharacterBoundary implements DarticObjectHolde
 
   @override
   int? getLeadingTextBoundaryAt(int position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLeadingTextBoundaryAt', [position]);
-    if (identical(r, notOverridden)) return super.getLeadingTextBoundaryAt(position);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLeadingTextBoundaryAt', [position]);
+    if (identical(_$r, notOverridden)) return super.getLeadingTextBoundaryAt(position);
+    return _$r as int?;
   }
 
   @override
   int? getTrailingTextBoundaryAt(int position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTrailingTextBoundaryAt', [position]);
-    if (identical(r, notOverridden)) return super.getTrailingTextBoundaryAt(position);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTrailingTextBoundaryAt', [position]);
+    if (identical(_$r, notOverridden)) return super.getTrailingTextBoundaryAt(position);
+    return _$r as int?;
   }
 
   @override
   TextRange getTextBoundaryAt(int position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextBoundaryAt', [position]);
-    if (identical(r, notOverridden)) return super.getTextBoundaryAt(position);
-    return r as TextRange;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextBoundaryAt', [position]);
+    if (identical(_$r, notOverridden)) return super.getTextBoundaryAt(position);
+    return _$r as TextRange;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -177,6 +177,25 @@ class MethodInfo {
     this.typeParamDecl,
   }) : isVoid = returnType == 'void';
 
+  /// Creates a copy with selectively overridden fields.
+  MethodInfo copyWith({
+    String? name,
+    List<ParamInfo>? paramTypes,
+    String? returnType,
+    bool? isAbstract,
+    bool? mustCallSuper,
+    String? typeParamDecl,
+  }) {
+    return MethodInfo(
+      name: name ?? this.name,
+      paramTypes: paramTypes ?? this.paramTypes,
+      returnType: returnType ?? this.returnType,
+      isAbstract: isAbstract ?? this.isAbstract,
+      mustCallSuper: mustCallSuper ?? this.mustCallSuper,
+      typeParamDecl: typeParamDecl ?? this.typeParamDecl,
+    );
+  }
+
   /// 主 binding key（总参数数），如 'gcd#1'。
   String get bindingKey => '$name#${paramTypes.length}';
 

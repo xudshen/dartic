@@ -37,51 +37,51 @@ class _$InspectorSerializationDelegate extends InspectorSerializationDelegate im
 
   @override
   Map<String, Object?> additionalNodeProperties(DiagnosticsNode node, {bool fullDetails = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'additionalNodeProperties', [node, fullDetails]);
-    if (identical(r, notOverridden)) return super.additionalNodeProperties(node, fullDetails: fullDetails);
-    return r as Map<String, Object?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'additionalNodeProperties', [node, fullDetails]);
+    if (identical(_$r, notOverridden)) return super.additionalNodeProperties(node, fullDetails: fullDetails);
+    return _$r as Map<String, Object?>;
   }
 
   @override
   DiagnosticsSerializationDelegate delegateForNode(DiagnosticsNode node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'delegateForNode', [node]);
-    if (identical(r, notOverridden)) return super.delegateForNode(node);
-    return r as DiagnosticsSerializationDelegate;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'delegateForNode', [node]);
+    if (identical(_$r, notOverridden)) return super.delegateForNode(node);
+    return _$r as DiagnosticsSerializationDelegate;
   }
 
   @override
   List<DiagnosticsNode> filterChildren(List<DiagnosticsNode> nodes, DiagnosticsNode owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filterChildren', [nodes, owner]);
-    if (identical(r, notOverridden)) return super.filterChildren(nodes, owner);
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filterChildren', [nodes, owner]);
+    if (identical(_$r, notOverridden)) return super.filterChildren(nodes, owner);
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   List<DiagnosticsNode> filterProperties(List<DiagnosticsNode> nodes, DiagnosticsNode owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filterProperties', [nodes, owner]);
-    if (identical(r, notOverridden)) return super.filterProperties(nodes, owner);
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filterProperties', [nodes, owner]);
+    if (identical(_$r, notOverridden)) return super.filterProperties(nodes, owner);
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   List<DiagnosticsNode> truncateNodesList(List<DiagnosticsNode> nodes, DiagnosticsNode? owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'truncateNodesList', [nodes, owner]);
-    if (identical(r, notOverridden)) return super.truncateNodesList(nodes, owner);
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'truncateNodesList', [nodes, owner]);
+    if (identical(_$r, notOverridden)) return super.truncateNodesList(nodes, owner);
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   InspectorSerializationDelegate copyWith({int? subtreeDepth, bool? includeProperties, bool? expandPropertyValues, bool? inDisableWidgetInspectorScope}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [subtreeDepth, includeProperties, expandPropertyValues, inDisableWidgetInspectorScope]);
-    if (identical(r, notOverridden)) return super.copyWith(subtreeDepth: subtreeDepth, includeProperties: includeProperties, expandPropertyValues: expandPropertyValues, inDisableWidgetInspectorScope: inDisableWidgetInspectorScope);
-    return r as InspectorSerializationDelegate;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [subtreeDepth, includeProperties, expandPropertyValues, inDisableWidgetInspectorScope]);
+    if (identical(_$r, notOverridden)) return super.copyWith(subtreeDepth: subtreeDepth, includeProperties: includeProperties, expandPropertyValues: expandPropertyValues, inDisableWidgetInspectorScope: inDisableWidgetInspectorScope);
+    return _$r as InspectorSerializationDelegate;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

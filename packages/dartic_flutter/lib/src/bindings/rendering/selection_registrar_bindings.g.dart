@@ -22,25 +22,25 @@ class _$SelectionRegistrar extends SelectionRegistrar implements DarticObjectHol
 
   @override
   void add(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
   }
 
   @override
   void remove(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -30,42 +30,42 @@ class _$ShapeBorderClipper extends ShapeBorderClipper implements DarticObjectHol
 
   @override
   ui.Path getClip(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
-    if (identical(r, notOverridden)) return super.getClip(size);
-    return r as ui.Path;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
+    if (identical(_$r, notOverridden)) return super.getClip(size);
+    return _$r as ui.Path;
   }
 
   @override
   bool shouldReclip(CustomClipper<ui.Path> oldClipper) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
-    if (identical(r, notOverridden)) return super.shouldReclip(oldClipper);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
+    if (identical(_$r, notOverridden)) return super.shouldReclip(oldClipper);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   ui.Rect getApproximateClipRect(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
-    if (identical(r, notOverridden)) return super.getApproximateClipRect(size);
-    return r as ui.Rect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
+    if (identical(_$r, notOverridden)) return super.getApproximateClipRect(size);
+    return _$r as ui.Rect;
   }
 
   @override

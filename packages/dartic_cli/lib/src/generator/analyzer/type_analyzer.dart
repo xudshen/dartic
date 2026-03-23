@@ -11,6 +11,8 @@ import 'dart:io' show Directory;
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/session.dart';
+import 'package:analyzer/dart/ast/ast.dart' show SimpleIdentifier;
+import 'package:analyzer/dart/ast/visitor.dart' show RecursiveAstVisitor;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -505,12 +507,15 @@ class TypeAnalyzer {
           }
         } else if (!member.isStatic) {
           if (!existingMethodNames.contains(member.name)) {
-            // For methods with covariant parameters, prefer the concrete
-            // ancestor's declaration. interfaceMembers uses the wide
-            // For methods with covariant params, prefer a concrete ancestor's
-            // method that has narrowed types (e.g. BoxHitTestEntry vs HitTestEntry,
-            // OpacityLayer vs OffsetLayer). _findConcreteMethodElement skips
-            // methods with TypeParam params (handled by _resolveCovariantTypeParams).
+            // For covariant params, two complementary resolution steps run
+            // sequentially (both may contribute to the final signature):
+            //   1. _findConcreteMethodElement: walks MRO for a concrete override
+            //      with already-narrowed, non-TypeParam types (e.g. BoxHitTestEntry).
+            //   2. _resolveCovariantTypeParams: substitutes TypeParameterType
+            //      from the supertype chain (e.g. T → DismissIntent). This can
+            //      refine step 1's result when the interface member's param type
+            //      is a generic type with TypeParam args (e.g.
+            //      SlottedContainerRenderObjectMixin<S, RenderObject>).
             final hasCovariant =
                 member.formalParameters.any((p) => p.isCovariant);
             final concreteMember = hasCovariant
@@ -519,20 +524,14 @@ class TypeAnalyzer {
             var info = (concreteMember != null)
                 ? _toMethodInfo(concreteMember)
                 : _toMethodInfo(member);
-            // Resolve unsubstituted TypeParameterType params from
-            // the supertype chain (e.g. T → DismissIntent).
+            // Always resolve TypeParams from the interface member — even when
+            // a concrete method was found, its types may be too broad (e.g.
+            // RenderObject instead of SlottedContainerRenderObjectMixin<S, ...>).
             info = _resolveCovariantTypeParams(info, member, cls);
             // If no concrete impl in extends/with chain, mark as abstract.
             if (!info.isAbstract &&
                 !_hasConcreteSuperMethod(info.name, concreteAncestors)) {
-              methods.add(MethodInfo(
-                name: info.name,
-                paramTypes: info.paramTypes,
-                returnType: info.returnType,
-                isAbstract: true,
-                mustCallSuper: info.mustCallSuper,
-                typeParamDecl: info.typeParamDecl,
-              ));
+              methods.add(info.copyWith(isAbstract: true));
             } else {
               methods.add(info);
             }
@@ -677,14 +676,7 @@ class TypeAnalyzer {
       resolvedParams.add(pi);
     }
     if (!changed) return info;
-    return MethodInfo(
-      name: info.name,
-      paramTypes: resolvedParams,
-      returnType: info.returnType,
-      isAbstract: info.isAbstract,
-      mustCallSuper: info.mustCallSuper,
-      typeParamDecl: info.typeParamDecl,
-    );
+    return info.copyWith(paramTypes: resolvedParams);
   }
 
   /// Resolves a type parameter to its concrete type argument via the
@@ -874,14 +866,7 @@ class TypeAnalyzer {
           // super.toString(minLevel:) would fail — mark as abstract.
           if (concreteAncestors != null &&
               !concreteAncestors.contains(superCls)) {
-            return MethodInfo(
-              name: info.name,
-              paramTypes: info.paramTypes,
-              returnType: info.returnType,
-              isAbstract: true,
-              mustCallSuper: info.mustCallSuper,
-              typeParamDecl: info.typeParamDecl,
-            );
+            return info.copyWith(isAbstract: true);
           }
           return info;
         }
@@ -1055,7 +1040,8 @@ class TypeAnalyzer {
         callbackReturnType: callbackReturnType,
         callbackParams: callbackParams,
         defaultValueCode: p.isOptional
-            ? _qualifyDefaultValue(p.defaultValueCode, enclosingClass)
+            ? _qualifyDefaultValue(p.defaultValueCode, enclosingClass,
+                param: p)
             : null,
         fullType: fullType,
       );
@@ -1098,11 +1084,13 @@ class TypeAnalyzer {
     // The emitter handles void params by using `_` instead of forwarding.
     if (type is VoidType) return 'void';
 
-    // Never type (bottom) — use Object? as a safe erasure.
+    // Never type (bottom) — preserve as-is. `Never` as a return type
+    // means the method never returns normally (always throws). Erasing to
+    // Object would break bridge override signatures.
     if (type is NeverType) {
       return type.nullabilitySuffix == NullabilitySuffix.question
-          ? 'Object?'
-          : 'Object';
+          ? 'Never?'
+          : 'Never';
     }
 
     // Type parameter -> use its bound, or fall back to dynamic
@@ -1258,17 +1246,35 @@ class TypeAnalyzer {
 
   /// Extracts import prefix mappings from a library.
   ///
-  /// Returns a map of library URI → prefix name for all prefixed imports.
+  /// Returns a map of library URI → prefix name for prefixed imports.
   /// E.g. `import 'dart:ui' as ui;` → `{'dart:ui': 'ui'}`
+  ///
+  /// If a URI has both a prefixed and an unprefixed import in the same
+  /// library, the unprefixed one wins (no entry in the map). This keeps
+  /// the prefix map consistent with [_extractSourceImports], which deduplicates
+  /// by URI and may emit the unprefixed form.
   Map<String, String> _extractImportPrefixes(LibraryElement library) {
     final prefixes = <String, String>{};
+    final unprefixed = <String>{};
     // libraryImports is on LibraryFragment, not LibraryElement.
     for (final fragment in library.fragments) {
+      // First pass: collect which URIs have an unprefixed import.
+      for (final import in fragment.libraryImports) {
+        final importedLib = import.importedLibrary;
+        if (importedLib == null) continue;
+        if (import.prefix == null) {
+          unprefixed.add(importedLib.uri.toString());
+        }
+      }
+      // Second pass: record prefixes only for URIs without an unprefixed import.
       for (final import in fragment.libraryImports) {
         final prefix = import.prefix?.element.name;
         final importedLib = import.importedLibrary;
         if (prefix != null && importedLib != null) {
-          prefixes[importedLib.uri.toString()] = prefix;
+          final uri = importedLib.uri.toString();
+          if (!unprefixed.contains(uri)) {
+            prefixes[uri] = prefix;
+          }
         }
       }
       break; // Only need the defining (first) fragment.
@@ -1276,8 +1282,30 @@ class TypeAnalyzer {
     return prefixes;
   }
 
-  /// Returns true if [type] contains a type parameter that should be erased.
+  /// Checks whether a parameter's default value references private identifiers.
   ///
+  /// Uses the AST [constantInitializer] when available (semantic-level check),
+  /// falling back to string-level analysis of [code] when AST is unavailable.
+  /// Private references (e.g. `_kDuration`, `_defaultAnchor`) are inaccessible
+  /// from generated binding code outside the declaring library.
+  bool _defaultValueReferencesPrivate(
+      FormalParameterElement? param, String code) {
+    // Prefer AST walk: resolve actual element references.
+    final initializer = param?.constantInitializer;
+    if (initializer != null) {
+      var found = false;
+      initializer.accept(_PrivateRefVisitor(onFound: () => found = true));
+      return found;
+    }
+    // Fallback: string-level heuristic. Strip string literals to avoid
+    // false positives from strings containing underscores (e.g. "'_prefix'").
+    final stripped = code.replaceAll(
+      RegExp(r'''r?'{3}[\s\S]*?'{3}|r?"{3}[\s\S]*?"{3}|r?'[^']*'|r?"[^"]*"'''),
+      '',
+    );
+    return RegExp(r'(?<![a-zA-Z0-9])_[a-zA-Z]').hasMatch(stripped);
+  }
+
   /// Qualifies bare default value identifiers with their declaring class name.
   ///
   /// The analyzer's `defaultValueCode` returns source text as-is, so a default
@@ -1289,14 +1317,15 @@ class TypeAnalyzer {
   /// by detecting the prefix pattern and triggering omission branching instead.
   ///
   String? _qualifyDefaultValue(
-      String? code, InterfaceElement? enclosingClass) {
+      String? code, InterfaceElement? enclosingClass,
+      {FormalParameterElement? param}) {
     if (code == null || enclosingClass == null) return code;
 
     // Private identifiers (e.g. _kDuration) are not accessible outside the
     // declaring library. Null them out — the emitter handles missing defaults
     // with type-appropriate zero values for Bridge overrides and omission
     // branching for methodMap entries.
-    if (RegExp(r'(?<![a-zA-Z0-9])_[a-zA-Z]').hasMatch(code)) {
+    if (_defaultValueReferencesPrivate(param, code)) {
       return null;
     }
 
@@ -1566,5 +1595,27 @@ class TypeAnalyzer {
       referencedTypes: refTypes,
       sourceImports: sourceImports,
     );
+  }
+}
+
+/// AST visitor that detects references to private identifiers in an expression.
+///
+/// Used by [TypeAnalyzer._defaultValueReferencesPrivate] to check whether a
+/// parameter's default value references library-private names (e.g. `_kDuration`)
+/// that would be inaccessible from generated binding code.
+class _PrivateRefVisitor extends RecursiveAstVisitor<void> {
+  final void Function() onFound;
+  bool _found = false;
+
+  _PrivateRefVisitor({required this.onFound});
+
+  @override
+  void visitSimpleIdentifier(SimpleIdentifier node) {
+    if (_found) return;
+    final name = node.token.lexeme;
+    if (name.isNotEmpty && name[0] == '_') {
+      _found = true;
+      onFound();
+    }
   }
 }

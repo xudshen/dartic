@@ -2184,9 +2184,9 @@ void _writeBridgeMethodOverride(
 
   final typeParamDecl = method.typeParamDecl ?? '';
 
-  // Avoid shadowing: if any parameter is named 'r', use '$r' for the
-  // dispatch result variable to prevent "referenced before declaration".
-  final resultVar = argNames.contains('r') ? r'$r' : 'r';
+  // Use underscore-prefixed name that can't collide with any public parameter
+  // (Bridge is generated code, so private names are safe).
+  const resultVar = r'_$r';
 
   buf.writeln('  @override');
 
@@ -2303,18 +2303,27 @@ String _emitBridgeSuperArg(ParamInfo p) {
     }
     final namedParamDecls = named.map((cp) {
       final prefix = cp.isRequired ? 'required ' : '';
-      // Non-required non-nullable params need a default value.
-      var defaultSuffix = '';
-      if (!cp.isRequired && !cp.type.endsWith('?') && cp.type != 'dynamic') {
-        defaultSuffix = switch (cp.type) {
-          'bool' => ' = false',
-          'int' => ' = 0',
-          'double' => ' = 0.0',
-          'String' => " = ''",
-          _ => '',
-        };
+      if (cp.isRequired) {
+        return '$prefix${cp.type} ${cp.name}';
       }
-      return '$prefix${cp.type} ${cp.name}$defaultSuffix';
+      // Non-required params: use original default if known, otherwise make
+      // nullable to avoid "implicit default value is null" compile errors.
+      final paramType = cp.type;
+      if (paramType.endsWith('?') || paramType == 'dynamic') {
+        return '$paramType ${cp.name}';
+      }
+      final defaultSuffix = switch (paramType) {
+        'bool' => ' = false',
+        'int' => ' = 0',
+        'double' => ' = 0.0',
+        'String' => " = ''",
+        _ => null,
+      };
+      if (defaultSuffix != null) {
+        return '$paramType ${cp.name}$defaultSuffix';
+      }
+      // Unknown non-nullable type: widen to nullable to compile.
+      return '$paramType? ${cp.name}';
     }).join(', ');
 
     final paramStr = [

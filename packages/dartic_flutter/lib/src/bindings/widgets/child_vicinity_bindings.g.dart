@@ -25,16 +25,16 @@ class _$ChildVicinity extends ChildVicinity implements DarticObjectHolder {
 
   @override
   int compareTo(ChildVicinity other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
-    if (identical(r, notOverridden)) return super.compareTo(other);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(_$r, notOverridden)) return super.compareTo(other);
+    return _$r as int;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

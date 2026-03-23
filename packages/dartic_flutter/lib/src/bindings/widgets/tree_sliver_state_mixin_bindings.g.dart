@@ -30,62 +30,62 @@ class _$TreeSliverStateMixin implements TreeSliverStateMixin<dynamic>, DarticObj
 
   @override
   bool isExpanded(TreeSliverNode node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isExpanded', [node]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isExpanded', [node]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isExpanded must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool isActive(TreeSliverNode node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isActive', [node]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isActive', [node]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isActive must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void toggleNode(TreeSliverNode node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleNode', [node]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleNode', [node]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toggleNode must be overridden in dartic code');
     }
   }
 
   @override
   void collapseAll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseAll', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'collapseAll', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method collapseAll must be overridden in dartic code');
     }
   }
 
   @override
   void expandAll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandAll', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandAll', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method expandAll must be overridden in dartic code');
     }
   }
 
   @override
   TreeSliverNode? getNodeFor(dynamic content) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNodeFor', [content]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNodeFor', [content]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getNodeFor must be overridden in dartic code');
     }
-    return r as TreeSliverNode?;
+    return _$r as TreeSliverNode?;
   }
 
   @override
   int? getActiveIndexFor(TreeSliverNode node) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActiveIndexFor', [node]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActiveIndexFor', [node]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getActiveIndexFor must be overridden in dartic code');
     }
-    return r as int?;
+    return _$r as int?;
   }
 
   @override

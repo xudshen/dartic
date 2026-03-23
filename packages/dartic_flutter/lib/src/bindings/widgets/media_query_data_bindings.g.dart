@@ -31,44 +31,44 @@ class _$MediaQueryData extends MediaQueryData implements DarticObjectHolder {
 
   @override
   MediaQueryData copyWith({ui.Size? size, double? devicePixelRatio, double? textScaleFactor, TextScaler? textScaler, ui.Brightness? platformBrightness, EdgeInsets? padding, EdgeInsets? viewPadding, EdgeInsets? viewInsets, EdgeInsets? systemGestureInsets, bool? alwaysUse24HourFormat, bool? highContrast, bool? onOffSwitchLabels, bool? disableAnimations, bool? invertColors, bool? accessibleNavigation, bool? boldText, bool? supportsAnnounce, NavigationMode? navigationMode, DeviceGestureSettings? gestureSettings, List<ui.DisplayFeature>? displayFeatures, bool? supportsShowingSystemContextMenu}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [size, devicePixelRatio, textScaleFactor, textScaler, platformBrightness, padding, viewPadding, viewInsets, systemGestureInsets, alwaysUse24HourFormat, highContrast, onOffSwitchLabels, disableAnimations, invertColors, accessibleNavigation, boldText, supportsAnnounce, navigationMode, gestureSettings, displayFeatures, supportsShowingSystemContextMenu]);
-    if (identical(r, notOverridden)) return super.copyWith(size: size, devicePixelRatio: devicePixelRatio, textScaleFactor: textScaleFactor, textScaler: textScaler, platformBrightness: platformBrightness, padding: padding, viewPadding: viewPadding, viewInsets: viewInsets, systemGestureInsets: systemGestureInsets, alwaysUse24HourFormat: alwaysUse24HourFormat, highContrast: highContrast, onOffSwitchLabels: onOffSwitchLabels, disableAnimations: disableAnimations, invertColors: invertColors, accessibleNavigation: accessibleNavigation, boldText: boldText, supportsAnnounce: supportsAnnounce, navigationMode: navigationMode, gestureSettings: gestureSettings, displayFeatures: displayFeatures, supportsShowingSystemContextMenu: supportsShowingSystemContextMenu);
-    return r as MediaQueryData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [size, devicePixelRatio, textScaleFactor, textScaler, platformBrightness, padding, viewPadding, viewInsets, systemGestureInsets, alwaysUse24HourFormat, highContrast, onOffSwitchLabels, disableAnimations, invertColors, accessibleNavigation, boldText, supportsAnnounce, navigationMode, gestureSettings, displayFeatures, supportsShowingSystemContextMenu]);
+    if (identical(_$r, notOverridden)) return super.copyWith(size: size, devicePixelRatio: devicePixelRatio, textScaleFactor: textScaleFactor, textScaler: textScaler, platformBrightness: platformBrightness, padding: padding, viewPadding: viewPadding, viewInsets: viewInsets, systemGestureInsets: systemGestureInsets, alwaysUse24HourFormat: alwaysUse24HourFormat, highContrast: highContrast, onOffSwitchLabels: onOffSwitchLabels, disableAnimations: disableAnimations, invertColors: invertColors, accessibleNavigation: accessibleNavigation, boldText: boldText, supportsAnnounce: supportsAnnounce, navigationMode: navigationMode, gestureSettings: gestureSettings, displayFeatures: displayFeatures, supportsShowingSystemContextMenu: supportsShowingSystemContextMenu);
+    return _$r as MediaQueryData;
   }
 
   @override
   MediaQueryData removePadding({bool removeLeft = false, bool removeTop = false, bool removeRight = false, bool removeBottom = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removePadding', [removeLeft, removeTop, removeRight, removeBottom]);
-    if (identical(r, notOverridden)) return super.removePadding(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
-    return r as MediaQueryData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removePadding', [removeLeft, removeTop, removeRight, removeBottom]);
+    if (identical(_$r, notOverridden)) return super.removePadding(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
+    return _$r as MediaQueryData;
   }
 
   @override
   MediaQueryData removeViewInsets({bool removeLeft = false, bool removeTop = false, bool removeRight = false, bool removeBottom = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeViewInsets', [removeLeft, removeTop, removeRight, removeBottom]);
-    if (identical(r, notOverridden)) return super.removeViewInsets(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
-    return r as MediaQueryData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeViewInsets', [removeLeft, removeTop, removeRight, removeBottom]);
+    if (identical(_$r, notOverridden)) return super.removeViewInsets(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
+    return _$r as MediaQueryData;
   }
 
   @override
   MediaQueryData removeViewPadding({bool removeLeft = false, bool removeTop = false, bool removeRight = false, bool removeBottom = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeViewPadding', [removeLeft, removeTop, removeRight, removeBottom]);
-    if (identical(r, notOverridden)) return super.removeViewPadding(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
-    return r as MediaQueryData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeViewPadding', [removeLeft, removeTop, removeRight, removeBottom]);
+    if (identical(_$r, notOverridden)) return super.removeViewPadding(removeLeft: removeLeft, removeTop: removeTop, removeRight: removeRight, removeBottom: removeBottom);
+    return _$r as MediaQueryData;
   }
 
   @override
   MediaQueryData removeDisplayFeatures(ui.Rect subScreen) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeDisplayFeatures', [subScreen]);
-    if (identical(r, notOverridden)) return super.removeDisplayFeatures(subScreen);
-    return r as MediaQueryData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeDisplayFeatures', [subScreen]);
+    if (identical(_$r, notOverridden)) return super.removeDisplayFeatures(subScreen);
+    return _$r as MediaQueryData;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

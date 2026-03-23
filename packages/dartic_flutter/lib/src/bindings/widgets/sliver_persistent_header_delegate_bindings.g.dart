@@ -26,27 +26,27 @@ class _$SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate im
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, shrinkOffset, overlapsContent]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, shrinkOffset, overlapsContent]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method build must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldRebuild must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

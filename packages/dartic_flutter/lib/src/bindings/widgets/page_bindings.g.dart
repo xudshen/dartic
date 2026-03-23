@@ -41,25 +41,25 @@ class _$Page extends Page<dynamic> implements DarticObjectHolder {
 
   @override
   bool canUpdate(Page<dynamic> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canUpdate', [other]);
-    if (identical(r, notOverridden)) return super.canUpdate(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canUpdate', [other]);
+    if (identical(_$r, notOverridden)) return super.canUpdate(other);
+    return _$r as bool;
   }
 
   @override
   Route createRoute(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRoute', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRoute', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createRoute must be overridden in dartic code');
     }
-    return r as Route;
+    return _$r as Route;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

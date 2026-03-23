@@ -20,21 +20,21 @@ class _$PointerSignalResolver extends PointerSignalResolver implements DarticObj
 
   @override
   void register(PointerSignalEvent event, PointerSignalResolvedCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'register', [event, callback]);
-    if (identical(r, notOverridden)) { super.register(event, (a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'register', [event, callback]);
+    if (identical(_$r, notOverridden)) { super.register(event, (a) => callback(a)); return; }
   }
 
   @override
   void resolve(PointerSignalEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [event]);
-    if (identical(r, notOverridden)) { super.resolve(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [event]);
+    if (identical(_$r, notOverridden)) { super.resolve(event); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

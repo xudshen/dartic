@@ -23,25 +23,25 @@ class _$ShaderWarmUp extends ShaderWarmUp implements DarticObjectHolder {
 
   @override
   Future<void> warmUpOnCanvas(ui.Canvas canvas) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'warmUpOnCanvas', [canvas]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'warmUpOnCanvas', [canvas]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method warmUpOnCanvas must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> execute() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'execute', const []);
-    if (identical(r, notOverridden)) return super.execute();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'execute', const []);
+    if (identical(_$r, notOverridden)) return super.execute();
+    return _$r as Future<void>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

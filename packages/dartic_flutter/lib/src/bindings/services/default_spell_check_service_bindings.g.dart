@@ -24,16 +24,16 @@ class _$DefaultSpellCheckService extends DefaultSpellCheckService implements Dar
 
   @override
   Future<List<SuggestionSpan>?> fetchSpellCheckSuggestions(Locale locale, String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fetchSpellCheckSuggestions', [locale, text]);
-    if (identical(r, notOverridden)) return super.fetchSpellCheckSuggestions(locale, text);
-    return r as Future<List<SuggestionSpan>?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fetchSpellCheckSuggestions', [locale, text]);
+    if (identical(_$r, notOverridden)) return super.fetchSpellCheckSuggestions(locale, text);
+    return _$r as Future<List<SuggestionSpan>?>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

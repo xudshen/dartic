@@ -19,45 +19,45 @@ class _$AbstractNode extends AbstractNode implements DarticObjectHolder {
 
   @override
   void redepthChild(AbstractNode child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChild', [child]);
-    if (identical(r, notOverridden)) { super.redepthChild(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChild', [child]);
+    if (identical(_$r, notOverridden)) { super.redepthChild(child); return; }
   }
 
   @override
   void redepthChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChildren', const []);
-    if (identical(r, notOverridden)) { super.redepthChildren(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redepthChildren', const []);
+    if (identical(_$r, notOverridden)) { super.redepthChildren(); return; }
   }
 
   @override
   void attach(Object owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
-    if (identical(r, notOverridden)) { super.attach(owner); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
+    if (identical(_$r, notOverridden)) { super.attach(owner); return; }
   }
 
   @override
   void detach() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
-    if (identical(r, notOverridden)) { super.detach(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(_$r, notOverridden)) { super.detach(); return; }
   }
 
   @override
   void adoptChild(AbstractNode child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adoptChild', [child]);
-    if (identical(r, notOverridden)) { super.adoptChild(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adoptChild', [child]);
+    if (identical(_$r, notOverridden)) { super.adoptChild(child); return; }
   }
 
   @override
   void dropChild(AbstractNode child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dropChild', [child]);
-    if (identical(r, notOverridden)) { super.dropChild(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dropChild', [child]);
+    if (identical(_$r, notOverridden)) { super.dropChild(child); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

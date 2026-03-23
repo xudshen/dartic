@@ -19,291 +19,291 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Queue<R> cast<R>() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cast must be overridden in dartic code');
     }
-    return r as Queue<R>;
+    return _$r as Queue<R>;
   }
 
   @override
   dynamic removeFirst() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeFirst', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeFirst', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeFirst must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   dynamic removeLast() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeLast', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeLast', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeLast must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   void addFirst(dynamic value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addFirst', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addFirst', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addFirst must be overridden in dartic code');
     }
   }
 
   @override
   void addLast(dynamic value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLast', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLast', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addLast must be overridden in dartic code');
     }
   }
 
   @override
   void add(dynamic value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
   }
 
   @override
   bool remove(Object? value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void addAll(Iterable iterable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAll', [iterable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAll', [iterable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addAll must be overridden in dartic code');
     }
   }
 
   @override
   void removeWhere(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeWhere', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeWhere', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeWhere must be overridden in dartic code');
     }
   }
 
   @override
   void retainWhere(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'retainWhere', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'retainWhere', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method retainWhere must be overridden in dartic code');
     }
   }
 
   @override
   void clear() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clear must be overridden in dartic code');
     }
   }
 
   @override
   Iterable followedBy(Iterable other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'followedBy', [other]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'followedBy', [other]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method followedBy must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   Iterable<T> map<T>(T Function(dynamic) toElement) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'map', [toElement]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'map', [toElement]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method map must be overridden in dartic code');
     }
-    return r as Iterable<T>;
+    return _$r as Iterable<T>;
   }
 
   @override
   Iterable where(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'where', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'where', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method where must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   Iterable<T> whereType<T>() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whereType', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whereType', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method whereType must be overridden in dartic code');
     }
-    return r as Iterable<T>;
+    return _$r as Iterable<T>;
   }
 
   @override
   Iterable<T> expand<T>(Iterable<T> Function(dynamic) toElements) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expand', [toElements]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expand', [toElements]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method expand must be overridden in dartic code');
     }
-    return r as Iterable<T>;
+    return _$r as Iterable<T>;
   }
 
   @override
   bool contains(Object? element) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [element]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [element]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method contains must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void forEach(void Function(dynamic) action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method forEach must be overridden in dartic code');
     }
   }
 
   @override
   dynamic reduce(dynamic Function(dynamic, dynamic) combine) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reduce', [combine]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reduce', [combine]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reduce must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   T fold<T>(T initialValue, T Function(T, dynamic) combine) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fold', [initialValue, combine]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fold', [initialValue, combine]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method fold must be overridden in dartic code');
     }
-    return r as T;
+    return _$r as T;
   }
 
   @override
   bool every(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'every', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'every', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method every must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String join([String separator = ""]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'join', [separator]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'join', [separator]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method join must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   bool any(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'any', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'any', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method any must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   List toList({bool growable = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toList', [growable]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toList', [growable]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toList must be overridden in dartic code');
     }
-    return r as List;
+    return _$r as List;
   }
 
   @override
   Set toSet() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSet', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSet', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toSet must be overridden in dartic code');
     }
-    return r as Set;
+    return _$r as Set;
   }
 
   @override
   Iterable take(int count) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'take', [count]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'take', [count]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method take must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   Iterable takeWhile(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takeWhile', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takeWhile', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method takeWhile must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   Iterable skip(int count) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skip', [count]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skip', [count]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skip must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   Iterable skipWhile(bool Function(dynamic) test) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skipWhile', [test]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skipWhile', [test]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skipWhile must be overridden in dartic code');
     }
-    return r as Iterable;
+    return _$r as Iterable;
   }
 
   @override
   dynamic firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstWhere', [test, orElse]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstWhere', [test, orElse]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method firstWhere must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   dynamic lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastWhere', [test, orElse]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastWhere', [test, orElse]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastWhere must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   dynamic singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'singleWhere', [test, orElse]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'singleWhere', [test, orElse]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method singleWhere must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   dynamic elementAt(int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'elementAt', [index]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'elementAt', [index]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method elementAt must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override

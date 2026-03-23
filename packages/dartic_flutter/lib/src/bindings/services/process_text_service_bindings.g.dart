@@ -21,27 +21,27 @@ class _$ProcessTextService extends ProcessTextService implements DarticObjectHol
 
   @override
   Future<List<ProcessTextAction>> queryTextActions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method queryTextActions must be overridden in dartic code');
     }
-    return r as Future<List<ProcessTextAction>>;
+    return _$r as Future<List<ProcessTextAction>>;
   }
 
   @override
   Future<String?> processTextAction(String id, String text, bool readOnly) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method processTextAction must be overridden in dartic code');
     }
-    return r as Future<String?>;
+    return _$r as Future<String?>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

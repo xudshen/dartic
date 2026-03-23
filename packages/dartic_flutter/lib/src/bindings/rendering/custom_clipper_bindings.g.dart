@@ -29,46 +29,46 @@ class _$CustomClipper extends CustomClipper<dynamic> implements DarticObjectHold
 
   @override
   void addListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   dynamic getClip(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClip', [size]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getClip must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   ui.Rect getApproximateClipRect(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
-    if (identical(r, notOverridden)) return super.getApproximateClipRect(size);
-    return r as ui.Rect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getApproximateClipRect', [size]);
+    if (identical(_$r, notOverridden)) return super.getApproximateClipRect(size);
+    return _$r as ui.Rect;
   }
 
   @override
   bool shouldReclip(CustomClipper oldClipper) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReclip', [oldClipper]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldReclip must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

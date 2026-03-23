@@ -21,18 +21,18 @@ class _$TickerProvider extends TickerProvider implements DarticObjectHolder {
 
   @override
   Ticker createTicker(TickerCallback onTick) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createTicker must be overridden in dartic code');
     }
-    return r as Ticker;
+    return _$r as Ticker;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

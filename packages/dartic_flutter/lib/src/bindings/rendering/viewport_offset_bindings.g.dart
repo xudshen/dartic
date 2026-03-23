@@ -23,89 +23,89 @@ class _$ViewportOffset extends ViewportOffset implements DarticObjectHolder {
 
   @override
   bool applyViewportDimension(double viewportDimension) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyViewportDimension', [viewportDimension]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyViewportDimension', [viewportDimension]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method applyViewportDimension must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool applyContentDimensions(double minScrollExtent, double maxScrollExtent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyContentDimensions', [minScrollExtent, maxScrollExtent]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyContentDimensions', [minScrollExtent, maxScrollExtent]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method applyContentDimensions must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void correctBy(double correction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctBy', [correction]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctBy', [correction]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method correctBy must be overridden in dartic code');
     }
   }
 
   @override
   void jumpTo(double pixels) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpTo', [pixels]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpTo', [pixels]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method jumpTo must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> animateTo(double to, {required Duration duration, required Curve curve}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [to, duration, curve]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [to, duration, curve]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method animateTo must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> moveTo(double to, {Duration? duration, Curve? curve, bool? clamp}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveTo', [to, duration, curve, clamp]);
-    if (identical(r, notOverridden)) return super.moveTo(to, duration: duration, curve: curve, clamp: clamp);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveTo', [to, duration, curve, clamp]);
+    if (identical(_$r, notOverridden)) return super.moveTo(to, duration: duration, curve: curve, clamp: clamp);
+    return _$r as Future<void>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void debugFillDescription(List<String> description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
-    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(_$r, notOverridden)) { super.debugFillDescription(description); return; }
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override

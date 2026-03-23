@@ -20,16 +20,16 @@ class _$AutofillConfiguration extends AutofillConfiguration implements DarticObj
 
   @override
   Map<String, dynamic>? toJson() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJson', const []);
-    if (identical(r, notOverridden)) return super.toJson();
-    return r as Map<String, dynamic>?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJson', const []);
+    if (identical(_$r, notOverridden)) return super.toJson();
+    return _$r as Map<String, dynamic>?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

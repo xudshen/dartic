@@ -20,27 +20,27 @@ class _$PointerEventResampler extends PointerEventResampler implements DarticObj
 
   @override
   void addEvent(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEvent', [event]);
-    if (identical(r, notOverridden)) { super.addEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.addEvent(event); return; }
   }
 
   @override
   void sample(Duration sampleTime, Duration nextSampleTime, HandleEventCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sample', [sampleTime, nextSampleTime, callback]);
-    if (identical(r, notOverridden)) { super.sample(sampleTime, nextSampleTime, (a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sample', [sampleTime, nextSampleTime, callback]);
+    if (identical(_$r, notOverridden)) { super.sample(sampleTime, nextSampleTime, (a) => callback(a)); return; }
   }
 
   @override
   void stop(HandleEventCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [callback]);
-    if (identical(r, notOverridden)) { super.stop((a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [callback]);
+    if (identical(_$r, notOverridden)) { super.stop((a) => callback(a)); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

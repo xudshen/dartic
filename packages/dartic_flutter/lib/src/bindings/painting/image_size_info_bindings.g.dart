@@ -21,16 +21,16 @@ class _$ImageSizeInfo extends ImageSizeInfo implements DarticObjectHolder {
 
   @override
   Map<String, Object?> toJson() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJson', const []);
-    if (identical(r, notOverridden)) return super.toJson();
-    return r as Map<String, Object?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJson', const []);
+    if (identical(_$r, notOverridden)) return super.toJson();
+    return _$r as Map<String, Object?>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -26,29 +26,29 @@ class _$KeyEventManager extends KeyEventManager implements DarticObjectHolder {
 
   @override
   bool handleKeyData(ui.KeyData data) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleKeyData', [data]);
-    if (identical(r, notOverridden)) return super.handleKeyData(data);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleKeyData', [data]);
+    if (identical(_$r, notOverridden)) return super.handleKeyData(data);
+    return _$r as bool;
   }
 
   @override
   Future<Map<String, dynamic>> handleRawKeyMessage(dynamic message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRawKeyMessage', [message]);
-    if (identical(r, notOverridden)) return super.handleRawKeyMessage(message);
-    return r as Future<Map<String, dynamic>>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRawKeyMessage', [message]);
+    if (identical(_$r, notOverridden)) return super.handleRawKeyMessage(message);
+    return _$r as Future<Map<String, dynamic>>;
   }
 
   @override
   void clearState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearState', const []);
-    if (identical(r, notOverridden)) { super.clearState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearState', const []);
+    if (identical(_$r, notOverridden)) { super.clearState(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

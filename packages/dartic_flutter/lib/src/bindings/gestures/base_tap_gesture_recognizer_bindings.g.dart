@@ -30,215 +30,215 @@ class _$BaseTapGestureRecognizer extends BaseTapGestureRecognizer implements Dar
 
   @override
   void handleTapDown({required PointerDownEvent down}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapDown', [down]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapDown', [down]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleTapDown must be overridden in dartic code');
     }
   }
 
   @override
   void handleTapUp({required PointerDownEvent down, required PointerUpEvent up}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapUp', [down, up]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapUp', [down, up]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleTapUp must be overridden in dartic code');
     }
   }
 
   @override
   void handleTapMove({required PointerMoveEvent move}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapMove', [move]);
-    if (identical(r, notOverridden)) { super.handleTapMove(move: move); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapMove', [move]);
+    if (identical(_$r, notOverridden)) { super.handleTapMove(move: move); return; }
   }
 
   @override
   void handleTapCancel({required PointerDownEvent down, PointerCancelEvent? cancel, required String reason}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapCancel', [down, cancel, reason]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleTapCancel', [down, cancel, reason]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleTapCancel must be overridden in dartic code');
     }
   }
 
   @override
   void addAllowedPointer(PointerDownEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAllowedPointer', [event]);
-    if (identical(r, notOverridden)) { super.addAllowedPointer(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAllowedPointer', [event]);
+    if (identical(_$r, notOverridden)) { super.addAllowedPointer(event); return; }
   }
 
   @override
   void startTrackingPointer(int pointer, [Matrix4? transform]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startTrackingPointer', [pointer, transform]);
-    if (identical(r, notOverridden)) { super.startTrackingPointer(pointer, transform); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startTrackingPointer', [pointer, transform]);
+    if (identical(_$r, notOverridden)) { super.startTrackingPointer(pointer, transform); return; }
   }
 
   @override
   void handlePrimaryPointer(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePrimaryPointer', [event]);
-    if (identical(r, notOverridden)) { super.handlePrimaryPointer(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePrimaryPointer', [event]);
+    if (identical(_$r, notOverridden)) { super.handlePrimaryPointer(event); return; }
   }
 
   @override
   void resolve(GestureDisposition disposition) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [disposition]);
-    if (identical(r, notOverridden)) { super.resolve(disposition); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [disposition]);
+    if (identical(_$r, notOverridden)) { super.resolve(disposition); return; }
   }
 
   @override
   void didExceedDeadline() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didExceedDeadline', const []);
-    if (identical(r, notOverridden)) { super.didExceedDeadline(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didExceedDeadline', const []);
+    if (identical(_$r, notOverridden)) { super.didExceedDeadline(); return; }
   }
 
   @override
   void acceptGesture(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', [pointer]);
-    if (identical(r, notOverridden)) { super.acceptGesture(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', [pointer]);
+    if (identical(_$r, notOverridden)) { super.acceptGesture(pointer); return; }
   }
 
   @override
   void rejectGesture(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', [pointer]);
-    if (identical(r, notOverridden)) { super.rejectGesture(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', [pointer]);
+    if (identical(_$r, notOverridden)) { super.rejectGesture(pointer); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   void handleNonAllowedPointer(PointerDownEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleNonAllowedPointer', [event]);
-    if (identical(r, notOverridden)) { super.handleNonAllowedPointer(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleNonAllowedPointer', [event]);
+    if (identical(_$r, notOverridden)) { super.handleNonAllowedPointer(event); return; }
   }
 
   @override
   void handleEvent(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event]);
-    if (identical(r, notOverridden)) { super.handleEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.handleEvent(event); return; }
   }
 
   @override
   void didExceedDeadlineWithEvent(PointerDownEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didExceedDeadlineWithEvent', [event]);
-    if (identical(r, notOverridden)) { super.didExceedDeadlineWithEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didExceedDeadlineWithEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.didExceedDeadlineWithEvent(event); return; }
   }
 
   @override
   void didStopTrackingLastPointer(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStopTrackingLastPointer', [pointer]);
-    if (identical(r, notOverridden)) { super.didStopTrackingLastPointer(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStopTrackingLastPointer', [pointer]);
+    if (identical(_$r, notOverridden)) { super.didStopTrackingLastPointer(pointer); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void resolvePointer(int pointer, GestureDisposition disposition) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolvePointer', [pointer, disposition]);
-    if (identical(r, notOverridden)) { super.resolvePointer(pointer, disposition); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolvePointer', [pointer, disposition]);
+    if (identical(_$r, notOverridden)) { super.resolvePointer(pointer, disposition); return; }
   }
 
   @override
   void stopTrackingPointer(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopTrackingPointer', [pointer]);
-    if (identical(r, notOverridden)) { super.stopTrackingPointer(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopTrackingPointer', [pointer]);
+    if (identical(_$r, notOverridden)) { super.stopTrackingPointer(pointer); return; }
   }
 
   @override
   void stopTrackingIfPointerNoLongerDown(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopTrackingIfPointerNoLongerDown', [event]);
-    if (identical(r, notOverridden)) { super.stopTrackingIfPointerNoLongerDown(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopTrackingIfPointerNoLongerDown', [event]);
+    if (identical(_$r, notOverridden)) { super.stopTrackingIfPointerNoLongerDown(event); return; }
   }
 
   @override
   void addPointerPanZoom(PointerPanZoomStartEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPointerPanZoom', [event]);
-    if (identical(r, notOverridden)) { super.addPointerPanZoom(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPointerPanZoom', [event]);
+    if (identical(_$r, notOverridden)) { super.addPointerPanZoom(event); return; }
   }
 
   @override
   void addAllowedPointerPanZoom(PointerPanZoomStartEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAllowedPointerPanZoom', [event]);
-    if (identical(r, notOverridden)) { super.addAllowedPointerPanZoom(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAllowedPointerPanZoom', [event]);
+    if (identical(_$r, notOverridden)) { super.addAllowedPointerPanZoom(event); return; }
   }
 
   @override
   void addPointer(PointerDownEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPointer', [event]);
-    if (identical(r, notOverridden)) { super.addPointer(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPointer', [event]);
+    if (identical(_$r, notOverridden)) { super.addPointer(event); return; }
   }
 
   @override
   bool isPointerAllowed(PointerDownEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPointerAllowed', [event]);
-    if (identical(r, notOverridden)) return super.isPointerAllowed(event);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPointerAllowed', [event]);
+    if (identical(_$r, notOverridden)) return super.isPointerAllowed(event);
+    return _$r as bool;
   }
 
   @override
   void handleNonAllowedPointerPanZoom(PointerPanZoomStartEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleNonAllowedPointerPanZoom', [event]);
-    if (identical(r, notOverridden)) { super.handleNonAllowedPointerPanZoom(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleNonAllowedPointerPanZoom', [event]);
+    if (identical(_$r, notOverridden)) { super.handleNonAllowedPointerPanZoom(event); return; }
   }
 
   @override
   bool isPointerPanZoomAllowed(PointerPanZoomStartEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPointerPanZoomAllowed', [event]);
-    if (identical(r, notOverridden)) return super.isPointerPanZoomAllowed(event);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPointerPanZoomAllowed', [event]);
+    if (identical(_$r, notOverridden)) return super.isPointerPanZoomAllowed(event);
+    return _$r as bool;
   }
 
   @override
   PointerDeviceKind getKindForPointer(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getKindForPointer', [pointer]);
-    if (identical(r, notOverridden)) return super.getKindForPointer(pointer);
-    return r as PointerDeviceKind;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getKindForPointer', [pointer]);
+    if (identical(_$r, notOverridden)) return super.getKindForPointer(pointer);
+    return _$r as PointerDeviceKind;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
-    if (identical(r, notOverridden)) return super.debugDescribeChildren();
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(_$r, notOverridden)) return super.debugDescribeChildren();
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override

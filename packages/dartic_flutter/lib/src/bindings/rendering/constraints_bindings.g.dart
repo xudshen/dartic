@@ -30,16 +30,16 @@ class _$Constraints extends Constraints implements DarticObjectHolder {
 
   @override
   bool debugAssertIsValid({bool isAppliedConstraint = false, InformationCollector? informationCollector}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
-    if (identical(r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
+    if (identical(_$r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

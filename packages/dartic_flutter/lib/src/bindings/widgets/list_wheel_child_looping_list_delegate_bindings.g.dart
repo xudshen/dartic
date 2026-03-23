@@ -35,30 +35,30 @@ class _$ListWheelChildLoopingListDelegate extends ListWheelChildLoopingListDeleg
 
   @override
   int trueIndexOf(int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'trueIndexOf', [index]);
-    if (identical(r, notOverridden)) return super.trueIndexOf(index);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'trueIndexOf', [index]);
+    if (identical(_$r, notOverridden)) return super.trueIndexOf(index);
+    return _$r as int;
   }
 
   @override
   Widget? build(BuildContext context, int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
-    if (identical(r, notOverridden)) return super.build(context, index);
-    return r as Widget?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context, index]);
+    if (identical(_$r, notOverridden)) return super.build(context, index);
+    return _$r as Widget?;
   }
 
   @override
   bool shouldRebuild(ListWheelChildLoopingListDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
-    if (identical(r, notOverridden)) return super.shouldRebuild(oldDelegate);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRebuild', [oldDelegate]);
+    if (identical(_$r, notOverridden)) return super.shouldRebuild(oldDelegate);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

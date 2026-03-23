@@ -30,36 +30,36 @@ class _$WindowingOwner extends WindowingOwner implements DarticObjectHolder {
 
   @override
   RegularWindowController createRegularWindowController({required RegularWindowControllerDelegate delegate, Size? preferredSize, BoxConstraints? preferredConstraints, String? title}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRegularWindowController', [delegate, preferredSize, preferredConstraints, title]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRegularWindowController', [delegate, preferredSize, preferredConstraints, title]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createRegularWindowController must be overridden in dartic code');
     }
-    return r as RegularWindowController;
+    return _$r as RegularWindowController;
   }
 
   @override
   DialogWindowController createDialogWindowController({required DialogWindowControllerDelegate delegate, Size? preferredSize, BoxConstraints? preferredConstraints, BaseWindowController? parent, String? title}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDialogWindowController', [delegate, preferredSize, preferredConstraints, parent, title]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDialogWindowController', [delegate, preferredSize, preferredConstraints, parent, title]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createDialogWindowController must be overridden in dartic code');
     }
-    return r as DialogWindowController;
+    return _$r as DialogWindowController;
   }
 
   @override
   bool hasTopLevelWindows() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasTopLevelWindows', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasTopLevelWindows', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hasTopLevelWindows must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

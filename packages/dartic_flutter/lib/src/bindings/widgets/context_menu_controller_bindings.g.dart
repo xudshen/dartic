@@ -23,27 +23,27 @@ class _$ContextMenuController extends ContextMenuController implements DarticObj
 
   @override
   void show({required BuildContext context, required WidgetBuilder contextMenuBuilder, Widget? debugRequiredFor}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [context, contextMenuBuilder, debugRequiredFor]);
-    if (identical(r, notOverridden)) { super.show(context: context, contextMenuBuilder: (a) => contextMenuBuilder(a) as Widget, debugRequiredFor: debugRequiredFor); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [context, contextMenuBuilder, debugRequiredFor]);
+    if (identical(_$r, notOverridden)) { super.show(context: context, contextMenuBuilder: (a) => contextMenuBuilder(a) as Widget, debugRequiredFor: debugRequiredFor); return; }
   }
 
   @override
   void markNeedsBuild() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsBuild', const []);
-    if (identical(r, notOverridden)) { super.markNeedsBuild(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsBuild', const []);
+    if (identical(_$r, notOverridden)) { super.markNeedsBuild(); return; }
   }
 
   @override
   void remove() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', const []);
-    if (identical(r, notOverridden)) { super.remove(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', const []);
+    if (identical(_$r, notOverridden)) { super.remove(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

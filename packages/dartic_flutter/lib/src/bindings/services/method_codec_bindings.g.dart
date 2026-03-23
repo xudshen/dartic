@@ -21,54 +21,54 @@ class _$MethodCodec extends MethodCodec implements DarticObjectHolder {
 
   @override
   ByteData encodeMethodCall(MethodCall methodCall) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMethodCall', [methodCall]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMethodCall', [methodCall]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method encodeMethodCall must be overridden in dartic code');
     }
-    return r as ByteData;
+    return _$r as ByteData;
   }
 
   @override
   MethodCall decodeMethodCall(ByteData? methodCall) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMethodCall', [methodCall]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMethodCall', [methodCall]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method decodeMethodCall must be overridden in dartic code');
     }
-    return r as MethodCall;
+    return _$r as MethodCall;
   }
 
   @override
   dynamic decodeEnvelope(ByteData envelope) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeEnvelope', [envelope]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeEnvelope', [envelope]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method decodeEnvelope must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   ByteData encodeSuccessEnvelope(Object? result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeSuccessEnvelope', [result]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeSuccessEnvelope', [result]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method encodeSuccessEnvelope must be overridden in dartic code');
     }
-    return r as ByteData;
+    return _$r as ByteData;
   }
 
   @override
   ByteData encodeErrorEnvelope({required String code, String? message, Object? details}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeErrorEnvelope', [code, message, details]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeErrorEnvelope', [code, message, details]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method encodeErrorEnvelope must be overridden in dartic code');
     }
-    return r as ByteData;
+    return _$r as ByteData;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -20,16 +20,16 @@ class _$GestureArenaTeam extends GestureArenaTeam implements DarticObjectHolder 
 
   @override
   GestureArenaEntry add(int pointer, GestureArenaMember member) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [pointer, member]);
-    if (identical(r, notOverridden)) return super.add(pointer, member);
-    return r as GestureArenaEntry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [pointer, member]);
+    if (identical(_$r, notOverridden)) return super.add(pointer, member);
+    return _$r as GestureArenaEntry;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

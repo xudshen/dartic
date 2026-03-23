@@ -34,27 +34,27 @@ class _$MenuController extends MenuController implements DarticObjectHolder {
 
   @override
   void open({ui.Offset? position}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'open', [position]);
-    if (identical(r, notOverridden)) { super.open(position: position); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'open', [position]);
+    if (identical(_$r, notOverridden)) { super.open(position: position); return; }
   }
 
   @override
   void close() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
-    if (identical(r, notOverridden)) { super.close(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
+    if (identical(_$r, notOverridden)) { super.close(); return; }
   }
 
   @override
   void closeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'closeChildren', const []);
-    if (identical(r, notOverridden)) { super.closeChildren(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'closeChildren', const []);
+    if (identical(_$r, notOverridden)) { super.closeChildren(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

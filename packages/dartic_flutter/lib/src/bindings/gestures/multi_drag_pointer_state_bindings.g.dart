@@ -31,41 +31,41 @@ class _$MultiDragPointerState extends MultiDragPointerState implements DarticObj
 
   @override
   void resolve(GestureDisposition disposition) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [disposition]);
-    if (identical(r, notOverridden)) { super.resolve(disposition); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [disposition]);
+    if (identical(_$r, notOverridden)) { super.resolve(disposition); return; }
   }
 
   @override
   void checkForResolutionAfterMove() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'checkForResolutionAfterMove', const []);
-    if (identical(r, notOverridden)) { super.checkForResolutionAfterMove(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'checkForResolutionAfterMove', const []);
+    if (identical(_$r, notOverridden)) { super.checkForResolutionAfterMove(); return; }
   }
 
   @override
   void accepted(GestureMultiDragStartCallback starter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepted', [starter]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepted', [starter]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method accepted must be overridden in dartic code');
     }
   }
 
   @override
   void rejected() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejected', const []);
-    if (identical(r, notOverridden)) { super.rejected(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejected', const []);
+    if (identical(_$r, notOverridden)) { super.rejected(); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

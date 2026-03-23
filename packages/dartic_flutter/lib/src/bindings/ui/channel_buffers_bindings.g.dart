@@ -28,58 +28,58 @@ class _$ChannelBuffers extends ChannelBuffers implements DarticObjectHolder {
 
   @override
   void push(String name, ByteData? data, PlatformMessageResponseCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'push', [name, data, callback]);
-    if (identical(r, notOverridden)) { super.push(name, data, (a) => callback(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'push', [name, data, callback]);
+    if (identical(_$r, notOverridden)) { super.push(name, data, (a) => callback(a)); return; }
   }
 
   @override
   void setListener(String name, ChannelCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setListener', [name, callback]);
-    if (identical(r, notOverridden)) { super.setListener(name, (a, b) => callback(a, b)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setListener', [name, callback]);
+    if (identical(_$r, notOverridden)) { super.setListener(name, (a, b) => callback(a, b)); return; }
   }
 
   @override
   void clearListener(String name) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListener', [name]);
-    if (identical(r, notOverridden)) { super.clearListener(name); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListener', [name]);
+    if (identical(_$r, notOverridden)) { super.clearListener(name); return; }
   }
 
   @override
   void sendChannelUpdate(String name, {required bool listening}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendChannelUpdate', [name, listening]);
-    if (identical(r, notOverridden)) { super.sendChannelUpdate(name, listening: listening); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendChannelUpdate', [name, listening]);
+    if (identical(_$r, notOverridden)) { super.sendChannelUpdate(name, listening: listening); return; }
   }
 
   @override
   Future<void> drain(String name, DrainChannelCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drain', [name, callback]);
-    if (identical(r, notOverridden)) return super.drain(name, (a, b) => callback(a, b) as Future<void>);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drain', [name, callback]);
+    if (identical(_$r, notOverridden)) return super.drain(name, (a, b) => callback(a, b) as Future<void>);
+    return _$r as Future<void>;
   }
 
   @override
   void handleMessage(ByteData data) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMessage', [data]);
-    if (identical(r, notOverridden)) { super.handleMessage(data); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleMessage', [data]);
+    if (identical(_$r, notOverridden)) { super.handleMessage(data); return; }
   }
 
   @override
   void resize(String name, int newSize) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resize', [name, newSize]);
-    if (identical(r, notOverridden)) { super.resize(name, newSize); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resize', [name, newSize]);
+    if (identical(_$r, notOverridden)) { super.resize(name, newSize); return; }
   }
 
   @override
   void allowOverflow(String name, bool allowed) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allowOverflow', [name, allowed]);
-    if (identical(r, notOverridden)) { super.allowOverflow(name, allowed); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allowOverflow', [name, allowed]);
+    if (identical(_$r, notOverridden)) { super.allowOverflow(name, allowed); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

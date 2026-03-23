@@ -22,27 +22,27 @@ class _$AssetManifest extends AssetManifest implements DarticObjectHolder {
 
   @override
   List<String> listAssets() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'listAssets', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'listAssets', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method listAssets must be overridden in dartic code');
     }
-    return r as List<String>;
+    return _$r as List<String>;
   }
 
   @override
   List<AssetMetadata>? getAssetVariants(String key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAssetVariants', [key]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAssetVariants', [key]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getAssetVariants must be overridden in dartic code');
     }
-    return r as List<AssetMetadata>?;
+    return _$r as List<AssetMetadata>?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

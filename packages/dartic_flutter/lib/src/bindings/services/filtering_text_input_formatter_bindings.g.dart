@@ -22,16 +22,16 @@ class _$FilteringTextInputFormatter extends FilteringTextInputFormatter implemen
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatEditUpdate', [oldValue, newValue]);
-    if (identical(r, notOverridden)) return super.formatEditUpdate(oldValue, newValue);
-    return r as TextEditingValue;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatEditUpdate', [oldValue, newValue]);
+    if (identical(_$r, notOverridden)) return super.formatEditUpdate(oldValue, newValue);
+    return _$r as TextEditingValue;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

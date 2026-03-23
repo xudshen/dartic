@@ -20,25 +20,25 @@ class _$TextScaler extends TextScaler implements DarticObjectHolder {
 
   @override
   double scale(double fontSize) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [fontSize]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [fontSize]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scale must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   TextScaler clamp({double minScaleFactor = 0, double maxScaleFactor = double.infinity}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clamp', [minScaleFactor, maxScaleFactor]);
-    if (identical(r, notOverridden)) return super.clamp(minScaleFactor: minScaleFactor, maxScaleFactor: maxScaleFactor);
-    return r as TextScaler;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clamp', [minScaleFactor, maxScaleFactor]);
+    if (identical(_$r, notOverridden)) return super.clamp(minScaleFactor: minScaleFactor, maxScaleFactor: maxScaleFactor);
+    return _$r as TextScaler;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

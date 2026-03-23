@@ -33,36 +33,36 @@ class _$ListTileThemeData extends ListTileThemeData implements DarticObjectHolde
 
   @override
   ListTileThemeData copyWith({bool? dense, ShapeBorder? shape, ListTileStyle? style, Color? selectedColor, Color? iconColor, Color? textColor, TextStyle? titleTextStyle, TextStyle? subtitleTextStyle, TextStyle? leadingAndTrailingTextStyle, EdgeInsetsGeometry? contentPadding, Color? tileColor, Color? selectedTileColor, double? horizontalTitleGap, double? minVerticalPadding, double? minLeadingWidth, double? minTileHeight, bool? enableFeedback, WidgetStateProperty<MouseCursor?>? mouseCursor, bool? isThreeLine, VisualDensity? visualDensity, ListTileTitleAlignment? titleAlignment, ListTileControlAffinity? controlAffinity}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [dense, shape, style, selectedColor, iconColor, textColor, titleTextStyle, subtitleTextStyle, leadingAndTrailingTextStyle, contentPadding, tileColor, selectedTileColor, horizontalTitleGap, minVerticalPadding, minLeadingWidth, minTileHeight, enableFeedback, mouseCursor, isThreeLine, visualDensity, titleAlignment, controlAffinity]);
-    if (identical(r, notOverridden)) return super.copyWith(dense: dense, shape: shape, style: style, selectedColor: selectedColor, iconColor: iconColor, textColor: textColor, titleTextStyle: titleTextStyle, subtitleTextStyle: subtitleTextStyle, leadingAndTrailingTextStyle: leadingAndTrailingTextStyle, contentPadding: contentPadding, tileColor: tileColor, selectedTileColor: selectedTileColor, horizontalTitleGap: horizontalTitleGap, minVerticalPadding: minVerticalPadding, minLeadingWidth: minLeadingWidth, minTileHeight: minTileHeight, enableFeedback: enableFeedback, mouseCursor: mouseCursor, isThreeLine: isThreeLine, visualDensity: visualDensity, titleAlignment: titleAlignment, controlAffinity: controlAffinity);
-    return r as ListTileThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [dense, shape, style, selectedColor, iconColor, textColor, titleTextStyle, subtitleTextStyle, leadingAndTrailingTextStyle, contentPadding, tileColor, selectedTileColor, horizontalTitleGap, minVerticalPadding, minLeadingWidth, minTileHeight, enableFeedback, mouseCursor, isThreeLine, visualDensity, titleAlignment, controlAffinity]);
+    if (identical(_$r, notOverridden)) return super.copyWith(dense: dense, shape: shape, style: style, selectedColor: selectedColor, iconColor: iconColor, textColor: textColor, titleTextStyle: titleTextStyle, subtitleTextStyle: subtitleTextStyle, leadingAndTrailingTextStyle: leadingAndTrailingTextStyle, contentPadding: contentPadding, tileColor: tileColor, selectedTileColor: selectedTileColor, horizontalTitleGap: horizontalTitleGap, minVerticalPadding: minVerticalPadding, minLeadingWidth: minLeadingWidth, minTileHeight: minTileHeight, enableFeedback: enableFeedback, mouseCursor: mouseCursor, isThreeLine: isThreeLine, visualDensity: visualDensity, titleAlignment: titleAlignment, controlAffinity: controlAffinity);
+    return _$r as ListTileThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

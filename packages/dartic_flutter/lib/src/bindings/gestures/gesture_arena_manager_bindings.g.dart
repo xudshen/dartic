@@ -21,40 +21,40 @@ class _$GestureArenaManager extends GestureArenaManager implements DarticObjectH
 
   @override
   GestureArenaEntry add(int pointer, GestureArenaMember member) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [pointer, member]);
-    if (identical(r, notOverridden)) return super.add(pointer, member);
-    return r as GestureArenaEntry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [pointer, member]);
+    if (identical(_$r, notOverridden)) return super.add(pointer, member);
+    return _$r as GestureArenaEntry;
   }
 
   @override
   void close(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', [pointer]);
-    if (identical(r, notOverridden)) { super.close(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', [pointer]);
+    if (identical(_$r, notOverridden)) { super.close(pointer); return; }
   }
 
   @override
   void sweep(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sweep', [pointer]);
-    if (identical(r, notOverridden)) { super.sweep(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sweep', [pointer]);
+    if (identical(_$r, notOverridden)) { super.sweep(pointer); return; }
   }
 
   @override
   void hold(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hold', [pointer]);
-    if (identical(r, notOverridden)) { super.hold(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hold', [pointer]);
+    if (identical(_$r, notOverridden)) { super.hold(pointer); return; }
   }
 
   @override
   void release(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'release', [pointer]);
-    if (identical(r, notOverridden)) { super.release(pointer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'release', [pointer]);
+    if (identical(_$r, notOverridden)) { super.release(pointer); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

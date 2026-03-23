@@ -26,174 +26,174 @@ class _$SemanticsBinding implements SemanticsBinding, DarticObjectHolder {
 
   @override
   void initInstances() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method initInstances must be overridden in dartic code');
     }
   }
 
   @override
   void addSemanticsEnabledListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsEnabledListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsEnabledListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addSemanticsEnabledListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeSemanticsEnabledListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsEnabledListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsEnabledListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeSemanticsEnabledListener must be overridden in dartic code');
     }
   }
 
   @override
   void addSemanticsActionListener(ValueSetter<ui.SemanticsActionEvent> listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsActionListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addSemanticsActionListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addSemanticsActionListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeSemanticsActionListener(ValueSetter<ui.SemanticsActionEvent> listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsActionListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeSemanticsActionListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeSemanticsActionListener must be overridden in dartic code');
     }
   }
 
   @override
   SemanticsHandle ensureSemantics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method ensureSemantics must be overridden in dartic code');
     }
-    return r as SemanticsHandle;
+    return _$r as SemanticsHandle;
   }
 
   @override
   void performSemanticsAction(ui.SemanticsActionEvent action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSemanticsAction', [action]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSemanticsAction', [action]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performSemanticsAction must be overridden in dartic code');
     }
   }
 
   @override
   void handleAccessibilityFeaturesChanged() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAccessibilityFeaturesChanged', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleAccessibilityFeaturesChanged', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleAccessibilityFeaturesChanged must be overridden in dartic code');
     }
   }
 
   @override
   ui.SemanticsUpdateBuilder createSemanticsUpdateBuilder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSemanticsUpdateBuilder', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSemanticsUpdateBuilder', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createSemanticsUpdateBuilder must be overridden in dartic code');
     }
-    return r as ui.SemanticsUpdateBuilder;
+    return _$r as ui.SemanticsUpdateBuilder;
   }
 
   @override
   bool debugCheckZone(String entryPoint) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugCheckZone must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void initServiceExtensions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method initServiceExtensions must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> lockEvents(Future<void> Function() callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lockEvents must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   void unlocked() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method unlocked must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> reassembleApplication() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reassembleApplication must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> performReassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performReassemble must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   void registerSignalServiceExtension({required String name, required AsyncCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerSignalServiceExtension must be overridden in dartic code');
     }
   }
 
   @override
   void registerBoolServiceExtension({required String name, required AsyncValueGetter<bool> getter, required AsyncValueSetter<bool> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerBoolServiceExtension must be overridden in dartic code');
     }
   }
 
   @override
   void registerNumericServiceExtension({required String name, required AsyncValueGetter<double> getter, required AsyncValueSetter<double> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerNumericServiceExtension must be overridden in dartic code');
     }
   }
 
   @override
   void postEvent(String eventKind, Map<String, dynamic> eventData) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method postEvent must be overridden in dartic code');
     }
   }
 
   @override
   void registerStringServiceExtension({required String name, required AsyncValueGetter<String> getter, required AsyncValueSetter<String> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerStringServiceExtension must be overridden in dartic code');
     }
   }
 
   @override
   void registerServiceExtension({required String name, required ServiceExtensionCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerServiceExtension must be overridden in dartic code');
     }
   }

@@ -21,25 +21,25 @@ class _$GestureArenaMember extends GestureArenaMember implements DarticObjectHol
 
   @override
   void acceptGesture(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', [pointer]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'acceptGesture', [pointer]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method acceptGesture must be overridden in dartic code');
     }
   }
 
   @override
   void rejectGesture(int pointer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', [pointer]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rejectGesture', [pointer]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method rejectGesture must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

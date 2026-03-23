@@ -28,16 +28,16 @@ base class _$LocaleStringAttribute extends LocaleStringAttribute implements Dart
 
   @override
   StringAttribute copy({required TextRange range}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', [range]);
-    if (identical(r, notOverridden)) return super.copy(range: range);
-    return r as StringAttribute;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', [range]);
+    if (identical(_$r, notOverridden)) return super.copy(range: range);
+    return _$r as StringAttribute;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

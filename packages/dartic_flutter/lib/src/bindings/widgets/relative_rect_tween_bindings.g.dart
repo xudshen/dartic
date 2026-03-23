@@ -28,44 +28,44 @@ class _$RelativeRectTween extends RelativeRectTween implements DarticObjectHolde
 
   @override
   RelativeRect lerp(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
-    if (identical(r, notOverridden)) return super.lerp(t);
-    return r as RelativeRect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(_$r, notOverridden)) return super.lerp(t);
+    return _$r as RelativeRect;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   RelativeRect transform(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
-    if (identical(r, notOverridden)) return super.transform(t);
-    return r as RelativeRect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(_$r, notOverridden)) return super.transform(t);
+    return _$r as RelativeRect;
   }
 
   @override
   RelativeRect evaluate(Animation<double> animation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
-    if (identical(r, notOverridden)) return super.evaluate(animation);
-    return r as RelativeRect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(_$r, notOverridden)) return super.evaluate(animation);
+    return _$r as RelativeRect;
   }
 
   @override
   Animation<RelativeRect> animate(Animation<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
-    if (identical(r, notOverridden)) return super.animate(parent);
-    return r as Animation<RelativeRect>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(_$r, notOverridden)) return super.animate(parent);
+    return _$r as Animation<RelativeRect>;
   }
 
   @override
   Animatable<RelativeRect> chain(Animatable<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
-    if (identical(r, notOverridden)) return super.chain(parent);
-    return r as Animatable<RelativeRect>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(_$r, notOverridden)) return super.chain(parent);
+    return _$r as Animatable<RelativeRect>;
   }
 
   @override

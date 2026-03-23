@@ -39,43 +39,43 @@ class _$StepStyle extends StepStyle implements DarticObjectHolder {
 
   @override
   StepStyle copyWith({Color? color, Color? errorColor, Color? connectorColor, double? connectorThickness, BoxBorder? border, BoxShadow? boxShadow, Gradient? gradient, TextStyle? indexStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, errorColor, connectorColor, connectorThickness, border, boxShadow, gradient, indexStyle]);
-    if (identical(r, notOverridden)) return super.copyWith(color: color, errorColor: errorColor, connectorColor: connectorColor, connectorThickness: connectorThickness, border: border, boxShadow: boxShadow, gradient: gradient, indexStyle: indexStyle);
-    return r as StepStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, errorColor, connectorColor, connectorThickness, border, boxShadow, gradient, indexStyle]);
+    if (identical(_$r, notOverridden)) return super.copyWith(color: color, errorColor: errorColor, connectorColor: connectorColor, connectorThickness: connectorThickness, border: border, boxShadow: boxShadow, gradient: gradient, indexStyle: indexStyle);
+    return _$r as StepStyle;
   }
 
   @override
   StepStyle merge(StepStyle? stepStyle) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [stepStyle]);
-    if (identical(r, notOverridden)) return super.merge(stepStyle);
-    return r as StepStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [stepStyle]);
+    if (identical(_$r, notOverridden)) return super.merge(stepStyle);
+    return _$r as StepStyle;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

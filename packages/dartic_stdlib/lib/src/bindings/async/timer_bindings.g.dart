@@ -20,8 +20,8 @@ class _$Timer implements Timer, DarticObjectHolder {
 
   @override
   void cancel() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cancel must be overridden in dartic code');
     }
   }

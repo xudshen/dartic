@@ -28,35 +28,35 @@ class _$Picture extends Picture implements DarticObjectHolder {
 
   @override
   Future<Image> toImage(int width, int height) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImage', [width, height]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImage', [width, height]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toImage must be overridden in dartic code');
     }
-    return r as Future<Image>;
+    return _$r as Future<Image>;
   }
 
   @override
   Image toImageSync(int width, int height) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImageSync', [width, height]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toImageSync', [width, height]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toImageSync must be overridden in dartic code');
     }
-    return r as Image;
+    return _$r as Image;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

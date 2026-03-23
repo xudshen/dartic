@@ -28,35 +28,35 @@ class _$DefaultPlatformMenuDelegate extends DefaultPlatformMenuDelegate implemen
 
   @override
   void clearMenus() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearMenus', const []);
-    if (identical(r, notOverridden)) { super.clearMenus(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearMenus', const []);
+    if (identical(_$r, notOverridden)) { super.clearMenus(); return; }
   }
 
   @override
   void setMenus(List<PlatformMenuItem> topLevelMenus) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMenus', [topLevelMenus]);
-    if (identical(r, notOverridden)) { super.setMenus(topLevelMenus); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMenus', [topLevelMenus]);
+    if (identical(_$r, notOverridden)) { super.setMenus(topLevelMenus); return; }
   }
 
   @override
   bool debugLockDelegate(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugLockDelegate', [context]);
-    if (identical(r, notOverridden)) return super.debugLockDelegate(context);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugLockDelegate', [context]);
+    if (identical(_$r, notOverridden)) return super.debugLockDelegate(context);
+    return _$r as bool;
   }
 
   @override
   bool debugUnlockDelegate(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugUnlockDelegate', [context]);
-    if (identical(r, notOverridden)) return super.debugUnlockDelegate(context);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugUnlockDelegate', [context]);
+    if (identical(_$r, notOverridden)) return super.debugUnlockDelegate(context);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

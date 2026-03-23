@@ -26,17 +26,17 @@ class _$SemanticsGestureDelegate extends SemanticsGestureDelegate implements Dar
 
   @override
   void assignSemantics(RenderSemanticsGestureHandler renderObject) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'assignSemantics', [renderObject]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'assignSemantics', [renderObject]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method assignSemantics must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -23,44 +23,44 @@ class _$ColorTween extends ColorTween implements DarticObjectHolder {
 
   @override
   Color? lerp(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
-    if (identical(r, notOverridden)) return super.lerp(t);
-    return r as Color?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(_$r, notOverridden)) return super.lerp(t);
+    return _$r as Color?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Color? transform(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
-    if (identical(r, notOverridden)) return super.transform(t);
-    return r as Color?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(_$r, notOverridden)) return super.transform(t);
+    return _$r as Color?;
   }
 
   @override
   Color? evaluate(Animation<double> animation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
-    if (identical(r, notOverridden)) return super.evaluate(animation);
-    return r as Color?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(_$r, notOverridden)) return super.evaluate(animation);
+    return _$r as Color?;
   }
 
   @override
   Animation<Color?> animate(Animation<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
-    if (identical(r, notOverridden)) return super.animate(parent);
-    return r as Animation<Color?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(_$r, notOverridden)) return super.animate(parent);
+    return _$r as Animation<Color?>;
   }
 
   @override
   Animatable<Color?> chain(Animatable<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
-    if (identical(r, notOverridden)) return super.chain(parent);
-    return r as Animatable<Color?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(_$r, notOverridden)) return super.chain(parent);
+    return _$r as Animatable<Color?>;
   }
 
   @override

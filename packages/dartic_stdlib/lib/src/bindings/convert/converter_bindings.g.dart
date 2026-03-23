@@ -21,32 +21,32 @@ class _$Converter extends Converter<dynamic, dynamic> implements DarticObjectHol
 
   @override
   dynamic convert(dynamic input) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'convert', [input]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'convert', [input]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method convert must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   Sink startChunkedConversion(Sink sink) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startChunkedConversion', [sink]);
-    if (identical(r, notOverridden)) return super.startChunkedConversion(sink);
-    return r as Sink;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startChunkedConversion', [sink]);
+    if (identical(_$r, notOverridden)) return super.startChunkedConversion(sink);
+    return _$r as Sink;
   }
 
   @override
   Stream bind(Stream stream) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
-    if (identical(r, notOverridden)) return super.bind(stream);
-    return r as Stream;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
+    if (identical(_$r, notOverridden)) return super.bind(stream);
+    return _$r as Stream;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

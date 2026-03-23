@@ -26,43 +26,43 @@ class _$CupertinoTextThemeData extends CupertinoTextThemeData implements DarticO
 
   @override
   CupertinoTextThemeData resolveFrom(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
-    if (identical(r, notOverridden)) return super.resolveFrom(context);
-    return r as CupertinoTextThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
+    if (identical(_$r, notOverridden)) return super.resolveFrom(context);
+    return _$r as CupertinoTextThemeData;
   }
 
   @override
   CupertinoTextThemeData copyWith({Color? primaryColor, TextStyle? textStyle, TextStyle? actionTextStyle, TextStyle? actionSmallTextStyle, TextStyle? tabLabelTextStyle, TextStyle? navTitleTextStyle, TextStyle? navLargeTitleTextStyle, TextStyle? navActionTextStyle, TextStyle? pickerTextStyle, TextStyle? dateTimePickerTextStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [primaryColor, textStyle, actionTextStyle, actionSmallTextStyle, tabLabelTextStyle, navTitleTextStyle, navLargeTitleTextStyle, navActionTextStyle, pickerTextStyle, dateTimePickerTextStyle]);
-    if (identical(r, notOverridden)) return super.copyWith(primaryColor: primaryColor, textStyle: textStyle, actionTextStyle: actionTextStyle, actionSmallTextStyle: actionSmallTextStyle, tabLabelTextStyle: tabLabelTextStyle, navTitleTextStyle: navTitleTextStyle, navLargeTitleTextStyle: navLargeTitleTextStyle, navActionTextStyle: navActionTextStyle, pickerTextStyle: pickerTextStyle, dateTimePickerTextStyle: dateTimePickerTextStyle);
-    return r as CupertinoTextThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [primaryColor, textStyle, actionTextStyle, actionSmallTextStyle, tabLabelTextStyle, navTitleTextStyle, navLargeTitleTextStyle, navActionTextStyle, pickerTextStyle, dateTimePickerTextStyle]);
+    if (identical(_$r, notOverridden)) return super.copyWith(primaryColor: primaryColor, textStyle: textStyle, actionTextStyle: actionTextStyle, actionSmallTextStyle: actionSmallTextStyle, tabLabelTextStyle: tabLabelTextStyle, navTitleTextStyle: navTitleTextStyle, navLargeTitleTextStyle: navLargeTitleTextStyle, navActionTextStyle: navActionTextStyle, pickerTextStyle: pickerTextStyle, dateTimePickerTextStyle: dateTimePickerTextStyle);
+    return _$r as CupertinoTextThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

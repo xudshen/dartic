@@ -23,27 +23,27 @@ class _$ViewportNotificationMixin implements ViewportNotificationMixin, DarticOb
 
   @override
   void debugFillDescription(List<String> description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugFillDescription must be overridden in dartic code');
     }
   }
 
   @override
   void dispatch(BuildContext? target) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispatch must be overridden in dartic code');
     }
   }
 
   @override
   dynamic noSuchMethod(Invocation invocation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'noSuchMethod', [invocation]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'noSuchMethod', [invocation]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method noSuchMethod must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override

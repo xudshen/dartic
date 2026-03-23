@@ -31,53 +31,53 @@ class _$BackButtonDispatcher extends BackButtonDispatcher implements DarticObjec
 
   @override
   Future<bool> invokeCallback(Future<bool> defaultValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invokeCallback', [defaultValue]);
-    if (identical(r, notOverridden)) return super.invokeCallback(defaultValue);
-    return r as Future<bool>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invokeCallback', [defaultValue]);
+    if (identical(_$r, notOverridden)) return super.invokeCallback(defaultValue);
+    return _$r as Future<bool>;
   }
 
   @override
   ChildBackButtonDispatcher createChildBackButtonDispatcher() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChildBackButtonDispatcher', const []);
-    if (identical(r, notOverridden)) return super.createChildBackButtonDispatcher();
-    return r as ChildBackButtonDispatcher;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChildBackButtonDispatcher', const []);
+    if (identical(_$r, notOverridden)) return super.createChildBackButtonDispatcher();
+    return _$r as ChildBackButtonDispatcher;
   }
 
   @override
   void takePriority() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takePriority', const []);
-    if (identical(r, notOverridden)) { super.takePriority(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takePriority', const []);
+    if (identical(_$r, notOverridden)) { super.takePriority(); return; }
   }
 
   @override
   void deferTo(ChildBackButtonDispatcher child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deferTo', [child]);
-    if (identical(r, notOverridden)) { super.deferTo(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deferTo', [child]);
+    if (identical(_$r, notOverridden)) { super.deferTo(child); return; }
   }
 
   @override
   void forget(ChildBackButtonDispatcher child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forget', [child]);
-    if (identical(r, notOverridden)) { super.forget(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forget', [child]);
+    if (identical(_$r, notOverridden)) { super.forget(child); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addCallback(ValueGetter<Future<bool>> callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addCallback', [callback]);
-    if (identical(r, notOverridden)) { super.addCallback(() => callback() as Future<bool>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.addCallback(() => callback() as Future<bool>); return; }
   }
 
   @override
   void removeCallback(ValueGetter<Future<bool>> callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeCallback', [callback]);
-    if (identical(r, notOverridden)) { super.removeCallback(() => callback() as Future<bool>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.removeCallback(() => callback() as Future<bool>); return; }
   }
 
   @override

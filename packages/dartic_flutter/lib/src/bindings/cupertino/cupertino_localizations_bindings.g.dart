@@ -21,153 +21,153 @@ class _$CupertinoLocalizations extends CupertinoLocalizations implements DarticO
 
   @override
   String datePickerYear(int yearIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerYear', [yearIndex]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerYear', [yearIndex]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerYear must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String datePickerMonth(int monthIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMonth', [monthIndex]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMonth', [monthIndex]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerMonth must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String datePickerStandaloneMonth(int monthIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerStandaloneMonth', [monthIndex]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerStandaloneMonth', [monthIndex]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerStandaloneMonth must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String datePickerDayOfMonth(int dayIndex, [int? weekDay]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerDayOfMonth', [dayIndex, weekDay]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerDayOfMonth', [dayIndex, weekDay]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerDayOfMonth must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String datePickerMediumDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMediumDate', [date]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMediumDate', [date]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerMediumDate must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String datePickerHour(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHour', [hour]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHour', [hour]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerHour must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String? datePickerHourSemanticsLabel(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHourSemanticsLabel', [hour]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHourSemanticsLabel', [hour]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerHourSemanticsLabel must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   String datePickerMinute(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinute', [minute]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinute', [minute]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerMinute must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String? datePickerMinuteSemanticsLabel(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinuteSemanticsLabel', [minute]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinuteSemanticsLabel', [minute]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method datePickerMinuteSemanticsLabel must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   String tabSemanticsLabel({required int tabIndex, required int tabCount}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabSemanticsLabel', [tabIndex, tabCount]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabSemanticsLabel', [tabIndex, tabCount]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method tabSemanticsLabel must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String timerPickerHour(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHour', [hour]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHour', [hour]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerHour must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String timerPickerMinute(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinute', [minute]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinute', [minute]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerMinute must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String timerPickerSecond(int second) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecond', [second]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecond', [second]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerSecond must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String? timerPickerHourLabel(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHourLabel', [hour]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHourLabel', [hour]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerHourLabel must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   String? timerPickerMinuteLabel(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinuteLabel', [minute]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinuteLabel', [minute]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerMinuteLabel must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   String? timerPickerSecondLabel(int second) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecondLabel', [second]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecondLabel', [second]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timerPickerSecondLabel must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -49,130 +49,130 @@ class _$TextSelectionGestureDetectorBuilder extends TextSelectionGestureDetector
 
   @override
   void onTapTrackStart() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapTrackStart', const []);
-    if (identical(r, notOverridden)) { super.onTapTrackStart(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapTrackStart', const []);
+    if (identical(_$r, notOverridden)) { super.onTapTrackStart(); return; }
   }
 
   @override
   void onTapTrackReset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapTrackReset', const []);
-    if (identical(r, notOverridden)) { super.onTapTrackReset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapTrackReset', const []);
+    if (identical(_$r, notOverridden)) { super.onTapTrackReset(); return; }
   }
 
   @override
   void onTapDown(TapDragDownDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapDown', [details]);
-    if (identical(r, notOverridden)) { super.onTapDown(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTapDown', [details]);
+    if (identical(_$r, notOverridden)) { super.onTapDown(details); return; }
   }
 
   @override
   void onForcePressStart(ForcePressDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onForcePressStart', [details]);
-    if (identical(r, notOverridden)) { super.onForcePressStart(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onForcePressStart', [details]);
+    if (identical(_$r, notOverridden)) { super.onForcePressStart(details); return; }
   }
 
   @override
   void onForcePressEnd(ForcePressDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onForcePressEnd', [details]);
-    if (identical(r, notOverridden)) { super.onForcePressEnd(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onForcePressEnd', [details]);
+    if (identical(_$r, notOverridden)) { super.onForcePressEnd(details); return; }
   }
 
   @override
   void onUserTap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onUserTap', const []);
-    if (identical(r, notOverridden)) { super.onUserTap(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onUserTap', const []);
+    if (identical(_$r, notOverridden)) { super.onUserTap(); return; }
   }
 
   @override
   void onSingleTapUp(TapDragUpDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleTapUp', [details]);
-    if (identical(r, notOverridden)) { super.onSingleTapUp(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleTapUp', [details]);
+    if (identical(_$r, notOverridden)) { super.onSingleTapUp(details); return; }
   }
 
   @override
   void onSingleTapCancel() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleTapCancel', const []);
-    if (identical(r, notOverridden)) { super.onSingleTapCancel(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleTapCancel', const []);
+    if (identical(_$r, notOverridden)) { super.onSingleTapCancel(); return; }
   }
 
   @override
   void onSingleLongTapStart(LongPressStartDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapStart', [details]);
-    if (identical(r, notOverridden)) { super.onSingleLongTapStart(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapStart', [details]);
+    if (identical(_$r, notOverridden)) { super.onSingleLongTapStart(details); return; }
   }
 
   @override
   void onSingleLongTapMoveUpdate(LongPressMoveUpdateDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapMoveUpdate', [details]);
-    if (identical(r, notOverridden)) { super.onSingleLongTapMoveUpdate(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapMoveUpdate', [details]);
+    if (identical(_$r, notOverridden)) { super.onSingleLongTapMoveUpdate(details); return; }
   }
 
   @override
   void onSingleLongTapEnd(LongPressEndDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapEnd', [details]);
-    if (identical(r, notOverridden)) { super.onSingleLongTapEnd(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapEnd', [details]);
+    if (identical(_$r, notOverridden)) { super.onSingleLongTapEnd(details); return; }
   }
 
   @override
   void onSingleLongTapCancel() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapCancel', const []);
-    if (identical(r, notOverridden)) { super.onSingleLongTapCancel(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSingleLongTapCancel', const []);
+    if (identical(_$r, notOverridden)) { super.onSingleLongTapCancel(); return; }
   }
 
   @override
   void onSecondaryTap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSecondaryTap', const []);
-    if (identical(r, notOverridden)) { super.onSecondaryTap(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSecondaryTap', const []);
+    if (identical(_$r, notOverridden)) { super.onSecondaryTap(); return; }
   }
 
   @override
   void onSecondaryTapDown(TapDownDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSecondaryTapDown', [details]);
-    if (identical(r, notOverridden)) { super.onSecondaryTapDown(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onSecondaryTapDown', [details]);
+    if (identical(_$r, notOverridden)) { super.onSecondaryTapDown(details); return; }
   }
 
   @override
   void onDoubleTapDown(TapDragDownDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDoubleTapDown', [details]);
-    if (identical(r, notOverridden)) { super.onDoubleTapDown(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDoubleTapDown', [details]);
+    if (identical(_$r, notOverridden)) { super.onDoubleTapDown(details); return; }
   }
 
   @override
   void onTripleTapDown(TapDragDownDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTripleTapDown', [details]);
-    if (identical(r, notOverridden)) { super.onTripleTapDown(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onTripleTapDown', [details]);
+    if (identical(_$r, notOverridden)) { super.onTripleTapDown(details); return; }
   }
 
   @override
   void onDragSelectionStart(TapDragStartDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionStart', [details]);
-    if (identical(r, notOverridden)) { super.onDragSelectionStart(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionStart', [details]);
+    if (identical(_$r, notOverridden)) { super.onDragSelectionStart(details); return; }
   }
 
   @override
   void onDragSelectionUpdate(TapDragUpdateDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionUpdate', [details]);
-    if (identical(r, notOverridden)) { super.onDragSelectionUpdate(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionUpdate', [details]);
+    if (identical(_$r, notOverridden)) { super.onDragSelectionUpdate(details); return; }
   }
 
   @override
   void onDragSelectionEnd(TapDragEndDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionEnd', [details]);
-    if (identical(r, notOverridden)) { super.onDragSelectionEnd(details); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDragSelectionEnd', [details]);
+    if (identical(_$r, notOverridden)) { super.onDragSelectionEnd(details); return; }
   }
 
   @override
   Widget buildGestureDetector({Key? key, HitTestBehavior? behavior, required Widget child}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildGestureDetector', [key, behavior, child]);
-    if (identical(r, notOverridden)) return super.buildGestureDetector(key: key, behavior: behavior, child: child);
-    return r as Widget;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildGestureDetector', [key, behavior, child]);
+    if (identical(_$r, notOverridden)) return super.buildGestureDetector(key: key, behavior: behavior, child: child);
+    return _$r as Widget;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

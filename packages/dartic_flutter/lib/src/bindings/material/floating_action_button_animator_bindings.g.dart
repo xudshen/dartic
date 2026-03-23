@@ -25,43 +25,43 @@ class _$FloatingActionButtonAnimator extends FloatingActionButtonAnimator implem
 
   @override
   Offset getOffset({required Offset begin, required Offset end, required double progress}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [begin, end, progress]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffset', [begin, end, progress]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getOffset must be overridden in dartic code');
     }
-    return r as Offset;
+    return _$r as Offset;
   }
 
   @override
   Animation<double> getScaleAnimation({required Animation<double> parent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getScaleAnimation', [parent]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getScaleAnimation', [parent]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getScaleAnimation must be overridden in dartic code');
     }
-    return r as Animation<double>;
+    return _$r as Animation<double>;
   }
 
   @override
   Animation<double> getRotationAnimation({required Animation<double> parent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRotationAnimation', [parent]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRotationAnimation', [parent]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getRotationAnimation must be overridden in dartic code');
     }
-    return r as Animation<double>;
+    return _$r as Animation<double>;
   }
 
   @override
   double getAnimationRestart(double previousValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAnimationRestart', [previousValue]);
-    if (identical(r, notOverridden)) return super.getAnimationRestart(previousValue);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAnimationRestart', [previousValue]);
+    if (identical(_$r, notOverridden)) return super.getAnimationRestart(previousValue);
+    return _$r as double;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

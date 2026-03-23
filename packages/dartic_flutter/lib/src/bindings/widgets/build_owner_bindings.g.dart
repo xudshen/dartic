@@ -29,39 +29,39 @@ class _$BuildOwner extends BuildOwner implements DarticObjectHolder {
 
   @override
   void scheduleBuildFor(Element element) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleBuildFor', [element]);
-    if (identical(r, notOverridden)) { super.scheduleBuildFor(element); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleBuildFor', [element]);
+    if (identical(_$r, notOverridden)) { super.scheduleBuildFor(element); return; }
   }
 
   @override
   void lockState(VoidCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockState', [callback]);
-    if (identical(r, notOverridden)) { super.lockState(() => callback()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockState', [callback]);
+    if (identical(_$r, notOverridden)) { super.lockState(() => callback()); return; }
   }
 
   @override
   void buildScope(Element context, [VoidCallback? callback]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildScope', [context, callback]);
-    if (identical(r, notOverridden)) { super.buildScope(context, callback != null ? () => callback() : null); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildScope', [context, callback]);
+    if (identical(_$r, notOverridden)) { super.buildScope(context, callback != null ? () => callback() : null); return; }
   }
 
   @override
   void finalizeTree() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'finalizeTree', const []);
-    if (identical(r, notOverridden)) { super.finalizeTree(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'finalizeTree', const []);
+    if (identical(_$r, notOverridden)) { super.finalizeTree(); return; }
   }
 
   @override
   void reassemble(Element root) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', [root]);
-    if (identical(r, notOverridden)) { super.reassemble(root); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', [root]);
+    if (identical(_$r, notOverridden)) { super.reassemble(root); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

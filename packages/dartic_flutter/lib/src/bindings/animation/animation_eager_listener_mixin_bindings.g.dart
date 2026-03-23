@@ -20,24 +20,24 @@ class _$AnimationEagerListenerMixin implements AnimationEagerListenerMixin, Dart
 
   @override
   void didRegisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void didUnregisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }

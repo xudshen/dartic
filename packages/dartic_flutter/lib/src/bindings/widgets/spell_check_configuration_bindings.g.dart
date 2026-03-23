@@ -28,16 +28,16 @@ class _$SpellCheckConfiguration extends SpellCheckConfiguration implements Darti
 
   @override
   SpellCheckConfiguration copyWith({SpellCheckService? spellCheckService, Color? misspelledSelectionColor, TextStyle? misspelledTextStyle, EditableTextContextMenuBuilder? spellCheckSuggestionsToolbarBuilder}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [spellCheckService, misspelledSelectionColor, misspelledTextStyle, spellCheckSuggestionsToolbarBuilder]);
-    if (identical(r, notOverridden)) return super.copyWith(spellCheckService: spellCheckService, misspelledSelectionColor: misspelledSelectionColor, misspelledTextStyle: misspelledTextStyle, spellCheckSuggestionsToolbarBuilder: spellCheckSuggestionsToolbarBuilder != null ? (a, b) => spellCheckSuggestionsToolbarBuilder(a, b) as Widget : null);
-    return r as SpellCheckConfiguration;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [spellCheckService, misspelledSelectionColor, misspelledTextStyle, spellCheckSuggestionsToolbarBuilder]);
+    if (identical(_$r, notOverridden)) return super.copyWith(spellCheckService: spellCheckService, misspelledSelectionColor: misspelledSelectionColor, misspelledTextStyle: misspelledTextStyle, spellCheckSuggestionsToolbarBuilder: spellCheckSuggestionsToolbarBuilder != null ? (a, b) => spellCheckSuggestionsToolbarBuilder(a, b) as Widget : null);
+    return _$r as SpellCheckConfiguration;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

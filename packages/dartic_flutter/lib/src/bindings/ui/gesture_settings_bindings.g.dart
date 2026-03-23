@@ -28,16 +28,16 @@ class _$GestureSettings extends GestureSettings implements DarticObjectHolder {
 
   @override
   GestureSettings copyWith({double? physicalTouchSlop, double? physicalDoubleTapSlop}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [physicalTouchSlop, physicalDoubleTapSlop]);
-    if (identical(r, notOverridden)) return super.copyWith(physicalTouchSlop: physicalTouchSlop, physicalDoubleTapSlop: physicalDoubleTapSlop);
-    return r as GestureSettings;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [physicalTouchSlop, physicalDoubleTapSlop]);
+    if (identical(_$r, notOverridden)) return super.copyWith(physicalTouchSlop: physicalTouchSlop, physicalDoubleTapSlop: physicalDoubleTapSlop);
+    return _$r as GestureSettings;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -18,44 +18,44 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Rectangle<num>? intersection(Rectangle<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersection', [other]);
-    if (identical(r, notOverridden)) return super.intersection(other);
-    return r as Rectangle<num>?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersection', [other]);
+    if (identical(_$r, notOverridden)) return super.intersection(other);
+    return _$r as Rectangle<num>?;
   }
 
   @override
   bool intersects(Rectangle<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersects', [other]);
-    if (identical(r, notOverridden)) return super.intersects(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersects', [other]);
+    if (identical(_$r, notOverridden)) return super.intersects(other);
+    return _$r as bool;
   }
 
   @override
   Rectangle<num> boundingBox(Rectangle<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'boundingBox', [other]);
-    if (identical(r, notOverridden)) return super.boundingBox(other);
-    return r as Rectangle<num>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'boundingBox', [other]);
+    if (identical(_$r, notOverridden)) return super.boundingBox(other);
+    return _$r as Rectangle<num>;
   }
 
   @override
   bool containsRectangle(Rectangle<num> another) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsRectangle', [another]);
-    if (identical(r, notOverridden)) return super.containsRectangle(another);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsRectangle', [another]);
+    if (identical(_$r, notOverridden)) return super.containsRectangle(another);
+    return _$r as bool;
   }
 
   @override
   bool containsPoint(Point<num> another) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsPoint', [another]);
-    if (identical(r, notOverridden)) return super.containsPoint(another);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsPoint', [another]);
+    if (identical(_$r, notOverridden)) return super.containsPoint(another);
+    return _$r as bool;
   }
 
   @override

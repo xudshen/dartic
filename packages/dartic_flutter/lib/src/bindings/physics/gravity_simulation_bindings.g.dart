@@ -22,30 +22,30 @@ class _$GravitySimulation extends GravitySimulation implements DarticObjectHolde
 
   @override
   double x(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
-    if (identical(r, notOverridden)) return super.x(time);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
+    if (identical(_$r, notOverridden)) return super.x(time);
+    return _$r as double;
   }
 
   @override
   double dx(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
-    if (identical(r, notOverridden)) return super.dx(time);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
+    if (identical(_$r, notOverridden)) return super.dx(time);
+    return _$r as double;
   }
 
   @override
   bool isDone(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
-    if (identical(r, notOverridden)) return super.isDone(time);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
+    if (identical(_$r, notOverridden)) return super.isDone(time);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

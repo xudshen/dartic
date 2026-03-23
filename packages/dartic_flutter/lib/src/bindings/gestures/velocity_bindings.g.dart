@@ -23,16 +23,16 @@ class _$Velocity extends Velocity implements DarticObjectHolder {
 
   @override
   Velocity clampMagnitude(double minValue, double maxValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clampMagnitude', [minValue, maxValue]);
-    if (identical(r, notOverridden)) return super.clampMagnitude(minValue, maxValue);
-    return r as Velocity;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clampMagnitude', [minValue, maxValue]);
+    if (identical(_$r, notOverridden)) return super.clampMagnitude(minValue, maxValue);
+    return _$r as Velocity;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

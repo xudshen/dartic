@@ -31,167 +31,167 @@ class _$AnimationController extends AnimationController implements DarticObjectH
 
   @override
   void resync(TickerProvider vsync) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resync', [vsync]);
-    if (identical(r, notOverridden)) { super.resync(vsync); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resync', [vsync]);
+    if (identical(_$r, notOverridden)) { super.resync(vsync); return; }
   }
 
   @override
   void reset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reset', const []);
-    if (identical(r, notOverridden)) { super.reset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reset', const []);
+    if (identical(_$r, notOverridden)) { super.reset(); return; }
   }
 
   @override
   TickerFuture forward({double? from}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forward', [from]);
-    if (identical(r, notOverridden)) return super.forward(from: from);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forward', [from]);
+    if (identical(_$r, notOverridden)) return super.forward(from: from);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture reverse({double? from}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reverse', [from]);
-    if (identical(r, notOverridden)) return super.reverse(from: from);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reverse', [from]);
+    if (identical(_$r, notOverridden)) return super.reverse(from: from);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture toggle({double? from}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggle', [from]);
-    if (identical(r, notOverridden)) return super.toggle(from: from);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggle', [from]);
+    if (identical(_$r, notOverridden)) return super.toggle(from: from);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture animateTo(double target, {Duration? duration, Curve curve = Curves.linear}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [target, duration, curve]);
-    if (identical(r, notOverridden)) return super.animateTo(target, duration: duration, curve: curve);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [target, duration, curve]);
+    if (identical(_$r, notOverridden)) return super.animateTo(target, duration: duration, curve: curve);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture animateBack(double target, {Duration? duration, Curve curve = Curves.linear}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateBack', [target, duration, curve]);
-    if (identical(r, notOverridden)) return super.animateBack(target, duration: duration, curve: curve);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateBack', [target, duration, curve]);
+    if (identical(_$r, notOverridden)) return super.animateBack(target, duration: duration, curve: curve);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture repeat({double? min, double? max, bool reverse = false, Duration? period, int? count}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'repeat', [min, max, reverse, period, count]);
-    if (identical(r, notOverridden)) return super.repeat(min: min, max: max, reverse: reverse, period: period, count: count);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'repeat', [min, max, reverse, period, count]);
+    if (identical(_$r, notOverridden)) return super.repeat(min: min, max: max, reverse: reverse, period: period, count: count);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture fling({double velocity = 1.0, SpringDescription? springDescription, AnimationBehavior? animationBehavior}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fling', [velocity, springDescription, animationBehavior]);
-    if (identical(r, notOverridden)) return super.fling(velocity: velocity, springDescription: springDescription, animationBehavior: animationBehavior);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fling', [velocity, springDescription, animationBehavior]);
+    if (identical(_$r, notOverridden)) return super.fling(velocity: velocity, springDescription: springDescription, animationBehavior: animationBehavior);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture animateWith(Simulation simulation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateWith', [simulation]);
-    if (identical(r, notOverridden)) return super.animateWith(simulation);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateWith', [simulation]);
+    if (identical(_$r, notOverridden)) return super.animateWith(simulation);
+    return _$r as TickerFuture;
   }
 
   @override
   TickerFuture animateBackWith(Simulation simulation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateBackWith', [simulation]);
-    if (identical(r, notOverridden)) return super.animateBackWith(simulation);
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateBackWith', [simulation]);
+    if (identical(_$r, notOverridden)) return super.animateBackWith(simulation);
+    return _$r as TickerFuture;
   }
 
   @override
   void stop({bool canceled = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [canceled]);
-    if (identical(r, notOverridden)) { super.stop(canceled: canceled); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [canceled]);
+    if (identical(_$r, notOverridden)) { super.stop(canceled: canceled); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toStringDetails() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDetails', const []);
-    if (identical(r, notOverridden)) return super.toStringDetails();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDetails', const []);
+    if (identical(_$r, notOverridden)) return super.toStringDetails();
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(ui.VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void addStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
-    if (identical(r, notOverridden)) { super.addStatusListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addStatusListener((a) => listener(a)); return; }
   }
 
   @override
   void removeStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeStatusListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeStatusListener((a) => listener(a)); return; }
   }
 
   @override
   void didRegisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void didUnregisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void clearListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListeners', const []);
-    if (identical(r, notOverridden)) { super.clearListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearListeners', const []);
+    if (identical(_$r, notOverridden)) { super.clearListeners(); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override
   void clearStatusListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearStatusListeners', const []);
-    if (identical(r, notOverridden)) { super.clearStatusListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearStatusListeners', const []);
+    if (identical(_$r, notOverridden)) { super.clearStatusListeners(); return; }
   }
 
   @override
   void notifyStatusListeners(AnimationStatus status) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyStatusListeners', [status]);
-    if (identical(r, notOverridden)) { super.notifyStatusListeners(status); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyStatusListeners', [status]);
+    if (identical(_$r, notOverridden)) { super.notifyStatusListeners(status); return; }
   }
 
   @override

@@ -21,35 +21,35 @@ class _$BinaryMessenger extends BinaryMessenger implements DarticObjectHolder {
 
   @override
   Future<void> handlePlatformMessage(String channel, ByteData? data, ui.PlatformMessageResponseCallback? callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformMessage', [channel, data, callback]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformMessage', [channel, data, callback]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handlePlatformMessage must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<ByteData?>? send(String channel, ByteData? message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'send', [channel, message]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'send', [channel, message]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method send must be overridden in dartic code');
     }
-    return r as Future<ByteData?>?;
+    return _$r as Future<ByteData?>?;
   }
 
   @override
   void setMessageHandler(String channel, MessageHandler? handler) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMessageHandler', [channel, handler]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMessageHandler', [channel, handler]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setMessageHandler must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -23,44 +23,44 @@ class _$AlignmentTween extends AlignmentTween implements DarticObjectHolder {
 
   @override
   Alignment lerp(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
-    if (identical(r, notOverridden)) return super.lerp(t);
-    return r as Alignment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerp', [t]);
+    if (identical(_$r, notOverridden)) return super.lerp(t);
+    return _$r as Alignment;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Alignment transform(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
-    if (identical(r, notOverridden)) return super.transform(t);
-    return r as Alignment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(_$r, notOverridden)) return super.transform(t);
+    return _$r as Alignment;
   }
 
   @override
   Alignment evaluate(Animation<double> animation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
-    if (identical(r, notOverridden)) return super.evaluate(animation);
-    return r as Alignment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evaluate', [animation]);
+    if (identical(_$r, notOverridden)) return super.evaluate(animation);
+    return _$r as Alignment;
   }
 
   @override
   Animation<Alignment> animate(Animation<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
-    if (identical(r, notOverridden)) return super.animate(parent);
-    return r as Animation<Alignment>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animate', [parent]);
+    if (identical(_$r, notOverridden)) return super.animate(parent);
+    return _$r as Animation<Alignment>;
   }
 
   @override
   Animatable<Alignment> chain(Animatable<double> parent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
-    if (identical(r, notOverridden)) return super.chain(parent);
-    return r as Animatable<Alignment>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'chain', [parent]);
+    if (identical(_$r, notOverridden)) return super.chain(parent);
+    return _$r as Animatable<Alignment>;
   }
 
   @override

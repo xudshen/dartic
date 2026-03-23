@@ -25,30 +25,30 @@ class _$NoDefaultCupertinoThemeData extends NoDefaultCupertinoThemeData implemen
 
   @override
   NoDefaultCupertinoThemeData noDefault() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'noDefault', const []);
-    if (identical(r, notOverridden)) return super.noDefault();
-    return r as NoDefaultCupertinoThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'noDefault', const []);
+    if (identical(_$r, notOverridden)) return super.noDefault();
+    return _$r as NoDefaultCupertinoThemeData;
   }
 
   @override
   NoDefaultCupertinoThemeData resolveFrom(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
-    if (identical(r, notOverridden)) return super.resolveFrom(context);
-    return r as NoDefaultCupertinoThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
+    if (identical(_$r, notOverridden)) return super.resolveFrom(context);
+    return _$r as NoDefaultCupertinoThemeData;
   }
 
   @override
   NoDefaultCupertinoThemeData copyWith({Brightness? brightness, Color? primaryColor, Color? primaryContrastingColor, CupertinoTextThemeData? textTheme, Color? barBackgroundColor, Color? scaffoldBackgroundColor, Color? selectionHandleColor, bool? applyThemeToAll}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [brightness, primaryColor, primaryContrastingColor, textTheme, barBackgroundColor, scaffoldBackgroundColor, selectionHandleColor, applyThemeToAll]);
-    if (identical(r, notOverridden)) return super.copyWith(brightness: brightness, primaryColor: primaryColor, primaryContrastingColor: primaryContrastingColor, textTheme: textTheme, barBackgroundColor: barBackgroundColor, scaffoldBackgroundColor: scaffoldBackgroundColor, selectionHandleColor: selectionHandleColor, applyThemeToAll: applyThemeToAll);
-    return r as NoDefaultCupertinoThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [brightness, primaryColor, primaryContrastingColor, textTheme, barBackgroundColor, scaffoldBackgroundColor, selectionHandleColor, applyThemeToAll]);
+    if (identical(_$r, notOverridden)) return super.copyWith(brightness: brightness, primaryColor: primaryColor, primaryContrastingColor: primaryContrastingColor, textTheme: textTheme, barBackgroundColor: barBackgroundColor, scaffoldBackgroundColor: scaffoldBackgroundColor, selectionHandleColor: selectionHandleColor, applyThemeToAll: applyThemeToAll);
+    return _$r as NoDefaultCupertinoThemeData;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

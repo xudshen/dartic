@@ -23,30 +23,30 @@ class _$SensitiveContentService extends SensitiveContentService implements Darti
 
   @override
   Future<void> setContentSensitivity(ContentSensitivity contentSensitivity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setContentSensitivity', [contentSensitivity]);
-    if (identical(r, notOverridden)) return super.setContentSensitivity(contentSensitivity);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setContentSensitivity', [contentSensitivity]);
+    if (identical(_$r, notOverridden)) return super.setContentSensitivity(contentSensitivity);
+    return _$r as Future<void>;
   }
 
   @override
   Future<ContentSensitivity> getContentSensitivity() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getContentSensitivity', const []);
-    if (identical(r, notOverridden)) return super.getContentSensitivity();
-    return r as Future<ContentSensitivity>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getContentSensitivity', const []);
+    if (identical(_$r, notOverridden)) return super.getContentSensitivity();
+    return _$r as Future<ContentSensitivity>;
   }
 
   @override
   Future<bool> isSupported() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSupported', const []);
-    if (identical(r, notOverridden)) return super.isSupported();
-    return r as Future<bool>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSupported', const []);
+    if (identical(_$r, notOverridden)) return super.isSupported();
+    return _$r as Future<bool>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

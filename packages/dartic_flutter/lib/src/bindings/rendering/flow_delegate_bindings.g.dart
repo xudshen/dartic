@@ -25,47 +25,47 @@ class _$FlowDelegate extends FlowDelegate implements DarticObjectHolder {
 
   @override
   ui.Size getSize(BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSize', [constraints]);
-    if (identical(r, notOverridden)) return super.getSize(constraints);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSize', [constraints]);
+    if (identical(_$r, notOverridden)) return super.getSize(constraints);
+    return _$r as ui.Size;
   }
 
   @override
   BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getConstraintsForChild', [i, constraints]);
-    if (identical(r, notOverridden)) return super.getConstraintsForChild(i, constraints);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getConstraintsForChild', [i, constraints]);
+    if (identical(_$r, notOverridden)) return super.getConstraintsForChild(i, constraints);
+    return _$r as BoxConstraints;
   }
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChildren', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChildren', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paintChildren must be overridden in dartic code');
     }
   }
 
   @override
   bool shouldRelayout(FlowDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
-    if (identical(r, notOverridden)) return super.shouldRelayout(oldDelegate);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
+    if (identical(_$r, notOverridden)) return super.shouldRelayout(oldDelegate);
+    return _$r as bool;
   }
 
   @override
   bool shouldRepaint(FlowDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRepaint', [oldDelegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRepaint', [oldDelegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldRepaint must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -23,56 +23,56 @@ class _$StandardMessageCodec extends StandardMessageCodec implements DarticObjec
 
   @override
   ByteData? encodeMessage(Object? message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMessage', [message]);
-    if (identical(r, notOverridden)) return super.encodeMessage(message);
-    return r as ByteData?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMessage', [message]);
+    if (identical(_$r, notOverridden)) return super.encodeMessage(message);
+    return _$r as ByteData?;
   }
 
   @override
   dynamic decodeMessage(ByteData? message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMessage', [message]);
-    if (identical(r, notOverridden)) return super.decodeMessage(message);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMessage', [message]);
+    if (identical(_$r, notOverridden)) return super.decodeMessage(message);
+    return _$r as dynamic;
   }
 
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeValue', [buffer, value]);
-    if (identical(r, notOverridden)) { super.writeValue(buffer, value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeValue', [buffer, value]);
+    if (identical(_$r, notOverridden)) { super.writeValue(buffer, value); return; }
   }
 
   @override
   Object? readValue(ReadBuffer buffer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readValue', [buffer]);
-    if (identical(r, notOverridden)) return super.readValue(buffer);
-    return r as Object?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readValue', [buffer]);
+    if (identical(_$r, notOverridden)) return super.readValue(buffer);
+    return _$r as Object?;
   }
 
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readValueOfType', [type, buffer]);
-    if (identical(r, notOverridden)) return super.readValueOfType(type, buffer);
-    return r as Object?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readValueOfType', [type, buffer]);
+    if (identical(_$r, notOverridden)) return super.readValueOfType(type, buffer);
+    return _$r as Object?;
   }
 
   @override
   void writeSize(WriteBuffer buffer, int value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeSize', [buffer, value]);
-    if (identical(r, notOverridden)) { super.writeSize(buffer, value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeSize', [buffer, value]);
+    if (identical(_$r, notOverridden)) { super.writeSize(buffer, value); return; }
   }
 
   @override
   int readSize(ReadBuffer buffer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readSize', [buffer]);
-    if (identical(r, notOverridden)) return super.readSize(buffer);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readSize', [buffer]);
+    if (identical(_$r, notOverridden)) return super.readSize(buffer);
+    return _$r as int;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

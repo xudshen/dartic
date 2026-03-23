@@ -47,107 +47,107 @@ class _$TextSelectionHandleControls implements TextSelectionHandleControls, Dart
 
   @override
   Widget buildToolbar(BuildContext context, Rect globalEditableRegion, double textLineHeight, Offset selectionMidpoint, List<TextSelectionPoint> endpoints, TextSelectionDelegate delegate, ValueListenable<ClipboardStatus>? clipboardStatus, Offset? lastSecondaryTapDownPosition) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildToolbar', [context, globalEditableRegion, textLineHeight, selectionMidpoint, endpoints, delegate, clipboardStatus, lastSecondaryTapDownPosition]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildToolbar', [context, globalEditableRegion, textLineHeight, selectionMidpoint, endpoints, delegate, clipboardStatus, lastSecondaryTapDownPosition]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildToolbar must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   bool canCut(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCut', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCut', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method canCut must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool canCopy(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCopy', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canCopy', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method canCopy must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool canPaste(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canPaste', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canPaste', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method canPaste must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool canSelectAll(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canSelectAll', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canSelectAll', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method canSelectAll must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void handleCut(TextSelectionDelegate delegate, [ClipboardStatusNotifier? clipboardStatus]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCut', [delegate, clipboardStatus]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCut', [delegate, clipboardStatus]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleCut must be overridden in dartic code');
     }
   }
 
   @override
   void handleCopy(TextSelectionDelegate delegate, [ClipboardStatusNotifier? clipboardStatus]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCopy', [delegate, clipboardStatus]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCopy', [delegate, clipboardStatus]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleCopy must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> handlePaste(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePaste', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePaste', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handlePaste must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   void handleSelectAll(TextSelectionDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectAll', [delegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectAll', [delegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleSelectAll must be overridden in dartic code');
     }
   }
 
   @override
   Widget buildHandle(BuildContext context, TextSelectionHandleType type, double textLineHeight, [VoidCallback? onTap]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildHandle', [context, type, textLineHeight, onTap]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildHandle', [context, type, textLineHeight, onTap]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildHandle must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   Offset getHandleAnchor(TextSelectionHandleType type, double textLineHeight) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleAnchor', [type, textLineHeight]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleAnchor', [type, textLineHeight]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getHandleAnchor must be overridden in dartic code');
     }
-    return r as Offset;
+    return _$r as Offset;
   }
 
   @override
   Size getHandleSize(double textLineHeight) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleSize', [textLineHeight]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHandleSize', [textLineHeight]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getHandleSize must be overridden in dartic code');
     }
-    return r as Size;
+    return _$r as Size;
   }
 
   @override

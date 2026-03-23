@@ -22,18 +22,18 @@ class _$NotchedShape extends NotchedShape implements DarticObjectHolder {
 
   @override
   Path getOuterPath(Rect host, Rect? guest) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [host, guest]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOuterPath', [host, guest]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getOuterPath must be overridden in dartic code');
     }
-    return r as Path;
+    return _$r as Path;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

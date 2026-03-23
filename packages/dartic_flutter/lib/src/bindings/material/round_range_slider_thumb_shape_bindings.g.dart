@@ -30,22 +30,22 @@ class _$RoundRangeSliderThumbShape extends RoundRangeSliderThumbShape implements
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
-    if (identical(r, notOverridden)) return super.getPreferredSize(isEnabled, isDiscrete);
-    return r as Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
+    if (identical(_$r, notOverridden)) return super.getPreferredSize(isEnabled, isDiscrete);
+    return _$r as Size;
   }
 
   @override
   void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, bool isDiscrete = false, bool isEnabled = false, bool? isOnTop, required SliderThemeData sliderTheme, TextDirection? textDirection, Thumb? thumb, bool? isPressed}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isEnabled, isOnTop, sliderTheme, textDirection, thumb, isPressed]);
-    if (identical(r, notOverridden)) { super.paint(context, center, activationAnimation: activationAnimation, enableAnimation: enableAnimation, isDiscrete: isDiscrete, isEnabled: isEnabled, isOnTop: isOnTop, sliderTheme: sliderTheme, textDirection: textDirection, thumb: thumb, isPressed: isPressed); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isEnabled, isOnTop, sliderTheme, textDirection, thumb, isPressed]);
+    if (identical(_$r, notOverridden)) { super.paint(context, center, activationAnimation: activationAnimation, enableAnimation: enableAnimation, isDiscrete: isDiscrete, isEnabled: isEnabled, isOnTop: isOnTop, sliderTheme: sliderTheme, textDirection: textDirection, thumb: thumb, isPressed: isPressed); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

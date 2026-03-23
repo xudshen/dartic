@@ -28,23 +28,23 @@ class _$Shadow extends Shadow implements DarticObjectHolder {
 
   @override
   Paint toPaint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPaint', const []);
-    if (identical(r, notOverridden)) return super.toPaint();
-    return r as Paint;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPaint', const []);
+    if (identical(_$r, notOverridden)) return super.toPaint();
+    return _$r as Paint;
   }
 
   @override
   Shadow scale(double factor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
-    if (identical(r, notOverridden)) return super.scale(factor);
-    return r as Shadow;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(_$r, notOverridden)) return super.scale(factor);
+    return _$r as Shadow;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

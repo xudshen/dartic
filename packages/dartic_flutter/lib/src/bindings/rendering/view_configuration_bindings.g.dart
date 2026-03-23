@@ -28,30 +28,30 @@ class _$ViewConfiguration extends ViewConfiguration implements DarticObjectHolde
 
   @override
   Matrix4 toMatrix() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMatrix', const []);
-    if (identical(r, notOverridden)) return super.toMatrix();
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMatrix', const []);
+    if (identical(_$r, notOverridden)) return super.toMatrix();
+    return _$r as Matrix4;
   }
 
   @override
   bool shouldUpdateMatrix(ViewConfiguration oldConfiguration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldUpdateMatrix', [oldConfiguration]);
-    if (identical(r, notOverridden)) return super.shouldUpdateMatrix(oldConfiguration);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldUpdateMatrix', [oldConfiguration]);
+    if (identical(_$r, notOverridden)) return super.shouldUpdateMatrix(oldConfiguration);
+    return _$r as bool;
   }
 
   @override
   ui.Size toPhysicalSize(ui.Size logicalSize) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPhysicalSize', [logicalSize]);
-    if (identical(r, notOverridden)) return super.toPhysicalSize(logicalSize);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPhysicalSize', [logicalSize]);
+    if (identical(_$r, notOverridden)) return super.toPhysicalSize(logicalSize);
+    return _$r as ui.Size;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

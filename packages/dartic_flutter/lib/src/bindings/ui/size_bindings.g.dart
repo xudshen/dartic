@@ -28,79 +28,79 @@ class _$Size extends Size implements DarticObjectHolder {
 
   @override
   Offset topLeft(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topLeft', [origin]);
-    if (identical(r, notOverridden)) return super.topLeft(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topLeft', [origin]);
+    if (identical(_$r, notOverridden)) return super.topLeft(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset topCenter(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topCenter', [origin]);
-    if (identical(r, notOverridden)) return super.topCenter(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topCenter', [origin]);
+    if (identical(_$r, notOverridden)) return super.topCenter(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset topRight(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topRight', [origin]);
-    if (identical(r, notOverridden)) return super.topRight(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'topRight', [origin]);
+    if (identical(_$r, notOverridden)) return super.topRight(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset centerLeft(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'centerLeft', [origin]);
-    if (identical(r, notOverridden)) return super.centerLeft(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'centerLeft', [origin]);
+    if (identical(_$r, notOverridden)) return super.centerLeft(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset center(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'center', [origin]);
-    if (identical(r, notOverridden)) return super.center(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'center', [origin]);
+    if (identical(_$r, notOverridden)) return super.center(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset centerRight(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'centerRight', [origin]);
-    if (identical(r, notOverridden)) return super.centerRight(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'centerRight', [origin]);
+    if (identical(_$r, notOverridden)) return super.centerRight(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset bottomLeft(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomLeft', [origin]);
-    if (identical(r, notOverridden)) return super.bottomLeft(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomLeft', [origin]);
+    if (identical(_$r, notOverridden)) return super.bottomLeft(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset bottomCenter(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomCenter', [origin]);
-    if (identical(r, notOverridden)) return super.bottomCenter(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomCenter', [origin]);
+    if (identical(_$r, notOverridden)) return super.bottomCenter(origin);
+    return _$r as Offset;
   }
 
   @override
   Offset bottomRight(Offset origin) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomRight', [origin]);
-    if (identical(r, notOverridden)) return super.bottomRight(origin);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bottomRight', [origin]);
+    if (identical(_$r, notOverridden)) return super.bottomRight(origin);
+    return _$r as Offset;
   }
 
   @override
   bool contains(Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [offset]);
-    if (identical(r, notOverridden)) return super.contains(offset);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [offset]);
+    if (identical(_$r, notOverridden)) return super.contains(offset);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

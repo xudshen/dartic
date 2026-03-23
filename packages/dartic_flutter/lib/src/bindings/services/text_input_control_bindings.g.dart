@@ -32,104 +32,104 @@ class _$TextInputControl implements TextInputControl, DarticObjectHolder {
 
   @override
   void attach(TextInputClient client, TextInputConfiguration configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [client, configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [client, configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method attach must be overridden in dartic code');
     }
   }
 
   @override
   void detach(TextInputClient client) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', [client]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', [client]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method detach must be overridden in dartic code');
     }
   }
 
   @override
   void show() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method show must be overridden in dartic code');
     }
   }
 
   @override
   void hide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hide must be overridden in dartic code');
     }
   }
 
   @override
   void updateConfig(TextInputConfiguration configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateConfig', [configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateConfig', [configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method updateConfig must be overridden in dartic code');
     }
   }
 
   @override
   void setEditingState(TextEditingValue value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setEditingState', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setEditingState', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setEditingState must be overridden in dartic code');
     }
   }
 
   @override
   void setEditableSizeAndTransform(Size editableBoxSize, Matrix4 transform) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setEditableSizeAndTransform', [editableBoxSize, transform]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setEditableSizeAndTransform', [editableBoxSize, transform]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setEditableSizeAndTransform must be overridden in dartic code');
     }
   }
 
   @override
   void setComposingRect(Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setComposingRect', [rect]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setComposingRect', [rect]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setComposingRect must be overridden in dartic code');
     }
   }
 
   @override
   void setCaretRect(Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setCaretRect', [rect]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setCaretRect', [rect]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setCaretRect must be overridden in dartic code');
     }
   }
 
   @override
   void setSelectionRects(List<SelectionRect> selectionRects) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelectionRects', [selectionRects]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelectionRects', [selectionRects]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setSelectionRects must be overridden in dartic code');
     }
   }
 
   @override
   void setStyle({required String? fontFamily, required double? fontSize, required FontWeight? fontWeight, required TextDirection textDirection, required TextAlign textAlign}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setStyle', [fontFamily, fontSize, fontWeight, textDirection, textAlign]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setStyle', [fontFamily, fontSize, fontWeight, textDirection, textAlign]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setStyle must be overridden in dartic code');
     }
   }
 
   @override
   void requestAutofill() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestAutofill', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestAutofill', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method requestAutofill must be overridden in dartic code');
     }
   }
 
   @override
   void finishAutofillContext({bool shouldSave = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'finishAutofillContext', [shouldSave]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'finishAutofillContext', [shouldSave]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method finishAutofillContext must be overridden in dartic code');
     }
   }

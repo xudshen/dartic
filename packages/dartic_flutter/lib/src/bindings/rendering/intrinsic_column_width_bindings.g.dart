@@ -25,30 +25,30 @@ class _$IntrinsicColumnWidth extends IntrinsicColumnWidth implements DarticObjec
 
   @override
   double minIntrinsicWidth(Iterable<RenderBox> cells, double containerWidth) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'minIntrinsicWidth', [cells, containerWidth]);
-    if (identical(r, notOverridden)) return super.minIntrinsicWidth(cells, containerWidth);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'minIntrinsicWidth', [cells, containerWidth]);
+    if (identical(_$r, notOverridden)) return super.minIntrinsicWidth(cells, containerWidth);
+    return _$r as double;
   }
 
   @override
   double maxIntrinsicWidth(Iterable<RenderBox> cells, double containerWidth) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'maxIntrinsicWidth', [cells, containerWidth]);
-    if (identical(r, notOverridden)) return super.maxIntrinsicWidth(cells, containerWidth);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'maxIntrinsicWidth', [cells, containerWidth]);
+    if (identical(_$r, notOverridden)) return super.maxIntrinsicWidth(cells, containerWidth);
+    return _$r as double;
   }
 
   @override
   double? flex(Iterable<RenderBox> cells) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'flex', [cells]);
-    if (identical(r, notOverridden)) return super.flex(cells);
-    return r as double?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'flex', [cells]);
+    if (identical(_$r, notOverridden)) return super.flex(cells);
+    return _$r as double?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

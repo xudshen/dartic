@@ -30,108 +30,108 @@ class _$SemanticsNode extends SemanticsNode implements DarticObjectHolder {
 
   @override
   void visitChildren(SemanticsNodeVisitor visitor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
-    if (identical(r, notOverridden)) { super.visitChildren((a) => visitor(a) as bool); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
+    if (identical(_$r, notOverridden)) { super.visitChildren((a) => visitor(a) as bool); return; }
   }
 
   @override
   void attach(SemanticsOwner owner) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
-    if (identical(r, notOverridden)) { super.attach(owner); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [owner]);
+    if (identical(_$r, notOverridden)) { super.attach(owner); return; }
   }
 
   @override
   void detach() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
-    if (identical(r, notOverridden)) { super.detach(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(_$r, notOverridden)) { super.detach(); return; }
   }
 
   @override
   bool isTagged(SemanticsTag tag) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isTagged', [tag]);
-    if (identical(r, notOverridden)) return super.isTagged(tag);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isTagged', [tag]);
+    if (identical(_$r, notOverridden)) return super.isTagged(tag);
+    return _$r as bool;
   }
 
   @override
   bool hasFlag(SemanticsFlag flag) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasFlag', [flag]);
-    if (identical(r, notOverridden)) return super.hasFlag(flag);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasFlag', [flag]);
+    if (identical(_$r, notOverridden)) return super.hasFlag(flag);
+    return _$r as bool;
   }
 
   @override
   void updateWith({required SemanticsConfiguration? config, List<SemanticsNode>? childrenInInversePaintOrder}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateWith', [config, childrenInInversePaintOrder]);
-    if (identical(r, notOverridden)) { super.updateWith(config: config, childrenInInversePaintOrder: childrenInInversePaintOrder); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateWith', [config, childrenInInversePaintOrder]);
+    if (identical(_$r, notOverridden)) { super.updateWith(config: config, childrenInInversePaintOrder: childrenInInversePaintOrder); return; }
   }
 
   @override
   SemanticsData getSemanticsData() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSemanticsData', const []);
-    if (identical(r, notOverridden)) return super.getSemanticsData();
-    return r as SemanticsData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSemanticsData', const []);
+    if (identical(_$r, notOverridden)) return super.getSemanticsData();
+    return _$r as SemanticsData;
   }
 
   @override
   void sendEvent(SemanticsEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendEvent', [event]);
-    if (identical(r, notOverridden)) { super.sendEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.sendEvent(event); return; }
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, DebugSemanticsDumpOrder childOrder = DebugSemanticsDumpOrder.traversalOrder, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, childOrder, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, childOrder: childOrder, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, childOrder, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, childOrder: childOrder, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style = DiagnosticsTreeStyle.sparse, DebugSemanticsDumpOrder childOrder = DebugSemanticsDumpOrder.traversalOrder}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style, childOrder]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style, childOrder: childOrder);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style, childOrder]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style, childOrder: childOrder);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren({DebugSemanticsDumpOrder childOrder = DebugSemanticsDumpOrder.inverseHitTest}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', [childOrder]);
-    if (identical(r, notOverridden)) return super.debugDescribeChildren(childOrder: childOrder);
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', [childOrder]);
+    if (identical(_$r, notOverridden)) return super.debugDescribeChildren(childOrder: childOrder);
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   List<SemanticsNode> debugListChildrenInOrder(DebugSemanticsDumpOrder childOrder) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugListChildrenInOrder', [childOrder]);
-    if (identical(r, notOverridden)) return super.debugListChildrenInOrder(childOrder);
-    return r as List<SemanticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugListChildrenInOrder', [childOrder]);
+    if (identical(_$r, notOverridden)) return super.debugListChildrenInOrder(childOrder);
+    return _$r as List<SemanticsNode>;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override

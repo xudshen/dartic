@@ -24,23 +24,23 @@ class _$SliverGridDelegateWithMaxCrossAxisExtent extends SliverGridDelegateWithM
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLayout', [constraints]);
-    if (identical(r, notOverridden)) return super.getLayout(constraints);
-    return r as SliverGridLayout;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLayout', [constraints]);
+    if (identical(_$r, notOverridden)) return super.getLayout(constraints);
+    return _$r as SliverGridLayout;
   }
 
   @override
   bool shouldRelayout(SliverGridDelegateWithMaxCrossAxisExtent oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
-    if (identical(r, notOverridden)) return super.shouldRelayout(oldDelegate);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
+    if (identical(_$r, notOverridden)) return super.shouldRelayout(oldDelegate);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

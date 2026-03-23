@@ -41,43 +41,43 @@ class _$InputDecorationThemeData extends InputDecorationThemeData implements Dar
 
   @override
   InputDecorationThemeData copyWith({TextStyle? labelStyle, TextStyle? floatingLabelStyle, TextStyle? helperStyle, int? helperMaxLines, TextStyle? hintStyle, Duration? hintFadeDuration, int? hintMaxLines, TextStyle? errorStyle, int? errorMaxLines, FloatingLabelBehavior? floatingLabelBehavior, FloatingLabelAlignment? floatingLabelAlignment, bool? isDense, EdgeInsetsGeometry? contentPadding, bool? isCollapsed, Color? iconColor, TextStyle? prefixStyle, Color? prefixIconColor, BoxConstraints? prefixIconConstraints, TextStyle? suffixStyle, Color? suffixIconColor, BoxConstraints? suffixIconConstraints, TextStyle? counterStyle, bool? filled, Color? fillColor, BorderSide? activeIndicatorBorder, BorderSide? outlineBorder, Color? focusColor, Color? hoverColor, InputBorder? errorBorder, InputBorder? focusedBorder, InputBorder? focusedErrorBorder, InputBorder? disabledBorder, InputBorder? enabledBorder, InputBorder? border, bool? alignLabelWithHint, BoxConstraints? constraints, VisualDensity? visualDensity}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [labelStyle, floatingLabelStyle, helperStyle, helperMaxLines, hintStyle, hintFadeDuration, hintMaxLines, errorStyle, errorMaxLines, floatingLabelBehavior, floatingLabelAlignment, isDense, contentPadding, isCollapsed, iconColor, prefixStyle, prefixIconColor, prefixIconConstraints, suffixStyle, suffixIconColor, suffixIconConstraints, counterStyle, filled, fillColor, activeIndicatorBorder, outlineBorder, focusColor, hoverColor, errorBorder, focusedBorder, focusedErrorBorder, disabledBorder, enabledBorder, border, alignLabelWithHint, constraints, visualDensity]);
-    if (identical(r, notOverridden)) return super.copyWith(labelStyle: labelStyle, floatingLabelStyle: floatingLabelStyle, helperStyle: helperStyle, helperMaxLines: helperMaxLines, hintStyle: hintStyle, hintFadeDuration: hintFadeDuration, hintMaxLines: hintMaxLines, errorStyle: errorStyle, errorMaxLines: errorMaxLines, floatingLabelBehavior: floatingLabelBehavior, floatingLabelAlignment: floatingLabelAlignment, isDense: isDense, contentPadding: contentPadding, isCollapsed: isCollapsed, iconColor: iconColor, prefixStyle: prefixStyle, prefixIconColor: prefixIconColor, prefixIconConstraints: prefixIconConstraints, suffixStyle: suffixStyle, suffixIconColor: suffixIconColor, suffixIconConstraints: suffixIconConstraints, counterStyle: counterStyle, filled: filled, fillColor: fillColor, activeIndicatorBorder: activeIndicatorBorder, outlineBorder: outlineBorder, focusColor: focusColor, hoverColor: hoverColor, errorBorder: errorBorder, focusedBorder: focusedBorder, focusedErrorBorder: focusedErrorBorder, disabledBorder: disabledBorder, enabledBorder: enabledBorder, border: border, alignLabelWithHint: alignLabelWithHint, constraints: constraints, visualDensity: visualDensity);
-    return r as InputDecorationThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [labelStyle, floatingLabelStyle, helperStyle, helperMaxLines, hintStyle, hintFadeDuration, hintMaxLines, errorStyle, errorMaxLines, floatingLabelBehavior, floatingLabelAlignment, isDense, contentPadding, isCollapsed, iconColor, prefixStyle, prefixIconColor, prefixIconConstraints, suffixStyle, suffixIconColor, suffixIconConstraints, counterStyle, filled, fillColor, activeIndicatorBorder, outlineBorder, focusColor, hoverColor, errorBorder, focusedBorder, focusedErrorBorder, disabledBorder, enabledBorder, border, alignLabelWithHint, constraints, visualDensity]);
+    if (identical(_$r, notOverridden)) return super.copyWith(labelStyle: labelStyle, floatingLabelStyle: floatingLabelStyle, helperStyle: helperStyle, helperMaxLines: helperMaxLines, hintStyle: hintStyle, hintFadeDuration: hintFadeDuration, hintMaxLines: hintMaxLines, errorStyle: errorStyle, errorMaxLines: errorMaxLines, floatingLabelBehavior: floatingLabelBehavior, floatingLabelAlignment: floatingLabelAlignment, isDense: isDense, contentPadding: contentPadding, isCollapsed: isCollapsed, iconColor: iconColor, prefixStyle: prefixStyle, prefixIconColor: prefixIconColor, prefixIconConstraints: prefixIconConstraints, suffixStyle: suffixStyle, suffixIconColor: suffixIconColor, suffixIconConstraints: suffixIconConstraints, counterStyle: counterStyle, filled: filled, fillColor: fillColor, activeIndicatorBorder: activeIndicatorBorder, outlineBorder: outlineBorder, focusColor: focusColor, hoverColor: hoverColor, errorBorder: errorBorder, focusedBorder: focusedBorder, focusedErrorBorder: focusedErrorBorder, disabledBorder: disabledBorder, enabledBorder: enabledBorder, border: border, alignLabelWithHint: alignLabelWithHint, constraints: constraints, visualDensity: visualDensity);
+    return _$r as InputDecorationThemeData;
   }
 
   @override
   InputDecorationThemeData merge(InputDecorationThemeData? other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
-    if (identical(r, notOverridden)) return super.merge(other);
-    return r as InputDecorationThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
+    if (identical(_$r, notOverridden)) return super.merge(other);
+    return _$r as InputDecorationThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

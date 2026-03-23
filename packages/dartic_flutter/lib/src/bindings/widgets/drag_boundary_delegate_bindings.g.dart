@@ -20,27 +20,27 @@ class _$DragBoundaryDelegate extends DragBoundaryDelegate<dynamic> implements Da
 
   @override
   bool isWithinBoundary(dynamic draggedObject) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWithinBoundary', [draggedObject]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWithinBoundary', [draggedObject]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isWithinBoundary must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   dynamic nearestPositionWithinBoundary(dynamic draggedObject) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nearestPositionWithinBoundary', [draggedObject]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nearestPositionWithinBoundary', [draggedObject]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nearestPositionWithinBoundary must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

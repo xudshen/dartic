@@ -24,26 +24,26 @@ class _$FlowPaintingContext extends FlowPaintingContext implements DarticObjectH
 
   @override
   ui.Size? getChildSize(int i) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildSize', [i]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildSize', [i]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getChildSize must be overridden in dartic code');
     }
-    return r as ui.Size?;
+    return _$r as ui.Size?;
   }
 
   @override
   void paintChild(int i, {Object? transform = darticAbsent, double opacity = 1.0}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChild', [i, transform, opacity]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChild', [i, transform, opacity]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paintChild must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

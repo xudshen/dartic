@@ -21,39 +21,39 @@ class _$PointerRouter extends PointerRouter implements DarticObjectHolder {
 
   @override
   void addRoute(int pointer, PointerRoute route, [Matrix4? transform]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addRoute', [pointer, route, transform]);
-    if (identical(r, notOverridden)) { super.addRoute(pointer, (a) => route(a), transform); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addRoute', [pointer, route, transform]);
+    if (identical(_$r, notOverridden)) { super.addRoute(pointer, (a) => route(a), transform); return; }
   }
 
   @override
   void removeRoute(int pointer, PointerRoute route) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeRoute', [pointer, route]);
-    if (identical(r, notOverridden)) { super.removeRoute(pointer, (a) => route(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeRoute', [pointer, route]);
+    if (identical(_$r, notOverridden)) { super.removeRoute(pointer, (a) => route(a)); return; }
   }
 
   @override
   void addGlobalRoute(PointerRoute route, [Matrix4? transform]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addGlobalRoute', [route, transform]);
-    if (identical(r, notOverridden)) { super.addGlobalRoute((a) => route(a), transform); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addGlobalRoute', [route, transform]);
+    if (identical(_$r, notOverridden)) { super.addGlobalRoute((a) => route(a), transform); return; }
   }
 
   @override
   void removeGlobalRoute(PointerRoute route) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeGlobalRoute', [route]);
-    if (identical(r, notOverridden)) { super.removeGlobalRoute((a) => route(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeGlobalRoute', [route]);
+    if (identical(_$r, notOverridden)) { super.removeGlobalRoute((a) => route(a)); return; }
   }
 
   @override
   void route(PointerEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'route', [event]);
-    if (identical(r, notOverridden)) { super.route(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'route', [event]);
+    if (identical(_$r, notOverridden)) { super.route(event); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

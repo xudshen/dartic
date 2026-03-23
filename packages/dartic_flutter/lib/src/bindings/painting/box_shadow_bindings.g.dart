@@ -23,30 +23,30 @@ class _$BoxShadow extends BoxShadow implements DarticObjectHolder {
 
   @override
   ui.Paint toPaint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPaint', const []);
-    if (identical(r, notOverridden)) return super.toPaint();
-    return r as ui.Paint;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPaint', const []);
+    if (identical(_$r, notOverridden)) return super.toPaint();
+    return _$r as ui.Paint;
   }
 
   @override
   BoxShadow scale(double factor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
-    if (identical(r, notOverridden)) return super.scale(factor);
-    return r as BoxShadow;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(_$r, notOverridden)) return super.scale(factor);
+    return _$r as BoxShadow;
   }
 
   @override
   BoxShadow copyWith({ui.Color? color, ui.Offset? offset, double? blurRadius, double? spreadRadius, ui.BlurStyle? blurStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, offset, blurRadius, spreadRadius, blurStyle]);
-    if (identical(r, notOverridden)) return super.copyWith(color: color, offset: offset, blurRadius: blurRadius, spreadRadius: spreadRadius, blurStyle: blurStyle);
-    return r as BoxShadow;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [color, offset, blurRadius, spreadRadius, blurStyle]);
+    if (identical(_$r, notOverridden)) return super.copyWith(color: color, offset: offset, blurRadius: blurRadius, spreadRadius: spreadRadius, blurStyle: blurStyle);
+    return _$r as BoxShadow;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

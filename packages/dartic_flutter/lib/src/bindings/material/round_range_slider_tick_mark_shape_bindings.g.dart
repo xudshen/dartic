@@ -31,22 +31,22 @@ class _$RoundRangeSliderTickMarkShape extends RoundRangeSliderTickMarkShape impl
 
   @override
   Size getPreferredSize({required SliderThemeData sliderTheme, bool isEnabled = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [sliderTheme, isEnabled]);
-    if (identical(r, notOverridden)) return super.getPreferredSize(sliderTheme: sliderTheme, isEnabled: isEnabled);
-    return r as Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [sliderTheme, isEnabled]);
+    if (identical(_$r, notOverridden)) return super.getPreferredSize(sliderTheme: sliderTheme, isEnabled: isEnabled);
+    return _$r as Size;
   }
 
   @override
   void paint(PaintingContext context, Offset center, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double> enableAnimation, required Offset startThumbCenter, required Offset endThumbCenter, bool isEnabled = false, required TextDirection textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, parentBox, sliderTheme, enableAnimation, startThumbCenter, endThumbCenter, isEnabled, textDirection]);
-    if (identical(r, notOverridden)) { super.paint(context, center, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, startThumbCenter: startThumbCenter, endThumbCenter: endThumbCenter, isEnabled: isEnabled, textDirection: textDirection); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, parentBox, sliderTheme, enableAnimation, startThumbCenter, endThumbCenter, isEnabled, textDirection]);
+    if (identical(_$r, notOverridden)) { super.paint(context, center, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, startThumbCenter: startThumbCenter, endThumbCenter: endThumbCenter, isEnabled: isEnabled, textDirection: textDirection); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

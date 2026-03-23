@@ -28,21 +28,21 @@ class _$DialogWindowControllerDelegate extends DialogWindowControllerDelegate im
 
   @override
   void onWindowCloseRequested(DialogWindowController controller) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onWindowCloseRequested', [controller]);
-    if (identical(r, notOverridden)) { super.onWindowCloseRequested(controller); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onWindowCloseRequested', [controller]);
+    if (identical(_$r, notOverridden)) { super.onWindowCloseRequested(controller); return; }
   }
 
   @override
   void onWindowDestroyed() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onWindowDestroyed', const []);
-    if (identical(r, notOverridden)) { super.onWindowDestroyed(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onWindowDestroyed', const []);
+    if (identical(_$r, notOverridden)) { super.onWindowDestroyed(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

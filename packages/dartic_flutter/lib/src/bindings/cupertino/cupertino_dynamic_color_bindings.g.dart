@@ -26,92 +26,92 @@ class _$CupertinoDynamicColor extends CupertinoDynamicColor implements DarticObj
 
   @override
   CupertinoDynamicColor resolveFrom(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
-    if (identical(r, notOverridden)) return super.resolveFrom(context);
-    return r as CupertinoDynamicColor;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveFrom', [context]);
+    if (identical(_$r, notOverridden)) return super.resolveFrom(context);
+    return _$r as CupertinoDynamicColor;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   int toARGB32() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toARGB32', const []);
-    if (identical(r, notOverridden)) return super.toARGB32();
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toARGB32', const []);
+    if (identical(_$r, notOverridden)) return super.toARGB32();
+    return _$r as int;
   }
 
   @override
   double computeLuminance() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeLuminance', const []);
-    if (identical(r, notOverridden)) return super.computeLuminance();
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeLuminance', const []);
+    if (identical(_$r, notOverridden)) return super.computeLuminance();
+    return _$r as double;
   }
 
   @override
   Color withAlpha(int a) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withAlpha', [a]);
-    if (identical(r, notOverridden)) return super.withAlpha(a);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withAlpha', [a]);
+    if (identical(_$r, notOverridden)) return super.withAlpha(a);
+    return _$r as Color;
   }
 
   @override
   Color withBlue(int b) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withBlue', [b]);
-    if (identical(r, notOverridden)) return super.withBlue(b);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withBlue', [b]);
+    if (identical(_$r, notOverridden)) return super.withBlue(b);
+    return _$r as Color;
   }
 
   @override
   Color withGreen(int g) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withGreen', [g]);
-    if (identical(r, notOverridden)) return super.withGreen(g);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withGreen', [g]);
+    if (identical(_$r, notOverridden)) return super.withGreen(g);
+    return _$r as Color;
   }
 
   @override
   Color withOpacity(double opacity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
-    if (identical(r, notOverridden)) return super.withOpacity(opacity);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
+    if (identical(_$r, notOverridden)) return super.withOpacity(opacity);
+    return _$r as Color;
   }
 
   @override
   Color withRed(int r) {
-    final $r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withRed', [r]);
-    if (identical($r, notOverridden)) return super.withRed(r);
-    return $r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withRed', [r]);
+    if (identical(_$r, notOverridden)) return super.withRed(r);
+    return _$r as Color;
   }
 
   @override
   Color withValues({double? alpha, double? red, double? green, double? blue, ColorSpace? colorSpace}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withValues', [alpha, red, green, blue, colorSpace]);
-    if (identical(r, notOverridden)) return super.withValues(alpha: alpha, red: red, green: green, blue: blue, colorSpace: colorSpace);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withValues', [alpha, red, green, blue, colorSpace]);
+    if (identical(_$r, notOverridden)) return super.withValues(alpha: alpha, red: red, green: green, blue: blue, colorSpace: colorSpace);
+    return _$r as Color;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

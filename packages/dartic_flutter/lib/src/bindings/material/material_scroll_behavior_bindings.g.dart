@@ -46,72 +46,72 @@ class _$MaterialScrollBehavior extends MaterialScrollBehavior implements DarticO
 
   @override
   TargetPlatform getPlatform(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPlatform', [context]);
-    if (identical(r, notOverridden)) return super.getPlatform(context);
-    return r as TargetPlatform;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPlatform', [context]);
+    if (identical(_$r, notOverridden)) return super.getPlatform(context);
+    return _$r as TargetPlatform;
   }
 
   @override
   Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildScrollbar', [context, child, details]);
-    if (identical(r, notOverridden)) return super.buildScrollbar(context, child, details);
-    return r as Widget;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildScrollbar', [context, child, details]);
+    if (identical(_$r, notOverridden)) return super.buildScrollbar(context, child, details);
+    return _$r as Widget;
   }
 
   @override
   Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildOverscrollIndicator', [context, child, details]);
-    if (identical(r, notOverridden)) return super.buildOverscrollIndicator(context, child, details);
-    return r as Widget;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildOverscrollIndicator', [context, child, details]);
+    if (identical(_$r, notOverridden)) return super.buildOverscrollIndicator(context, child, details);
+    return _$r as Widget;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   ScrollBehavior copyWith({bool? scrollbars, bool? overscroll, Set<ui.PointerDeviceKind>? dragDevices, MultitouchDragStrategy? multitouchDragStrategy, Set<LogicalKeyboardKey>? pointerAxisModifiers, ScrollPhysics? physics, TargetPlatform? platform, ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [scrollbars, overscroll, dragDevices, multitouchDragStrategy, pointerAxisModifiers, physics, platform, keyboardDismissBehavior]);
-    if (identical(r, notOverridden)) return super.copyWith(scrollbars: scrollbars, overscroll: overscroll, dragDevices: dragDevices, multitouchDragStrategy: multitouchDragStrategy, pointerAxisModifiers: pointerAxisModifiers, physics: physics, platform: platform, keyboardDismissBehavior: keyboardDismissBehavior);
-    return r as ScrollBehavior;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [scrollbars, overscroll, dragDevices, multitouchDragStrategy, pointerAxisModifiers, physics, platform, keyboardDismissBehavior]);
+    if (identical(_$r, notOverridden)) return super.copyWith(scrollbars: scrollbars, overscroll: overscroll, dragDevices: dragDevices, multitouchDragStrategy: multitouchDragStrategy, pointerAxisModifiers: pointerAxisModifiers, physics: physics, platform: platform, keyboardDismissBehavior: keyboardDismissBehavior);
+    return _$r as ScrollBehavior;
   }
 
   @override
   MultitouchDragStrategy getMultitouchDragStrategy(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMultitouchDragStrategy', [context]);
-    if (identical(r, notOverridden)) return super.getMultitouchDragStrategy(context);
-    return r as MultitouchDragStrategy;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMultitouchDragStrategy', [context]);
+    if (identical(_$r, notOverridden)) return super.getMultitouchDragStrategy(context);
+    return _$r as MultitouchDragStrategy;
   }
 
   @override
   GestureVelocityTrackerBuilder velocityTrackerBuilder(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'velocityTrackerBuilder', [context]);
-    if (identical(r, notOverridden)) return super.velocityTrackerBuilder(context);
-    return r as GestureVelocityTrackerBuilder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'velocityTrackerBuilder', [context]);
+    if (identical(_$r, notOverridden)) return super.velocityTrackerBuilder(context);
+    return _$r as GestureVelocityTrackerBuilder;
   }
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getScrollPhysics', [context]);
-    if (identical(r, notOverridden)) return super.getScrollPhysics(context);
-    return r as ScrollPhysics;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getScrollPhysics', [context]);
+    if (identical(_$r, notOverridden)) return super.getScrollPhysics(context);
+    return _$r as ScrollPhysics;
   }
 
   @override
   bool shouldNotify(ScrollBehavior oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldNotify', [oldDelegate]);
-    if (identical(r, notOverridden)) return super.shouldNotify(oldDelegate);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldNotify', [oldDelegate]);
+    if (identical(_$r, notOverridden)) return super.shouldNotify(oldDelegate);
+    return _$r as bool;
   }
 
   @override
   ScrollViewKeyboardDismissBehavior getKeyboardDismissBehavior(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getKeyboardDismissBehavior', [context]);
-    if (identical(r, notOverridden)) return super.getKeyboardDismissBehavior(context);
-    return r as ScrollViewKeyboardDismissBehavior;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getKeyboardDismissBehavior', [context]);
+    if (identical(_$r, notOverridden)) return super.getKeyboardDismissBehavior(context);
+    return _$r as ScrollViewKeyboardDismissBehavior;
   }
 
   @override

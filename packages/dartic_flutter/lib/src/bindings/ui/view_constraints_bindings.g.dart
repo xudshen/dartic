@@ -28,16 +28,16 @@ class _$ViewConstraints extends ViewConstraints implements DarticObjectHolder {
 
   @override
   bool isSatisfiedBy(Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [size]);
-    if (identical(r, notOverridden)) return super.isSatisfiedBy(size);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [size]);
+    if (identical(_$r, notOverridden)) return super.isSatisfiedBy(size);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

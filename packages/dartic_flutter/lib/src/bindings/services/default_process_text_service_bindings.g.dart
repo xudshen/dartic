@@ -23,29 +23,29 @@ class _$DefaultProcessTextService extends DefaultProcessTextService implements D
 
   @override
   void setChannel(MethodChannel newChannel) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setChannel', [newChannel]);
-    if (identical(r, notOverridden)) { super.setChannel(newChannel); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setChannel', [newChannel]);
+    if (identical(_$r, notOverridden)) { super.setChannel(newChannel); return; }
   }
 
   @override
   Future<List<ProcessTextAction>> queryTextActions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
-    if (identical(r, notOverridden)) return super.queryTextActions();
-    return r as Future<List<ProcessTextAction>>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'queryTextActions', const []);
+    if (identical(_$r, notOverridden)) return super.queryTextActions();
+    return _$r as Future<List<ProcessTextAction>>;
   }
 
   @override
   Future<String?> processTextAction(String id, String text, bool readOnly) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
-    if (identical(r, notOverridden)) return super.processTextAction(id, text, readOnly);
-    return r as Future<String?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processTextAction', [id, text, readOnly]);
+    if (identical(_$r, notOverridden)) return super.processTextAction(id, text, readOnly);
+    return _$r as Future<String?>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

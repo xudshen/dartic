@@ -30,74 +30,74 @@ class _$PrioritizedAction extends PrioritizedAction implements DarticObjectHolde
 
   @override
   bool isEnabled(PrioritizedIntents intent, [BuildContext? context]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isEnabled', [intent, context]);
-    if (identical(r, notOverridden)) return super.isEnabled(intent, context);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isEnabled', [intent, context]);
+    if (identical(_$r, notOverridden)) return super.isEnabled(intent, context);
+    return _$r as bool;
   }
 
   @override
   void invoke(PrioritizedIntents intent, [BuildContext? context]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invoke', [intent, context]);
-    if (identical(r, notOverridden)) { super.invoke(intent, context); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'invoke', [intent, context]);
+    if (identical(_$r, notOverridden)) { super.invoke(intent, context); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   bool consumesKey(PrioritizedIntents intent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'consumesKey', [intent]);
-    if (identical(r, notOverridden)) return super.consumesKey(intent);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'consumesKey', [intent]);
+    if (identical(_$r, notOverridden)) return super.consumesKey(intent);
+    return _$r as bool;
   }
 
   @override
   KeyEventResult toKeyEventResult(PrioritizedIntents intent, Object? invokeResult) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toKeyEventResult', [intent, invokeResult]);
-    if (identical(r, notOverridden)) return super.toKeyEventResult(intent, invokeResult);
-    return r as KeyEventResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toKeyEventResult', [intent, invokeResult]);
+    if (identical(_$r, notOverridden)) return super.toKeyEventResult(intent, invokeResult);
+    return _$r as KeyEventResult;
   }
 
   @override
   void addActionListener(ActionListenerCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addActionListener', [listener]);
-    if (identical(r, notOverridden)) { super.addActionListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addActionListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addActionListener((a) => listener(a)); return; }
   }
 
   @override
   void removeActionListener(ActionListenerCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeActionListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeActionListener((a) => listener(a)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeActionListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeActionListener((a) => listener(a)); return; }
   }
 
   @override
   void notifyActionListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyActionListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyActionListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyActionListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyActionListeners(); return; }
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override

@@ -33,121 +33,121 @@ class _$FocusNode extends FocusNode implements DarticObjectHolder {
 
   @override
   void unfocus({UnfocusDisposition disposition = UnfocusDisposition.scope}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unfocus', [disposition]);
-    if (identical(r, notOverridden)) { super.unfocus(disposition: disposition); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unfocus', [disposition]);
+    if (identical(_$r, notOverridden)) { super.unfocus(disposition: disposition); return; }
   }
 
   @override
   bool consumeKeyboardToken() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'consumeKeyboardToken', const []);
-    if (identical(r, notOverridden)) return super.consumeKeyboardToken();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'consumeKeyboardToken', const []);
+    if (identical(_$r, notOverridden)) return super.consumeKeyboardToken();
+    return _$r as bool;
   }
 
   @override
   FocusAttachment attach(BuildContext? context, {FocusOnKeyEventCallback? onKeyEvent, FocusOnKeyCallback? onKey}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [context, onKeyEvent, onKey]);
-    if (identical(r, notOverridden)) return super.attach(context, onKeyEvent: onKeyEvent != null ? (a, b) => onKeyEvent(a, b) as KeyEventResult : null, onKey: onKey != null ? (a, b) => onKey(a, b) as KeyEventResult : null);
-    return r as FocusAttachment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [context, onKeyEvent, onKey]);
+    if (identical(_$r, notOverridden)) return super.attach(context, onKeyEvent: onKeyEvent != null ? (a, b) => onKeyEvent(a, b) as KeyEventResult : null, onKey: onKey != null ? (a, b) => onKey(a, b) as KeyEventResult : null);
+    return _$r as FocusAttachment;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void requestFocus([FocusNode? node]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocus', [node]);
-    if (identical(r, notOverridden)) { super.requestFocus(node); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocus', [node]);
+    if (identical(_$r, notOverridden)) { super.requestFocus(node); return; }
   }
 
   @override
   bool nextFocus() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextFocus', const []);
-    if (identical(r, notOverridden)) return super.nextFocus();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextFocus', const []);
+    if (identical(_$r, notOverridden)) return super.nextFocus();
+    return _$r as bool;
   }
 
   @override
   bool previousFocus() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'previousFocus', const []);
-    if (identical(r, notOverridden)) return super.previousFocus();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'previousFocus', const []);
+    if (identical(_$r, notOverridden)) return super.previousFocus();
+    return _$r as bool;
   }
 
   @override
   bool focusInDirection(TraversalDirection direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'focusInDirection', [direction]);
-    if (identical(r, notOverridden)) return super.focusInDirection(direction);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'focusInDirection', [direction]);
+    if (identical(_$r, notOverridden)) return super.focusInDirection(direction);
+    return _$r as bool;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
-    if (identical(r, notOverridden)) return super.debugDescribeChildren();
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(_$r, notOverridden)) return super.debugDescribeChildren();
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override

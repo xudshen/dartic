@@ -27,28 +27,28 @@ class _$ChildSemanticsConfigurationsResultBuilder extends ChildSemanticsConfigur
 
   @override
   void markAsMergeUp(SemanticsConfiguration config) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markAsMergeUp', [config]);
-    if (identical(r, notOverridden)) { super.markAsMergeUp(config); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markAsMergeUp', [config]);
+    if (identical(_$r, notOverridden)) { super.markAsMergeUp(config); return; }
   }
 
   @override
   void markAsSiblingMergeGroup(List<SemanticsConfiguration> configs) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markAsSiblingMergeGroup', [configs]);
-    if (identical(r, notOverridden)) { super.markAsSiblingMergeGroup(configs); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markAsSiblingMergeGroup', [configs]);
+    if (identical(_$r, notOverridden)) { super.markAsSiblingMergeGroup(configs); return; }
   }
 
   @override
   ChildSemanticsConfigurationsResult build() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', const []);
-    if (identical(r, notOverridden)) return super.build();
-    return r as ChildSemanticsConfigurationsResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', const []);
+    if (identical(_$r, notOverridden)) return super.build();
+    return _$r as ChildSemanticsConfigurationsResult;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -30,29 +30,29 @@ class _$MagnifierController extends MagnifierController implements DarticObjectH
 
   @override
   Future<void> show({required BuildContext context, required WidgetBuilder builder, Widget? debugRequiredFor, OverlayEntry? below}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [context, builder, debugRequiredFor, below]);
-    if (identical(r, notOverridden)) return super.show(context: context, builder: (a) => builder(a) as Widget, debugRequiredFor: debugRequiredFor, below: below);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [context, builder, debugRequiredFor, below]);
+    if (identical(_$r, notOverridden)) return super.show(context: context, builder: (a) => builder(a) as Widget, debugRequiredFor: debugRequiredFor, below: below);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> hide({bool removeFromOverlay = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', [removeFromOverlay]);
-    if (identical(r, notOverridden)) return super.hide(removeFromOverlay: removeFromOverlay);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', [removeFromOverlay]);
+    if (identical(_$r, notOverridden)) return super.hide(removeFromOverlay: removeFromOverlay);
+    return _$r as Future<void>;
   }
 
   @override
   void removeFromOverlay() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeFromOverlay', const []);
-    if (identical(r, notOverridden)) { super.removeFromOverlay(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeFromOverlay', const []);
+    if (identical(_$r, notOverridden)) { super.removeFromOverlay(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

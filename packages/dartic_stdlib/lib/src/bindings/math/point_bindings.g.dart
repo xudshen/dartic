@@ -18,23 +18,23 @@ class _$Point extends Point<num> implements DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   double distanceTo(Point<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'distanceTo', [other]);
-    if (identical(r, notOverridden)) return super.distanceTo(other);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'distanceTo', [other]);
+    if (identical(_$r, notOverridden)) return super.distanceTo(other);
+    return _$r as double;
   }
 
   @override
   num squaredDistanceTo(Point<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'squaredDistanceTo', [other]);
-    if (identical(r, notOverridden)) return super.squaredDistanceTo(other);
-    return r as num;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'squaredDistanceTo', [other]);
+    if (identical(_$r, notOverridden)) return super.squaredDistanceTo(other);
+    return _$r as num;
   }
 
   @override

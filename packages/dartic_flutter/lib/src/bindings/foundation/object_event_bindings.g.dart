@@ -22,18 +22,18 @@ class _$ObjectEvent extends ObjectEvent implements DarticObjectHolder {
 
   @override
   Map<Object, Map<String, Object>> toMap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toMap must be overridden in dartic code');
     }
-    return r as Map<Object, Map<String, Object>>;
+    return _$r as Map<Object, Map<String, Object>>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

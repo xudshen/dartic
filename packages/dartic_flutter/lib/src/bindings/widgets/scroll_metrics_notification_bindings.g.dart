@@ -33,28 +33,28 @@ class _$ScrollMetricsNotification extends ScrollMetricsNotification implements D
 
   @override
   ScrollUpdateNotification asScrollUpdate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asScrollUpdate', const []);
-    if (identical(r, notOverridden)) return super.asScrollUpdate();
-    return r as ScrollUpdateNotification;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asScrollUpdate', const []);
+    if (identical(_$r, notOverridden)) return super.asScrollUpdate();
+    return _$r as ScrollUpdateNotification;
   }
 
   @override
   void debugFillDescription(List<String> description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
-    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(_$r, notOverridden)) { super.debugFillDescription(description); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void dispatch(BuildContext? target) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
-    if (identical(r, notOverridden)) { super.dispatch(target); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatch', [target]);
+    if (identical(_$r, notOverridden)) { super.dispatch(target); return; }
   }
 
   @override

@@ -26,26 +26,26 @@ class _$GestureRecognizerFactory extends GestureRecognizerFactory<GestureRecogni
 
   @override
   GestureRecognizer constructor() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constructor', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constructor', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method constructor must be overridden in dartic code');
     }
-    return r as GestureRecognizer;
+    return _$r as GestureRecognizer;
   }
 
   @override
   void initializer(GestureRecognizer instance) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initializer', [instance]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initializer', [instance]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method initializer must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

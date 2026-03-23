@@ -42,102 +42,102 @@ class _$Route extends Route<dynamic> implements DarticObjectHolder {
 
   @override
   void install() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'install', const []);
-    if (identical(r, notOverridden)) { super.install(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'install', const []);
+    if (identical(_$r, notOverridden)) { super.install(); return; }
   }
 
   @override
   TickerFuture didPush() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
-    if (identical(r, notOverridden)) return super.didPush();
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
+    if (identical(_$r, notOverridden)) return super.didPush();
+    return _$r as TickerFuture;
   }
 
   @override
   void didAdd() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdd', const []);
-    if (identical(r, notOverridden)) { super.didAdd(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didAdd', const []);
+    if (identical(_$r, notOverridden)) { super.didAdd(); return; }
   }
 
   @override
   void didReplace(Route<dynamic>? oldRoute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReplace', [oldRoute]);
-    if (identical(r, notOverridden)) { super.didReplace(oldRoute); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReplace', [oldRoute]);
+    if (identical(_$r, notOverridden)) { super.didReplace(oldRoute); return; }
   }
 
   @override
   Future<RoutePopDisposition> willPop() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'willPop', const []);
-    if (identical(r, notOverridden)) return super.willPop();
-    return r as Future<RoutePopDisposition>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'willPop', const []);
+    if (identical(_$r, notOverridden)) return super.willPop();
+    return _$r as Future<RoutePopDisposition>;
   }
 
   @override
   void onPopInvoked(bool didPop) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvoked', [didPop]);
-    if (identical(r, notOverridden)) { super.onPopInvoked(didPop); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvoked', [didPop]);
+    if (identical(_$r, notOverridden)) { super.onPopInvoked(didPop); return; }
   }
 
   @override
   void onPopInvokedWithResult(bool didPop, dynamic result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvokedWithResult', [didPop, result]);
-    if (identical(r, notOverridden)) { super.onPopInvokedWithResult(didPop, result); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvokedWithResult', [didPop, result]);
+    if (identical(_$r, notOverridden)) { super.onPopInvokedWithResult(didPop, result); return; }
   }
 
   @override
   bool didPop(dynamic result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', [result]);
-    if (identical(r, notOverridden)) return super.didPop(result);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', [result]);
+    if (identical(_$r, notOverridden)) return super.didPop(result);
+    return _$r as bool;
   }
 
   @override
   void didComplete(dynamic result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didComplete', [result]);
-    if (identical(r, notOverridden)) { super.didComplete(result); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didComplete', [result]);
+    if (identical(_$r, notOverridden)) { super.didComplete(result); return; }
   }
 
   @override
   void didPopNext(Route<dynamic> nextRoute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', [nextRoute]);
-    if (identical(r, notOverridden)) { super.didPopNext(nextRoute); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', [nextRoute]);
+    if (identical(_$r, notOverridden)) { super.didPopNext(nextRoute); return; }
   }
 
   @override
   void didChangeNext(Route<dynamic>? nextRoute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeNext', [nextRoute]);
-    if (identical(r, notOverridden)) { super.didChangeNext(nextRoute); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeNext', [nextRoute]);
+    if (identical(_$r, notOverridden)) { super.didChangeNext(nextRoute); return; }
   }
 
   @override
   void didChangePrevious(Route<dynamic>? previousRoute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangePrevious', [previousRoute]);
-    if (identical(r, notOverridden)) { super.didChangePrevious(previousRoute); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangePrevious', [previousRoute]);
+    if (identical(_$r, notOverridden)) { super.didChangePrevious(previousRoute); return; }
   }
 
   @override
   void changedInternalState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedInternalState', const []);
-    if (identical(r, notOverridden)) { super.changedInternalState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedInternalState', const []);
+    if (identical(_$r, notOverridden)) { super.changedInternalState(); return; }
   }
 
   @override
   void changedExternalState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedExternalState', const []);
-    if (identical(r, notOverridden)) { super.changedExternalState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'changedExternalState', const []);
+    if (identical(_$r, notOverridden)) { super.changedExternalState(); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

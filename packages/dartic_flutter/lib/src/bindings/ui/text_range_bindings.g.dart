@@ -28,30 +28,30 @@ class _$TextRange extends TextRange implements DarticObjectHolder {
 
   @override
   String textBefore(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textBefore', [text]);
-    if (identical(r, notOverridden)) return super.textBefore(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textBefore', [text]);
+    if (identical(_$r, notOverridden)) return super.textBefore(text);
+    return _$r as String;
   }
 
   @override
   String textAfter(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textAfter', [text]);
-    if (identical(r, notOverridden)) return super.textAfter(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textAfter', [text]);
+    if (identical(_$r, notOverridden)) return super.textAfter(text);
+    return _$r as String;
   }
 
   @override
   String textInside(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textInside', [text]);
-    if (identical(r, notOverridden)) return super.textInside(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textInside', [text]);
+    if (identical(_$r, notOverridden)) return super.textInside(text);
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

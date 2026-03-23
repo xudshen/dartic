@@ -22,18 +22,18 @@ class _$SpellCheckService extends SpellCheckService implements DarticObjectHolde
 
   @override
   Future<List<SuggestionSpan>?> fetchSpellCheckSuggestions(Locale locale, String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fetchSpellCheckSuggestions', [locale, text]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fetchSpellCheckSuggestions', [locale, text]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method fetchSpellCheckSuggestions must be overridden in dartic code');
     }
-    return r as Future<List<SuggestionSpan>?>;
+    return _$r as Future<List<SuggestionSpan>?>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -20,36 +20,36 @@ class _$Simulation extends Simulation implements DarticObjectHolder {
 
   @override
   double x(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'x', [time]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method x must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   double dx(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dx', [time]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dx must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   bool isDone(double time) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isDone', [time]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isDone must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

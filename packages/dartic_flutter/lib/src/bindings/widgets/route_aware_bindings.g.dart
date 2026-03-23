@@ -40,33 +40,33 @@ class _$RouteAware extends RouteAware implements DarticObjectHolder {
 
   @override
   void didPopNext() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', const []);
-    if (identical(r, notOverridden)) { super.didPopNext(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopNext', const []);
+    if (identical(_$r, notOverridden)) { super.didPopNext(); return; }
   }
 
   @override
   void didPush() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
-    if (identical(r, notOverridden)) { super.didPush(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPush', const []);
+    if (identical(_$r, notOverridden)) { super.didPush(); return; }
   }
 
   @override
   void didPop() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', const []);
-    if (identical(r, notOverridden)) { super.didPop(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPop', const []);
+    if (identical(_$r, notOverridden)) { super.didPop(); return; }
   }
 
   @override
   void didPushNext() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushNext', const []);
-    if (identical(r, notOverridden)) { super.didPushNext(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushNext', const []);
+    if (identical(_$r, notOverridden)) { super.didPushNext(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

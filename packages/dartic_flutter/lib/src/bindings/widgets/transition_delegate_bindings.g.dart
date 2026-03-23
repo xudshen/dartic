@@ -40,18 +40,18 @@ class _$TransitionDelegate extends TransitionDelegate<dynamic> implements Dartic
 
   @override
   Iterable<RouteTransitionRecord> resolve({required List<RouteTransitionRecord> newPageRouteHistory, required Map<RouteTransitionRecord?, RouteTransitionRecord> locationToExitingPageRoute, required Map<RouteTransitionRecord?, List<RouteTransitionRecord>> pageRouteToPagelessRoutes}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [newPageRouteHistory, locationToExitingPageRoute, pageRouteToPagelessRoutes]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [newPageRouteHistory, locationToExitingPageRoute, pageRouteToPagelessRoutes]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
     }
-    return r as Iterable<RouteTransitionRecord>;
+    return _$r as Iterable<RouteTransitionRecord>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

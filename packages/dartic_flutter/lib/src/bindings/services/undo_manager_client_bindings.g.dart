@@ -20,24 +20,24 @@ class _$UndoManagerClient implements UndoManagerClient, DarticObjectHolder {
 
   @override
   void handlePlatformUndo(UndoDirection direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformUndo', [direction]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handlePlatformUndo', [direction]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handlePlatformUndo must be overridden in dartic code');
     }
   }
 
   @override
   void undo() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'undo', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'undo', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method undo must be overridden in dartic code');
     }
   }
 
   @override
   void redo() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redo', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'redo', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method redo must be overridden in dartic code');
     }
   }

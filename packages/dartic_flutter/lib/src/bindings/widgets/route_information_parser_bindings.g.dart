@@ -30,30 +30,30 @@ class _$RouteInformationParser extends RouteInformationParser<dynamic> implement
 
   @override
   Future parseRouteInformation(RouteInformation routeInformation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformation', [routeInformation]);
-    if (identical(r, notOverridden)) return super.parseRouteInformation(routeInformation);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformation', [routeInformation]);
+    if (identical(_$r, notOverridden)) return super.parseRouteInformation(routeInformation);
+    return _$r as Future;
   }
 
   @override
   Future parseRouteInformationWithDependencies(RouteInformation routeInformation, BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformationWithDependencies', [routeInformation, context]);
-    if (identical(r, notOverridden)) return super.parseRouteInformationWithDependencies(routeInformation, context);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseRouteInformationWithDependencies', [routeInformation, context]);
+    if (identical(_$r, notOverridden)) return super.parseRouteInformationWithDependencies(routeInformation, context);
+    return _$r as Future;
   }
 
   @override
   RouteInformation? restoreRouteInformation(dynamic configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreRouteInformation', [configuration]);
-    if (identical(r, notOverridden)) return super.restoreRouteInformation(configuration);
-    return r as RouteInformation?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreRouteInformation', [configuration]);
+    if (identical(_$r, notOverridden)) return super.restoreRouteInformation(configuration);
+    return _$r as RouteInformation?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

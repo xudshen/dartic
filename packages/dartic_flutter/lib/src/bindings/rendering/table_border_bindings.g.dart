@@ -24,22 +24,22 @@ class _$TableBorder extends TableBorder implements DarticObjectHolder {
 
   @override
   TableBorder scale(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [t]);
-    if (identical(r, notOverridden)) return super.scale(t);
-    return r as TableBorder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [t]);
+    if (identical(_$r, notOverridden)) return super.scale(t);
+    return _$r as TableBorder;
   }
 
   @override
   void paint(Canvas canvas, Rect rect, {required Iterable<double> rows, required Iterable<double> columns}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, rows, columns]);
-    if (identical(r, notOverridden)) { super.paint(canvas, rect, rows: rows, columns: columns); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, rows, columns]);
+    if (identical(_$r, notOverridden)) { super.paint(canvas, rect, rows: rows, columns: columns); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

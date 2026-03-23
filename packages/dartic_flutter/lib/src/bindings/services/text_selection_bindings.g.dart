@@ -20,51 +20,51 @@ class _$TextSelection extends TextSelection implements DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   TextSelection copyWith({int? baseOffset, int? extentOffset, TextAffinity? affinity, bool? isDirectional}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [baseOffset, extentOffset, affinity, isDirectional]);
-    if (identical(r, notOverridden)) return super.copyWith(baseOffset: baseOffset, extentOffset: extentOffset, affinity: affinity, isDirectional: isDirectional);
-    return r as TextSelection;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [baseOffset, extentOffset, affinity, isDirectional]);
+    if (identical(_$r, notOverridden)) return super.copyWith(baseOffset: baseOffset, extentOffset: extentOffset, affinity: affinity, isDirectional: isDirectional);
+    return _$r as TextSelection;
   }
 
   @override
   TextSelection expandTo(TextPosition position, [bool extentAtIndex = false]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandTo', [position, extentAtIndex]);
-    if (identical(r, notOverridden)) return super.expandTo(position, extentAtIndex);
-    return r as TextSelection;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expandTo', [position, extentAtIndex]);
+    if (identical(_$r, notOverridden)) return super.expandTo(position, extentAtIndex);
+    return _$r as TextSelection;
   }
 
   @override
   TextSelection extendTo(TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'extendTo', [position]);
-    if (identical(r, notOverridden)) return super.extendTo(position);
-    return r as TextSelection;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'extendTo', [position]);
+    if (identical(_$r, notOverridden)) return super.extendTo(position);
+    return _$r as TextSelection;
   }
 
   @override
   String textBefore(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textBefore', [text]);
-    if (identical(r, notOverridden)) return super.textBefore(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textBefore', [text]);
+    if (identical(_$r, notOverridden)) return super.textBefore(text);
+    return _$r as String;
   }
 
   @override
   String textAfter(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textAfter', [text]);
-    if (identical(r, notOverridden)) return super.textAfter(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textAfter', [text]);
+    if (identical(_$r, notOverridden)) return super.textAfter(text);
+    return _$r as String;
   }
 
   @override
   String textInside(String text) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textInside', [text]);
-    if (identical(r, notOverridden)) return super.textInside(text);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'textInside', [text]);
+    if (identical(_$r, notOverridden)) return super.textInside(text);
+    return _$r as String;
   }
 
   @override

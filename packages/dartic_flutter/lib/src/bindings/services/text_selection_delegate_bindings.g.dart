@@ -32,57 +32,57 @@ class _$TextSelectionDelegate implements TextSelectionDelegate, DarticObjectHold
 
   @override
   void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'userUpdateTextEditingValue', [value, cause]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'userUpdateTextEditingValue', [value, cause]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method userUpdateTextEditingValue must be overridden in dartic code');
     }
   }
 
   @override
   void hideToolbar([bool hideHandles = true]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', [hideHandles]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', [hideHandles]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method hideToolbar must be overridden in dartic code');
     }
   }
 
   @override
   void bringIntoView(TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bringIntoView', [position]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bringIntoView', [position]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method bringIntoView must be overridden in dartic code');
     }
   }
 
   @override
   void cutSelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cutSelection', [cause]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cutSelection', [cause]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cutSelection must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> pasteText(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pasteText', [cause]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pasteText', [cause]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pasteText must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   void selectAll(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectAll', [cause]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectAll', [cause]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method selectAll must be overridden in dartic code');
     }
   }
 
   @override
   void copySelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySelection', [cause]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySelection', [cause]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method copySelection must be overridden in dartic code');
     }
   }

@@ -27,22 +27,22 @@ class _$BasicMessageChannel extends BasicMessageChannel<dynamic> implements Dart
 
   @override
   Future send(dynamic message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'send', [message]);
-    if (identical(r, notOverridden)) return super.send(message);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'send', [message]);
+    if (identical(_$r, notOverridden)) return super.send(message);
+    return _$r as Future;
   }
 
   @override
   void setMessageHandler(Future Function(dynamic)? handler) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMessageHandler', [handler]);
-    if (identical(r, notOverridden)) { super.setMessageHandler(handler != null ? (a) => handler(a) as Future : null); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMessageHandler', [handler]);
+    if (identical(_$r, notOverridden)) { super.setMessageHandler(handler != null ? (a) => handler(a) as Future : null); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

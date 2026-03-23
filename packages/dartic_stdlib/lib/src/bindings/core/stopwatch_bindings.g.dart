@@ -21,27 +21,27 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
 
   @override
   void start() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'start', const []);
-    if (identical(r, notOverridden)) { super.start(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'start', const []);
+    if (identical(_$r, notOverridden)) { super.start(); return; }
   }
 
   @override
   void stop() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', const []);
-    if (identical(r, notOverridden)) { super.stop(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', const []);
+    if (identical(_$r, notOverridden)) { super.stop(); return; }
   }
 
   @override
   void reset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reset', const []);
-    if (identical(r, notOverridden)) { super.reset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reset', const []);
+    if (identical(_$r, notOverridden)) { super.reset(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

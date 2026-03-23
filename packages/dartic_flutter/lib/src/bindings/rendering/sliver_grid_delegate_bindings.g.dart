@@ -24,27 +24,27 @@ class _$SliverGridDelegate extends SliverGridDelegate implements DarticObjectHol
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLayout', [constraints]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLayout', [constraints]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getLayout must be overridden in dartic code');
     }
-    return r as SliverGridLayout;
+    return _$r as SliverGridLayout;
   }
 
   @override
   bool shouldRelayout(SliverGridDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldRelayout must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

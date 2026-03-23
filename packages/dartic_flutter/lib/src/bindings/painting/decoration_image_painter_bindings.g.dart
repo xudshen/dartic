@@ -31,16 +31,16 @@ class _$DecorationImagePainter implements DecorationImagePainter, DarticObjectHo
 
   @override
   void paint(ui.Canvas canvas, ui.Rect rect, ui.Path? clipPath, ImageConfiguration configuration, {double blend = 1.0, ui.BlendMode blendMode = BlendMode.srcOver}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, clipPath, configuration, blend, blendMode]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect, clipPath, configuration, blend, blendMode]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paint must be overridden in dartic code');
     }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }

@@ -25,50 +25,50 @@ class _$Gradient extends Gradient implements DarticObjectHolder {
 
   @override
   ui.Shader createShader(ui.Rect rect, {ui.TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createShader', [rect, textDirection]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createShader', [rect, textDirection]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createShader must be overridden in dartic code');
     }
-    return r as ui.Shader;
+    return _$r as ui.Shader;
   }
 
   @override
   Gradient scale(double factor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [factor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method scale must be overridden in dartic code');
     }
-    return r as Gradient;
+    return _$r as Gradient;
   }
 
   @override
   Gradient withOpacity(double opacity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withOpacity', [opacity]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method withOpacity must be overridden in dartic code');
     }
-    return r as Gradient;
+    return _$r as Gradient;
   }
 
   @override
   Gradient? lerpFrom(Gradient? a, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
-    if (identical(r, notOverridden)) return super.lerpFrom(a, t);
-    return r as Gradient?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpFrom', [a, t]);
+    if (identical(_$r, notOverridden)) return super.lerpFrom(a, t);
+    return _$r as Gradient?;
   }
 
   @override
   Gradient? lerpTo(Gradient? b, double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
-    if (identical(r, notOverridden)) return super.lerpTo(b, t);
-    return r as Gradient?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lerpTo', [b, t]);
+    if (identical(_$r, notOverridden)) return super.lerpTo(b, t);
+    return _$r as Gradient?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

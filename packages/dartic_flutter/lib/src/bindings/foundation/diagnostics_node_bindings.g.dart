@@ -26,71 +26,71 @@ class _$DiagnosticsNode extends DiagnosticsNode implements DarticObjectHolder {
 
   @override
   String toDescription({TextTreeConfiguration? parentConfiguration}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDescription', [parentConfiguration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDescription', [parentConfiguration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toDescription must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   bool isFiltered(DiagnosticLevel minLevel) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isFiltered', [minLevel]);
-    if (identical(r, notOverridden)) return super.isFiltered(minLevel);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isFiltered', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.isFiltered(minLevel);
+    return _$r as bool;
   }
 
   @override
   List<DiagnosticsNode> getProperties() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getProperties', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getProperties', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getProperties must be overridden in dartic code');
     }
-    return r as List<DiagnosticsNode>;
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   List<DiagnosticsNode> getChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildren', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildren', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getChildren must be overridden in dartic code');
     }
-    return r as List<DiagnosticsNode>;
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override
   Map<String, String>? toTimelineArguments() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toTimelineArguments', const []);
-    if (identical(r, notOverridden)) return super.toTimelineArguments();
-    return r as Map<String, String>?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toTimelineArguments', const []);
+    if (identical(_$r, notOverridden)) return super.toTimelineArguments();
+    return _$r as Map<String, String>?;
   }
 
   @override
   Map<String, Object?> toJsonMap(DiagnosticsSerializationDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJsonMap', [delegate]);
-    if (identical(r, notOverridden)) return super.toJsonMap(delegate);
-    return r as Map<String, Object?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJsonMap', [delegate]);
+    if (identical(_$r, notOverridden)) return super.toJsonMap(delegate);
+    return _$r as Map<String, Object?>;
   }
 
   @override
   Map<String, Object?> toJsonMapIterative(DiagnosticsSerializationDelegate delegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJsonMapIterative', [delegate]);
-    if (identical(r, notOverridden)) return super.toJsonMapIterative(delegate);
-    return r as Map<String, Object?>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJsonMapIterative', [delegate]);
+    if (identical(_$r, notOverridden)) return super.toJsonMapIterative(delegate);
+    return _$r as Map<String, Object?>;
   }
 
   @override
   String toString({TextTreeConfiguration? parentConfiguration, DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [parentConfiguration, minLevel]);
-    if (identical(r, notOverridden)) return super.toString(parentConfiguration: parentConfiguration, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [parentConfiguration, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(parentConfiguration: parentConfiguration, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, TextTreeConfiguration? parentConfiguration, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, parentConfiguration, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration, minLevel: minLevel, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, parentConfiguration, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration, minLevel: minLevel, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override

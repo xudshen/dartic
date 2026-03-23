@@ -20,48 +20,48 @@ class _$AnimationLocalStatusListenersMixin implements AnimationLocalStatusListen
 
   @override
   void didRegisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRegisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didRegisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void didUnregisterListener() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUnregisterListener', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didUnregisterListener must be overridden in dartic code');
     }
   }
 
   @override
   void addStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addStatusListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeStatusListener must be overridden in dartic code');
     }
   }
 
   @override
   void clearStatusListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearStatusListeners', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearStatusListeners', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clearStatusListeners must be overridden in dartic code');
     }
   }
 
   @override
   void notifyStatusListeners(AnimationStatus status) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyStatusListeners', [status]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyStatusListeners', [status]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method notifyStatusListeners must be overridden in dartic code');
     }
   }

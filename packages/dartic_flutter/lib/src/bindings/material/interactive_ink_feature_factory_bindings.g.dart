@@ -34,18 +34,18 @@ class _$InteractiveInkFeatureFactory extends InteractiveInkFeatureFactory implem
 
   @override
   InteractiveInkFeature create({required MaterialInkController controller, required RenderBox referenceBox, required Offset position, required Color color, required TextDirection textDirection, bool containedInkWell = false, RectCallback? rectCallback, BorderRadius? borderRadius, ShapeBorder? customBorder, double? radius, VoidCallback? onRemoved}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [controller, referenceBox, position, color, textDirection, containedInkWell, rectCallback, borderRadius, customBorder, radius, onRemoved]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [controller, referenceBox, position, color, textDirection, containedInkWell, rectCallback, borderRadius, customBorder, radius, onRemoved]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method create must be overridden in dartic code');
     }
-    return r as InteractiveInkFeature;
+    return _$r as InteractiveInkFeature;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

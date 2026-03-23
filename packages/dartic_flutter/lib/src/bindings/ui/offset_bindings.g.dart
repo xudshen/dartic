@@ -28,23 +28,23 @@ class _$Offset extends Offset implements DarticObjectHolder {
 
   @override
   Offset scale(double scaleX, double scaleY) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [scaleX, scaleY]);
-    if (identical(r, notOverridden)) return super.scale(scaleX, scaleY);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scale', [scaleX, scaleY]);
+    if (identical(_$r, notOverridden)) return super.scale(scaleX, scaleY);
+    return _$r as Offset;
   }
 
   @override
   Offset translate(double translateX, double translateY) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'translate', [translateX, translateY]);
-    if (identical(r, notOverridden)) return super.translate(translateX, translateY);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'translate', [translateX, translateY]);
+    if (identical(_$r, notOverridden)) return super.translate(translateX, translateY);
+    return _$r as Offset;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

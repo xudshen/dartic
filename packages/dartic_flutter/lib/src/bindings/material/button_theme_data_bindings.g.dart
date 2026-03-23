@@ -34,176 +34,176 @@ class _$ButtonThemeData extends ButtonThemeData implements DarticObjectHolder {
 
   @override
   Brightness getBrightness(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBrightness', [button]);
-    if (identical(r, notOverridden)) return super.getBrightness(button);
-    return r as Brightness;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBrightness', [button]);
+    if (identical(_$r, notOverridden)) return super.getBrightness(button);
+    return _$r as Brightness;
   }
 
   @override
   ButtonTextTheme getTextTheme(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextTheme', [button]);
-    if (identical(r, notOverridden)) return super.getTextTheme(button);
-    return r as ButtonTextTheme;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextTheme', [button]);
+    if (identical(_$r, notOverridden)) return super.getTextTheme(button);
+    return _$r as ButtonTextTheme;
   }
 
   @override
   Color getDisabledTextColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledTextColor', [button]);
-    if (identical(r, notOverridden)) return super.getDisabledTextColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledTextColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getDisabledTextColor(button);
+    return _$r as Color;
   }
 
   @override
   Color getDisabledFillColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledFillColor', [button]);
-    if (identical(r, notOverridden)) return super.getDisabledFillColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledFillColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getDisabledFillColor(button);
+    return _$r as Color;
   }
 
   @override
   Color? getFillColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFillColor', [button]);
-    if (identical(r, notOverridden)) return super.getFillColor(button);
-    return r as Color?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFillColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getFillColor(button);
+    return _$r as Color?;
   }
 
   @override
   Color getTextColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextColor', [button]);
-    if (identical(r, notOverridden)) return super.getTextColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getTextColor(button);
+    return _$r as Color;
   }
 
   @override
   Color getSplashColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSplashColor', [button]);
-    if (identical(r, notOverridden)) return super.getSplashColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSplashColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getSplashColor(button);
+    return _$r as Color;
   }
 
   @override
   Color getFocusColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFocusColor', [button]);
-    if (identical(r, notOverridden)) return super.getFocusColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFocusColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getFocusColor(button);
+    return _$r as Color;
   }
 
   @override
   Color getHoverColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHoverColor', [button]);
-    if (identical(r, notOverridden)) return super.getHoverColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHoverColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getHoverColor(button);
+    return _$r as Color;
   }
 
   @override
   Color getHighlightColor(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHighlightColor', [button]);
-    if (identical(r, notOverridden)) return super.getHighlightColor(button);
-    return r as Color;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHighlightColor', [button]);
+    if (identical(_$r, notOverridden)) return super.getHighlightColor(button);
+    return _$r as Color;
   }
 
   @override
   double getElevation(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getElevation', [button]);
-    if (identical(r, notOverridden)) return super.getElevation(button);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getElevation', [button]);
+    if (identical(_$r, notOverridden)) return super.getElevation(button);
+    return _$r as double;
   }
 
   @override
   double getFocusElevation(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFocusElevation', [button]);
-    if (identical(r, notOverridden)) return super.getFocusElevation(button);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFocusElevation', [button]);
+    if (identical(_$r, notOverridden)) return super.getFocusElevation(button);
+    return _$r as double;
   }
 
   @override
   double getHoverElevation(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHoverElevation', [button]);
-    if (identical(r, notOverridden)) return super.getHoverElevation(button);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHoverElevation', [button]);
+    if (identical(_$r, notOverridden)) return super.getHoverElevation(button);
+    return _$r as double;
   }
 
   @override
   double getHighlightElevation(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHighlightElevation', [button]);
-    if (identical(r, notOverridden)) return super.getHighlightElevation(button);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getHighlightElevation', [button]);
+    if (identical(_$r, notOverridden)) return super.getHighlightElevation(button);
+    return _$r as double;
   }
 
   @override
   double getDisabledElevation(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledElevation', [button]);
-    if (identical(r, notOverridden)) return super.getDisabledElevation(button);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDisabledElevation', [button]);
+    if (identical(_$r, notOverridden)) return super.getDisabledElevation(button);
+    return _$r as double;
   }
 
   @override
   EdgeInsetsGeometry getPadding(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPadding', [button]);
-    if (identical(r, notOverridden)) return super.getPadding(button);
-    return r as EdgeInsetsGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPadding', [button]);
+    if (identical(_$r, notOverridden)) return super.getPadding(button);
+    return _$r as EdgeInsetsGeometry;
   }
 
   @override
   ShapeBorder getShape(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getShape', [button]);
-    if (identical(r, notOverridden)) return super.getShape(button);
-    return r as ShapeBorder;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getShape', [button]);
+    if (identical(_$r, notOverridden)) return super.getShape(button);
+    return _$r as ShapeBorder;
   }
 
   @override
   Duration getAnimationDuration(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAnimationDuration', [button]);
-    if (identical(r, notOverridden)) return super.getAnimationDuration(button);
-    return r as Duration;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAnimationDuration', [button]);
+    if (identical(_$r, notOverridden)) return super.getAnimationDuration(button);
+    return _$r as Duration;
   }
 
   @override
   BoxConstraints getConstraints(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getConstraints', [button]);
-    if (identical(r, notOverridden)) return super.getConstraints(button);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getConstraints', [button]);
+    if (identical(_$r, notOverridden)) return super.getConstraints(button);
+    return _$r as BoxConstraints;
   }
 
   @override
   MaterialTapTargetSize getMaterialTapTargetSize(MaterialButton button) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaterialTapTargetSize', [button]);
-    if (identical(r, notOverridden)) return super.getMaterialTapTargetSize(button);
-    return r as MaterialTapTargetSize;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaterialTapTargetSize', [button]);
+    if (identical(_$r, notOverridden)) return super.getMaterialTapTargetSize(button);
+    return _$r as MaterialTapTargetSize;
   }
 
   @override
   ButtonThemeData copyWith({ButtonTextTheme? textTheme, ButtonBarLayoutBehavior? layoutBehavior, double? minWidth, double? height, EdgeInsetsGeometry? padding, ShapeBorder? shape, bool? alignedDropdown, Color? buttonColor, Color? disabledColor, Color? focusColor, Color? hoverColor, Color? highlightColor, Color? splashColor, ColorScheme? colorScheme, MaterialTapTargetSize? materialTapTargetSize}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [textTheme, layoutBehavior, minWidth, height, padding, shape, alignedDropdown, buttonColor, disabledColor, focusColor, hoverColor, highlightColor, splashColor, colorScheme, materialTapTargetSize]);
-    if (identical(r, notOverridden)) return super.copyWith(textTheme: textTheme, layoutBehavior: layoutBehavior, minWidth: minWidth, height: height, padding: padding, shape: shape, alignedDropdown: alignedDropdown, buttonColor: buttonColor, disabledColor: disabledColor, focusColor: focusColor, hoverColor: hoverColor, highlightColor: highlightColor, splashColor: splashColor, colorScheme: colorScheme, materialTapTargetSize: materialTapTargetSize);
-    return r as ButtonThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [textTheme, layoutBehavior, minWidth, height, padding, shape, alignedDropdown, buttonColor, disabledColor, focusColor, hoverColor, highlightColor, splashColor, colorScheme, materialTapTargetSize]);
+    if (identical(_$r, notOverridden)) return super.copyWith(textTheme: textTheme, layoutBehavior: layoutBehavior, minWidth: minWidth, height: height, padding: padding, shape: shape, alignedDropdown: alignedDropdown, buttonColor: buttonColor, disabledColor: disabledColor, focusColor: focusColor, hoverColor: hoverColor, highlightColor: highlightColor, splashColor: splashColor, colorScheme: colorScheme, materialTapTargetSize: materialTapTargetSize);
+    return _$r as ButtonThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

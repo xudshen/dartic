@@ -22,16 +22,16 @@ class _$WidgetStatePropertyAll extends WidgetStatePropertyAll<dynamic> implement
 
   @override
   dynamic resolve(Set<WidgetState> states) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
-    if (identical(r, notOverridden)) return super.resolve(states);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [states]);
+    if (identical(_$r, notOverridden)) return super.resolve(states);
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

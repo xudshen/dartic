@@ -24,90 +24,90 @@ class _$ImageStreamCompleter extends ImageStreamCompleter implements DarticObjec
 
   @override
   void addListener(ImageStreamListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(listener); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(listener); return; }
   }
 
   @override
   void addEphemeralErrorListener(ImageErrorListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEphemeralErrorListener', [listener]);
-    if (identical(r, notOverridden)) { super.addEphemeralErrorListener((a, b) => listener(a, b)); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addEphemeralErrorListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addEphemeralErrorListener((a, b) => listener(a, b)); return; }
   }
 
   @override
   ImageStreamCompleterHandle keepAlive() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'keepAlive', const []);
-    if (identical(r, notOverridden)) return super.keepAlive();
-    return r as ImageStreamCompleterHandle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'keepAlive', const []);
+    if (identical(_$r, notOverridden)) return super.keepAlive();
+    return _$r as ImageStreamCompleterHandle;
   }
 
   @override
   void removeListener(ImageStreamListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(listener); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(listener); return; }
   }
 
   @override
   void onDisposed() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDisposed', const []);
-    if (identical(r, notOverridden)) { super.onDisposed(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onDisposed', const []);
+    if (identical(_$r, notOverridden)) { super.onDisposed(); return; }
   }
 
   @override
   void addOnLastListenerRemovedCallback(ui.VoidCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addOnLastListenerRemovedCallback', [callback]);
-    if (identical(r, notOverridden)) { super.addOnLastListenerRemovedCallback(() => callback()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addOnLastListenerRemovedCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.addOnLastListenerRemovedCallback(() => callback()); return; }
   }
 
   @override
   void removeOnLastListenerRemovedCallback(ui.VoidCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeOnLastListenerRemovedCallback', [callback]);
-    if (identical(r, notOverridden)) { super.removeOnLastListenerRemovedCallback(() => callback()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeOnLastListenerRemovedCallback', [callback]);
+    if (identical(_$r, notOverridden)) { super.removeOnLastListenerRemovedCallback(() => callback()); return; }
   }
 
   @override
   void setImage(ImageInfo image) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setImage', [image]);
-    if (identical(r, notOverridden)) { super.setImage(image); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setImage', [image]);
+    if (identical(_$r, notOverridden)) { super.setImage(image); return; }
   }
 
   @override
   void reportError({DiagnosticsNode? context, required Object exception, StackTrace? stack, InformationCollector? informationCollector, bool silent = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reportError', [context, exception, stack, informationCollector, silent]);
-    if (identical(r, notOverridden)) { super.reportError(context: context, exception: exception, stack: stack, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null, silent: silent); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reportError', [context, exception, stack, informationCollector, silent]);
+    if (identical(_$r, notOverridden)) { super.reportError(context: context, exception: exception, stack: stack, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null, silent: silent); return; }
   }
 
   @override
   void reportImageChunkEvent(ImageChunkEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reportImageChunkEvent', [event]);
-    if (identical(r, notOverridden)) { super.reportImageChunkEvent(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reportImageChunkEvent', [event]);
+    if (identical(_$r, notOverridden)) { super.reportImageChunkEvent(event); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [description]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(description); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [description]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(description); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

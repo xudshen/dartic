@@ -18,29 +18,29 @@ class _$Random implements Random, DarticObjectHolder {
 
   @override
   int nextInt(int max) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextInt', [max]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextInt', [max]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextInt must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   double nextDouble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextDouble', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextDouble', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextDouble must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   bool nextBool() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextBool', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextBool', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextBool must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override

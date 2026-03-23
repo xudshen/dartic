@@ -32,26 +32,26 @@ class _$ScribbleClient extends ScribbleClient implements DarticObjectHolder {
 
   @override
   void onScribbleFocus(Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onScribbleFocus', [offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onScribbleFocus', [offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method onScribbleFocus must be overridden in dartic code');
     }
   }
 
   @override
   bool isInScribbleRect(Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isInScribbleRect', [rect]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isInScribbleRect', [rect]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isInScribbleRect must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

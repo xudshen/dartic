@@ -20,16 +20,16 @@ class _$ContextMenuButtonItem extends ContextMenuButtonItem implements DarticObj
 
   @override
   ContextMenuButtonItem copyWith({VoidCallback? onPressed, ContextMenuButtonType? type, String? label}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [onPressed, type, label]);
-    if (identical(r, notOverridden)) return super.copyWith(onPressed: onPressed != null ? () => onPressed() : null, type: type, label: label);
-    return r as ContextMenuButtonItem;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [onPressed, type, label]);
+    if (identical(_$r, notOverridden)) return super.copyWith(onPressed: onPressed != null ? () => onPressed() : null, type: type, label: label);
+    return _$r as ContextMenuButtonItem;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

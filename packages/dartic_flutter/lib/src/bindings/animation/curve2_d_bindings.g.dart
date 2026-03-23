@@ -22,37 +22,37 @@ class _$Curve2D extends Curve2D implements DarticObjectHolder {
 
   @override
   Iterable<Curve2DSample> generateSamples({double start = 0.0, double end = 1.0, double tolerance = 1e-10}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'generateSamples', [start, end, tolerance]);
-    if (identical(r, notOverridden)) return super.generateSamples(start: start, end: end, tolerance: tolerance);
-    return r as Iterable<Curve2DSample>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'generateSamples', [start, end, tolerance]);
+    if (identical(_$r, notOverridden)) return super.generateSamples(start: start, end: end, tolerance: tolerance);
+    return _$r as Iterable<Curve2DSample>;
   }
 
   @override
   double findInverse(double x) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findInverse', [x]);
-    if (identical(r, notOverridden)) return super.findInverse(x);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findInverse', [x]);
+    if (identical(_$r, notOverridden)) return super.findInverse(x);
+    return _$r as double;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Offset transform(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
-    if (identical(r, notOverridden)) return super.transform(t);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [t]);
+    if (identical(_$r, notOverridden)) return super.transform(t);
+    return _$r as Offset;
   }
 
   @override
   Offset transformInternal(double t) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transformInternal', [t]);
-    if (identical(r, notOverridden)) return super.transformInternal(t);
-    return r as Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transformInternal', [t]);
+    if (identical(_$r, notOverridden)) return super.transformInternal(t);
+    return _$r as Offset;
   }
 
   @override

@@ -26,16 +26,16 @@ class _$TextTreeRenderer extends TextTreeRenderer implements DarticObjectHolder 
 
   @override
   String render(DiagnosticsNode node, {String prefixLineOne = '', String? prefixOtherLines, TextTreeConfiguration? parentConfiguration}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'render', [node, prefixLineOne, prefixOtherLines, parentConfiguration]);
-    if (identical(r, notOverridden)) return super.render(node, prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'render', [node, prefixLineOne, prefixOtherLines, parentConfiguration]);
+    if (identical(_$r, notOverridden)) return super.render(node, prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration);
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

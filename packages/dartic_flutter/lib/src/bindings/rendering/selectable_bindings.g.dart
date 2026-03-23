@@ -23,68 +23,68 @@ class _$Selectable implements Selectable, DarticObjectHolder {
 
   @override
   Matrix4 getTransformTo(RenderObject? ancestor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getTransformTo must be overridden in dartic code');
     }
-    return r as Matrix4;
+    return _$r as Matrix4;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }
 
   @override
   void pushHandleLayers(LayerLink? startHandle, LayerLink? endHandle) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pushHandleLayers must be overridden in dartic code');
     }
   }
 
   @override
   SelectedContent? getSelectedContent() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelectedContent must be overridden in dartic code');
     }
-    return r as SelectedContent?;
+    return _$r as SelectedContent?;
   }
 
   @override
   SelectedContentRange? getSelection() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelection must be overridden in dartic code');
     }
-    return r as SelectedContentRange?;
+    return _$r as SelectedContentRange?;
   }
 
   @override
   SelectionResult dispatchSelectionEvent(SelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispatchSelectionEvent must be overridden in dartic code');
     }
-    return r as SelectionResult;
+    return _$r as SelectionResult;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
     }
   }

@@ -19,33 +19,33 @@ class _$ClipContext extends ClipContext implements DarticObjectHolder {
 
   @override
   void clipPathAndPaint(Path path, Clip clipBehavior, Rect bounds, VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipPathAndPaint', [path, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipPathAndPaint(path, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipPathAndPaint', [path, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipPathAndPaint(path, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRRectAndPaint(RRect rrect, Clip clipBehavior, Rect bounds, VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRRectAndPaint', [rrect, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRRectAndPaint(rrect, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRRectAndPaint', [rrect, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRRectAndPaint(rrect, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRSuperellipseAndPaint(RSuperellipse rse, Clip clipBehavior, Rect bounds, VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRSuperellipseAndPaint', [rse, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRSuperellipseAndPaint(rse, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRSuperellipseAndPaint', [rse, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRSuperellipseAndPaint(rse, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRectAndPaint(Rect rect, Clip clipBehavior, Rect bounds, VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRectAndPaint', [rect, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRectAndPaint(rect, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRectAndPaint', [rect, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRectAndPaint(rect, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

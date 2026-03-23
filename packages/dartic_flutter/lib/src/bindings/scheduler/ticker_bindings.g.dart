@@ -22,53 +22,53 @@ class _$Ticker extends Ticker implements DarticObjectHolder {
 
   @override
   TickerFuture start() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'start', const []);
-    if (identical(r, notOverridden)) return super.start();
-    return r as TickerFuture;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'start', const []);
+    if (identical(_$r, notOverridden)) return super.start();
+    return _$r as TickerFuture;
   }
 
   @override
   DiagnosticsNode describeForError(String name) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeForError', [name]);
-    if (identical(r, notOverridden)) return super.describeForError(name);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'describeForError', [name]);
+    if (identical(_$r, notOverridden)) return super.describeForError(name);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   void stop({bool canceled = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [canceled]);
-    if (identical(r, notOverridden)) { super.stop(canceled: canceled); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', [canceled]);
+    if (identical(_$r, notOverridden)) { super.stop(canceled: canceled); return; }
   }
 
   @override
   void scheduleTick({bool rescheduling = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleTick', [rescheduling]);
-    if (identical(r, notOverridden)) { super.scheduleTick(rescheduling: rescheduling); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleTick', [rescheduling]);
+    if (identical(_$r, notOverridden)) { super.scheduleTick(rescheduling: rescheduling); return; }
   }
 
   @override
   void unscheduleTick() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unscheduleTick', const []);
-    if (identical(r, notOverridden)) { super.unscheduleTick(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unscheduleTick', const []);
+    if (identical(_$r, notOverridden)) { super.unscheduleTick(); return; }
   }
 
   @override
   void absorbTicker(Ticker originalTicker) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorbTicker', [originalTicker]);
-    if (identical(r, notOverridden)) { super.absorbTicker(originalTicker); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorbTicker', [originalTicker]);
+    if (identical(_$r, notOverridden)) { super.absorbTicker(originalTicker); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString({bool debugIncludeStack = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [debugIncludeStack]);
-    if (identical(r, notOverridden)) return super.toString(debugIncludeStack: debugIncludeStack);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [debugIncludeStack]);
+    if (identical(_$r, notOverridden)) return super.toString(debugIncludeStack: debugIncludeStack);
+    return _$r as String;
   }
 
   @override

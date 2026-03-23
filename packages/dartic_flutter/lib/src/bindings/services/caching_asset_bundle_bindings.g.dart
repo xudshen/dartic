@@ -25,44 +25,44 @@ class _$CachingAssetBundle extends CachingAssetBundle implements DarticObjectHol
 
   @override
   Future<String> loadString(String key, {bool cache = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadString', [key, cache]);
-    if (identical(r, notOverridden)) return super.loadString(key, cache: cache);
-    return r as Future<String>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadString', [key, cache]);
+    if (identical(_$r, notOverridden)) return super.loadString(key, cache: cache);
+    return _$r as Future<String>;
   }
 
   @override
   void evict(String key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [key]);
-    if (identical(r, notOverridden)) { super.evict(key); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'evict', [key]);
+    if (identical(_$r, notOverridden)) { super.evict(key); return; }
   }
 
   @override
   void clear() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
-    if (identical(r, notOverridden)) { super.clear(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
+    if (identical(_$r, notOverridden)) { super.clear(); return; }
   }
 
   @override
   Future<ui.ImmutableBuffer> loadBuffer(String key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadBuffer', [key]);
-    if (identical(r, notOverridden)) return super.loadBuffer(key);
-    return r as Future<ui.ImmutableBuffer>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadBuffer', [key]);
+    if (identical(_$r, notOverridden)) return super.loadBuffer(key);
+    return _$r as Future<ui.ImmutableBuffer>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Future<ByteData> load(String key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', [key]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', [key]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method load must be overridden in dartic code');
     }
-    return r as Future<ByteData>;
+    return _$r as Future<ByteData>;
   }
 
   @override

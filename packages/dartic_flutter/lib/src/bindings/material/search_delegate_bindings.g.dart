@@ -41,90 +41,90 @@ class _$SearchDelegate extends SearchDelegate<dynamic> implements DarticObjectHo
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildSuggestions', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildSuggestions', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildSuggestions must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildResults', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildResults', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildResults must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildLeading', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildLeading', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildLeading must be overridden in dartic code');
     }
-    return r as Widget?;
+    return _$r as Widget?;
   }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildActions', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildActions', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method buildActions must be overridden in dartic code');
     }
-    return r as List<Widget>?;
+    return _$r as List<Widget>?;
   }
 
   @override
   PreferredSizeWidget? buildBottom(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildBottom', [context]);
-    if (identical(r, notOverridden)) return super.buildBottom(context);
-    return r as PreferredSizeWidget?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildBottom', [context]);
+    if (identical(_$r, notOverridden)) return super.buildBottom(context);
+    return _$r as PreferredSizeWidget?;
   }
 
   @override
   Widget? buildFlexibleSpace(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildFlexibleSpace', [context]);
-    if (identical(r, notOverridden)) return super.buildFlexibleSpace(context);
-    return r as Widget?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildFlexibleSpace', [context]);
+    if (identical(_$r, notOverridden)) return super.buildFlexibleSpace(context);
+    return _$r as Widget?;
   }
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'appBarTheme', [context]);
-    if (identical(r, notOverridden)) return super.appBarTheme(context);
-    return r as ThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'appBarTheme', [context]);
+    if (identical(_$r, notOverridden)) return super.appBarTheme(context);
+    return _$r as ThemeData;
   }
 
   @override
   void showResults(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showResults', [context]);
-    if (identical(r, notOverridden)) { super.showResults(context); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showResults', [context]);
+    if (identical(_$r, notOverridden)) { super.showResults(context); return; }
   }
 
   @override
   void showSuggestions(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSuggestions', [context]);
-    if (identical(r, notOverridden)) { super.showSuggestions(context); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSuggestions', [context]);
+    if (identical(_$r, notOverridden)) { super.showSuggestions(context); return; }
   }
 
   @override
   void close(BuildContext context, dynamic result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', [context, result]);
-    if (identical(r, notOverridden)) { super.close(context, result); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', [context, result]);
+    if (identical(_$r, notOverridden)) { super.close(context, result); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

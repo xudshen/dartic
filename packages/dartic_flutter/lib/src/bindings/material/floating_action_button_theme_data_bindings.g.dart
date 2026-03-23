@@ -31,36 +31,36 @@ class _$FloatingActionButtonThemeData extends FloatingActionButtonThemeData impl
 
   @override
   FloatingActionButtonThemeData copyWith({Color? foregroundColor, Color? backgroundColor, Color? focusColor, Color? hoverColor, Color? splashColor, double? elevation, double? focusElevation, double? hoverElevation, double? disabledElevation, double? highlightElevation, ShapeBorder? shape, bool? enableFeedback, double? iconSize, BoxConstraints? sizeConstraints, BoxConstraints? smallSizeConstraints, BoxConstraints? largeSizeConstraints, BoxConstraints? extendedSizeConstraints, double? extendedIconLabelSpacing, EdgeInsetsGeometry? extendedPadding, TextStyle? extendedTextStyle, WidgetStateProperty<MouseCursor?>? mouseCursor}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [foregroundColor, backgroundColor, focusColor, hoverColor, splashColor, elevation, focusElevation, hoverElevation, disabledElevation, highlightElevation, shape, enableFeedback, iconSize, sizeConstraints, smallSizeConstraints, largeSizeConstraints, extendedSizeConstraints, extendedIconLabelSpacing, extendedPadding, extendedTextStyle, mouseCursor]);
-    if (identical(r, notOverridden)) return super.copyWith(foregroundColor: foregroundColor, backgroundColor: backgroundColor, focusColor: focusColor, hoverColor: hoverColor, splashColor: splashColor, elevation: elevation, focusElevation: focusElevation, hoverElevation: hoverElevation, disabledElevation: disabledElevation, highlightElevation: highlightElevation, shape: shape, enableFeedback: enableFeedback, iconSize: iconSize, sizeConstraints: sizeConstraints, smallSizeConstraints: smallSizeConstraints, largeSizeConstraints: largeSizeConstraints, extendedSizeConstraints: extendedSizeConstraints, extendedIconLabelSpacing: extendedIconLabelSpacing, extendedPadding: extendedPadding, extendedTextStyle: extendedTextStyle, mouseCursor: mouseCursor);
-    return r as FloatingActionButtonThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [foregroundColor, backgroundColor, focusColor, hoverColor, splashColor, elevation, focusElevation, hoverElevation, disabledElevation, highlightElevation, shape, enableFeedback, iconSize, sizeConstraints, smallSizeConstraints, largeSizeConstraints, extendedSizeConstraints, extendedIconLabelSpacing, extendedPadding, extendedTextStyle, mouseCursor]);
+    if (identical(_$r, notOverridden)) return super.copyWith(foregroundColor: foregroundColor, backgroundColor: backgroundColor, focusColor: focusColor, hoverColor: hoverColor, splashColor: splashColor, elevation: elevation, focusElevation: focusElevation, hoverElevation: hoverElevation, disabledElevation: disabledElevation, highlightElevation: highlightElevation, shape: shape, enableFeedback: enableFeedback, iconSize: iconSize, sizeConstraints: sizeConstraints, smallSizeConstraints: smallSizeConstraints, largeSizeConstraints: largeSizeConstraints, extendedSizeConstraints: extendedSizeConstraints, extendedIconLabelSpacing: extendedIconLabelSpacing, extendedPadding: extendedPadding, extendedTextStyle: extendedTextStyle, mouseCursor: mouseCursor);
+    return _$r as FloatingActionButtonThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

@@ -32,79 +32,79 @@ class _$NeverScrollableScrollPhysics extends NeverScrollableScrollPhysics implem
 
   @override
   NeverScrollableScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyTo', [ancestor]);
-    if (identical(r, notOverridden)) return super.applyTo(ancestor);
-    return r as NeverScrollableScrollPhysics;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyTo', [ancestor]);
+    if (identical(_$r, notOverridden)) return super.applyTo(ancestor);
+    return _$r as NeverScrollableScrollPhysics;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   ScrollPhysics? buildParent(ScrollPhysics? ancestor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildParent', [ancestor]);
-    if (identical(r, notOverridden)) return super.buildParent(ancestor);
-    return r as ScrollPhysics?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildParent', [ancestor]);
+    if (identical(_$r, notOverridden)) return super.buildParent(ancestor);
+    return _$r as ScrollPhysics?;
   }
 
   @override
   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPhysicsToUserOffset', [position, offset]);
-    if (identical(r, notOverridden)) return super.applyPhysicsToUserOffset(position, offset);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyPhysicsToUserOffset', [position, offset]);
+    if (identical(_$r, notOverridden)) return super.applyPhysicsToUserOffset(position, offset);
+    return _$r as double;
   }
 
   @override
   bool shouldAcceptUserOffset(ScrollMetrics position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldAcceptUserOffset', [position]);
-    if (identical(r, notOverridden)) return super.shouldAcceptUserOffset(position);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldAcceptUserOffset', [position]);
+    if (identical(_$r, notOverridden)) return super.shouldAcceptUserOffset(position);
+    return _$r as bool;
   }
 
   @override
   bool recommendDeferredLoading(double velocity, ScrollMetrics metrics, BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'recommendDeferredLoading', [velocity, metrics, context]);
-    if (identical(r, notOverridden)) return super.recommendDeferredLoading(velocity, metrics, context);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'recommendDeferredLoading', [velocity, metrics, context]);
+    if (identical(_$r, notOverridden)) return super.recommendDeferredLoading(velocity, metrics, context);
+    return _$r as bool;
   }
 
   @override
   double applyBoundaryConditions(ScrollMetrics position, double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyBoundaryConditions', [position, value]);
-    if (identical(r, notOverridden)) return super.applyBoundaryConditions(position, value);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyBoundaryConditions', [position, value]);
+    if (identical(_$r, notOverridden)) return super.applyBoundaryConditions(position, value);
+    return _$r as double;
   }
 
   @override
   double adjustPositionForNewDimensions({required ScrollMetrics oldPosition, required ScrollMetrics newPosition, required bool isScrolling, required double velocity}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adjustPositionForNewDimensions', [oldPosition, newPosition, isScrolling, velocity]);
-    if (identical(r, notOverridden)) return super.adjustPositionForNewDimensions(oldPosition: oldPosition, newPosition: newPosition, isScrolling: isScrolling, velocity: velocity);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adjustPositionForNewDimensions', [oldPosition, newPosition, isScrolling, velocity]);
+    if (identical(_$r, notOverridden)) return super.adjustPositionForNewDimensions(oldPosition: oldPosition, newPosition: newPosition, isScrolling: isScrolling, velocity: velocity);
+    return _$r as double;
   }
 
   @override
   Simulation? createBallisticSimulation(ScrollMetrics position, double velocity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createBallisticSimulation', [position, velocity]);
-    if (identical(r, notOverridden)) return super.createBallisticSimulation(position, velocity);
-    return r as Simulation?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createBallisticSimulation', [position, velocity]);
+    if (identical(_$r, notOverridden)) return super.createBallisticSimulation(position, velocity);
+    return _$r as Simulation?;
   }
 
   @override
   Tolerance toleranceFor(ScrollMetrics metrics) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toleranceFor', [metrics]);
-    if (identical(r, notOverridden)) return super.toleranceFor(metrics);
-    return r as Tolerance;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toleranceFor', [metrics]);
+    if (identical(_$r, notOverridden)) return super.toleranceFor(metrics);
+    return _$r as Tolerance;
   }
 
   @override
   double carriedMomentum(double existingVelocity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'carriedMomentum', [existingVelocity]);
-    if (identical(r, notOverridden)) return super.carriedMomentum(existingVelocity);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'carriedMomentum', [existingVelocity]);
+    if (identical(_$r, notOverridden)) return super.carriedMomentum(existingVelocity);
+    return _$r as double;
   }
 
   @override

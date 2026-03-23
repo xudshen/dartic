@@ -33,36 +33,36 @@ class _$DatePickerThemeData extends DatePickerThemeData implements DarticObjectH
 
   @override
   DatePickerThemeData copyWith({Color? backgroundColor, double? elevation, Color? shadowColor, Color? surfaceTintColor, ShapeBorder? shape, Color? headerBackgroundColor, Color? headerForegroundColor, TextStyle? headerHeadlineStyle, TextStyle? headerHelpStyle, TextStyle? weekdayStyle, TextStyle? dayStyle, WidgetStateProperty<Color?>? dayForegroundColor, WidgetStateProperty<Color?>? dayBackgroundColor, WidgetStateProperty<Color?>? dayOverlayColor, WidgetStateProperty<OutlinedBorder?>? dayShape, WidgetStateProperty<Color?>? todayForegroundColor, WidgetStateProperty<Color?>? todayBackgroundColor, BorderSide? todayBorder, TextStyle? yearStyle, WidgetStateProperty<Color?>? yearForegroundColor, WidgetStateProperty<Color?>? yearBackgroundColor, WidgetStateProperty<Color?>? yearOverlayColor, WidgetStateProperty<OutlinedBorder?>? yearShape, Color? rangePickerBackgroundColor, double? rangePickerElevation, Color? rangePickerShadowColor, Color? rangePickerSurfaceTintColor, ShapeBorder? rangePickerShape, Color? rangePickerHeaderBackgroundColor, Color? rangePickerHeaderForegroundColor, TextStyle? rangePickerHeaderHeadlineStyle, TextStyle? rangePickerHeaderHelpStyle, Color? rangeSelectionBackgroundColor, WidgetStateProperty<Color?>? rangeSelectionOverlayColor, Color? dividerColor, InputDecorationTheme? inputDecorationTheme, ButtonStyle? cancelButtonStyle, ButtonStyle? confirmButtonStyle, Locale? locale, TextStyle? toggleButtonTextStyle, Color? subHeaderForegroundColor}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, elevation, shadowColor, surfaceTintColor, shape, headerBackgroundColor, headerForegroundColor, headerHeadlineStyle, headerHelpStyle, weekdayStyle, dayStyle, dayForegroundColor, dayBackgroundColor, dayOverlayColor, dayShape, todayForegroundColor, todayBackgroundColor, todayBorder, yearStyle, yearForegroundColor, yearBackgroundColor, yearOverlayColor, yearShape, rangePickerBackgroundColor, rangePickerElevation, rangePickerShadowColor, rangePickerSurfaceTintColor, rangePickerShape, rangePickerHeaderBackgroundColor, rangePickerHeaderForegroundColor, rangePickerHeaderHeadlineStyle, rangePickerHeaderHelpStyle, rangeSelectionBackgroundColor, rangeSelectionOverlayColor, dividerColor, inputDecorationTheme, cancelButtonStyle, confirmButtonStyle, locale, toggleButtonTextStyle, subHeaderForegroundColor]);
-    if (identical(r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, elevation: elevation, shadowColor: shadowColor, surfaceTintColor: surfaceTintColor, shape: shape, headerBackgroundColor: headerBackgroundColor, headerForegroundColor: headerForegroundColor, headerHeadlineStyle: headerHeadlineStyle, headerHelpStyle: headerHelpStyle, weekdayStyle: weekdayStyle, dayStyle: dayStyle, dayForegroundColor: dayForegroundColor, dayBackgroundColor: dayBackgroundColor, dayOverlayColor: dayOverlayColor, dayShape: dayShape, todayForegroundColor: todayForegroundColor, todayBackgroundColor: todayBackgroundColor, todayBorder: todayBorder, yearStyle: yearStyle, yearForegroundColor: yearForegroundColor, yearBackgroundColor: yearBackgroundColor, yearOverlayColor: yearOverlayColor, yearShape: yearShape, rangePickerBackgroundColor: rangePickerBackgroundColor, rangePickerElevation: rangePickerElevation, rangePickerShadowColor: rangePickerShadowColor, rangePickerSurfaceTintColor: rangePickerSurfaceTintColor, rangePickerShape: rangePickerShape, rangePickerHeaderBackgroundColor: rangePickerHeaderBackgroundColor, rangePickerHeaderForegroundColor: rangePickerHeaderForegroundColor, rangePickerHeaderHeadlineStyle: rangePickerHeaderHeadlineStyle, rangePickerHeaderHelpStyle: rangePickerHeaderHelpStyle, rangeSelectionBackgroundColor: rangeSelectionBackgroundColor, rangeSelectionOverlayColor: rangeSelectionOverlayColor, dividerColor: dividerColor, inputDecorationTheme: inputDecorationTheme, cancelButtonStyle: cancelButtonStyle, confirmButtonStyle: confirmButtonStyle, locale: locale, toggleButtonTextStyle: toggleButtonTextStyle, subHeaderForegroundColor: subHeaderForegroundColor);
-    return r as DatePickerThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, elevation, shadowColor, surfaceTintColor, shape, headerBackgroundColor, headerForegroundColor, headerHeadlineStyle, headerHelpStyle, weekdayStyle, dayStyle, dayForegroundColor, dayBackgroundColor, dayOverlayColor, dayShape, todayForegroundColor, todayBackgroundColor, todayBorder, yearStyle, yearForegroundColor, yearBackgroundColor, yearOverlayColor, yearShape, rangePickerBackgroundColor, rangePickerElevation, rangePickerShadowColor, rangePickerSurfaceTintColor, rangePickerShape, rangePickerHeaderBackgroundColor, rangePickerHeaderForegroundColor, rangePickerHeaderHeadlineStyle, rangePickerHeaderHelpStyle, rangeSelectionBackgroundColor, rangeSelectionOverlayColor, dividerColor, inputDecorationTheme, cancelButtonStyle, confirmButtonStyle, locale, toggleButtonTextStyle, subHeaderForegroundColor]);
+    if (identical(_$r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, elevation: elevation, shadowColor: shadowColor, surfaceTintColor: surfaceTintColor, shape: shape, headerBackgroundColor: headerBackgroundColor, headerForegroundColor: headerForegroundColor, headerHeadlineStyle: headerHeadlineStyle, headerHelpStyle: headerHelpStyle, weekdayStyle: weekdayStyle, dayStyle: dayStyle, dayForegroundColor: dayForegroundColor, dayBackgroundColor: dayBackgroundColor, dayOverlayColor: dayOverlayColor, dayShape: dayShape, todayForegroundColor: todayForegroundColor, todayBackgroundColor: todayBackgroundColor, todayBorder: todayBorder, yearStyle: yearStyle, yearForegroundColor: yearForegroundColor, yearBackgroundColor: yearBackgroundColor, yearOverlayColor: yearOverlayColor, yearShape: yearShape, rangePickerBackgroundColor: rangePickerBackgroundColor, rangePickerElevation: rangePickerElevation, rangePickerShadowColor: rangePickerShadowColor, rangePickerSurfaceTintColor: rangePickerSurfaceTintColor, rangePickerShape: rangePickerShape, rangePickerHeaderBackgroundColor: rangePickerHeaderBackgroundColor, rangePickerHeaderForegroundColor: rangePickerHeaderForegroundColor, rangePickerHeaderHeadlineStyle: rangePickerHeaderHeadlineStyle, rangePickerHeaderHelpStyle: rangePickerHeaderHelpStyle, rangeSelectionBackgroundColor: rangeSelectionBackgroundColor, rangeSelectionOverlayColor: rangeSelectionOverlayColor, dividerColor: dividerColor, inputDecorationTheme: inputDecorationTheme, cancelButtonStyle: cancelButtonStyle, confirmButtonStyle: confirmButtonStyle, locale: locale, toggleButtonTextStyle: toggleButtonTextStyle, subHeaderForegroundColor: subHeaderForegroundColor);
+    return _$r as DatePickerThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

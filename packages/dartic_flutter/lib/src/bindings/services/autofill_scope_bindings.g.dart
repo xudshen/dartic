@@ -20,27 +20,27 @@ class _$AutofillScope extends AutofillScope implements DarticObjectHolder {
 
   @override
   AutofillClient? getAutofillClient(String autofillId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAutofillClient', [autofillId]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAutofillClient', [autofillId]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getAutofillClient must be overridden in dartic code');
     }
-    return r as AutofillClient?;
+    return _$r as AutofillClient?;
   }
 
   @override
   TextInputConnection attach(TextInputClient trigger, TextInputConfiguration configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [trigger, configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [trigger, configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method attach must be overridden in dartic code');
     }
-    return r as TextInputConnection;
+    return _$r as TextInputConnection;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

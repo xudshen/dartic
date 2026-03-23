@@ -24,16 +24,16 @@ class _$SliverGridGeometry extends SliverGridGeometry implements DarticObjectHol
 
   @override
   BoxConstraints getBoxConstraints(SliverConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxConstraints', [constraints]);
-    if (identical(r, notOverridden)) return super.getBoxConstraints(constraints);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxConstraints', [constraints]);
+    if (identical(_$r, notOverridden)) return super.getBoxConstraints(constraints);
+    return _$r as BoxConstraints;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

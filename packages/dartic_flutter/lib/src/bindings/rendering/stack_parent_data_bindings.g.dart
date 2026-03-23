@@ -25,22 +25,22 @@ class _$StackParentData extends StackParentData implements DarticObjectHolder {
 
   @override
   BoxConstraints positionedChildConstraints(Size stackSize) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'positionedChildConstraints', [stackSize]);
-    if (identical(r, notOverridden)) return super.positionedChildConstraints(stackSize);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'positionedChildConstraints', [stackSize]);
+    if (identical(_$r, notOverridden)) return super.positionedChildConstraints(stackSize);
+    return _$r as BoxConstraints;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void detach() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
-    if (identical(r, notOverridden)) { super.detach(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(_$r, notOverridden)) { super.detach(); return; }
   }
 
   @override

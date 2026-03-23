@@ -28,26 +28,26 @@ class _$Codec extends Codec implements DarticObjectHolder {
 
   @override
   Future<FrameInfo> getNextFrame() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNextFrame', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getNextFrame', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getNextFrame must be overridden in dartic code');
     }
-    return r as Future<FrameInfo>;
+    return _$r as Future<FrameInfo>;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method dispose must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

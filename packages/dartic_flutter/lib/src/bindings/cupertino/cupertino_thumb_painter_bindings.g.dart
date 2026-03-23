@@ -22,15 +22,15 @@ class _$CupertinoThumbPainter extends CupertinoThumbPainter implements DarticObj
 
   @override
   void paint(Canvas canvas, Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect]);
-    if (identical(r, notOverridden)) { super.paint(canvas, rect); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, rect]);
+    if (identical(_$r, notOverridden)) { super.paint(canvas, rect); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

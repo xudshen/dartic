@@ -22,60 +22,60 @@ class _$EdgeInsetsGeometry extends EdgeInsetsGeometry implements DarticObjectHol
 
   @override
   double along(Axis axis) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'along', [axis]);
-    if (identical(r, notOverridden)) return super.along(axis);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'along', [axis]);
+    if (identical(_$r, notOverridden)) return super.along(axis);
+    return _$r as double;
   }
 
   @override
   ui.Size inflateSize(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inflateSize', [size]);
-    if (identical(r, notOverridden)) return super.inflateSize(size);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inflateSize', [size]);
+    if (identical(_$r, notOverridden)) return super.inflateSize(size);
+    return _$r as ui.Size;
   }
 
   @override
   ui.Size deflateSize(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deflateSize', [size]);
-    if (identical(r, notOverridden)) return super.deflateSize(size);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deflateSize', [size]);
+    if (identical(_$r, notOverridden)) return super.deflateSize(size);
+    return _$r as ui.Size;
   }
 
   @override
   EdgeInsetsGeometry subtract(EdgeInsetsGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'subtract', [other]);
-    if (identical(r, notOverridden)) return super.subtract(other);
-    return r as EdgeInsetsGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'subtract', [other]);
+    if (identical(_$r, notOverridden)) return super.subtract(other);
+    return _$r as EdgeInsetsGeometry;
   }
 
   @override
   EdgeInsetsGeometry add(EdgeInsetsGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
-    if (identical(r, notOverridden)) return super.add(other);
-    return r as EdgeInsetsGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(_$r, notOverridden)) return super.add(other);
+    return _$r as EdgeInsetsGeometry;
   }
 
   @override
   EdgeInsetsGeometry clamp(EdgeInsetsGeometry min, EdgeInsetsGeometry max) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clamp', [min, max]);
-    if (identical(r, notOverridden)) return super.clamp(min, max);
-    return r as EdgeInsetsGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clamp', [min, max]);
+    if (identical(_$r, notOverridden)) return super.clamp(min, max);
+    return _$r as EdgeInsetsGeometry;
   }
 
   @override
   EdgeInsets resolve(ui.TextDirection? direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
     }
-    return r as EdgeInsets;
+    return _$r as EdgeInsets;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -30,16 +30,16 @@ class _$ImageConfiguration extends ImageConfiguration implements DarticObjectHol
 
   @override
   ImageConfiguration copyWith({AssetBundle? bundle, double? devicePixelRatio, ui.Locale? locale, ui.TextDirection? textDirection, ui.Size? size, TargetPlatform? platform}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [bundle, devicePixelRatio, locale, textDirection, size, platform]);
-    if (identical(r, notOverridden)) return super.copyWith(bundle: bundle, devicePixelRatio: devicePixelRatio, locale: locale, textDirection: textDirection, size: size, platform: platform);
-    return r as ImageConfiguration;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [bundle, devicePixelRatio, locale, textDirection, size, platform]);
+    if (identical(_$r, notOverridden)) return super.copyWith(bundle: bundle, devicePixelRatio: devicePixelRatio, locale: locale, textDirection: textDirection, size: size, platform: platform);
+    return _$r as ImageConfiguration;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

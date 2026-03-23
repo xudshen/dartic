@@ -27,16 +27,16 @@ class _$EventChannel extends EventChannel implements DarticObjectHolder {
 
   @override
   Stream<dynamic> receiveBroadcastStream([dynamic arguments]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'receiveBroadcastStream', [arguments]);
-    if (identical(r, notOverridden)) return super.receiveBroadcastStream(arguments);
-    return r as Stream<dynamic>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'receiveBroadcastStream', [arguments]);
+    if (identical(_$r, notOverridden)) return super.receiveBroadcastStream(arguments);
+    return _$r as Stream<dynamic>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

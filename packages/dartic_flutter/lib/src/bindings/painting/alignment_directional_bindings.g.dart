@@ -22,23 +22,23 @@ class _$AlignmentDirectional extends AlignmentDirectional implements DarticObjec
 
   @override
   AlignmentGeometry add(AlignmentGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
-    if (identical(r, notOverridden)) return super.add(other);
-    return r as AlignmentGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(_$r, notOverridden)) return super.add(other);
+    return _$r as AlignmentGeometry;
   }
 
   @override
   Alignment resolve(ui.TextDirection? direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
-    if (identical(r, notOverridden)) return super.resolve(direction);
-    return r as Alignment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(_$r, notOverridden)) return super.resolve(direction);
+    return _$r as Alignment;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

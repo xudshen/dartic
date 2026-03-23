@@ -20,18 +20,18 @@ class _$StreamTransformerBase extends StreamTransformerBase<dynamic, dynamic> im
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Stream bind(Stream stream) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method bind must be overridden in dartic code');
     }
-    return r as Stream;
+    return _$r as Stream;
   }
 
   @override

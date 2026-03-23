@@ -35,36 +35,36 @@ class _$SliderThemeData extends SliderThemeData implements DarticObjectHolder {
 
   @override
   SliderThemeData copyWith({double? trackHeight, Color? activeTrackColor, Color? inactiveTrackColor, Color? secondaryActiveTrackColor, Color? disabledActiveTrackColor, Color? disabledInactiveTrackColor, Color? disabledSecondaryActiveTrackColor, Color? activeTickMarkColor, Color? inactiveTickMarkColor, Color? disabledActiveTickMarkColor, Color? disabledInactiveTickMarkColor, Color? thumbColor, Color? overlappingShapeStrokeColor, Color? disabledThumbColor, Color? overlayColor, Color? valueIndicatorColor, Color? valueIndicatorStrokeColor, SliderComponentShape? overlayShape, SliderTickMarkShape? tickMarkShape, SliderComponentShape? thumbShape, SliderTrackShape? trackShape, SliderComponentShape? valueIndicatorShape, RangeSliderTickMarkShape? rangeTickMarkShape, RangeSliderThumbShape? rangeThumbShape, RangeSliderTrackShape? rangeTrackShape, RangeSliderValueIndicatorShape? rangeValueIndicatorShape, ShowValueIndicator? showValueIndicator, TextStyle? valueIndicatorTextStyle, double? minThumbSeparation, RangeThumbSelector? thumbSelector, WidgetStateProperty<MouseCursor?>? mouseCursor, SliderInteraction? allowedInteraction, EdgeInsetsGeometry? padding, WidgetStateProperty<Size?>? thumbSize, double? trackGap, bool? year2023}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [trackHeight, activeTrackColor, inactiveTrackColor, secondaryActiveTrackColor, disabledActiveTrackColor, disabledInactiveTrackColor, disabledSecondaryActiveTrackColor, activeTickMarkColor, inactiveTickMarkColor, disabledActiveTickMarkColor, disabledInactiveTickMarkColor, thumbColor, overlappingShapeStrokeColor, disabledThumbColor, overlayColor, valueIndicatorColor, valueIndicatorStrokeColor, overlayShape, tickMarkShape, thumbShape, trackShape, valueIndicatorShape, rangeTickMarkShape, rangeThumbShape, rangeTrackShape, rangeValueIndicatorShape, showValueIndicator, valueIndicatorTextStyle, minThumbSeparation, thumbSelector, mouseCursor, allowedInteraction, padding, thumbSize, trackGap, year2023]);
-    if (identical(r, notOverridden)) return super.copyWith(trackHeight: trackHeight, activeTrackColor: activeTrackColor, inactiveTrackColor: inactiveTrackColor, secondaryActiveTrackColor: secondaryActiveTrackColor, disabledActiveTrackColor: disabledActiveTrackColor, disabledInactiveTrackColor: disabledInactiveTrackColor, disabledSecondaryActiveTrackColor: disabledSecondaryActiveTrackColor, activeTickMarkColor: activeTickMarkColor, inactiveTickMarkColor: inactiveTickMarkColor, disabledActiveTickMarkColor: disabledActiveTickMarkColor, disabledInactiveTickMarkColor: disabledInactiveTickMarkColor, thumbColor: thumbColor, overlappingShapeStrokeColor: overlappingShapeStrokeColor, disabledThumbColor: disabledThumbColor, overlayColor: overlayColor, valueIndicatorColor: valueIndicatorColor, valueIndicatorStrokeColor: valueIndicatorStrokeColor, overlayShape: overlayShape, tickMarkShape: tickMarkShape, thumbShape: thumbShape, trackShape: trackShape, valueIndicatorShape: valueIndicatorShape, rangeTickMarkShape: rangeTickMarkShape, rangeThumbShape: rangeThumbShape, rangeTrackShape: rangeTrackShape, rangeValueIndicatorShape: rangeValueIndicatorShape, showValueIndicator: showValueIndicator, valueIndicatorTextStyle: valueIndicatorTextStyle, minThumbSeparation: minThumbSeparation, thumbSelector: thumbSelector != null ? (a, b, c, d, e, f) => thumbSelector(a, b, c, d, e, f) as Thumb? : null, mouseCursor: mouseCursor, allowedInteraction: allowedInteraction, padding: padding, thumbSize: thumbSize, trackGap: trackGap, year2023: year2023);
-    return r as SliderThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [trackHeight, activeTrackColor, inactiveTrackColor, secondaryActiveTrackColor, disabledActiveTrackColor, disabledInactiveTrackColor, disabledSecondaryActiveTrackColor, activeTickMarkColor, inactiveTickMarkColor, disabledActiveTickMarkColor, disabledInactiveTickMarkColor, thumbColor, overlappingShapeStrokeColor, disabledThumbColor, overlayColor, valueIndicatorColor, valueIndicatorStrokeColor, overlayShape, tickMarkShape, thumbShape, trackShape, valueIndicatorShape, rangeTickMarkShape, rangeThumbShape, rangeTrackShape, rangeValueIndicatorShape, showValueIndicator, valueIndicatorTextStyle, minThumbSeparation, thumbSelector, mouseCursor, allowedInteraction, padding, thumbSize, trackGap, year2023]);
+    if (identical(_$r, notOverridden)) return super.copyWith(trackHeight: trackHeight, activeTrackColor: activeTrackColor, inactiveTrackColor: inactiveTrackColor, secondaryActiveTrackColor: secondaryActiveTrackColor, disabledActiveTrackColor: disabledActiveTrackColor, disabledInactiveTrackColor: disabledInactiveTrackColor, disabledSecondaryActiveTrackColor: disabledSecondaryActiveTrackColor, activeTickMarkColor: activeTickMarkColor, inactiveTickMarkColor: inactiveTickMarkColor, disabledActiveTickMarkColor: disabledActiveTickMarkColor, disabledInactiveTickMarkColor: disabledInactiveTickMarkColor, thumbColor: thumbColor, overlappingShapeStrokeColor: overlappingShapeStrokeColor, disabledThumbColor: disabledThumbColor, overlayColor: overlayColor, valueIndicatorColor: valueIndicatorColor, valueIndicatorStrokeColor: valueIndicatorStrokeColor, overlayShape: overlayShape, tickMarkShape: tickMarkShape, thumbShape: thumbShape, trackShape: trackShape, valueIndicatorShape: valueIndicatorShape, rangeTickMarkShape: rangeTickMarkShape, rangeThumbShape: rangeThumbShape, rangeTrackShape: rangeTrackShape, rangeValueIndicatorShape: rangeValueIndicatorShape, showValueIndicator: showValueIndicator, valueIndicatorTextStyle: valueIndicatorTextStyle, minThumbSeparation: minThumbSeparation, thumbSelector: thumbSelector != null ? (a, b, c, d, e, f) => thumbSelector(a, b, c, d, e, f) as Thumb? : null, mouseCursor: mouseCursor, allowedInteraction: allowedInteraction, padding: padding, thumbSize: thumbSize, trackGap: trackGap, year2023: year2023);
+    return _$r as SliderThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

@@ -20,86 +20,86 @@ class _$ReadBuffer extends ReadBuffer implements DarticObjectHolder {
 
   @override
   int getUint8() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint8', const []);
-    if (identical(r, notOverridden)) return super.getUint8();
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint8', const []);
+    if (identical(_$r, notOverridden)) return super.getUint8();
+    return _$r as int;
   }
 
   @override
   int getUint16({Endian? endian}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint16', [endian]);
-    if (identical(r, notOverridden)) return super.getUint16(endian: endian);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint16', [endian]);
+    if (identical(_$r, notOverridden)) return super.getUint16(endian: endian);
+    return _$r as int;
   }
 
   @override
   int getUint32({Endian? endian}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint32', [endian]);
-    if (identical(r, notOverridden)) return super.getUint32(endian: endian);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint32', [endian]);
+    if (identical(_$r, notOverridden)) return super.getUint32(endian: endian);
+    return _$r as int;
   }
 
   @override
   int getInt32({Endian? endian}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt32', [endian]);
-    if (identical(r, notOverridden)) return super.getInt32(endian: endian);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt32', [endian]);
+    if (identical(_$r, notOverridden)) return super.getInt32(endian: endian);
+    return _$r as int;
   }
 
   @override
   int getInt64({Endian? endian}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt64', [endian]);
-    if (identical(r, notOverridden)) return super.getInt64(endian: endian);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt64', [endian]);
+    if (identical(_$r, notOverridden)) return super.getInt64(endian: endian);
+    return _$r as int;
   }
 
   @override
   double getFloat64({Endian? endian}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat64', [endian]);
-    if (identical(r, notOverridden)) return super.getFloat64(endian: endian);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat64', [endian]);
+    if (identical(_$r, notOverridden)) return super.getFloat64(endian: endian);
+    return _$r as double;
   }
 
   @override
   Uint8List getUint8List(int length) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint8List', [length]);
-    if (identical(r, notOverridden)) return super.getUint8List(length);
-    return r as Uint8List;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getUint8List', [length]);
+    if (identical(_$r, notOverridden)) return super.getUint8List(length);
+    return _$r as Uint8List;
   }
 
   @override
   Int32List getInt32List(int length) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt32List', [length]);
-    if (identical(r, notOverridden)) return super.getInt32List(length);
-    return r as Int32List;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt32List', [length]);
+    if (identical(_$r, notOverridden)) return super.getInt32List(length);
+    return _$r as Int32List;
   }
 
   @override
   Int64List getInt64List(int length) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt64List', [length]);
-    if (identical(r, notOverridden)) return super.getInt64List(length);
-    return r as Int64List;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getInt64List', [length]);
+    if (identical(_$r, notOverridden)) return super.getInt64List(length);
+    return _$r as Int64List;
   }
 
   @override
   Float32List getFloat32List(int length) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat32List', [length]);
-    if (identical(r, notOverridden)) return super.getFloat32List(length);
-    return r as Float32List;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat32List', [length]);
+    if (identical(_$r, notOverridden)) return super.getFloat32List(length);
+    return _$r as Float32List;
   }
 
   @override
   Float64List getFloat64List(int length) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat64List', [length]);
-    if (identical(r, notOverridden)) return super.getFloat64List(length);
-    return r as Float64List;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFloat64List', [length]);
+    if (identical(_$r, notOverridden)) return super.getFloat64List(length);
+    return _$r as Float64List;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -27,43 +27,43 @@ class _$PlatformMenuDelegate extends PlatformMenuDelegate implements DarticObjec
 
   @override
   void setMenus(List<PlatformMenuItem> topLevelMenus) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMenus', [topLevelMenus]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMenus', [topLevelMenus]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setMenus must be overridden in dartic code');
     }
   }
 
   @override
   void clearMenus() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearMenus', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearMenus', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clearMenus must be overridden in dartic code');
     }
   }
 
   @override
   bool debugLockDelegate(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugLockDelegate', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugLockDelegate', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugLockDelegate must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool debugUnlockDelegate(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugUnlockDelegate', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugUnlockDelegate', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugUnlockDelegate must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

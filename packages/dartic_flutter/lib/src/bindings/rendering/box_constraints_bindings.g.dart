@@ -29,114 +29,114 @@ class _$BoxConstraints extends BoxConstraints implements DarticObjectHolder {
 
   @override
   BoxConstraints copyWith({double? minWidth, double? maxWidth, double? minHeight, double? maxHeight}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minWidth, maxWidth, minHeight, maxHeight]);
-    if (identical(r, notOverridden)) return super.copyWith(minWidth: minWidth, maxWidth: maxWidth, minHeight: minHeight, maxHeight: maxHeight);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minWidth, maxWidth, minHeight, maxHeight]);
+    if (identical(_$r, notOverridden)) return super.copyWith(minWidth: minWidth, maxWidth: maxWidth, minHeight: minHeight, maxHeight: maxHeight);
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints deflate(EdgeInsetsGeometry edges) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deflate', [edges]);
-    if (identical(r, notOverridden)) return super.deflate(edges);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deflate', [edges]);
+    if (identical(_$r, notOverridden)) return super.deflate(edges);
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints loosen() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loosen', const []);
-    if (identical(r, notOverridden)) return super.loosen();
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loosen', const []);
+    if (identical(_$r, notOverridden)) return super.loosen();
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints enforce(BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'enforce', [constraints]);
-    if (identical(r, notOverridden)) return super.enforce(constraints);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'enforce', [constraints]);
+    if (identical(_$r, notOverridden)) return super.enforce(constraints);
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints tighten({double? width, double? height}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tighten', [width, height]);
-    if (identical(r, notOverridden)) return super.tighten(width: width, height: height);
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tighten', [width, height]);
+    if (identical(_$r, notOverridden)) return super.tighten(width: width, height: height);
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints widthConstraints() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'widthConstraints', const []);
-    if (identical(r, notOverridden)) return super.widthConstraints();
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'widthConstraints', const []);
+    if (identical(_$r, notOverridden)) return super.widthConstraints();
+    return _$r as BoxConstraints;
   }
 
   @override
   BoxConstraints heightConstraints() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'heightConstraints', const []);
-    if (identical(r, notOverridden)) return super.heightConstraints();
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'heightConstraints', const []);
+    if (identical(_$r, notOverridden)) return super.heightConstraints();
+    return _$r as BoxConstraints;
   }
 
   @override
   double constrainWidth([double width = double.infinity]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainWidth', [width]);
-    if (identical(r, notOverridden)) return super.constrainWidth(width);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainWidth', [width]);
+    if (identical(_$r, notOverridden)) return super.constrainWidth(width);
+    return _$r as double;
   }
 
   @override
   double constrainHeight([double height = double.infinity]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainHeight', [height]);
-    if (identical(r, notOverridden)) return super.constrainHeight(height);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainHeight', [height]);
+    if (identical(_$r, notOverridden)) return super.constrainHeight(height);
+    return _$r as double;
   }
 
   @override
   ui.Size constrain(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrain', [size]);
-    if (identical(r, notOverridden)) return super.constrain(size);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrain', [size]);
+    if (identical(_$r, notOverridden)) return super.constrain(size);
+    return _$r as ui.Size;
   }
 
   @override
   ui.Size constrainDimensions(double width, double height) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainDimensions', [width, height]);
-    if (identical(r, notOverridden)) return super.constrainDimensions(width, height);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainDimensions', [width, height]);
+    if (identical(_$r, notOverridden)) return super.constrainDimensions(width, height);
+    return _$r as ui.Size;
   }
 
   @override
   ui.Size constrainSizeAndAttemptToPreserveAspectRatio(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainSizeAndAttemptToPreserveAspectRatio', [size]);
-    if (identical(r, notOverridden)) return super.constrainSizeAndAttemptToPreserveAspectRatio(size);
-    return r as ui.Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'constrainSizeAndAttemptToPreserveAspectRatio', [size]);
+    if (identical(_$r, notOverridden)) return super.constrainSizeAndAttemptToPreserveAspectRatio(size);
+    return _$r as ui.Size;
   }
 
   @override
   bool isSatisfiedBy(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [size]);
-    if (identical(r, notOverridden)) return super.isSatisfiedBy(size);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSatisfiedBy', [size]);
+    if (identical(_$r, notOverridden)) return super.isSatisfiedBy(size);
+    return _$r as bool;
   }
 
   @override
   bool debugAssertIsValid({bool isAppliedConstraint = false, InformationCollector? informationCollector}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
-    if (identical(r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', [isAppliedConstraint, informationCollector]);
+    if (identical(_$r, notOverridden)) return super.debugAssertIsValid(isAppliedConstraint: isAppliedConstraint, informationCollector: informationCollector != null ? () => informationCollector() as Iterable<DiagnosticsNode> : null);
+    return _$r as bool;
   }
 
   @override
   BoxConstraints normalize() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'normalize', const []);
-    if (identical(r, notOverridden)) return super.normalize();
-    return r as BoxConstraints;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'normalize', const []);
+    if (identical(_$r, notOverridden)) return super.normalize();
+    return _$r as BoxConstraints;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

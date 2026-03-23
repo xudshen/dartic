@@ -29,42 +29,42 @@ class _$ScrollActivityDelegate extends ScrollActivityDelegate implements DarticO
 
   @override
   double setPixels(double pixels) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPixels', [pixels]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPixels', [pixels]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setPixels must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   void applyUserOffset(double delta) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyUserOffset', [delta]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyUserOffset', [delta]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method applyUserOffset must be overridden in dartic code');
     }
   }
 
   @override
   void goIdle() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goIdle', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goIdle', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method goIdle must be overridden in dartic code');
     }
   }
 
   @override
   void goBallistic(double velocity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goBallistic', [velocity]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goBallistic', [velocity]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method goBallistic must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

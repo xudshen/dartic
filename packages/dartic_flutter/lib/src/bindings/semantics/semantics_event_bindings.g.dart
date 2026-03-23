@@ -20,25 +20,25 @@ class _$SemanticsEvent extends SemanticsEvent implements DarticObjectHolder {
 
   @override
   Map<String, dynamic> toMap({int? nodeId}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', [nodeId]);
-    if (identical(r, notOverridden)) return super.toMap(nodeId: nodeId);
-    return r as Map<String, dynamic>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', [nodeId]);
+    if (identical(_$r, notOverridden)) return super.toMap(nodeId: nodeId);
+    return _$r as Map<String, dynamic>;
   }
 
   @override
   Map<String, dynamic> getDataMap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDataMap', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDataMap', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getDataMap must be overridden in dartic code');
     }
-    return r as Map<String, dynamic>;
+    return _$r as Map<String, dynamic>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

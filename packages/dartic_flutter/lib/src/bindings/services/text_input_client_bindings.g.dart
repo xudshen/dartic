@@ -32,96 +32,96 @@ class _$TextInputClient implements TextInputClient, DarticObjectHolder {
 
   @override
   void updateEditingValue(TextEditingValue value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValue', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValue', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method updateEditingValue must be overridden in dartic code');
     }
   }
 
   @override
   void performAction(TextInputAction action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performAction', [action]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performAction', [action]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performAction must be overridden in dartic code');
     }
   }
 
   @override
   void insertContent(KeyboardInsertedContent content) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertContent', [content]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertContent', [content]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method insertContent must be overridden in dartic code');
     }
   }
 
   @override
   void performPrivateCommand(String action, Map<String, dynamic> data) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performPrivateCommand', [action, data]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performPrivateCommand', [action, data]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performPrivateCommand must be overridden in dartic code');
     }
   }
 
   @override
   void updateFloatingCursor(RawFloatingCursorPoint point) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateFloatingCursor', [point]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateFloatingCursor', [point]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method updateFloatingCursor must be overridden in dartic code');
     }
   }
 
   @override
   void showAutocorrectionPromptRect(int start, int end) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showAutocorrectionPromptRect', [start, end]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showAutocorrectionPromptRect', [start, end]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method showAutocorrectionPromptRect must be overridden in dartic code');
     }
   }
 
   @override
   void connectionClosed() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'connectionClosed', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'connectionClosed', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method connectionClosed must be overridden in dartic code');
     }
   }
 
   @override
   void didChangeInputControl(TextInputControl? oldControl, TextInputControl? newControl) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeInputControl', [oldControl, newControl]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeInputControl', [oldControl, newControl]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method didChangeInputControl must be overridden in dartic code');
     }
   }
 
   @override
   void showToolbar() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method showToolbar must be overridden in dartic code');
     }
   }
 
   @override
   void insertTextPlaceholder(Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertTextPlaceholder', [size]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertTextPlaceholder', [size]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method insertTextPlaceholder must be overridden in dartic code');
     }
   }
 
   @override
   void removeTextPlaceholder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTextPlaceholder', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTextPlaceholder', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeTextPlaceholder must be overridden in dartic code');
     }
   }
 
   @override
   void performSelector(String selectorName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSelector', [selectorName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSelector', [selectorName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performSelector must be overridden in dartic code');
     }
   }

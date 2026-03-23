@@ -28,49 +28,49 @@ class _$SemanticsConfiguration extends SemanticsConfiguration implements DarticO
 
   @override
   SemanticsActionHandler? getActionHandler(SemanticsAction action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActionHandler', [action]);
-    if (identical(r, notOverridden)) return super.getActionHandler(action);
-    return r as SemanticsActionHandler?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getActionHandler', [action]);
+    if (identical(_$r, notOverridden)) return super.getActionHandler(action);
+    return _$r as SemanticsActionHandler?;
   }
 
   @override
   bool tagsChildrenWith(SemanticsTag tag) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tagsChildrenWith', [tag]);
-    if (identical(r, notOverridden)) return super.tagsChildrenWith(tag);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tagsChildrenWith', [tag]);
+    if (identical(_$r, notOverridden)) return super.tagsChildrenWith(tag);
+    return _$r as bool;
   }
 
   @override
   void addTagForChildren(SemanticsTag tag) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addTagForChildren', [tag]);
-    if (identical(r, notOverridden)) { super.addTagForChildren(tag); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addTagForChildren', [tag]);
+    if (identical(_$r, notOverridden)) { super.addTagForChildren(tag); return; }
   }
 
   @override
   bool isCompatibleWith(SemanticsConfiguration? other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isCompatibleWith', [other]);
-    if (identical(r, notOverridden)) return super.isCompatibleWith(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isCompatibleWith', [other]);
+    if (identical(_$r, notOverridden)) return super.isCompatibleWith(other);
+    return _$r as bool;
   }
 
   @override
   void absorb(SemanticsConfiguration child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorb', [child]);
-    if (identical(r, notOverridden)) { super.absorb(child); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorb', [child]);
+    if (identical(_$r, notOverridden)) { super.absorb(child); return; }
   }
 
   @override
   SemanticsConfiguration copy() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', const []);
-    if (identical(r, notOverridden)) return super.copy();
-    return r as SemanticsConfiguration;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', const []);
+    if (identical(_$r, notOverridden)) return super.copy();
+    return _$r as SemanticsConfiguration;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

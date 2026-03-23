@@ -26,41 +26,41 @@ class _$ScrollContext extends ScrollContext implements DarticObjectHolder {
 
   @override
   void setIgnorePointer(bool value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setIgnorePointer', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setIgnorePointer', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setIgnorePointer must be overridden in dartic code');
     }
   }
 
   @override
   void setCanDrag(bool value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setCanDrag', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setCanDrag', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setCanDrag must be overridden in dartic code');
     }
   }
 
   @override
   void setSemanticsActions(Set<SemanticsAction> actions) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSemanticsActions', [actions]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSemanticsActions', [actions]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setSemanticsActions must be overridden in dartic code');
     }
   }
 
   @override
   void saveOffset(double offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveOffset', [offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveOffset', [offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method saveOffset must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

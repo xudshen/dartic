@@ -23,43 +23,43 @@ class _$StrutStyle extends StrutStyle implements DarticObjectHolder {
 
   @override
   RenderComparison compareTo(StrutStyle other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
-    if (identical(r, notOverridden)) return super.compareTo(other);
-    return r as RenderComparison;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(_$r, notOverridden)) return super.compareTo(other);
+    return _$r as RenderComparison;
   }
 
   @override
   StrutStyle inheritFromTextStyle(TextStyle? other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inheritFromTextStyle', [other]);
-    if (identical(r, notOverridden)) return super.inheritFromTextStyle(other);
-    return r as StrutStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inheritFromTextStyle', [other]);
+    if (identical(_$r, notOverridden)) return super.inheritFromTextStyle(other);
+    return _$r as StrutStyle;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties, {String prefix = ''}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties, prefix]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties, prefix: prefix); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties, prefix]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties, prefix: prefix); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

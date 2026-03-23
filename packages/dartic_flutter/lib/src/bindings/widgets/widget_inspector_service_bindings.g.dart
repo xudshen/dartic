@@ -37,302 +37,302 @@ class _$WidgetInspectorService implements WidgetInspectorService, DarticObjectHo
 
   @override
   void registerServiceExtension({required String name, required ServiceExtensionCallback callback, required RegisterServiceExtensionCallback registerExtension}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback, registerExtension]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback, registerExtension]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerServiceExtension must be overridden in dartic code');
     }
   }
 
   @override
   Future<void> forceRebuild() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forceRebuild', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forceRebuild', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method forceRebuild must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   bool isStructuredErrorsEnabled() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isStructuredErrorsEnabled', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isStructuredErrorsEnabled', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isStructuredErrorsEnabled must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void initServiceExtensions(RegisterServiceExtensionCallback registerExtension) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', [registerExtension]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', [registerExtension]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method initServiceExtensions must be overridden in dartic code');
     }
   }
 
   @override
   void disposeAllGroups() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeAllGroups', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeAllGroups', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method disposeAllGroups must be overridden in dartic code');
     }
   }
 
   @override
   void resetAllState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetAllState', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetAllState', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resetAllState must be overridden in dartic code');
     }
   }
 
   @override
   void disposeGroup(String name) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeGroup', [name]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeGroup', [name]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method disposeGroup must be overridden in dartic code');
     }
   }
 
   @override
   String? toId(Object? object, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toId', [object, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toId', [object, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toId must be overridden in dartic code');
     }
-    return r as String?;
+    return _$r as String?;
   }
 
   @override
   bool isWidgetTreeReady([String? groupName]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWidgetTreeReady', [groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWidgetTreeReady', [groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isWidgetTreeReady must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   Object? toObject(String? id, [String? groupName]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toObject', [id, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toObject', [id, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toObject must be overridden in dartic code');
     }
-    return r as Object?;
+    return _$r as Object?;
   }
 
   @override
   Object? toObjectForSourceLocation(String id, [String? groupName]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toObjectForSourceLocation', [id, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toObjectForSourceLocation', [id, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toObjectForSourceLocation must be overridden in dartic code');
     }
-    return r as Object?;
+    return _$r as Object?;
   }
 
   @override
   void disposeId(String? id, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeId', [id, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'disposeId', [id, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method disposeId must be overridden in dartic code');
     }
   }
 
   @override
   void setPubRootDirectories(List<String> pubRootDirectories) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPubRootDirectories', [pubRootDirectories]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPubRootDirectories', [pubRootDirectories]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setPubRootDirectories must be overridden in dartic code');
     }
   }
 
   @override
   void resetPubRootDirectories() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetPubRootDirectories', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resetPubRootDirectories', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resetPubRootDirectories must be overridden in dartic code');
     }
   }
 
   @override
   void addPubRootDirectories(List<String> pubRootDirectories) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPubRootDirectories', [pubRootDirectories]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addPubRootDirectories', [pubRootDirectories]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addPubRootDirectories must be overridden in dartic code');
     }
   }
 
   @override
   void removePubRootDirectories(List<String> pubRootDirectories) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removePubRootDirectories', [pubRootDirectories]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removePubRootDirectories', [pubRootDirectories]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removePubRootDirectories must be overridden in dartic code');
     }
   }
 
   @override
   Future<Map<String, dynamic>> pubRootDirectories(Map<String, String> parameters) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pubRootDirectories', [parameters]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pubRootDirectories', [parameters]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pubRootDirectories must be overridden in dartic code');
     }
-    return r as Future<Map<String, dynamic>>;
+    return _$r as Future<Map<String, dynamic>>;
   }
 
   @override
   bool setSelectionById(String? id, [String? groupName]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelectionById', [id, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelectionById', [id, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setSelectionById must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool setSelection(Object? object, [String? groupName]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelection', [object, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSelection', [object, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setSelection must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String devToolsInspectorUri(String inspectorRef) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'devToolsInspectorUri', [inspectorRef]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'devToolsInspectorUri', [inspectorRef]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method devToolsInspectorUri must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getParentChain(String id, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getParentChain', [id, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getParentChain', [id, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getParentChain must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getProperties(String diagnosticsNodeId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getProperties', [diagnosticsNodeId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getProperties', [diagnosticsNodeId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getProperties must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getChildren(String diagnosticsNodeId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildren', [diagnosticsNodeId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildren', [diagnosticsNodeId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getChildren must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getChildrenSummaryTree(String diagnosticsNodeId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildrenSummaryTree', [diagnosticsNodeId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildrenSummaryTree', [diagnosticsNodeId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getChildrenSummaryTree must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getChildrenDetailsSubtree(String diagnosticableId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildrenDetailsSubtree', [diagnosticableId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getChildrenDetailsSubtree', [diagnosticableId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getChildrenDetailsSubtree must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getRootWidget(String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRootWidget', [groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRootWidget', [groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getRootWidget must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getRootWidgetSummaryTree(String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRootWidgetSummaryTree', [groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getRootWidgetSummaryTree', [groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getRootWidgetSummaryTree must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getDetailsSubtree(String diagnosticableId, String groupName, {int subtreeDepth = 2}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDetailsSubtree', [diagnosticableId, groupName, subtreeDepth]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDetailsSubtree', [diagnosticableId, groupName, subtreeDepth]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getDetailsSubtree must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   String getSelectedWidget(String? previousSelectionId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedWidget', [previousSelectionId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedWidget', [previousSelectionId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelectedWidget must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   Future<ui.Image?> screenshot(Object? object, {required double width, required double height, double margin = 0.0, double maxPixelRatio = 1.0, bool debugPaint = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'screenshot', [object, width, height, margin, maxPixelRatio, debugPaint]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'screenshot', [object, width, height, margin, maxPixelRatio, debugPaint]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method screenshot must be overridden in dartic code');
     }
-    return r as Future<ui.Image?>;
+    return _$r as Future<ui.Image?>;
   }
 
   @override
   String getSelectedSummaryWidget(String? previousSelectionId, String groupName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedSummaryWidget', [previousSelectionId, groupName]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedSummaryWidget', [previousSelectionId, groupName]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSelectedSummaryWidget must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override
   bool isWidgetCreationTracked() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWidgetCreationTracked', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isWidgetCreationTracked', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isWidgetCreationTracked must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   void postEvent(String eventKind, Map<Object, Object?> eventData, {String stream = 'Extension'}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData, stream]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData, stream]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method postEvent must be overridden in dartic code');
     }
   }
 
   @override
   void inspect(Object? object) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inspect', [object]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inspect', [object]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method inspect must be overridden in dartic code');
     }
   }
 
   @override
   void performReassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performReassemble must be overridden in dartic code');
     }
   }

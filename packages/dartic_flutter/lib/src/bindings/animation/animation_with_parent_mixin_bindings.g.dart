@@ -24,32 +24,32 @@ class _$AnimationWithParentMixin implements AnimationWithParentMixin<dynamic>, D
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
     }
   }
 
   @override
   void addStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addStatusListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeStatusListener(AnimationStatusListener listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeStatusListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeStatusListener must be overridden in dartic code');
     }
   }

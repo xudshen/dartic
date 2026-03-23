@@ -24,16 +24,16 @@ class _$PartialStackFrame extends PartialStackFrame implements DarticObjectHolde
 
   @override
   bool matches(StackFrame stackFrame) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'matches', [stackFrame]);
-    if (identical(r, notOverridden)) return super.matches(stackFrame);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'matches', [stackFrame]);
+    if (identical(_$r, notOverridden)) return super.matches(stackFrame);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

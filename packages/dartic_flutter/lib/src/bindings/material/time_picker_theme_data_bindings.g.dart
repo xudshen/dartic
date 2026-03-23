@@ -31,36 +31,36 @@ class _$TimePickerThemeData extends TimePickerThemeData implements DarticObjectH
 
   @override
   TimePickerThemeData copyWith({Color? backgroundColor, ButtonStyle? cancelButtonStyle, ButtonStyle? confirmButtonStyle, ButtonStyle? dayPeriodButtonStyle, BorderSide? dayPeriodBorderSide, Color? dayPeriodColor, OutlinedBorder? dayPeriodShape, Color? dayPeriodTextColor, TextStyle? dayPeriodTextStyle, Color? dialBackgroundColor, Color? dialHandColor, Color? dialTextColor, TextStyle? dialTextStyle, double? elevation, Color? entryModeIconColor, TextStyle? helpTextStyle, Color? hourMinuteColor, ShapeBorder? hourMinuteShape, Color? hourMinuteTextColor, TextStyle? hourMinuteTextStyle, InputDecorationTheme? inputDecorationTheme, EdgeInsetsGeometry? padding, ShapeBorder? shape, WidgetStateProperty<Color?>? timeSelectorSeparatorColor, WidgetStateProperty<TextStyle?>? timeSelectorSeparatorTextStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, cancelButtonStyle, confirmButtonStyle, dayPeriodButtonStyle, dayPeriodBorderSide, dayPeriodColor, dayPeriodShape, dayPeriodTextColor, dayPeriodTextStyle, dialBackgroundColor, dialHandColor, dialTextColor, dialTextStyle, elevation, entryModeIconColor, helpTextStyle, hourMinuteColor, hourMinuteShape, hourMinuteTextColor, hourMinuteTextStyle, inputDecorationTheme, padding, shape, timeSelectorSeparatorColor, timeSelectorSeparatorTextStyle]);
-    if (identical(r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, cancelButtonStyle: cancelButtonStyle, confirmButtonStyle: confirmButtonStyle, dayPeriodButtonStyle: dayPeriodButtonStyle, dayPeriodBorderSide: dayPeriodBorderSide, dayPeriodColor: dayPeriodColor, dayPeriodShape: dayPeriodShape, dayPeriodTextColor: dayPeriodTextColor, dayPeriodTextStyle: dayPeriodTextStyle, dialBackgroundColor: dialBackgroundColor, dialHandColor: dialHandColor, dialTextColor: dialTextColor, dialTextStyle: dialTextStyle, elevation: elevation, entryModeIconColor: entryModeIconColor, helpTextStyle: helpTextStyle, hourMinuteColor: hourMinuteColor, hourMinuteShape: hourMinuteShape, hourMinuteTextColor: hourMinuteTextColor, hourMinuteTextStyle: hourMinuteTextStyle, inputDecorationTheme: inputDecorationTheme, padding: padding, shape: shape, timeSelectorSeparatorColor: timeSelectorSeparatorColor, timeSelectorSeparatorTextStyle: timeSelectorSeparatorTextStyle);
-    return r as TimePickerThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, cancelButtonStyle, confirmButtonStyle, dayPeriodButtonStyle, dayPeriodBorderSide, dayPeriodColor, dayPeriodShape, dayPeriodTextColor, dayPeriodTextStyle, dialBackgroundColor, dialHandColor, dialTextColor, dialTextStyle, elevation, entryModeIconColor, helpTextStyle, hourMinuteColor, hourMinuteShape, hourMinuteTextColor, hourMinuteTextStyle, inputDecorationTheme, padding, shape, timeSelectorSeparatorColor, timeSelectorSeparatorTextStyle]);
+    if (identical(_$r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, cancelButtonStyle: cancelButtonStyle, confirmButtonStyle: confirmButtonStyle, dayPeriodButtonStyle: dayPeriodButtonStyle, dayPeriodBorderSide: dayPeriodBorderSide, dayPeriodColor: dayPeriodColor, dayPeriodShape: dayPeriodShape, dayPeriodTextColor: dayPeriodTextColor, dayPeriodTextStyle: dayPeriodTextStyle, dialBackgroundColor: dialBackgroundColor, dialHandColor: dialHandColor, dialTextColor: dialTextColor, dialTextStyle: dialTextStyle, elevation: elevation, entryModeIconColor: entryModeIconColor, helpTextStyle: helpTextStyle, hourMinuteColor: hourMinuteColor, hourMinuteShape: hourMinuteShape, hourMinuteTextColor: hourMinuteTextColor, hourMinuteTextStyle: hourMinuteTextStyle, inputDecorationTheme: inputDecorationTheme, padding: padding, shape: shape, timeSelectorSeparatorColor: timeSelectorSeparatorColor, timeSelectorSeparatorTextStyle: timeSelectorSeparatorTextStyle);
+    return _$r as TimePickerThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

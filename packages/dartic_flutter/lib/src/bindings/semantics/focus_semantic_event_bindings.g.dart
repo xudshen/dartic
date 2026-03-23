@@ -20,23 +20,23 @@ class _$FocusSemanticEvent extends FocusSemanticEvent implements DarticObjectHol
 
   @override
   Map<String, dynamic> getDataMap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDataMap', const []);
-    if (identical(r, notOverridden)) return super.getDataMap();
-    return r as Map<String, dynamic>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getDataMap', const []);
+    if (identical(_$r, notOverridden)) return super.getDataMap();
+    return _$r as Map<String, dynamic>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   Map<String, dynamic> toMap({int? nodeId}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', [nodeId]);
-    if (identical(r, notOverridden)) return super.toMap(nodeId: nodeId);
-    return r as Map<String, dynamic>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', [nodeId]);
+    if (identical(_$r, notOverridden)) return super.toMap(nodeId: nodeId);
+    return _$r as Map<String, dynamic>;
   }
 
   @override

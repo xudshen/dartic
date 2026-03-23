@@ -25,36 +25,36 @@ class _$BottomSheetThemeData extends BottomSheetThemeData implements DarticObjec
 
   @override
   BottomSheetThemeData copyWith({Color? backgroundColor, Color? surfaceTintColor, double? elevation, Color? modalBackgroundColor, Color? modalBarrierColor, Color? shadowColor, double? modalElevation, ShapeBorder? shape, bool? showDragHandle, Color? dragHandleColor, Size? dragHandleSize, Clip? clipBehavior, BoxConstraints? constraints}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, surfaceTintColor, elevation, modalBackgroundColor, modalBarrierColor, shadowColor, modalElevation, shape, showDragHandle, dragHandleColor, dragHandleSize, clipBehavior, constraints]);
-    if (identical(r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, surfaceTintColor: surfaceTintColor, elevation: elevation, modalBackgroundColor: modalBackgroundColor, modalBarrierColor: modalBarrierColor, shadowColor: shadowColor, modalElevation: modalElevation, shape: shape, showDragHandle: showDragHandle, dragHandleColor: dragHandleColor, dragHandleSize: dragHandleSize, clipBehavior: clipBehavior, constraints: constraints);
-    return r as BottomSheetThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, surfaceTintColor, elevation, modalBackgroundColor, modalBarrierColor, shadowColor, modalElevation, shape, showDragHandle, dragHandleColor, dragHandleSize, clipBehavior, constraints]);
+    if (identical(_$r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, surfaceTintColor: surfaceTintColor, elevation: elevation, modalBackgroundColor: modalBackgroundColor, modalBarrierColor: modalBarrierColor, shadowColor: shadowColor, modalElevation: modalElevation, shape: shape, showDragHandle: showDragHandle, dragHandleColor: dragHandleColor, dragHandleSize: dragHandleSize, clipBehavior: clipBehavior, constraints: constraints);
+    return _$r as BottomSheetThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

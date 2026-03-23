@@ -27,30 +27,30 @@ class _$WindowingOwnerWin32 extends WindowingOwnerWin32 implements DarticObjectH
 
   @override
   RegularWindowController createRegularWindowController({Size? preferredSize, BoxConstraints? preferredConstraints, String? title, required RegularWindowControllerDelegate delegate}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRegularWindowController', [preferredSize, preferredConstraints, title, delegate]);
-    if (identical(r, notOverridden)) return super.createRegularWindowController(preferredSize: preferredSize, preferredConstraints: preferredConstraints, title: title, delegate: delegate);
-    return r as RegularWindowController;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRegularWindowController', [preferredSize, preferredConstraints, title, delegate]);
+    if (identical(_$r, notOverridden)) return super.createRegularWindowController(preferredSize: preferredSize, preferredConstraints: preferredConstraints, title: title, delegate: delegate);
+    return _$r as RegularWindowController;
   }
 
   @override
   DialogWindowController createDialogWindowController({required DialogWindowControllerDelegate delegate, Size? preferredSize, BoxConstraints? preferredConstraints, BaseWindowController? parent, String? title}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDialogWindowController', [delegate, preferredSize, preferredConstraints, parent, title]);
-    if (identical(r, notOverridden)) return super.createDialogWindowController(delegate: delegate, preferredSize: preferredSize, preferredConstraints: preferredConstraints, parent: parent, title: title);
-    return r as DialogWindowController;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createDialogWindowController', [delegate, preferredSize, preferredConstraints, parent, title]);
+    if (identical(_$r, notOverridden)) return super.createDialogWindowController(delegate: delegate, preferredSize: preferredSize, preferredConstraints: preferredConstraints, parent: parent, title: title);
+    return _$r as DialogWindowController;
   }
 
   @override
   bool hasTopLevelWindows() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasTopLevelWindows', const []);
-    if (identical(r, notOverridden)) return super.hasTopLevelWindows();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasTopLevelWindows', const []);
+    if (identical(_$r, notOverridden)) return super.hasTopLevelWindows();
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

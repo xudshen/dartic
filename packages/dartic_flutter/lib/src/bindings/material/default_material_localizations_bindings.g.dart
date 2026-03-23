@@ -23,163 +23,163 @@ class _$DefaultMaterialLocalizations extends DefaultMaterialLocalizations implem
 
   @override
   String formatHour(TimeOfDay timeOfDay, {bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatHour', [timeOfDay, alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) return super.formatHour(timeOfDay, alwaysUse24HourFormat: alwaysUse24HourFormat);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatHour', [timeOfDay, alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) return super.formatHour(timeOfDay, alwaysUse24HourFormat: alwaysUse24HourFormat);
+    return _$r as String;
   }
 
   @override
   String formatMinute(TimeOfDay timeOfDay) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMinute', [timeOfDay]);
-    if (identical(r, notOverridden)) return super.formatMinute(timeOfDay);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMinute', [timeOfDay]);
+    if (identical(_$r, notOverridden)) return super.formatMinute(timeOfDay);
+    return _$r as String;
   }
 
   @override
   String formatYear(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [date]);
-    if (identical(r, notOverridden)) return super.formatYear(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatYear', [date]);
+    if (identical(_$r, notOverridden)) return super.formatYear(date);
+    return _$r as String;
   }
 
   @override
   String formatCompactDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date]);
-    if (identical(r, notOverridden)) return super.formatCompactDate(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatCompactDate', [date]);
+    if (identical(_$r, notOverridden)) return super.formatCompactDate(date);
+    return _$r as String;
   }
 
   @override
   String formatShortDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date]);
-    if (identical(r, notOverridden)) return super.formatShortDate(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortDate', [date]);
+    if (identical(_$r, notOverridden)) return super.formatShortDate(date);
+    return _$r as String;
   }
 
   @override
   String formatMediumDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date]);
-    if (identical(r, notOverridden)) return super.formatMediumDate(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMediumDate', [date]);
+    if (identical(_$r, notOverridden)) return super.formatMediumDate(date);
+    return _$r as String;
   }
 
   @override
   String formatFullDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date]);
-    if (identical(r, notOverridden)) return super.formatFullDate(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatFullDate', [date]);
+    if (identical(_$r, notOverridden)) return super.formatFullDate(date);
+    return _$r as String;
   }
 
   @override
   String formatMonthYear(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date]);
-    if (identical(r, notOverridden)) return super.formatMonthYear(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatMonthYear', [date]);
+    if (identical(_$r, notOverridden)) return super.formatMonthYear(date);
+    return _$r as String;
   }
 
   @override
   String formatShortMonthDay(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date]);
-    if (identical(r, notOverridden)) return super.formatShortMonthDay(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatShortMonthDay', [date]);
+    if (identical(_$r, notOverridden)) return super.formatShortMonthDay(date);
+    return _$r as String;
   }
 
   @override
   DateTime? parseCompactDate(String? inputString) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString]);
-    if (identical(r, notOverridden)) return super.parseCompactDate(inputString);
-    return r as DateTime?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'parseCompactDate', [inputString]);
+    if (identical(_$r, notOverridden)) return super.parseCompactDate(inputString);
+    return _$r as DateTime?;
   }
 
   @override
   String dateRangeStartDateSemanticLabel(String formattedDate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeStartDateSemanticLabel', [formattedDate]);
-    if (identical(r, notOverridden)) return super.dateRangeStartDateSemanticLabel(formattedDate);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeStartDateSemanticLabel', [formattedDate]);
+    if (identical(_$r, notOverridden)) return super.dateRangeStartDateSemanticLabel(formattedDate);
+    return _$r as String;
   }
 
   @override
   String dateRangeEndDateSemanticLabel(String formattedDate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeEndDateSemanticLabel', [formattedDate]);
-    if (identical(r, notOverridden)) return super.dateRangeEndDateSemanticLabel(formattedDate);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dateRangeEndDateSemanticLabel', [formattedDate]);
+    if (identical(_$r, notOverridden)) return super.dateRangeEndDateSemanticLabel(formattedDate);
+    return _$r as String;
   }
 
   @override
   String formatDecimal(int number) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatDecimal', [number]);
-    if (identical(r, notOverridden)) return super.formatDecimal(number);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatDecimal', [number]);
+    if (identical(_$r, notOverridden)) return super.formatDecimal(number);
+    return _$r as String;
   }
 
   @override
   String formatTimeOfDay(TimeOfDay timeOfDay, {bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatTimeOfDay', [timeOfDay, alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) return super.formatTimeOfDay(timeOfDay, alwaysUse24HourFormat: alwaysUse24HourFormat);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'formatTimeOfDay', [timeOfDay, alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) return super.formatTimeOfDay(timeOfDay, alwaysUse24HourFormat: alwaysUse24HourFormat);
+    return _$r as String;
   }
 
   @override
   String scrimOnTapHint(String modalRouteContentName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scrimOnTapHint', [modalRouteContentName]);
-    if (identical(r, notOverridden)) return super.scrimOnTapHint(modalRouteContentName);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scrimOnTapHint', [modalRouteContentName]);
+    if (identical(_$r, notOverridden)) return super.scrimOnTapHint(modalRouteContentName);
+    return _$r as String;
   }
 
   @override
   String aboutListTileTitle(String applicationName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'aboutListTileTitle', [applicationName]);
-    if (identical(r, notOverridden)) return super.aboutListTileTitle(applicationName);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'aboutListTileTitle', [applicationName]);
+    if (identical(_$r, notOverridden)) return super.aboutListTileTitle(applicationName);
+    return _$r as String;
   }
 
   @override
   String licensesPackageDetailText(int licenseCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'licensesPackageDetailText', [licenseCount]);
-    if (identical(r, notOverridden)) return super.licensesPackageDetailText(licenseCount);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'licensesPackageDetailText', [licenseCount]);
+    if (identical(_$r, notOverridden)) return super.licensesPackageDetailText(licenseCount);
+    return _$r as String;
   }
 
   @override
   String pageRowsInfoTitle(int firstRow, int lastRow, int rowCount, bool rowCountIsApproximate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pageRowsInfoTitle', [firstRow, lastRow, rowCount, rowCountIsApproximate]);
-    if (identical(r, notOverridden)) return super.pageRowsInfoTitle(firstRow, lastRow, rowCount, rowCountIsApproximate);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pageRowsInfoTitle', [firstRow, lastRow, rowCount, rowCountIsApproximate]);
+    if (identical(_$r, notOverridden)) return super.pageRowsInfoTitle(firstRow, lastRow, rowCount, rowCountIsApproximate);
+    return _$r as String;
   }
 
   @override
   String tabLabel({required int tabIndex, required int tabCount}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabLabel', [tabIndex, tabCount]);
-    if (identical(r, notOverridden)) return super.tabLabel(tabIndex: tabIndex, tabCount: tabCount);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabLabel', [tabIndex, tabCount]);
+    if (identical(_$r, notOverridden)) return super.tabLabel(tabIndex: tabIndex, tabCount: tabCount);
+    return _$r as String;
   }
 
   @override
   String selectedRowCountTitle(int selectedRowCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectedRowCountTitle', [selectedRowCount]);
-    if (identical(r, notOverridden)) return super.selectedRowCountTitle(selectedRowCount);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectedRowCountTitle', [selectedRowCount]);
+    if (identical(_$r, notOverridden)) return super.selectedRowCountTitle(selectedRowCount);
+    return _$r as String;
   }
 
   @override
   TimeOfDayFormat timeOfDayFormat({bool alwaysUse24HourFormat = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeOfDayFormat', [alwaysUse24HourFormat]);
-    if (identical(r, notOverridden)) return super.timeOfDayFormat(alwaysUse24HourFormat: alwaysUse24HourFormat);
-    return r as TimeOfDayFormat;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeOfDayFormat', [alwaysUse24HourFormat]);
+    if (identical(_$r, notOverridden)) return super.timeOfDayFormat(alwaysUse24HourFormat: alwaysUse24HourFormat);
+    return _$r as TimeOfDayFormat;
   }
 
   @override
   String remainingTextFieldCharacterCount(int remaining) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remainingTextFieldCharacterCount', [remaining]);
-    if (identical(r, notOverridden)) return super.remainingTextFieldCharacterCount(remaining);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remainingTextFieldCharacterCount', [remaining]);
+    if (identical(_$r, notOverridden)) return super.remainingTextFieldCharacterCount(remaining);
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

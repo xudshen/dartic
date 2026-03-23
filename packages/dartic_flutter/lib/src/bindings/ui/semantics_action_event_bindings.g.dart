@@ -28,16 +28,16 @@ class _$SemanticsActionEvent extends SemanticsActionEvent implements DarticObjec
 
   @override
   SemanticsActionEvent copyWith({SemanticsAction? type, int? viewId, int? nodeId, Object? arguments}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [type, viewId, nodeId, arguments]);
-    if (identical(r, notOverridden)) return super.copyWith(type: type, viewId: viewId, nodeId: nodeId, arguments: arguments);
-    return r as SemanticsActionEvent;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [type, viewId, nodeId, arguments]);
+    if (identical(_$r, notOverridden)) return super.copyWith(type: type, viewId: viewId, nodeId: nodeId, arguments: arguments);
+    return _$r as SemanticsActionEvent;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

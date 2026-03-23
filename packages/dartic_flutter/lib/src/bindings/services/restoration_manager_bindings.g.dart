@@ -25,70 +25,70 @@ class _$RestorationManager extends RestorationManager implements DarticObjectHol
 
   @override
   void initChannels() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initChannels', const []);
-    if (identical(r, notOverridden)) { super.initChannels(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initChannels', const []);
+    if (identical(_$r, notOverridden)) { super.initChannels(); return; }
   }
 
   @override
   void handleRestorationUpdateFromEngine({required bool enabled, required Uint8List? data}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRestorationUpdateFromEngine', [enabled, data]);
-    if (identical(r, notOverridden)) { super.handleRestorationUpdateFromEngine(enabled: enabled, data: data); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleRestorationUpdateFromEngine', [enabled, data]);
+    if (identical(_$r, notOverridden)) { super.handleRestorationUpdateFromEngine(enabled: enabled, data: data); return; }
   }
 
   @override
   Future<void> sendToEngine(Uint8List encodedData) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendToEngine', [encodedData]);
-    if (identical(r, notOverridden)) return super.sendToEngine(encodedData);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'sendToEngine', [encodedData]);
+    if (identical(_$r, notOverridden)) return super.sendToEngine(encodedData);
+    return _$r as Future<void>;
   }
 
   @override
   void scheduleSerializationFor(RestorationBucket bucket) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleSerializationFor', [bucket]);
-    if (identical(r, notOverridden)) { super.scheduleSerializationFor(bucket); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'scheduleSerializationFor', [bucket]);
+    if (identical(_$r, notOverridden)) { super.scheduleSerializationFor(bucket); return; }
   }
 
   @override
   void unscheduleSerializationFor(RestorationBucket bucket) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unscheduleSerializationFor', [bucket]);
-    if (identical(r, notOverridden)) { super.unscheduleSerializationFor(bucket); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unscheduleSerializationFor', [bucket]);
+    if (identical(_$r, notOverridden)) { super.unscheduleSerializationFor(bucket); return; }
   }
 
   @override
   void flushData() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'flushData', const []);
-    if (identical(r, notOverridden)) { super.flushData(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'flushData', const []);
+    if (identical(_$r, notOverridden)) { super.flushData(); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override

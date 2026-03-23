@@ -43,261 +43,261 @@ class _$ScrollPositionWithSingleContext extends ScrollPositionWithSingleContext 
 
   @override
   double setPixels(double newPixels) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPixels', [newPixels]);
-    if (identical(r, notOverridden)) return super.setPixels(newPixels);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPixels', [newPixels]);
+    if (identical(_$r, notOverridden)) return super.setPixels(newPixels);
+    return _$r as double;
   }
 
   @override
   void absorb(ScrollPosition other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorb', [other]);
-    if (identical(r, notOverridden)) { super.absorb(other); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'absorb', [other]);
+    if (identical(_$r, notOverridden)) { super.absorb(other); return; }
   }
 
   @override
   void applyNewDimensions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyNewDimensions', const []);
-    if (identical(r, notOverridden)) { super.applyNewDimensions(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyNewDimensions', const []);
+    if (identical(_$r, notOverridden)) { super.applyNewDimensions(); return; }
   }
 
   @override
   void beginActivity(ScrollActivity? newActivity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'beginActivity', [newActivity]);
-    if (identical(r, notOverridden)) { super.beginActivity(newActivity); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'beginActivity', [newActivity]);
+    if (identical(_$r, notOverridden)) { super.beginActivity(newActivity); return; }
   }
 
   @override
   void applyUserOffset(double delta) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyUserOffset', [delta]);
-    if (identical(r, notOverridden)) { super.applyUserOffset(delta); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyUserOffset', [delta]);
+    if (identical(_$r, notOverridden)) { super.applyUserOffset(delta); return; }
   }
 
   @override
   void goIdle() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goIdle', const []);
-    if (identical(r, notOverridden)) { super.goIdle(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goIdle', const []);
+    if (identical(_$r, notOverridden)) { super.goIdle(); return; }
   }
 
   @override
   void goBallistic(double velocity) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goBallistic', [velocity]);
-    if (identical(r, notOverridden)) { super.goBallistic(velocity); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'goBallistic', [velocity]);
+    if (identical(_$r, notOverridden)) { super.goBallistic(velocity); return; }
   }
 
   @override
   void updateUserScrollDirection(ScrollDirection value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateUserScrollDirection', [value]);
-    if (identical(r, notOverridden)) { super.updateUserScrollDirection(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateUserScrollDirection', [value]);
+    if (identical(_$r, notOverridden)) { super.updateUserScrollDirection(value); return; }
   }
 
   @override
   Future<void> animateTo(double to, {required Duration duration, required Curve curve}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [to, duration, curve]);
-    if (identical(r, notOverridden)) return super.animateTo(to, duration: duration, curve: curve);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'animateTo', [to, duration, curve]);
+    if (identical(_$r, notOverridden)) return super.animateTo(to, duration: duration, curve: curve);
+    return _$r as Future<void>;
   }
 
   @override
   void jumpTo(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpTo', [value]);
-    if (identical(r, notOverridden)) { super.jumpTo(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpTo', [value]);
+    if (identical(_$r, notOverridden)) { super.jumpTo(value); return; }
   }
 
   @override
   void pointerScroll(double delta) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pointerScroll', [delta]);
-    if (identical(r, notOverridden)) { super.pointerScroll(delta); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pointerScroll', [delta]);
+    if (identical(_$r, notOverridden)) { super.pointerScroll(delta); return; }
   }
 
   @override
   void jumpToWithoutSettling(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpToWithoutSettling', [value]);
-    if (identical(r, notOverridden)) { super.jumpToWithoutSettling(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'jumpToWithoutSettling', [value]);
+    if (identical(_$r, notOverridden)) { super.jumpToWithoutSettling(value); return; }
   }
 
   @override
   ScrollHoldController hold(VoidCallback holdCancelCallback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hold', [holdCancelCallback]);
-    if (identical(r, notOverridden)) return super.hold(() => holdCancelCallback());
-    return r as ScrollHoldController;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hold', [holdCancelCallback]);
+    if (identical(_$r, notOverridden)) return super.hold(() => holdCancelCallback());
+    return _$r as ScrollHoldController;
   }
 
   @override
   Drag drag(DragStartDetails details, VoidCallback dragCancelCallback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drag', [details, dragCancelCallback]);
-    if (identical(r, notOverridden)) return super.drag(details, () => dragCancelCallback());
-    return r as Drag;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drag', [details, dragCancelCallback]);
+    if (identical(_$r, notOverridden)) return super.drag(details, () => dragCancelCallback());
+    return _$r as Drag;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void debugFillDescription(List<String> description) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
-    if (identical(r, notOverridden)) { super.debugFillDescription(description); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillDescription', [description]);
+    if (identical(_$r, notOverridden)) { super.debugFillDescription(description); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void correctPixels(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctPixels', [value]);
-    if (identical(r, notOverridden)) { super.correctPixels(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctPixels', [value]);
+    if (identical(_$r, notOverridden)) { super.correctPixels(value); return; }
   }
 
   @override
   void correctBy(double correction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctBy', [correction]);
-    if (identical(r, notOverridden)) { super.correctBy(correction); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctBy', [correction]);
+    if (identical(_$r, notOverridden)) { super.correctBy(correction); return; }
   }
 
   @override
   void forcePixels(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forcePixels', [value]);
-    if (identical(r, notOverridden)) { super.forcePixels(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forcePixels', [value]);
+    if (identical(_$r, notOverridden)) { super.forcePixels(value); return; }
   }
 
   @override
   void saveScrollOffset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveScrollOffset', const []);
-    if (identical(r, notOverridden)) { super.saveScrollOffset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveScrollOffset', const []);
+    if (identical(_$r, notOverridden)) { super.saveScrollOffset(); return; }
   }
 
   @override
   void restoreScrollOffset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreScrollOffset', const []);
-    if (identical(r, notOverridden)) { super.restoreScrollOffset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreScrollOffset', const []);
+    if (identical(_$r, notOverridden)) { super.restoreScrollOffset(); return; }
   }
 
   @override
   void restoreOffset(double offset, {bool initialRestore = false}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreOffset', [offset, initialRestore]);
-    if (identical(r, notOverridden)) { super.restoreOffset(offset, initialRestore: initialRestore); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'restoreOffset', [offset, initialRestore]);
+    if (identical(_$r, notOverridden)) { super.restoreOffset(offset, initialRestore: initialRestore); return; }
   }
 
   @override
   void saveOffset() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveOffset', const []);
-    if (identical(r, notOverridden)) { super.saveOffset(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'saveOffset', const []);
+    if (identical(_$r, notOverridden)) { super.saveOffset(); return; }
   }
 
   @override
   double applyBoundaryConditions(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyBoundaryConditions', [value]);
-    if (identical(r, notOverridden)) return super.applyBoundaryConditions(value);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyBoundaryConditions', [value]);
+    if (identical(_$r, notOverridden)) return super.applyBoundaryConditions(value);
+    return _$r as double;
   }
 
   @override
   bool applyViewportDimension(double viewportDimension) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyViewportDimension', [viewportDimension]);
-    if (identical(r, notOverridden)) return super.applyViewportDimension(viewportDimension);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyViewportDimension', [viewportDimension]);
+    if (identical(_$r, notOverridden)) return super.applyViewportDimension(viewportDimension);
+    return _$r as bool;
   }
 
   @override
   bool applyContentDimensions(double minScrollExtent, double maxScrollExtent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyContentDimensions', [minScrollExtent, maxScrollExtent]);
-    if (identical(r, notOverridden)) return super.applyContentDimensions(minScrollExtent, maxScrollExtent);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'applyContentDimensions', [minScrollExtent, maxScrollExtent]);
+    if (identical(_$r, notOverridden)) return super.applyContentDimensions(minScrollExtent, maxScrollExtent);
+    return _$r as bool;
   }
 
   @override
   bool correctForNewDimensions(ScrollMetrics oldPosition, ScrollMetrics newPosition) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctForNewDimensions', [oldPosition, newPosition]);
-    if (identical(r, notOverridden)) return super.correctForNewDimensions(oldPosition, newPosition);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'correctForNewDimensions', [oldPosition, newPosition]);
+    if (identical(_$r, notOverridden)) return super.correctForNewDimensions(oldPosition, newPosition);
+    return _$r as bool;
   }
 
   @override
   Future<void> ensureVisible(RenderObject object, {double alignment = 0.0, Duration duration = Duration.zero, Curve curve = Curves.ease, ScrollPositionAlignmentPolicy alignmentPolicy = ScrollPositionAlignmentPolicy.explicit, RenderObject? targetRenderObject}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureVisible', [object, alignment, duration, curve, alignmentPolicy, targetRenderObject]);
-    if (identical(r, notOverridden)) return super.ensureVisible(object, alignment: alignment, duration: duration, curve: curve, alignmentPolicy: alignmentPolicy, targetRenderObject: targetRenderObject);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureVisible', [object, alignment, duration, curve, alignmentPolicy, targetRenderObject]);
+    if (identical(_$r, notOverridden)) return super.ensureVisible(object, alignment: alignment, duration: duration, curve: curve, alignmentPolicy: alignmentPolicy, targetRenderObject: targetRenderObject);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> moveTo(double to, {Duration? duration, Curve? curve, bool? clamp = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveTo', [to, duration, curve, clamp]);
-    if (identical(r, notOverridden)) return super.moveTo(to, duration: duration, curve: curve, clamp: clamp);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'moveTo', [to, duration, curve, clamp]);
+    if (identical(_$r, notOverridden)) return super.moveTo(to, duration: duration, curve: curve, clamp: clamp);
+    return _$r as Future<void>;
   }
 
   @override
   void didStartScroll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartScroll', const []);
-    if (identical(r, notOverridden)) { super.didStartScroll(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didStartScroll', const []);
+    if (identical(_$r, notOverridden)) { super.didStartScroll(); return; }
   }
 
   @override
   void didUpdateScrollPositionBy(double delta) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollPositionBy', [delta]);
-    if (identical(r, notOverridden)) { super.didUpdateScrollPositionBy(delta); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollPositionBy', [delta]);
+    if (identical(_$r, notOverridden)) { super.didUpdateScrollPositionBy(delta); return; }
   }
 
   @override
   void didEndScroll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didEndScroll', const []);
-    if (identical(r, notOverridden)) { super.didEndScroll(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didEndScroll', const []);
+    if (identical(_$r, notOverridden)) { super.didEndScroll(); return; }
   }
 
   @override
   void didOverscrollBy(double value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didOverscrollBy', [value]);
-    if (identical(r, notOverridden)) { super.didOverscrollBy(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didOverscrollBy', [value]);
+    if (identical(_$r, notOverridden)) { super.didOverscrollBy(value); return; }
   }
 
   @override
   void didUpdateScrollDirection(ScrollDirection direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollDirection', [direction]);
-    if (identical(r, notOverridden)) { super.didUpdateScrollDirection(direction); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollDirection', [direction]);
+    if (identical(_$r, notOverridden)) { super.didUpdateScrollDirection(direction); return; }
   }
 
   @override
   void didUpdateScrollMetrics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollMetrics', const []);
-    if (identical(r, notOverridden)) { super.didUpdateScrollMetrics(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateScrollMetrics', const []);
+    if (identical(_$r, notOverridden)) { super.didUpdateScrollMetrics(); return; }
   }
 
   @override
   bool recommendDeferredLoading(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'recommendDeferredLoading', [context]);
-    if (identical(r, notOverridden)) return super.recommendDeferredLoading(context);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'recommendDeferredLoading', [context]);
+    if (identical(_$r, notOverridden)) return super.recommendDeferredLoading(context);
+    return _$r as bool;
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   ScrollMetrics copyWith({double? minScrollExtent, double? maxScrollExtent, double? pixels, double? viewportDimension, AxisDirection? axisDirection, double? devicePixelRatio}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minScrollExtent, maxScrollExtent, pixels, viewportDimension, axisDirection, devicePixelRatio]);
-    if (identical(r, notOverridden)) return super.copyWith(minScrollExtent: minScrollExtent, maxScrollExtent: maxScrollExtent, pixels: pixels, viewportDimension: viewportDimension, axisDirection: axisDirection, devicePixelRatio: devicePixelRatio);
-    return r as ScrollMetrics;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [minScrollExtent, maxScrollExtent, pixels, viewportDimension, axisDirection, devicePixelRatio]);
+    if (identical(_$r, notOverridden)) return super.copyWith(minScrollExtent: minScrollExtent, maxScrollExtent: maxScrollExtent, pixels: pixels, viewportDimension: viewportDimension, axisDirection: axisDirection, devicePixelRatio: devicePixelRatio);
+    return _$r as ScrollMetrics;
   }
 
   @override

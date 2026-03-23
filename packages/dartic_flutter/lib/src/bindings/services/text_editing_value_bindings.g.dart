@@ -32,30 +32,30 @@ class _$TextEditingValue extends TextEditingValue implements DarticObjectHolder 
 
   @override
   TextEditingValue copyWith({String? text, TextSelection? selection, TextRange? composing}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [text, selection, composing]);
-    if (identical(r, notOverridden)) return super.copyWith(text: text, selection: selection, composing: composing);
-    return r as TextEditingValue;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [text, selection, composing]);
+    if (identical(_$r, notOverridden)) return super.copyWith(text: text, selection: selection, composing: composing);
+    return _$r as TextEditingValue;
   }
 
   @override
   TextEditingValue replaced(TextRange replacementRange, String replacementString) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replaced', [replacementRange, replacementString]);
-    if (identical(r, notOverridden)) return super.replaced(replacementRange, replacementString);
-    return r as TextEditingValue;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replaced', [replacementRange, replacementString]);
+    if (identical(_$r, notOverridden)) return super.replaced(replacementRange, replacementString);
+    return _$r as TextEditingValue;
   }
 
   @override
   Map<String, dynamic> toJSON() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJSON', const []);
-    if (identical(r, notOverridden)) return super.toJSON();
-    return r as Map<String, dynamic>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toJSON', const []);
+    if (identical(_$r, notOverridden)) return super.toJSON();
+    return _$r as Map<String, dynamic>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

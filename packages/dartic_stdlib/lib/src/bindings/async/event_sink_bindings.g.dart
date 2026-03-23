@@ -20,24 +20,24 @@ class _$EventSink implements EventSink<dynamic>, DarticObjectHolder {
 
   @override
   void add(dynamic event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [event]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [event]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
   }
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addError', [error, stackTrace]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addError', [error, stackTrace]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addError must be overridden in dartic code');
     }
   }
 
   @override
   void close() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method close must be overridden in dartic code');
     }
   }

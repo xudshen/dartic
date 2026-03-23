@@ -22,32 +22,32 @@ class _$BorderRadiusGeometry extends BorderRadiusGeometry implements DarticObjec
 
   @override
   BorderRadiusGeometry subtract(BorderRadiusGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'subtract', [other]);
-    if (identical(r, notOverridden)) return super.subtract(other);
-    return r as BorderRadiusGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'subtract', [other]);
+    if (identical(_$r, notOverridden)) return super.subtract(other);
+    return _$r as BorderRadiusGeometry;
   }
 
   @override
   BorderRadiusGeometry add(BorderRadiusGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
-    if (identical(r, notOverridden)) return super.add(other);
-    return r as BorderRadiusGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(_$r, notOverridden)) return super.add(other);
+    return _$r as BorderRadiusGeometry;
   }
 
   @override
   BorderRadius resolve(TextDirection? direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolve must be overridden in dartic code');
     }
-    return r as BorderRadius;
+    return _$r as BorderRadius;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

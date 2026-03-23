@@ -32,21 +32,21 @@ class _$EdgeDraggingAutoScroller extends EdgeDraggingAutoScroller implements Dar
 
   @override
   void startAutoScrollIfNecessary(Rect dragTarget) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startAutoScrollIfNecessary', [dragTarget]);
-    if (identical(r, notOverridden)) { super.startAutoScrollIfNecessary(dragTarget); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'startAutoScrollIfNecessary', [dragTarget]);
+    if (identical(_$r, notOverridden)) { super.startAutoScrollIfNecessary(dragTarget); return; }
   }
 
   @override
   void stopAutoScroll() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopAutoScroll', const []);
-    if (identical(r, notOverridden)) { super.stopAutoScroll(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopAutoScroll', const []);
+    if (identical(_$r, notOverridden)) { super.stopAutoScroll(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

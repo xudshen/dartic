@@ -30,26 +30,26 @@ class _$RangeSliderThumbShape extends RangeSliderThumbShape implements DarticObj
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [isEnabled, isDiscrete]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getPreferredSize must be overridden in dartic code');
     }
-    return r as Size;
+    return _$r as Size;
   }
 
   @override
   void paint(PaintingContext context, Offset center, {required Animation<double> activationAnimation, required Animation<double> enableAnimation, Object? isDiscrete = darticAbsent, Object? isEnabled = darticAbsent, Object? isOnTop = darticAbsent, Object? textDirection = darticAbsent, required SliderThemeData sliderTheme, Object? thumb = darticAbsent, Object? isPressed = darticAbsent}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isEnabled, isOnTop, textDirection, sliderTheme, thumb, isPressed]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, activationAnimation, enableAnimation, isDiscrete, isEnabled, isOnTop, textDirection, sliderTheme, thumb, isPressed]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method paint must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

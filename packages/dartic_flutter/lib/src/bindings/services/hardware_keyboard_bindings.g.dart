@@ -28,62 +28,62 @@ class _$HardwareKeyboard extends HardwareKeyboard implements DarticObjectHolder 
 
   @override
   LogicalKeyboardKey? lookUpLayout(PhysicalKeyboardKey physicalKey) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lookUpLayout', [physicalKey]);
-    if (identical(r, notOverridden)) return super.lookUpLayout(physicalKey);
-    return r as LogicalKeyboardKey?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lookUpLayout', [physicalKey]);
+    if (identical(_$r, notOverridden)) return super.lookUpLayout(physicalKey);
+    return _$r as LogicalKeyboardKey?;
   }
 
   @override
   bool isLogicalKeyPressed(LogicalKeyboardKey key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isLogicalKeyPressed', [key]);
-    if (identical(r, notOverridden)) return super.isLogicalKeyPressed(key);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isLogicalKeyPressed', [key]);
+    if (identical(_$r, notOverridden)) return super.isLogicalKeyPressed(key);
+    return _$r as bool;
   }
 
   @override
   bool isPhysicalKeyPressed(PhysicalKeyboardKey key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPhysicalKeyPressed', [key]);
-    if (identical(r, notOverridden)) return super.isPhysicalKeyPressed(key);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isPhysicalKeyPressed', [key]);
+    if (identical(_$r, notOverridden)) return super.isPhysicalKeyPressed(key);
+    return _$r as bool;
   }
 
   @override
   void addHandler(KeyEventCallback handler) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addHandler', [handler]);
-    if (identical(r, notOverridden)) { super.addHandler((a) => handler(a) as bool); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addHandler', [handler]);
+    if (identical(_$r, notOverridden)) { super.addHandler((a) => handler(a) as bool); return; }
   }
 
   @override
   void removeHandler(KeyEventCallback handler) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeHandler', [handler]);
-    if (identical(r, notOverridden)) { super.removeHandler((a) => handler(a) as bool); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeHandler', [handler]);
+    if (identical(_$r, notOverridden)) { super.removeHandler((a) => handler(a) as bool); return; }
   }
 
   @override
   Future<void> syncKeyboardState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'syncKeyboardState', const []);
-    if (identical(r, notOverridden)) return super.syncKeyboardState();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'syncKeyboardState', const []);
+    if (identical(_$r, notOverridden)) return super.syncKeyboardState();
+    return _$r as Future<void>;
   }
 
   @override
   bool handleKeyEvent(KeyEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleKeyEvent', [event]);
-    if (identical(r, notOverridden)) return super.handleKeyEvent(event);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleKeyEvent', [event]);
+    if (identical(_$r, notOverridden)) return super.handleKeyEvent(event);
+    return _$r as bool;
   }
 
   @override
   void clearState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearState', const []);
-    if (identical(r, notOverridden)) { super.clearState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearState', const []);
+    if (identical(_$r, notOverridden)) { super.clearState(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

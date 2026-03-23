@@ -29,40 +29,40 @@ class _$SliverHitTestResult extends SliverHitTestResult implements DarticObjectH
 
   @override
   bool addWithAxisOffset({required Offset? paintOffset, required double mainAxisOffset, required double crossAxisOffset, required double mainAxisPosition, required double crossAxisPosition, required SliverHitTest hitTest}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithAxisOffset', [paintOffset, mainAxisOffset, crossAxisOffset, mainAxisPosition, crossAxisPosition, hitTest]);
-    if (identical(r, notOverridden)) return super.addWithAxisOffset(paintOffset: paintOffset, mainAxisOffset: mainAxisOffset, crossAxisOffset: crossAxisOffset, mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition, hitTest: (a, {required double crossAxisPosition, required double mainAxisPosition}) => hitTest(a, crossAxisPosition: crossAxisPosition, mainAxisPosition: mainAxisPosition) as bool);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addWithAxisOffset', [paintOffset, mainAxisOffset, crossAxisOffset, mainAxisPosition, crossAxisPosition, hitTest]);
+    if (identical(_$r, notOverridden)) return super.addWithAxisOffset(paintOffset: paintOffset, mainAxisOffset: mainAxisOffset, crossAxisOffset: crossAxisOffset, mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition, hitTest: (a, {required double crossAxisPosition, required double mainAxisPosition}) => hitTest(a, crossAxisPosition: crossAxisPosition, mainAxisPosition: mainAxisPosition) as bool);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void add(HitTestEntry<HitTestTarget> entry) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [entry]);
-    if (identical(r, notOverridden)) { super.add(entry); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [entry]);
+    if (identical(_$r, notOverridden)) { super.add(entry); return; }
   }
 
   @override
   void pushTransform(Matrix4 transform) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushTransform', [transform]);
-    if (identical(r, notOverridden)) { super.pushTransform(transform); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushTransform', [transform]);
+    if (identical(_$r, notOverridden)) { super.pushTransform(transform); return; }
   }
 
   @override
   void pushOffset(Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushOffset', [offset]);
-    if (identical(r, notOverridden)) { super.pushOffset(offset); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushOffset', [offset]);
+    if (identical(_$r, notOverridden)) { super.pushOffset(offset); return; }
   }
 
   @override
   void popTransform() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popTransform', const []);
-    if (identical(r, notOverridden)) { super.popTransform(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popTransform', const []);
+    if (identical(_$r, notOverridden)) { super.popTransform(); return; }
   }
 
   @override

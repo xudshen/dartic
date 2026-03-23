@@ -29,138 +29,138 @@ class _$PaintingContext extends PaintingContext implements DarticObjectHolder {
 
   @override
   void paintChild(RenderObject child, ui.Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChild', [child, offset]);
-    if (identical(r, notOverridden)) { super.paintChild(child, offset); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paintChild', [child, offset]);
+    if (identical(_$r, notOverridden)) { super.paintChild(child, offset); return; }
   }
 
   @override
   void appendLayer(Layer layer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'appendLayer', [layer]);
-    if (identical(r, notOverridden)) { super.appendLayer(layer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'appendLayer', [layer]);
+    if (identical(_$r, notOverridden)) { super.appendLayer(layer); return; }
   }
 
   @override
   ui.VoidCallback addCompositionCallback(CompositionCallback callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addCompositionCallback', [callback]);
-    if (identical(r, notOverridden)) return super.addCompositionCallback((a) => callback(a));
-    return r as ui.VoidCallback;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addCompositionCallback', [callback]);
+    if (identical(_$r, notOverridden)) return super.addCompositionCallback((a) => callback(a));
+    return _$r as ui.VoidCallback;
   }
 
   @override
   void stopRecordingIfNeeded() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopRecordingIfNeeded', const []);
-    if (identical(r, notOverridden)) { super.stopRecordingIfNeeded(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopRecordingIfNeeded', const []);
+    if (identical(_$r, notOverridden)) { super.stopRecordingIfNeeded(); return; }
   }
 
   @override
   void setIsComplexHint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setIsComplexHint', const []);
-    if (identical(r, notOverridden)) { super.setIsComplexHint(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setIsComplexHint', const []);
+    if (identical(_$r, notOverridden)) { super.setIsComplexHint(); return; }
   }
 
   @override
   void setWillChangeHint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setWillChangeHint', const []);
-    if (identical(r, notOverridden)) { super.setWillChangeHint(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setWillChangeHint', const []);
+    if (identical(_$r, notOverridden)) { super.setWillChangeHint(); return; }
   }
 
   @override
   void addLayer(Layer layer) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLayer', [layer]);
-    if (identical(r, notOverridden)) { super.addLayer(layer); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLayer', [layer]);
+    if (identical(_$r, notOverridden)) { super.addLayer(layer); return; }
   }
 
   @override
   void pushLayer(ContainerLayer childLayer, PaintingContextCallback painter, ui.Offset offset, {ui.Rect? childPaintBounds}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushLayer', [childLayer, painter, offset, childPaintBounds]);
-    if (identical(r, notOverridden)) { super.pushLayer(childLayer, (a, b) => painter(a, b), offset, childPaintBounds: childPaintBounds); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushLayer', [childLayer, painter, offset, childPaintBounds]);
+    if (identical(_$r, notOverridden)) { super.pushLayer(childLayer, (a, b) => painter(a, b), offset, childPaintBounds: childPaintBounds); return; }
   }
 
   @override
   PaintingContext createChildContext(ContainerLayer childLayer, ui.Rect bounds) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChildContext', [childLayer, bounds]);
-    if (identical(r, notOverridden)) return super.createChildContext(childLayer, bounds);
-    return r as PaintingContext;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createChildContext', [childLayer, bounds]);
+    if (identical(_$r, notOverridden)) return super.createChildContext(childLayer, bounds);
+    return _$r as PaintingContext;
   }
 
   @override
   ClipRectLayer? pushClipRect(bool needsCompositing, ui.Offset offset, ui.Rect clipRect, PaintingContextCallback painter, {ui.Clip clipBehavior = Clip.hardEdge, ClipRectLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRect', [needsCompositing, offset, clipRect, painter, clipBehavior, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushClipRect(needsCompositing, offset, clipRect, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
-    return r as ClipRectLayer?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRect', [needsCompositing, offset, clipRect, painter, clipBehavior, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushClipRect(needsCompositing, offset, clipRect, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
+    return _$r as ClipRectLayer?;
   }
 
   @override
   ClipRRectLayer? pushClipRRect(bool needsCompositing, ui.Offset offset, ui.Rect bounds, ui.RRect clipRRect, PaintingContextCallback painter, {ui.Clip clipBehavior = Clip.antiAlias, ClipRRectLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRRect', [needsCompositing, offset, bounds, clipRRect, painter, clipBehavior, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushClipRRect(needsCompositing, offset, bounds, clipRRect, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
-    return r as ClipRRectLayer?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRRect', [needsCompositing, offset, bounds, clipRRect, painter, clipBehavior, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushClipRRect(needsCompositing, offset, bounds, clipRRect, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
+    return _$r as ClipRRectLayer?;
   }
 
   @override
   ClipRSuperellipseLayer? pushClipRSuperellipse(bool needsCompositing, ui.Offset offset, ui.Rect bounds, ui.RSuperellipse clipRSuperellipse, PaintingContextCallback painter, {ui.Clip clipBehavior = Clip.antiAlias, ClipRSuperellipseLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRSuperellipse', [needsCompositing, offset, bounds, clipRSuperellipse, painter, clipBehavior, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushClipRSuperellipse(needsCompositing, offset, bounds, clipRSuperellipse, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
-    return r as ClipRSuperellipseLayer?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipRSuperellipse', [needsCompositing, offset, bounds, clipRSuperellipse, painter, clipBehavior, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushClipRSuperellipse(needsCompositing, offset, bounds, clipRSuperellipse, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
+    return _$r as ClipRSuperellipseLayer?;
   }
 
   @override
   ClipPathLayer? pushClipPath(bool needsCompositing, ui.Offset offset, ui.Rect bounds, ui.Path clipPath, PaintingContextCallback painter, {ui.Clip clipBehavior = Clip.antiAlias, ClipPathLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipPath', [needsCompositing, offset, bounds, clipPath, painter, clipBehavior, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushClipPath(needsCompositing, offset, bounds, clipPath, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
-    return r as ClipPathLayer?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushClipPath', [needsCompositing, offset, bounds, clipPath, painter, clipBehavior, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushClipPath(needsCompositing, offset, bounds, clipPath, (a, b) => painter(a, b), clipBehavior: clipBehavior, oldLayer: oldLayer);
+    return _$r as ClipPathLayer?;
   }
 
   @override
   ColorFilterLayer pushColorFilter(ui.Offset offset, ui.ColorFilter colorFilter, PaintingContextCallback painter, {ColorFilterLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushColorFilter', [offset, colorFilter, painter, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushColorFilter(offset, colorFilter, (a, b) => painter(a, b), oldLayer: oldLayer);
-    return r as ColorFilterLayer;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushColorFilter', [offset, colorFilter, painter, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushColorFilter(offset, colorFilter, (a, b) => painter(a, b), oldLayer: oldLayer);
+    return _$r as ColorFilterLayer;
   }
 
   @override
   TransformLayer? pushTransform(bool needsCompositing, ui.Offset offset, Matrix4 transform, PaintingContextCallback painter, {TransformLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushTransform', [needsCompositing, offset, transform, painter, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushTransform(needsCompositing, offset, transform, (a, b) => painter(a, b), oldLayer: oldLayer);
-    return r as TransformLayer?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushTransform', [needsCompositing, offset, transform, painter, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushTransform(needsCompositing, offset, transform, (a, b) => painter(a, b), oldLayer: oldLayer);
+    return _$r as TransformLayer?;
   }
 
   @override
   OpacityLayer pushOpacity(ui.Offset offset, int alpha, PaintingContextCallback painter, {OpacityLayer? oldLayer}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushOpacity', [offset, alpha, painter, oldLayer]);
-    if (identical(r, notOverridden)) return super.pushOpacity(offset, alpha, (a, b) => painter(a, b), oldLayer: oldLayer);
-    return r as OpacityLayer;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushOpacity', [offset, alpha, painter, oldLayer]);
+    if (identical(_$r, notOverridden)) return super.pushOpacity(offset, alpha, (a, b) => painter(a, b), oldLayer: oldLayer);
+    return _$r as OpacityLayer;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void clipPathAndPaint(ui.Path path, ui.Clip clipBehavior, ui.Rect bounds, ui.VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipPathAndPaint', [path, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipPathAndPaint(path, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipPathAndPaint', [path, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipPathAndPaint(path, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRRectAndPaint(ui.RRect rrect, ui.Clip clipBehavior, ui.Rect bounds, ui.VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRRectAndPaint', [rrect, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRRectAndPaint(rrect, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRRectAndPaint', [rrect, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRRectAndPaint(rrect, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRSuperellipseAndPaint(ui.RSuperellipse rse, ui.Clip clipBehavior, ui.Rect bounds, ui.VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRSuperellipseAndPaint', [rse, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRSuperellipseAndPaint(rse, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRSuperellipseAndPaint', [rse, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRSuperellipseAndPaint(rse, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override
   void clipRectAndPaint(ui.Rect rect, ui.Clip clipBehavior, ui.Rect bounds, ui.VoidCallback painter) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRectAndPaint', [rect, clipBehavior, bounds, painter]);
-    if (identical(r, notOverridden)) { super.clipRectAndPaint(rect, clipBehavior, bounds, () => painter()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clipRectAndPaint', [rect, clipBehavior, bounds, painter]);
+    if (identical(_$r, notOverridden)) { super.clipRectAndPaint(rect, clipBehavior, bounds, () => painter()); return; }
   }
 
   @override

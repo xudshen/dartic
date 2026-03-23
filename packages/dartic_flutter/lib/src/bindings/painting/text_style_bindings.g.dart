@@ -27,71 +27,71 @@ class _$TextStyle extends TextStyle implements DarticObjectHolder {
 
   @override
   TextStyle copyWith({bool? inherit, ui.Color? color, ui.Color? backgroundColor, double? fontSize, ui.FontWeight? fontWeight, ui.FontStyle? fontStyle, double? letterSpacing, double? wordSpacing, ui.TextBaseline? textBaseline, double? height, ui.TextLeadingDistribution? leadingDistribution, ui.Locale? locale, ui.Paint? foreground, ui.Paint? background, List<ui.Shadow>? shadows, List<ui.FontFeature>? fontFeatures, List<ui.FontVariation>? fontVariations, ui.TextDecoration? decoration, ui.Color? decorationColor, ui.TextDecorationStyle? decorationStyle, double? decorationThickness, String? debugLabel, String? fontFamily, List<String>? fontFamilyFallback, String? package, TextOverflow? overflow}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [inherit, color, backgroundColor, fontSize, fontWeight, fontStyle, letterSpacing, wordSpacing, textBaseline, height, leadingDistribution, locale, foreground, background, shadows, fontFeatures, fontVariations, decoration, decorationColor, decorationStyle, decorationThickness, debugLabel, fontFamily, fontFamilyFallback, package, overflow]);
-    if (identical(r, notOverridden)) return super.copyWith(inherit: inherit, color: color, backgroundColor: backgroundColor, fontSize: fontSize, fontWeight: fontWeight, fontStyle: fontStyle, letterSpacing: letterSpacing, wordSpacing: wordSpacing, textBaseline: textBaseline, height: height, leadingDistribution: leadingDistribution, locale: locale, foreground: foreground, background: background, shadows: shadows, fontFeatures: fontFeatures, fontVariations: fontVariations, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle, decorationThickness: decorationThickness, debugLabel: debugLabel, fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, package: package, overflow: overflow);
-    return r as TextStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [inherit, color, backgroundColor, fontSize, fontWeight, fontStyle, letterSpacing, wordSpacing, textBaseline, height, leadingDistribution, locale, foreground, background, shadows, fontFeatures, fontVariations, decoration, decorationColor, decorationStyle, decorationThickness, debugLabel, fontFamily, fontFamilyFallback, package, overflow]);
+    if (identical(_$r, notOverridden)) return super.copyWith(inherit: inherit, color: color, backgroundColor: backgroundColor, fontSize: fontSize, fontWeight: fontWeight, fontStyle: fontStyle, letterSpacing: letterSpacing, wordSpacing: wordSpacing, textBaseline: textBaseline, height: height, leadingDistribution: leadingDistribution, locale: locale, foreground: foreground, background: background, shadows: shadows, fontFeatures: fontFeatures, fontVariations: fontVariations, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle, decorationThickness: decorationThickness, debugLabel: debugLabel, fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, package: package, overflow: overflow);
+    return _$r as TextStyle;
   }
 
   @override
   TextStyle apply({ui.Color? color, ui.Color? backgroundColor, ui.TextDecoration? decoration, ui.Color? decorationColor, ui.TextDecorationStyle? decorationStyle, double decorationThicknessFactor = 1.0, double decorationThicknessDelta = 0.0, String? fontFamily, List<String>? fontFamilyFallback, double fontSizeFactor = 1.0, double fontSizeDelta = 0.0, int fontWeightDelta = 0, ui.FontStyle? fontStyle, double letterSpacingFactor = 1.0, double letterSpacingDelta = 0.0, double wordSpacingFactor = 1.0, double wordSpacingDelta = 0.0, double heightFactor = 1.0, double heightDelta = 0.0, ui.TextBaseline? textBaseline, ui.TextLeadingDistribution? leadingDistribution, ui.Locale? locale, List<ui.Shadow>? shadows, List<ui.FontFeature>? fontFeatures, List<ui.FontVariation>? fontVariations, String? package, TextOverflow? overflow}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'apply', [color, backgroundColor, decoration, decorationColor, decorationStyle, decorationThicknessFactor, decorationThicknessDelta, fontFamily, fontFamilyFallback, fontSizeFactor, fontSizeDelta, fontWeightDelta, fontStyle, letterSpacingFactor, letterSpacingDelta, wordSpacingFactor, wordSpacingDelta, heightFactor, heightDelta, textBaseline, leadingDistribution, locale, shadows, fontFeatures, fontVariations, package, overflow]);
-    if (identical(r, notOverridden)) return super.apply(color: color, backgroundColor: backgroundColor, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle, decorationThicknessFactor: decorationThicknessFactor, decorationThicknessDelta: decorationThicknessDelta, fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, fontSizeFactor: fontSizeFactor, fontSizeDelta: fontSizeDelta, fontWeightDelta: fontWeightDelta, fontStyle: fontStyle, letterSpacingFactor: letterSpacingFactor, letterSpacingDelta: letterSpacingDelta, wordSpacingFactor: wordSpacingFactor, wordSpacingDelta: wordSpacingDelta, heightFactor: heightFactor, heightDelta: heightDelta, textBaseline: textBaseline, leadingDistribution: leadingDistribution, locale: locale, shadows: shadows, fontFeatures: fontFeatures, fontVariations: fontVariations, package: package, overflow: overflow);
-    return r as TextStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'apply', [color, backgroundColor, decoration, decorationColor, decorationStyle, decorationThicknessFactor, decorationThicknessDelta, fontFamily, fontFamilyFallback, fontSizeFactor, fontSizeDelta, fontWeightDelta, fontStyle, letterSpacingFactor, letterSpacingDelta, wordSpacingFactor, wordSpacingDelta, heightFactor, heightDelta, textBaseline, leadingDistribution, locale, shadows, fontFeatures, fontVariations, package, overflow]);
+    if (identical(_$r, notOverridden)) return super.apply(color: color, backgroundColor: backgroundColor, decoration: decoration, decorationColor: decorationColor, decorationStyle: decorationStyle, decorationThicknessFactor: decorationThicknessFactor, decorationThicknessDelta: decorationThicknessDelta, fontFamily: fontFamily, fontFamilyFallback: fontFamilyFallback, fontSizeFactor: fontSizeFactor, fontSizeDelta: fontSizeDelta, fontWeightDelta: fontWeightDelta, fontStyle: fontStyle, letterSpacingFactor: letterSpacingFactor, letterSpacingDelta: letterSpacingDelta, wordSpacingFactor: wordSpacingFactor, wordSpacingDelta: wordSpacingDelta, heightFactor: heightFactor, heightDelta: heightDelta, textBaseline: textBaseline, leadingDistribution: leadingDistribution, locale: locale, shadows: shadows, fontFeatures: fontFeatures, fontVariations: fontVariations, package: package, overflow: overflow);
+    return _$r as TextStyle;
   }
 
   @override
   TextStyle merge(TextStyle? other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
-    if (identical(r, notOverridden)) return super.merge(other);
-    return r as TextStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
+    if (identical(_$r, notOverridden)) return super.merge(other);
+    return _$r as TextStyle;
   }
 
   @override
   ui.TextStyle getTextStyle({double textScaleFactor = 1.0, TextScaler textScaler = TextScaler.noScaling}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextStyle', [textScaleFactor, textScaler]);
-    if (identical(r, notOverridden)) return super.getTextStyle(textScaleFactor: textScaleFactor, textScaler: textScaler);
-    return r as ui.TextStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTextStyle', [textScaleFactor, textScaler]);
+    if (identical(_$r, notOverridden)) return super.getTextStyle(textScaleFactor: textScaleFactor, textScaler: textScaler);
+    return _$r as ui.TextStyle;
   }
 
   @override
   ui.ParagraphStyle getParagraphStyle({ui.TextAlign? textAlign, ui.TextDirection? textDirection, TextScaler textScaler = TextScaler.noScaling, String? ellipsis, int? maxLines, ui.TextHeightBehavior? textHeightBehavior, ui.Locale? locale, String? fontFamily, double? fontSize, ui.FontWeight? fontWeight, ui.FontStyle? fontStyle, double? height, StrutStyle? strutStyle}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getParagraphStyle', [textAlign, textDirection, textScaler, ellipsis, maxLines, textHeightBehavior, locale, fontFamily, fontSize, fontWeight, fontStyle, height, strutStyle]);
-    if (identical(r, notOverridden)) return super.getParagraphStyle(textAlign: textAlign, textDirection: textDirection, textScaler: textScaler, ellipsis: ellipsis, maxLines: maxLines, textHeightBehavior: textHeightBehavior, locale: locale, fontFamily: fontFamily, fontSize: fontSize, fontWeight: fontWeight, fontStyle: fontStyle, height: height, strutStyle: strutStyle);
-    return r as ui.ParagraphStyle;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getParagraphStyle', [textAlign, textDirection, textScaler, ellipsis, maxLines, textHeightBehavior, locale, fontFamily, fontSize, fontWeight, fontStyle, height, strutStyle]);
+    if (identical(_$r, notOverridden)) return super.getParagraphStyle(textAlign: textAlign, textDirection: textDirection, textScaler: textScaler, ellipsis: ellipsis, maxLines: maxLines, textHeightBehavior: textHeightBehavior, locale: locale, fontFamily: fontFamily, fontSize: fontSize, fontWeight: fontWeight, fontStyle: fontStyle, height: height, strutStyle: strutStyle);
+    return _$r as ui.ParagraphStyle;
   }
 
   @override
   RenderComparison compareTo(TextStyle other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
-    if (identical(r, notOverridden)) return super.compareTo(other);
-    return r as RenderComparison;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(_$r, notOverridden)) return super.compareTo(other);
+    return _$r as RenderComparison;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties, {String prefix = ''}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties, prefix]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties, prefix: prefix); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties, prefix]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties, prefix: prefix); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

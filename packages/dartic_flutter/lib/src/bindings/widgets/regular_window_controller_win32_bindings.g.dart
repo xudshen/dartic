@@ -27,88 +27,88 @@ class _$RegularWindowControllerWin32 extends RegularWindowControllerWin32 implem
 
   @override
   void setSize(Size? size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSize', [size]);
-    if (identical(r, notOverridden)) { super.setSize(size); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setSize', [size]);
+    if (identical(_$r, notOverridden)) { super.setSize(size); return; }
   }
 
   @override
   void setConstraints(BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setConstraints', [constraints]);
-    if (identical(r, notOverridden)) { super.setConstraints(constraints); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setConstraints', [constraints]);
+    if (identical(_$r, notOverridden)) { super.setConstraints(constraints); return; }
   }
 
   @override
   void setTitle(String title) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setTitle', [title]);
-    if (identical(r, notOverridden)) { super.setTitle(title); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setTitle', [title]);
+    if (identical(_$r, notOverridden)) { super.setTitle(title); return; }
   }
 
   @override
   void activate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
-    if (identical(r, notOverridden)) { super.activate(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
+    if (identical(_$r, notOverridden)) { super.activate(); return; }
   }
 
   @override
   void setMaximized(bool maximized) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMaximized', [maximized]);
-    if (identical(r, notOverridden)) { super.setMaximized(maximized); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMaximized', [maximized]);
+    if (identical(_$r, notOverridden)) { super.setMaximized(maximized); return; }
   }
 
   @override
   void setMinimized(bool minimized) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMinimized', [minimized]);
-    if (identical(r, notOverridden)) { super.setMinimized(minimized); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMinimized', [minimized]);
+    if (identical(_$r, notOverridden)) { super.setMinimized(minimized); return; }
   }
 
   @override
   void setFullscreen(bool fullscreen, {Display? display}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setFullscreen', [fullscreen, display]);
-    if (identical(r, notOverridden)) { super.setFullscreen(fullscreen, display: display); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setFullscreen', [fullscreen, display]);
+    if (identical(_$r, notOverridden)) { super.setFullscreen(fullscreen, display: display); return; }
   }
 
   @override
   ffi.Pointer<ffi.Void> getWindowHandle() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getWindowHandle', const []);
-    if (identical(r, notOverridden)) return super.getWindowHandle();
-    return r as ffi.Pointer<ffi.Void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getWindowHandle', const []);
+    if (identical(_$r, notOverridden)) return super.getWindowHandle();
+    return _$r as ffi.Pointer<ffi.Void>;
   }
 
   @override
   void destroy() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'destroy', const []);
-    if (identical(r, notOverridden)) { super.destroy(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'destroy', const []);
+    if (identical(_$r, notOverridden)) { super.destroy(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override

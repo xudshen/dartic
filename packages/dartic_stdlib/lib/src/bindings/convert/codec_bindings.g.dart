@@ -21,23 +21,23 @@ class _$Codec extends Codec<dynamic, dynamic> implements DarticObjectHolder {
 
   @override
   dynamic encode(dynamic input) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encode', [input]);
-    if (identical(r, notOverridden)) return super.encode(input);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encode', [input]);
+    if (identical(_$r, notOverridden)) return super.encode(input);
+    return _$r as dynamic;
   }
 
   @override
   dynamic decode(dynamic encoded) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decode', [encoded]);
-    if (identical(r, notOverridden)) return super.decode(encoded);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decode', [encoded]);
+    if (identical(_$r, notOverridden)) return super.decode(encoded);
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

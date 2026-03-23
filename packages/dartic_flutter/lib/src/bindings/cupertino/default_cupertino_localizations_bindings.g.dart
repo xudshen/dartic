@@ -21,121 +21,121 @@ class _$DefaultCupertinoLocalizations extends DefaultCupertinoLocalizations impl
 
   @override
   String datePickerYear(int yearIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerYear', [yearIndex]);
-    if (identical(r, notOverridden)) return super.datePickerYear(yearIndex);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerYear', [yearIndex]);
+    if (identical(_$r, notOverridden)) return super.datePickerYear(yearIndex);
+    return _$r as String;
   }
 
   @override
   String datePickerMonth(int monthIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMonth', [monthIndex]);
-    if (identical(r, notOverridden)) return super.datePickerMonth(monthIndex);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMonth', [monthIndex]);
+    if (identical(_$r, notOverridden)) return super.datePickerMonth(monthIndex);
+    return _$r as String;
   }
 
   @override
   String datePickerStandaloneMonth(int monthIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerStandaloneMonth', [monthIndex]);
-    if (identical(r, notOverridden)) return super.datePickerStandaloneMonth(monthIndex);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerStandaloneMonth', [monthIndex]);
+    if (identical(_$r, notOverridden)) return super.datePickerStandaloneMonth(monthIndex);
+    return _$r as String;
   }
 
   @override
   String datePickerDayOfMonth(int dayIndex, [int? weekDay]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerDayOfMonth', [dayIndex, weekDay]);
-    if (identical(r, notOverridden)) return super.datePickerDayOfMonth(dayIndex, weekDay);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerDayOfMonth', [dayIndex, weekDay]);
+    if (identical(_$r, notOverridden)) return super.datePickerDayOfMonth(dayIndex, weekDay);
+    return _$r as String;
   }
 
   @override
   String datePickerHour(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHour', [hour]);
-    if (identical(r, notOverridden)) return super.datePickerHour(hour);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHour', [hour]);
+    if (identical(_$r, notOverridden)) return super.datePickerHour(hour);
+    return _$r as String;
   }
 
   @override
   String datePickerHourSemanticsLabel(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHourSemanticsLabel', [hour]);
-    if (identical(r, notOverridden)) return super.datePickerHourSemanticsLabel(hour);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerHourSemanticsLabel', [hour]);
+    if (identical(_$r, notOverridden)) return super.datePickerHourSemanticsLabel(hour);
+    return _$r as String;
   }
 
   @override
   String datePickerMinute(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinute', [minute]);
-    if (identical(r, notOverridden)) return super.datePickerMinute(minute);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinute', [minute]);
+    if (identical(_$r, notOverridden)) return super.datePickerMinute(minute);
+    return _$r as String;
   }
 
   @override
   String datePickerMinuteSemanticsLabel(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinuteSemanticsLabel', [minute]);
-    if (identical(r, notOverridden)) return super.datePickerMinuteSemanticsLabel(minute);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMinuteSemanticsLabel', [minute]);
+    if (identical(_$r, notOverridden)) return super.datePickerMinuteSemanticsLabel(minute);
+    return _$r as String;
   }
 
   @override
   String datePickerMediumDate(DateTime date) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMediumDate', [date]);
-    if (identical(r, notOverridden)) return super.datePickerMediumDate(date);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'datePickerMediumDate', [date]);
+    if (identical(_$r, notOverridden)) return super.datePickerMediumDate(date);
+    return _$r as String;
   }
 
   @override
   String tabSemanticsLabel({required int tabIndex, required int tabCount}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabSemanticsLabel', [tabIndex, tabCount]);
-    if (identical(r, notOverridden)) return super.tabSemanticsLabel(tabIndex: tabIndex, tabCount: tabCount);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'tabSemanticsLabel', [tabIndex, tabCount]);
+    if (identical(_$r, notOverridden)) return super.tabSemanticsLabel(tabIndex: tabIndex, tabCount: tabCount);
+    return _$r as String;
   }
 
   @override
   String timerPickerHour(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHour', [hour]);
-    if (identical(r, notOverridden)) return super.timerPickerHour(hour);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHour', [hour]);
+    if (identical(_$r, notOverridden)) return super.timerPickerHour(hour);
+    return _$r as String;
   }
 
   @override
   String timerPickerMinute(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinute', [minute]);
-    if (identical(r, notOverridden)) return super.timerPickerMinute(minute);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinute', [minute]);
+    if (identical(_$r, notOverridden)) return super.timerPickerMinute(minute);
+    return _$r as String;
   }
 
   @override
   String timerPickerSecond(int second) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecond', [second]);
-    if (identical(r, notOverridden)) return super.timerPickerSecond(second);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecond', [second]);
+    if (identical(_$r, notOverridden)) return super.timerPickerSecond(second);
+    return _$r as String;
   }
 
   @override
   String timerPickerHourLabel(int hour) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHourLabel', [hour]);
-    if (identical(r, notOverridden)) return super.timerPickerHourLabel(hour);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerHourLabel', [hour]);
+    if (identical(_$r, notOverridden)) return super.timerPickerHourLabel(hour);
+    return _$r as String;
   }
 
   @override
   String timerPickerMinuteLabel(int minute) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinuteLabel', [minute]);
-    if (identical(r, notOverridden)) return super.timerPickerMinuteLabel(minute);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerMinuteLabel', [minute]);
+    if (identical(_$r, notOverridden)) return super.timerPickerMinuteLabel(minute);
+    return _$r as String;
   }
 
   @override
   String timerPickerSecondLabel(int second) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecondLabel', [second]);
-    if (identical(r, notOverridden)) return super.timerPickerSecondLabel(second);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timerPickerSecondLabel', [second]);
+    if (identical(_$r, notOverridden)) return super.timerPickerSecondLabel(second);
+    return _$r as String;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

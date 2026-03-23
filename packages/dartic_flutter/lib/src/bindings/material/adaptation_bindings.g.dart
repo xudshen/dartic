@@ -86,16 +86,16 @@ class _$Adaptation extends Adaptation<dynamic> implements DarticObjectHolder {
 
   @override
   dynamic adapt(ThemeData theme, dynamic defaultValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adapt', [theme, defaultValue]);
-    if (identical(r, notOverridden)) return super.adapt(theme, defaultValue);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'adapt', [theme, defaultValue]);
+    if (identical(_$r, notOverridden)) return super.adapt(theme, defaultValue);
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

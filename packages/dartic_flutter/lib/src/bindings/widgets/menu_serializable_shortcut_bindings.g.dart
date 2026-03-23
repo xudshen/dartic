@@ -29,29 +29,29 @@ class _$MenuSerializableShortcut implements MenuSerializableShortcut, DarticObje
 
   @override
   ShortcutSerialization serializeForMenu() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'serializeForMenu', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'serializeForMenu', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method serializeForMenu must be overridden in dartic code');
     }
-    return r as ShortcutSerialization;
+    return _$r as ShortcutSerialization;
   }
 
   @override
   bool accepts(KeyEvent event, HardwareKeyboard state) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepts', [event, state]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'accepts', [event, state]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method accepts must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String debugDescribeKeys() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeKeys', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeKeys', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method debugDescribeKeys must be overridden in dartic code');
     }
-    return r as String;
+    return _$r as String;
   }
 
   @override

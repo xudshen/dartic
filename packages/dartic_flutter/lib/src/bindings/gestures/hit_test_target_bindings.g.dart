@@ -21,8 +21,8 @@ class _$HitTestTarget implements HitTestTarget, DarticObjectHolder {
 
   @override
   void handleEvent(PointerEvent event, HitTestEntry<HitTestTarget> entry) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleEvent', [event, entry]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleEvent must be overridden in dartic code');
     }
   }

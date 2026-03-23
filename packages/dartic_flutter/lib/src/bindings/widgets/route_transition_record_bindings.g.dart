@@ -40,47 +40,47 @@ class _$RouteTransitionRecord extends RouteTransitionRecord implements DarticObj
 
   @override
   void markForPush() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPush', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPush', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markForPush must be overridden in dartic code');
     }
   }
 
   @override
   void markForAdd() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForAdd', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForAdd', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markForAdd must be overridden in dartic code');
     }
   }
 
   @override
   void markForPop([dynamic result]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPop', [result]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForPop', [result]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markForPop must be overridden in dartic code');
     }
   }
 
   @override
   void markForComplete([dynamic result]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForComplete', [result]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForComplete', [result]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markForComplete must be overridden in dartic code');
     }
   }
 
   @override
   void markForRemove() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForRemove', const []);
-    if (identical(r, notOverridden)) { super.markForRemove(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markForRemove', const []);
+    if (identical(_$r, notOverridden)) { super.markForRemove(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

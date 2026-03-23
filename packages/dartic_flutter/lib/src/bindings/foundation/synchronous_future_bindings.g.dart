@@ -19,37 +19,37 @@ class _$SynchronousFuture extends SynchronousFuture<dynamic> implements DarticOb
 
   @override
   Stream asStream() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asStream', const []);
-    if (identical(r, notOverridden)) return super.asStream();
-    return r as Stream;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asStream', const []);
+    if (identical(_$r, notOverridden)) return super.asStream();
+    return _$r as Stream;
   }
 
   @override
   Future catchError(Function onError, {bool Function(Object)? test}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'catchError', [onError, test]);
-    if (identical(r, notOverridden)) return super.catchError(onError, test: test != null ? (a) => test(a) as bool : null);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'catchError', [onError, test]);
+    if (identical(_$r, notOverridden)) return super.catchError(onError, test: test != null ? (a) => test(a) as bool : null);
+    return _$r as Future;
   }
 
   @override
   Future timeout(Duration timeLimit, {FutureOr Function()? onTimeout}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
-    if (identical(r, notOverridden)) return super.timeout(timeLimit, onTimeout: onTimeout != null ? () => onTimeout() as FutureOr : null);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
+    if (identical(_$r, notOverridden)) return super.timeout(timeLimit, onTimeout: onTimeout != null ? () => onTimeout() as FutureOr : null);
+    return _$r as Future;
   }
 
   @override
   Future whenComplete(FutureOr<dynamic> Function() action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whenComplete', [action]);
-    if (identical(r, notOverridden)) return super.whenComplete(() => action() as FutureOr<dynamic>);
-    return r as Future;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whenComplete', [action]);
+    if (identical(_$r, notOverridden)) return super.whenComplete(() => action() as FutureOr<dynamic>);
+    return _$r as Future;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

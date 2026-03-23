@@ -27,15 +27,15 @@ class _$MethodChannel extends MethodChannel implements DarticObjectHolder {
 
   @override
   void setMethodCallHandler(Future<dynamic> Function(MethodCall)? handler) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMethodCallHandler', [handler]);
-    if (identical(r, notOverridden)) { super.setMethodCallHandler(handler != null ? (a) => handler(a) as Future<dynamic> : null); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setMethodCallHandler', [handler]);
+    if (identical(_$r, notOverridden)) { super.setMethodCallHandler(handler != null ? (a) => handler(a) as Future<dynamic> : null); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

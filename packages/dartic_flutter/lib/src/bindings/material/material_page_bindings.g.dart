@@ -27,23 +27,23 @@ class _$MaterialPage extends MaterialPage<dynamic> implements DarticObjectHolder
 
   @override
   Route createRoute(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRoute', [context]);
-    if (identical(r, notOverridden)) return super.createRoute(context);
-    return r as Route;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createRoute', [context]);
+    if (identical(_$r, notOverridden)) return super.createRoute(context);
+    return _$r as Route;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   bool canUpdate(Page<dynamic> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canUpdate', [other]);
-    if (identical(r, notOverridden)) return super.canUpdate(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'canUpdate', [other]);
+    if (identical(_$r, notOverridden)) return super.canUpdate(other);
+    return _$r as bool;
   }
 
   @override

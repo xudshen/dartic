@@ -27,25 +27,25 @@ class _$MaterialInkController extends MaterialInkController implements DarticObj
 
   @override
   void addInkFeature(InkFeature feature) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addInkFeature', [feature]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addInkFeature', [feature]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addInkFeature must be overridden in dartic code');
     }
   }
 
   @override
   void markNeedsPaint() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsPaint', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsPaint', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method markNeedsPaint must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

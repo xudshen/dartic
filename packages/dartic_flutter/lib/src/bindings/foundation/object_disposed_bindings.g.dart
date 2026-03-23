@@ -22,16 +22,16 @@ class _$ObjectDisposed extends ObjectDisposed implements DarticObjectHolder {
 
   @override
   Map<Object, Map<String, Object>> toMap() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', const []);
-    if (identical(r, notOverridden)) return super.toMap();
-    return r as Map<Object, Map<String, Object>>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toMap', const []);
+    if (identical(_$r, notOverridden)) return super.toMap();
+    return _$r as Map<Object, Map<String, Object>>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

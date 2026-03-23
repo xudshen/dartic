@@ -20,17 +20,17 @@ class _$AutofillClient extends AutofillClient implements DarticObjectHolder {
 
   @override
   void autofill(TextEditingValue newEditingValue) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'autofill', [newEditingValue]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'autofill', [newEditingValue]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method autofill must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

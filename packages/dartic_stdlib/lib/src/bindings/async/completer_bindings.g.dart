@@ -20,16 +20,16 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   void complete([FutureOr? value]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'complete', [value]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'complete', [value]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method complete must be overridden in dartic code');
     }
   }
 
   @override
   void completeError(Object error, [StackTrace? stackTrace]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'completeError', [error, stackTrace]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'completeError', [error, stackTrace]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method completeError must be overridden in dartic code');
     }
   }

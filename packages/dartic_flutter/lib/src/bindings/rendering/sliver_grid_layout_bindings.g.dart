@@ -24,45 +24,45 @@ class _$SliverGridLayout extends SliverGridLayout implements DarticObjectHolder 
 
   @override
   int getMinChildIndexForScrollOffset(double scrollOffset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMinChildIndexForScrollOffset', [scrollOffset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMinChildIndexForScrollOffset', [scrollOffset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getMinChildIndexForScrollOffset must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   int getMaxChildIndexForScrollOffset(double scrollOffset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaxChildIndexForScrollOffset', [scrollOffset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaxChildIndexForScrollOffset', [scrollOffset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getMaxChildIndexForScrollOffset must be overridden in dartic code');
     }
-    return r as int;
+    return _$r as int;
   }
 
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGeometryForChildIndex', [index]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGeometryForChildIndex', [index]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getGeometryForChildIndex must be overridden in dartic code');
     }
-    return r as SliverGridGeometry;
+    return _$r as SliverGridGeometry;
   }
 
   @override
   double computeMaxScrollOffset(int childCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeMaxScrollOffset', [childCount]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeMaxScrollOffset', [childCount]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method computeMaxScrollOffset must be overridden in dartic code');
     }
-    return r as double;
+    return _$r as double;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

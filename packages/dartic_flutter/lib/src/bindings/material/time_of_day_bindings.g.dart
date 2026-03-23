@@ -23,51 +23,51 @@ class _$TimeOfDay extends TimeOfDay implements DarticObjectHolder {
 
   @override
   TimeOfDay replacing({int? hour, int? minute}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replacing', [hour, minute]);
-    if (identical(r, notOverridden)) return super.replacing(hour: hour, minute: minute);
-    return r as TimeOfDay;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'replacing', [hour, minute]);
+    if (identical(_$r, notOverridden)) return super.replacing(hour: hour, minute: minute);
+    return _$r as TimeOfDay;
   }
 
   @override
   String format(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'format', [context]);
-    if (identical(r, notOverridden)) return super.format(context);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'format', [context]);
+    if (identical(_$r, notOverridden)) return super.format(context);
+    return _$r as String;
   }
 
   @override
   bool isBefore(TimeOfDay other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isBefore', [other]);
-    if (identical(r, notOverridden)) return super.isBefore(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isBefore', [other]);
+    if (identical(_$r, notOverridden)) return super.isBefore(other);
+    return _$r as bool;
   }
 
   @override
   bool isAfter(TimeOfDay other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isAfter', [other]);
-    if (identical(r, notOverridden)) return super.isAfter(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isAfter', [other]);
+    if (identical(_$r, notOverridden)) return super.isAfter(other);
+    return _$r as bool;
   }
 
   @override
   bool isAtSameTimeAs(TimeOfDay other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isAtSameTimeAs', [other]);
-    if (identical(r, notOverridden)) return super.isAtSameTimeAs(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isAtSameTimeAs', [other]);
+    if (identical(_$r, notOverridden)) return super.isAtSameTimeAs(other);
+    return _$r as bool;
   }
 
   @override
   int compareTo(TimeOfDay other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
-    if (identical(r, notOverridden)) return super.compareTo(other);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(_$r, notOverridden)) return super.compareTo(other);
+    return _$r as int;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

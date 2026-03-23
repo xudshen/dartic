@@ -34,36 +34,36 @@ class _$TabBarThemeData extends TabBarThemeData implements DarticObjectHolder {
 
   @override
   TabBarThemeData copyWith({Decoration? indicator, Color? indicatorColor, TabBarIndicatorSize? indicatorSize, Color? dividerColor, double? dividerHeight, Color? labelColor, EdgeInsetsGeometry? labelPadding, TextStyle? labelStyle, Color? unselectedLabelColor, TextStyle? unselectedLabelStyle, WidgetStateProperty<Color?>? overlayColor, InteractiveInkFeatureFactory? splashFactory, WidgetStateProperty<MouseCursor?>? mouseCursor, TabAlignment? tabAlignment, TextScaler? textScaler, TabIndicatorAnimation? indicatorAnimation, BorderRadius? splashBorderRadius}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [indicator, indicatorColor, indicatorSize, dividerColor, dividerHeight, labelColor, labelPadding, labelStyle, unselectedLabelColor, unselectedLabelStyle, overlayColor, splashFactory, mouseCursor, tabAlignment, textScaler, indicatorAnimation, splashBorderRadius]);
-    if (identical(r, notOverridden)) return super.copyWith(indicator: indicator, indicatorColor: indicatorColor, indicatorSize: indicatorSize, dividerColor: dividerColor, dividerHeight: dividerHeight, labelColor: labelColor, labelPadding: labelPadding, labelStyle: labelStyle, unselectedLabelColor: unselectedLabelColor, unselectedLabelStyle: unselectedLabelStyle, overlayColor: overlayColor, splashFactory: splashFactory, mouseCursor: mouseCursor, tabAlignment: tabAlignment, textScaler: textScaler, indicatorAnimation: indicatorAnimation, splashBorderRadius: splashBorderRadius);
-    return r as TabBarThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [indicator, indicatorColor, indicatorSize, dividerColor, dividerHeight, labelColor, labelPadding, labelStyle, unselectedLabelColor, unselectedLabelStyle, overlayColor, splashFactory, mouseCursor, tabAlignment, textScaler, indicatorAnimation, splashBorderRadius]);
+    if (identical(_$r, notOverridden)) return super.copyWith(indicator: indicator, indicatorColor: indicatorColor, indicatorSize: indicatorSize, dividerColor: dividerColor, dividerHeight: dividerHeight, labelColor: labelColor, labelPadding: labelPadding, labelStyle: labelStyle, unselectedLabelColor: unselectedLabelColor, unselectedLabelStyle: unselectedLabelStyle, overlayColor: overlayColor, splashFactory: splashFactory, mouseCursor: mouseCursor, tabAlignment: tabAlignment, textScaler: textScaler, indicatorAnimation: indicatorAnimation, splashBorderRadius: splashBorderRadius);
+    return _$r as TabBarThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

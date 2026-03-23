@@ -27,36 +27,36 @@ class _$LocalizationsDelegate extends LocalizationsDelegate<dynamic> implements 
 
   @override
   bool isSupported(Locale locale) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSupported', [locale]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isSupported', [locale]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method isSupported must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   Future load(Locale locale) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', [locale]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', [locale]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method load must be overridden in dartic code');
     }
-    return r as Future;
+    return _$r as Future;
   }
 
   @override
   bool shouldReload(LocalizationsDelegate old) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReload', [old]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldReload', [old]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldReload must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

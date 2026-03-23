@@ -30,116 +30,116 @@ class _$TextPainter extends TextPainter implements DarticObjectHolder {
 
   @override
   void markNeedsLayout() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayout', const []);
-    if (identical(r, notOverridden)) { super.markNeedsLayout(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsLayout', const []);
+    if (identical(_$r, notOverridden)) { super.markNeedsLayout(); return; }
   }
 
   @override
   void setPlaceholderDimensions(List<PlaceholderDimensions>? value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPlaceholderDimensions', [value]);
-    if (identical(r, notOverridden)) { super.setPlaceholderDimensions(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setPlaceholderDimensions', [value]);
+    if (identical(_$r, notOverridden)) { super.setPlaceholderDimensions(value); return; }
   }
 
   @override
   double computeDistanceToActualBaseline(ui.TextBaseline baseline) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeDistanceToActualBaseline', [baseline]);
-    if (identical(r, notOverridden)) return super.computeDistanceToActualBaseline(baseline);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeDistanceToActualBaseline', [baseline]);
+    if (identical(_$r, notOverridden)) return super.computeDistanceToActualBaseline(baseline);
+    return _$r as double;
   }
 
   @override
   void layout({double minWidth = 0.0, double maxWidth = double.infinity}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layout', [minWidth, maxWidth]);
-    if (identical(r, notOverridden)) { super.layout(minWidth: minWidth, maxWidth: maxWidth); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layout', [minWidth, maxWidth]);
+    if (identical(_$r, notOverridden)) { super.layout(minWidth: minWidth, maxWidth: maxWidth); return; }
   }
 
   @override
   void paint(ui.Canvas canvas, ui.Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, offset]);
-    if (identical(r, notOverridden)) { super.paint(canvas, offset); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [canvas, offset]);
+    if (identical(_$r, notOverridden)) { super.paint(canvas, offset); return; }
   }
 
   @override
   int? getOffsetAfter(int offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetAfter', [offset]);
-    if (identical(r, notOverridden)) return super.getOffsetAfter(offset);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetAfter', [offset]);
+    if (identical(_$r, notOverridden)) return super.getOffsetAfter(offset);
+    return _$r as int?;
   }
 
   @override
   int? getOffsetBefore(int offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetBefore', [offset]);
-    if (identical(r, notOverridden)) return super.getOffsetBefore(offset);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetBefore', [offset]);
+    if (identical(_$r, notOverridden)) return super.getOffsetBefore(offset);
+    return _$r as int?;
   }
 
   @override
   ui.Offset getOffsetForCaret(ui.TextPosition position, ui.Rect caretPrototype) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetForCaret', [position, caretPrototype]);
-    if (identical(r, notOverridden)) return super.getOffsetForCaret(position, caretPrototype);
-    return r as ui.Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getOffsetForCaret', [position, caretPrototype]);
+    if (identical(_$r, notOverridden)) return super.getOffsetForCaret(position, caretPrototype);
+    return _$r as ui.Offset;
   }
 
   @override
   double getFullHeightForCaret(ui.TextPosition position, ui.Rect caretPrototype) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFullHeightForCaret', [position, caretPrototype]);
-    if (identical(r, notOverridden)) return super.getFullHeightForCaret(position, caretPrototype);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getFullHeightForCaret', [position, caretPrototype]);
+    if (identical(_$r, notOverridden)) return super.getFullHeightForCaret(position, caretPrototype);
+    return _$r as double;
   }
 
   @override
   List<ui.TextBox> getBoxesForSelection(TextSelection selection, {ui.BoxHeightStyle boxHeightStyle = ui.BoxHeightStyle.tight, ui.BoxWidthStyle boxWidthStyle = ui.BoxWidthStyle.tight}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxesForSelection', [selection, boxHeightStyle, boxWidthStyle]);
-    if (identical(r, notOverridden)) return super.getBoxesForSelection(selection, boxHeightStyle: boxHeightStyle, boxWidthStyle: boxWidthStyle);
-    return r as List<ui.TextBox>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getBoxesForSelection', [selection, boxHeightStyle, boxWidthStyle]);
+    if (identical(_$r, notOverridden)) return super.getBoxesForSelection(selection, boxHeightStyle: boxHeightStyle, boxWidthStyle: boxWidthStyle);
+    return _$r as List<ui.TextBox>;
   }
 
   @override
   ui.GlyphInfo? getClosestGlyphForOffset(ui.Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClosestGlyphForOffset', [offset]);
-    if (identical(r, notOverridden)) return super.getClosestGlyphForOffset(offset);
-    return r as ui.GlyphInfo?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getClosestGlyphForOffset', [offset]);
+    if (identical(_$r, notOverridden)) return super.getClosestGlyphForOffset(offset);
+    return _$r as ui.GlyphInfo?;
   }
 
   @override
   ui.TextPosition getPositionForOffset(ui.Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPositionForOffset', [offset]);
-    if (identical(r, notOverridden)) return super.getPositionForOffset(offset);
-    return r as ui.TextPosition;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPositionForOffset', [offset]);
+    if (identical(_$r, notOverridden)) return super.getPositionForOffset(offset);
+    return _$r as ui.TextPosition;
   }
 
   @override
   ui.TextRange getWordBoundary(ui.TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getWordBoundary', [position]);
-    if (identical(r, notOverridden)) return super.getWordBoundary(position);
-    return r as ui.TextRange;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getWordBoundary', [position]);
+    if (identical(_$r, notOverridden)) return super.getWordBoundary(position);
+    return _$r as ui.TextRange;
   }
 
   @override
   ui.TextRange getLineBoundary(ui.TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLineBoundary', [position]);
-    if (identical(r, notOverridden)) return super.getLineBoundary(position);
-    return r as ui.TextRange;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getLineBoundary', [position]);
+    if (identical(_$r, notOverridden)) return super.getLineBoundary(position);
+    return _$r as ui.TextRange;
   }
 
   @override
   List<ui.LineMetrics> computeLineMetrics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeLineMetrics', const []);
-    if (identical(r, notOverridden)) return super.computeLineMetrics();
-    return r as List<ui.LineMetrics>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeLineMetrics', const []);
+    if (identical(_$r, notOverridden)) return super.computeLineMetrics();
+    return _$r as List<ui.LineMetrics>;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

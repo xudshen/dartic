@@ -23,37 +23,37 @@ class _$GtkKeyHelper extends GtkKeyHelper implements DarticObjectHolder {
 
   @override
   bool isModifierPressed(ModifierKey key, int modifiers, {KeyboardSide side = KeyboardSide.any, required int keyCode, required bool isDown}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isModifierPressed', [key, modifiers, side, keyCode, isDown]);
-    if (identical(r, notOverridden)) return super.isModifierPressed(key, modifiers, side: side, keyCode: keyCode, isDown: isDown);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'isModifierPressed', [key, modifiers, side, keyCode, isDown]);
+    if (identical(_$r, notOverridden)) return super.isModifierPressed(key, modifiers, side: side, keyCode: keyCode, isDown: isDown);
+    return _$r as bool;
   }
 
   @override
   KeyboardSide getModifierSide(ModifierKey key) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getModifierSide', [key]);
-    if (identical(r, notOverridden)) return super.getModifierSide(key);
-    return r as KeyboardSide;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getModifierSide', [key]);
+    if (identical(_$r, notOverridden)) return super.getModifierSide(key);
+    return _$r as KeyboardSide;
   }
 
   @override
   LogicalKeyboardKey? numpadKey(int keyCode) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'numpadKey', [keyCode]);
-    if (identical(r, notOverridden)) return super.numpadKey(keyCode);
-    return r as LogicalKeyboardKey?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'numpadKey', [keyCode]);
+    if (identical(_$r, notOverridden)) return super.numpadKey(keyCode);
+    return _$r as LogicalKeyboardKey?;
   }
 
   @override
   LogicalKeyboardKey? logicalKey(int keyCode) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'logicalKey', [keyCode]);
-    if (identical(r, notOverridden)) return super.logicalKey(keyCode);
-    return r as LogicalKeyboardKey?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'logicalKey', [keyCode]);
+    if (identical(_$r, notOverridden)) return super.logicalKey(keyCode);
+    return _$r as LogicalKeyboardKey?;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

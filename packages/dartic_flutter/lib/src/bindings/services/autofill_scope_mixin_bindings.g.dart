@@ -20,20 +20,20 @@ class _$AutofillScopeMixin implements AutofillScopeMixin, DarticObjectHolder {
 
   @override
   TextInputConnection attach(TextInputClient trigger, TextInputConfiguration configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [trigger, configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'attach', [trigger, configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method attach must be overridden in dartic code');
     }
-    return r as TextInputConnection;
+    return _$r as TextInputConnection;
   }
 
   @override
   AutofillClient? getAutofillClient(String autofillId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAutofillClient', [autofillId]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getAutofillClient', [autofillId]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getAutofillClient must be overridden in dartic code');
     }
-    return r as AutofillClient?;
+    return _$r as AutofillClient?;
   }
 
   @override

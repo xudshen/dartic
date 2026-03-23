@@ -21,27 +21,27 @@ class _$MessageCodec extends MessageCodec<dynamic> implements DarticObjectHolder
 
   @override
   ByteData? encodeMessage(dynamic message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMessage', [message]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encodeMessage', [message]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method encodeMessage must be overridden in dartic code');
     }
-    return r as ByteData?;
+    return _$r as ByteData?;
   }
 
   @override
   dynamic decodeMessage(ByteData? message) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMessage', [message]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeMessage', [message]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method decodeMessage must be overridden in dartic code');
     }
-    return r as dynamic;
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

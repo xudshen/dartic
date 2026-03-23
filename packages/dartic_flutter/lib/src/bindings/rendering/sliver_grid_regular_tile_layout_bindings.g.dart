@@ -24,37 +24,37 @@ class _$SliverGridRegularTileLayout extends SliverGridRegularTileLayout implemen
 
   @override
   int getMinChildIndexForScrollOffset(double scrollOffset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMinChildIndexForScrollOffset', [scrollOffset]);
-    if (identical(r, notOverridden)) return super.getMinChildIndexForScrollOffset(scrollOffset);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMinChildIndexForScrollOffset', [scrollOffset]);
+    if (identical(_$r, notOverridden)) return super.getMinChildIndexForScrollOffset(scrollOffset);
+    return _$r as int;
   }
 
   @override
   int getMaxChildIndexForScrollOffset(double scrollOffset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaxChildIndexForScrollOffset', [scrollOffset]);
-    if (identical(r, notOverridden)) return super.getMaxChildIndexForScrollOffset(scrollOffset);
-    return r as int;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getMaxChildIndexForScrollOffset', [scrollOffset]);
+    if (identical(_$r, notOverridden)) return super.getMaxChildIndexForScrollOffset(scrollOffset);
+    return _$r as int;
   }
 
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGeometryForChildIndex', [index]);
-    if (identical(r, notOverridden)) return super.getGeometryForChildIndex(index);
-    return r as SliverGridGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGeometryForChildIndex', [index]);
+    if (identical(_$r, notOverridden)) return super.getGeometryForChildIndex(index);
+    return _$r as SliverGridGeometry;
   }
 
   @override
   double computeMaxScrollOffset(int childCount) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeMaxScrollOffset', [childCount]);
-    if (identical(r, notOverridden)) return super.computeMaxScrollOffset(childCount);
-    return r as double;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeMaxScrollOffset', [childCount]);
+    if (identical(_$r, notOverridden)) return super.computeMaxScrollOffset(childCount);
+    return _$r as double;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -46,197 +46,197 @@ class _$StaticSelectionContainerDelegate extends StaticSelectionContainerDelegat
 
   @override
   void didReceiveSelectionEventFor({required Selectable selectable, bool? forEnd}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReceiveSelectionEventFor', [selectable, forEnd]);
-    if (identical(r, notOverridden)) { super.didReceiveSelectionEventFor(selectable: selectable, forEnd: forEnd); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReceiveSelectionEventFor', [selectable, forEnd]);
+    if (identical(_$r, notOverridden)) { super.didReceiveSelectionEventFor(selectable: selectable, forEnd: forEnd); return; }
   }
 
   @override
   void didReceiveSelectionBoundaryEvents() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReceiveSelectionBoundaryEvents', const []);
-    if (identical(r, notOverridden)) { super.didReceiveSelectionBoundaryEvents(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didReceiveSelectionBoundaryEvents', const []);
+    if (identical(_$r, notOverridden)) { super.didReceiveSelectionBoundaryEvents(); return; }
   }
 
   @override
   void updateLastSelectionEdgeLocation({required Offset globalSelectionEdgeLocation, required bool forEnd}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateLastSelectionEdgeLocation', [globalSelectionEdgeLocation, forEnd]);
-    if (identical(r, notOverridden)) { super.updateLastSelectionEdgeLocation(globalSelectionEdgeLocation: globalSelectionEdgeLocation, forEnd: forEnd); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateLastSelectionEdgeLocation', [globalSelectionEdgeLocation, forEnd]);
+    if (identical(_$r, notOverridden)) { super.updateLastSelectionEdgeLocation(globalSelectionEdgeLocation: globalSelectionEdgeLocation, forEnd: forEnd); return; }
   }
 
   @override
   void clearInternalSelectionState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearInternalSelectionState', const []);
-    if (identical(r, notOverridden)) { super.clearInternalSelectionState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearInternalSelectionState', const []);
+    if (identical(_$r, notOverridden)) { super.clearInternalSelectionState(); return; }
   }
 
   @override
   void clearInternalSelectionStateForSelectable(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearInternalSelectionStateForSelectable', [selectable]);
-    if (identical(r, notOverridden)) { super.clearInternalSelectionStateForSelectable(selectable); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clearInternalSelectionStateForSelectable', [selectable]);
+    if (identical(_$r, notOverridden)) { super.clearInternalSelectionStateForSelectable(selectable); return; }
   }
 
   @override
   void remove(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
-    if (identical(r, notOverridden)) { super.remove(selectable); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [selectable]);
+    if (identical(_$r, notOverridden)) { super.remove(selectable); return; }
   }
 
   @override
   SelectionResult handleSelectAll(SelectAllSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectAll', [event]);
-    if (identical(r, notOverridden)) return super.handleSelectAll(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectAll', [event]);
+    if (identical(_$r, notOverridden)) return super.handleSelectAll(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult handleSelectWord(SelectWordSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectWord', [event]);
-    if (identical(r, notOverridden)) return super.handleSelectWord(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectWord', [event]);
+    if (identical(_$r, notOverridden)) return super.handleSelectWord(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult handleSelectParagraph(SelectParagraphSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectParagraph', [event]);
-    if (identical(r, notOverridden)) return super.handleSelectParagraph(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectParagraph', [event]);
+    if (identical(_$r, notOverridden)) return super.handleSelectParagraph(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult handleClearSelection(ClearSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleClearSelection', [event]);
-    if (identical(r, notOverridden)) return super.handleClearSelection(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleClearSelection', [event]);
+    if (identical(_$r, notOverridden)) return super.handleClearSelection(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult handleSelectionEdgeUpdate(SelectionEdgeUpdateEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectionEdgeUpdate', [event]);
-    if (identical(r, notOverridden)) return super.handleSelectionEdgeUpdate(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSelectionEdgeUpdate', [event]);
+    if (identical(_$r, notOverridden)) return super.handleSelectionEdgeUpdate(event);
+    return _$r as SelectionResult;
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   SelectionResult dispatchSelectionEventToChild(Selectable selectable, SelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEventToChild', [selectable, event]);
-    if (identical(r, notOverridden)) return super.dispatchSelectionEventToChild(selectable, event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEventToChild', [selectable, event]);
+    if (identical(_$r, notOverridden)) return super.dispatchSelectionEventToChild(selectable, event);
+    return _$r as SelectionResult;
   }
 
   @override
   void ensureChildUpdated(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureChildUpdated', [selectable]);
-    if (identical(r, notOverridden)) { super.ensureChildUpdated(selectable); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'ensureChildUpdated', [selectable]);
+    if (identical(_$r, notOverridden)) { super.ensureChildUpdated(selectable); return; }
   }
 
   @override
   void didChangeSelectables() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeSelectables', const []);
-    if (identical(r, notOverridden)) { super.didChangeSelectables(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeSelectables', const []);
+    if (identical(_$r, notOverridden)) { super.didChangeSelectables(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   void add(Selectable selectable) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
-    if (identical(r, notOverridden)) { super.add(selectable); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [selectable]);
+    if (identical(_$r, notOverridden)) { super.add(selectable); return; }
   }
 
   @override
   void layoutDidChange() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layoutDidChange', const []);
-    if (identical(r, notOverridden)) { super.layoutDidChange(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layoutDidChange', const []);
+    if (identical(_$r, notOverridden)) { super.layoutDidChange(); return; }
   }
 
   @override
   SelectionGeometry getSelectionGeometry() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectionGeometry', const []);
-    if (identical(r, notOverridden)) return super.getSelectionGeometry();
-    return r as SelectionGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectionGeometry', const []);
+    if (identical(_$r, notOverridden)) return super.getSelectionGeometry();
+    return _$r as SelectionGeometry;
   }
 
   @override
   void pushHandleLayers(LayerLink? startHandle, LayerLink? endHandle) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
-    if (identical(r, notOverridden)) { super.pushHandleLayers(startHandle, endHandle); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pushHandleLayers', [startHandle, endHandle]);
+    if (identical(_$r, notOverridden)) { super.pushHandleLayers(startHandle, endHandle); return; }
   }
 
   @override
   SelectedContent? getSelectedContent() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
-    if (identical(r, notOverridden)) return super.getSelectedContent();
-    return r as SelectedContent?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelectedContent', const []);
+    if (identical(_$r, notOverridden)) return super.getSelectedContent();
+    return _$r as SelectedContent?;
   }
 
   @override
   SelectedContentRange? getSelection() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
-    if (identical(r, notOverridden)) return super.getSelection();
-    return r as SelectedContentRange?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSelection', const []);
+    if (identical(_$r, notOverridden)) return super.getSelection();
+    return _$r as SelectedContentRange?;
   }
 
   @override
   SelectionResult handleGranularlyExtendSelection(GranularlyExtendSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleGranularlyExtendSelection', [event]);
-    if (identical(r, notOverridden)) return super.handleGranularlyExtendSelection(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleGranularlyExtendSelection', [event]);
+    if (identical(_$r, notOverridden)) return super.handleGranularlyExtendSelection(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult handleDirectionallyExtendSelection(DirectionallyExtendSelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDirectionallyExtendSelection', [event]);
-    if (identical(r, notOverridden)) return super.handleDirectionallyExtendSelection(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDirectionallyExtendSelection', [event]);
+    if (identical(_$r, notOverridden)) return super.handleDirectionallyExtendSelection(event);
+    return _$r as SelectionResult;
   }
 
   @override
   SelectionResult dispatchSelectionEvent(SelectionEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
-    if (identical(r, notOverridden)) return super.dispatchSelectionEvent(event);
-    return r as SelectionResult;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispatchSelectionEvent', [event]);
+    if (identical(_$r, notOverridden)) return super.dispatchSelectionEvent(event);
+    return _$r as SelectionResult;
   }
 
   @override
   Matrix4 getTransformFrom(Selectable child) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformFrom', [child]);
-    if (identical(r, notOverridden)) return super.getTransformFrom(child);
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformFrom', [child]);
+    if (identical(_$r, notOverridden)) return super.getTransformFrom(child);
+    return _$r as Matrix4;
   }
 
   @override
   Matrix4 getTransformTo(RenderObject? ancestor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
-    if (identical(r, notOverridden)) return super.getTransformTo(ancestor);
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getTransformTo', [ancestor]);
+    if (identical(_$r, notOverridden)) return super.getTransformTo(ancestor);
+    return _$r as Matrix4;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) { super.addListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.addListener(() => listener()); return; }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) { super.removeListener(() => listener()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) { super.removeListener(() => listener()); return; }
   }
 
   @override
   void notifyListeners() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
-    if (identical(r, notOverridden)) { super.notifyListeners(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'notifyListeners', const []);
+    if (identical(_$r, notOverridden)) { super.notifyListeners(); return; }
   }
 
   @override

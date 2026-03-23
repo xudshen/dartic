@@ -28,37 +28,37 @@ class _$SemanticsFlags extends SemanticsFlags implements DarticObjectHolder {
 
   @override
   SemanticsFlags merge(SemanticsFlags other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
-    if (identical(r, notOverridden)) return super.merge(other);
-    return r as SemanticsFlags;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'merge', [other]);
+    if (identical(_$r, notOverridden)) return super.merge(other);
+    return _$r as SemanticsFlags;
   }
 
   @override
   SemanticsFlags copyWith({CheckedState? isChecked, Tristate? isSelected, Tristate? isEnabled, Tristate? isToggled, Tristate? isExpanded, Tristate? isRequired, Tristate? isFocused, bool? isButton, bool? isTextField, bool? isInMutuallyExclusiveGroup, bool? isHeader, bool? isObscured, bool? scopesRoute, bool? namesRoute, bool? isHidden, bool? isImage, bool? isLiveRegion, bool? hasImplicitScrolling, bool? isMultiline, bool? isReadOnly, bool? isLink, bool? isSlider, bool? isKeyboardKey}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [isChecked, isSelected, isEnabled, isToggled, isExpanded, isRequired, isFocused, isButton, isTextField, isInMutuallyExclusiveGroup, isHeader, isObscured, scopesRoute, namesRoute, isHidden, isImage, isLiveRegion, hasImplicitScrolling, isMultiline, isReadOnly, isLink, isSlider, isKeyboardKey]);
-    if (identical(r, notOverridden)) return super.copyWith(isChecked: isChecked, isSelected: isSelected, isEnabled: isEnabled, isToggled: isToggled, isExpanded: isExpanded, isRequired: isRequired, isFocused: isFocused, isButton: isButton, isTextField: isTextField, isInMutuallyExclusiveGroup: isInMutuallyExclusiveGroup, isHeader: isHeader, isObscured: isObscured, scopesRoute: scopesRoute, namesRoute: namesRoute, isHidden: isHidden, isImage: isImage, isLiveRegion: isLiveRegion, hasImplicitScrolling: hasImplicitScrolling, isMultiline: isMultiline, isReadOnly: isReadOnly, isLink: isLink, isSlider: isSlider, isKeyboardKey: isKeyboardKey);
-    return r as SemanticsFlags;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [isChecked, isSelected, isEnabled, isToggled, isExpanded, isRequired, isFocused, isButton, isTextField, isInMutuallyExclusiveGroup, isHeader, isObscured, scopesRoute, namesRoute, isHidden, isImage, isLiveRegion, hasImplicitScrolling, isMultiline, isReadOnly, isLink, isSlider, isKeyboardKey]);
+    if (identical(_$r, notOverridden)) return super.copyWith(isChecked: isChecked, isSelected: isSelected, isEnabled: isEnabled, isToggled: isToggled, isExpanded: isExpanded, isRequired: isRequired, isFocused: isFocused, isButton: isButton, isTextField: isTextField, isInMutuallyExclusiveGroup: isInMutuallyExclusiveGroup, isHeader: isHeader, isObscured: isObscured, scopesRoute: scopesRoute, namesRoute: namesRoute, isHidden: isHidden, isImage: isImage, isLiveRegion: isLiveRegion, hasImplicitScrolling: hasImplicitScrolling, isMultiline: isMultiline, isReadOnly: isReadOnly, isLink: isLink, isSlider: isSlider, isKeyboardKey: isKeyboardKey);
+    return _$r as SemanticsFlags;
   }
 
   @override
   List<String> toStrings() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStrings', const []);
-    if (identical(r, notOverridden)) return super.toStrings();
-    return r as List<String>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStrings', const []);
+    if (identical(_$r, notOverridden)) return super.toStrings();
+    return _$r as List<String>;
   }
 
   @override
   bool hasRepeatedFlags(SemanticsFlags other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasRepeatedFlags', [other]);
-    if (identical(r, notOverridden)) return super.hasRepeatedFlags(other);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasRepeatedFlags', [other]);
+    if (identical(_$r, notOverridden)) return super.hasRepeatedFlags(other);
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -33,91 +33,91 @@ class _$BindingBase extends BindingBase implements DarticObjectHolder {
 
   @override
   void initInstances() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
-    if (identical(r, notOverridden)) { super.initInstances(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initInstances', const []);
+    if (identical(_$r, notOverridden)) { super.initInstances(); return; }
   }
 
   @override
   bool debugCheckZone(String entryPoint) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
-    if (identical(r, notOverridden)) return super.debugCheckZone(entryPoint);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugCheckZone', [entryPoint]);
+    if (identical(_$r, notOverridden)) return super.debugCheckZone(entryPoint);
+    return _$r as bool;
   }
 
   @override
   void initServiceExtensions() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
-    if (identical(r, notOverridden)) { super.initServiceExtensions(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initServiceExtensions', const []);
+    if (identical(_$r, notOverridden)) { super.initServiceExtensions(); return; }
   }
 
   @override
   Future<void> lockEvents(Future<void> Function() callback) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
-    if (identical(r, notOverridden)) return super.lockEvents(() => callback() as Future<void>);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lockEvents', [callback]);
+    if (identical(_$r, notOverridden)) return super.lockEvents(() => callback() as Future<void>);
+    return _$r as Future<void>;
   }
 
   @override
   void unlocked() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
-    if (identical(r, notOverridden)) { super.unlocked(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unlocked', const []);
+    if (identical(_$r, notOverridden)) { super.unlocked(); return; }
   }
 
   @override
   Future<void> reassembleApplication() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
-    if (identical(r, notOverridden)) return super.reassembleApplication();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassembleApplication', const []);
+    if (identical(_$r, notOverridden)) return super.reassembleApplication();
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> performReassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
-    if (identical(r, notOverridden)) return super.performReassemble();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performReassemble', const []);
+    if (identical(_$r, notOverridden)) return super.performReassemble();
+    return _$r as Future<void>;
   }
 
   @override
   void registerSignalServiceExtension({required String name, required AsyncCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) { super.registerSignalServiceExtension(name: name, callback: () => callback() as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerSignalServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) { super.registerSignalServiceExtension(name: name, callback: () => callback() as Future<void>); return; }
   }
 
   @override
   void registerBoolServiceExtension({required String name, required AsyncValueGetter<bool> getter, required AsyncValueSetter<bool> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerBoolServiceExtension(name: name, getter: () => getter() as Future<bool>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerBoolServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerBoolServiceExtension(name: name, getter: () => getter() as Future<bool>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void registerNumericServiceExtension({required String name, required AsyncValueGetter<double> getter, required AsyncValueSetter<double> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerNumericServiceExtension(name: name, getter: () => getter() as Future<double>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerNumericServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerNumericServiceExtension(name: name, getter: () => getter() as Future<double>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void postEvent(String eventKind, Map<String, dynamic> eventData) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
-    if (identical(r, notOverridden)) { super.postEvent(eventKind, eventData); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'postEvent', [eventKind, eventData]);
+    if (identical(_$r, notOverridden)) { super.postEvent(eventKind, eventData); return; }
   }
 
   @override
   void registerStringServiceExtension({required String name, required AsyncValueGetter<String> getter, required AsyncValueSetter<String> setter}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
-    if (identical(r, notOverridden)) { super.registerStringServiceExtension(name: name, getter: () => getter() as Future<String>, setter: (a) => setter(a) as Future<void>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerStringServiceExtension', [name, getter, setter]);
+    if (identical(_$r, notOverridden)) { super.registerStringServiceExtension(name: name, getter: () => getter() as Future<String>, setter: (a) => setter(a) as Future<void>); return; }
   }
 
   @override
   void registerServiceExtension({required String name, required ServiceExtensionCallback callback}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
-    if (identical(r, notOverridden)) { super.registerServiceExtension(name: name, callback: (a) => callback(a) as Future<Map<String, dynamic>>); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerServiceExtension', [name, callback]);
+    if (identical(_$r, notOverridden)) { super.registerServiceExtension(name: name, callback: (a) => callback(a) as Future<Map<String, dynamic>>); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

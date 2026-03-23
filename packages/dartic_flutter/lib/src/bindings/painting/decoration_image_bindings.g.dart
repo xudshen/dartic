@@ -31,16 +31,16 @@ class _$DecorationImage extends DecorationImage implements DarticObjectHolder {
 
   @override
   DecorationImagePainter createPainter(ui.VoidCallback onChanged) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createPainter', [onChanged]);
-    if (identical(r, notOverridden)) return super.createPainter(() => onChanged());
-    return r as DecorationImagePainter;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createPainter', [onChanged]);
+    if (identical(_$r, notOverridden)) return super.createPainter(() => onChanged());
+    return _$r as DecorationImagePainter;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

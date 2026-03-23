@@ -28,150 +28,150 @@ class _$PlaceholderSpan extends PlaceholderSpan implements DarticObjectHolder {
 
   @override
   void computeToPlainText(StringBuffer buffer, {bool includeSemanticsLabels = true, bool includePlaceholders = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeToPlainText', [buffer, includeSemanticsLabels, includePlaceholders]);
-    if (identical(r, notOverridden)) { super.computeToPlainText(buffer, includeSemanticsLabels: includeSemanticsLabels, includePlaceholders: includePlaceholders); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeToPlainText', [buffer, includeSemanticsLabels, includePlaceholders]);
+    if (identical(_$r, notOverridden)) { super.computeToPlainText(buffer, includeSemanticsLabels: includeSemanticsLabels, includePlaceholders: includePlaceholders); return; }
   }
 
   @override
   void computeSemanticsInformation(List<InlineSpanSemanticsInformation> collector) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeSemanticsInformation', [collector]);
-    if (identical(r, notOverridden)) { super.computeSemanticsInformation(collector); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'computeSemanticsInformation', [collector]);
+    if (identical(_$r, notOverridden)) { super.computeSemanticsInformation(collector); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   bool debugAssertIsValid() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', const []);
-    if (identical(r, notOverridden)) return super.debugAssertIsValid();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugAssertIsValid', const []);
+    if (identical(_$r, notOverridden)) return super.debugAssertIsValid();
+    return _$r as bool;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   void build(ui.ParagraphBuilder builder, {TextScaler textScaler = TextScaler.noScaling, List<PlaceholderDimensions>? dimensions}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [builder, textScaler, dimensions]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [builder, textScaler, dimensions]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method build must be overridden in dartic code');
     }
   }
 
   @override
   bool visitChildren(InlineSpanVisitor visitor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitChildren', [visitor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method visitChildren must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   bool visitDirectChildren(InlineSpanVisitor visitor) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitDirectChildren', [visitor]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'visitDirectChildren', [visitor]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method visitDirectChildren must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   InlineSpan? getSpanForPosition(ui.TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSpanForPosition', [position]);
-    if (identical(r, notOverridden)) return super.getSpanForPosition(position);
-    return r as InlineSpan?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSpanForPosition', [position]);
+    if (identical(_$r, notOverridden)) return super.getSpanForPosition(position);
+    return _$r as InlineSpan?;
   }
 
   @override
   InlineSpan? getSpanForPositionVisitor(ui.TextPosition position, Accumulator offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSpanForPositionVisitor', [position, offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSpanForPositionVisitor', [position, offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method getSpanForPositionVisitor must be overridden in dartic code');
     }
-    return r as InlineSpan?;
+    return _$r as InlineSpan?;
   }
 
   @override
   String toPlainText({bool includeSemanticsLabels = true, bool includePlaceholders = true}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPlainText', [includeSemanticsLabels, includePlaceholders]);
-    if (identical(r, notOverridden)) return super.toPlainText(includeSemanticsLabels: includeSemanticsLabels, includePlaceholders: includePlaceholders);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toPlainText', [includeSemanticsLabels, includePlaceholders]);
+    if (identical(_$r, notOverridden)) return super.toPlainText(includeSemanticsLabels: includeSemanticsLabels, includePlaceholders: includePlaceholders);
+    return _$r as String;
   }
 
   @override
   List<InlineSpanSemanticsInformation> getSemanticsInformation() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSemanticsInformation', const []);
-    if (identical(r, notOverridden)) return super.getSemanticsInformation();
-    return r as List<InlineSpanSemanticsInformation>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSemanticsInformation', const []);
+    if (identical(_$r, notOverridden)) return super.getSemanticsInformation();
+    return _$r as List<InlineSpanSemanticsInformation>;
   }
 
   @override
   int? codeUnitAt(int index) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'codeUnitAt', [index]);
-    if (identical(r, notOverridden)) return super.codeUnitAt(index);
-    return r as int?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'codeUnitAt', [index]);
+    if (identical(_$r, notOverridden)) return super.codeUnitAt(index);
+    return _$r as int?;
   }
 
   @override
   int? codeUnitAtVisitor(int index, Accumulator offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'codeUnitAtVisitor', [index, offset]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'codeUnitAtVisitor', [index, offset]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method codeUnitAtVisitor must be overridden in dartic code');
     }
-    return r as int?;
+    return _$r as int?;
   }
 
   @override
   RenderComparison compareTo(InlineSpan other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method compareTo must be overridden in dartic code');
     }
-    return r as RenderComparison;
+    return _$r as RenderComparison;
   }
 
   @override
   String toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
-    if (identical(r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShallow', [joiner, minLevel]);
+    if (identical(_$r, notOverridden)) return super.toStringShallow(joiner: joiner, minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
-    if (identical(r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringDeep', [prefixLineOne, prefixOtherLines, minLevel, wrapWidth]);
+    if (identical(_$r, notOverridden)) return super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
-    if (identical(r, notOverridden)) return super.debugDescribeChildren();
-    return r as List<DiagnosticsNode>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDescribeChildren', const []);
+    if (identical(_$r, notOverridden)) return super.debugDescribeChildren();
+    return _$r as List<DiagnosticsNode>;
   }
 
   @override

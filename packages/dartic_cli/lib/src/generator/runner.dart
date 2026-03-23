@@ -72,6 +72,28 @@ const _disallowedBridgeTypes = {'FutureOr', 'Null', 'Never'};
 BridgeMode inferBridgeMode(DiscoveredClass cls) =>
     inferBridgeModeWithReason(cls).mode;
 
+/// Post-analysis bridge validation using [TypeInfo] from the analyzer.
+///
+/// Called after [inferBridgeModeWithReason] (which uses Kernel IR metadata for
+/// early filtering). This catches cases that require full type analysis:
+///   - F-bounded generics in extends mode (type erasure breaks override sigs)
+///   - Interface bridges with non-abstract generic methods (emitter can't impl)
+///
+/// Returns null if bridge is OK, or a skip-reason string if bridge should be
+/// disabled for this class.
+String? detectBridgeIssue(TypeInfo info) {
+  if (!info.isInterface && info.bridgeSuperTypeArgs != null) {
+    return '${info.className} has F-bounded type parameters'
+        ' — extends bridge would have invalid override signatures';
+  }
+  if (info.isInterface &&
+      info.methods.any((m) => m.typeParamDecl != null && !m.isAbstract)) {
+    return '${info.className} has generic methods'
+        ' that the interface bridge cannot implement';
+  }
+  return null;
+}
+
 /// Orchestrates the code generation pipeline.
 class Runner {
   /// Analysis root directory for type resolution (e.g. Flutter project root).
@@ -518,22 +540,12 @@ class Runner {
           }
         }
 
-        // Detect bridge issues that would cause compile errors.
+        // Post-analysis bridge validation (complements discovery-time check).
         var effectiveBridge = classConfig.bridge;
         if (effectiveBridge) {
-          if (!info.isInterface && info.bridgeSuperTypeArgs != null) {
-            // F-bounded generic in extends mode → type erasure breaks overrides.
-            stderr.writeln(
-                '  SKIP bridge: $resolvedName has F-bounded type parameters'
-                ' — extends bridge would have invalid override signatures');
-            effectiveBridge = false;
-          } else if (info.isInterface && info.methods.any(
-              (m) => m.typeParamDecl != null && !m.isAbstract)) {
-            // Interface bridge (implements) with inherited non-abstract generic
-            // methods — emitter skips them, leaving missing implementations.
-            stderr.writeln(
-                '  SKIP bridge: $resolvedName has generic methods'
-                ' that the interface bridge cannot implement');
+          final issue = detectBridgeIssue(info);
+          if (issue != null) {
+            stderr.writeln('  SKIP bridge: $issue');
             effectiveBridge = false;
           }
         }

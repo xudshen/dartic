@@ -23,53 +23,53 @@ class _$MultiChildLayoutDelegate extends MultiChildLayoutDelegate implements Dar
 
   @override
   bool hasChild(Object childId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasChild', [childId]);
-    if (identical(r, notOverridden)) return super.hasChild(childId);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hasChild', [childId]);
+    if (identical(_$r, notOverridden)) return super.hasChild(childId);
+    return _$r as bool;
   }
 
   @override
   Size layoutChild(Object childId, BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layoutChild', [childId, constraints]);
-    if (identical(r, notOverridden)) return super.layoutChild(childId, constraints);
-    return r as Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'layoutChild', [childId, constraints]);
+    if (identical(_$r, notOverridden)) return super.layoutChild(childId, constraints);
+    return _$r as Size;
   }
 
   @override
   void positionChild(Object childId, Offset offset) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'positionChild', [childId, offset]);
-    if (identical(r, notOverridden)) { super.positionChild(childId, offset); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'positionChild', [childId, offset]);
+    if (identical(_$r, notOverridden)) { super.positionChild(childId, offset); return; }
   }
 
   @override
   Size getSize(BoxConstraints constraints) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSize', [constraints]);
-    if (identical(r, notOverridden)) return super.getSize(constraints);
-    return r as Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getSize', [constraints]);
+    if (identical(_$r, notOverridden)) return super.getSize(constraints);
+    return _$r as Size;
   }
 
   @override
   void performLayout(Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performLayout', [size]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performLayout', [size]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method performLayout must be overridden in dartic code');
     }
   }
 
   @override
   bool shouldRelayout(MultiChildLayoutDelegate oldDelegate) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shouldRelayout', [oldDelegate]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shouldRelayout must be overridden in dartic code');
     }
-    return r as bool;
+    return _$r as bool;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

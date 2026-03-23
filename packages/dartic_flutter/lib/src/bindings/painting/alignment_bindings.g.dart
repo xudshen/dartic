@@ -22,51 +22,51 @@ class _$Alignment extends Alignment implements DarticObjectHolder {
 
   @override
   AlignmentGeometry add(AlignmentGeometry other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
-    if (identical(r, notOverridden)) return super.add(other);
-    return r as AlignmentGeometry;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [other]);
+    if (identical(_$r, notOverridden)) return super.add(other);
+    return _$r as AlignmentGeometry;
   }
 
   @override
   ui.Offset alongOffset(ui.Offset other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongOffset', [other]);
-    if (identical(r, notOverridden)) return super.alongOffset(other);
-    return r as ui.Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongOffset', [other]);
+    if (identical(_$r, notOverridden)) return super.alongOffset(other);
+    return _$r as ui.Offset;
   }
 
   @override
   ui.Offset alongSize(ui.Size other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongSize', [other]);
-    if (identical(r, notOverridden)) return super.alongSize(other);
-    return r as ui.Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'alongSize', [other]);
+    if (identical(_$r, notOverridden)) return super.alongSize(other);
+    return _$r as ui.Offset;
   }
 
   @override
   ui.Offset withinRect(ui.Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withinRect', [rect]);
-    if (identical(r, notOverridden)) return super.withinRect(rect);
-    return r as ui.Offset;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'withinRect', [rect]);
+    if (identical(_$r, notOverridden)) return super.withinRect(rect);
+    return _$r as ui.Offset;
   }
 
   @override
   ui.Rect inscribe(ui.Size size, ui.Rect rect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inscribe', [size, rect]);
-    if (identical(r, notOverridden)) return super.inscribe(size, rect);
-    return r as ui.Rect;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'inscribe', [size, rect]);
+    if (identical(_$r, notOverridden)) return super.inscribe(size, rect);
+    return _$r as ui.Rect;
   }
 
   @override
   Alignment resolve(ui.TextDirection? direction) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
-    if (identical(r, notOverridden)) return super.resolve(direction);
-    return r as Alignment;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolve', [direction]);
+    if (identical(_$r, notOverridden)) return super.resolve(direction);
+    return _$r as Alignment;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

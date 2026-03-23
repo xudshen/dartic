@@ -31,61 +31,61 @@ class _$PopNavigatorRouterDelegateMixin implements PopNavigatorRouterDelegateMix
 
   @override
   Future<bool> popRoute() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popRoute', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'popRoute', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method popRoute must be overridden in dartic code');
     }
-    return r as Future<bool>;
+    return _$r as Future<bool>;
   }
 
   @override
   Future<void> setInitialRoutePath(dynamic configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setInitialRoutePath', [configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setInitialRoutePath', [configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setInitialRoutePath must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> setRestoredRoutePath(dynamic configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setRestoredRoutePath', [configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setRestoredRoutePath', [configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setRestoredRoutePath must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> setNewRoutePath(dynamic configuration) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setNewRoutePath', [configuration]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setNewRoutePath', [configuration]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setNewRoutePath must be overridden in dartic code');
     }
-    return r as Future<void>;
+    return _$r as Future<void>;
   }
 
   @override
   Widget build(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method build must be overridden in dartic code');
     }
-    return r as Widget;
+    return _$r as Widget;
   }
 
   @override
   void addListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addListener must be overridden in dartic code');
     }
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeListener', [listener]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeListener must be overridden in dartic code');
     }
   }

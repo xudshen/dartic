@@ -41,21 +41,21 @@ class _$PopEntry extends PopEntry<dynamic> implements DarticObjectHolder {
 
   @override
   void onPopInvoked(bool didPop) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvoked', [didPop]);
-    if (identical(r, notOverridden)) { super.onPopInvoked(didPop); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvoked', [didPop]);
+    if (identical(_$r, notOverridden)) { super.onPopInvoked(didPop); return; }
   }
 
   @override
   void onPopInvokedWithResult(bool didPop, dynamic result) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvokedWithResult', [didPop, result]);
-    if (identical(r, notOverridden)) { super.onPopInvokedWithResult(didPop, result); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'onPopInvokedWithResult', [didPop, result]);
+    if (identical(_$r, notOverridden)) { super.onPopInvokedWithResult(didPop, result); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

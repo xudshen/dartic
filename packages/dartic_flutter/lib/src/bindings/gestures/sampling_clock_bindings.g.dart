@@ -31,23 +31,23 @@ class _$SamplingClock extends SamplingClock implements DarticObjectHolder {
 
   @override
   DateTime now() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'now', const []);
-    if (identical(r, notOverridden)) return super.now();
-    return r as DateTime;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'now', const []);
+    if (identical(_$r, notOverridden)) return super.now();
+    return _$r as DateTime;
   }
 
   @override
   Stopwatch stopwatch() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopwatch', const []);
-    if (identical(r, notOverridden)) return super.stopwatch();
-    return r as Stopwatch;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stopwatch', const []);
+    if (identical(_$r, notOverridden)) return super.stopwatch();
+    return _$r as Stopwatch;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

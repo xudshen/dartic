@@ -31,22 +31,22 @@ class _$RoundSliderTickMarkShape extends RoundSliderTickMarkShape implements Dar
 
   @override
   Size getPreferredSize({required SliderThemeData sliderTheme, required bool isEnabled}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [sliderTheme, isEnabled]);
-    if (identical(r, notOverridden)) return super.getPreferredSize(sliderTheme: sliderTheme, isEnabled: isEnabled);
-    return r as Size;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getPreferredSize', [sliderTheme, isEnabled]);
+    if (identical(_$r, notOverridden)) return super.getPreferredSize(sliderTheme: sliderTheme, isEnabled: isEnabled);
+    return _$r as Size;
   }
 
   @override
   void paint(PaintingContext context, Offset center, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double> enableAnimation, required TextDirection textDirection, required Offset thumbCenter, required bool isEnabled}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, parentBox, sliderTheme, enableAnimation, textDirection, thumbCenter, isEnabled]);
-    if (identical(r, notOverridden)) { super.paint(context, center, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, textDirection: textDirection, thumbCenter: thumbCenter, isEnabled: isEnabled); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'paint', [context, center, parentBox, sliderTheme, enableAnimation, textDirection, thumbCenter, isEnabled]);
+    if (identical(_$r, notOverridden)) { super.paint(context, center, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, textDirection: textDirection, thumbCenter: thumbCenter, isEnabled: isEnabled); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

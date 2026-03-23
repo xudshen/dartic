@@ -22,22 +22,22 @@ class _$MouseCursorManager extends MouseCursorManager implements DarticObjectHol
 
   @override
   MouseCursor? debugDeviceActiveCursor(int device) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDeviceActiveCursor', [device]);
-    if (identical(r, notOverridden)) return super.debugDeviceActiveCursor(device);
-    return r as MouseCursor?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugDeviceActiveCursor', [device]);
+    if (identical(_$r, notOverridden)) return super.debugDeviceActiveCursor(device);
+    return _$r as MouseCursor?;
   }
 
   @override
   void handleDeviceCursorUpdate(int device, PointerEvent? triggeringEvent, Iterable<MouseCursor> cursorCandidates) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDeviceCursorUpdate', [device, triggeringEvent, cursorCandidates]);
-    if (identical(r, notOverridden)) { super.handleDeviceCursorUpdate(device, triggeringEvent, cursorCandidates); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleDeviceCursorUpdate', [device, triggeringEvent, cursorCandidates]);
+    if (identical(_$r, notOverridden)) { super.handleDeviceCursorUpdate(device, triggeringEvent, cursorCandidates); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

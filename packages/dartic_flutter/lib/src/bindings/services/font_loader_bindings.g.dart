@@ -22,29 +22,29 @@ class _$FontLoader extends FontLoader implements DarticObjectHolder {
 
   @override
   void addFont(Future<ByteData> bytes) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addFont', [bytes]);
-    if (identical(r, notOverridden)) { super.addFont(bytes); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addFont', [bytes]);
+    if (identical(_$r, notOverridden)) { super.addFont(bytes); return; }
   }
 
   @override
   Future<void> load() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', const []);
-    if (identical(r, notOverridden)) return super.load();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'load', const []);
+    if (identical(_$r, notOverridden)) return super.load();
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> loadFont(Uint8List list, String family) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadFont', [list, family]);
-    if (identical(r, notOverridden)) return super.loadFont(list, family);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'loadFont', [list, family]);
+    if (identical(_$r, notOverridden)) return super.loadFont(list, family);
+    return _$r as Future<void>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -29,36 +29,36 @@ class _$SearchViewThemeData extends SearchViewThemeData implements DarticObjectH
 
   @override
   SearchViewThemeData copyWith({Color? backgroundColor, double? elevation, Color? surfaceTintColor, BorderSide? side, OutlinedBorder? shape, double? headerHeight, TextStyle? headerTextStyle, TextStyle? headerHintStyle, BoxConstraints? constraints, EdgeInsetsGeometry? padding, EdgeInsetsGeometry? barPadding, bool? shrinkWrap, Color? dividerColor}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, elevation, surfaceTintColor, side, shape, headerHeight, headerTextStyle, headerHintStyle, constraints, padding, barPadding, shrinkWrap, dividerColor]);
-    if (identical(r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, elevation: elevation, surfaceTintColor: surfaceTintColor, side: side, shape: shape, headerHeight: headerHeight, headerTextStyle: headerTextStyle, headerHintStyle: headerHintStyle, constraints: constraints, padding: padding, barPadding: barPadding, shrinkWrap: shrinkWrap, dividerColor: dividerColor);
-    return r as SearchViewThemeData;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [backgroundColor, elevation, surfaceTintColor, side, shape, headerHeight, headerTextStyle, headerHintStyle, constraints, padding, barPadding, shrinkWrap, dividerColor]);
+    if (identical(_$r, notOverridden)) return super.copyWith(backgroundColor: backgroundColor, elevation: elevation, surfaceTintColor: surfaceTintColor, side: side, shape: shape, headerHeight: headerHeight, headerTextStyle: headerTextStyle, headerHintStyle: headerHintStyle, constraints: constraints, padding: padding, barPadding: barPadding, shrinkWrap: shrinkWrap, dividerColor: dividerColor);
+    return _$r as SearchViewThemeData;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

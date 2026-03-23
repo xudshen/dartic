@@ -20,36 +20,36 @@ class _$StreamController implements StreamController<dynamic>, DarticObjectHolde
 
   @override
   void add(dynamic event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [event]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [event]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
   }
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addError', [error, stackTrace]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addError', [error, stackTrace]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addError must be overridden in dartic code');
     }
   }
 
   @override
   Future<dynamic> close() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method close must be overridden in dartic code');
     }
-    return r as Future<dynamic>;
+    return _$r as Future<dynamic>;
   }
 
   @override
   Future<dynamic> addStream(Stream source, {bool? cancelOnError}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStream', [source, cancelOnError]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStream', [source, cancelOnError]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addStream must be overridden in dartic code');
     }
-    return r as Future<dynamic>;
+    return _$r as Future<dynamic>;
   }
 
   @override

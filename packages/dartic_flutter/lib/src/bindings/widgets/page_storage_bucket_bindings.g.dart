@@ -20,22 +20,22 @@ class _$PageStorageBucket extends PageStorageBucket implements DarticObjectHolde
 
   @override
   void writeState(BuildContext context, dynamic data, {Object? identifier}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeState', [context, data, identifier]);
-    if (identical(r, notOverridden)) { super.writeState(context, data, identifier: identifier); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeState', [context, data, identifier]);
+    if (identical(_$r, notOverridden)) { super.writeState(context, data, identifier: identifier); return; }
   }
 
   @override
   dynamic readState(BuildContext context, {Object? identifier}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readState', [context, identifier]);
-    if (identical(r, notOverridden)) return super.readState(context, identifier: identifier);
-    return r as dynamic;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readState', [context, identifier]);
+    if (identical(_$r, notOverridden)) return super.readState(context, identifier: identifier);
+    return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

@@ -25,16 +25,16 @@ class _$GradientRotation extends GradientRotation implements DarticObjectHolder 
 
   @override
   Matrix4 transform(ui.Rect bounds, {ui.TextDirection? textDirection}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [bounds, textDirection]);
-    if (identical(r, notOverridden)) return super.transform(bounds, textDirection: textDirection);
-    return r as Matrix4;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [bounds, textDirection]);
+    if (identical(_$r, notOverridden)) return super.transform(bounds, textDirection: textDirection);
+    return _$r as Matrix4;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

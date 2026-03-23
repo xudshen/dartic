@@ -27,27 +27,27 @@ class _$OverlayPortalController extends OverlayPortalController implements Darti
 
   @override
   void show() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', const []);
-    if (identical(r, notOverridden)) { super.show(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', const []);
+    if (identical(_$r, notOverridden)) { super.show(); return; }
   }
 
   @override
   void hide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
-    if (identical(r, notOverridden)) { super.hide(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(_$r, notOverridden)) { super.hide(); return; }
   }
 
   @override
   void toggle() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggle', const []);
-    if (identical(r, notOverridden)) { super.toggle(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggle', const []);
+    if (identical(_$r, notOverridden)) { super.toggle(); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

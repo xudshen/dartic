@@ -21,30 +21,30 @@ class _$Encoding extends Encoding implements DarticObjectHolder {
 
   @override
   Future<String> decodeStream(Stream<List<int>> byteStream) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeStream', [byteStream]);
-    if (identical(r, notOverridden)) return super.decodeStream(byteStream);
-    return r as Future<String>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decodeStream', [byteStream]);
+    if (identical(_$r, notOverridden)) return super.decodeStream(byteStream);
+    return _$r as Future<String>;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override
   List<int> encode(String input) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encode', [input]);
-    if (identical(r, notOverridden)) return super.encode(input);
-    return r as List<int>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encode', [input]);
+    if (identical(_$r, notOverridden)) return super.encode(input);
+    return _$r as List<int>;
   }
 
   @override
   String decode(List<int> encoded) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decode', [encoded]);
-    if (identical(r, notOverridden)) return super.decode(encoded);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decode', [encoded]);
+    if (identical(_$r, notOverridden)) return super.decode(encoded);
+    return _$r as String;
   }
 
   @override

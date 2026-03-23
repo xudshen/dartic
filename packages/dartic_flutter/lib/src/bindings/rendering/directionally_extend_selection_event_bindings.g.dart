@@ -22,16 +22,16 @@ class _$DirectionallyExtendSelectionEvent extends DirectionallyExtendSelectionEv
 
   @override
   DirectionallyExtendSelectionEvent copyWith({double? dx, bool? isEnd, SelectionExtendDirection? direction}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [dx, isEnd, direction]);
-    if (identical(r, notOverridden)) return super.copyWith(dx: dx, isEnd: isEnd, direction: direction);
-    return r as DirectionallyExtendSelectionEvent;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [dx, isEnd, direction]);
+    if (identical(_$r, notOverridden)) return super.copyWith(dx: dx, isEnd: isEnd, direction: direction);
+    return _$r as DirectionallyExtendSelectionEvent;
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

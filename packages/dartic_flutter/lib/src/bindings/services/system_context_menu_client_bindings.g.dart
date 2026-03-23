@@ -36,16 +36,16 @@ class _$SystemContextMenuClient implements SystemContextMenuClient, DarticObject
 
   @override
   void handleSystemHide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemHide', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemHide', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleSystemHide must be overridden in dartic code');
     }
   }
 
   @override
   void handleCustomContextMenuAction(String actionId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCustomContextMenuAction', [actionId]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCustomContextMenuAction', [actionId]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleCustomContextMenuAction must be overridden in dartic code');
     }
   }

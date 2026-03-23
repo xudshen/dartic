@@ -51,75 +51,75 @@ class _$SelectionOverlay extends SelectionOverlay implements DarticObjectHolder 
 
   @override
   void showMagnifier(MagnifierInfo initialMagnifierInfo) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showMagnifier', [initialMagnifierInfo]);
-    if (identical(r, notOverridden)) { super.showMagnifier(initialMagnifierInfo); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showMagnifier', [initialMagnifierInfo]);
+    if (identical(_$r, notOverridden)) { super.showMagnifier(initialMagnifierInfo); return; }
   }
 
   @override
   void hideMagnifier() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideMagnifier', const []);
-    if (identical(r, notOverridden)) { super.hideMagnifier(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideMagnifier', const []);
+    if (identical(_$r, notOverridden)) { super.hideMagnifier(); return; }
   }
 
   @override
   void showHandles() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showHandles', const []);
-    if (identical(r, notOverridden)) { super.showHandles(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showHandles', const []);
+    if (identical(_$r, notOverridden)) { super.showHandles(); return; }
   }
 
   @override
   void hideHandles() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideHandles', const []);
-    if (identical(r, notOverridden)) { super.hideHandles(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideHandles', const []);
+    if (identical(_$r, notOverridden)) { super.hideHandles(); return; }
   }
 
   @override
   void showToolbar({BuildContext? context, WidgetBuilder? contextMenuBuilder}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', [context, contextMenuBuilder]);
-    if (identical(r, notOverridden)) { super.showToolbar(context: context, contextMenuBuilder: contextMenuBuilder != null ? (a) => contextMenuBuilder(a) as Widget : null); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', [context, contextMenuBuilder]);
+    if (identical(_$r, notOverridden)) { super.showToolbar(context: context, contextMenuBuilder: contextMenuBuilder != null ? (a) => contextMenuBuilder(a) as Widget : null); return; }
   }
 
   @override
   void showSpellCheckSuggestionsToolbar({BuildContext? context, required WidgetBuilder builder}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSpellCheckSuggestionsToolbar', [context, builder]);
-    if (identical(r, notOverridden)) { super.showSpellCheckSuggestionsToolbar(context: context, builder: (a) => builder(a) as Widget); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSpellCheckSuggestionsToolbar', [context, builder]);
+    if (identical(_$r, notOverridden)) { super.showSpellCheckSuggestionsToolbar(context: context, builder: (a) => builder(a) as Widget); return; }
   }
 
   @override
   void markNeedsBuild() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsBuild', const []);
-    if (identical(r, notOverridden)) { super.markNeedsBuild(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'markNeedsBuild', const []);
+    if (identical(_$r, notOverridden)) { super.markNeedsBuild(); return; }
   }
 
   @override
   void hide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
-    if (identical(r, notOverridden)) { super.hide(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(_$r, notOverridden)) { super.hide(); return; }
   }
 
   @override
   void hideToolbar() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', const []);
-    if (identical(r, notOverridden)) { super.hideToolbar(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', const []);
+    if (identical(_$r, notOverridden)) { super.hideToolbar(); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void updateMagnifier(MagnifierInfo magnifierInfo) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateMagnifier', [magnifierInfo]);
-    if (identical(r, notOverridden)) { super.updateMagnifier(magnifierInfo); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateMagnifier', [magnifierInfo]);
+    if (identical(_$r, notOverridden)) { super.updateMagnifier(magnifierInfo); return; }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

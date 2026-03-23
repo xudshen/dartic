@@ -80,412 +80,412 @@ class _$EditableTextState extends EditableTextState implements DarticObjectHolde
 
   @override
   void copySelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySelection', [cause]);
-    if (identical(r, notOverridden)) { super.copySelection(cause); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySelection', [cause]);
+    if (identical(_$r, notOverridden)) { super.copySelection(cause); return; }
   }
 
   @override
   void cutSelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cutSelection', [cause]);
-    if (identical(r, notOverridden)) { super.cutSelection(cause); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cutSelection', [cause]);
+    if (identical(_$r, notOverridden)) { super.cutSelection(cause); return; }
   }
 
   @override
   Future<void> pasteText(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pasteText', [cause]);
-    if (identical(r, notOverridden)) return super.pasteText(cause);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pasteText', [cause]);
+    if (identical(_$r, notOverridden)) return super.pasteText(cause);
+    return _$r as Future<void>;
   }
 
   @override
   void selectAll(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectAll', [cause]);
-    if (identical(r, notOverridden)) { super.selectAll(cause); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'selectAll', [cause]);
+    if (identical(_$r, notOverridden)) { super.selectAll(cause); return; }
   }
 
   @override
   Future<void> lookUpSelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lookUpSelection', [cause]);
-    if (identical(r, notOverridden)) return super.lookUpSelection(cause);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lookUpSelection', [cause]);
+    if (identical(_$r, notOverridden)) return super.lookUpSelection(cause);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> searchWebForSelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'searchWebForSelection', [cause]);
-    if (identical(r, notOverridden)) return super.searchWebForSelection(cause);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'searchWebForSelection', [cause]);
+    if (identical(_$r, notOverridden)) return super.searchWebForSelection(cause);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> shareSelection(SelectionChangedCause cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shareSelection', [cause]);
-    if (identical(r, notOverridden)) return super.shareSelection(cause);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shareSelection', [cause]);
+    if (identical(_$r, notOverridden)) return super.shareSelection(cause);
+    return _$r as Future<void>;
   }
 
   @override
   SuggestionSpan? findSuggestionSpanAtCursorIndex(int cursorIndex) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findSuggestionSpanAtCursorIndex', [cursorIndex]);
-    if (identical(r, notOverridden)) return super.findSuggestionSpanAtCursorIndex(cursorIndex);
-    return r as SuggestionSpan?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'findSuggestionSpanAtCursorIndex', [cursorIndex]);
+    if (identical(_$r, notOverridden)) return super.findSuggestionSpanAtCursorIndex(cursorIndex);
+    return _$r as SuggestionSpan?;
   }
 
   @override
   List<ContextMenuButtonItem>? buttonItemsForToolbarOptions([TargetPlatform? targetPlatform]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buttonItemsForToolbarOptions', [targetPlatform]);
-    if (identical(r, notOverridden)) return super.buttonItemsForToolbarOptions(targetPlatform);
-    return r as List<ContextMenuButtonItem>?;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buttonItemsForToolbarOptions', [targetPlatform]);
+    if (identical(_$r, notOverridden)) return super.buttonItemsForToolbarOptions(targetPlatform);
+    return _$r as List<ContextMenuButtonItem>?;
   }
 
   @override
   ({double endGlyphHeight, double startGlyphHeight}) getGlyphHeights() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGlyphHeights', const []);
-    if (identical(r, notOverridden)) return super.getGlyphHeights();
-    return r as ({double endGlyphHeight, double startGlyphHeight});
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'getGlyphHeights', const []);
+    if (identical(_$r, notOverridden)) return super.getGlyphHeights();
+    return _$r as ({double endGlyphHeight, double startGlyphHeight});
   }
 
   @override
   void initState() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
-    if (identical(r, notOverridden)) { super.initState(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'initState', const []);
+    if (identical(_$r, notOverridden)) { super.initState(); return; }
   }
 
   @override
   void didChangeDependencies() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
-    if (identical(r, notOverridden)) { super.didChangeDependencies(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeDependencies', const []);
+    if (identical(_$r, notOverridden)) { super.didChangeDependencies(); return; }
   }
 
   @override
   void didUpdateWidget(EditableText oldWidget) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
-    if (identical(r, notOverridden)) { super.didUpdateWidget(oldWidget); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didUpdateWidget', [oldWidget]);
+    if (identical(_$r, notOverridden)) { super.didUpdateWidget(oldWidget); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   void updateEditingValue(TextEditingValue value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValue', [value]);
-    if (identical(r, notOverridden)) { super.updateEditingValue(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateEditingValue', [value]);
+    if (identical(_$r, notOverridden)) { super.updateEditingValue(value); return; }
   }
 
   @override
   void performAction(TextInputAction action) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performAction', [action]);
-    if (identical(r, notOverridden)) { super.performAction(action); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performAction', [action]);
+    if (identical(_$r, notOverridden)) { super.performAction(action); return; }
   }
 
   @override
   void performPrivateCommand(String action, Map<String, dynamic> data) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performPrivateCommand', [action, data]);
-    if (identical(r, notOverridden)) { super.performPrivateCommand(action, data); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performPrivateCommand', [action, data]);
+    if (identical(_$r, notOverridden)) { super.performPrivateCommand(action, data); return; }
   }
 
   @override
   void insertContent(KeyboardInsertedContent content) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertContent', [content]);
-    if (identical(r, notOverridden)) { super.insertContent(content); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertContent', [content]);
+    if (identical(_$r, notOverridden)) { super.insertContent(content); return; }
   }
 
   @override
   void updateFloatingCursor(RawFloatingCursorPoint point) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateFloatingCursor', [point]);
-    if (identical(r, notOverridden)) { super.updateFloatingCursor(point); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateFloatingCursor', [point]);
+    if (identical(_$r, notOverridden)) { super.updateFloatingCursor(point); return; }
   }
 
   @override
   void beginBatchEdit() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'beginBatchEdit', const []);
-    if (identical(r, notOverridden)) { super.beginBatchEdit(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'beginBatchEdit', const []);
+    if (identical(_$r, notOverridden)) { super.beginBatchEdit(); return; }
   }
 
   @override
   void endBatchEdit() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'endBatchEdit', const []);
-    if (identical(r, notOverridden)) { super.endBatchEdit(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'endBatchEdit', const []);
+    if (identical(_$r, notOverridden)) { super.endBatchEdit(); return; }
   }
 
   @override
   void didChangeInputControl(TextInputControl? oldControl, TextInputControl? newControl) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeInputControl', [oldControl, newControl]);
-    if (identical(r, notOverridden)) { super.didChangeInputControl(oldControl, newControl); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeInputControl', [oldControl, newControl]);
+    if (identical(_$r, notOverridden)) { super.didChangeInputControl(oldControl, newControl); return; }
   }
 
   @override
   void connectionClosed() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'connectionClosed', const []);
-    if (identical(r, notOverridden)) { super.connectionClosed(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'connectionClosed', const []);
+    if (identical(_$r, notOverridden)) { super.connectionClosed(); return; }
   }
 
   @override
   void requestKeyboard() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestKeyboard', const []);
-    if (identical(r, notOverridden)) { super.requestKeyboard(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'requestKeyboard', const []);
+    if (identical(_$r, notOverridden)) { super.requestKeyboard(); return; }
   }
 
   @override
   void didChangeMetrics() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeMetrics', const []);
-    if (identical(r, notOverridden)) { super.didChangeMetrics(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeMetrics', const []);
+    if (identical(_$r, notOverridden)) { super.didChangeMetrics(); return; }
   }
 
   @override
   void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause? cause) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'userUpdateTextEditingValue', [value, cause]);
-    if (identical(r, notOverridden)) { super.userUpdateTextEditingValue(value, cause); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'userUpdateTextEditingValue', [value, cause]);
+    if (identical(_$r, notOverridden)) { super.userUpdateTextEditingValue(value, cause); return; }
   }
 
   @override
   void bringIntoView(ui.TextPosition position) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bringIntoView', [position]);
-    if (identical(r, notOverridden)) { super.bringIntoView(position); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bringIntoView', [position]);
+    if (identical(_$r, notOverridden)) { super.bringIntoView(position); return; }
   }
 
   @override
   bool showToolbar() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
-    if (identical(r, notOverridden)) return super.showToolbar();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showToolbar', const []);
+    if (identical(_$r, notOverridden)) return super.showToolbar();
+    return _$r as bool;
   }
 
   @override
   void hideToolbar([bool hideHandles = true]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', [hideHandles]);
-    if (identical(r, notOverridden)) { super.hideToolbar(hideHandles); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideToolbar', [hideHandles]);
+    if (identical(_$r, notOverridden)) { super.hideToolbar(hideHandles); return; }
   }
 
   @override
   void toggleToolbar([bool hideHandles = true]) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleToolbar', [hideHandles]);
-    if (identical(r, notOverridden)) { super.toggleToolbar(hideHandles); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toggleToolbar', [hideHandles]);
+    if (identical(_$r, notOverridden)) { super.toggleToolbar(hideHandles); return; }
   }
 
   @override
   bool showSpellCheckSuggestionsToolbar() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSpellCheckSuggestionsToolbar', const []);
-    if (identical(r, notOverridden)) return super.showSpellCheckSuggestionsToolbar();
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showSpellCheckSuggestionsToolbar', const []);
+    if (identical(_$r, notOverridden)) return super.showSpellCheckSuggestionsToolbar();
+    return _$r as bool;
   }
 
   @override
   void showMagnifier(ui.Offset positionToShow) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showMagnifier', [positionToShow]);
-    if (identical(r, notOverridden)) { super.showMagnifier(positionToShow); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showMagnifier', [positionToShow]);
+    if (identical(_$r, notOverridden)) { super.showMagnifier(positionToShow); return; }
   }
 
   @override
   void hideMagnifier() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideMagnifier', const []);
-    if (identical(r, notOverridden)) { super.hideMagnifier(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hideMagnifier', const []);
+    if (identical(_$r, notOverridden)) { super.hideMagnifier(); return; }
   }
 
   @override
   void insertTextPlaceholder(ui.Size size) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertTextPlaceholder', [size]);
-    if (identical(r, notOverridden)) { super.insertTextPlaceholder(size); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'insertTextPlaceholder', [size]);
+    if (identical(_$r, notOverridden)) { super.insertTextPlaceholder(size); return; }
   }
 
   @override
   void removeTextPlaceholder() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTextPlaceholder', const []);
-    if (identical(r, notOverridden)) { super.removeTextPlaceholder(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeTextPlaceholder', const []);
+    if (identical(_$r, notOverridden)) { super.removeTextPlaceholder(); return; }
   }
 
   @override
   void performSelector(String selectorName) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSelector', [selectorName]);
-    if (identical(r, notOverridden)) { super.performSelector(selectorName); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'performSelector', [selectorName]);
+    if (identical(_$r, notOverridden)) { super.performSelector(selectorName); return; }
   }
 
   @override
   void autofill(TextEditingValue value) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'autofill', [value]);
-    if (identical(r, notOverridden)) { super.autofill(value); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'autofill', [value]);
+    if (identical(_$r, notOverridden)) { super.autofill(value); return; }
   }
 
   @override
   void showAutocorrectionPromptRect(int start, int end) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showAutocorrectionPromptRect', [start, end]);
-    if (identical(r, notOverridden)) { super.showAutocorrectionPromptRect(start, end); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showAutocorrectionPromptRect', [start, end]);
+    if (identical(_$r, notOverridden)) { super.showAutocorrectionPromptRect(start, end); return; }
   }
 
   @override
   Widget build(BuildContext context) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
-    if (identical(r, notOverridden)) return super.build(context);
-    return r as Widget;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'build', [context]);
+    if (identical(_$r, notOverridden)) return super.build(context);
+    return _$r as Widget;
   }
 
   @override
   TextSpan buildTextSpan() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildTextSpan', const []);
-    if (identical(r, notOverridden)) return super.buildTextSpan();
-    return r as TextSpan;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'buildTextSpan', const []);
+    if (identical(_$r, notOverridden)) return super.buildTextSpan();
+    return _$r as TextSpan;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   void reassemble() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
-    if (identical(r, notOverridden)) { super.reassemble(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reassemble', const []);
+    if (identical(_$r, notOverridden)) { super.reassemble(); return; }
   }
 
   @override
   void setState(ui.VoidCallback fn) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
-    if (identical(r, notOverridden)) { super.setState(() => fn()); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setState', [fn]);
+    if (identical(_$r, notOverridden)) { super.setState(() => fn()); return; }
   }
 
   @override
   void deactivate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
-    if (identical(r, notOverridden)) { super.deactivate(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deactivate', const []);
+    if (identical(_$r, notOverridden)) { super.deactivate(); return; }
   }
 
   @override
   void activate() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
-    if (identical(r, notOverridden)) { super.activate(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'activate', const []);
+    if (identical(_$r, notOverridden)) { super.activate(); return; }
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override
   void updateKeepAlive() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateKeepAlive', const []);
-    if (identical(r, notOverridden)) { super.updateKeepAlive(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'updateKeepAlive', const []);
+    if (identical(_$r, notOverridden)) { super.updateKeepAlive(); return; }
   }
 
   @override
   Future<bool> didPopRoute() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopRoute', const []);
-    if (identical(r, notOverridden)) return super.didPopRoute();
-    return r as Future<bool>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPopRoute', const []);
+    if (identical(_$r, notOverridden)) return super.didPopRoute();
+    return _$r as Future<bool>;
   }
 
   @override
   bool handleStartBackGesture(PredictiveBackEvent backEvent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [backEvent]);
-    if (identical(r, notOverridden)) return super.handleStartBackGesture(backEvent);
-    return r as bool;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleStartBackGesture', [backEvent]);
+    if (identical(_$r, notOverridden)) return super.handleStartBackGesture(backEvent);
+    return _$r as bool;
   }
 
   @override
   void handleUpdateBackGestureProgress(PredictiveBackEvent backEvent) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [backEvent]);
-    if (identical(r, notOverridden)) { super.handleUpdateBackGestureProgress(backEvent); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleUpdateBackGestureProgress', [backEvent]);
+    if (identical(_$r, notOverridden)) { super.handleUpdateBackGestureProgress(backEvent); return; }
   }
 
   @override
   void handleCommitBackGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
-    if (identical(r, notOverridden)) { super.handleCommitBackGesture(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCommitBackGesture', const []);
+    if (identical(_$r, notOverridden)) { super.handleCommitBackGesture(); return; }
   }
 
   @override
   void handleCancelBackGesture() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
-    if (identical(r, notOverridden)) { super.handleCancelBackGesture(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCancelBackGesture', const []);
+    if (identical(_$r, notOverridden)) { super.handleCancelBackGesture(); return; }
   }
 
   @override
   Future<bool> didPushRoute(String route) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushRoute', [route]);
-    if (identical(r, notOverridden)) return super.didPushRoute(route);
-    return r as Future<bool>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushRoute', [route]);
+    if (identical(_$r, notOverridden)) return super.didPushRoute(route);
+    return _$r as Future<bool>;
   }
 
   @override
   Future<bool> didPushRouteInformation(RouteInformation routeInformation) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushRouteInformation', [routeInformation]);
-    if (identical(r, notOverridden)) return super.didPushRouteInformation(routeInformation);
-    return r as Future<bool>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didPushRouteInformation', [routeInformation]);
+    if (identical(_$r, notOverridden)) return super.didPushRouteInformation(routeInformation);
+    return _$r as Future<bool>;
   }
 
   @override
   void didChangeTextScaleFactor() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeTextScaleFactor', const []);
-    if (identical(r, notOverridden)) { super.didChangeTextScaleFactor(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeTextScaleFactor', const []);
+    if (identical(_$r, notOverridden)) { super.didChangeTextScaleFactor(); return; }
   }
 
   @override
   void didChangePlatformBrightness() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangePlatformBrightness', const []);
-    if (identical(r, notOverridden)) { super.didChangePlatformBrightness(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangePlatformBrightness', const []);
+    if (identical(_$r, notOverridden)) { super.didChangePlatformBrightness(); return; }
   }
 
   @override
   void didChangeLocales(List<ui.Locale>? locales) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeLocales', [locales]);
-    if (identical(r, notOverridden)) { super.didChangeLocales(locales); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeLocales', [locales]);
+    if (identical(_$r, notOverridden)) { super.didChangeLocales(locales); return; }
   }
 
   @override
   void didChangeAppLifecycleState(ui.AppLifecycleState state) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeAppLifecycleState', [state]);
-    if (identical(r, notOverridden)) { super.didChangeAppLifecycleState(state); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeAppLifecycleState', [state]);
+    if (identical(_$r, notOverridden)) { super.didChangeAppLifecycleState(state); return; }
   }
 
   @override
   void didChangeViewFocus(ui.ViewFocusEvent event) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeViewFocus', [event]);
-    if (identical(r, notOverridden)) { super.didChangeViewFocus(event); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeViewFocus', [event]);
+    if (identical(_$r, notOverridden)) { super.didChangeViewFocus(event); return; }
   }
 
   @override
   Future<ui.AppExitResponse> didRequestAppExit() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRequestAppExit', const []);
-    if (identical(r, notOverridden)) return super.didRequestAppExit();
-    return r as Future<ui.AppExitResponse>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didRequestAppExit', const []);
+    if (identical(_$r, notOverridden)) return super.didRequestAppExit();
+    return _$r as Future<ui.AppExitResponse>;
   }
 
   @override
   void didHaveMemoryPressure() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didHaveMemoryPressure', const []);
-    if (identical(r, notOverridden)) { super.didHaveMemoryPressure(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didHaveMemoryPressure', const []);
+    if (identical(_$r, notOverridden)) { super.didHaveMemoryPressure(); return; }
   }
 
   @override
   void didChangeAccessibilityFeatures() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeAccessibilityFeatures', const []);
-    if (identical(r, notOverridden)) { super.didChangeAccessibilityFeatures(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'didChangeAccessibilityFeatures', const []);
+    if (identical(_$r, notOverridden)) { super.didChangeAccessibilityFeatures(); return; }
   }
 
   @override
   Ticker createTicker(TickerCallback onTick) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
-    if (identical(r, notOverridden)) return super.createTicker((a) => onTick(a));
-    return r as Ticker;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createTicker', [onTick]);
+    if (identical(_$r, notOverridden)) return super.createTicker((a) => onTick(a));
+    return _$r as Ticker;
   }
 
   @override

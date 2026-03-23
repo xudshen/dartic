@@ -26,36 +26,36 @@ class _$ColorScheme extends ColorScheme implements DarticObjectHolder {
 
   @override
   ColorScheme copyWith({ui.Brightness? brightness, ui.Color? primary, ui.Color? onPrimary, ui.Color? primaryContainer, ui.Color? onPrimaryContainer, ui.Color? primaryFixed, ui.Color? primaryFixedDim, ui.Color? onPrimaryFixed, ui.Color? onPrimaryFixedVariant, ui.Color? secondary, ui.Color? onSecondary, ui.Color? secondaryContainer, ui.Color? onSecondaryContainer, ui.Color? secondaryFixed, ui.Color? secondaryFixedDim, ui.Color? onSecondaryFixed, ui.Color? onSecondaryFixedVariant, ui.Color? tertiary, ui.Color? onTertiary, ui.Color? tertiaryContainer, ui.Color? onTertiaryContainer, ui.Color? tertiaryFixed, ui.Color? tertiaryFixedDim, ui.Color? onTertiaryFixed, ui.Color? onTertiaryFixedVariant, ui.Color? error, ui.Color? onError, ui.Color? errorContainer, ui.Color? onErrorContainer, ui.Color? surface, ui.Color? onSurface, ui.Color? surfaceDim, ui.Color? surfaceBright, ui.Color? surfaceContainerLowest, ui.Color? surfaceContainerLow, ui.Color? surfaceContainer, ui.Color? surfaceContainerHigh, ui.Color? surfaceContainerHighest, ui.Color? onSurfaceVariant, ui.Color? outline, ui.Color? outlineVariant, ui.Color? shadow, ui.Color? scrim, ui.Color? inverseSurface, ui.Color? onInverseSurface, ui.Color? inversePrimary, ui.Color? surfaceTint, ui.Color? background, ui.Color? onBackground, ui.Color? surfaceVariant}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [brightness, primary, onPrimary, primaryContainer, onPrimaryContainer, primaryFixed, primaryFixedDim, onPrimaryFixed, onPrimaryFixedVariant, secondary, onSecondary, secondaryContainer, onSecondaryContainer, secondaryFixed, secondaryFixedDim, onSecondaryFixed, onSecondaryFixedVariant, tertiary, onTertiary, tertiaryContainer, onTertiaryContainer, tertiaryFixed, tertiaryFixedDim, onTertiaryFixed, onTertiaryFixedVariant, error, onError, errorContainer, onErrorContainer, surface, onSurface, surfaceDim, surfaceBright, surfaceContainerLowest, surfaceContainerLow, surfaceContainer, surfaceContainerHigh, surfaceContainerHighest, onSurfaceVariant, outline, outlineVariant, shadow, scrim, inverseSurface, onInverseSurface, inversePrimary, surfaceTint, background, onBackground, surfaceVariant]);
-    if (identical(r, notOverridden)) return super.copyWith(brightness: brightness, primary: primary, onPrimary: onPrimary, primaryContainer: primaryContainer, onPrimaryContainer: onPrimaryContainer, primaryFixed: primaryFixed, primaryFixedDim: primaryFixedDim, onPrimaryFixed: onPrimaryFixed, onPrimaryFixedVariant: onPrimaryFixedVariant, secondary: secondary, onSecondary: onSecondary, secondaryContainer: secondaryContainer, onSecondaryContainer: onSecondaryContainer, secondaryFixed: secondaryFixed, secondaryFixedDim: secondaryFixedDim, onSecondaryFixed: onSecondaryFixed, onSecondaryFixedVariant: onSecondaryFixedVariant, tertiary: tertiary, onTertiary: onTertiary, tertiaryContainer: tertiaryContainer, onTertiaryContainer: onTertiaryContainer, tertiaryFixed: tertiaryFixed, tertiaryFixedDim: tertiaryFixedDim, onTertiaryFixed: onTertiaryFixed, onTertiaryFixedVariant: onTertiaryFixedVariant, error: error, onError: onError, errorContainer: errorContainer, onErrorContainer: onErrorContainer, surface: surface, onSurface: onSurface, surfaceDim: surfaceDim, surfaceBright: surfaceBright, surfaceContainerLowest: surfaceContainerLowest, surfaceContainerLow: surfaceContainerLow, surfaceContainer: surfaceContainer, surfaceContainerHigh: surfaceContainerHigh, surfaceContainerHighest: surfaceContainerHighest, onSurfaceVariant: onSurfaceVariant, outline: outline, outlineVariant: outlineVariant, shadow: shadow, scrim: scrim, inverseSurface: inverseSurface, onInverseSurface: onInverseSurface, inversePrimary: inversePrimary, surfaceTint: surfaceTint, background: background, onBackground: onBackground, surfaceVariant: surfaceVariant);
-    return r as ColorScheme;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copyWith', [brightness, primary, onPrimary, primaryContainer, onPrimaryContainer, primaryFixed, primaryFixedDim, onPrimaryFixed, onPrimaryFixedVariant, secondary, onSecondary, secondaryContainer, onSecondaryContainer, secondaryFixed, secondaryFixedDim, onSecondaryFixed, onSecondaryFixedVariant, tertiary, onTertiary, tertiaryContainer, onTertiaryContainer, tertiaryFixed, tertiaryFixedDim, onTertiaryFixed, onTertiaryFixedVariant, error, onError, errorContainer, onErrorContainer, surface, onSurface, surfaceDim, surfaceBright, surfaceContainerLowest, surfaceContainerLow, surfaceContainer, surfaceContainerHigh, surfaceContainerHighest, onSurfaceVariant, outline, outlineVariant, shadow, scrim, inverseSurface, onInverseSurface, inversePrimary, surfaceTint, background, onBackground, surfaceVariant]);
+    if (identical(_$r, notOverridden)) return super.copyWith(brightness: brightness, primary: primary, onPrimary: onPrimary, primaryContainer: primaryContainer, onPrimaryContainer: onPrimaryContainer, primaryFixed: primaryFixed, primaryFixedDim: primaryFixedDim, onPrimaryFixed: onPrimaryFixed, onPrimaryFixedVariant: onPrimaryFixedVariant, secondary: secondary, onSecondary: onSecondary, secondaryContainer: secondaryContainer, onSecondaryContainer: onSecondaryContainer, secondaryFixed: secondaryFixed, secondaryFixedDim: secondaryFixedDim, onSecondaryFixed: onSecondaryFixed, onSecondaryFixedVariant: onSecondaryFixedVariant, tertiary: tertiary, onTertiary: onTertiary, tertiaryContainer: tertiaryContainer, onTertiaryContainer: onTertiaryContainer, tertiaryFixed: tertiaryFixed, tertiaryFixedDim: tertiaryFixedDim, onTertiaryFixed: onTertiaryFixed, onTertiaryFixedVariant: onTertiaryFixedVariant, error: error, onError: onError, errorContainer: errorContainer, onErrorContainer: onErrorContainer, surface: surface, onSurface: onSurface, surfaceDim: surfaceDim, surfaceBright: surfaceBright, surfaceContainerLowest: surfaceContainerLowest, surfaceContainerLow: surfaceContainerLow, surfaceContainer: surfaceContainer, surfaceContainerHigh: surfaceContainerHigh, surfaceContainerHighest: surfaceContainerHighest, onSurfaceVariant: onSurfaceVariant, outline: outline, outlineVariant: outlineVariant, shadow: shadow, scrim: scrim, inverseSurface: inverseSurface, onInverseSurface: onInverseSurface, inversePrimary: inversePrimary, surfaceTint: surfaceTint, background: background, onBackground: onBackground, surfaceVariant: surfaceVariant);
+    return _$r as ColorScheme;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

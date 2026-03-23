@@ -24,17 +24,17 @@ class _$StackFilter extends StackFilter implements DarticObjectHolder {
 
   @override
   void filter(List<StackFrame> stackFrames, List<String?> reasons) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filter', [stackFrames, reasons]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'filter', [stackFrames, reasons]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method filter must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

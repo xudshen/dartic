@@ -33,68 +33,68 @@ class _$SystemContextMenuController extends SystemContextMenuController implemen
 
   @override
   void handleSystemHide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemHide', const []);
-    if (identical(r, notOverridden)) { super.handleSystemHide(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleSystemHide', const []);
+    if (identical(_$r, notOverridden)) { super.handleSystemHide(); return; }
   }
 
   @override
   void handleCustomContextMenuAction(String callbackId) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCustomContextMenuAction', [callbackId]);
-    if (identical(r, notOverridden)) { super.handleCustomContextMenuAction(callbackId); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleCustomContextMenuAction', [callbackId]);
+    if (identical(_$r, notOverridden)) { super.handleCustomContextMenuAction(callbackId); return; }
   }
 
   @override
   Future<void> show(Rect targetRect) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [targetRect]);
-    if (identical(r, notOverridden)) return super.show(targetRect);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'show', [targetRect]);
+    if (identical(_$r, notOverridden)) return super.show(targetRect);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> showWithItems(Rect targetRect, List<IOSSystemContextMenuItemData> items) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showWithItems', [targetRect, items]);
-    if (identical(r, notOverridden)) return super.showWithItems(targetRect, items);
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'showWithItems', [targetRect, items]);
+    if (identical(_$r, notOverridden)) return super.showWithItems(targetRect, items);
+    return _$r as Future<void>;
   }
 
   @override
   Future<void> hide() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
-    if (identical(r, notOverridden)) return super.hide();
-    return r as Future<void>;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'hide', const []);
+    if (identical(_$r, notOverridden)) return super.hide();
+    return _$r as Future<void>;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
-    if (identical(r, notOverridden)) { super.debugFillProperties(properties); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'debugFillProperties', [properties]);
+    if (identical(_$r, notOverridden)) { super.debugFillProperties(properties); return; }
   }
 
   @override
   void dispose() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
-    if (identical(r, notOverridden)) { super.dispose(); return; }
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'dispose', const []);
+    if (identical(_$r, notOverridden)) { super.dispose(); return; }
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
-    if (identical(r, notOverridden)) return super.toString(minLevel: minLevel);
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', [minLevel]);
+    if (identical(_$r, notOverridden)) return super.toString(minLevel: minLevel);
+    return _$r as String;
   }
 
   @override
   String toStringShort() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
-    if (identical(r, notOverridden)) return super.toStringShort();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toStringShort', const []);
+    if (identical(_$r, notOverridden)) return super.toStringShort();
+    return _$r as String;
   }
 
   @override
   DiagnosticsNode toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
-    if (identical(r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
-    return r as DiagnosticsNode;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toDiagnosticsNode', [name, style]);
+    if (identical(_$r, notOverridden)) return super.toDiagnosticsNode(name: name, style: style);
+    return _$r as DiagnosticsNode;
   }
 
   @override

@@ -30,25 +30,25 @@ class _$RadioGroupRegistry extends RadioGroupRegistry<dynamic> implements Dartic
 
   @override
   void registerClient(RadioClient radio) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerClient', [radio]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'registerClient', [radio]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method registerClient must be overridden in dartic code');
     }
   }
 
   @override
   void unregisterClient(RadioClient radio) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unregisterClient', [radio]);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unregisterClient', [radio]);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method unregisterClient must be overridden in dartic code');
     }
   }
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
-    if (identical(r, notOverridden)) return super.toString();
-    return r as String;
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(_$r, notOverridden)) return super.toString();
+    return _$r as String;
   }
 
   @override

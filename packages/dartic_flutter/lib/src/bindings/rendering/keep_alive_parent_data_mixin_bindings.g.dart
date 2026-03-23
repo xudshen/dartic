@@ -24,8 +24,8 @@ class _$KeepAliveParentDataMixin implements KeepAliveParentDataMixin, DarticObje
 
   @override
   void detach() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
-    if (identical(r, notOverridden)) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'detach', const []);
+    if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method detach must be overridden in dartic code');
     }
   }
