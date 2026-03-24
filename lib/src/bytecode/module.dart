@@ -232,6 +232,57 @@ class DynCallDescriptor {
       'named=$namedArgNames)';
 }
 
+/// Descriptor for a closure call whose FunctionType has named parameters.
+///
+/// Stored in the constant pool and referenced by Op.call instructions that
+/// set the flag byte (bits[8:16]) to 1. Enables the native-Function fallback
+/// path to properly separate positional and named arguments for
+/// [Function.apply].
+class CallNamedInfo {
+  const CallNamedInfo({
+    required this.positionalCount,
+    required this.allNamedNames,
+    this.providedBits = 0,
+  });
+
+  /// Number of positional arguments at the call site.
+  final int positionalCount;
+
+  /// All named parameter names in **declaration order** (matching the
+  /// frame layout after the positional args).
+  final List<String> allNamedNames;
+
+  /// Bitmask: bit *i* is set when [allNamedNames]\[i\] was explicitly
+  /// provided at the call site. Cleared bits indicate compiler-filled
+  /// defaults that must NOT be forwarded to native [Function.apply].
+  ///
+  /// Serialized as int64, supporting up to 63 named parameters (Dart SMI).
+  final int providedBits;
+
+  /// Total argument count (positional + all named slots including defaults).
+  int get totalArgCount => positionalCount + allNamedNames.length;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CallNamedInfo &&
+          positionalCount == other.positionalCount &&
+          providedBits == other.providedBits &&
+          DynCallDescriptor._listEquals(allNamedNames, other.allNamedNames);
+
+  @override
+  int get hashCode => Object.hash(
+        positionalCount,
+        providedBits,
+        Object.hashAll(allNamedNames),
+      );
+
+  @override
+  String toString() =>
+      'CallNamedInfo(pos=$positionalCount, '
+      'named=$allNamedNames, provided=0x${providedBits.toRadixString(16)})';
+}
+
 class DarticFuncProto {
   DarticFuncProto({
     required this.funcId,

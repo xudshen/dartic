@@ -38,10 +38,25 @@ int encodeAx(int op, int ax) =>
 int encodesAx(int op, int sax) =>
     (op & 0xFF) | (((sax + 0x7FFFFFFFFFFF) & 0xFFFFFFFFFFFF) << 16);
 
+/// Encodes an ABC-format instruction with flag byte in bits [8:16].
+///
+/// The flag byte occupies the reserved padding field that is normally zero.
+/// Used by [Op.call] to indicate that C encodes a [CallNamedInfo] constant
+/// pool index rather than a plain arg count.
+int encodeABCF(int op, int flag, int a, int b, int c) =>
+    (op & 0xFF) |
+    ((flag & 0xFF) << 8) |
+    ((a & 0xFFFF) << 16) |
+    ((b & 0xFFFF) << 32) |
+    ((c & 0xFFFF) << 48);
+
 // ── Decoding ──
 
 /// Extracts the 8-bit opcode from an instruction word.
 int decodeOp(int instr) => instr & 0xFF;
+
+/// Extracts the 8-bit flag from the reserved padding field (bits [8:16]).
+int decodeFlag(int instr) => (instr >>> 8) & 0xFF;
 
 /// Extracts the 16-bit A operand.
 int decodeA(int instr) => (instr >>> 16) & 0xFFFF;

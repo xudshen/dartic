@@ -114,6 +114,14 @@ class DarticSerializer {
         for (final name in ref.namedArgNames) {
           w.writeString(name);
         }
+      } else if (ref is CallNamedInfo) {
+        w.addByte(5);
+        w.writeUint32(ref.positionalCount);
+        w.writeUint32(ref.allNamedNames.length);
+        for (final name in ref.allNamedNames) {
+          w.writeString(name);
+        }
+        w.writeInt64(ref.providedBits);
       } else {
         throw StateError('Unsupported ref type: ${ref.runtimeType}');
       }

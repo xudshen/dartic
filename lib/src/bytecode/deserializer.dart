@@ -169,6 +169,17 @@ class DarticDeserializer {
             positionalArgCount: posArgCount,
             namedArgNames: namedNames,
           ));
+        case 5:
+          // CallNamedInfo
+          final posCount = r.readUint32();
+          final namedCount = r.readUint32();
+          final namedNames = List.generate(namedCount, (_) => r.readString());
+          final providedBits = r.readInt64();
+          refs.add(CallNamedInfo(
+            positionalCount: posCount,
+            allNamedNames: namedNames,
+            providedBits: providedBits,
+          ));
         default:
           throw FormatException('Unknown ref tag: $tag');
       }
