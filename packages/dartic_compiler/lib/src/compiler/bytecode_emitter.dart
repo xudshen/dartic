@@ -50,6 +50,18 @@ class BytecodeEmitter {
     _buffer.add(encodeABC(op, a, b, c));
   }
 
+  /// Emits an ABC-format instruction with a flag byte in bits [8:16].
+  ///
+  /// Used by [Op.call] to indicate that [c] is a [CallNamedInfo] constant
+  /// pool index (flag=1) rather than a plain arg count (flag=0).
+  void emitABCF(int op, int flag, int a, int b, int c) {
+    assert(flag >= 0 && flag <= 0xFF, 'Flag byte out of range: $flag');
+    assert(a >= 0 && a <= 0xFFFF, 'ABCF operand A out of range: $a');
+    assert(b >= 0 && b <= 0xFFFF, 'ABCF operand B out of range: $b');
+    assert(c >= 0 && c <= 0xFFFF, 'ABCF operand C out of range: $c');
+    _buffer.add(encodeABCF(op, flag, a, b, c));
+  }
+
   /// Emits an ABx-format instruction.
   void emitABx(int op, int a, int bx) {
     _buffer.add(encodeABx(op, a, bx));
