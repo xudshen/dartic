@@ -17,6 +17,7 @@ export 'src/types/type_template.dart';
 
 // Runtime internals
 export 'src/runtime/class_info.dart';
+export 'src/runtime/dartic_record.dart';
 export 'src/runtime/future_box.dart';
 export 'src/runtime/object.dart';
 

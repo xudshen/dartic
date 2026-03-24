@@ -139,17 +139,18 @@ TypeTemplate _convert(
   // into a single dispatch.
   final nonNullable = _toNonNullable(type);
   if (nonNullable != null) {
-    return NullableTemplate(
-      inner: _convert(
-        nonNullable,
-        classIdLookup,
-        classParams,
-        funcParams,
-        structuralParams,
-        coreTypes,
-        currentFnTypeParams,
-      ),
+    final inner = _convert(
+      nonNullable,
+      classIdLookup,
+      classParams,
+      funcParams,
+      structuralParams,
+      coreTypes,
+      currentFnTypeParams,
     );
+    // NORM: T?? → T? (double nullable flattens to single nullable).
+    if (inner is NullableTemplate) return inner;
+    return NullableTemplate(inner: inner);
   }
 
   return switch (type) {

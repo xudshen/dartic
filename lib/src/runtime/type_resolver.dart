@@ -59,6 +59,11 @@ DarticType _resolveTypeParam(
 }
 
 /// Resolves a nullable type: resolve inner, then intern with nullable.
+///
+/// Applies NORM rules after resolution:
+/// - `dynamic?` → `dynamic` (dynamic is a top type)
+/// - `void?` → `void` (void is a top type)
+/// - `T??` → `T?` (already-nullable stays as-is)
 DarticType _resolveNullable(
   NullableTemplate template,
   List<DarticType>? ita,
@@ -67,24 +72,37 @@ DarticType _resolveNullable(
 ) {
   final inner = resolveType(template.inner, ita, fta, registry);
   return switch (inner) {
-    DarticInterfaceType() => registry.intern(
-        inner.classId,
-        inner.typeArgs,
-        nullability: Nullability.nullable,
-      ),
-    DarticFunctionType() => registry.internFunction(
-        typeParamBounds: inner.typeParamBounds,
-        requiredParamCount: inner.requiredParamCount,
-        positionalParams: inner.positionalParams,
-        namedParams: inner.namedParams,
-        returnType: inner.returnType,
-        nullability: Nullability.nullable,
-      ),
-    DarticRecordType() => registry.internRecord(
-        positionalTypes: inner.positionalTypes,
-        namedTypes: inner.namedTypes,
-        nullability: Nullability.nullable,
-      ),
+    DarticInterfaceType() =>
+      // NORM: dynamic? = dynamic, void? = void, T?? = T?
+      (inner.classId == SpecialClassId.dynamic_ ||
+              inner.classId == SpecialClassId.void_ ||
+              inner.nullability == Nullability.nullable)
+          ? inner
+          : registry.intern(
+              inner.classId,
+              inner.typeArgs,
+              nullability: Nullability.nullable,
+            ),
+    DarticFunctionType() =>
+      // NORM: (T Function())? already nullable → return as-is
+      inner.nullability == Nullability.nullable
+          ? inner
+          : registry.internFunction(
+              typeParamBounds: inner.typeParamBounds,
+              requiredParamCount: inner.requiredParamCount,
+              positionalParams: inner.positionalParams,
+              namedParams: inner.namedParams,
+              returnType: inner.returnType,
+              nullability: Nullability.nullable,
+            ),
+    DarticRecordType() =>
+      inner.nullability == Nullability.nullable
+          ? inner
+          : registry.internRecord(
+              positionalTypes: inner.positionalTypes,
+              namedTypes: inner.namedTypes,
+              nullability: Nullability.nullable,
+            ),
     DarticTypeParameterType() =>
       DarticTypeParameterType(inner.index, Nullability.nullable),
   };

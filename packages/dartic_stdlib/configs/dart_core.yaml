@@ -262,6 +262,14 @@ libraries:
           "$super$==#1": "(args) => identical(args[0], args[1])"
           "$super$toString#0": "(args) => args[0].toString()"
           "$super$noSuchMethod#1": "(args) => NoSuchMethodError.withInvocation(args[0], args[1] as Invocation)"
+          "$super$hashCode#0": "(args) => identityHashCode(args[0])"
+          "$super$runtimeType#0": "(args) => args[0].runtimeType"
+
+      # ── Expando: reject DarticRecord keys (records have no identity) ──
+      Expando:
+        extra_methods:
+          "[]=#2": "(args) { if (args[1] is DarticRecord) throw ArgumentError.value(args[1], 'object', 'Records do not have a well-defined identity'); (args[0] as Expando)[args[1] as Object] = args[2]; return args[2]; }"
+          "[]#1": "(args) { if (args[1] is DarticRecord) throw ArgumentError.value(args[1], 'object', 'Records do not have a well-defined identity'); return (args[0] as Expando)[(args[1] as Object)]; }"
 
       # ── _GrowableList: VM-internal literal constructors ──
       _GrowableList:

@@ -694,30 +694,68 @@ class DarticCompiler {
 
     final ct = _coreTypes;
 
-    // ── Register all core types (order doesn't matter). ──
+    // ── Layer 1: Value-stack primitives ──
+    // These define the dual-stack (value/ref) type identity. TypeRegistry uses
+    // their classIds for extractType(), box/unbox dispatch, and toString().
     final objectCid = register(ct.objectClass, 'Object');
     final numCid = register(ct.numClass, 'num');
     final intCid = register(ct.intClass, 'int');
     final doubleCid = register(ct.doubleClass, 'double');
     final stringCid = register(ct.stringClass, 'String');
     final boolCid = register(ct.boolClass, 'bool');
+
+    // ── Layer 2: Types with special SubtypeChecker / TypeRegistry rules ──
+    // Each has hardcoded branches in the runtime that require a known classId.
+    // Future: FutureOr normalization in TypeRegistry.intern().
     final futureCid = register(ct.futureClass, 'Future');
+    // FutureOr: Dart spec §19.9 requires splitting `S <: FutureOr<T>` into
+    // two paths (`S <: T` or `S <: Future<T>`), hardcoded in SubtypeChecker.
     final futureOrCid = register(ct.deprecatedFutureOrClass, 'FutureOr');
+    // Function: `closure is Function` must be true for all closures; checked
+    // by classId in SubtypeChecker, not via supertypeIds.
     final functionCid = register(ct.functionClass, 'Function');
-    tryRegister(ct.index.tryGetClass('dart:core', 'Exception'), 'Exception');
-    tryRegister(ct.index.tryGetClass('dart:core', 'Error'), 'Error');
+    // TypeError: host VM CAST throws native TypeError; extractType() maps it
+    // to this classId so `e is TypeError` works in bytecode catch handlers.
     final typeErrorCid = tryRegister(
         ct.index.tryGetClass('dart:core', 'TypeError'), 'TypeError') ?? -1;
+    // Type: reified DarticType objects need `x is Type` → true.
+    final typeCid = tryRegister(
+        ct.index.tryGetClass('dart:core', 'Type'), 'Type') ?? -1;
+    // Record: `r is Record` must be true for all DarticRecord instances;
+    // checked by classId in SubtypeChecker, not via supertypeIds.
+    final recordCid = tryRegister(ct.recordClass, 'Record') ?? -1;
+
+    // ── Layer 3: TAG_TYPE anchor types ──
+    // CFE lowers collection/async literals to internal factory calls
+    // (_GrowableList, _LinkedHashSet, etc.). _resolvePublicGenericType BFS
+    // walks up the class hierarchy until it finds a registered type to use
+    // for TAG_TYPE. Without these, `[1,2,3]` would be tagged as `Object<int>`
+    // instead of `List<int>`, breaking generic type checks.
     register(ct.listClass, 'List');
     register(ct.iterableClass, 'Iterable');
     register(ct.mapClass, 'Map');
     register(ct.setClass, 'Set');
-    tryRegister(ct.index.tryGetClass('dart:core', 'Comparable'), 'Comparable');
     register(ct.streamClass, 'Stream');
+
+    // ── Layer 4: Value-stack supertype anchors ──
+    // num implements Comparable<num>, String implements Comparable<String> and
+    // Pattern. These must be registered so _buildCoreTypeHierarchy includes
+    // them in the value-stack types' supertypeIds. There is no runtime
+    // patching for core types (only for user classes with hostSuperClassName/
+    // hostInterfaceNames), so without these `42 is Comparable` would fail.
+    tryRegister(ct.index.tryGetClass('dart:core', 'Comparable'), 'Comparable');
     tryRegister(ct.index.tryGetClass('dart:core', 'Pattern'), 'Pattern');
-    final typeCid = tryRegister(
-        ct.index.tryGetClass('dart:core', 'Type'), 'Type') ?? -1;
-    final recordCid = tryRegister(ct.recordClass, 'Record') ?? -1;
+
+    // ── Layer 5: Common host hierarchy anchors ──
+    // Provide compile-time classIds for _collectHostSupertypeIds so that user
+    // classes extending Error/Exception subclasses get stable supertypeIds
+    // without relying on runtime HostTypeResolver resolution. Could
+    // theoretically be removed — runtime patching via hostSuperClassName /
+    // hostInterfaceNames + HostTypeResolver.resolveClassIds would compensate
+    // — but keeping them avoids fragile ordering dependencies between plugin
+    // registration and module install.
+    tryRegister(ct.index.tryGetClass('dart:core', 'Exception'), 'Exception');
+    tryRegister(ct.index.tryGetClass('dart:core', 'Error'), 'Error');
 
     // ── Derive superClassId + supertypeIds from Kernel IR. ──
     // Walk each registered class's supertype/implementedTypes to build the

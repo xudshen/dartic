@@ -3435,6 +3435,57 @@ extension on DarticCompiler {
       }
     }
 
+    // ConstructorTearOff: factory/constructor with type instantiation.
+    // e.g., `A<int>.new` where A has a constructor, or `A<int>.factory`.
+    if (expr.expression is ir.ConstructorTearOff) {
+      final tearOff = expr.expression as ir.ConstructorTearOff;
+      final target = tearOff.target;
+      if (target is ir.Constructor &&
+          target.enclosingClass.typeParameters.isNotEmpty) {
+        return _generateGenericConstructorTearOffThunk(
+            target, expr.typeArguments);
+      }
+      if (target is ir.Procedure && target.isFactory) {
+        final funcId = _procToFuncId[target.reference];
+        final fn = target.function;
+        if (funcId != null && fn.typeParameters.isNotEmpty) {
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, expr.typeArguments);
+          return _generateInstantiationThunk(
+              funcId, fn, subst, expr.typeArguments);
+        }
+        if (funcId == null && _isHostLibrary(target.enclosingLibrary)) {
+          final thunkFuncId = _buildHostStaticTearOffThunk(target);
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, expr.typeArguments);
+          return _generateInstantiationThunk(
+              thunkFuncId, fn, subst, expr.typeArguments);
+        }
+      }
+    }
+
+    // RedirectingFactoryTearOff: resolve redirect chain then instantiate.
+    // e.g., `A<int>.f` where `factory A.f() = C;`.
+    if (expr.expression is ir.RedirectingFactoryTearOff) {
+      final tearOff = expr.expression as ir.RedirectingFactoryTearOff;
+      final finalTarget = _resolveRedirectingFactory(tearOff.target);
+      if (finalTarget is ir.Constructor &&
+          finalTarget.enclosingClass.typeParameters.isNotEmpty) {
+        return _generateGenericConstructorTearOffThunk(
+            finalTarget, expr.typeArguments);
+      }
+      if (finalTarget is ir.Procedure && finalTarget.isFactory) {
+        final funcId = _procToFuncId[finalTarget.reference];
+        final fn = finalTarget.function;
+        if (funcId != null && fn.typeParameters.isNotEmpty) {
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, expr.typeArguments);
+          return _generateInstantiationThunk(
+              funcId, fn, subst, expr.typeArguments);
+        }
+      }
+    }
+
     // Fallback: compile the inner expression (which produces a generic
     // closure), then bind FTA so the runtime can resolve its function type.
     // This handles e.g. extension tearoff getters returning generic closures:
@@ -3628,12 +3679,20 @@ extension on DarticCompiler {
     // Register parameters with INSTANTIATED types. The caller sends args
     // based on the instantiated type, so this ensures the thunk receives
     // them on the correct stack.
+    //
+    // For actualKind: use the inner function's paramKinds if available
+    // (e.g., host-static-tearoff thunks put ALL params on ref stack),
+    // falling back to _effectiveParamKind from the original declaration.
+    final innerParamKinds = _functions[innerFuncId].paramKinds;
     final paramMappings = <({int reg, StackKind instKind, StackKind actualKind,
         ir.DartType instType})>[];
-    for (final param in fn.positionalParameters) {
+    for (var i = 0; i < fn.positionalParameters.length; i++) {
+      final param = fn.positionalParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _effectiveParamKind(param);
+      final actualKind = (innerParamKinds != null && i < innerParamKinds.length)
+          ? StackKind.values[innerParamKinds[i]]
+          : _effectiveParamKind(param);
       final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       paramMappings.add((
         reg: reg,
@@ -3644,10 +3703,16 @@ extension on DarticCompiler {
     }
     final namedMappings = <({int reg, StackKind instKind, StackKind actualKind,
         ir.DartType instType, String name})>[];
-    for (final param in fn.namedParameters) {
+    final posCount = fn.positionalParameters.length;
+    for (var i = 0; i < fn.namedParameters.length; i++) {
+      final param = fn.namedParameters[i];
       final instType = subst.substituteType(param.type);
       final instKind = _classifyStackKind(instType);
-      final actualKind = _effectiveParamKind(param);
+      final kindIdx = posCount + i;
+      final actualKind =
+          (innerParamKinds != null && kindIdx < innerParamKinds.length)
+              ? StackKind.values[innerParamKinds[kindIdx]]
+              : _effectiveParamKind(param);
       final reg = instKind.isValue ? _valueAlloc.alloc() : _refAlloc.alloc();
       namedMappings.add((
         reg: reg,
@@ -4315,6 +4380,50 @@ extension on DarticCompiler {
             fn.typeParameters, constant.types);
         return _generateInstantiationThunk(
             thunkFuncId, fn, subst, constant.types);
+      }
+      // User-library factory with instantiation.
+      if (target is ir.Procedure &&
+          target.isFactory &&
+          constant.types.isNotEmpty) {
+        final funcId = _procToFuncId[target.reference];
+        if (funcId != null) {
+          final fn = target.function;
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, constant.types);
+          return _generateInstantiationThunk(
+              funcId, fn, subst, constant.types);
+        }
+      }
+    }
+    // RedirectingFactoryTearOffConstant: resolve redirect chain, then
+    // generate a generic constructor/factory thunk with bound type args.
+    if (constant.tearOffConstant is ir.RedirectingFactoryTearOffConstant) {
+      final tearOff =
+          constant.tearOffConstant as ir.RedirectingFactoryTearOffConstant;
+      final finalTarget = _resolveRedirectingFactory(tearOff.target);
+      if (finalTarget is ir.Constructor && constant.types.isNotEmpty) {
+        return _generateGenericConstructorTearOffThunk(
+            finalTarget, constant.types);
+      }
+      if (finalTarget is ir.Procedure &&
+          finalTarget.isFactory &&
+          constant.types.isNotEmpty) {
+        final funcId = _procToFuncId[finalTarget.reference];
+        if (funcId != null) {
+          final fn = finalTarget.function;
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, constant.types);
+          return _generateInstantiationThunk(
+              funcId, fn, subst, constant.types);
+        }
+        if (_isHostLibrary(finalTarget.enclosingLibrary)) {
+          final thunkFuncId = _buildHostStaticTearOffThunk(finalTarget);
+          final fn = finalTarget.function;
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, constant.types);
+          return _generateInstantiationThunk(
+              thunkFuncId, fn, subst, constant.types);
+        }
       }
     }
     return constant.tearOffConstant.accept(_constantVisitor);
