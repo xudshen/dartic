@@ -102,6 +102,13 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
           .toList() ??
       [];
 
+  final topLevelOverrides = <String, String>{};
+  if (yaml['top_level_overrides'] is YamlMap) {
+    for (final entry in (yaml['top_level_overrides'] as YamlMap).entries) {
+      topLevelOverrides[entry.key as String] = entry.value as String;
+    }
+  }
+
   return LibraryConfig(
     uri: uri,
     classes: classes,
@@ -113,6 +120,7 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
             ?.map((e) => e as String)
             .toList() ??
         [],
+    topLevelOverrides: topLevelOverrides,
   );
 }
 

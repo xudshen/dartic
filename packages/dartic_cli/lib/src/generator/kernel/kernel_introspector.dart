@@ -225,6 +225,171 @@ class KernelIntrospector {
     return result;
   }
 
+  /// Lists all public top-level fields and property accessors discoverable
+  /// from [libraryUri].
+  ///
+  /// Discovers [ir.Field] (top-level variables) and [ir.Procedure] with
+  /// getter/setter kind. Returns records with:
+  /// - [name]: Kernel-encoded name (may contain `|` for extension statics)
+  /// - [libraryUri]: declaring library URI (for binding name matching)
+  /// - [hasSetter]: whether a setter binding is needed
+  /// - [importUri]: library to import (differs from [libraryUri] when the
+  ///   declaring library is a private implementation file re-exported
+  ///   through a public library)
+  List<({String name, String libraryUri, bool hasSetter, String? importUri})>
+      listPublicTopLevelFields(
+      String libraryUri, {String discoverMode = 'all'}) {
+    final seen = <String>{};
+    final result =
+        <({String name, String libraryUri, bool hasSetter, String? importUri})>[];
+
+    void addField(String name, String libUri, bool hasSetter) {
+      if (seen.contains(name)) return;
+      seen.add(name);
+      final importUri = _isPrivateLibFile(libUri)
+          ? _findPublicReExporter(libUri, name)
+          : null;
+      result.add((
+        name: name,
+        libraryUri: libUri,
+        hasSetter: hasSetter,
+        importUri: importUri,
+      ));
+    }
+
+    void addFromLibrary(ir.Library lib) {
+      final libUri = lib.importUri.toString();
+
+      // Top-level variables (ir.Field).
+      for (final field in lib.fields) {
+        final name = field.name.text;
+        if (name.startsWith('_')) continue;
+        // Extension static fields: skip get#/set#/constructor# tearoffs
+        // and private extension members (part after '|' starts with '_').
+        if (name.contains('|')) {
+          if (name.contains('|get#') ||
+              name.contains('|set#') ||
+              name.contains('|constructor#')) {
+            continue;
+          }
+          final pipeIdx = name.indexOf('|');
+          if (pipeIdx > 0 &&
+              name.length > pipeIdx + 1 &&
+              name[pipeIdx + 1] == '_') {
+            continue;
+          }
+        }
+        addField(name, libUri, !field.isFinal && !field.isConst);
+      }
+
+      // Top-level getter procedures (explicit `get foo => ...`).
+      for (final proc in lib.procedures) {
+        final name = proc.name.text;
+        if (name.startsWith('_')) continue;
+        if (proc.kind == ir.ProcedureKind.Getter) {
+          final hasSetter = lib.procedures.any(
+            (p) => p.name.text == name && p.kind == ir.ProcedureKind.Setter,
+          );
+          addField(name, libUri, hasSetter);
+        }
+      }
+    }
+
+    if (libraryUri.endsWith('.dart') || libraryUri.startsWith('dart:')) {
+      for (final lib in _component.libraries) {
+        if (lib.importUri.toString() != libraryUri) continue;
+        addFromLibrary(lib);
+        final packagePrefix = _packagePrefix(libraryUri);
+        // Re-exported fields and getters.
+        for (final ref in lib.additionalExports) {
+          final node = ref.node;
+          if (node is ir.Field &&
+              !node.name.text.startsWith('_') &&
+              !seen.contains(node.name.text) &&
+              _belongsToPackage(
+                  node.enclosingLibrary.importUri.toString(),
+                  packagePrefix)) {
+            addField(
+              node.name.text,
+              node.enclosingLibrary.importUri.toString(),
+              !node.isFinal && !node.isConst,
+            );
+          }
+          if (node is ir.Procedure &&
+              node.kind == ir.ProcedureKind.Getter &&
+              !node.name.text.startsWith('_') &&
+              !seen.contains(node.name.text) &&
+              _belongsToPackage(
+                  node.enclosingLibrary.importUri.toString(),
+                  packagePrefix)) {
+            final encLib = node.enclosingLibrary;
+            final hasSetter = encLib.procedures.any(
+              (p) =>
+                  p.name.text == node.name.text &&
+                  p.kind == ir.ProcedureKind.Setter,
+            );
+            addField(
+              node.name.text,
+              encLib.importUri.toString(),
+              hasSetter,
+            );
+          }
+        }
+        break;
+      }
+    } else {
+      final dirPrefix =
+          libraryUri.endsWith('/') ? libraryUri : '$libraryUri/';
+      for (final lib in _component.libraries) {
+        final libUri = lib.importUri.toString();
+        if (!libUri.startsWith(dirPrefix)) continue;
+        if (discoverMode == 'current') {
+          final remainder = libUri.substring(dirPrefix.length);
+          if (remainder.contains('/')) continue;
+        }
+        addFromLibrary(lib);
+      }
+    }
+
+    result.sort((a, b) => a.name.compareTo(b.name));
+    return result;
+  }
+
+  /// Whether a library URI refers to a private implementation file
+  /// (filename starts with `_`).
+  static bool _isPrivateLibFile(String libUri) {
+    final lastSlash = libUri.lastIndexOf('/');
+    if (lastSlash < 0) return false;
+    return libUri.length > lastSlash + 1 && libUri[lastSlash + 1] == '_';
+  }
+
+  /// Finds a public library that re-exports a symbol originally declared
+  /// in [privateLibUri]. Returns the public library URI, or null.
+  String? _findPublicReExporter(String privateLibUri, String symbolName) {
+    // Scan same-directory libraries for one that re-exports this symbol.
+    final dirPrefix =
+        privateLibUri.substring(0, privateLibUri.lastIndexOf('/') + 1);
+    for (final lib in _component.libraries) {
+      final libUri = lib.importUri.toString();
+      if (!libUri.startsWith(dirPrefix)) continue;
+      if (_isPrivateLibFile(libUri)) continue;
+      for (final ref in lib.additionalExports) {
+        final node = ref.node;
+        if (node is ir.NamedNode && _nodeName(node) == symbolName) {
+          return libUri;
+        }
+      }
+    }
+    return null;
+  }
+
+  static String? _nodeName(ir.NamedNode node) {
+    if (node is ir.Field) return node.name.text;
+    if (node is ir.Procedure) return node.name.text;
+    if (node is ir.Class) return node.name;
+    return null;
+  }
+
   /// Discovers classes from a single library and its additionalExports.
   void _discoverFromLibrary(
     String libraryUri,

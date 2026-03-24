@@ -29,5 +29,14 @@ abstract final class ConvertTopLevelBindings {
     ctx.registerBinding('dart:convert::::base64Encode#1', (args) => base64Encode((args[0] as List).cast<int>()));
     ctx.registerBinding('dart:convert::::base64Decode#1', (args) => base64Decode(args[0] as String));
     ctx.registerBinding('dart:convert::::base64UrlEncode#1', (args) => base64Url.encode((args[0] as List).cast<int>()));
+    ctx.registerBinding('dart:convert::::ascii#0', (args) => ascii);
+    ctx.registerBinding('dart:convert::::base64#0', (args) => base64);
+    ctx.registerBinding('dart:convert::::base64Url#0', (args) => base64Url);
+    ctx.registerBinding('dart:convert::::htmlEscape#0', (args) => htmlEscape);
+    ctx.registerBinding('dart:convert::::json#0', (args) => json);
+    ctx.registerBinding('dart:convert::::latin1#0', (args) => latin1);
+    ctx.registerBinding('dart:convert::::unicodeBomCharacterRune#0', (args) => unicodeBomCharacterRune);
+    ctx.registerBinding('dart:convert::::unicodeReplacementCharacterRune#0', (args) => unicodeReplacementCharacterRune);
+    ctx.registerBinding('dart:convert::::utf8#0', (args) => utf8);
   }
 }

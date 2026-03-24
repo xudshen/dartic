@@ -60,6 +60,12 @@ class LibraryConfig {
   /// These are added to every generated binding file in this library.
   final List<String> extraImports;
 
+  /// Custom overrides for auto-discovered top-level functions/fields.
+  /// Keys are symbol names (e.g. 'defaultTargetPlatform'), values are
+  /// custom closure source code (e.g. '(args) => defaultTargetPlatform').
+  /// Use 'name=' keys for setter overrides.
+  final Map<String, String> topLevelOverrides;
+
   LibraryConfig({
     required this.uri,
     required this.classes,
@@ -68,6 +74,7 @@ class LibraryConfig {
     this.discover,
     this.exclude = const [],
     this.extraImports = const [],
+    this.topLevelOverrides = const {},
   });
 }
 

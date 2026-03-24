@@ -21,5 +21,13 @@ abstract final class MathTopLevelBindings {
     ctx.registerBinding('dart:math::::asin#1', (args) => asin(args[0] as num));
     ctx.registerBinding('dart:math::::acos#1', (args) => acos(args[0] as num));
     ctx.registerBinding('dart:math::::atan#1', (args) => atan(args[0] as num));
+    ctx.registerBinding('dart:math::::e#0', (args) => e);
+    ctx.registerBinding('dart:math::::ln10#0', (args) => ln10);
+    ctx.registerBinding('dart:math::::ln2#0', (args) => ln2);
+    ctx.registerBinding('dart:math::::log10e#0', (args) => log10e);
+    ctx.registerBinding('dart:math::::log2e#0', (args) => log2e);
+    ctx.registerBinding('dart:math::::pi#0', (args) => pi);
+    ctx.registerBinding('dart:math::::sqrt1_2#0', (args) => sqrt1_2);
+    ctx.registerBinding('dart:math::::sqrt2#0', (args) => sqrt2);
   }
 }

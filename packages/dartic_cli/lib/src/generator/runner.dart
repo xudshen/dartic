@@ -602,11 +602,25 @@ class Runner {
         if (fnConfig.custom != null) {
           // Custom source -- skip analysis, create FunctionInfo with custom.
           // Use explicit arity from config, or default to 0.
-          // Add the library's own URI as a source import so the function
-          // and its parameter types are accessible in the generated file.
+          // Use sourceLibraryUri when available (discovered fields/functions
+          // from sub-libraries have their actual declaring library URI).
           final arity = fnConfig.arity ?? 0;
-          final uri = library.uri;
-          final needsImport = uri != 'dart:core' && !uri.startsWith('dart:_');
+          final uri = fnConfig.sourceLibraryUri ?? library.uri;
+          // Use importUris when provided (e.g., fields from private _*.dart
+          // files use the public re-exporting library for imports to avoid
+          // ambiguous import errors). Otherwise import from uri.
+          final List<String> sourceImports;
+          if (fnConfig.importUris != null) {
+            sourceImports = [
+              for (final u in fnConfig.importUris!)
+                "import '$u';",
+            ];
+          } else {
+            final needsImport =
+                uri != 'dart:core' && !uri.startsWith('dart:_');
+            sourceImports =
+                needsImport ? ["import '$uri';"] : const [];
+          }
           functionInfos.add(FunctionInfo(
             name: fnConfig.name,
             libraryUri: uri,
@@ -616,7 +630,7 @@ class Runner {
             ],
             returnType: 'dynamic',
             customSource: fnConfig.custom,
-            sourceImports: needsImport ? ["import '$uri';"] : const [],
+            sourceImports: sourceImports,
           ));
         } else if (fnConfig.name.contains('|')) {
           // Extension method — Kernel encodes as 'ExtName|method'.
@@ -1108,21 +1122,87 @@ class Runner {
         .listPublicTopLevelFunctions(library.uri, discoverMode: mode);
     final mergedFunctions = [...library.functions];
     var addedFnCount = 0;
+    final topOverrides = library.topLevelOverrides;
     for (final fn in discoveredFunctions) {
       if (explicitFunctions.contains(fn.name)) continue;
       if (excludeSet.contains('${fn.libraryUri}::${fn.name}')) continue;
-      mergedFunctions.add(FunctionConfig(
-        name: fn.name,
-        sourceLibraryUri: fn.libraryUri,
-        arity: fn.arity,
-        kernelParams: fn.params,
-        importUris: fn.importUris,
-      ));
+      final override = topOverrides[fn.name];
+      if (override != null) {
+        // Use custom source from override; empty importUris to avoid
+        // importing the declaring library (may be a private _*.dart file).
+        mergedFunctions.add(FunctionConfig(
+          name: fn.name,
+          sourceLibraryUri: fn.libraryUri,
+          arity: fn.arity,
+          custom: override,
+          importUris: const [],
+        ));
+      } else {
+        mergedFunctions.add(FunctionConfig(
+          name: fn.name,
+          sourceLibraryUri: fn.libraryUri,
+          arity: fn.arity,
+          kernelParams: fn.params,
+          importUris: fn.importUris,
+        ));
+      }
       addedFnCount++;
     }
     if (addedFnCount > 0) {
       stderr.writeln(
           '  discover: ${library.uri}: $addedFnCount new top-level functions');
+    }
+
+    // Auto-discover top-level fields/properties not already in YAML.
+    final allFunctionNames = mergedFunctions.map((f) => f.name).toSet();
+    final discoveredFields = _kernelIntrospector!
+        .listPublicTopLevelFields(library.uri, discoverMode: mode);
+    var addedFieldCount = 0;
+    for (final field in discoveredFields) {
+      if (allFunctionNames.contains(field.name)) continue;
+      if (excludeSet.contains('${field.libraryUri}::${field.name}')) continue;
+
+      // For extension static fields (Kernel encodes as 'ExtName|field'),
+      // generate Dart access syntax: ExtName.field
+      final dartAccessName = field.name.contains('|')
+          ? field.name.replaceFirst('|', '.')
+          : field.name;
+      final importUris =
+          field.importUri != null ? [field.importUri!] : null;
+
+      final getterOverride = topOverrides[field.name];
+      final setterName = '${field.name}=';
+
+      // Getter binding: (args) => fieldName
+      mergedFunctions.add(FunctionConfig(
+        name: field.name,
+        sourceLibraryUri: field.libraryUri,
+        arity: 0,
+        custom: getterOverride ?? '(args) => $dartAccessName',
+        // Empty importUris for overrides to avoid private file imports.
+        importUris: getterOverride != null ? const [] : importUris,
+      ));
+      allFunctionNames.add(field.name);
+      addedFieldCount++;
+
+      // Setter binding: (args) { fieldName = v; return args[0]; }
+      if (field.hasSetter) {
+        final setterOverride = topOverrides[setterName];
+        mergedFunctions.add(FunctionConfig(
+          name: setterName,
+          sourceLibraryUri: field.libraryUri,
+          arity: 1,
+          custom: setterOverride ??
+              '(args) { final dynamic v = args[0]; $dartAccessName = v; return args[0]; }',
+          importUris: setterOverride != null ? const [] : importUris,
+        ));
+        allFunctionNames.add(setterName);
+        addedFieldCount++;
+      }
+    }
+    if (addedFieldCount > 0) {
+      stderr.writeln(
+          '  discover: ${library.uri}: $addedFieldCount new top-level field bindings');
     }
 
     return LibraryConfig(
@@ -1133,6 +1213,7 @@ class Runner {
       discover: library.discover,
       exclude: library.exclude,
       extraImports: library.extraImports,
+      topLevelOverrides: library.topLevelOverrides,
     );
   }
 
