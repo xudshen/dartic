@@ -9,6 +9,15 @@ class _VerifyStreamConsumer implements StreamConsumer {
   @override
   Future close() => Future.value(null);
 
+  @override
+  String toString() => '';
+
+  @override
+  int get hashCode => 0;
+
+  @override
+  bool operator ==(Object other) => false;
+
 }
 
 void main() {

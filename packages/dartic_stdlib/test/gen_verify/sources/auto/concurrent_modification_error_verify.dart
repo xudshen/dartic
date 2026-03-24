@@ -17,7 +17,9 @@ class _VerifyConcurrentModificationError extends ConcurrentModificationError {
   void runAllSuperCalls() {
     _callSuper('toString', () => super.toString());
     _callSuper('modifiedObject', () => super.modifiedObject);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 

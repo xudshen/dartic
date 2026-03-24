@@ -72,6 +72,8 @@ class _VerifySetBase extends SetBase {
     _callSuper('single', () => super.single);
     _callSuper('first', () => super.first);
     _callSuper('last', () => super.last);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

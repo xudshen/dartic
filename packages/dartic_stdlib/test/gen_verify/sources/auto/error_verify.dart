@@ -15,7 +15,10 @@ class _VerifyError extends Error {
   }
 
   void runAllSuperCalls() {
+    _callSuper('toString', () => super.toString());
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

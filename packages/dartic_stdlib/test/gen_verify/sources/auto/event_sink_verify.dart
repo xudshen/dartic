@@ -12,6 +12,15 @@ class _VerifyEventSink implements EventSink {
   @override
   void close() {}
 
+  @override
+  String toString() => '';
+
+  @override
+  int get hashCode => 0;
+
+  @override
+  bool operator ==(Object other) => false;
+
 }
 
 void main() {

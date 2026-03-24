@@ -49,6 +49,8 @@ class _VerifyMapBase extends MapBase {
     _callSuper('isEmpty', () => super.isEmpty);
     _callSuper('isNotEmpty', () => super.isNotEmpty);
     _callSuper('values', () => super.values);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

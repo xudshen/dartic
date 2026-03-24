@@ -19,7 +19,9 @@ class _VerifyArgumentError extends ArgumentError {
     _callSuper('invalidValue', () => super.invalidValue);
     _callSuper('name', () => super.name);
     _callSuper('message', () => super.message);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 

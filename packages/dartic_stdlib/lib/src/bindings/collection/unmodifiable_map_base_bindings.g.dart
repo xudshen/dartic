@@ -40,7 +40,6 @@ abstract final class UnmodifiableMapBaseBindings {
         'values#0': (args) => (args[0] as UnmodifiableMapBase).values,
         '==#1': (args) => (args[0] as UnmodifiableMapBase) == (args[1] as Object),
         '[]#1': (args) => (args[0] as UnmodifiableMapBase)[(args[1])],
-        '[]=#2': (args) { (args[0] as UnmodifiableMapBase)[args[1]] = args[2]; return args[2]; },
         'addAll#1': (args) { (args[0] as Map).addAll(args[1] as Map); return null; },
         'clear#0': (args) { (args[0] as Map).clear(); return null; },
         '[]=#2': (args) { (args[0] as Map)[args[1]] = args[2]; return args[2]; },

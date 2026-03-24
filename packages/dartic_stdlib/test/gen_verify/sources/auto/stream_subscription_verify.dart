@@ -25,7 +25,16 @@ class _VerifyStreamSubscription implements StreamSubscription {
   Future<E> asFuture<E>([E? futureValue]) => Future<E>.value(futureValue);
 
   @override
+  String toString() => '';
+
+  @override
   bool get isPaused => false;
+
+  @override
+  int get hashCode => 0;
+
+  @override
+  bool operator ==(Object other) => false;
 
 }
 

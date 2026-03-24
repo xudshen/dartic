@@ -49,6 +49,51 @@ void main() {
       expect(log.last, equals('OK'));
     });
 
+    test('Completer bridge: super calls', () {
+      final log = _runFixture('completer_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Future bridge: super calls', () {
+      final log = _runFixture('future_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('MultiStreamController bridge: super calls', () {
+      final log = _runFixture('multi_stream_controller_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ParallelWaitError bridge: super calls', () {
+      final log = _runFixture('parallel_wait_error_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('StreamController bridge: super calls', () {
+      final log = _runFixture('stream_controller_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('StreamTransformerBase bridge: super calls', () {
+      final log = _runFixture('stream_transformer_base_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('SynchronousStreamController bridge: super calls', () {
+      final log = _runFixture('synchronous_stream_controller_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('TimeoutException bridge: super calls', () {
+      final log = _runFixture('timeout_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Timer bridge: super calls', () {
+      final log = _runFixture('timer_verify');
+      expect(log.last, equals('OK'));
+    });
+
     test('ListBase bridge: super calls', () {
       final log = _runFixture('list_base_verify');
       expect(log.last, equals('OK'));
@@ -61,6 +106,56 @@ void main() {
 
     test('SetBase bridge: super calls', () {
       final log = _runFixture('set_base_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('MapView bridge: super calls', () {
+      final log = _runFixture('map_view_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Queue bridge: super calls', () {
+      final log = _runFixture('queue_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('UnmodifiableListView bridge: super calls', () {
+      final log = _runFixture('unmodifiable_list_view_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('UnmodifiableMapView bridge: super calls', () {
+      final log = _runFixture('unmodifiable_map_view_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('UnmodifiableSetView bridge: super calls', () {
+      final log = _runFixture('unmodifiable_set_view_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Codec bridge: super calls', () {
+      final log = _runFixture('codec_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Converter bridge: super calls', () {
+      final log = _runFixture('converter_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Encoding bridge: super calls', () {
+      final log = _runFixture('encoding_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('JsonCyclicError bridge: super calls', () {
+      final log = _runFixture('json_cyclic_error_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('JsonUnsupportedObjectError bridge: super calls', () {
+      final log = _runFixture('json_unsupported_object_error_verify');
       expect(log.last, equals('OK'));
     });
 
@@ -141,6 +236,201 @@ void main() {
 
     test('Stopwatch bridge: super calls', () {
       final log = _runFixture('stopwatch_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('IntegerDivisionByZeroException bridge: super calls', () {
+      final log = _runFixture('integer_division_by_zero_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('CertificateException bridge: super calls', () {
+      final log = _runFixture('certificate_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Directory bridge: super calls', () {
+      final log = _runFixture('directory_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('File bridge: super calls', () {
+      final log = _runFixture('file_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('FileStat bridge: super calls', () {
+      final log = _runFixture('file_stat_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('FileSystemEntity bridge: super calls', () {
+      final log = _runFixture('file_system_entity_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('FileSystemException bridge: super calls', () {
+      final log = _runFixture('file_system_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('HandshakeException bridge: super calls', () {
+      final log = _runFixture('handshake_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('IOException bridge: super calls', () {
+      final log = _runFixture('i_o_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('IOSink bridge: super calls', () {
+      final log = _runFixture('i_o_sink_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('InternetAddress bridge: super calls', () {
+      final log = _runFixture('internet_address_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Link bridge: super calls', () {
+      final log = _runFixture('link_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('NetworkInterface bridge: super calls', () {
+      final log = _runFixture('network_interface_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('OSError bridge: super calls', () {
+      final log = _runFixture('o_s_error_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ProcessException bridge: super calls', () {
+      final log = _runFixture('process_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ProcessSignal bridge: super calls', () {
+      final log = _runFixture('process_signal_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RandomAccessFile bridge: super calls', () {
+      final log = _runFixture('random_access_file_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawDatagramSocket bridge: super calls', () {
+      final log = _runFixture('raw_datagram_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawSecureSocket bridge: super calls', () {
+      final log = _runFixture('raw_secure_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawServerSocket bridge: super calls', () {
+      final log = _runFixture('raw_server_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawSocket bridge: super calls', () {
+      final log = _runFixture('raw_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawSynchronousSocket bridge: super calls', () {
+      final log = _runFixture('raw_synchronous_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('RawZLibFilter bridge: super calls', () {
+      final log = _runFixture('raw_z_lib_filter_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ReadPipe bridge: super calls', () {
+      final log = _runFixture('read_pipe_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ResourceHandle bridge: super calls', () {
+      final log = _runFixture('resource_handle_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('SecureSocket bridge: super calls', () {
+      final log = _runFixture('secure_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('ServerSocket bridge: super calls', () {
+      final log = _runFixture('server_socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('SignalException bridge: super calls', () {
+      final log = _runFixture('signal_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Socket bridge: super calls', () {
+      final log = _runFixture('socket_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('SocketControlMessage bridge: super calls', () {
+      final log = _runFixture('socket_control_message_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('SocketException bridge: super calls', () {
+      final log = _runFixture('socket_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('StdinException bridge: super calls', () {
+      final log = _runFixture('stdin_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('StdoutException bridge: super calls', () {
+      final log = _runFixture('stdout_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('TlsException bridge: super calls', () {
+      final log = _runFixture('tls_exception_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('WritePipe bridge: super calls', () {
+      final log = _runFixture('write_pipe_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('X509Certificate bridge: super calls', () {
+      final log = _runFixture('x509_certificate_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('MutableRectangle bridge: super calls', () {
+      final log = _runFixture('mutable_rectangle_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Point bridge: super calls', () {
+      final log = _runFixture('point_verify');
+      expect(log.last, equals('OK'));
+    });
+
+    test('Random bridge: super calls', () {
+      final log = _runFixture('random_verify');
       expect(log.last, equals('OK'));
     });
 

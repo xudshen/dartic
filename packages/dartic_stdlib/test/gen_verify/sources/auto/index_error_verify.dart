@@ -15,14 +15,17 @@ class _VerifyIndexError extends IndexError {
   }
 
   void runAllSuperCalls() {
+    _callSuper('toString', () => super.toString());
     _callSuper('indexable', () => super.indexable);
     _callSuper('length', () => super.length);
     _callSuper('invalidValue', () => super.invalidValue);
     _callSuper('start', () => super.start);
     _callSuper('end', () => super.end);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('name', () => super.name);
     _callSuper('message', () => super.message);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 

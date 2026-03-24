@@ -19,6 +19,8 @@ class _VerifyFormatException extends FormatException {
     _callSuper('message', () => super.message);
     _callSuper('source', () => super.source);
     _callSuper('offset', () => super.offset);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

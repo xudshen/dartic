@@ -18,12 +18,15 @@ class _VerifyStopwatch extends Stopwatch {
     _callSuper('start', () => super.start());
     _callSuper('stop', () => super.stop());
     _callSuper('reset', () => super.reset());
+    _callSuper('toString', () => super.toString());
     _callSuper('frequency', () => super.frequency);
     _callSuper('elapsedTicks', () => super.elapsedTicks);
     _callSuper('elapsed', () => super.elapsed);
     _callSuper('elapsedMicroseconds', () => super.elapsedMicroseconds);
     _callSuper('elapsedMilliseconds', () => super.elapsedMilliseconds);
     _callSuper('isRunning', () => super.isRunning);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

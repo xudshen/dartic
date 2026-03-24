@@ -34,6 +34,7 @@ class _VerifyDuration extends Duration {
     _callSuper('>', () => this > Duration());
     _callSuper('<=', () => this <= Duration());
     _callSuper('>=', () => this >= Duration());
+    _callSuper('==', () => this == Object());
     _callSuper('-', () => -this);
   }
 }

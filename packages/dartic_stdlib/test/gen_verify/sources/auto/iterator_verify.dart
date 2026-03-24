@@ -7,7 +7,16 @@ class _VerifyIterator implements Iterator {
   bool moveNext() { _index++; return _index < _list.length; }
 
   @override
+  String toString() => '';
+
+  @override
   dynamic get current => _list[_index];
+
+  @override
+  int get hashCode => 0;
+
+  @override
+  bool operator ==(Object other) => false;
 
 }
 

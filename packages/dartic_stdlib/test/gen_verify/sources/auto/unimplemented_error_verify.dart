@@ -17,7 +17,9 @@ class _VerifyUnimplementedError extends UnimplementedError {
   void runAllSuperCalls() {
     _callSuper('toString', () => super.toString());
     _callSuper('message', () => super.message);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 

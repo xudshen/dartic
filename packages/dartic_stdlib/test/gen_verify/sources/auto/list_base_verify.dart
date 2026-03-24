@@ -82,7 +82,9 @@ class _VerifyListBase extends ListBase {
     _callSuper('last', () => super.last);
     _callSuper('single', () => super.single);
     _callSuper('reversed', () => super.reversed);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('+', () => this + []);
+    _callSuper('==', () => this == Object());
   }
 }
 

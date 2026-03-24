@@ -15,12 +15,15 @@ class _VerifyRangeError extends RangeError {
   }
 
   void runAllSuperCalls() {
+    _callSuper('toString', () => super.toString());
     _callSuper('start', () => super.start);
     _callSuper('end', () => super.end);
     _callSuper('invalidValue', () => super.invalidValue);
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('name', () => super.name);
     _callSuper('message', () => super.message);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 

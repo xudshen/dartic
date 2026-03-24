@@ -9,6 +9,9 @@ class _VerifyStreamSink implements StreamSink {
   Future close() { _doneCompleter.complete(); return done; }
 
   @override
+  String toString() => '';
+
+  @override
   void add(dynamic event) {}
 
   @override
@@ -19,6 +22,12 @@ class _VerifyStreamSink implements StreamSink {
 
   @override
   Future get done => _doneCompleter.future;
+
+  @override
+  int get hashCode => 0;
+
+  @override
+  bool operator ==(Object other) => false;
 
 }
 

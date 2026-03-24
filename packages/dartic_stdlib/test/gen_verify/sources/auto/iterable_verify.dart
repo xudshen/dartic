@@ -45,6 +45,8 @@ class _VerifyIterable extends Iterable {
     _callSuper('first', () => super.first);
     _callSuper('last', () => super.last);
     _callSuper('single', () => super.single);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

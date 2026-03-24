@@ -41,12 +41,15 @@ class _VerifyStream extends Stream {
     _callSuper('singleWhere', () => super.singleWhere((a) => false, orElse: null));
     _callSuper('elementAt', () => super.elementAt(0));
     _callSuper('timeout', () => super.timeout(Duration(), onTimeout: null));
+    _callSuper('toString', () => super.toString());
     _callSuper('isBroadcast', () => super.isBroadcast);
     _callSuper('length', () => super.length);
     _callSuper('isEmpty', () => super.isEmpty);
     _callSuper('first', () => super.first);
     _callSuper('last', () => super.last);
     _callSuper('single', () => super.single);
+    _callSuper('hashCode', () => super.hashCode);
+    _callSuper('==', () => this == Object());
   }
 }
 

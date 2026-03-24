@@ -2,21 +2,42 @@
 // Regenerate: dartic gen <config> --emit-tests
 import 'package:test/test.dart';
 // ignore_for_file: implementation_imports
+import 'package:dartic_stdlib/src/bindings/async/completer_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/async/event_sink_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/future_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/multi_stream_controller_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/parallel_wait_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/async/stream_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/async/stream_consumer_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/stream_controller_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/async/stream_sink_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/async/stream_subscription_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/stream_transformer_base_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/synchronous_stream_controller_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/timeout_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/async/timer_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/collection/list_base_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/collection/map_base_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/collection/map_view_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/collection/queue_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/collection/set_base_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/collection/unmodifiable_list_view_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/collection/unmodifiable_map_view_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/collection/unmodifiable_set_view_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/convert/codec_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/convert/converter_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/convert/encoding_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/convert/json_cyclic_error_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/convert/json_unsupported_object_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/argument_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/assertion_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/concurrent_modification_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/duration_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/error_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/core/exception_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/format_exception_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/index_error_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/core/integer_division_by_zero_exception_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/iterable_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/iterator_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/range_error_bindings.g.dart';
@@ -25,6 +46,44 @@ import 'package:dartic_stdlib/src/bindings/core/stopwatch_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/type_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/unimplemented_error_bindings.g.dart';
 import 'package:dartic_stdlib/src/bindings/core/unsupported_error_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/certificate_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/directory_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/file_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/file_stat_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/file_system_entity_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/file_system_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/handshake_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/i_o_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/i_o_sink_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/internet_address_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/link_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/network_interface_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/o_s_error_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/process_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/process_signal_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/random_access_file_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_datagram_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_secure_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_server_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_synchronous_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/raw_z_lib_filter_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/read_pipe_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/resource_handle_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/secure_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/server_socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/signal_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/socket_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/socket_control_message_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/socket_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/stdin_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/stdout_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/tls_exception_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/write_pipe_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/io/x509_certificate_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/math/mutable_rectangle_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/math/point_bindings.g.dart';
+import 'package:dartic_stdlib/src/bindings/math/random_bindings.g.dart';
 
 void main() {
   group('Binding completeness', () {
@@ -62,12 +121,24 @@ void main() {
         'singleWhere#2',
         'elementAt#1',
         'timeout#2',
+        'toString#0',
         'isBroadcast#0',
         'length#0',
         'isEmpty#0',
         'first#0',
         'last#0',
         'single#0',
+        'hashCode#0',
+        '==#1',
+        'empty#1',
+        'value#1',
+        'error#2',
+        'fromFuture#1',
+        'fromFutures#1',
+        'fromIterable#1',
+        'multi#2',
+        'periodic#2',
+        'eventTransformed#2',
       ]));
     });
 
@@ -81,29 +152,220 @@ void main() {
         'pause#1',
         'resume#0',
         'asFuture#1',
+        'toString#0',
         'isPaused#0',
+        'hashCode#0',
+        '==#1',
       ]));
     });
 
     test('EventSinkBindings.methodMap has expected keys', () {
       final map = EventSinkBindings.methodMap();
-      expect(map.keys, containsAll(['add#1', 'addError#2', 'close#0']));
+      expect(map.keys, containsAll([
+        'add#1',
+        'addError#2',
+        'close#0',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+      ]));
     });
 
     test('StreamSinkBindings.methodMap has expected keys', () {
       final map = StreamSinkBindings.methodMap();
       expect(map.keys, containsAll([
         'close#0',
+        'toString#0',
         'add#1',
         'addError#2',
         'addStream#1',
         'done#0',
+        'hashCode#0',
+        '==#1',
       ]));
     });
 
     test('StreamConsumerBindings.methodMap has expected keys', () {
       final map = StreamConsumerBindings.methodMap();
-      expect(map.keys, containsAll(['addStream#1', 'close#0']));
+      expect(map.keys, containsAll([
+        'addStream#1',
+        'close#0',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('CompleterBindings.methodMap has expected keys', () {
+      final map = CompleterBindings.methodMap();
+      expect(map.keys, containsAll([
+        'complete#1',
+        'completeError#2',
+        'toString#0',
+        'future#0',
+        'isCompleted#0',
+        'hashCode#0',
+        '==#1',
+        '#0',
+        'sync#0',
+      ]));
+    });
+
+    test('FutureBindings.methodMap has expected keys', () {
+      final map = FutureBindings.methodMap();
+      expect(map.keys, containsAll([
+        'then#2',
+        'catchError#2',
+        'whenComplete#1',
+        'asStream#0',
+        'timeout#2',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+        '#1',
+        'microtask#1',
+        'sync#1',
+        'syncValue#1',
+        'value#1',
+        'error#2',
+        'delayed#2',
+      ]));
+    });
+
+    test('MultiStreamControllerBindings.methodMap has expected keys', () {
+      final map = MultiStreamControllerBindings.methodMap();
+      expect(map.keys, containsAll([
+        'addSync#1',
+        'addErrorSync#2',
+        'closeSync#0',
+        'toString#0',
+        'add#1',
+        'addError#2',
+        'close#0',
+        'addStream#2',
+        'hashCode#0',
+        'stream#0',
+        'onListen#0',
+        'onPause#0',
+        'onResume#0',
+        'onCancel#0',
+        'sink#0',
+        'isClosed#0',
+        'isPaused#0',
+        'hasListener#0',
+        'done#0',
+        'onListen=#1',
+        'onPause=#1',
+        'onResume=#1',
+        'onCancel=#1',
+        '==#1',
+      ]));
+    });
+
+    test('ParallelWaitErrorBindings.methodMap has expected keys', () {
+      final map = ParallelWaitErrorBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'values#0',
+        'errors#0',
+        'stackTrace#0',
+        'hashCode#0',
+        '==#1',
+        '#4',
+      ]));
+    });
+
+    test('StreamControllerBindings.methodMap has expected keys', () {
+      final map = StreamControllerBindings.methodMap();
+      expect(map.keys, containsAll([
+        'add#1',
+        'addError#2',
+        'close#0',
+        'addStream#2',
+        'toString#0',
+        'stream#0',
+        'onListen#0',
+        'onPause#0',
+        'onResume#0',
+        'onCancel#0',
+        'sink#0',
+        'isClosed#0',
+        'isPaused#0',
+        'hasListener#0',
+        'done#0',
+        'hashCode#0',
+        'onListen=#1',
+        'onPause=#1',
+        'onResume=#1',
+        'onCancel=#1',
+        '==#1',
+        '#5',
+        'broadcast#3',
+      ]));
+    });
+
+    test('StreamTransformerBaseBindings.methodMap has expected keys', () {
+      final map = StreamTransformerBaseBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cast#0',
+        'toString#0',
+        'bind#1',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('SynchronousStreamControllerBindings.methodMap has expected keys', () {
+      final map = SynchronousStreamControllerBindings.methodMap();
+      expect(map.keys, containsAll([
+        'add#1',
+        'addError#2',
+        'close#0',
+        'toString#0',
+        'addStream#2',
+        'hashCode#0',
+        'stream#0',
+        'onListen#0',
+        'onPause#0',
+        'onResume#0',
+        'onCancel#0',
+        'sink#0',
+        'isClosed#0',
+        'isPaused#0',
+        'hasListener#0',
+        'done#0',
+        'onListen=#1',
+        'onPause=#1',
+        'onResume=#1',
+        'onCancel=#1',
+        '==#1',
+      ]));
+    });
+
+    test('TimeoutExceptionBindings.methodMap has expected keys', () {
+      final map = TimeoutExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'duration#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('TimerBindings.methodMap has expected keys', () {
+      final map = TimerBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cancel#0',
+        'toString#0',
+        'tick#0',
+        'isActive#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+        'periodic#2',
+      ]));
     });
 
     test('ListBaseBindings.methodMap has expected keys', () {
@@ -164,11 +426,13 @@ void main() {
         'last#0',
         'single#0',
         'reversed#0',
+        'hashCode#0',
         'length#0',
         'first=#1',
         'last=#1',
         'length=#1',
         '+#1',
+        '==#1',
         '[]#1',
         '[]=#2',
       ]));
@@ -197,8 +461,10 @@ void main() {
         'isEmpty#0',
         'isNotEmpty#0',
         'values#0',
+        'hashCode#0',
         '[]#1',
         '[]=#2',
+        '==#1',
       ]));
     });
 
@@ -249,6 +515,320 @@ void main() {
         'single#0',
         'first#0',
         'last#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('MapViewBindings.methodMap has expected keys', () {
+      final map = MapViewBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cast#0',
+        'addAll#1',
+        'clear#0',
+        'putIfAbsent#2',
+        'containsKey#1',
+        'containsValue#1',
+        'forEach#1',
+        'remove#1',
+        'toString#0',
+        'addEntries#1',
+        'map#1',
+        'update#3',
+        'updateAll#1',
+        'removeWhere#1',
+        'isEmpty#0',
+        'isNotEmpty#0',
+        'length#0',
+        'keys#0',
+        'values#0',
+        'entries#0',
+        'hashCode#0',
+        '[]#1',
+        '[]=#2',
+        '==#1',
+        '#1',
+      ]));
+    });
+
+    test('QueueBindings.methodMap has expected keys', () {
+      final map = QueueBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cast#0',
+        'removeFirst#0',
+        'removeLast#0',
+        'addFirst#1',
+        'addLast#1',
+        'add#1',
+        'remove#1',
+        'addAll#1',
+        'removeWhere#1',
+        'retainWhere#1',
+        'clear#0',
+        'toString#0',
+        'followedBy#1',
+        'map#1',
+        'where#1',
+        'whereType#0',
+        'expand#1',
+        'contains#1',
+        'forEach#1',
+        'reduce#1',
+        'fold#2',
+        'every#1',
+        'join#1',
+        'any#1',
+        'toList#1',
+        'toSet#0',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'hashCode#0',
+        'iterator#0',
+        'length#0',
+        'isEmpty#0',
+        'isNotEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        '==#1',
+        '#0',
+        'from#1',
+        'of#1',
+      ]));
+    });
+
+    test('UnmodifiableListViewBindings.methodMap has expected keys', () {
+      final map = UnmodifiableListViewBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cast#0',
+        'toString#0',
+        'elementAt#1',
+        'followedBy#1',
+        'forEach#1',
+        'contains#1',
+        'every#1',
+        'any#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'join#1',
+        'where#1',
+        'whereType#0',
+        'map#1',
+        'expand#1',
+        'reduce#1',
+        'fold#2',
+        'skip#1',
+        'skipWhile#1',
+        'take#1',
+        'takeWhile#1',
+        'toList#1',
+        'toSet#0',
+        'add#1',
+        'addAll#1',
+        'remove#1',
+        'removeWhere#1',
+        'retainWhere#1',
+        'clear#0',
+        'removeLast#0',
+        'sort#1',
+        'shuffle#1',
+        'asMap#0',
+        'sublist#2',
+        'getRange#2',
+        'removeRange#2',
+        'fillRange#3',
+        'setRange#4',
+        'replaceRange#3',
+        'indexOf#2',
+        'indexWhere#2',
+        'lastIndexOf#2',
+        'lastIndexWhere#2',
+        'insert#2',
+        'removeAt#1',
+        'insertAll#2',
+        'setAll#2',
+        'length#0',
+        'hashCode#0',
+        'iterator#0',
+        'isEmpty#0',
+        'isNotEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'reversed#0',
+        'first=#1',
+        'last=#1',
+        'length=#1',
+        '[]#1',
+        '==#1',
+        '+#1',
+        '[]=#2',
+        '#1',
+      ]));
+    });
+
+    test('UnmodifiableMapViewBindings.methodMap has expected keys', () {
+      final map = UnmodifiableMapViewBindings.methodMap();
+      expect(map.keys, containsAll([
+        'cast#0',
+        'toString#0',
+        'addAll#1',
+        'clear#0',
+        'putIfAbsent#2',
+        'containsKey#1',
+        'containsValue#1',
+        'forEach#1',
+        'remove#1',
+        'addEntries#1',
+        'map#1',
+        'update#3',
+        'updateAll#1',
+        'removeWhere#1',
+        'hashCode#0',
+        'isEmpty#0',
+        'isNotEmpty#0',
+        'length#0',
+        'keys#0',
+        'values#0',
+        'entries#0',
+        '==#1',
+        '[]#1',
+        '[]=#2',
+        '#1',
+      ]));
+    });
+
+    test('UnmodifiableSetViewBindings.methodMap has expected keys', () {
+      final map = UnmodifiableSetViewBindings.methodMap();
+      expect(map.keys, containsAll([
+        'contains#1',
+        'lookup#1',
+        'toSet#0',
+        'toString#0',
+        'add#1',
+        'remove#1',
+        'cast#0',
+        'followedBy#1',
+        'whereType#0',
+        'clear#0',
+        'addAll#1',
+        'removeAll#1',
+        'retainAll#1',
+        'removeWhere#1',
+        'retainWhere#1',
+        'containsAll#1',
+        'union#1',
+        'intersection#1',
+        'difference#1',
+        'toList#1',
+        'map#1',
+        'where#1',
+        'expand#1',
+        'forEach#1',
+        'reduce#1',
+        'fold#2',
+        'every#1',
+        'join#1',
+        'any#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'length#0',
+        'iterator#0',
+        'hashCode#0',
+        'isEmpty#0',
+        'isNotEmpty#0',
+        'single#0',
+        'first#0',
+        'last#0',
+        '==#1',
+        '#1',
+      ]));
+    });
+
+    test('CodecBindings.methodMap has expected keys', () {
+      final map = CodecBindings.methodMap();
+      expect(map.keys, containsAll([
+        'encode#1',
+        'decode#1',
+        'fuse#1',
+        'toString#0',
+        'encoder#0',
+        'decoder#0',
+        'inverted#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('ConverterBindings.methodMap has expected keys', () {
+      final map = ConverterBindings.methodMap();
+      expect(map.keys, containsAll([
+        'convert#1',
+        'fuse#1',
+        'startChunkedConversion#1',
+        'bind#1',
+        'cast#0',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('EncodingBindings.methodMap has expected keys', () {
+      final map = EncodingBindings.methodMap();
+      expect(map.keys, containsAll([
+        'decodeStream#1',
+        'toString#0',
+        'encode#1',
+        'decode#1',
+        'fuse#1',
+        'encoder#0',
+        'decoder#0',
+        'name#0',
+        'hashCode#0',
+        'inverted#0',
+        '==#1',
+      ]));
+    });
+
+    test('JsonCyclicErrorBindings.methodMap has expected keys', () {
+      final map = JsonCyclicErrorBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'hashCode#0',
+        'unsupportedObject#0',
+        'cause#0',
+        'partialResult#0',
+        'stackTrace#0',
+        '==#1',
+        '#1',
+      ]));
+    });
+
+    test('JsonUnsupportedObjectErrorBindings.methodMap has expected keys', () {
+      final map = JsonUnsupportedObjectErrorBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'unsupportedObject#0',
+        'cause#0',
+        'partialResult#0',
+        'hashCode#0',
+        'stackTrace#0',
+        '==#1',
+        '#3',
       ]));
     });
 
@@ -274,6 +854,7 @@ void main() {
         '>#1',
         '<=#1',
         '>=#1',
+        '==#1',
         'unary-#0',
         '#6',
       ]));
@@ -313,17 +894,34 @@ void main() {
         'first#0',
         'last#0',
         'single#0',
+        'hashCode#0',
+        '==#1',
+        'generate#2',
+        'withIterator#1',
+        'empty#0',
       ]));
     });
 
     test('IteratorBindings.methodMap has expected keys', () {
       final map = IteratorBindings.methodMap();
-      expect(map.keys, containsAll(['moveNext#0', 'current#0']));
+      expect(map.keys, containsAll([
+        'moveNext#0',
+        'toString#0',
+        'current#0',
+        'hashCode#0',
+        '==#1',
+      ]));
     });
 
     test('ErrorBindings.methodMap has expected keys', () {
       final map = ErrorBindings.methodMap();
-      expect(map.keys, containsAll(['stackTrace#0', '#0']));
+      expect(map.keys, containsAll([
+        'toString#0',
+        'stackTrace#0',
+        'hashCode#0',
+        '==#1',
+        '#0',
+      ]));
     });
 
     test('ArgumentErrorBindings.methodMap has expected keys', () {
@@ -333,7 +931,9 @@ void main() {
         'invalidValue#0',
         'name#0',
         'message#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#2',
         'value#3',
         'notNull#1',
@@ -343,12 +943,15 @@ void main() {
     test('RangeErrorBindings.methodMap has expected keys', () {
       final map = RangeErrorBindings.methodMap();
       expect(map.keys, containsAll([
+        'toString#0',
         'start#0',
         'end#0',
         'invalidValue#0',
+        'hashCode#0',
         'name#0',
         'message#0',
         'stackTrace#0',
+        '==#1',
         '#1',
         'value#3',
         'range#5',
@@ -359,14 +962,17 @@ void main() {
     test('IndexErrorBindings.methodMap has expected keys', () {
       final map = IndexErrorBindings.methodMap();
       expect(map.keys, containsAll([
+        'toString#0',
         'indexable#0',
         'length#0',
         'invalidValue#0',
         'start#0',
         'end#0',
+        'hashCode#0',
         'name#0',
         'message#0',
         'stackTrace#0',
+        '==#1',
         '#5',
         'withLength#5',
       ]));
@@ -377,7 +983,9 @@ void main() {
       expect(map.keys, containsAll([
         'toString#0',
         'message#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#1',
       ]));
     });
@@ -387,7 +995,9 @@ void main() {
       expect(map.keys, containsAll([
         'toString#0',
         'message#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#1',
       ]));
     });
@@ -397,7 +1007,9 @@ void main() {
       expect(map.keys, containsAll([
         'toString#0',
         'message#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#1',
       ]));
     });
@@ -409,7 +1021,19 @@ void main() {
         'message#0',
         'source#0',
         'offset#0',
+        'hashCode#0',
+        '==#1',
         '#3',
+      ]));
+    });
+
+    test('ExceptionBindings.methodMap has expected keys', () {
+      final map = ExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+        '#1',
       ]));
     });
 
@@ -418,7 +1042,9 @@ void main() {
       expect(map.keys, containsAll([
         'toString#0',
         'modifiedObject#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#1',
       ]));
     });
@@ -428,14 +1054,22 @@ void main() {
       expect(map.keys, containsAll([
         'toString#0',
         'message#0',
+        'hashCode#0',
         'stackTrace#0',
+        '==#1',
         '#1',
       ]));
     });
 
     test('TypeErrorBindings.methodMap has expected keys', () {
       final map = TypeErrorBindings.methodMap();
-      expect(map.keys, containsAll(['stackTrace#0', '#0']));
+      expect(map.keys, containsAll([
+        'toString#0',
+        'hashCode#0',
+        'stackTrace#0',
+        '==#1',
+        '#0',
+      ]));
     });
 
     test('StopwatchBindings.methodMap has expected keys', () {
@@ -444,13 +1078,1075 @@ void main() {
         'start#0',
         'stop#0',
         'reset#0',
+        'toString#0',
         'frequency#0',
         'elapsedTicks#0',
         'elapsed#0',
         'elapsedMicroseconds#0',
         'elapsedMilliseconds#0',
         'isRunning#0',
+        'hashCode#0',
+        '==#1',
         '#0',
+      ]));
+    });
+
+    test('IntegerDivisionByZeroExceptionBindings.methodMap has expected keys', () {
+      final map = IntegerDivisionByZeroExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'stackTrace#0',
+        'hashCode#0',
+        '==#1',
+        '#0',
+      ]));
+    });
+
+    test('CertificateExceptionBindings.methodMap has expected keys', () {
+      final map = CertificateExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'hashCode#0',
+        'type#0',
+        'message#0',
+        'osError#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('DirectoryBindings.methodMap has expected keys', () {
+      final map = DirectoryBindings.methodMap();
+      expect(map.keys, containsAll([
+        'create#1',
+        'createSync#1',
+        'createTemp#1',
+        'createTempSync#1',
+        'resolveSymbolicLinks#0',
+        'resolveSymbolicLinksSync#0',
+        'rename#1',
+        'renameSync#1',
+        'delete#1',
+        'deleteSync#1',
+        'list#2',
+        'listSync#2',
+        'toString#0',
+        'exists#0',
+        'existsSync#0',
+        'stat#0',
+        'statSync#0',
+        'watch#2',
+        'path#0',
+        'uri#0',
+        'absolute#0',
+        'hashCode#0',
+        'isAbsolute#0',
+        'parent#0',
+        '==#1',
+        '#1',
+        'fromRawPath#1',
+        'fromUri#1',
+      ]));
+    });
+
+    test('FileBindings.methodMap has expected keys', () {
+      final map = FileBindings.methodMap();
+      expect(map.keys, containsAll([
+        'create#2',
+        'createSync#2',
+        'rename#1',
+        'renameSync#1',
+        'delete#1',
+        'deleteSync#1',
+        'copy#1',
+        'copySync#1',
+        'length#0',
+        'lengthSync#0',
+        'lastAccessed#0',
+        'lastAccessedSync#0',
+        'setLastAccessed#1',
+        'setLastAccessedSync#1',
+        'lastModified#0',
+        'lastModifiedSync#0',
+        'setLastModified#1',
+        'setLastModifiedSync#1',
+        'open#1',
+        'openSync#1',
+        'openRead#2',
+        'openWrite#2',
+        'readAsBytes#0',
+        'readAsBytesSync#0',
+        'readAsString#1',
+        'readAsStringSync#1',
+        'readAsLines#1',
+        'readAsLinesSync#1',
+        'writeAsBytes#3',
+        'writeAsBytesSync#3',
+        'writeAsString#4',
+        'writeAsStringSync#4',
+        'toString#0',
+        'exists#0',
+        'existsSync#0',
+        'resolveSymbolicLinks#0',
+        'resolveSymbolicLinksSync#0',
+        'stat#0',
+        'statSync#0',
+        'watch#2',
+        'absolute#0',
+        'path#0',
+        'hashCode#0',
+        'uri#0',
+        'isAbsolute#0',
+        'parent#0',
+        '==#1',
+        '#1',
+        'fromUri#1',
+        'fromRawPath#1',
+      ]));
+    });
+
+    test('FileStatBindings.methodMap has expected keys', () {
+      final map = FileStatBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'modeString#0',
+        'changed#0',
+        'modified#0',
+        'accessed#0',
+        'type#0',
+        'mode#0',
+        'size#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('FileSystemEntityBindings.methodMap has expected keys', () {
+      final map = FileSystemEntityBindings.methodMap();
+      expect(map.keys, containsAll([
+        'exists#0',
+        'existsSync#0',
+        'rename#1',
+        'renameSync#1',
+        'resolveSymbolicLinks#0',
+        'resolveSymbolicLinksSync#0',
+        'stat#0',
+        'statSync#0',
+        'delete#1',
+        'deleteSync#1',
+        'watch#2',
+        'toString#0',
+        'path#0',
+        'uri#0',
+        'isAbsolute#0',
+        'absolute#0',
+        'parent#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('FileSystemExceptionBindings.methodMap has expected keys', () {
+      final map = FileSystemExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'path#0',
+        'osError#0',
+        'hashCode#0',
+        '==#1',
+        '#3',
+      ]));
+    });
+
+    test('HandshakeExceptionBindings.methodMap has expected keys', () {
+      final map = HandshakeExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'hashCode#0',
+        'type#0',
+        'message#0',
+        'osError#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('IOExceptionBindings.methodMap has expected keys', () {
+      final map = IOExceptionBindings.methodMap();
+      expect(map.keys, containsAll(['toString#0', 'hashCode#0', '==#1']));
+    });
+
+    test('IOSinkBindings.methodMap has expected keys', () {
+      final map = IOSinkBindings.methodMap();
+      expect(map.keys, containsAll([
+        'add#1',
+        'write#1',
+        'writeAll#2',
+        'writeln#1',
+        'writeCharCode#1',
+        'addError#2',
+        'addStream#1',
+        'flush#0',
+        'close#0',
+        'toString#0',
+        'encoding#0',
+        'done#0',
+        'hashCode#0',
+        'encoding=#1',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('InternetAddressBindings.methodMap has expected keys', () {
+      final map = InternetAddressBindings.methodMap();
+      expect(map.keys, containsAll([
+        'reverse#0',
+        'toString#0',
+        'type#0',
+        'address#0',
+        'host#0',
+        'rawAddress#0',
+        'isLoopback#0',
+        'isLinkLocal#0',
+        'isMulticast#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+        'fromRawAddress#2',
+      ]));
+    });
+
+    test('LinkBindings.methodMap has expected keys', () {
+      final map = LinkBindings.methodMap();
+      expect(map.keys, containsAll([
+        'create#2',
+        'createSync#2',
+        'updateSync#1',
+        'update#1',
+        'resolveSymbolicLinks#0',
+        'resolveSymbolicLinksSync#0',
+        'rename#1',
+        'renameSync#1',
+        'delete#1',
+        'deleteSync#1',
+        'target#0',
+        'targetSync#0',
+        'toString#0',
+        'exists#0',
+        'existsSync#0',
+        'stat#0',
+        'statSync#0',
+        'watch#2',
+        'absolute#0',
+        'hashCode#0',
+        'path#0',
+        'uri#0',
+        'isAbsolute#0',
+        'parent#0',
+        '==#1',
+        '#1',
+        'fromRawPath#1',
+        'fromUri#1',
+      ]));
+    });
+
+    test('NetworkInterfaceBindings.methodMap has expected keys', () {
+      final map = NetworkInterfaceBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'name#0',
+        'index#0',
+        'addresses#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('OSErrorBindings.methodMap has expected keys', () {
+      final map = OSErrorBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'errorCode#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('ProcessExceptionBindings.methodMap has expected keys', () {
+      final map = ProcessExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'executable#0',
+        'arguments#0',
+        'message#0',
+        'errorCode#0',
+        'hashCode#0',
+        '==#1',
+        '#4',
+      ]));
+    });
+
+    test('ProcessSignalBindings.methodMap has expected keys', () {
+      final map = ProcessSignalBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'watch#0',
+        'signalNumber#0',
+        'name#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('RandomAccessFileBindings.methodMap has expected keys', () {
+      final map = RandomAccessFileBindings.methodMap();
+      expect(map.keys, containsAll([
+        'close#0',
+        'closeSync#0',
+        'readByte#0',
+        'readByteSync#0',
+        'read#1',
+        'readSync#1',
+        'readInto#3',
+        'readIntoSync#3',
+        'writeByte#1',
+        'writeByteSync#1',
+        'writeFrom#3',
+        'writeFromSync#3',
+        'writeString#2',
+        'writeStringSync#2',
+        'position#0',
+        'positionSync#0',
+        'setPosition#1',
+        'setPositionSync#1',
+        'truncate#1',
+        'truncateSync#1',
+        'length#0',
+        'lengthSync#0',
+        'flush#0',
+        'flushSync#0',
+        'lock#3',
+        'lockSync#3',
+        'unlock#2',
+        'unlockSync#2',
+        'toString#0',
+        'path#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('RawDatagramSocketBindings.methodMap has expected keys', () {
+      final map = RawDatagramSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'close#0',
+        'send#3',
+        'receive#0',
+        'joinMulticast#2',
+        'leaveMulticast#2',
+        'getRawOption#1',
+        'setRawOption#1',
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'readEventsEnabled#0',
+        'writeEventsEnabled#0',
+        'multicastLoopback#0',
+        'multicastHops#0',
+        'multicastInterface#0',
+        'broadcastEnabled#0',
+        'port#0',
+        'address#0',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'readEventsEnabled=#1',
+        'writeEventsEnabled=#1',
+        'multicastLoopback=#1',
+        'multicastHops=#1',
+        'multicastInterface=#1',
+        'broadcastEnabled=#1',
+        '==#1',
+      ]));
+    });
+
+    test('RawSecureSocketBindings.methodMap has expected keys', () {
+      final map = RawSecureSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'renegotiate#3',
+        'toString#0',
+        'available#0',
+        'read#1',
+        'readMessage#1',
+        'write#3',
+        'sendMessage#4',
+        'close#0',
+        'shutdown#1',
+        'setOption#2',
+        'getRawOption#1',
+        'setRawOption#1',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'peerCertificate#0',
+        'selectedProtocol#0',
+        'hashCode#0',
+        'readEventsEnabled#0',
+        'writeEventsEnabled#0',
+        'port#0',
+        'remotePort#0',
+        'address#0',
+        'remoteAddress#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'readEventsEnabled=#1',
+        'writeEventsEnabled=#1',
+        '==#1',
+      ]));
+    });
+
+    test('RawServerSocketBindings.methodMap has expected keys', () {
+      final map = RawServerSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'close#0',
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'port#0',
+        'address#0',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        '==#1',
+      ]));
+    });
+
+    test('RawSocketBindings.methodMap has expected keys', () {
+      final map = RawSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'available#0',
+        'read#1',
+        'readMessage#1',
+        'write#3',
+        'sendMessage#4',
+        'close#0',
+        'shutdown#1',
+        'setOption#2',
+        'getRawOption#1',
+        'setRawOption#1',
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'readEventsEnabled#0',
+        'writeEventsEnabled#0',
+        'port#0',
+        'remotePort#0',
+        'address#0',
+        'remoteAddress#0',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'readEventsEnabled=#1',
+        'writeEventsEnabled=#1',
+        '==#1',
+      ]));
+    });
+
+    test('RawSynchronousSocketBindings.methodMap has expected keys', () {
+      final map = RawSynchronousSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'available#0',
+        'closeSync#0',
+        'readIntoSync#3',
+        'readSync#1',
+        'shutdown#1',
+        'writeFromSync#3',
+        'toString#0',
+        'port#0',
+        'remotePort#0',
+        'address#0',
+        'remoteAddress#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('RawZLibFilterBindings.methodMap has expected keys', () {
+      final map = RawZLibFilterBindings.methodMap();
+      expect(map.keys, containsAll([
+        'process#3',
+        'processed#2',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+        'deflateFilter#7',
+        'inflateFilter#4',
+      ]));
+    });
+
+    test('ReadPipeBindings.methodMap has expected keys', () {
+      final map = ReadPipeBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        '==#1',
+      ]));
+    });
+
+    test('ResourceHandleBindings.methodMap has expected keys', () {
+      final map = ResourceHandleBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toFile#0',
+        'toSocket#0',
+        'toRawSocket#0',
+        'toRawDatagramSocket#0',
+        'toReadPipe#0',
+        'toWritePipe#0',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+        'fromFile#1',
+        'fromSocket#1',
+        'fromRawSocket#1',
+        'fromRawDatagramSocket#1',
+        'fromStdin#1',
+        'fromStdout#1',
+        'fromReadPipe#1',
+        'fromWritePipe#1',
+      ]));
+    });
+
+    test('SecureSocketBindings.methodMap has expected keys', () {
+      final map = SecureSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'renegotiate#3',
+        'toString#0',
+        'destroy#0',
+        'setOption#2',
+        'getRawOption#1',
+        'setRawOption#1',
+        'addError#2',
+        'close#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'add#1',
+        'write#1',
+        'writeAll#2',
+        'writeln#1',
+        'writeCharCode#1',
+        'addStream#1',
+        'flush#0',
+        'peerCertificate#0',
+        'selectedProtocol#0',
+        'hashCode#0',
+        'port#0',
+        'remotePort#0',
+        'address#0',
+        'remoteAddress#0',
+        'done#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'encoding#0',
+        'encoding=#1',
+        '==#1',
+      ]));
+    });
+
+    test('ServerSocketBindings.methodMap has expected keys', () {
+      final map = ServerSocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'close#0',
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'port#0',
+        'address#0',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        '==#1',
+      ]));
+    });
+
+    test('SignalExceptionBindings.methodMap has expected keys', () {
+      final map = SignalExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'osError#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('SocketBindings.methodMap has expected keys', () {
+      final map = SocketBindings.methodMap();
+      expect(map.keys, containsAll([
+        'destroy#0',
+        'setOption#2',
+        'getRawOption#1',
+        'setRawOption#1',
+        'addError#2',
+        'close#0',
+        'toString#0',
+        'asBroadcastStream#2',
+        'listen#4',
+        'where#1',
+        'map#1',
+        'asyncMap#1',
+        'asyncExpand#1',
+        'handleError#2',
+        'expand#1',
+        'pipe#1',
+        'transform#1',
+        'reduce#1',
+        'fold#2',
+        'join#1',
+        'contains#1',
+        'forEach#1',
+        'every#1',
+        'any#1',
+        'cast#0',
+        'toList#0',
+        'toSet#0',
+        'drain#1',
+        'take#1',
+        'takeWhile#1',
+        'skip#1',
+        'skipWhile#1',
+        'distinct#1',
+        'firstWhere#2',
+        'lastWhere#2',
+        'singleWhere#2',
+        'elementAt#1',
+        'timeout#2',
+        'add#1',
+        'write#1',
+        'writeAll#2',
+        'writeln#1',
+        'writeCharCode#1',
+        'addStream#1',
+        'flush#0',
+        'port#0',
+        'remotePort#0',
+        'address#0',
+        'remoteAddress#0',
+        'done#0',
+        'hashCode#0',
+        'isBroadcast#0',
+        'length#0',
+        'isEmpty#0',
+        'first#0',
+        'last#0',
+        'single#0',
+        'encoding#0',
+        'encoding=#1',
+        '==#1',
+      ]));
+    });
+
+    test('SocketControlMessageBindings.methodMap has expected keys', () {
+      final map = SocketControlMessageBindings.methodMap();
+      expect(map.keys, containsAll([
+        'extractHandles#0',
+        'toString#0',
+        'level#0',
+        'type#0',
+        'data#0',
+        'hashCode#0',
+        '==#1',
+        'fromHandles#1',
+      ]));
+    });
+
+    test('SocketExceptionBindings.methodMap has expected keys', () {
+      final map = SocketExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'osError#0',
+        'address#0',
+        'port#0',
+        'hashCode#0',
+        '==#1',
+        '#4',
+        'closed#0',
+      ]));
+    });
+
+    test('StdinExceptionBindings.methodMap has expected keys', () {
+      final map = StdinExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'osError#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('StdoutExceptionBindings.methodMap has expected keys', () {
+      final map = StdoutExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'message#0',
+        'osError#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('TlsExceptionBindings.methodMap has expected keys', () {
+      final map = TlsExceptionBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'type#0',
+        'message#0',
+        'osError#0',
+        'hashCode#0',
+        '==#1',
+        '#2',
+      ]));
+    });
+
+    test('WritePipeBindings.methodMap has expected keys', () {
+      final map = WritePipeBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'add#1',
+        'write#1',
+        'writeAll#2',
+        'writeln#1',
+        'writeCharCode#1',
+        'addError#2',
+        'addStream#1',
+        'flush#0',
+        'close#0',
+        'hashCode#0',
+        'encoding#0',
+        'done#0',
+        'encoding=#1',
+        '==#1',
+      ]));
+    });
+
+    test('X509CertificateBindings.methodMap has expected keys', () {
+      final map = X509CertificateBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'der#0',
+        'pem#0',
+        'sha1#0',
+        'subject#0',
+        'issuer#0',
+        'startValidity#0',
+        'endValidity#0',
+        'hashCode#0',
+        '==#1',
+      ]));
+    });
+
+    test('MutableRectangleBindings.methodMap has expected keys', () {
+      final map = MutableRectangleBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'intersection#1',
+        'intersects#1',
+        'boundingBox#1',
+        'containsRectangle#1',
+        'containsPoint#1',
+        'left#0',
+        'top#0',
+        'width#0',
+        'height#0',
+        'hashCode#0',
+        'right#0',
+        'bottom#0',
+        'topLeft#0',
+        'topRight#0',
+        'bottomRight#0',
+        'bottomLeft#0',
+        'left=#1',
+        'top=#1',
+        'width=#1',
+        'height=#1',
+        '==#1',
+        '#4',
+        'fromPoints#2',
+      ]));
+    });
+
+    test('PointBindings.methodMap has expected keys', () {
+      final map = PointBindings.methodMap();
+      expect(map.keys, containsAll([
+        'toString#0',
+        'distanceTo#1',
+        'squaredDistanceTo#1',
+        'x#0',
+        'y#0',
+        'hashCode#0',
+        'magnitude#0',
+        '==#1',
+        '+#1',
+        '-#1',
+        '*#1',
+        '#2',
+      ]));
+    });
+
+    test('RandomBindings.methodMap has expected keys', () {
+      final map = RandomBindings.methodMap();
+      expect(map.keys, containsAll([
+        'nextInt#1',
+        'nextDouble#0',
+        'nextBool#0',
+        'toString#0',
+        'hashCode#0',
+        '==#1',
+        '#1',
+        'secure#0',
       ]));
     });
 

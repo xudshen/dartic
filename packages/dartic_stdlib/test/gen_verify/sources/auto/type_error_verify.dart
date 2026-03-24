@@ -15,7 +15,10 @@ class _VerifyTypeError extends TypeError {
   }
 
   void runAllSuperCalls() {
+    _callSuper('toString', () => super.toString());
+    _callSuper('hashCode', () => super.hashCode);
     _callSuper('stackTrace', () => super.stackTrace);
+    _callSuper('==', () => this == Object());
   }
 }
 
