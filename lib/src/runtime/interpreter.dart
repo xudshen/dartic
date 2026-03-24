@@ -2334,10 +2334,22 @@ class DarticInterpreter {
 
         // ── Call/Return (0x50-0x5F) ──
 
-        case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A; C=argCount
+        case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
           final a = decodeA(instr);
           final b = decodeB(instr);
           final raw = rs.read(rBase + b);
+
+          // Read flag byte: 0 = C is argCount, 1 = C is CallNamedInfo index.
+          final CallNamedInfo? callNamedInfo;
+          final int argCount;
+          if (decodeFlag(instr) != 0) {
+            callNamedInfo = cp.getRef(decodeC(instr)) as CallNamedInfo;
+            argCount = callNamedInfo.totalArgCount;
+          } else {
+            callNamedInfo = null;
+            argCount = decodeC(instr);
+          }
+
           // Unwrap proxy functions back to DarticClosure. This happens when
           // closures escape to host collections (e.g., List.add wraps them via
           // ClosureAdapter) and are later read back via host getters.
@@ -2347,21 +2359,42 @@ class DarticInterpreter {
           } else if (raw is Function) {
             closure = _closureReverseCache[raw];
             if (closure == null) {
-              // Native host Function — call directly via Function.apply.
-              // C field encodes the positional arg count. Args are placed by
-              // the compiler at the callee frame area: rs.sp+3, rs.sp+4, ...
-              // (skipping ITA/FTA/this header slots).
-              final argCount = decodeC(instr);
-              final args = <Object?>[];
-              for (var i = 0; i < argCount; i++) {
-                args.add(rs.read(rs.sp + 3 + i));
-              }
-              try {
-                final result = Function.apply(raw, args);
-                rs.write(rBase + a, result);
-              } on Object catch (e, st) {
-                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                continue;
+              // Native host Function — call via Function.apply.
+              if (callNamedInfo != null) {
+                // Split args into positional and named using CallNamedInfo.
+                final posArgs = <Object?>[];
+                for (var i = 0; i < callNamedInfo.positionalCount; i++) {
+                  posArgs.add(rs.read(rs.sp + 3 + i));
+                }
+                final namedArgs = <Symbol, dynamic>{};
+                for (var i = 0; i < callNamedInfo.allNamedNames.length; i++) {
+                  if ((callNamedInfo.providedBits & (1 << i)) != 0) {
+                    namedArgs[Symbol(callNamedInfo.allNamedNames[i])] =
+                        rs.read(rs.sp + 3 + callNamedInfo.positionalCount + i);
+                  }
+                }
+                try {
+                  final result = Function.apply(
+                    raw, posArgs, namedArgs.isEmpty ? null : namedArgs,
+                  );
+                  rs.write(rBase + a, result);
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
+                }
+              } else {
+                // No named params — all positional (existing fast path).
+                final args = <Object?>[];
+                for (var i = 0; i < argCount; i++) {
+                  args.add(rs.read(rs.sp + 3 + i));
+                }
+                try {
+                  final result = Function.apply(raw, args);
+                  rs.write(rBase + a, result);
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
+                }
               }
               break;
             }
@@ -2375,7 +2408,6 @@ class DarticInterpreter {
 
           // Arity check: verify call-site arg count matches callee's params.
           {
-            final argCount = decodeC(instr);
             if (argCount < callee.requiredPositionalCount ||
                 argCount > callee.positionalParamCount + callee.namedParamNames.length) {
               final args = <Object?>[];
