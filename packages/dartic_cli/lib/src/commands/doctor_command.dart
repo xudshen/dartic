@@ -34,17 +34,7 @@ class DoctorCommand extends Command<int> {
       issues++;
     }
 
-    // 2. Flutter SDK
-    try {
-      final path = _sdkResolver.resolveFlutterSdk();
-      final version = readSdkVersion(path) ?? 'unknown';
-      _logger.info('[\u2713] Flutter SDK $version ($path)');
-    } on Object catch (e) {
-      _logger.err('[\u2717] Flutter SDK: $e');
-      issues++;
-    }
-
-    // 3. package_config.json
+    // 2. package_config.json
     final packageConfig = File('.dart_tool/package_config.json');
     if (packageConfig.existsSync()) {
       _logger.info('[\u2713] .dart_tool/package_config.json');
@@ -53,7 +43,7 @@ class DoctorCommand extends Command<int> {
       issues++;
     }
 
-    // 4. vendor/dart-sdk
+    // 3. vendor/dart-sdk
     final vendorSdk = Directory('vendor/dart-sdk');
     if (vendorSdk.existsSync()) {
       _logger.info('[\u2713] vendor/dart-sdk');

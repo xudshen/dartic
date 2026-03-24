@@ -39,10 +39,7 @@ class StubDillCompiler {
     // Resolve directory URIs to actual barrel file imports.
     libraryUris = _resolveDirectoryUris(libraryUris, analysisRoot);
 
-    // Use explicit compiler mode; fall back to auto-detection for
-    // backwards compatibility (e.g. --discover which doesn't pass mode).
-    final isFlutter = compilerMode == 'frontend-server' ||
-        (compilerMode == 'dart' && _needsFlutterCompiler(libraryUris));
+    final isFlutter = compilerMode == 'frontend-server';
     final cacheKey = _computeCacheKey(
         libraryUris, dartBin, isFlutter ? 'flutter' : 'dart');
     final dillPath = '$cacheDir/$cacheKey.dill';
@@ -57,16 +54,14 @@ class StubDillCompiler {
     _generateStub(stubPath, libraryUris);
 
     if (isFlutter) {
-      final flutterSdk = flutterSdkPath ?? _discoverFlutterSdk();
-      if (flutterSdk == null) {
-        // Clean up stub and fail.
+      if (flutterSdkPath == null) {
         try { File(stubPath).deleteSync(); } catch (_) {}
         throw StateError(
-          'Flutter SDK required for compiling stub with dart:ui / package:flutter imports. '
-          'Set --flutter-sdk or ensure FVM is configured.');
+          'Flutter SDK required for compiler-mode=frontend-server. '
+          'Pass --flutter-sdk.');
       }
       await _compileFlutterDill(
-        flutterSdk: flutterSdk,
+        flutterSdk: flutterSdkPath,
         stubPath: stubPath,
         dillPath: dillPath,
         analysisRoot: analysisRoot,
@@ -163,11 +158,6 @@ class StubDillCompiler {
       // Fallback: can't read package config.
     }
     return [];
-  }
-
-  /// Whether any URI requires the Flutter compiler (dart:ui or package:flutter).
-  static bool _needsFlutterCompiler(List<String> uris) {
-    return uris.any((u) => u == 'dart:ui' || u.startsWith('package:flutter/'));
   }
 
   /// Loads a Component from a .dill binary.
@@ -280,46 +270,6 @@ class StubDillCompiler {
         '${result.stdout}\n${result.stderr}',
       );
     }
-  }
-
-  // ── Flutter SDK discovery ─────────────────────────────────────────────
-
-  /// Discovers Flutter SDK from FVM config or environment.
-  static String? _discoverFlutterSdk() {
-    // Try FVM.
-    final version = _findFvmFlutterVersion();
-    if (version != null) {
-      final home = Platform.environment['HOME'] ?? '';
-      final sdkPath = '$home/.fvm_cache/versions/$version';
-      if (Directory(sdkPath).existsSync()) return sdkPath;
-    }
-
-    // Try FLUTTER_ROOT env.
-    final envRoot = Platform.environment['FLUTTER_ROOT'];
-    if (envRoot != null && Directory(envRoot).existsSync()) return envRoot;
-
-    return null;
-  }
-
-  /// Reads the Flutter version from FVM config.
-  static String? _findFvmFlutterVersion() {
-    var dir = Directory.current;
-    while (true) {
-      final configFile = File('${dir.path}/.fvm/fvm_config.json');
-      if (configFile.existsSync()) {
-        try {
-          final content = configFile.readAsStringSync();
-          final json = jsonDecode(content) as Map<String, dynamic>;
-          return json['flutterSdkVersion'] as String?;
-        } catch (_) {
-          return null;
-        }
-      }
-      final parent = dir.parent;
-      if (parent.path == dir.path) break;
-      dir = parent;
-    }
-    return null;
   }
 
   // ── Cache utilities ───────────────────────────────────────────────────

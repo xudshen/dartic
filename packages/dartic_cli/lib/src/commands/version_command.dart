@@ -1,6 +1,6 @@
 import 'package:args/command_runner.dart';
 import 'package:dartic_compiler/dartic_compiler.dart'
-    show darticVersion, requiredDartSdk, requiredFlutterSdk;
+    show darticVersion, requiredDartSdk;
 import 'package:mason_logger/mason_logger.dart';
 
 /// Prints dartic version and SDK requirements.
@@ -18,10 +18,7 @@ class VersionCommand extends Command<int> {
   @override
   int run() {
     _logger.info('dartic CLI $darticVersion');
-    _logger.info('  Dart SDK:    $requiredDartSdk (required)');
-    _logger.info(
-      '  Flutter SDK: $requiredFlutterSdk (required for --target=flutter)',
-    );
+    _logger.info('  Dart SDK: $requiredDartSdk (required)');
     return 0;
   }
 }
