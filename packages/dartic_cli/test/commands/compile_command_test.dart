@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic_compiler/dartic_compiler.dart'
-    show CompileError, CompilePipeline, DarticTarget, SdkNotFoundError;
+    show CompileError, CompilePipeline, DarticTarget;
 import 'package:dartic_cli/src/cli_error.dart';
 import 'package:dartic_cli/src/commands/compile_command.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -139,9 +139,9 @@ void main() {
       );
     });
 
-    test('SdkNotFoundError wraps in DarticCliError', () async {
+    test('CompileError wraps in CompileCliError', () async {
       final errorPipeline = FakeCompilePipeline(
-        errorToThrow: SdkNotFoundError('SDK not found'),
+        errorToThrow: CompileError('SDK not found'),
       );
 
       final sourceFile = File(p.join(tempDir.path, 'main.dart'));

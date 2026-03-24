@@ -3,12 +3,9 @@ import 'dart:typed_data';
 import 'package:dartic_compiler/dartic_compiler.dart'
     show CompilePipeline, DarticTarget;
 
-import 'fake_sdk_resolver.dart';
-
 /// A fake CompilePipeline that returns fixed bytes or throws a given error.
 class FakeCompilePipeline extends CompilePipeline {
-  FakeCompilePipeline({this.resultBytes, this.errorToThrow})
-      : super(sdkResolver: FakeSuccessSdkResolver());
+  FakeCompilePipeline({this.resultBytes, this.errorToThrow});
 
   final Uint8List? resultBytes;
   final Object? errorToThrow;

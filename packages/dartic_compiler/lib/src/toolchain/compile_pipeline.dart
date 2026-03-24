@@ -4,8 +4,6 @@
 ///   Flutter frontend_server
 /// - Stage 2: `BinaryBuilder` → `DarticCompiler`
 /// - Stage 3: `DarticSerializer`
-///
-/// See: docs/plans/2026-03-08-dartic-cli-design.md §5.1
 library;
 
 import 'dart:io';
@@ -18,7 +16,6 @@ import 'package:dartic/dartic_internal.dart';
 
 import '../compiler/compiler.dart';
 import '../compiler/package_discovery.dart';
-import 'sdk_resolver.dart';
 import 'target.dart';
 
 /// Error thrown when compilation fails at any stage.
@@ -35,23 +32,19 @@ class CompileError implements Exception {
 /// Compiles Dart source to `.darb` bytecode.
 ///
 /// Wraps the three-stage pipeline:
-/// 1. `.dart → .dill` via subprocess (Dart SDK or Flutter frontend_server)
+/// 1. `.dart → .dill` via subprocess (`dart compile kernel` or frontend_server)
 /// 2. `.dill → DarticModule` via [DarticCompiler]
 /// 3. `DarticModule → .darb` via [DarticSerializer]
 class CompilePipeline {
-  /// The SDK resolver used to locate Dart / Flutter SDKs for Stage 1.
-  final SdkResolver sdkResolver;
-
-  CompilePipeline({required this.sdkResolver});
+  CompilePipeline();
 
   /// Full pipeline: `.dart → .darb`.
   ///
   /// [sourcePath] must point to an existing `.dart` file.
   /// [target] selects the Stage 1 subprocess (Dart or Flutter).
-  /// [sdkPath] overrides SDK discovery (passed to [SdkResolver]).
+  /// [sdkPath] — Flutter SDK path (required when target=flutter).
   /// [onProgress] is called with a short stage description for progress UI.
   /// [compilablePackages] overrides auto-discovery when provided.
-  /// When `null`, packages are discovered from `pubspec.yaml` `dartic:` sections.
   Future<Uint8List> compile({
     required String sourcePath,
     required DarticTarget target,
@@ -101,8 +94,7 @@ class CompilePipeline {
     try {
       switch (target) {
         case DarticTarget.dart:
-          await _compileDartDill(sourcePath, tempDill,
-              sdkPath: sdkPath, onStderr: onStderr);
+          await _compileDartDill(sourcePath, tempDill, onStderr: onStderr);
         case DarticTarget.flutter:
           if (sdkPath == null) {
             throw CompileError(
@@ -111,7 +103,7 @@ class CompilePipeline {
             );
           }
           await _compileFlutterDill(sourcePath, tempDill,
-              sdkPath: sdkPath, onStderr: onStderr);
+              flutterSdkPath: sdkPath, onStderr: onStderr);
       }
 
       final dillFile = File(tempDill);
@@ -150,15 +142,15 @@ class CompilePipeline {
     }
   }
 
-  /// Compiles `.dart → .dill` using the Dart SDK's `dart compile kernel`.
+  /// Compiles `.dart → .dill` using `dart compile kernel`.
+  ///
+  /// Uses [Platform.resolvedExecutable] as the dart binary.
   Future<void> _compileDartDill(
     String sourcePath,
     String outputDill, {
-    String? sdkPath,
     void Function(String stderr)? onStderr,
   }) async {
-    final dartSdk = sdkResolver.resolveDartSdk(explicitPath: sdkPath);
-    final dartBin = '$dartSdk/bin/dart';
+    final dartBin = Platform.resolvedExecutable;
 
     final result = await Process.run(dartBin, [
       'compile',
@@ -184,17 +176,15 @@ class CompilePipeline {
   Future<void> _compileFlutterDill(
     String sourcePath,
     String outputDill, {
-    required String sdkPath,
+    required String flutterSdkPath,
     void Function(String stderr)? onStderr,
   }) async {
-    final flutterSdk = sdkResolver.resolveFlutterSdk(explicitPath: sdkPath);
-
     final dartAotRuntime =
-        '$flutterSdk/bin/cache/dart-sdk/bin/dartaotruntime';
+        '$flutterSdkPath/bin/cache/dart-sdk/bin/dartaotruntime';
     final frontendServer =
-        '$flutterSdk/bin/cache/dart-sdk/bin/snapshots/frontend_server_aot.dart.snapshot';
+        '$flutterSdkPath/bin/cache/dart-sdk/bin/snapshots/frontend_server_aot.dart.snapshot';
     final sdkRoot =
-        '$flutterSdk/bin/cache/artifacts/engine/common/flutter_patched_sdk/';
+        '$flutterSdkPath/bin/cache/artifacts/engine/common/flutter_patched_sdk/';
 
     // Locate the project's package_config.json for --packages.
     String? packageConfigPath;
@@ -231,10 +221,6 @@ class CompilePipeline {
   }
 
   /// Discovers compilable packages from the project containing [sourcePath].
-  ///
-  /// Walks up to find the nearest `pubspec.yaml`, then reads
-  /// `.dart_tool/package_config.json` and checks each package's
-  /// `pubspec.yaml` for a `dartic: role: compilable` declaration.
   Set<String> _discoverCompilablePackages(String sourcePath) {
     final pubspec = findNearestPubspec(sourcePath);
     if (pubspec == null) return {};

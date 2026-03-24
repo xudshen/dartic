@@ -81,7 +81,7 @@ void main() {
     late CompilePipeline pipeline;
 
     setUp(() {
-      pipeline = CompilePipeline(sdkResolver: SdkResolver());
+      pipeline = CompilePipeline();
     });
 
     test('compiles valid dill bytes to .darb with correct magic number',
@@ -115,9 +115,7 @@ void main() {
 
     setUp(() {
       dartSdkPath = _findDartSdkPath();
-      pipeline = CompilePipeline(
-        sdkResolver: SdkResolver(),
-      );
+      pipeline = CompilePipeline();
     });
 
     test('compiles valid Dart source to .darb', () async {

@@ -2,13 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic_compiler/dartic_compiler.dart'
-    show
-        CompileError,
-        CompilePipeline,
-        DarticTarget,
-        SdkNotFoundError,
-        SdkResolver,
-        SdkVersionMismatchError;
+    show CompileError, CompilePipeline, DarticTarget;
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
@@ -19,10 +13,8 @@ class CompileCommand extends Command<int> {
   CompileCommand({
     Logger? logger,
     CompilePipeline? pipeline,
-    SdkResolver? sdkResolver,
   })  : _logger = logger ?? Logger(),
-        _pipeline = pipeline,
-        _sdkResolver = sdkResolver ?? SdkResolver() {
+        _pipeline = pipeline {
     argParser
       ..addOption(
         'output',
@@ -41,13 +33,12 @@ class CompileCommand extends Command<int> {
       )
       ..addOption(
         'sdk-path',
-        help: 'SDK path (Dart SDK for target=dart, Flutter SDK for target=flutter).',
+        help: 'SDK path (Flutter SDK for target=flutter).',
       );
   }
 
   final Logger _logger;
   final CompilePipeline? _pipeline;
-  final SdkResolver _sdkResolver;
 
   @override
   String get name => 'compile';
@@ -86,8 +77,7 @@ class CompileCommand extends Command<int> {
     final sdkPath = argResults!['sdk-path'] as String?;
 
     // Create pipeline if not injected.
-    final pipeline =
-        _pipeline ?? CompilePipeline(sdkResolver: _sdkResolver);
+    final pipeline = _pipeline ?? CompilePipeline();
 
     try {
       // Compile with progress.
@@ -116,10 +106,6 @@ class CompileCommand extends Command<int> {
       return 0;
     } on CompileError catch (e) {
       throw CompileCliError(e.message);
-    } on SdkNotFoundError catch (e) {
-      throw DarticCliError(e.message);
-    } on SdkVersionMismatchError catch (e) {
-      throw DarticCliError(e.toString());
     }
   }
 }
