@@ -3306,6 +3306,8 @@ class DarticInterpreter {
               value is! DarticClosure &&
               hostTypeResolver != null &&
               targetType is DarticInterfaceType &&
+              // Exclude FutureOr: its subtyping is fully algorithmic.
+              targetType.classId != reg.futureOrClassId &&
               (objType is! DarticInterfaceType ||
                   objType.classId != targetType.classId)) {
             // Check if the subtype checker already knows this relationship.
@@ -3357,6 +3359,9 @@ class DarticInterpreter {
               value is! DarticClosure &&
               hostTypeResolver != null &&
               targetType is DarticInterfaceType &&
+              // Exclude FutureOr: its subtyping is fully algorithmic (Rule 7
+              // in SubtypeChecker), not a host multi-inheritance relationship.
+              targetType.classId != _activeTypeRegistry!.futureOrClassId &&
               (objType is! DarticInterfaceType ||
                   objType.classId != targetType.classId)) {
             // Host multi-inheritance fallback (same guard as INSTANCE_OF).
