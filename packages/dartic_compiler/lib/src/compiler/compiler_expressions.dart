@@ -1023,10 +1023,34 @@ extension on DarticCompiler {
       );
     }
 
+    // Build CallNamedInfo for funcType with named parameters, so the
+    // interpreter's native-Function fallback can properly split positional
+    // and named args for Function.apply.
+    int? callNamedInfoIdx;
+    if (funcType != null && funcType.namedParameters.isNotEmpty) {
+      final providedNames = {for (final n in arguments.named) n.name};
+      int providedBits = 0;
+      final allNamedNames = <String>[];
+      for (var i = 0; i < funcType.namedParameters.length; i++) {
+        final name = funcType.namedParameters[i].name;
+        allNamedNames.add(name);
+        if (providedNames.contains(name)) {
+          providedBits |= (1 << i);
+        }
+      }
+      final info = CallNamedInfo(
+        positionalCount: arguments.positional.length,
+        allNamedNames: allNamedNames,
+        providedBits: providedBits,
+      );
+      callNamedInfoIdx = _constantPool.addRef(info);
+    }
+
     // Emit FTA for generic closure calls (e.g., ctor<int>(42)).
     _emitFTAForCall(arguments.types);
 
-    _emitArgMovesAndCall(argTemps, Op.call, resultReg, closureReg);
+    _emitArgMovesAndCall(argTemps, Op.call, resultReg, closureReg,
+        callNamedInfoIdx: callNamedInfoIdx);
 
     // Unbox if the caller needs a value type (the ref register holds
     // the boxed value thanks to the runtime's dual-write on RETURN_VAL).
@@ -1446,8 +1470,9 @@ extension on DarticCompiler {
     List<(int, ResultLoc)> argTemps,
     int callOp,
     int resultReg,
-    int callOperandB,
-  ) {
+    int callOperandB, {
+    int? callNamedInfoIdx,
+  }) {
     var valArgIdx = 0;
     var refArgIdx = 3; // Skip ITA(0), FTA(1), this(2) — Ch2 convention
     for (final (srcReg, loc) in argTemps) {
@@ -1460,6 +1485,9 @@ extension on DarticCompiler {
 
     if (callOp == Op.callStatic || callOp == Op.callSuper) {
       _emitter.emitABx(callOp, resultReg, callOperandB);
+    } else if (callNamedInfoIdx != null) {
+      // Op.call with CallNamedInfo: flag=1, C=info index.
+      _emitter.emitABCF(callOp, 1, resultReg, callOperandB, callNamedInfoIdx);
     } else {
       // For Op.call: C = positional arg count (used for native Function
       // fallback when the callee is a host Function, not a DarticClosure).
