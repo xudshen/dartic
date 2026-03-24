@@ -73,10 +73,8 @@ class DarticObject {
   String toString() {
     final d = dispatch;
     if (d != null) {
-      try {
-        final result = d.invoke(this, this, 'toString', const []);
-        if (!identical(result, notOverridden)) return result as String;
-      } catch (_) {}
+      final result = d.invoke(this, this, 'toString', const []);
+      if (!identical(result, notOverridden)) return result as String;
     }
     return 'DarticObject(cls=$classId, '
         'refs=${refFields.length}, vals=${valueFields.length})';
@@ -86,10 +84,8 @@ class DarticObject {
   int get hashCode {
     final d = dispatch;
     if (d != null) {
-      try {
-        final result = d.get(this, this, 'hashCode');
-        if (!identical(result, notOverridden)) return result as int;
-      } catch (_) {}
+      final result = d.get(this, this, 'hashCode');
+      if (!identical(result, notOverridden)) return result as int;
     }
     return identityHashCode(this);
   }
@@ -104,10 +100,8 @@ class DarticObject {
     }
     final d = dispatch;
     if (d != null) {
-      try {
-        final result = d.invoke(this, this, '==', [other]);
-        if (!identical(result, notOverridden)) return result as bool;
-      } catch (_) {}
+      final result = d.invoke(this, this, '==', [other]);
+      if (!identical(result, notOverridden)) return result as bool;
     }
     return false;
   }

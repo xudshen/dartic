@@ -2295,8 +2295,14 @@ class DarticInterpreter {
           final a = decodeA(instr);
           final b = decodeB(instr);
           final c = decodeC(instr);
-          vs.writeInt(vBase + a,
-              rs.read(rBase + b) == rs.read(rBase + c) ? 1 : 0);
+          // try/catch: DarticObject.== dispatches to user-overridden ==
+          // which may throw (e.g., covariant parameter TypeError).
+          try {
+            vs.writeInt(vBase + a,
+                rs.read(rBase + b) == rs.read(rBase + c) ? 1 : 0);
+          } on Object catch (e, st) {
+            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+          }
 
         // ── Control Flow (0x40-0x4F) ──
 
