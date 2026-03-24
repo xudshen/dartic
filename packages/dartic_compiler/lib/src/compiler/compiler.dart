@@ -184,6 +184,12 @@ class DarticCompiler {
   /// the runtime object's classInfo.fields resolves to the most-derived slot.
   final Set<String> _overriddenFieldNames = {};
 
+  /// Late fields whose initializer is currently being compiled.
+  /// Used to detect circular references: when a late field's initializer
+  /// accesses the same field, we emit a direct field read (bypassing the
+  /// sentinel init logic) so the runtime handles re-initialization per spec.
+  final Set<ir.Field> _lateFieldsBeingCompiled = {};
+
   // ── Source position tracking (module-level) ──
 
   /// Maps source file URIs to indices in [_fileUris].

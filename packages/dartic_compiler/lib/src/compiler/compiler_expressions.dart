@@ -2000,6 +2000,13 @@ extension on DarticCompiler {
           return _emitGetField(recvReg, layout);
         }
 
+        // Late field circular reference: if we're already compiling this
+        // field's initializer, emit a direct field read (no sentinel init).
+        // The runtime handles re-initialization per Dart spec §16.32.
+        if (_lateFieldsBeingCompiled.contains(target)) {
+          return _emitGetField(recvReg, layout);
+        }
+
         // Late field: read then check sentinel.
         return _emitLateFieldGet(recvReg, layout, target);
       }
@@ -2626,6 +2633,9 @@ extension on DarticCompiler {
       if (layout != null) {
         const thisReg = 2; // rsp+2
         if (layout.isLate) {
+          if (_lateFieldsBeingCompiled.contains(target)) {
+            return _emitGetField(thisReg, layout);
+          }
           return _emitLateFieldGet(thisReg, layout, target);
         }
         return _emitGetField(thisReg, layout);
@@ -4619,7 +4629,12 @@ extension on DarticCompiler {
         _emitMove(savedThisReg, thisReg, ResultLoc.ref);
         _emitMove(thisReg, recvReg, ResultLoc.ref);
       }
+      // Track this field to detect circular references during compilation.
+      // If the initializer accesses the same field, _compileInstanceGet
+      // emits a direct field read instead of recursing into _emitLateFieldGet.
+      _lateFieldsBeingCompiled.add(field);
       final (initReg, initLoc) = _compileExpression(field.initializer!);
+      _lateFieldsBeingCompiled.remove(field);
       final initRefReg =
           _boxToRefIfValue(initReg, initLoc, _inferExprType(field.initializer!));
 

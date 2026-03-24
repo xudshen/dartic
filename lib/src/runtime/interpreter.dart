@@ -2730,8 +2730,13 @@ class DarticInterpreter {
             final result = hostBindingRegistry!.invoke(runtimeId, hostArgs);
             rs.write(rBase + a, result);
           } on Object catch (e, st) {
-            // Host function threw — route through the exception handler.
-            pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+            // Error.throwWithStackTrace: the user provided a custom stack
+            // trace that Dart associates with the catch clause's `st`.
+            // Preserve it instead of capturing a new DarticStackTrace.
+            final trace = _lastHostCallName == 'throwWithStackTrace'
+                ? st
+                : DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st);
+            pc = unwindToHandler(pc - 1, e, trace);
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
