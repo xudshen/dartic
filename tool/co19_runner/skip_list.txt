@@ -633,3 +633,9 @@ LibTest/collection/ListBase/ListBase_class_A01_t03.dart    # mixin chain: ListBa
 LibTest/collection/ListBase/ListBase_class_A01_t04.dart    # mixin chain: ListBase = ListMixin → stack overflow
 LibTest/collection/ListBase/ListBase_class_A01_t05.dart    # mixin chain: ListBase = ListMixin → stack overflow
 LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBase = ListMixin → stack overflow
+
+# ── Augmentations: CFE compilation failure (2) ──────────────────────
+# "Bad state: Generating kernel failed\!" — CFE doesn't support these
+# augmentation patterns with the current Dart SDK version.
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t05.dart
+LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t06.dart
