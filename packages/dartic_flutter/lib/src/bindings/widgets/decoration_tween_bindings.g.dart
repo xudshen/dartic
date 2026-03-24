@@ -75,13 +75,6 @@ class _$DecorationTween extends DecorationTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Decoration? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -110,10 +103,20 @@ class _$DecorationTween extends DecorationTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -123,11 +126,11 @@ class _$DecorationTween extends DecorationTween implements DarticObjectHolder {
   Decoration _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<Decoration> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<Decoration> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   Decoration? get _super$begin => super.begin;
   Decoration? get _super$end => super.end;
   set _super$begin(Decoration? value) { super.begin = value; }
   set _super$end(Decoration? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,11 +156,11 @@ abstract final class DecorationTweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$evaluate#1', (args) => (args[0] as _$DecorationTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$animate#1', (args) => (args[0] as _$DecorationTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$chain#1', (args) => (args[0] as _$DecorationTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$hashCode#0', (args) => (args[0] as _$DecorationTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$begin#0', (args) => (args[0] as _$DecorationTween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$end#0', (args) => (args[0] as _$DecorationTween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$begin=#1', (args) { (args[0] as _$DecorationTween)._super$begin = args[1] as Decoration?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$end=#1', (args) { (args[0] as _$DecorationTween)._super$end = args[1] as Decoration?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::DecorationTween::\$super\$hashCode#0', (args) => (args[0] as _$DecorationTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -106,13 +106,6 @@ class _$ContinuousRectangleBorder extends ContinuousRectangleBorder implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   BorderSide get side {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'side');
     if (identical(r, notOverridden)) return super.side;
@@ -127,17 +120,27 @@ class _$ContinuousRectangleBorder extends ContinuousRectangleBorder implements D
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -153,9 +156,9 @@ class _$ContinuousRectangleBorder extends ContinuousRectangleBorder implements D
   void _super$paintInterior(Canvas canvas, Rect rect, Paint paint, {TextDirection? textDirection}) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); }
   BorderRadiusGeometry get _super$borderRadius => super.borderRadius;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
-  int get _super$hashCode => super.hashCode;
   BorderSide get _super$side => super.side;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -187,9 +190,9 @@ abstract final class ContinuousRectangleBorderBindings {
     ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$paintInterior#4', (args) { (args[0] as _$ContinuousRectangleBorder)._super$paintInterior(args[1] as Canvas, args[2] as Rect, args[3] as Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$borderRadius#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$dimensions#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$dimensions);
-    ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$hashCode#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$side#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$side);
     ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$preferPaintInterior);
+    ctx.registerBinding('package:flutter/src/painting/continuous_rectangle_border.dart::ContinuousRectangleBorder::\$super\$hashCode#0', (args) => (args[0] as _$ContinuousRectangleBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

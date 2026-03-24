@@ -65,13 +65,6 @@ class _$InkSparkle extends InkSparkle implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Color get color {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
     if (identical(r, notOverridden)) return super.color;
@@ -121,10 +114,20 @@ class _$InkSparkle extends InkSparkle implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -134,7 +137,6 @@ class _$InkSparkle extends InkSparkle implements DarticObjectHolder {
   void _super$confirm() { super.confirm(); }
   void _super$cancel() { super.cancel(); }
   void _super$paintInkCircle({required ui.Canvas canvas, required Matrix4 transform, required ui.Paint paint, required ui.Offset center, required double radius, ui.TextDirection? textDirection, ShapeBorder? customBorder, BorderRadius borderRadius = BorderRadius.zero, RectCallback? clipCallback}) { super.paintInkCircle(canvas: canvas, transform: transform, paint: paint, center: center, radius: radius, textDirection: textDirection, customBorder: customBorder, borderRadius: borderRadius, clipCallback: clipCallback); }
-  int get _super$hashCode => super.hashCode;
   ui.Color get _super$color => super.color;
   ShapeBorder? get _super$customBorder => super.customBorder;
   MaterialInkController get _super$controller => super.controller;
@@ -142,6 +144,7 @@ class _$InkSparkle extends InkSparkle implements DarticObjectHolder {
   ui.VoidCallback? get _super$onRemoved => super.onRemoved;
   set _super$color(ui.Color value) { super.color = value; }
   set _super$customBorder(ShapeBorder? value) { super.customBorder = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -169,7 +172,6 @@ abstract final class InkSparkleBindings {
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$confirm#0', (args) { (args[0] as _$InkSparkle)._super$confirm(); return null; });
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$cancel#0', (args) { (args[0] as _$InkSparkle)._super$cancel(); return null; });
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$paintInkCircle#9', (args) { (args[0] as _$InkSparkle)._super$paintInkCircle(canvas: args[1] as ui.Canvas, transform: args[2] as Matrix4, paint: args[3] as ui.Paint, center: args[4] as ui.Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as ui.TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; });
-    ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$hashCode#0', (args) => (args[0] as _$InkSparkle)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$color#0', (args) => (args[0] as _$InkSparkle)._super$color);
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$customBorder#0', (args) => (args[0] as _$InkSparkle)._super$customBorder);
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$controller#0', (args) => (args[0] as _$InkSparkle)._super$controller);
@@ -177,6 +179,7 @@ abstract final class InkSparkleBindings {
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$onRemoved#0', (args) => (args[0] as _$InkSparkle)._super$onRemoved);
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$color=#1', (args) { (args[0] as _$InkSparkle)._super$color = args[1] as ui.Color; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$customBorder=#1', (args) { (args[0] as _$InkSparkle)._super$customBorder = args[1] as ShapeBorder?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_sparkle.dart::InkSparkle::\$super\$hashCode#0', (args) => (args[0] as _$InkSparkle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

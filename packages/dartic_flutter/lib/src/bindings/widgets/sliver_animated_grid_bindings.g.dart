@@ -102,13 +102,6 @@ class _$SliverAnimatedGrid extends SliverAnimatedGrid implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AnimatedItemBuilder get itemBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'itemBuilder');
     if (identical(r, notOverridden)) return super.itemBuilder;
@@ -137,10 +130,20 @@ class _$SliverAnimatedGrid extends SliverAnimatedGrid implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -154,11 +157,11 @@ class _$SliverAnimatedGrid extends SliverAnimatedGrid implements DarticObjectHol
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   SliverGridDelegate get _super$gridDelegate => super.gridDelegate;
-  int get _super$hashCode => super.hashCode;
   AnimatedItemBuilder get _super$itemBuilder => super.itemBuilder;
   ChildIndexGetter? get _super$findChildIndexCallback => super.findChildIndexCallback;
   int get _super$initialItemCount => super.initialItemCount;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -190,11 +193,11 @@ abstract final class SliverAnimatedGridBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SliverAnimatedGrid)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$gridDelegate#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$gridDelegate);
-    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$itemBuilder#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$itemBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$findChildIndexCallback#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$findChildIndexCallback);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$initialItemCount#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$initialItemCount);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$key#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedGrid::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedGrid)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

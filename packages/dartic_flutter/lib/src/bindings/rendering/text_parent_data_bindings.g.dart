@@ -58,13 +58,6 @@ class _$TextParentData extends TextParentData implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   RenderBox? get previousSibling {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'previousSibling');
     if (identical(r, notOverridden)) return super.previousSibling;
@@ -100,10 +93,20 @@ class _$TextParentData extends TextParentData implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -111,12 +114,12 @@ class _$TextParentData extends TextParentData implements DarticObjectHolder {
   String _super$toString() => super.toString();
   ui.Offset? get _super$offset => super.offset;
   PlaceholderSpan? get _super$span => super.span;
-  int get _super$hashCode => super.hashCode;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
   set _super$span(PlaceholderSpan? value) { super.span = value; }
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -140,12 +143,12 @@ abstract final class TextParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$toString#0', (args) => (args[0] as _$TextParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$offset#0', (args) => (args[0] as _$TextParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$span#0', (args) => (args[0] as _$TextParentData)._super$span);
-    ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$hashCode#0', (args) => (args[0] as _$TextParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$previousSibling#0', (args) => (args[0] as _$TextParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$nextSibling#0', (args) => (args[0] as _$TextParentData)._super$nextSibling);
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$span=#1', (args) { (args[0] as _$TextParentData)._super$span = args[1] as PlaceholderSpan?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$TextParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$TextParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::TextParentData::\$super\$hashCode#0', (args) => (args[0] as _$TextParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

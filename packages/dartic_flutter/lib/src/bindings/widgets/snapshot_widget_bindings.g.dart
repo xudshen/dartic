@@ -129,13 +129,6 @@ class _$SnapshotWidget extends SnapshotWidget implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -150,10 +143,20 @@ class _$SnapshotWidget extends SnapshotWidget implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -172,9 +175,9 @@ class _$SnapshotWidget extends SnapshotWidget implements DarticObjectHolder {
   SnapshotMode get _super$mode => super.mode;
   bool get _super$autoresize => super.autoresize;
   SnapshotPainter get _super$painter => super.painter;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -209,9 +212,9 @@ abstract final class SnapshotWidgetBindings {
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$mode#0', (args) => (args[0] as _$SnapshotWidget)._super$mode);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$autoresize#0', (args) => (args[0] as _$SnapshotWidget)._super$autoresize);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$painter#0', (args) => (args[0] as _$SnapshotWidget)._super$painter);
-    ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$hashCode#0', (args) => (args[0] as _$SnapshotWidget)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$child#0', (args) => (args[0] as _$SnapshotWidget)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$key#0', (args) => (args[0] as _$SnapshotWidget)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotWidget::\$super\$hashCode#0', (args) => (args[0] as _$SnapshotWidget)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

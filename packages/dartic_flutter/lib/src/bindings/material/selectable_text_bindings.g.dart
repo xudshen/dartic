@@ -349,13 +349,6 @@ class _$SelectableText extends SelectableText implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -363,10 +356,20 @@ class _$SelectableText extends SelectableText implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -413,8 +416,8 @@ class _$SelectableText extends SelectableText implements DarticObjectHolder {
   SelectionChangedCallback? get _super$onSelectionChanged => super.onSelectionChanged;
   EditableTextContextMenuBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
   TextMagnifierConfiguration? get _super$magnifierConfiguration => super.magnifierConfiguration;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -477,8 +480,8 @@ abstract final class SelectableTextBindings {
     ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$onSelectionChanged#0', (args) => (args[0] as _$SelectableText)._super$onSelectionChanged);
     ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$SelectableText)._super$contextMenuBuilder);
     ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$magnifierConfiguration#0', (args) => (args[0] as _$SelectableText)._super$magnifierConfiguration);
-    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$hashCode#0', (args) => (args[0] as _$SelectableText)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$key#0', (args) => (args[0] as _$SelectableText)._super$key);
+    ctx.registerBinding('package:flutter/src/material/selectable_text.dart::SelectableText::\$super\$hashCode#0', (args) => (args[0] as _$SelectableText)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

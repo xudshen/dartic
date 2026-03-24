@@ -131,13 +131,6 @@ class _$NavigationDrawerDestination extends NavigationDrawerDestination implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -145,10 +138,20 @@ class _$NavigationDrawerDestination extends NavigationDrawerDestination implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -166,8 +169,8 @@ class _$NavigationDrawerDestination extends NavigationDrawerDestination implemen
   Widget? get _super$selectedIcon => super.selectedIcon;
   Widget get _super$label => super.label;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -201,8 +204,8 @@ abstract final class NavigationDrawerDestinationBindings {
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$selectedIcon#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$selectedIcon);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$label#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$label);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$enabled#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$enabled);
-    ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$key#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$key);
+    ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawerDestination::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDrawerDestination)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -447,13 +447,6 @@ class _$ModalRoute extends ModalRoute<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Future get completed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'completed');
     if (identical(r, notOverridden)) return super.completed;
@@ -626,10 +619,20 @@ class _$ModalRoute extends ModalRoute<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -687,7 +690,6 @@ class _$ModalRoute extends ModalRoute<dynamic> implements DarticObjectHolder {
   bool get _super$canPop => super.canPop;
   bool get _super$impliesAppBarDismissal => super.impliesAppBarDismissal;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
-  int get _super$hashCode => super.hashCode;
   Future get _super$completed => super.completed;
   Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
@@ -710,6 +712,7 @@ class _$ModalRoute extends ModalRoute<dynamic> implements DarticObjectHolder {
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -792,7 +795,6 @@ abstract final class ModalRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$canPop#0', (args) => (args[0] as _$ModalRoute)._super$canPop);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$impliesAppBarDismissal#0', (args) => (args[0] as _$ModalRoute)._super$impliesAppBarDismissal);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$fullscreenDialog#0', (args) => (args[0] as _$ModalRoute)._super$fullscreenDialog);
-    ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$hashCode#0', (args) => (args[0] as _$ModalRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$completed#0', (args) => (args[0] as _$ModalRoute)._super$completed);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$ModalRoute)._super$reverseTransitionDuration);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$ModalRoute)._super$allowSnapshotting);
@@ -815,6 +817,7 @@ abstract final class ModalRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$ModalRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$offstage=#1', (args) { (args[0] as _$ModalRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$ModalRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::ModalRoute::\$super\$hashCode#0', (args) => (args[0] as _$ModalRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

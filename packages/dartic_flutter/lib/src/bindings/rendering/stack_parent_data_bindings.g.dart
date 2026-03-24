@@ -100,13 +100,6 @@ class _$StackParentData extends StackParentData implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -198,10 +191,20 @@ class _$StackParentData extends StackParentData implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -216,7 +219,6 @@ class _$StackParentData extends StackParentData implements DarticObjectHolder {
   double? get _super$height => super.height;
   RelativeRect get _super$rect => super.rect;
   bool get _super$isPositioned => super.isPositioned;
-  int get _super$hashCode => super.hashCode;
   Offset get _super$offset => super.offset;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
@@ -230,6 +232,7 @@ class _$StackParentData extends StackParentData implements DarticObjectHolder {
   set _super$offset(Offset value) { super.offset = value; }
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -260,7 +263,6 @@ abstract final class StackParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$height#0', (args) => (args[0] as _$StackParentData)._super$height);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$rect#0', (args) => (args[0] as _$StackParentData)._super$rect);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$isPositioned#0', (args) => (args[0] as _$StackParentData)._super$isPositioned);
-    ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$hashCode#0', (args) => (args[0] as _$StackParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$offset#0', (args) => (args[0] as _$StackParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$previousSibling#0', (args) => (args[0] as _$StackParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$nextSibling#0', (args) => (args[0] as _$StackParentData)._super$nextSibling);
@@ -274,6 +276,7 @@ abstract final class StackParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$offset=#1', (args) { (args[0] as _$StackParentData)._super$offset = args[1] as Offset; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$StackParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$StackParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/stack.dart::StackParentData::\$super\$hashCode#0', (args) => (args[0] as _$StackParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

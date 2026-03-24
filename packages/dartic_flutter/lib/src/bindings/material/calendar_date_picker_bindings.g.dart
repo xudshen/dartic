@@ -165,13 +165,6 @@ class _$CalendarDatePicker extends CalendarDatePicker implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -179,10 +172,20 @@ class _$CalendarDatePicker extends CalendarDatePicker implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -204,8 +207,8 @@ class _$CalendarDatePicker extends CalendarDatePicker implements DarticObjectHol
   DatePickerMode get _super$initialCalendarMode => super.initialCalendarMode;
   SelectableDayPredicate? get _super$selectableDayPredicate => super.selectableDayPredicate;
   CalendarDelegate<DateTime> get _super$calendarDelegate => super.calendarDelegate;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -243,8 +246,8 @@ abstract final class CalendarDatePickerBindings {
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$initialCalendarMode#0', (args) => (args[0] as _$CalendarDatePicker)._super$initialCalendarMode);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$selectableDayPredicate#0', (args) => (args[0] as _$CalendarDatePicker)._super$selectableDayPredicate);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$calendarDelegate#0', (args) => (args[0] as _$CalendarDatePicker)._super$calendarDelegate);
-    ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$hashCode#0', (args) => (args[0] as _$CalendarDatePicker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$key#0', (args) => (args[0] as _$CalendarDatePicker)._super$key);
+    ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::CalendarDatePicker::\$super\$hashCode#0', (args) => (args[0] as _$CalendarDatePicker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

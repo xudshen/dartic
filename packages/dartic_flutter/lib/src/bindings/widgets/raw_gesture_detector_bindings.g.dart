@@ -125,13 +125,6 @@ class _$RawGestureDetector extends RawGestureDetector implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -139,10 +132,20 @@ class _$RawGestureDetector extends RawGestureDetector implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -160,8 +163,8 @@ class _$RawGestureDetector extends RawGestureDetector implements DarticObjectHol
   HitTestBehavior? get _super$behavior => super.behavior;
   bool get _super$excludeFromSemantics => super.excludeFromSemantics;
   SemanticsGestureDelegate? get _super$semantics => super.semantics;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -195,8 +198,8 @@ abstract final class RawGestureDetectorBindings {
     ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$behavior#0', (args) => (args[0] as _$RawGestureDetector)._super$behavior);
     ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$excludeFromSemantics#0', (args) => (args[0] as _$RawGestureDetector)._super$excludeFromSemantics);
     ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$semantics#0', (args) => (args[0] as _$RawGestureDetector)._super$semantics);
-    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$hashCode#0', (args) => (args[0] as _$RawGestureDetector)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$key#0', (args) => (args[0] as _$RawGestureDetector)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/gesture_detector.dart::RawGestureDetector::\$super\$hashCode#0', (args) => (args[0] as _$RawGestureDetector)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

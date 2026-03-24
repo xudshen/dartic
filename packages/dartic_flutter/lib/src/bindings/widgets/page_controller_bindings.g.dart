@@ -167,13 +167,6 @@ class _$PageController extends PageController implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get initialScrollOffset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialScrollOffset');
     if (identical(r, notOverridden)) return super.initialScrollOffset;
@@ -244,10 +237,20 @@ class _$PageController extends PageController implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -270,7 +273,6 @@ class _$PageController extends PageController implements DarticObjectHolder {
   bool get _super$keepPage => super.keepPage;
   double get _super$viewportFraction => super.viewportFraction;
   double? get _super$page => super.page;
-  int get _super$hashCode => super.hashCode;
   double get _super$initialScrollOffset => super.initialScrollOffset;
   bool get _super$keepScrollOffset => super.keepScrollOffset;
   ScrollControllerCallback? get _super$onAttach => super.onAttach;
@@ -281,6 +283,7 @@ class _$PageController extends PageController implements DarticObjectHolder {
   ScrollPosition get _super$position => super.position;
   double get _super$offset => super.offset;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -319,7 +322,6 @@ abstract final class PageControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$keepPage#0', (args) => (args[0] as _$PageController)._super$keepPage);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$viewportFraction#0', (args) => (args[0] as _$PageController)._super$viewportFraction);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$page#0', (args) => (args[0] as _$PageController)._super$page);
-    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$hashCode#0', (args) => (args[0] as _$PageController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$initialScrollOffset#0', (args) => (args[0] as _$PageController)._super$initialScrollOffset);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$keepScrollOffset#0', (args) => (args[0] as _$PageController)._super$keepScrollOffset);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$onAttach#0', (args) => (args[0] as _$PageController)._super$onAttach);
@@ -330,6 +332,7 @@ abstract final class PageControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$position#0', (args) => (args[0] as _$PageController)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$offset#0', (args) => (args[0] as _$PageController)._super$offset);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$hasListeners#0', (args) => (args[0] as _$PageController)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageController::\$super\$hashCode#0', (args) => (args[0] as _$PageController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

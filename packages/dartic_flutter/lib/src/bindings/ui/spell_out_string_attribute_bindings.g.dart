@@ -41,13 +41,6 @@ base class _$SpellOutStringAttribute extends SpellOutStringAttribute implements 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   TextRange get range {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'range');
     if (identical(r, notOverridden)) return super.range;
@@ -55,17 +48,27 @@ base class _$SpellOutStringAttribute extends SpellOutStringAttribute implements 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   StringAttribute _super$copy({required TextRange range}) => super.copy(range: range);
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   TextRange get _super$range => super.range;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -87,8 +90,8 @@ abstract final class SpellOutStringAttributeBindings {
     );
     ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$copy#1', (args) => (args[0] as _$SpellOutStringAttribute)._super$copy(range: args[1] as TextRange));
     ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$toString#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$toString());
-    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$hashCode#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$hashCode);
     ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$range#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$range);
+    ctx.registerBinding('dart:ui::SpellOutStringAttribute::\$super\$hashCode#0', (args) => (args[0] as _$SpellOutStringAttribute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

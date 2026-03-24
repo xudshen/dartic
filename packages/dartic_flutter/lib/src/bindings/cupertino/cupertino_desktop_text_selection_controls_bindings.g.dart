@@ -127,13 +127,6 @@ class _$CupertinoDesktopTextSelectionControls extends CupertinoDesktopTextSelect
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Type get runtimeType {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'runtimeType');
     if (identical(r, notOverridden)) return super.runtimeType;
@@ -141,10 +134,20 @@ class _$CupertinoDesktopTextSelectionControls extends CupertinoDesktopTextSelect
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -162,8 +165,8 @@ class _$CupertinoDesktopTextSelectionControls extends CupertinoDesktopTextSelect
   void _super$handleCopy(TextSelectionDelegate delegate) { super.handleCopy(delegate); }
   Future<void> _super$handlePaste(TextSelectionDelegate delegate) => super.handlePaste(delegate);
   dynamic _super$noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-  int get _super$hashCode => super.hashCode;
   Type get _super$runtimeType => super.runtimeType;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -197,8 +200,8 @@ abstract final class CupertinoDesktopTextSelectionControlsBindings {
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$handleCopy#1', (args) { (args[0] as _$CupertinoDesktopTextSelectionControls)._super$handleCopy(args[1] as TextSelectionDelegate); return null; });
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$handlePaste#1', (args) => (args[0] as _$CupertinoDesktopTextSelectionControls)._super$handlePaste(args[1] as TextSelectionDelegate));
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$noSuchMethod#1', (args) => (args[0] as _$CupertinoDesktopTextSelectionControls)._super$noSuchMethod(args[1] as Invocation));
-    ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionControls)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$runtimeType#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionControls)._super$runtimeType);
+    ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection.dart::CupertinoDesktopTextSelectionControls::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionControls)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

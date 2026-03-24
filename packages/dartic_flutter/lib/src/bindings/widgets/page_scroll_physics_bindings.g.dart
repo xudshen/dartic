@@ -127,13 +127,6 @@ class _$PageScrollPhysics extends PageScrollPhysics implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics? get parent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
@@ -190,10 +183,20 @@ class _$PageScrollPhysics extends PageScrollPhysics implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -209,7 +212,6 @@ class _$PageScrollPhysics extends PageScrollPhysics implements DarticObjectHolde
   Tolerance _super$toleranceFor(ScrollMetrics metrics) => super.toleranceFor(metrics);
   double _super$carriedMomentum(double existingVelocity) => super.carriedMomentum(existingVelocity);
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics? get _super$parent => super.parent;
   SpringDescription get _super$spring => super.spring;
   Tolerance get _super$tolerance => super.tolerance;
@@ -218,6 +220,7 @@ class _$PageScrollPhysics extends PageScrollPhysics implements DarticObjectHolde
   double get _super$maxFlingVelocity => super.maxFlingVelocity;
   double? get _super$dragStartDistanceMotionThreshold => super.dragStartDistanceMotionThreshold;
   bool get _super$allowUserScrolling => super.allowUserScrolling;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -249,7 +252,6 @@ abstract final class PageScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$toleranceFor#1', (args) => (args[0] as _$PageScrollPhysics)._super$toleranceFor(args[1] as ScrollMetrics));
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$carriedMomentum#1', (args) => (args[0] as _$PageScrollPhysics)._super$carriedMomentum(args[1] as double));
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$PageScrollPhysics)._super$allowImplicitScrolling);
-    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$PageScrollPhysics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$parent#0', (args) => (args[0] as _$PageScrollPhysics)._super$parent);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$spring#0', (args) => (args[0] as _$PageScrollPhysics)._super$spring);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$tolerance#0', (args) => (args[0] as _$PageScrollPhysics)._super$tolerance);
@@ -258,6 +260,7 @@ abstract final class PageScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$maxFlingVelocity#0', (args) => (args[0] as _$PageScrollPhysics)._super$maxFlingVelocity);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$dragStartDistanceMotionThreshold#0', (args) => (args[0] as _$PageScrollPhysics)._super$dragStartDistanceMotionThreshold);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$allowUserScrolling#0', (args) => (args[0] as _$PageScrollPhysics)._super$allowUserScrolling);
+    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$PageScrollPhysics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

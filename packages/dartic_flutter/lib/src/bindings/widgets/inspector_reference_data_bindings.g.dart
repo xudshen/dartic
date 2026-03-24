@@ -63,13 +63,6 @@ class _$InspectorReferenceData extends InspectorReferenceData implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set count(int value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'count', value)) {
       super.count = value;
@@ -77,10 +70,20 @@ class _$InspectorReferenceData extends InspectorReferenceData implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -88,8 +91,8 @@ class _$InspectorReferenceData extends InspectorReferenceData implements DarticO
   String get _super$id => super.id;
   int get _super$count => super.count;
   Object? get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   set _super$count(int value) { super.count = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -112,8 +115,8 @@ abstract final class InspectorReferenceDataBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$id#0', (args) => (args[0] as _$InspectorReferenceData)._super$id);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$count#0', (args) => (args[0] as _$InspectorReferenceData)._super$count);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$value#0', (args) => (args[0] as _$InspectorReferenceData)._super$value);
-    ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$hashCode#0', (args) => (args[0] as _$InspectorReferenceData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$count=#1', (args) { (args[0] as _$InspectorReferenceData)._super$count = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::InspectorReferenceData::\$super\$hashCode#0', (args) => (args[0] as _$InspectorReferenceData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

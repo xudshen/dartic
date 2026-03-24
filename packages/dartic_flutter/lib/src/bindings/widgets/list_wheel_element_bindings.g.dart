@@ -375,13 +375,6 @@ class _$ListWheelElement extends ListWheelElement implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Element? get renderObjectAttachingChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'renderObjectAttachingChild');
     if (identical(r, notOverridden)) return super.renderObjectAttachingChild;
@@ -466,10 +459,20 @@ class _$ListWheelElement extends ListWheelElement implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -525,7 +528,6 @@ class _$ListWheelElement extends ListWheelElement implements DarticObjectHolder 
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   RenderListWheelViewport get _super$renderObject => super.renderObject;
   int? get _super$childCount => super.childCount;
-  int get _super$hashCode => super.hashCode;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
   bool get _super$debugDoingBuild => super.debugDoingBuild;
   Object? get _super$slot => super.slot;
@@ -538,6 +540,7 @@ class _$ListWheelElement extends ListWheelElement implements DarticObjectHolder 
   BuildScope get _super$buildScope => super.buildScope;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -609,7 +612,6 @@ abstract final class ListWheelElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$toStringDeep#4', (args) => (args[0] as _$ListWheelElement)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$renderObject#0', (args) => (args[0] as _$ListWheelElement)._super$renderObject);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$childCount#0', (args) => (args[0] as _$ListWheelElement)._super$childCount);
-    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$hashCode#0', (args) => (args[0] as _$ListWheelElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$ListWheelElement)._super$renderObjectAttachingChild);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$ListWheelElement)._super$debugDoingBuild);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$slot#0', (args) => (args[0] as _$ListWheelElement)._super$slot);
@@ -622,6 +624,7 @@ abstract final class ListWheelElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$buildScope#0', (args) => (args[0] as _$ListWheelElement)._super$buildScope);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$size#0', (args) => (args[0] as _$ListWheelElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$dirty#0', (args) => (args[0] as _$ListWheelElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::ListWheelElement::\$super\$hashCode#0', (args) => (args[0] as _$ListWheelElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

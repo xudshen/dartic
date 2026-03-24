@@ -325,13 +325,6 @@ class _$RawDialogRoute extends RawDialogRoute<dynamic> implements DarticObjectHo
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get opaque {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
     if (identical(r, notOverridden)) return super.opaque;
@@ -619,10 +612,20 @@ class _$RawDialogRoute extends RawDialogRoute<dynamic> implements DarticObjectHo
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -669,7 +672,6 @@ class _$RawDialogRoute extends RawDialogRoute<dynamic> implements DarticObjectHo
   Duration get _super$transitionDuration => super.transitionDuration;
   ui.Offset? get _super$anchorPoint => super.anchorPoint;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
-  int get _super$hashCode => super.hashCode;
   bool get _super$opaque => super.opaque;
   bool get _super$maintainState => super.maintainState;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
@@ -711,6 +713,7 @@ class _$RawDialogRoute extends RawDialogRoute<dynamic> implements DarticObjectHo
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -773,7 +776,6 @@ abstract final class RawDialogRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$transitionDuration#0', (args) => (args[0] as _$RawDialogRoute)._super$transitionDuration);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$anchorPoint#0', (args) => (args[0] as _$RawDialogRoute)._super$anchorPoint);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$fullscreenDialog#0', (args) => (args[0] as _$RawDialogRoute)._super$fullscreenDialog);
-    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$hashCode#0', (args) => (args[0] as _$RawDialogRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$opaque#0', (args) => (args[0] as _$RawDialogRoute)._super$opaque);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$maintainState#0', (args) => (args[0] as _$RawDialogRoute)._super$maintainState);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$RawDialogRoute)._super$allowSnapshotting);
@@ -815,6 +817,7 @@ abstract final class RawDialogRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$RawDialogRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$offstage=#1', (args) { (args[0] as _$RawDialogRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$RawDialogRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RawDialogRoute::\$super\$hashCode#0', (args) => (args[0] as _$RawDialogRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

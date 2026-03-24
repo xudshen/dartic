@@ -324,13 +324,6 @@ class _$SearchAnchor extends SearchAnchor implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -338,10 +331,20 @@ class _$SearchAnchor extends SearchAnchor implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -383,8 +386,8 @@ class _$SearchAnchor extends SearchAnchor implements DarticObjectHolder {
   TextInputAction? get _super$textInputAction => super.textInputAction;
   TextInputType? get _super$keyboardType => super.keyboardType;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -442,8 +445,8 @@ abstract final class SearchAnchorBindings {
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$textInputAction#0', (args) => (args[0] as _$SearchAnchor)._super$textInputAction);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$keyboardType#0', (args) => (args[0] as _$SearchAnchor)._super$keyboardType);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$enabled#0', (args) => (args[0] as _$SearchAnchor)._super$enabled);
-    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$hashCode#0', (args) => (args[0] as _$SearchAnchor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$key#0', (args) => (args[0] as _$SearchAnchor)._super$key);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchAnchor::\$super\$hashCode#0', (args) => (args[0] as _$SearchAnchor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

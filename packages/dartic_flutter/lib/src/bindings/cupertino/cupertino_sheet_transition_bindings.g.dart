@@ -120,13 +120,6 @@ class _$CupertinoSheetTransition extends CupertinoSheetTransition implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -134,10 +127,20 @@ class _$CupertinoSheetTransition extends CupertinoSheetTransition implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -154,8 +157,8 @@ class _$CupertinoSheetTransition extends CupertinoSheetTransition implements Dar
   Animation<double> get _super$secondaryRouteAnimation => super.secondaryRouteAnimation;
   Widget get _super$child => super.child;
   bool get _super$linearTransition => super.linearTransition;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -189,8 +192,8 @@ abstract final class CupertinoSheetTransitionBindings {
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$secondaryRouteAnimation#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$secondaryRouteAnimation);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$child#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$child);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$linearTransition#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$linearTransition);
-    ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$key#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetTransition::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSheetTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

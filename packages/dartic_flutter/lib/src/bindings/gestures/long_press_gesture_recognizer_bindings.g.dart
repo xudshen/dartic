@@ -367,13 +367,6 @@ class _$LongPressGestureRecognizer extends LongPressGestureRecognizer implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Duration? get deadline {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'deadline');
     if (identical(r, notOverridden)) return super.deadline;
@@ -619,10 +612,20 @@ class _$LongPressGestureRecognizer extends LongPressGestureRecognizer implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -677,7 +680,6 @@ class _$LongPressGestureRecognizer extends LongPressGestureRecognizer implements
   GestureLongPressUpCallback? get _super$onTertiaryLongPressUp => super.onTertiaryLongPressUp;
   GestureLongPressEndCallback? get _super$onTertiaryLongPressEnd => super.onTertiaryLongPressEnd;
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   Duration? get _super$deadline => super.deadline;
   double? get _super$preAcceptSlopTolerance => super.preAcceptSlopTolerance;
   double? get _super$postAcceptSlopTolerance => super.postAcceptSlopTolerance;
@@ -713,6 +715,7 @@ class _$LongPressGestureRecognizer extends LongPressGestureRecognizer implements
   set _super$team(GestureArenaTeam? value) { super.team = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -783,7 +786,6 @@ abstract final class LongPressGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$onTertiaryLongPressUp#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$onTertiaryLongPressUp);
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$onTertiaryLongPressEnd#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$onTertiaryLongPressEnd);
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$deadline#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$deadline);
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$preAcceptSlopTolerance#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$preAcceptSlopTolerance);
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$postAcceptSlopTolerance#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$postAcceptSlopTolerance);
@@ -819,6 +821,7 @@ abstract final class LongPressGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$team=#1', (args) { (args[0] as _$LongPressGestureRecognizer)._super$team = args[1] as GestureArenaTeam?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$LongPressGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$LongPressGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/long_press.dart::LongPressGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$LongPressGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

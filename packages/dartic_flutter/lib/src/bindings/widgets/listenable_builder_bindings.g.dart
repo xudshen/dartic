@@ -117,13 +117,6 @@ class _$ListenableBuilder extends ListenableBuilder implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -131,10 +124,20 @@ class _$ListenableBuilder extends ListenableBuilder implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -151,8 +154,8 @@ class _$ListenableBuilder extends ListenableBuilder implements DarticObjectHolde
   Listenable get _super$listenable => super.listenable;
   TransitionBuilder get _super$builder => super.builder;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -185,8 +188,8 @@ abstract final class ListenableBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$listenable#0', (args) => (args[0] as _$ListenableBuilder)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$builder#0', (args) => (args[0] as _$ListenableBuilder)._super$builder);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$child#0', (args) => (args[0] as _$ListenableBuilder)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$hashCode#0', (args) => (args[0] as _$ListenableBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$key#0', (args) => (args[0] as _$ListenableBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ListenableBuilder::\$super\$hashCode#0', (args) => (args[0] as _$ListenableBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

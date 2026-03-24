@@ -473,13 +473,6 @@ class _$RenderSliverMainAxisGroup extends RenderSliverMainAxisGroup implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get ensureSemantics {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics');
     if (identical(r, notOverridden)) return super.ensureSemantics;
@@ -746,10 +739,20 @@ class _$RenderSliverMainAxisGroup extends RenderSliverMainAxisGroup implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -822,7 +825,6 @@ class _$RenderSliverMainAxisGroup extends RenderSliverMainAxisGroup implements D
   void _super$move(RenderSliver child, {RenderSliver? after}) { super.move(child, after: after); }
   RenderSliver? _super$childBefore(RenderSliver child) => super.childBefore(child);
   RenderSliver? _super$childAfter(RenderSliver child) => super.childAfter(child);
-  int get _super$hashCode => super.hashCode;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
   SliverGeometry? get _super$geometry => super.geometry;
@@ -861,6 +863,7 @@ class _$RenderSliverMainAxisGroup extends RenderSliverMainAxisGroup implements D
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -949,7 +952,6 @@ abstract final class RenderSliverMainAxisGroupBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$move#2', (args) { (args[0] as _$RenderSliverMainAxisGroup)._super$move(args[1] as RenderSliver, after: identical(args[2], darticAbsent) ? null : args[2] as RenderSliver?); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$childBefore#1', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$childBefore(args[1] as RenderSliver));
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$childAfter#1', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$childAfter(args[1] as RenderSliver));
-    ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$constraints);
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$geometry#0', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$geometry);
@@ -988,6 +990,7 @@ abstract final class RenderSliverMainAxisGroupBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$parentData=#1', (args) { (args[0] as _$RenderSliverMainAxisGroup)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverMainAxisGroup)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverMainAxisGroup)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_group.dart::RenderSliverMainAxisGroup::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverMainAxisGroup)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

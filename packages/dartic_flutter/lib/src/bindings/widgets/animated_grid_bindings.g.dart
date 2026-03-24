@@ -106,13 +106,6 @@ class _$AnimatedGrid extends AnimatedGrid implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AnimatedItemBuilder get itemBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'itemBuilder');
     if (identical(r, notOverridden)) return super.itemBuilder;
@@ -197,10 +190,20 @@ class _$AnimatedGrid extends AnimatedGrid implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -214,7 +217,6 @@ class _$AnimatedGrid extends AnimatedGrid implements DarticObjectHolder {
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   SliverGridDelegate get _super$gridDelegate => super.gridDelegate;
-  int get _super$hashCode => super.hashCode;
   AnimatedItemBuilder get _super$itemBuilder => super.itemBuilder;
   AnimatedItemBuilder? get _super$removedSeparatorBuilder => super.removedSeparatorBuilder;
   int get _super$initialItemCount => super.initialItemCount;
@@ -227,6 +229,7 @@ class _$AnimatedGrid extends AnimatedGrid implements DarticObjectHolder {
   EdgeInsetsGeometry? get _super$padding => super.padding;
   Clip get _super$clipBehavior => super.clipBehavior;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -258,7 +261,6 @@ abstract final class AnimatedGridBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$AnimatedGrid)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$AnimatedGrid)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$gridDelegate#0', (args) => (args[0] as _$AnimatedGrid)._super$gridDelegate);
-    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedGrid)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$itemBuilder#0', (args) => (args[0] as _$AnimatedGrid)._super$itemBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$removedSeparatorBuilder#0', (args) => (args[0] as _$AnimatedGrid)._super$removedSeparatorBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$initialItemCount#0', (args) => (args[0] as _$AnimatedGrid)._super$initialItemCount);
@@ -271,6 +273,7 @@ abstract final class AnimatedGridBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$padding#0', (args) => (args[0] as _$AnimatedGrid)._super$padding);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$clipBehavior#0', (args) => (args[0] as _$AnimatedGrid)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$key#0', (args) => (args[0] as _$AnimatedGrid)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::AnimatedGrid::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedGrid)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

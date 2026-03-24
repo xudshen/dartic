@@ -255,13 +255,6 @@ class _$ScrollableState extends ScrollableState implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Scrollable get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -297,10 +290,20 @@ class _$ScrollableState extends ScrollableState implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -336,12 +339,12 @@ class _$ScrollableState extends ScrollableState implements DarticObjectHolder {
   BuildContext? get _super$notificationContext => super.notificationContext;
   BuildContext get _super$storageContext => super.storageContext;
   String? get _super$restorationId => super.restorationId;
-  int get _super$hashCode => super.hashCode;
   Scrollable get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
   RestorationBucket? get _super$bucket => super.bucket;
   bool get _super$restorePending => super.restorePending;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -393,12 +396,12 @@ abstract final class ScrollableStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$notificationContext#0', (args) => (args[0] as _$ScrollableState)._super$notificationContext);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$storageContext#0', (args) => (args[0] as _$ScrollableState)._super$storageContext);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$restorationId#0', (args) => (args[0] as _$ScrollableState)._super$restorationId);
-    ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$hashCode#0', (args) => (args[0] as _$ScrollableState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$widget#0', (args) => (args[0] as _$ScrollableState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$context#0', (args) => (args[0] as _$ScrollableState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$mounted#0', (args) => (args[0] as _$ScrollableState)._super$mounted);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$bucket#0', (args) => (args[0] as _$ScrollableState)._super$bucket);
     ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$restorePending#0', (args) => (args[0] as _$ScrollableState)._super$restorePending);
+    ctx.registerBinding('package:flutter/src/widgets/scrollable.dart::ScrollableState::\$super\$hashCode#0', (args) => (args[0] as _$ScrollableState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

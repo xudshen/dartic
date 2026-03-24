@@ -90,13 +90,6 @@ class _$FocusScope extends FocusScope implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   FocusNode? get parentNode {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parentNode');
     if (identical(r, notOverridden)) return super.parentNode;
@@ -195,10 +188,20 @@ class _$FocusScope extends FocusScope implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -211,7 +214,6 @@ class _$FocusScope extends FocusScope implements DarticObjectHolder {
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
-  int get _super$hashCode => super.hashCode;
   FocusNode? get _super$parentNode => super.parentNode;
   Widget get _super$child => super.child;
   FocusNode? get _super$focusNode => super.focusNode;
@@ -226,6 +228,7 @@ class _$FocusScope extends FocusScope implements DarticObjectHolder {
   bool get _super$includeSemantics => super.includeSemantics;
   String? get _super$debugLabel => super.debugLabel;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -255,7 +258,6 @@ abstract final class FocusScopeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$toStringDeep#4', (args) => (args[0] as _$FocusScope)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$FocusScope)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$FocusScope)._super$debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$hashCode#0', (args) => (args[0] as _$FocusScope)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$parentNode#0', (args) => (args[0] as _$FocusScope)._super$parentNode);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$child#0', (args) => (args[0] as _$FocusScope)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$focusNode#0', (args) => (args[0] as _$FocusScope)._super$focusNode);
@@ -270,6 +272,7 @@ abstract final class FocusScopeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$includeSemantics#0', (args) => (args[0] as _$FocusScope)._super$includeSemantics);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$debugLabel#0', (args) => (args[0] as _$FocusScope)._super$debugLabel);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$key#0', (args) => (args[0] as _$FocusScope)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::FocusScope::\$super\$hashCode#0', (args) => (args[0] as _$FocusScope)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

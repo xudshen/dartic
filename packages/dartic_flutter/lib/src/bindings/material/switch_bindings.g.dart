@@ -304,13 +304,6 @@ class _$Switch extends Switch implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -318,10 +311,20 @@ class _$Switch extends Switch implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -362,8 +365,8 @@ class _$Switch extends Switch implements DarticObjectHolder {
   ValueChanged<bool>? get _super$onFocusChange => super.onFocusChange;
   bool get _super$autofocus => super.autofocus;
   EdgeInsetsGeometry? get _super$padding => super.padding;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -420,8 +423,8 @@ abstract final class SwitchBindings {
     ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$onFocusChange#0', (args) => (args[0] as _$Switch)._super$onFocusChange);
     ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$autofocus#0', (args) => (args[0] as _$Switch)._super$autofocus);
     ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$padding#0', (args) => (args[0] as _$Switch)._super$padding);
-    ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$hashCode#0', (args) => (args[0] as _$Switch)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$key#0', (args) => (args[0] as _$Switch)._super$key);
+    ctx.registerBinding('package:flutter/src/material/switch.dart::Switch::\$super\$hashCode#0', (args) => (args[0] as _$Switch)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

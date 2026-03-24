@@ -249,13 +249,6 @@ class _$UnmodifiableSetView extends UnmodifiableSetView<dynamic> implements Dart
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isEmpty {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
     if (identical(r, notOverridden)) return super.isEmpty;
@@ -291,10 +284,20 @@ class _$UnmodifiableSetView extends UnmodifiableSetView<dynamic> implements Dart
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -338,12 +341,12 @@ class _$UnmodifiableSetView extends UnmodifiableSetView<dynamic> implements Dart
   dynamic _super$elementAt(int index) => super.elementAt(index);
   int get _super$length => super.length;
   Iterator get _super$iterator => super.iterator;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;
   dynamic get _super$single => super.single;
   dynamic get _super$first => super.first;
   dynamic get _super$last => super.last;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -397,12 +400,12 @@ abstract final class UnmodifiableSetViewBindings {
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$elementAt#1', (args) => (args[0] as _$UnmodifiableSetView)._super$elementAt(args[1] as int));
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$length#0', (args) => (args[0] as _$UnmodifiableSetView)._super$length);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$iterator#0', (args) => (args[0] as _$UnmodifiableSetView)._super$iterator);
-    ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableSetView)._super$hashCode);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$isEmpty#0', (args) => (args[0] as _$UnmodifiableSetView)._super$isEmpty);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$isNotEmpty#0', (args) => (args[0] as _$UnmodifiableSetView)._super$isNotEmpty);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$single#0', (args) => (args[0] as _$UnmodifiableSetView)._super$single);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$first#0', (args) => (args[0] as _$UnmodifiableSetView)._super$first);
     ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$last#0', (args) => (args[0] as _$UnmodifiableSetView)._super$last);
+    ctx.registerBinding('dart:collection::UnmodifiableSetView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableSetView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

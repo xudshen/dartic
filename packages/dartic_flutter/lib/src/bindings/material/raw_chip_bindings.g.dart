@@ -392,13 +392,6 @@ class _$RawChip extends RawChip implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -406,10 +399,20 @@ class _$RawChip extends RawChip implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -462,8 +465,8 @@ class _$RawChip extends RawChip implements DarticObjectHolder {
   ChipAnimationStyle? get _super$chipAnimationStyle => super.chipAnimationStyle;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
   bool get _super$tapEnabled => super.tapEnabled;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -532,8 +535,8 @@ abstract final class RawChipBindings {
     ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$chipAnimationStyle#0', (args) => (args[0] as _$RawChip)._super$chipAnimationStyle);
     ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$mouseCursor#0', (args) => (args[0] as _$RawChip)._super$mouseCursor);
     ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$tapEnabled#0', (args) => (args[0] as _$RawChip)._super$tapEnabled);
-    ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$hashCode#0', (args) => (args[0] as _$RawChip)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$key#0', (args) => (args[0] as _$RawChip)._super$key);
+    ctx.registerBinding('package:flutter/src/material/chip.dart::RawChip::\$super\$hashCode#0', (args) => (args[0] as _$RawChip)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

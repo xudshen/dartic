@@ -49,13 +49,6 @@ class _$SawTooth extends SawTooth implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get flipped {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'flipped');
     if (identical(r, notOverridden)) return super.flipped;
@@ -63,10 +56,20 @@ class _$SawTooth extends SawTooth implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -74,8 +77,8 @@ class _$SawTooth extends SawTooth implements DarticObjectHolder {
   String _super$toString() => super.toString();
   double _super$transform(double t) => super.transform(t);
   int get _super$count => super.count;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$flipped => super.flipped;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -99,8 +102,8 @@ abstract final class SawToothBindings {
     ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$toString#0', (args) => (args[0] as _$SawTooth)._super$toString());
     ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$transform#1', (args) => (args[0] as _$SawTooth)._super$transform(args[1] as double));
     ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$count#0', (args) => (args[0] as _$SawTooth)._super$count);
-    ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$hashCode#0', (args) => (args[0] as _$SawTooth)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$flipped#0', (args) => (args[0] as _$SawTooth)._super$flipped);
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::SawTooth::\$super\$hashCode#0', (args) => (args[0] as _$SawTooth)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -554,13 +554,6 @@ class _$RenderIgnorePointer extends RenderIgnorePointer implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -827,10 +820,20 @@ class _$RenderIgnorePointer extends RenderIgnorePointer implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -914,7 +917,6 @@ class _$RenderIgnorePointer extends RenderIgnorePointer implements DarticObjectH
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   bool get _super$ignoring => super.ignoring;
   bool? get _super$ignoringSemantics => super.ignoringSemantics;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -953,6 +955,7 @@ class _$RenderIgnorePointer extends RenderIgnorePointer implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1052,7 +1055,6 @@ abstract final class RenderIgnorePointerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderIgnorePointer)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$ignoring#0', (args) => (args[0] as _$RenderIgnorePointer)._super$ignoring);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$ignoringSemantics#0', (args) => (args[0] as _$RenderIgnorePointer)._super$ignoringSemantics);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$hashCode#0', (args) => (args[0] as _$RenderIgnorePointer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$hasSize#0', (args) => (args[0] as _$RenderIgnorePointer)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$size#0', (args) => (args[0] as _$RenderIgnorePointer)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderIgnorePointer)._super$semanticBounds);
@@ -1091,6 +1093,7 @@ abstract final class RenderIgnorePointerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderIgnorePointer)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$layer=#1', (args) { (args[0] as _$RenderIgnorePointer)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$child=#1', (args) { (args[0] as _$RenderIgnorePointer)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIgnorePointer::\$super\$hashCode#0', (args) => (args[0] as _$RenderIgnorePointer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -141,13 +141,6 @@ class _$FlexibleSpaceBar extends FlexibleSpaceBar implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -155,10 +148,20 @@ class _$FlexibleSpaceBar extends FlexibleSpaceBar implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -178,8 +181,8 @@ class _$FlexibleSpaceBar extends FlexibleSpaceBar implements DarticObjectHolder 
   List<StretchMode> get _super$stretchModes => super.stretchModes;
   EdgeInsetsGeometry? get _super$titlePadding => super.titlePadding;
   double get _super$expandedTitleScale => super.expandedTitleScale;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -216,8 +219,8 @@ abstract final class FlexibleSpaceBarBindings {
     ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$stretchModes#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$stretchModes);
     ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$titlePadding#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$titlePadding);
     ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$expandedTitleScale#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$expandedTitleScale);
-    ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$hashCode#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$key#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/flexible_space_bar.dart::FlexibleSpaceBar::\$super\$hashCode#0', (args) => (args[0] as _$FlexibleSpaceBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

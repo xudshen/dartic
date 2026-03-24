@@ -75,13 +75,6 @@ class _$EdgeInsetsGeometryTween extends EdgeInsetsGeometryTween implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -110,10 +103,20 @@ class _$EdgeInsetsGeometryTween extends EdgeInsetsGeometryTween implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -123,11 +126,11 @@ class _$EdgeInsetsGeometryTween extends EdgeInsetsGeometryTween implements Darti
   EdgeInsetsGeometry _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<EdgeInsetsGeometry> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<EdgeInsetsGeometry> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry? get _super$begin => super.begin;
   EdgeInsetsGeometry? get _super$end => super.end;
   set _super$begin(EdgeInsetsGeometry? value) { super.begin = value; }
   set _super$end(EdgeInsetsGeometry? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,11 +156,11 @@ abstract final class EdgeInsetsGeometryTweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$evaluate#1', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$animate#1', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$chain#1', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$hashCode#0', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$begin#0', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$end#0', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$begin=#1', (args) { (args[0] as _$EdgeInsetsGeometryTween)._super$begin = args[1] as EdgeInsetsGeometry?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$end=#1', (args) { (args[0] as _$EdgeInsetsGeometryTween)._super$end = args[1] as EdgeInsetsGeometry?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsGeometryTween::\$super\$hashCode#0', (args) => (args[0] as _$EdgeInsetsGeometryTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

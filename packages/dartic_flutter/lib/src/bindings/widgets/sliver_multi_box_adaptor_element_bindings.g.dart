@@ -399,13 +399,6 @@ class _$SliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Element? get renderObjectAttachingChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'renderObjectAttachingChild');
     if (identical(r, notOverridden)) return super.renderObjectAttachingChild;
@@ -490,10 +483,20 @@ class _$SliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -554,7 +557,6 @@ class _$SliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement implem
   RenderSliverMultiBoxAdaptor get _super$renderObject => super.renderObject;
   int? get _super$estimatedChildCount => super.estimatedChildCount;
   int get _super$childCount => super.childCount;
-  int get _super$hashCode => super.hashCode;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
   bool get _super$debugDoingBuild => super.debugDoingBuild;
   Object? get _super$slot => super.slot;
@@ -567,6 +569,7 @@ class _$SliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement implem
   BuildScope get _super$buildScope => super.buildScope;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -643,7 +646,6 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$renderObject#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$renderObject);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$estimatedChildCount#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$estimatedChildCount);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$childCount#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$childCount);
-    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$hashCode#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$renderObjectAttachingChild);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$debugDoingBuild);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$slot#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$slot);
@@ -656,6 +658,7 @@ abstract final class SliverMultiBoxAdaptorElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$buildScope#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$buildScope);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$size#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$dirty#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverMultiBoxAdaptorElement::\$super\$hashCode#0', (args) => (args[0] as _$SliverMultiBoxAdaptorElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

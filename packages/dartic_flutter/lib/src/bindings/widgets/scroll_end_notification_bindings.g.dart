@@ -49,13 +49,6 @@ class _$ScrollEndNotification extends ScrollEndNotification implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollMetrics get metrics {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'metrics');
     if (identical(r, notOverridden)) return super.metrics;
@@ -77,10 +70,20 @@ class _$ScrollEndNotification extends ScrollEndNotification implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -88,10 +91,10 @@ class _$ScrollEndNotification extends ScrollEndNotification implements DarticObj
   String _super$toString() => super.toString();
   void _super$dispatch(BuildContext? target) { super.dispatch(target); }
   DragEndDetails? get _super$dragDetails => super.dragDetails;
-  int get _super$hashCode => super.hashCode;
   ScrollMetrics get _super$metrics => super.metrics;
   BuildContext? get _super$context => super.context;
   int get _super$depth => super.depth;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -115,10 +118,10 @@ abstract final class ScrollEndNotificationBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$toString#0', (args) => (args[0] as _$ScrollEndNotification)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$dispatch#1', (args) { (args[0] as _$ScrollEndNotification)._super$dispatch(args[1] as BuildContext?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$dragDetails#0', (args) => (args[0] as _$ScrollEndNotification)._super$dragDetails);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$hashCode#0', (args) => (args[0] as _$ScrollEndNotification)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$metrics#0', (args) => (args[0] as _$ScrollEndNotification)._super$metrics);
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$context#0', (args) => (args[0] as _$ScrollEndNotification)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$depth#0', (args) => (args[0] as _$ScrollEndNotification)._super$depth);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_notification.dart::ScrollEndNotification::\$super\$hashCode#0', (args) => (args[0] as _$ScrollEndNotification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

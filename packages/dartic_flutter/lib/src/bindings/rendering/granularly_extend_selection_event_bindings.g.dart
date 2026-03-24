@@ -49,13 +49,6 @@ class _$GranularlyExtendSelectionEvent extends GranularlyExtendSelectionEvent im
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SelectionEventType get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -63,10 +56,20 @@ class _$GranularlyExtendSelectionEvent extends GranularlyExtendSelectionEvent im
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -74,8 +77,8 @@ class _$GranularlyExtendSelectionEvent extends GranularlyExtendSelectionEvent im
   bool get _super$forward => super.forward;
   bool get _super$isEnd => super.isEnd;
   TextGranularity get _super$granularity => super.granularity;
-  int get _super$hashCode => super.hashCode;
   SelectionEventType get _super$type => super.type;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -99,8 +102,8 @@ abstract final class GranularlyExtendSelectionEventBindings {
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$forward#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$forward);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$isEnd#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$isEnd);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$granularity#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$granularity);
-    ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$type#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$type);
+    ctx.registerBinding('package:flutter/src/rendering/selection.dart::GranularlyExtendSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$GranularlyExtendSelectionEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

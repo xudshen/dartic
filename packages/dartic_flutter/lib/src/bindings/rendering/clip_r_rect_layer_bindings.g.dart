@@ -206,13 +206,6 @@ class _$ClipRRectLayer extends ClipRRectLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -353,10 +346,20 @@ class _$ClipRRectLayer extends ClipRRectLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -388,7 +391,6 @@ class _$ClipRRectLayer extends ClipRRectLayer implements DarticObjectHolder {
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   ui.RRect? get _super$clipRRect => super.clipRRect;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -409,6 +411,7 @@ class _$ClipRRectLayer extends ClipRRectLayer implements DarticObjectHolder {
   set _super$clipBehavior(ui.Clip value) { super.clipBehavior = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -456,7 +459,6 @@ abstract final class ClipRRectLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ClipRRectLayer)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$clipRRect#0', (args) => (args[0] as _$ClipRRectLayer)._super$clipRRect);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$clipBehavior#0', (args) => (args[0] as _$ClipRRectLayer)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$hashCode#0', (args) => (args[0] as _$ClipRRectLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$firstChild#0', (args) => (args[0] as _$ClipRRectLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$lastChild#0', (args) => (args[0] as _$ClipRRectLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$hasChildren#0', (args) => (args[0] as _$ClipRRectLayer)._super$hasChildren);
@@ -477,6 +479,7 @@ abstract final class ClipRRectLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$clipBehavior=#1', (args) { (args[0] as _$ClipRRectLayer)._super$clipBehavior = args[1] as ui.Clip; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$ClipRRectLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$ClipRRectLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ClipRRectLayer::\$super\$hashCode#0', (args) => (args[0] as _$ClipRRectLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

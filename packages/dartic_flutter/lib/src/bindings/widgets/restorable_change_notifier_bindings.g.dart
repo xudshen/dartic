@@ -90,13 +90,6 @@ class _$RestorableChangeNotifier extends RestorableChangeNotifier<ChangeNotifier
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ChangeNotifier get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -132,10 +125,20 @@ class _$RestorableChangeNotifier extends RestorableChangeNotifier<ChangeNotifier
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -145,12 +148,12 @@ class _$RestorableChangeNotifier extends RestorableChangeNotifier<ChangeNotifier
   void _super$addListener(VoidCallback listener) { super.addListener(listener); }
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$notifyListeners() { super.notifyListeners(); }
-  int get _super$hashCode => super.hashCode;
   ChangeNotifier get _super$value => super.value;
   bool get _super$enabled => super.enabled;
   State<StatefulWidget> get _super$state => super.state;
   bool get _super$isRegistered => super.isRegistered;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -176,12 +179,12 @@ abstract final class RestorableChangeNotifierBindings {
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$addListener#1', (args) { (args[0] as _$RestorableChangeNotifier)._super$addListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$removeListener#1', (args) { (args[0] as _$RestorableChangeNotifier)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$notifyListeners#0', (args) { (args[0] as _$RestorableChangeNotifier)._super$notifyListeners(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$hashCode#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$value#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$enabled#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$state#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$state);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$isRegistered);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableChangeNotifier::\$super\$hashCode#0', (args) => (args[0] as _$RestorableChangeNotifier)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

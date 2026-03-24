@@ -37,13 +37,6 @@ class _$ContainerBoxParentData extends ContainerBoxParentData<RenderObject> impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -86,22 +79,32 @@ class _$ContainerBoxParentData extends ContainerBoxParentData<RenderObject> impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
-  int get _super$hashCode => super.hashCode;
   ui.Offset get _super$offset => super.offset;
   RenderObject? get _super$previousSibling => super.previousSibling;
   RenderObject? get _super$nextSibling => super.nextSibling;
   set _super$offset(ui.Offset value) { super.offset = value; }
   set _super$previousSibling(RenderObject? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderObject? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -123,13 +126,13 @@ abstract final class ContainerBoxParentDataBindings {
     );
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$toString#0', (args) => (args[0] as _$ContainerBoxParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$detach#0', (args) { (args[0] as _$ContainerBoxParentData)._super$detach(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$hashCode#0', (args) => (args[0] as _$ContainerBoxParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$offset#0', (args) => (args[0] as _$ContainerBoxParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$previousSibling#0', (args) => (args[0] as _$ContainerBoxParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$nextSibling#0', (args) => (args[0] as _$ContainerBoxParentData)._super$nextSibling);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$offset=#1', (args) { (args[0] as _$ContainerBoxParentData)._super$offset = args[1] as ui.Offset; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$ContainerBoxParentData)._super$previousSibling = args[1] as RenderObject?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$ContainerBoxParentData)._super$nextSibling = args[1] as RenderObject?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::ContainerBoxParentData::\$super\$hashCode#0', (args) => (args[0] as _$ContainerBoxParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

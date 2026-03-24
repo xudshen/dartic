@@ -160,13 +160,6 @@ class _$AnimatedPhysicalModel extends AnimatedPhysicalModel implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -195,10 +188,20 @@ class _$AnimatedPhysicalModel extends AnimatedPhysicalModel implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -220,11 +223,11 @@ class _$AnimatedPhysicalModel extends AnimatedPhysicalModel implements DarticObj
   bool get _super$animateColor => super.animateColor;
   ui.Color get _super$shadowColor => super.shadowColor;
   bool get _super$animateShadowColor => super.animateShadowColor;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -262,11 +265,11 @@ abstract final class AnimatedPhysicalModelBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$animateColor#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$animateColor);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$shadowColor#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$shadowColor);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$animateShadowColor#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$animateShadowColor);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$curve#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$duration#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$key#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPhysicalModel::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedPhysicalModel)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

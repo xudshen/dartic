@@ -372,13 +372,6 @@ class _$ListTile extends ListTile implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -386,10 +379,20 @@ class _$ListTile extends ListTile implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -439,8 +442,8 @@ class _$ListTile extends ListTile implements DarticObjectHolder {
   ListTileTitleAlignment? get _super$titleAlignment => super.titleAlignment;
   bool get _super$internalAddSemanticForOnTap => super.internalAddSemanticForOnTap;
   WidgetStatesController? get _super$statesController => super.statesController;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -507,8 +510,8 @@ abstract final class ListTileBindings {
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$titleAlignment#0', (args) => (args[0] as _$ListTile)._super$titleAlignment);
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$internalAddSemanticForOnTap#0', (args) => (args[0] as _$ListTile)._super$internalAddSemanticForOnTap);
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$statesController#0', (args) => (args[0] as _$ListTile)._super$statesController);
-    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$hashCode#0', (args) => (args[0] as _$ListTile)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$key#0', (args) => (args[0] as _$ListTile)._super$key);
+    ctx.registerBinding('package:flutter/src/material/list_tile.dart::ListTile::\$super\$hashCode#0', (args) => (args[0] as _$ListTile)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

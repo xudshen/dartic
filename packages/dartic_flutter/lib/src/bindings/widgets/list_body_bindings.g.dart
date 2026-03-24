@@ -124,13 +124,6 @@ class _$ListBody extends ListBody implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -145,10 +138,20 @@ class _$ListBody extends ListBody implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -165,9 +168,9 @@ class _$ListBody extends ListBody implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Axis get _super$mainAxis => super.mainAxis;
   bool get _super$reverse => super.reverse;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -200,9 +203,9 @@ abstract final class ListBodyBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$ListBody)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$mainAxis#0', (args) => (args[0] as _$ListBody)._super$mainAxis);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$reverse#0', (args) => (args[0] as _$ListBody)._super$reverse);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$hashCode#0', (args) => (args[0] as _$ListBody)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$children#0', (args) => (args[0] as _$ListBody)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$key#0', (args) => (args[0] as _$ListBody)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ListBody::\$super\$hashCode#0', (args) => (args[0] as _$ListBody)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

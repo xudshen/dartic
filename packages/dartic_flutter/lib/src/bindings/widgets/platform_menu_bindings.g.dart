@@ -111,13 +111,6 @@ class _$PlatformMenu extends PlatformMenu implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get label {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
     if (identical(r, notOverridden)) return super.label;
@@ -153,10 +146,20 @@ class _$PlatformMenu extends PlatformMenu implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -172,12 +175,12 @@ class _$PlatformMenu extends PlatformMenu implements DarticObjectHolder {
   VoidCallback? get _super$onClose => super.onClose;
   List<PlatformMenuItem> get _super$menus => super.menus;
   List<PlatformMenuItem> get _super$descendants => super.descendants;
-  int get _super$hashCode => super.hashCode;
   String get _super$label => super.label;
   MenuSerializableShortcut? get _super$shortcut => super.shortcut;
   VoidCallback? get _super$onSelected => super.onSelected;
   Intent? get _super$onSelectedIntent => super.onSelectedIntent;
   List<PlatformMenuItem> get _super$members => super.members;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,12 +214,12 @@ abstract final class PlatformMenuBindings {
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$onClose#0', (args) => (args[0] as _$PlatformMenu)._super$onClose);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$menus#0', (args) => (args[0] as _$PlatformMenu)._super$menus);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$descendants#0', (args) => (args[0] as _$PlatformMenu)._super$descendants);
-    ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$hashCode#0', (args) => (args[0] as _$PlatformMenu)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$label#0', (args) => (args[0] as _$PlatformMenu)._super$label);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$shortcut#0', (args) => (args[0] as _$PlatformMenu)._super$shortcut);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$onSelected#0', (args) => (args[0] as _$PlatformMenu)._super$onSelected);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$onSelectedIntent#0', (args) => (args[0] as _$PlatformMenu)._super$onSelectedIntent);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$members#0', (args) => (args[0] as _$PlatformMenu)._super$members);
+    ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformMenu::\$super\$hashCode#0', (args) => (args[0] as _$PlatformMenu)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

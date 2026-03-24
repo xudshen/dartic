@@ -117,13 +117,6 @@ class _$UnderlineTabIndicator extends UnderlineTabIndicator implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry get padding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
     if (identical(r, notOverridden)) return super.padding;
@@ -138,10 +131,20 @@ class _$UnderlineTabIndicator extends UnderlineTabIndicator implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -158,9 +161,9 @@ class _$UnderlineTabIndicator extends UnderlineTabIndicator implements DarticObj
   BorderRadius? get _super$borderRadius => super.borderRadius;
   BorderSide get _super$borderSide => super.borderSide;
   EdgeInsetsGeometry get _super$insets => super.insets;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry get _super$padding => super.padding;
   bool get _super$isComplex => super.isComplex;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -193,9 +196,9 @@ abstract final class UnderlineTabIndicatorBindings {
     ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$borderRadius#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$borderSide#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$borderSide);
     ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$insets#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$insets);
-    ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$hashCode#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$padding#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$padding);
     ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$isComplex#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$isComplex);
+    ctx.registerBinding('package:flutter/src/material/tab_indicator.dart::UnderlineTabIndicator::\$super\$hashCode#0', (args) => (args[0] as _$UnderlineTabIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

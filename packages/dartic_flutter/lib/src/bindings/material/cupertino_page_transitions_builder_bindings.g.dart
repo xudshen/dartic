@@ -53,13 +53,6 @@ class _$CupertinoPageTransitionsBuilder extends CupertinoPageTransitionsBuilder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Duration get reverseTransitionDuration {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'reverseTransitionDuration');
     if (identical(r, notOverridden)) return super.reverseTransitionDuration;
@@ -67,18 +60,28 @@ class _$CupertinoPageTransitionsBuilder extends CupertinoPageTransitionsBuilder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Duration get _super$transitionDuration => super.transitionDuration;
   DelegatedTransitionBuilder? get _super$delegatedTransition => super.delegatedTransition;
-  int get _super$hashCode => super.hashCode;
   Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -101,8 +104,8 @@ abstract final class CupertinoPageTransitionsBuilderBindings {
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$toString#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$toString());
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$transitionDuration#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$transitionDuration);
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$delegatedTransition#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$delegatedTransition);
-    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$reverseTransitionDuration);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::CupertinoPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPageTransitionsBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -170,13 +170,6 @@ class _$AnimatedCrossFade extends AnimatedCrossFade implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -184,10 +177,20 @@ class _$AnimatedCrossFade extends AnimatedCrossFade implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -211,8 +214,8 @@ class _$AnimatedCrossFade extends AnimatedCrossFade implements DarticObjectHolde
   AlignmentGeometry get _super$alignment => super.alignment;
   AnimatedCrossFadeBuilder get _super$layoutBuilder => super.layoutBuilder;
   bool get _super$excludeBottomFocus => super.excludeBottomFocus;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -253,8 +256,8 @@ abstract final class AnimatedCrossFadeBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$alignment#0', (args) => (args[0] as _$AnimatedCrossFade)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$layoutBuilder#0', (args) => (args[0] as _$AnimatedCrossFade)._super$layoutBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$excludeBottomFocus#0', (args) => (args[0] as _$AnimatedCrossFade)._super$excludeBottomFocus);
-    ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedCrossFade)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$key#0', (args) => (args[0] as _$AnimatedCrossFade)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/animated_cross_fade.dart::AnimatedCrossFade::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedCrossFade)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

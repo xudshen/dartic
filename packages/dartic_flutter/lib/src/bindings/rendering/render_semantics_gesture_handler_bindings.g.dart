@@ -585,13 +585,6 @@ class _$RenderSemanticsGestureHandler extends RenderSemanticsGestureHandler impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   HitTestBehavior get behavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'behavior');
     if (identical(r, notOverridden)) return super.behavior;
@@ -900,10 +893,20 @@ class _$RenderSemanticsGestureHandler extends RenderSemanticsGestureHandler impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -991,7 +994,6 @@ class _$RenderSemanticsGestureHandler extends RenderSemanticsGestureHandler impl
   GestureDragUpdateCallback? get _super$onHorizontalDragUpdate => super.onHorizontalDragUpdate;
   GestureDragUpdateCallback? get _super$onVerticalDragUpdate => super.onVerticalDragUpdate;
   double get _super$scrollFactor => super.scrollFactor;
-  int get _super$hashCode => super.hashCode;
   HitTestBehavior get _super$behavior => super.behavior;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
@@ -1036,6 +1038,7 @@ class _$RenderSemanticsGestureHandler extends RenderSemanticsGestureHandler impl
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1139,7 +1142,6 @@ abstract final class RenderSemanticsGestureHandlerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$onHorizontalDragUpdate#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$onHorizontalDragUpdate);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$onVerticalDragUpdate#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$onVerticalDragUpdate);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$scrollFactor#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$scrollFactor);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$hashCode#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$behavior#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$behavior);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$hasSize#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$size#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$size);
@@ -1184,6 +1186,7 @@ abstract final class RenderSemanticsGestureHandlerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSemanticsGestureHandler)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$layer=#1', (args) { (args[0] as _$RenderSemanticsGestureHandler)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$child=#1', (args) { (args[0] as _$RenderSemanticsGestureHandler)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsGestureHandler::\$super\$hashCode#0', (args) => (args[0] as _$RenderSemanticsGestureHandler)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

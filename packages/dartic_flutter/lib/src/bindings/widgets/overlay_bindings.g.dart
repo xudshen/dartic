@@ -105,13 +105,6 @@ class _$Overlay extends Overlay implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -119,10 +112,20 @@ class _$Overlay extends Overlay implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -137,8 +140,8 @@ class _$Overlay extends Overlay implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   List<OverlayEntry> get _super$initialEntries => super.initialEntries;
   Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -172,8 +175,8 @@ abstract final class OverlayBindings {
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$Overlay)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$initialEntries#0', (args) => (args[0] as _$Overlay)._super$initialEntries);
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$clipBehavior#0', (args) => (args[0] as _$Overlay)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$hashCode#0', (args) => (args[0] as _$Overlay)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$key#0', (args) => (args[0] as _$Overlay)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::Overlay::\$super\$hashCode#0', (args) => (args[0] as _$Overlay)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

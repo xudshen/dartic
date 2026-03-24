@@ -124,13 +124,6 @@ class _$NestedScrollViewViewport extends NestedScrollViewViewport implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AxisDirection get axisDirection {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axisDirection');
     if (identical(r, notOverridden)) return super.axisDirection;
@@ -208,10 +201,20 @@ class _$NestedScrollViewViewport extends NestedScrollViewViewport implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -227,7 +230,6 @@ class _$NestedScrollViewViewport extends NestedScrollViewViewport implements Dar
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   SliverOverlapAbsorberHandle get _super$handle => super.handle;
-  int get _super$hashCode => super.hashCode;
   AxisDirection get _super$axisDirection => super.axisDirection;
   AxisDirection? get _super$crossAxisDirection => super.crossAxisDirection;
   double get _super$anchor => super.anchor;
@@ -239,6 +241,7 @@ class _$NestedScrollViewViewport extends NestedScrollViewViewport implements Dar
   Clip get _super$clipBehavior => super.clipBehavior;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -270,7 +273,6 @@ abstract final class NestedScrollViewViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$NestedScrollViewViewport)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$handle#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$handle);
-    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$hashCode#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$axisDirection#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$axisDirection);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$crossAxisDirection#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$crossAxisDirection);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$anchor#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$anchor);
@@ -282,6 +284,7 @@ abstract final class NestedScrollViewViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$clipBehavior#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$children#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$key#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollViewViewport::\$super\$hashCode#0', (args) => (args[0] as _$NestedScrollViewViewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -311,13 +311,6 @@ class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements Da
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Iterator get iterator {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'iterator');
     if (identical(r, notOverridden)) return super.iterator;
@@ -395,13 +388,6 @@ class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements Da
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   List operator +(List other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
@@ -412,6 +398,23 @@ class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements Da
   void operator []=(int index, dynamic value) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]=', [index, value]);
     if (identical(r, notOverridden)) { super[index] = value; return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -465,7 +468,6 @@ class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements Da
   void _super$insertAll(int at, Iterable iterable) { super.insertAll(at, iterable); }
   void _super$setAll(int at, Iterable iterable) { super.setAll(at, iterable); }
   int get _super$length => super.length;
-  int get _super$hashCode => super.hashCode;
   Iterator get _super$iterator => super.iterator;
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;
@@ -476,6 +478,7 @@ class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements Da
   set _super$first(dynamic value) { super.first = value; }
   set _super$last(dynamic value) { super.last = value; }
   set _super$length(int value) { super.length = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -539,7 +542,6 @@ abstract final class UnmodifiableListViewBindings {
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$insertAll#2', (args) { (args[0] as _$UnmodifiableListView)._super$insertAll(args[1] as int, args[2] as Iterable); return null; });
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$setAll#2', (args) { (args[0] as _$UnmodifiableListView)._super$setAll(args[1] as int, args[2] as Iterable); return null; });
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$length#0', (args) => (args[0] as _$UnmodifiableListView)._super$length);
-    ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableListView)._super$hashCode);
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$iterator#0', (args) => (args[0] as _$UnmodifiableListView)._super$iterator);
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$isEmpty#0', (args) => (args[0] as _$UnmodifiableListView)._super$isEmpty);
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$isNotEmpty#0', (args) => (args[0] as _$UnmodifiableListView)._super$isNotEmpty);
@@ -550,6 +552,7 @@ abstract final class UnmodifiableListViewBindings {
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$first=#1', (args) { (args[0] as _$UnmodifiableListView)._super$first = args[1]; return args[1]; });
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$last=#1', (args) { (args[0] as _$UnmodifiableListView)._super$last = args[1]; return args[1]; });
     ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$length=#1', (args) { (args[0] as _$UnmodifiableListView)._super$length = args[1] as int; return args[1]; });
+    ctx.registerBinding('dart:collection::UnmodifiableListView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableListView)._super$hashCode);
     ctx.registerBinding('dart:_internal::UnmodifiableListBase::[]=#2', methodMap()['[]=#2']!);
     ctx.registerBinding('dart:_internal::UnmodifiableListBase::length=#1', methodMap()['length=#1']!);
     ctx.registerBinding('dart:_internal::UnmodifiableListBase::first=#1', methodMap()['first=#1']!);

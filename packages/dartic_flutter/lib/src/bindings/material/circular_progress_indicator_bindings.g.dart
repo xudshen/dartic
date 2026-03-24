@@ -161,13 +161,6 @@ class _$CircularProgressIndicator extends CircularProgressIndicator implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double? get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -210,10 +203,20 @@ class _$CircularProgressIndicator extends CircularProgressIndicator implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -235,13 +238,13 @@ class _$CircularProgressIndicator extends CircularProgressIndicator implements D
   bool? get _super$year2023 => super.year2023;
   EdgeInsetsGeometry? get _super$padding => super.padding;
   AnimationController? get _super$controller => super.controller;
-  int get _super$hashCode => super.hashCode;
   double? get _super$value => super.value;
   Color? get _super$color => super.color;
   Animation<Color?>? get _super$valueColor => super.valueColor;
   String? get _super$semanticsLabel => super.semanticsLabel;
   String? get _super$semanticsValue => super.semanticsValue;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -283,13 +286,13 @@ abstract final class CircularProgressIndicatorBindings {
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$year2023#0', (args) => (args[0] as _$CircularProgressIndicator)._super$year2023);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$padding#0', (args) => (args[0] as _$CircularProgressIndicator)._super$padding);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$controller#0', (args) => (args[0] as _$CircularProgressIndicator)._super$controller);
-    ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CircularProgressIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$value#0', (args) => (args[0] as _$CircularProgressIndicator)._super$value);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$color#0', (args) => (args[0] as _$CircularProgressIndicator)._super$color);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$valueColor#0', (args) => (args[0] as _$CircularProgressIndicator)._super$valueColor);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$semanticsLabel#0', (args) => (args[0] as _$CircularProgressIndicator)._super$semanticsLabel);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$semanticsValue#0', (args) => (args[0] as _$CircularProgressIndicator)._super$semanticsValue);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$key#0', (args) => (args[0] as _$CircularProgressIndicator)._super$key);
+    ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::CircularProgressIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CircularProgressIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -448,13 +448,6 @@ class _$RenderDecoratedSliver extends RenderDecoratedSliver implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Rect get semanticBounds {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticBounds');
     if (identical(r, notOverridden)) return super.semanticBounds;
@@ -735,10 +728,20 @@ class _$RenderDecoratedSliver extends RenderDecoratedSliver implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -806,7 +809,6 @@ class _$RenderDecoratedSliver extends RenderDecoratedSliver implements DarticObj
   Decoration get _super$decoration => super.decoration;
   DecorationPosition get _super$position => super.position;
   ImageConfiguration get _super$configuration => super.configuration;
-  int get _super$hashCode => super.hashCode;
   Rect get _super$semanticBounds => super.semanticBounds;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
@@ -847,6 +849,7 @@ class _$RenderDecoratedSliver extends RenderDecoratedSliver implements DarticObj
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderSliver? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -930,7 +933,6 @@ abstract final class RenderDecoratedSliverBindings {
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$decoration#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$decoration);
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$position#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$position);
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$configuration#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$configuration);
-    ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$hashCode#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$semanticBounds);
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$constraints#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$constraints);
@@ -971,6 +973,7 @@ abstract final class RenderDecoratedSliverBindings {
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderDecoratedSliver)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$layer=#1', (args) { (args[0] as _$RenderDecoratedSliver)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$child=#1', (args) { (args[0] as _$RenderDecoratedSliver)._super$child = args[1] as RenderSliver?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/decorated_sliver.dart::RenderDecoratedSliver::\$super\$hashCode#0', (args) => (args[0] as _$RenderDecoratedSliver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

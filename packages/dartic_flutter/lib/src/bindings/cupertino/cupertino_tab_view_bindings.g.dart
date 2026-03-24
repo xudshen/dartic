@@ -143,13 +143,6 @@ class _$CupertinoTabView extends CupertinoTabView implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -157,10 +150,20 @@ class _$CupertinoTabView extends CupertinoTabView implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -181,8 +184,8 @@ class _$CupertinoTabView extends CupertinoTabView implements DarticObjectHolder 
   RouteFactory? get _super$onUnknownRoute => super.onUnknownRoute;
   List<NavigatorObserver> get _super$navigatorObservers => super.navigatorObservers;
   String? get _super$restorationScopeId => super.restorationScopeId;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -219,8 +222,8 @@ abstract final class CupertinoTabViewBindings {
     ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$onUnknownRoute#0', (args) => (args[0] as _$CupertinoTabView)._super$onUnknownRoute);
     ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$navigatorObservers#0', (args) => (args[0] as _$CupertinoTabView)._super$navigatorObservers);
     ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$restorationScopeId#0', (args) => (args[0] as _$CupertinoTabView)._super$restorationScopeId);
-    ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$key#0', (args) => (args[0] as _$CupertinoTabView)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/tab_view.dart::CupertinoTabView::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

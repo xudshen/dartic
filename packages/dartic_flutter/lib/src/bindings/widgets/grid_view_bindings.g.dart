@@ -154,13 +154,6 @@ class _$GridView extends GridView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry? get padding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
     if (identical(r, notOverridden)) return super.padding;
@@ -294,10 +287,20 @@ class _$GridView extends GridView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -316,7 +319,6 @@ class _$GridView extends GridView implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   SliverGridDelegate get _super$gridDelegate => super.gridDelegate;
   SliverChildDelegate get _super$childrenDelegate => super.childrenDelegate;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry? get _super$padding => super.padding;
   Axis get _super$scrollDirection => super.scrollDirection;
   bool get _super$reverse => super.reverse;
@@ -336,6 +338,7 @@ class _$GridView extends GridView implements DarticObjectHolder {
   Clip get _super$clipBehavior => super.clipBehavior;
   HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -370,7 +373,6 @@ abstract final class GridViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$GridView)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$gridDelegate#0', (args) => (args[0] as _$GridView)._super$gridDelegate);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$childrenDelegate#0', (args) => (args[0] as _$GridView)._super$childrenDelegate);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$hashCode#0', (args) => (args[0] as _$GridView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$padding#0', (args) => (args[0] as _$GridView)._super$padding);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$scrollDirection#0', (args) => (args[0] as _$GridView)._super$scrollDirection);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$reverse#0', (args) => (args[0] as _$GridView)._super$reverse);
@@ -390,6 +392,7 @@ abstract final class GridViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$clipBehavior#0', (args) => (args[0] as _$GridView)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$GridView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$key#0', (args) => (args[0] as _$GridView)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::GridView::\$super\$hashCode#0', (args) => (args[0] as _$GridView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

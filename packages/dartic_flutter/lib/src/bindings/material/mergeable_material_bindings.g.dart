@@ -127,13 +127,6 @@ class _$MergeableMaterial extends MergeableMaterial implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -141,10 +134,20 @@ class _$MergeableMaterial extends MergeableMaterial implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -162,8 +165,8 @@ class _$MergeableMaterial extends MergeableMaterial implements DarticObjectHolde
   double get _super$elevation => super.elevation;
   bool get _super$hasDividers => super.hasDividers;
   Color? get _super$dividerColor => super.dividerColor;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -197,8 +200,8 @@ abstract final class MergeableMaterialBindings {
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$elevation#0', (args) => (args[0] as _$MergeableMaterial)._super$elevation);
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$hasDividers#0', (args) => (args[0] as _$MergeableMaterial)._super$hasDividers);
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$dividerColor#0', (args) => (args[0] as _$MergeableMaterial)._super$dividerColor);
-    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$hashCode#0', (args) => (args[0] as _$MergeableMaterial)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$key#0', (args) => (args[0] as _$MergeableMaterial)._super$key);
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MergeableMaterial::\$super\$hashCode#0', (args) => (args[0] as _$MergeableMaterial)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

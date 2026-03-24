@@ -50,13 +50,6 @@ class _$DeleteCharacterIntent extends DeleteCharacterIntent implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get forward {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'forward');
     if (identical(r, notOverridden)) return super.forward;
@@ -64,10 +57,20 @@ class _$DeleteCharacterIntent extends DeleteCharacterIntent implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -75,8 +78,8 @@ class _$DeleteCharacterIntent extends DeleteCharacterIntent implements DarticObj
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$forward => super.forward;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -100,8 +103,8 @@ abstract final class DeleteCharacterIntentBindings {
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$toStringShort#0', (args) => (args[0] as _$DeleteCharacterIntent)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DeleteCharacterIntent)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$debugFillProperties#1', (args) { (args[0] as _$DeleteCharacterIntent)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$hashCode#0', (args) => (args[0] as _$DeleteCharacterIntent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$forward#0', (args) => (args[0] as _$DeleteCharacterIntent)._super$forward);
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::DeleteCharacterIntent::\$super\$hashCode#0', (args) => (args[0] as _$DeleteCharacterIntent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

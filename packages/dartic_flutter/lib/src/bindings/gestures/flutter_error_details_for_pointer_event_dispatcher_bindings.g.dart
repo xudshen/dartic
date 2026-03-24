@@ -88,13 +88,6 @@ class _$FlutterErrorDetailsForPointerEventDispatcher extends FlutterErrorDetails
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object get exception {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'exception');
     if (identical(r, notOverridden)) return super.exception;
@@ -151,10 +144,20 @@ class _$FlutterErrorDetailsForPointerEventDispatcher extends FlutterErrorDetails
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -166,7 +169,6 @@ class _$FlutterErrorDetailsForPointerEventDispatcher extends FlutterErrorDetails
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   PointerEvent? get _super$event => super.event;
   HitTestEntry<HitTestTarget>? get _super$hitTestEntry => super.hitTestEntry;
-  int get _super$hashCode => super.hashCode;
   Object get _super$exception => super.exception;
   StackTrace? get _super$stack => super.stack;
   String? get _super$library => super.library;
@@ -175,6 +177,7 @@ class _$FlutterErrorDetailsForPointerEventDispatcher extends FlutterErrorDetails
   InformationCollector? get _super$informationCollector => super.informationCollector;
   bool get _super$silent => super.silent;
   DiagnosticsNode get _super$summary => super.summary;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -202,7 +205,6 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$event#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$event);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$hitTestEntry#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$hitTestEntry);
-    ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$exception#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$exception);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$stack#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$stack);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$library#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$library);
@@ -211,6 +213,7 @@ abstract final class FlutterErrorDetailsForPointerEventDispatcherBindings {
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$informationCollector#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$informationCollector);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$silent#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$silent);
     ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$summary#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$summary);
+    ctx.registerBinding('package:flutter/src/gestures/binding.dart::FlutterErrorDetailsForPointerEventDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$FlutterErrorDetailsForPointerEventDispatcher)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

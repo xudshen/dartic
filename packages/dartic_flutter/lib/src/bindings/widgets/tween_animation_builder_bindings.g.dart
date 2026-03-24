@@ -110,13 +110,6 @@ class _$TweenAnimationBuilder extends TweenAnimationBuilder<Object?> implements 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -145,10 +138,20 @@ class _$TweenAnimationBuilder extends TweenAnimationBuilder<Object?> implements 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -164,11 +167,11 @@ class _$TweenAnimationBuilder extends TweenAnimationBuilder<Object?> implements 
   Tween get _super$tween => super.tween;
   Widget Function(BuildContext, Object?, Widget?) get _super$builder => super.builder;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -200,11 +203,11 @@ abstract final class TweenAnimationBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$tween#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$tween);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$builder#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$builder);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$child#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$hashCode#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$curve#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$duration#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$onEnd#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$key#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/tween_animation_builder.dart::TweenAnimationBuilder::\$super\$hashCode#0', (args) => (args[0] as _$TweenAnimationBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

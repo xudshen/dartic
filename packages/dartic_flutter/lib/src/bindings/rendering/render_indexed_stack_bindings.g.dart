@@ -632,13 +632,6 @@ class _$RenderIndexedStack extends RenderIndexedStack implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AlignmentGeometry get alignment {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'alignment');
     if (identical(r, notOverridden)) return super.alignment;
@@ -961,10 +954,20 @@ class _$RenderIndexedStack extends RenderIndexedStack implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1060,7 +1063,6 @@ class _$RenderIndexedStack extends RenderIndexedStack implements DarticObjectHol
   void _super$defaultPaint(PaintingContext context, Offset offset) { super.defaultPaint(context, offset); }
   List<RenderBox> _super$getChildrenAsList() => super.getChildrenAsList();
   int? get _super$index => super.index;
-  int get _super$hashCode => super.hashCode;
   AlignmentGeometry get _super$alignment => super.alignment;
   TextDirection? get _super$textDirection => super.textDirection;
   StackFit get _super$fit => super.fit;
@@ -1107,6 +1109,7 @@ class _$RenderIndexedStack extends RenderIndexedStack implements DarticObjectHol
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1218,7 +1221,6 @@ abstract final class RenderIndexedStackBindings {
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$defaultPaint#2', (args) { (args[0] as _$RenderIndexedStack)._super$defaultPaint(args[1] as PaintingContext, args[2] as Offset); return null; });
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$getChildrenAsList#0', (args) => (args[0] as _$RenderIndexedStack)._super$getChildrenAsList());
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$index#0', (args) => (args[0] as _$RenderIndexedStack)._super$index);
-    ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$hashCode#0', (args) => (args[0] as _$RenderIndexedStack)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$alignment#0', (args) => (args[0] as _$RenderIndexedStack)._super$alignment);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$textDirection#0', (args) => (args[0] as _$RenderIndexedStack)._super$textDirection);
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$fit#0', (args) => (args[0] as _$RenderIndexedStack)._super$fit);
@@ -1265,6 +1267,7 @@ abstract final class RenderIndexedStackBindings {
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$parentData=#1', (args) { (args[0] as _$RenderIndexedStack)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderIndexedStack)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$layer=#1', (args) { (args[0] as _$RenderIndexedStack)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/stack.dart::RenderIndexedStack::\$super\$hashCode#0', (args) => (args[0] as _$RenderIndexedStack)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

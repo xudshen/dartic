@@ -234,13 +234,6 @@ class _$FollowerLayer extends FollowerLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -388,10 +381,20 @@ class _$FollowerLayer extends FollowerLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -427,7 +430,6 @@ class _$FollowerLayer extends FollowerLayer implements DarticObjectHolder {
   ui.Offset? get _super$unlinkedOffset => super.unlinkedOffset;
   ui.Offset? get _super$linkedOffset => super.linkedOffset;
   bool get _super$alwaysNeedsAddToScene => super.alwaysNeedsAddToScene;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -449,6 +451,7 @@ class _$FollowerLayer extends FollowerLayer implements DarticObjectHolder {
   set _super$linkedOffset(ui.Offset? value) { super.linkedOffset = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -500,7 +503,6 @@ abstract final class FollowerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$unlinkedOffset#0', (args) => (args[0] as _$FollowerLayer)._super$unlinkedOffset);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$linkedOffset#0', (args) => (args[0] as _$FollowerLayer)._super$linkedOffset);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$alwaysNeedsAddToScene#0', (args) => (args[0] as _$FollowerLayer)._super$alwaysNeedsAddToScene);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$hashCode#0', (args) => (args[0] as _$FollowerLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$firstChild#0', (args) => (args[0] as _$FollowerLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$lastChild#0', (args) => (args[0] as _$FollowerLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$hasChildren#0', (args) => (args[0] as _$FollowerLayer)._super$hasChildren);
@@ -522,6 +524,7 @@ abstract final class FollowerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$linkedOffset=#1', (args) { (args[0] as _$FollowerLayer)._super$linkedOffset = args[1] as ui.Offset?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$FollowerLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$FollowerLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::FollowerLayer::\$super\$hashCode#0', (args) => (args[0] as _$FollowerLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

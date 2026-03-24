@@ -114,13 +114,6 @@ class _$DualTransitionBuilder extends DualTransitionBuilder implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -128,10 +121,20 @@ class _$DualTransitionBuilder extends DualTransitionBuilder implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -148,8 +151,8 @@ class _$DualTransitionBuilder extends DualTransitionBuilder implements DarticObj
   AnimatedTransitionBuilder get _super$forwardBuilder => super.forwardBuilder;
   AnimatedTransitionBuilder get _super$reverseBuilder => super.reverseBuilder;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -182,8 +185,8 @@ abstract final class DualTransitionBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$forwardBuilder#0', (args) => (args[0] as _$DualTransitionBuilder)._super$forwardBuilder);
     ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$reverseBuilder#0', (args) => (args[0] as _$DualTransitionBuilder)._super$reverseBuilder);
     ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$child#0', (args) => (args[0] as _$DualTransitionBuilder)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$hashCode#0', (args) => (args[0] as _$DualTransitionBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$key#0', (args) => (args[0] as _$DualTransitionBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/dual_transition_builder.dart::DualTransitionBuilder::\$super\$hashCode#0', (args) => (args[0] as _$DualTransitionBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

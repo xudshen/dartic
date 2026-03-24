@@ -105,13 +105,6 @@ class _$ValueListenableBuilder extends ValueListenableBuilder<dynamic> implement
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -119,10 +112,20 @@ class _$ValueListenableBuilder extends ValueListenableBuilder<dynamic> implement
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -138,8 +141,8 @@ class _$ValueListenableBuilder extends ValueListenableBuilder<dynamic> implement
   ValueListenable get _super$valueListenable => super.valueListenable;
   Widget Function(BuildContext, dynamic, Widget?) get _super$builder => super.builder;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -171,8 +174,8 @@ abstract final class ValueListenableBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$valueListenable#0', (args) => (args[0] as _$ValueListenableBuilder)._super$valueListenable);
     ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$builder#0', (args) => (args[0] as _$ValueListenableBuilder)._super$builder);
     ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$child#0', (args) => (args[0] as _$ValueListenableBuilder)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$hashCode#0', (args) => (args[0] as _$ValueListenableBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$key#0', (args) => (args[0] as _$ValueListenableBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/value_listenable_builder.dart::ValueListenableBuilder::\$super\$hashCode#0', (args) => (args[0] as _$ValueListenableBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

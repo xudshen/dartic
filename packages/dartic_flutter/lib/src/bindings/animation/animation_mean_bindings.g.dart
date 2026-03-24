@@ -122,13 +122,6 @@ class _$AnimationMean extends AnimationMean implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Animation<double> get first {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'first');
     if (identical(r, notOverridden)) return super.first;
@@ -185,10 +178,20 @@ class _$AnimationMean extends AnimationMean implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -205,7 +208,6 @@ class _$AnimationMean extends AnimationMean implements DarticObjectHolder {
   void _super$clearStatusListeners() { super.clearStatusListeners(); }
   void _super$notifyStatusListeners(AnimationStatus status) { super.notifyStatusListeners(status); }
   double get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   Animation<double> get _super$first => super.first;
   Animation<double> get _super$next => super.next;
   AnimationStatus get _super$status => super.status;
@@ -214,6 +216,7 @@ class _$AnimationMean extends AnimationMean implements DarticObjectHolder {
   bool get _super$isAnimating => super.isAnimating;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
   bool get _super$isListening => super.isListening;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -246,7 +249,6 @@ abstract final class AnimationMeanBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$clearStatusListeners#0', (args) { (args[0] as _$AnimationMean)._super$clearStatusListeners(); return null; });
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$notifyStatusListeners#1', (args) { (args[0] as _$AnimationMean)._super$notifyStatusListeners(args[1] as AnimationStatus); return null; });
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$value#0', (args) => (args[0] as _$AnimationMean)._super$value);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$hashCode#0', (args) => (args[0] as _$AnimationMean)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$first#0', (args) => (args[0] as _$AnimationMean)._super$first);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$next#0', (args) => (args[0] as _$AnimationMean)._super$next);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$status#0', (args) => (args[0] as _$AnimationMean)._super$status);
@@ -255,6 +257,7 @@ abstract final class AnimationMeanBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$isAnimating#0', (args) => (args[0] as _$AnimationMean)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$AnimationMean)._super$isForwardOrCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$isListening#0', (args) => (args[0] as _$AnimationMean)._super$isListening);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::AnimationMean::\$super\$hashCode#0', (args) => (args[0] as _$AnimationMean)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

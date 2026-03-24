@@ -130,13 +130,6 @@ class _$Flexible extends Flexible implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get debugTypicalAncestorWidgetDescription {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugTypicalAncestorWidgetDescription');
     if (identical(r, notOverridden)) return super.debugTypicalAncestorWidgetDescription;
@@ -158,10 +151,20 @@ class _$Flexible extends Flexible implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -179,10 +182,10 @@ class _$Flexible extends Flexible implements DarticObjectHolder {
   int get _super$flex => super.flex;
   FlexFit get _super$fit => super.fit;
   Type get _super$debugTypicalAncestorWidgetClass => super.debugTypicalAncestorWidgetClass;
-  int get _super$hashCode => super.hashCode;
   String get _super$debugTypicalAncestorWidgetDescription => super.debugTypicalAncestorWidgetDescription;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -216,10 +219,10 @@ abstract final class FlexibleBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$flex#0', (args) => (args[0] as _$Flexible)._super$flex);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$fit#0', (args) => (args[0] as _$Flexible)._super$fit);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$debugTypicalAncestorWidgetClass#0', (args) => (args[0] as _$Flexible)._super$debugTypicalAncestorWidgetClass);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$hashCode#0', (args) => (args[0] as _$Flexible)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$debugTypicalAncestorWidgetDescription#0', (args) => (args[0] as _$Flexible)._super$debugTypicalAncestorWidgetDescription);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$child#0', (args) => (args[0] as _$Flexible)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$key#0', (args) => (args[0] as _$Flexible)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flexible::\$super\$hashCode#0', (args) => (args[0] as _$Flexible)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

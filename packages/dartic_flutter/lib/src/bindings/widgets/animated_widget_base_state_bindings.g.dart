@@ -140,13 +140,6 @@ class _$AnimatedWidgetBaseState extends AnimatedWidgetBaseState<ImplicitlyAnimat
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AnimationController get controller {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
     if (identical(r, notOverridden)) return super.controller;
@@ -182,10 +175,20 @@ class _$AnimatedWidgetBaseState extends AnimatedWidgetBaseState<ImplicitlyAnimat
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -203,12 +206,12 @@ class _$AnimatedWidgetBaseState extends AnimatedWidgetBaseState<ImplicitlyAnimat
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   Ticker _super$createTicker(TickerCallback onTick) => super.createTicker(onTick);
-  int get _super$hashCode => super.hashCode;
   AnimationController get _super$controller => super.controller;
   Animation<double> get _super$animation => super.animation;
   ImplicitlyAnimatedWidget get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -242,12 +245,12 @@ abstract final class AnimatedWidgetBaseStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$toStringShort#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$createTicker#1', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$createTicker((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$controller#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$controller);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$animation#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$animation);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$widget#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$context#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$mounted#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedWidgetBaseState::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedWidgetBaseState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

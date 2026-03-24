@@ -91,13 +91,6 @@ class _$OvalBorder extends OvalBorder implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get eccentricity {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'eccentricity');
     if (identical(r, notOverridden)) return super.eccentricity;
@@ -126,17 +119,27 @@ class _$OvalBorder extends OvalBorder implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -150,11 +153,11 @@ class _$OvalBorder extends OvalBorder implements DarticObjectHolder {
   void _super$paintInterior(ui.Canvas canvas, ui.Rect rect, ui.Paint paint, {ui.TextDirection? textDirection}) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); }
   void _super$paint(ui.Canvas canvas, ui.Rect rect, {ui.TextDirection? textDirection}) { super.paint(canvas, rect, textDirection: textDirection); }
   ShapeBorder? _super$add(ShapeBorder other, {bool reversed = false}) => super.add(other, reversed: reversed);
-  int get _super$hashCode => super.hashCode;
   double get _super$eccentricity => super.eccentricity;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   BorderSide get _super$side => super.side;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -184,11 +187,11 @@ abstract final class OvalBorderBindings {
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$paintInterior#4', (args) { (args[0] as _$OvalBorder)._super$paintInterior(args[1] as ui.Canvas, args[2] as ui.Rect, args[3] as ui.Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$paint#3', (args) { (args[0] as _$OvalBorder)._super$paint(args[1] as ui.Canvas, args[2] as ui.Rect, textDirection: identical(args[3], darticAbsent) ? null : args[3] as ui.TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$add#2', (args) => (args[0] as _$OvalBorder)._super$add(args[1] as ShapeBorder, reversed: identical(args[2], darticAbsent) ? false : args[2] as bool));
-    ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$hashCode#0', (args) => (args[0] as _$OvalBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$eccentricity#0', (args) => (args[0] as _$OvalBorder)._super$eccentricity);
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$OvalBorder)._super$preferPaintInterior);
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$dimensions#0', (args) => (args[0] as _$OvalBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$side#0', (args) => (args[0] as _$OvalBorder)._super$side);
+    ctx.registerBinding('package:flutter/src/painting/oval_border.dart::OvalBorder::\$super\$hashCode#0', (args) => (args[0] as _$OvalBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

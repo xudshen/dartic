@@ -649,13 +649,6 @@ class _$WidgetsFlutterBinding extends WidgetsFlutterBinding implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SingletonFlutterWindow get window {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'window');
     if (identical(r, notOverridden)) return super.window;
@@ -1076,10 +1069,20 @@ class _$WidgetsFlutterBinding extends WidgetsFlutterBinding implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1176,7 +1179,6 @@ class _$WidgetsFlutterBinding extends WidgetsFlutterBinding implements DarticObj
   void _super$attachRootWidget(Widget rootWidget) { super.attachRootWidget(rootWidget); }
   void _super$attachToBuildOwner(RootWidget widget) { super.attachToBuildOwner(widget); }
   Locale? _super$computePlatformResolvedLocale(List<Locale> supportedLocales) => super.computePlatformResolvedLocale(supportedLocales);
-  int get _super$hashCode => super.hashCode;
   SingletonFlutterWindow get _super$window => super.window;
   PlatformDispatcher get _super$platformDispatcher => super.platformDispatcher;
   bool get _super$locked => super.locked;
@@ -1237,6 +1239,7 @@ class _$WidgetsFlutterBinding extends WidgetsFlutterBinding implements DarticObj
   set _super$platformMenuDelegate(PlatformMenuDelegate value) { super.platformMenuDelegate = value; }
   set _super$debugBuildingDirtyElements(bool value) { super.debugBuildingDirtyElements = value; }
   set _super$windowingOwner(WindowingOwner value) { super.windowingOwner = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1350,7 +1353,6 @@ abstract final class WidgetsFlutterBindingBindings {
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$attachRootWidget#1', (args) { (args[0] as _$WidgetsFlutterBinding)._super$attachRootWidget(args[1] as Widget); return null; });
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$attachToBuildOwner#1', (args) { (args[0] as _$WidgetsFlutterBinding)._super$attachToBuildOwner(args[1] as RootWidget); return null; });
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$computePlatformResolvedLocale#1', (args) => (args[0] as _$WidgetsFlutterBinding)._super$computePlatformResolvedLocale((args[1] as List).cast<Locale>()));
-    ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$hashCode#0', (args) => (args[0] as _$WidgetsFlutterBinding)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$window#0', (args) => (args[0] as _$WidgetsFlutterBinding)._super$window);
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$platformDispatcher#0', (args) => (args[0] as _$WidgetsFlutterBinding)._super$platformDispatcher);
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$locked#0', (args) => (args[0] as _$WidgetsFlutterBinding)._super$locked);
@@ -1411,6 +1413,7 @@ abstract final class WidgetsFlutterBindingBindings {
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$platformMenuDelegate=#1', (args) { (args[0] as _$WidgetsFlutterBinding)._super$platformMenuDelegate = args[1] as PlatformMenuDelegate; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$debugBuildingDirtyElements=#1', (args) { (args[0] as _$WidgetsFlutterBinding)._super$debugBuildingDirtyElements = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$windowingOwner=#1', (args) { (args[0] as _$WidgetsFlutterBinding)._super$windowingOwner = args[1] as WindowingOwner; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/binding.dart::WidgetsFlutterBinding::\$super\$hashCode#0', (args) => (args[0] as _$WidgetsFlutterBinding)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -72,13 +72,6 @@ class _$ScrollMetricsNotification extends ScrollMetricsNotification implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get depth {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'depth');
     if (identical(r, notOverridden)) return super.depth;
@@ -86,10 +79,20 @@ class _$ScrollMetricsNotification extends ScrollMetricsNotification implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -99,8 +102,8 @@ class _$ScrollMetricsNotification extends ScrollMetricsNotification implements D
   void _super$dispatch(BuildContext? target) { super.dispatch(target); }
   ScrollMetrics get _super$metrics => super.metrics;
   BuildContext get _super$context => super.context;
-  int get _super$hashCode => super.hashCode;
   int get _super$depth => super.depth;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -126,8 +129,8 @@ abstract final class ScrollMetricsNotificationBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$dispatch#1', (args) { (args[0] as _$ScrollMetricsNotification)._super$dispatch(args[1] as BuildContext?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$metrics#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$metrics);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$context#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$context);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$hashCode#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$depth#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$depth);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollMetricsNotification::\$super\$hashCode#0', (args) => (args[0] as _$ScrollMetricsNotification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

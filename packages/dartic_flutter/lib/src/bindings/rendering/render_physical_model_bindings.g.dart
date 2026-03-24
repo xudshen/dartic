@@ -557,13 +557,6 @@ class _$RenderPhysicalModel extends RenderPhysicalModel implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get elevation {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elevation');
     if (identical(r, notOverridden)) return super.elevation;
@@ -900,10 +893,20 @@ class _$RenderPhysicalModel extends RenderPhysicalModel implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -987,7 +990,6 @@ class _$RenderPhysicalModel extends RenderPhysicalModel implements DarticObjectH
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   BoxShape get _super$shape => super.shape;
   BorderRadius? get _super$borderRadius => super.borderRadius;
-  int get _super$hashCode => super.hashCode;
   double get _super$elevation => super.elevation;
   ui.Color get _super$shadowColor => super.shadowColor;
   ui.Color get _super$color => super.color;
@@ -1036,6 +1038,7 @@ class _$RenderPhysicalModel extends RenderPhysicalModel implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1135,7 +1138,6 @@ abstract final class RenderPhysicalModelBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderPhysicalModel)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$shape#0', (args) => (args[0] as _$RenderPhysicalModel)._super$shape);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$borderRadius#0', (args) => (args[0] as _$RenderPhysicalModel)._super$borderRadius);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$hashCode#0', (args) => (args[0] as _$RenderPhysicalModel)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$elevation#0', (args) => (args[0] as _$RenderPhysicalModel)._super$elevation);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$shadowColor#0', (args) => (args[0] as _$RenderPhysicalModel)._super$shadowColor);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$color#0', (args) => (args[0] as _$RenderPhysicalModel)._super$color);
@@ -1184,6 +1186,7 @@ abstract final class RenderPhysicalModelBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderPhysicalModel)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$layer=#1', (args) { (args[0] as _$RenderPhysicalModel)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$child=#1', (args) { (args[0] as _$RenderPhysicalModel)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderPhysicalModel::\$super\$hashCode#0', (args) => (args[0] as _$RenderPhysicalModel)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

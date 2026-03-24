@@ -113,13 +113,6 @@ class _$ElevatedButton extends ElevatedButton implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   VoidCallback? get onPressed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onPressed');
     if (identical(r, notOverridden)) return super.onPressed;
@@ -225,10 +218,20 @@ class _$ElevatedButton extends ElevatedButton implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -243,7 +246,6 @@ class _$ElevatedButton extends ElevatedButton implements DarticObjectHolder {
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
-  int get _super$hashCode => super.hashCode;
   VoidCallback? get _super$onPressed => super.onPressed;
   VoidCallback? get _super$onLongPress => super.onLongPress;
   ValueChanged<bool>? get _super$onHover => super.onHover;
@@ -259,6 +261,7 @@ class _$ElevatedButton extends ElevatedButton implements DarticObjectHolder {
   Widget? get _super$child => super.child;
   bool get _super$enabled => super.enabled;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -290,7 +293,6 @@ abstract final class ElevatedButtonBindings {
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$toStringDeep#4', (args) => (args[0] as _$ElevatedButton)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ElevatedButton)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$ElevatedButton)._super$debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$hashCode#0', (args) => (args[0] as _$ElevatedButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$onPressed#0', (args) => (args[0] as _$ElevatedButton)._super$onPressed);
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$onLongPress#0', (args) => (args[0] as _$ElevatedButton)._super$onLongPress);
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$onHover#0', (args) => (args[0] as _$ElevatedButton)._super$onHover);
@@ -306,6 +308,7 @@ abstract final class ElevatedButtonBindings {
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$child#0', (args) => (args[0] as _$ElevatedButton)._super$child);
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$enabled#0', (args) => (args[0] as _$ElevatedButton)._super$enabled);
     ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$key#0', (args) => (args[0] as _$ElevatedButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/elevated_button.dart::ElevatedButton::\$super\$hashCode#0', (args) => (args[0] as _$ElevatedButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -169,13 +169,6 @@ class _$AnimatedContainer extends AnimatedContainer implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -204,10 +197,20 @@ class _$AnimatedContainer extends AnimatedContainer implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -230,11 +233,11 @@ class _$AnimatedContainer extends AnimatedContainer implements DarticObjectHolde
   Matrix4? get _super$transform => super.transform;
   AlignmentGeometry? get _super$transformAlignment => super.transformAlignment;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -273,11 +276,11 @@ abstract final class AnimatedContainerBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$transform#0', (args) => (args[0] as _$AnimatedContainer)._super$transform);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$transformAlignment#0', (args) => (args[0] as _$AnimatedContainer)._super$transformAlignment);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$clipBehavior#0', (args) => (args[0] as _$AnimatedContainer)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedContainer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$curve#0', (args) => (args[0] as _$AnimatedContainer)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$duration#0', (args) => (args[0] as _$AnimatedContainer)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedContainer)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$key#0', (args) => (args[0] as _$AnimatedContainer)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedContainer::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedContainer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

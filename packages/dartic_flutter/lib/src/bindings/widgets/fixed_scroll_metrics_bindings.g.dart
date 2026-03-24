@@ -99,13 +99,6 @@ class _$FixedScrollMetrics extends FixedScrollMetrics implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Axis get axis {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axis');
     if (identical(r, notOverridden)) return super.axis;
@@ -155,10 +148,20 @@ class _$FixedScrollMetrics extends FixedScrollMetrics implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -173,7 +176,6 @@ class _$FixedScrollMetrics extends FixedScrollMetrics implements DarticObjectHol
   bool get _super$hasViewportDimension => super.hasViewportDimension;
   AxisDirection get _super$axisDirection => super.axisDirection;
   double get _super$devicePixelRatio => super.devicePixelRatio;
-  int get _super$hashCode => super.hashCode;
   Axis get _super$axis => super.axis;
   bool get _super$outOfRange => super.outOfRange;
   bool get _super$atEdge => super.atEdge;
@@ -181,6 +183,7 @@ class _$FixedScrollMetrics extends FixedScrollMetrics implements DarticObjectHol
   double get _super$extentInside => super.extentInside;
   double get _super$extentAfter => super.extentAfter;
   double get _super$extentTotal => super.extentTotal;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,7 +214,6 @@ abstract final class FixedScrollMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$hasViewportDimension#0', (args) => (args[0] as _$FixedScrollMetrics)._super$hasViewportDimension);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$axisDirection#0', (args) => (args[0] as _$FixedScrollMetrics)._super$axisDirection);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$devicePixelRatio#0', (args) => (args[0] as _$FixedScrollMetrics)._super$devicePixelRatio);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$hashCode#0', (args) => (args[0] as _$FixedScrollMetrics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$axis#0', (args) => (args[0] as _$FixedScrollMetrics)._super$axis);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$outOfRange#0', (args) => (args[0] as _$FixedScrollMetrics)._super$outOfRange);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$atEdge#0', (args) => (args[0] as _$FixedScrollMetrics)._super$atEdge);
@@ -219,6 +221,7 @@ abstract final class FixedScrollMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$extentInside#0', (args) => (args[0] as _$FixedScrollMetrics)._super$extentInside);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$extentAfter#0', (args) => (args[0] as _$FixedScrollMetrics)._super$extentAfter);
     ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$extentTotal#0', (args) => (args[0] as _$FixedScrollMetrics)._super$extentTotal);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_metrics.dart::FixedScrollMetrics::\$super\$hashCode#0', (args) => (args[0] as _$FixedScrollMetrics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

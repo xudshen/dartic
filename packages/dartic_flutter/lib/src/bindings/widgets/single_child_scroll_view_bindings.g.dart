@@ -187,13 +187,6 @@ class _$SingleChildScrollView extends SingleChildScrollView implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -201,10 +194,20 @@ class _$SingleChildScrollView extends SingleChildScrollView implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -229,8 +232,8 @@ class _$SingleChildScrollView extends SingleChildScrollView implements DarticObj
   HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   String? get _super$restorationId => super.restorationId;
   ScrollViewKeyboardDismissBehavior? get _super$keyboardDismissBehavior => super.keyboardDismissBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -271,8 +274,8 @@ abstract final class SingleChildScrollViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$SingleChildScrollView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$restorationId#0', (args) => (args[0] as _$SingleChildScrollView)._super$restorationId);
     ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$keyboardDismissBehavior#0', (args) => (args[0] as _$SingleChildScrollView)._super$keyboardDismissBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$hashCode#0', (args) => (args[0] as _$SingleChildScrollView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$key#0', (args) => (args[0] as _$SingleChildScrollView)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/single_child_scroll_view.dart::SingleChildScrollView::\$super\$hashCode#0', (args) => (args[0] as _$SingleChildScrollView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

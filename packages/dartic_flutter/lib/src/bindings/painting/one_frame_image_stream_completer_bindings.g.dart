@@ -111,13 +111,6 @@ class _$OneFrameImageStreamCompleter extends OneFrameImageStreamCompleter implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String? get debugLabel {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugLabel');
     if (identical(r, notOverridden)) return super.debugLabel;
@@ -139,10 +132,20 @@ class _$OneFrameImageStreamCompleter extends OneFrameImageStreamCompleter implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -160,10 +163,10 @@ class _$OneFrameImageStreamCompleter extends OneFrameImageStreamCompleter implem
   void _super$debugFillProperties(DiagnosticPropertiesBuilder description) { super.debugFillProperties(description); }
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   String? get _super$debugLabel => super.debugLabel;
   bool get _super$hasListeners => super.hasListeners;
   set _super$debugLabel(String? value) { super.debugLabel = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -197,10 +200,10 @@ abstract final class OneFrameImageStreamCompleterBindings {
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$debugFillProperties#1', (args) { (args[0] as _$OneFrameImageStreamCompleter)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$toStringShort#0', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$hashCode#0', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$debugLabel#0', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$debugLabel);
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$hasListeners#0', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$debugLabel=#1', (args) { (args[0] as _$OneFrameImageStreamCompleter)._super$debugLabel = args[1] as String?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/painting/image_stream.dart::OneFrameImageStreamCompleter::\$super\$hashCode#0', (args) => (args[0] as _$OneFrameImageStreamCompleter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

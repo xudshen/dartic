@@ -59,13 +59,6 @@ class _$KeyEventManager extends KeyEventManager implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set keyMessageHandler(KeyMessageHandler? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'keyMessageHandler', value)) {
       super.keyMessageHandler = value;
@@ -73,10 +66,20 @@ class _$KeyEventManager extends KeyEventManager implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -85,8 +88,8 @@ class _$KeyEventManager extends KeyEventManager implements DarticObjectHolder {
   void _super$clearState() { super.clearState(); }
   String _super$toString() => super.toString();
   KeyMessageHandler? get _super$keyMessageHandler => super.keyMessageHandler;
-  int get _super$hashCode => super.hashCode;
   set _super$keyMessageHandler(KeyMessageHandler? value) { super.keyMessageHandler = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -110,8 +113,8 @@ abstract final class KeyEventManagerBindings {
     ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$clearState#0', (args) { (args[0] as _$KeyEventManager)._super$clearState(); return null; });
     ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$toString#0', (args) => (args[0] as _$KeyEventManager)._super$toString());
     ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$keyMessageHandler#0', (args) => (args[0] as _$KeyEventManager)._super$keyMessageHandler);
-    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$hashCode#0', (args) => (args[0] as _$KeyEventManager)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$keyMessageHandler=#1', (args) { (args[0] as _$KeyEventManager)._super$keyMessageHandler = args[1] as KeyMessageHandler?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/services/hardware_keyboard.dart::KeyEventManager::\$super\$hashCode#0', (args) => (args[0] as _$KeyEventManager)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

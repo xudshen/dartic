@@ -108,13 +108,6 @@ class _$ClampingScrollPhysics extends ClampingScrollPhysics implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics? get parent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
@@ -178,10 +171,20 @@ class _$ClampingScrollPhysics extends ClampingScrollPhysics implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -196,7 +199,6 @@ class _$ClampingScrollPhysics extends ClampingScrollPhysics implements DarticObj
   double _super$adjustPositionForNewDimensions({required ScrollMetrics oldPosition, required ScrollMetrics newPosition, required bool isScrolling, required double velocity}) => super.adjustPositionForNewDimensions(oldPosition: oldPosition, newPosition: newPosition, isScrolling: isScrolling, velocity: velocity);
   Tolerance _super$toleranceFor(ScrollMetrics metrics) => super.toleranceFor(metrics);
   double _super$carriedMomentum(double existingVelocity) => super.carriedMomentum(existingVelocity);
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics? get _super$parent => super.parent;
   SpringDescription get _super$spring => super.spring;
   Tolerance get _super$tolerance => super.tolerance;
@@ -206,6 +208,7 @@ class _$ClampingScrollPhysics extends ClampingScrollPhysics implements DarticObj
   double? get _super$dragStartDistanceMotionThreshold => super.dragStartDistanceMotionThreshold;
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
   bool get _super$allowUserScrolling => super.allowUserScrolling;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -236,7 +239,6 @@ abstract final class ClampingScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$adjustPositionForNewDimensions#4', (args) => (args[0] as _$ClampingScrollPhysics)._super$adjustPositionForNewDimensions(oldPosition: args[1] as ScrollMetrics, newPosition: args[2] as ScrollMetrics, isScrolling: args[3] as bool, velocity: args[4] as double));
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$toleranceFor#1', (args) => (args[0] as _$ClampingScrollPhysics)._super$toleranceFor(args[1] as ScrollMetrics));
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$carriedMomentum#1', (args) => (args[0] as _$ClampingScrollPhysics)._super$carriedMomentum(args[1] as double));
-    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$parent#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$parent);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$spring#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$spring);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$tolerance#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$tolerance);
@@ -246,6 +248,7 @@ abstract final class ClampingScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$dragStartDistanceMotionThreshold#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$dragStartDistanceMotionThreshold);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$allowImplicitScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$allowUserScrolling#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$allowUserScrolling);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::ClampingScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$ClampingScrollPhysics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

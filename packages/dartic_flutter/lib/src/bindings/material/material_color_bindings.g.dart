@@ -152,13 +152,6 @@ class _$MaterialColor extends MaterialColor implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Iterable<int> get keys {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keys');
     if (identical(r, notOverridden)) return super.keys;
@@ -243,17 +236,27 @@ class _$MaterialColor extends MaterialColor implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   Color? operator [](int index) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) return super[index];
     return r as Color?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -276,7 +279,6 @@ class _$MaterialColor extends MaterialColor implements DarticObjectHolder {
   Color get _super$shade700 => super.shade700;
   Color get _super$shade800 => super.shade800;
   Color get _super$shade900 => super.shade900;
-  int get _super$hashCode => super.hashCode;
   Iterable<int> get _super$keys => super.keys;
   double get _super$a => super.a;
   double get _super$r => super.r;
@@ -289,6 +291,7 @@ class _$MaterialColor extends MaterialColor implements DarticObjectHolder {
   int get _super$red => super.red;
   int get _super$green => super.green;
   int get _super$blue => super.blue;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -327,7 +330,6 @@ abstract final class MaterialColorBindings {
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$shade700#0', (args) => (args[0] as _$MaterialColor)._super$shade700);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$shade800#0', (args) => (args[0] as _$MaterialColor)._super$shade800);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$shade900#0', (args) => (args[0] as _$MaterialColor)._super$shade900);
-    ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$hashCode#0', (args) => (args[0] as _$MaterialColor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$keys#0', (args) => (args[0] as _$MaterialColor)._super$keys);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$a#0', (args) => (args[0] as _$MaterialColor)._super$a);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$r#0', (args) => (args[0] as _$MaterialColor)._super$r);
@@ -340,6 +342,7 @@ abstract final class MaterialColorBindings {
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$red#0', (args) => (args[0] as _$MaterialColor)._super$red);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$green#0', (args) => (args[0] as _$MaterialColor)._super$green);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$blue#0', (args) => (args[0] as _$MaterialColor)._super$blue);
+    ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialColor::\$super\$hashCode#0', (args) => (args[0] as _$MaterialColor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

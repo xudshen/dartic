@@ -116,13 +116,6 @@ class _$DiagnosticableNode extends DiagnosticableNode<Diagnosticable> implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String? get name {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -186,10 +179,20 @@ class _$DiagnosticableNode extends DiagnosticableNode<Diagnosticable> implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -206,7 +209,6 @@ class _$DiagnosticableNode extends DiagnosticableNode<Diagnosticable> implements
   DiagnosticPropertiesBuilder? get _super$builder => super.builder;
   DiagnosticsTreeStyle get _super$style => super.style;
   String? get _super$emptyBodyDescription => super.emptyBodyDescription;
-  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   bool get _super$showSeparator => super.showSeparator;
   DiagnosticLevel get _super$level => super.level;
@@ -216,6 +218,7 @@ class _$DiagnosticableNode extends DiagnosticableNode<Diagnosticable> implements
   bool get _super$allowNameWrap => super.allowNameWrap;
   bool get _super$allowTruncate => super.allowTruncate;
   TextTreeConfiguration? get _super$textTreeConfiguration => super.textTreeConfiguration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -248,7 +251,6 @@ abstract final class DiagnosticableNodeBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$builder#0', (args) => (args[0] as _$DiagnosticableNode)._super$builder);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$style#0', (args) => (args[0] as _$DiagnosticableNode)._super$style);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$emptyBodyDescription#0', (args) => (args[0] as _$DiagnosticableNode)._super$emptyBodyDescription);
-    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticableNode)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$name#0', (args) => (args[0] as _$DiagnosticableNode)._super$name);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$showSeparator#0', (args) => (args[0] as _$DiagnosticableNode)._super$showSeparator);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$level#0', (args) => (args[0] as _$DiagnosticableNode)._super$level);
@@ -258,6 +260,7 @@ abstract final class DiagnosticableNodeBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$allowNameWrap#0', (args) => (args[0] as _$DiagnosticableNode)._super$allowNameWrap);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$allowTruncate#0', (args) => (args[0] as _$DiagnosticableNode)._super$allowTruncate);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$textTreeConfiguration#0', (args) => (args[0] as _$DiagnosticableNode)._super$textTreeConfiguration);
+    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticableNode::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticableNode)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

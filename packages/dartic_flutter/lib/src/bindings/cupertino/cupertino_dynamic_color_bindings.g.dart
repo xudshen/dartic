@@ -171,13 +171,6 @@ class _$CupertinoDynamicColor extends CupertinoDynamicColor implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -255,10 +248,20 @@ class _$CupertinoDynamicColor extends CupertinoDynamicColor implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -283,7 +286,6 @@ class _$CupertinoDynamicColor extends CupertinoDynamicColor implements DarticObj
   Color get _super$darkElevatedColor => super.darkElevatedColor;
   Color get _super$highContrastElevatedColor => super.highContrastElevatedColor;
   Color get _super$darkHighContrastElevatedColor => super.darkHighContrastElevatedColor;
-  int get _super$hashCode => super.hashCode;
   int get _super$value => super.value;
   int get _super$alpha => super.alpha;
   int get _super$blue => super.blue;
@@ -295,6 +297,7 @@ class _$CupertinoDynamicColor extends CupertinoDynamicColor implements DarticObj
   double get _super$g => super.g;
   double get _super$b => super.b;
   ColorSpace get _super$colorSpace => super.colorSpace;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -337,7 +340,6 @@ abstract final class CupertinoDynamicColorBindings {
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$darkElevatedColor#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$darkElevatedColor);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$highContrastElevatedColor#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$highContrastElevatedColor);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$darkHighContrastElevatedColor#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$darkHighContrastElevatedColor);
-    ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$value#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$value);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$alpha#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$alpha);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$blue#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$blue);
@@ -349,6 +351,7 @@ abstract final class CupertinoDynamicColorBindings {
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$g#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$g);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$b#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$b);
     ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$colorSpace#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$colorSpace);
+    ctx.registerBinding('package:flutter/src/cupertino/colors.dart::CupertinoDynamicColor::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDynamicColor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

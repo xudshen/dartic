@@ -443,13 +443,6 @@ class _$RenderView extends RenderView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool? get debugDisposed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugDisposed');
     if (identical(r, notOverridden)) return super.debugDisposed;
@@ -667,10 +660,20 @@ class _$RenderView extends RenderView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -738,7 +741,6 @@ class _$RenderView extends RenderView implements DarticObjectHolder {
   bool get _super$isRepaintBoundary => super.isRepaintBoundary;
   ui.Rect get _super$paintBounds => super.paintBounds;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
-  int get _super$hashCode => super.hashCode;
   bool? get _super$debugDisposed => super.debugDisposed;
   ParentData? get _super$parentData => super.parentData;
   int get _super$depth => super.depth;
@@ -770,6 +772,7 @@ class _$RenderView extends RenderView implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -855,7 +858,6 @@ abstract final class RenderViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$isRepaintBoundary#0', (args) => (args[0] as _$RenderView)._super$isRepaintBoundary);
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$paintBounds#0', (args) => (args[0] as _$RenderView)._super$paintBounds);
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderView)._super$semanticBounds);
-    ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$hashCode#0', (args) => (args[0] as _$RenderView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$debugDisposed#0', (args) => (args[0] as _$RenderView)._super$debugDisposed);
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$parentData#0', (args) => (args[0] as _$RenderView)._super$parentData);
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$depth#0', (args) => (args[0] as _$RenderView)._super$depth);
@@ -887,6 +889,7 @@ abstract final class RenderViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderView)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$layer=#1', (args) { (args[0] as _$RenderView)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$child=#1', (args) { (args[0] as _$RenderView)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/view.dart::RenderView::\$super\$hashCode#0', (args) => (args[0] as _$RenderView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

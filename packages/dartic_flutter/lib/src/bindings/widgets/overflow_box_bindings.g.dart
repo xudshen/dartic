@@ -152,13 +152,6 @@ class _$OverflowBox extends OverflowBox implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -173,10 +166,20 @@ class _$OverflowBox extends OverflowBox implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -197,9 +200,9 @@ class _$OverflowBox extends OverflowBox implements DarticObjectHolder {
   double? get _super$minHeight => super.minHeight;
   double? get _super$maxHeight => super.maxHeight;
   OverflowBoxFit get _super$fit => super.fit;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -236,9 +239,9 @@ abstract final class OverflowBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$minHeight#0', (args) => (args[0] as _$OverflowBox)._super$minHeight);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$maxHeight#0', (args) => (args[0] as _$OverflowBox)._super$maxHeight);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$fit#0', (args) => (args[0] as _$OverflowBox)._super$fit);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$OverflowBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$child#0', (args) => (args[0] as _$OverflowBox)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$key#0', (args) => (args[0] as _$OverflowBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::OverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$OverflowBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

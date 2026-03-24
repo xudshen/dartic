@@ -57,13 +57,6 @@ class _$SensitiveContentService extends SensitiveContentService implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set sensitiveContentChannel(MethodChannel value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'sensitiveContentChannel', value)) {
       super.sensitiveContentChannel = value;
@@ -71,10 +64,20 @@ class _$SensitiveContentService extends SensitiveContentService implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -83,8 +86,8 @@ class _$SensitiveContentService extends SensitiveContentService implements Darti
   Future<bool> _super$isSupported() => super.isSupported();
   String _super$toString() => super.toString();
   MethodChannel get _super$sensitiveContentChannel => super.sensitiveContentChannel;
-  int get _super$hashCode => super.hashCode;
   set _super$sensitiveContentChannel(MethodChannel value) { super.sensitiveContentChannel = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -108,8 +111,8 @@ abstract final class SensitiveContentServiceBindings {
     ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$isSupported#0', (args) => (args[0] as _$SensitiveContentService)._super$isSupported());
     ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$toString#0', (args) => (args[0] as _$SensitiveContentService)._super$toString());
     ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$sensitiveContentChannel#0', (args) => (args[0] as _$SensitiveContentService)._super$sensitiveContentChannel);
-    ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$hashCode#0', (args) => (args[0] as _$SensitiveContentService)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$sensitiveContentChannel=#1', (args) { (args[0] as _$SensitiveContentService)._super$sensitiveContentChannel = args[1] as MethodChannel; return args[1]; });
+    ctx.registerBinding('package:flutter/src/services/sensitive_content.dart::SensitiveContentService::\$super\$hashCode#0', (args) => (args[0] as _$SensitiveContentService)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

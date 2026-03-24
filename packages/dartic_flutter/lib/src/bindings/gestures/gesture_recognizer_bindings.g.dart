@@ -195,13 +195,6 @@ class _$GestureRecognizer extends GestureRecognizer implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set gestureSettings(DeviceGestureSettings? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'gestureSettings', value)) {
       super.gestureSettings = value;
@@ -216,10 +209,20 @@ class _$GestureRecognizer extends GestureRecognizer implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -244,9 +247,9 @@ class _$GestureRecognizer extends GestureRecognizer implements DarticObjectHolde
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
   Set<PointerDeviceKind>? get _super$supportedDevices => super.supportedDevices;
   AllowedButtonsFilter get _super$allowedButtonsFilter => super.allowedButtonsFilter;
-  int get _super$hashCode => super.hashCode;
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -287,9 +290,9 @@ abstract final class GestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$GestureRecognizer)._super$gestureSettings);
     ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$supportedDevices#0', (args) => (args[0] as _$GestureRecognizer)._super$supportedDevices);
     ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$allowedButtonsFilter#0', (args) => (args[0] as _$GestureRecognizer)._super$allowedButtonsFilter);
-    ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$GestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$GestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$GestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/recognizer.dart::GestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$GestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

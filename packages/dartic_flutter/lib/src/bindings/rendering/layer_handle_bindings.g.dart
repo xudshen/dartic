@@ -38,13 +38,6 @@ class _$LayerHandle extends LayerHandle<Layer> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set layer(Layer? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'layer', value)) {
       super.layer = value;
@@ -52,17 +45,27 @@ class _$LayerHandle extends LayerHandle<Layer> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Layer? get _super$layer => super.layer;
-  int get _super$hashCode => super.hashCode;
   set _super$layer(Layer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -83,8 +86,8 @@ abstract final class LayerHandleBindings {
     );
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::LayerHandle::\$super\$toString#0', (args) => (args[0] as _$LayerHandle)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::LayerHandle::\$super\$layer#0', (args) => (args[0] as _$LayerHandle)._super$layer);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::LayerHandle::\$super\$hashCode#0', (args) => (args[0] as _$LayerHandle)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::LayerHandle::\$super\$layer=#1', (args) { (args[0] as _$LayerHandle)._super$layer = args[1] as Layer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::LayerHandle::\$super\$hashCode#0', (args) => (args[0] as _$LayerHandle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

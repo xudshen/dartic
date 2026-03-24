@@ -146,13 +146,6 @@ class _$CupertinoAlertDialog extends CupertinoAlertDialog implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -160,10 +153,20 @@ class _$CupertinoAlertDialog extends CupertinoAlertDialog implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -183,8 +186,8 @@ class _$CupertinoAlertDialog extends CupertinoAlertDialog implements DarticObjec
   ScrollController? get _super$actionScrollController => super.actionScrollController;
   Duration get _super$insetAnimationDuration => super.insetAnimationDuration;
   Curve get _super$insetAnimationCurve => super.insetAnimationCurve;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -220,8 +223,8 @@ abstract final class CupertinoAlertDialogBindings {
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$actionScrollController#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$actionScrollController);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$insetAnimationDuration#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$insetAnimationDuration);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$insetAnimationCurve#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$insetAnimationCurve);
-    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$key#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoAlertDialog::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoAlertDialog)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

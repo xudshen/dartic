@@ -118,13 +118,6 @@ class _$SliverCrossAxisExpanded extends SliverCrossAxisExpanded implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get debugTypicalAncestorWidgetDescription {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugTypicalAncestorWidgetDescription');
     if (identical(r, notOverridden)) return super.debugTypicalAncestorWidgetDescription;
@@ -146,10 +139,20 @@ class _$SliverCrossAxisExpanded extends SliverCrossAxisExpanded implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -166,10 +169,10 @@ class _$SliverCrossAxisExpanded extends SliverCrossAxisExpanded implements Darti
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   int get _super$flex => super.flex;
   Type get _super$debugTypicalAncestorWidgetClass => super.debugTypicalAncestorWidgetClass;
-  int get _super$hashCode => super.hashCode;
   String get _super$debugTypicalAncestorWidgetDescription => super.debugTypicalAncestorWidgetDescription;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -202,10 +205,10 @@ abstract final class SliverCrossAxisExpandedBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$flex#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$flex);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$debugTypicalAncestorWidgetClass#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$debugTypicalAncestorWidgetClass);
-    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$hashCode#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$debugTypicalAncestorWidgetDescription#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$debugTypicalAncestorWidgetDescription);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$child#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$key#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverCrossAxisExpanded::\$super\$hashCode#0', (args) => (args[0] as _$SliverCrossAxisExpanded)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -43,13 +43,6 @@ class _$SliverGridParentData extends SliverGridParentData implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int? get index {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'index');
     if (identical(r, notOverridden)) return super.index;
@@ -134,17 +127,26 @@ class _$SliverGridParentData extends SliverGridParentData implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
   double? get _super$crossAxisOffset => super.crossAxisOffset;
-  int get _super$hashCode => super.hashCode;
   int? get _super$index => super.index;
   bool get _super$keptAlive => super.keptAlive;
   double? get _super$layoutOffset => super.layoutOffset;
@@ -157,6 +159,7 @@ class _$SliverGridParentData extends SliverGridParentData implements DarticObjec
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
   set _super$keepAlive(bool value) { super.keepAlive = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -179,7 +182,6 @@ abstract final class SliverGridParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$toString#0', (args) => (args[0] as _$SliverGridParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$detach#0', (args) { (args[0] as _$SliverGridParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$crossAxisOffset#0', (args) => (args[0] as _$SliverGridParentData)._super$crossAxisOffset);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverGridParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$index#0', (args) => (args[0] as _$SliverGridParentData)._super$index);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$keptAlive#0', (args) => (args[0] as _$SliverGridParentData)._super$keptAlive);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$layoutOffset#0', (args) => (args[0] as _$SliverGridParentData)._super$layoutOffset);
@@ -192,6 +194,7 @@ abstract final class SliverGridParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$SliverGridParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$SliverGridParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$keepAlive=#1', (args) { (args[0] as _$SliverGridParentData)._super$keepAlive = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::SliverGridParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverGridParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

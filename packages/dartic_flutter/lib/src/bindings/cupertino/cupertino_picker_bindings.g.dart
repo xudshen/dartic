@@ -176,13 +176,6 @@ class _$CupertinoPicker extends CupertinoPicker implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -190,10 +183,20 @@ class _$CupertinoPicker extends CupertinoPicker implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -218,8 +221,8 @@ class _$CupertinoPicker extends CupertinoPicker implements DarticObjectHolder {
   ValueChanged<int>? get _super$onSelectedItemChanged => super.onSelectedItemChanged;
   ListWheelChildDelegate get _super$childDelegate => super.childDelegate;
   Widget? get _super$selectionOverlay => super.selectionOverlay;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -260,8 +263,8 @@ abstract final class CupertinoPickerBindings {
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$onSelectedItemChanged#0', (args) => (args[0] as _$CupertinoPicker)._super$onSelectedItemChanged);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$childDelegate#0', (args) => (args[0] as _$CupertinoPicker)._super$childDelegate);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$selectionOverlay#0', (args) => (args[0] as _$CupertinoPicker)._super$selectionOverlay);
-    ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPicker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$key#0', (args) => (args[0] as _$CupertinoPicker)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPicker::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPicker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -554,13 +554,6 @@ class _$RenderOffstage extends RenderOffstage implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -813,10 +806,20 @@ class _$RenderOffstage extends RenderOffstage implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -900,7 +903,6 @@ class _$RenderOffstage extends RenderOffstage implements DarticObjectHolder {
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   bool get _super$offstage => super.offstage;
   bool get _super$sizedByParent => super.sizedByParent;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -937,6 +939,7 @@ class _$RenderOffstage extends RenderOffstage implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1036,7 +1039,6 @@ abstract final class RenderOffstageBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderOffstage)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$offstage#0', (args) => (args[0] as _$RenderOffstage)._super$offstage);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$sizedByParent#0', (args) => (args[0] as _$RenderOffstage)._super$sizedByParent);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$hashCode#0', (args) => (args[0] as _$RenderOffstage)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$hasSize#0', (args) => (args[0] as _$RenderOffstage)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$size#0', (args) => (args[0] as _$RenderOffstage)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderOffstage)._super$semanticBounds);
@@ -1073,6 +1075,7 @@ abstract final class RenderOffstageBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderOffstage)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$layer=#1', (args) { (args[0] as _$RenderOffstage)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$child=#1', (args) { (args[0] as _$RenderOffstage)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderOffstage::\$super\$hashCode#0', (args) => (args[0] as _$RenderOffstage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

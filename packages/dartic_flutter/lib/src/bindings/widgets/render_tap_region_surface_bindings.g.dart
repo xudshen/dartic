@@ -555,13 +555,6 @@ class _$RenderTapRegionSurface extends RenderTapRegionSurface implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   HitTestBehavior get behavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'behavior');
     if (identical(r, notOverridden)) return super.behavior;
@@ -828,10 +821,20 @@ class _$RenderTapRegionSurface extends RenderTapRegionSurface implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -915,7 +918,6 @@ class _$RenderTapRegionSurface extends RenderTapRegionSurface implements DarticO
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
-  int get _super$hashCode => super.hashCode;
   HitTestBehavior get _super$behavior => super.behavior;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
@@ -954,6 +956,7 @@ class _$RenderTapRegionSurface extends RenderTapRegionSurface implements DarticO
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1053,7 +1056,6 @@ abstract final class RenderTapRegionSurfaceBindings {
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderTapRegionSurface)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderTapRegionSurface)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderTapRegionSurface)._super$computeSizeForNoChild(args[1] as BoxConstraints));
-    ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$hashCode#0', (args) => (args[0] as _$RenderTapRegionSurface)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$behavior#0', (args) => (args[0] as _$RenderTapRegionSurface)._super$behavior);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$hasSize#0', (args) => (args[0] as _$RenderTapRegionSurface)._super$hasSize);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$size#0', (args) => (args[0] as _$RenderTapRegionSurface)._super$size);
@@ -1092,6 +1094,7 @@ abstract final class RenderTapRegionSurfaceBindings {
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderTapRegionSurface)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$layer=#1', (args) { (args[0] as _$RenderTapRegionSurface)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$child=#1', (args) { (args[0] as _$RenderTapRegionSurface)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegionSurface::\$super\$hashCode#0', (args) => (args[0] as _$RenderTapRegionSurface)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

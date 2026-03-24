@@ -69,13 +69,6 @@ class _$PageMetrics extends PageMetrics implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get minScrollExtent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minScrollExtent');
     if (identical(r, notOverridden)) return super.minScrollExtent;
@@ -188,10 +181,20 @@ class _$PageMetrics extends PageMetrics implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -199,7 +202,6 @@ class _$PageMetrics extends PageMetrics implements DarticObjectHolder {
   String _super$toString() => super.toString();
   double? get _super$page => super.page;
   double get _super$viewportFraction => super.viewportFraction;
-  int get _super$hashCode => super.hashCode;
   double get _super$minScrollExtent => super.minScrollExtent;
   double get _super$maxScrollExtent => super.maxScrollExtent;
   bool get _super$hasContentDimensions => super.hasContentDimensions;
@@ -216,6 +218,7 @@ class _$PageMetrics extends PageMetrics implements DarticObjectHolder {
   double get _super$extentInside => super.extentInside;
   double get _super$extentAfter => super.extentAfter;
   double get _super$extentTotal => super.extentTotal;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -239,7 +242,6 @@ abstract final class PageMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$toString#0', (args) => (args[0] as _$PageMetrics)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$page#0', (args) => (args[0] as _$PageMetrics)._super$page);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$viewportFraction#0', (args) => (args[0] as _$PageMetrics)._super$viewportFraction);
-    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$hashCode#0', (args) => (args[0] as _$PageMetrics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$minScrollExtent#0', (args) => (args[0] as _$PageMetrics)._super$minScrollExtent);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$maxScrollExtent#0', (args) => (args[0] as _$PageMetrics)._super$maxScrollExtent);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$hasContentDimensions#0', (args) => (args[0] as _$PageMetrics)._super$hasContentDimensions);
@@ -256,6 +258,7 @@ abstract final class PageMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$extentInside#0', (args) => (args[0] as _$PageMetrics)._super$extentInside);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$extentAfter#0', (args) => (args[0] as _$PageMetrics)._super$extentAfter);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$extentTotal#0', (args) => (args[0] as _$PageMetrics)._super$extentTotal);
+    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageMetrics::\$super\$hashCode#0', (args) => (args[0] as _$PageMetrics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

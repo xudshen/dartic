@@ -163,13 +163,6 @@ class _$Card extends Card implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -177,10 +170,20 @@ class _$Card extends Card implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -203,8 +206,8 @@ class _$Card extends Card implements DarticObjectHolder {
   EdgeInsetsGeometry? get _super$margin => super.margin;
   bool get _super$semanticContainer => super.semanticContainer;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -243,8 +246,8 @@ abstract final class CardBindings {
     ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$margin#0', (args) => (args[0] as _$Card)._super$margin);
     ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$semanticContainer#0', (args) => (args[0] as _$Card)._super$semanticContainer);
     ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$child#0', (args) => (args[0] as _$Card)._super$child);
-    ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$hashCode#0', (args) => (args[0] as _$Card)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$key#0', (args) => (args[0] as _$Card)._super$key);
+    ctx.registerBinding('package:flutter/src/material/card.dart::Card::\$super\$hashCode#0', (args) => (args[0] as _$Card)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

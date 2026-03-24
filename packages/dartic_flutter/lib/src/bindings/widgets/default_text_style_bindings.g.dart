@@ -151,13 +151,6 @@ class _$DefaultTextStyle extends DefaultTextStyle implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -172,10 +165,20 @@ class _$DefaultTextStyle extends DefaultTextStyle implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -196,9 +199,9 @@ class _$DefaultTextStyle extends DefaultTextStyle implements DarticObjectHolder 
   int? get _super$maxLines => super.maxLines;
   TextWidthBasis get _super$textWidthBasis => super.textWidthBasis;
   ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -237,9 +240,9 @@ abstract final class DefaultTextStyleBindings {
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$maxLines#0', (args) => (args[0] as _$DefaultTextStyle)._super$maxLines);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$textWidthBasis#0', (args) => (args[0] as _$DefaultTextStyle)._super$textWidthBasis);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$textHeightBehavior#0', (args) => (args[0] as _$DefaultTextStyle)._super$textHeightBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$hashCode#0', (args) => (args[0] as _$DefaultTextStyle)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$child#0', (args) => (args[0] as _$DefaultTextStyle)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$key#0', (args) => (args[0] as _$DefaultTextStyle)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::DefaultTextStyle::\$super\$hashCode#0', (args) => (args[0] as _$DefaultTextStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

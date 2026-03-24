@@ -109,13 +109,6 @@ class _$TrackingScrollController extends TrackingScrollController implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get keepScrollOffset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keepScrollOffset');
     if (identical(r, notOverridden)) return super.keepScrollOffset;
@@ -179,10 +172,20 @@ class _$TrackingScrollController extends TrackingScrollController implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -199,7 +202,6 @@ class _$TrackingScrollController extends TrackingScrollController implements Dar
   void _super$notifyListeners() { super.notifyListeners(); }
   ScrollPosition? get _super$mostRecentlyUpdatedPosition => super.mostRecentlyUpdatedPosition;
   double get _super$initialScrollOffset => super.initialScrollOffset;
-  int get _super$hashCode => super.hashCode;
   bool get _super$keepScrollOffset => super.keepScrollOffset;
   ScrollControllerCallback? get _super$onAttach => super.onAttach;
   ScrollControllerCallback? get _super$onDetach => super.onDetach;
@@ -209,6 +211,7 @@ class _$TrackingScrollController extends TrackingScrollController implements Dar
   ScrollPosition get _super$position => super.position;
   double get _super$offset => super.offset;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -241,7 +244,6 @@ abstract final class TrackingScrollControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$notifyListeners#0', (args) { (args[0] as _$TrackingScrollController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$mostRecentlyUpdatedPosition#0', (args) => (args[0] as _$TrackingScrollController)._super$mostRecentlyUpdatedPosition);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$initialScrollOffset#0', (args) => (args[0] as _$TrackingScrollController)._super$initialScrollOffset);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$hashCode#0', (args) => (args[0] as _$TrackingScrollController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$keepScrollOffset#0', (args) => (args[0] as _$TrackingScrollController)._super$keepScrollOffset);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$onAttach#0', (args) => (args[0] as _$TrackingScrollController)._super$onAttach);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$onDetach#0', (args) => (args[0] as _$TrackingScrollController)._super$onDetach);
@@ -251,6 +253,7 @@ abstract final class TrackingScrollControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$position#0', (args) => (args[0] as _$TrackingScrollController)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$offset#0', (args) => (args[0] as _$TrackingScrollController)._super$offset);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$hasListeners#0', (args) => (args[0] as _$TrackingScrollController)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::TrackingScrollController::\$super\$hashCode#0', (args) => (args[0] as _$TrackingScrollController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

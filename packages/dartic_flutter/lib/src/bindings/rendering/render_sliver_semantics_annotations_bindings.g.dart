@@ -429,13 +429,6 @@ class _$RenderSliverSemanticsAnnotations extends RenderSliverSemanticsAnnotation
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Rect get semanticBounds {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticBounds');
     if (identical(r, notOverridden)) return super.semanticBounds;
@@ -793,10 +786,20 @@ class _$RenderSliverSemanticsAnnotations extends RenderSliverSemanticsAnnotation
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -862,7 +865,6 @@ class _$RenderSliverSemanticsAnnotations extends RenderSliverSemanticsAnnotation
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   void _super$initSemanticsAnnotations({required SemanticsProperties properties, required bool container, required bool explicitChildNodes, required bool excludeSemantics, required bool blockUserActions, required ui.Locale? localeForSubtree, required ui.TextDirection? textDirection}) { super.initSemanticsAnnotations(properties: properties, container: container, explicitChildNodes: explicitChildNodes, excludeSemantics: excludeSemantics, blockUserActions: blockUserActions, localeForSubtree: localeForSubtree, textDirection: textDirection); }
-  int get _super$hashCode => super.hashCode;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
@@ -914,6 +916,7 @@ class _$RenderSliverSemanticsAnnotations extends RenderSliverSemanticsAnnotation
   set _super$blockUserActions(bool value) { super.blockUserActions = value; }
   set _super$localeForSubtree(ui.Locale? value) { super.localeForSubtree = value; }
   set _super$textDirection(ui.TextDirection? value) { super.textDirection = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -995,7 +998,6 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$initSemanticsAnnotations#7', (args) { (args[0] as _$RenderSliverSemanticsAnnotations)._super$initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$semanticBounds);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$constraints);
@@ -1047,6 +1049,7 @@ abstract final class RenderSliverSemanticsAnnotationsBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$blockUserActions=#1', (args) { (args[0] as _$RenderSliverSemanticsAnnotations)._super$blockUserActions = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$localeForSubtree=#1', (args) { (args[0] as _$RenderSliverSemanticsAnnotations)._super$localeForSubtree = args[1] as ui.Locale?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$textDirection=#1', (args) { (args[0] as _$RenderSliverSemanticsAnnotations)._super$textDirection = args[1] as ui.TextDirection?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverSemanticsAnnotations::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverSemanticsAnnotations)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

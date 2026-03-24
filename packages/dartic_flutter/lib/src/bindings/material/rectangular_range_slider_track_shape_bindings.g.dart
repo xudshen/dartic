@@ -50,13 +50,6 @@ class _$RectangularRangeSliderTrackShape extends RectangularRangeSliderTrackShap
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isRounded {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRounded');
     if (identical(r, notOverridden)) return super.isRounded;
@@ -64,18 +57,28 @@ class _$RectangularRangeSliderTrackShape extends RectangularRangeSliderTrackShap
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   void _super$paint(PaintingContext context, Offset offset, {required RenderBox parentBox, required SliderThemeData sliderTheme, required Animation<double>? enableAnimation, required Offset startThumbCenter, required Offset endThumbCenter, bool isEnabled = false, bool isDiscrete = false, required TextDirection textDirection}) { super.paint(context, offset, parentBox: parentBox, sliderTheme: sliderTheme, enableAnimation: enableAnimation, startThumbCenter: startThumbCenter, endThumbCenter: endThumbCenter, isEnabled: isEnabled, isDiscrete: isDiscrete, textDirection: textDirection); }
   String _super$toString() => super.toString();
   Rect _super$getPreferredRect({required RenderBox parentBox, Offset offset = Offset.zero, required SliderThemeData sliderTheme, bool isEnabled = false, bool isDiscrete = false}) => super.getPreferredRect(parentBox: parentBox, offset: offset, sliderTheme: sliderTheme, isEnabled: isEnabled, isDiscrete: isDiscrete);
-  int get _super$hashCode => super.hashCode;
   bool get _super$isRounded => super.isRounded;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -98,8 +101,8 @@ abstract final class RectangularRangeSliderTrackShapeBindings {
     ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$paint#10', (args) { (args[0] as _$RectangularRangeSliderTrackShape)._super$paint(args[1] as PaintingContext, args[2] as Offset, parentBox: args[3] as RenderBox, sliderTheme: args[4] as SliderThemeData, enableAnimation: args[5] as Animation<double>?, startThumbCenter: args[6] as Offset, endThumbCenter: args[7] as Offset, isEnabled: identical(args[8], darticAbsent) ? false : args[8] as bool, isDiscrete: identical(args[9], darticAbsent) ? false : args[9] as bool, textDirection: args[10] as TextDirection); return null; });
     ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$toString#0', (args) => (args[0] as _$RectangularRangeSliderTrackShape)._super$toString());
     ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$getPreferredRect#5', (args) => (args[0] as _$RectangularRangeSliderTrackShape)._super$getPreferredRect(parentBox: args[1] as RenderBox, offset: identical(args[2], darticAbsent) ? Offset.zero : args[2] as Offset, sliderTheme: args[3] as SliderThemeData, isEnabled: identical(args[4], darticAbsent) ? false : args[4] as bool, isDiscrete: identical(args[5], darticAbsent) ? false : args[5] as bool));
-    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$hashCode#0', (args) => (args[0] as _$RectangularRangeSliderTrackShape)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$isRounded#0', (args) => (args[0] as _$RectangularRangeSliderTrackShape)._super$isRounded);
+    ctx.registerBinding('package:flutter/src/material/range_slider_parts.dart::RectangularRangeSliderTrackShape::\$super\$hashCode#0', (args) => (args[0] as _$RectangularRangeSliderTrackShape)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

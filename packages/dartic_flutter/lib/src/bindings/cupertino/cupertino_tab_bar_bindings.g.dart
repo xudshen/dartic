@@ -176,13 +176,6 @@ class _$CupertinoTabBar extends CupertinoTabBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -190,10 +183,20 @@ class _$CupertinoTabBar extends CupertinoTabBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -218,8 +221,8 @@ class _$CupertinoTabBar extends CupertinoTabBar implements DarticObjectHolder {
   double get _super$height => super.height;
   Border? get _super$border => super.border;
   Size get _super$preferredSize => super.preferredSize;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -260,8 +263,8 @@ abstract final class CupertinoTabBarBindings {
     ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$height#0', (args) => (args[0] as _$CupertinoTabBar)._super$height);
     ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$border#0', (args) => (args[0] as _$CupertinoTabBar)._super$border);
     ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$preferredSize#0', (args) => (args[0] as _$CupertinoTabBar)._super$preferredSize);
-    ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$key#0', (args) => (args[0] as _$CupertinoTabBar)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/bottom_tab_bar.dart::CupertinoTabBar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -46,13 +46,6 @@ class _$SliverPhysicalContainerParentData extends SliverPhysicalContainerParentD
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get paintOffset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'paintOffset');
     if (identical(r, notOverridden)) return super.paintOffset;
@@ -109,17 +102,26 @@ class _$SliverPhysicalContainerParentData extends SliverPhysicalContainerParentD
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$applyPaintTransform(Matrix4 transform) { super.applyPaintTransform(transform); }
   void _super$detach() { super.detach(); }
-  int get _super$hashCode => super.hashCode;
   Offset get _super$paintOffset => super.paintOffset;
   int? get _super$crossAxisFlex => super.crossAxisFlex;
   RenderSliver? get _super$previousSibling => super.previousSibling;
@@ -128,6 +130,7 @@ class _$SliverPhysicalContainerParentData extends SliverPhysicalContainerParentD
   set _super$crossAxisFlex(int? value) { super.crossAxisFlex = value; }
   set _super$previousSibling(RenderSliver? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderSliver? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -150,7 +153,6 @@ abstract final class SliverPhysicalContainerParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$toString#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$applyPaintTransform#1', (args) { (args[0] as _$SliverPhysicalContainerParentData)._super$applyPaintTransform(args[1] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$detach#0', (args) { (args[0] as _$SliverPhysicalContainerParentData)._super$detach(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$paintOffset#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$paintOffset);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$crossAxisFlex#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$crossAxisFlex);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$previousSibling#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$previousSibling);
@@ -159,6 +161,7 @@ abstract final class SliverPhysicalContainerParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$crossAxisFlex=#1', (args) { (args[0] as _$SliverPhysicalContainerParentData)._super$crossAxisFlex = args[1] as int?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$SliverPhysicalContainerParentData)._super$previousSibling = args[1] as RenderSliver?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$SliverPhysicalContainerParentData)._super$nextSibling = args[1] as RenderSliver?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverPhysicalContainerParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverPhysicalContainerParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

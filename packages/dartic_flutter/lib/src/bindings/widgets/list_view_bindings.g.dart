@@ -168,13 +168,6 @@ class _$ListView extends ListView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry? get padding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
     if (identical(r, notOverridden)) return super.padding;
@@ -308,10 +301,20 @@ class _$ListView extends ListView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -332,7 +335,6 @@ class _$ListView extends ListView implements DarticObjectHolder {
   ItemExtentBuilder? get _super$itemExtentBuilder => super.itemExtentBuilder;
   Widget? get _super$prototypeItem => super.prototypeItem;
   SliverChildDelegate get _super$childrenDelegate => super.childrenDelegate;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry? get _super$padding => super.padding;
   Axis get _super$scrollDirection => super.scrollDirection;
   bool get _super$reverse => super.reverse;
@@ -352,6 +354,7 @@ class _$ListView extends ListView implements DarticObjectHolder {
   Clip get _super$clipBehavior => super.clipBehavior;
   HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -388,7 +391,6 @@ abstract final class ListViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$itemExtentBuilder#0', (args) => (args[0] as _$ListView)._super$itemExtentBuilder);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$prototypeItem#0', (args) => (args[0] as _$ListView)._super$prototypeItem);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$childrenDelegate#0', (args) => (args[0] as _$ListView)._super$childrenDelegate);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$hashCode#0', (args) => (args[0] as _$ListView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$padding#0', (args) => (args[0] as _$ListView)._super$padding);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$scrollDirection#0', (args) => (args[0] as _$ListView)._super$scrollDirection);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$reverse#0', (args) => (args[0] as _$ListView)._super$reverse);
@@ -408,6 +410,7 @@ abstract final class ListViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$clipBehavior#0', (args) => (args[0] as _$ListView)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$ListView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$key#0', (args) => (args[0] as _$ListView)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_view.dart::ListView::\$super\$hashCode#0', (args) => (args[0] as _$ListView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

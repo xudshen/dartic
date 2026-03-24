@@ -40,13 +40,6 @@ class _$PredictiveBackPageTransitionsBuilder extends PredictiveBackPageTransitio
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   DelegatedTransitionBuilder? get delegatedTransition {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition');
     if (identical(r, notOverridden)) return super.delegatedTransition;
@@ -61,18 +54,28 @@ class _$PredictiveBackPageTransitionsBuilder extends PredictiveBackPageTransitio
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Duration get _super$transitionDuration => super.transitionDuration;
-  int get _super$hashCode => super.hashCode;
   DelegatedTransitionBuilder? get _super$delegatedTransition => super.delegatedTransition;
   Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -94,9 +97,9 @@ abstract final class PredictiveBackPageTransitionsBuilderBindings {
     );
     ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$toString#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$toString());
     ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$transitionDuration#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$transitionDuration);
-    ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$delegatedTransition#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$delegatedTransition);
     ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$reverseTransitionDuration);
+    ctx.registerBinding('package:flutter/src/material/predictive_back_page_transitions_builder.dart::PredictiveBackPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$PredictiveBackPageTransitionsBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

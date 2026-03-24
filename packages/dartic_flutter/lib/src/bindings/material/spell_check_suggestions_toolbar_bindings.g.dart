@@ -109,13 +109,6 @@ class _$SpellCheckSuggestionsToolbar extends SpellCheckSuggestionsToolbar implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -123,10 +116,20 @@ class _$SpellCheckSuggestionsToolbar extends SpellCheckSuggestionsToolbar implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -141,8 +144,8 @@ class _$SpellCheckSuggestionsToolbar extends SpellCheckSuggestionsToolbar implem
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Offset get _super$anchor => super.anchor;
   List<ContextMenuButtonItem> get _super$buttonItems => super.buttonItems;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -175,8 +178,8 @@ abstract final class SpellCheckSuggestionsToolbarBindings {
     ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$anchor#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$anchor);
     ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$buttonItems#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$buttonItems);
-    ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$hashCode#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$key#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/spell_check_suggestions_toolbar.dart::SpellCheckSuggestionsToolbar::\$super\$hashCode#0', (args) => (args[0] as _$SpellCheckSuggestionsToolbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -77,13 +77,6 @@ class _$TextEditingDeltaReplacement extends TextEditingDeltaReplacement implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get oldText {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'oldText');
     if (identical(r, notOverridden)) return super.oldText;
@@ -105,10 +98,20 @@ class _$TextEditingDeltaReplacement extends TextEditingDeltaReplacement implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -120,10 +123,10 @@ class _$TextEditingDeltaReplacement extends TextEditingDeltaReplacement implemen
   String get _super$replacementText => super.replacementText;
   TextRange get _super$replacedRange => super.replacedRange;
   String get _super$textReplaced => super.textReplaced;
-  int get _super$hashCode => super.hashCode;
   String get _super$oldText => super.oldText;
   TextSelection get _super$selection => super.selection;
   TextRange get _super$composing => super.composing;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -151,10 +154,10 @@ abstract final class TextEditingDeltaReplacementBindings {
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$replacementText#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$replacementText);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$replacedRange#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$replacedRange);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$textReplaced#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$textReplaced);
-    ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$oldText#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$oldText);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$selection#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$selection);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$composing#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$composing);
+    ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaReplacement::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingDeltaReplacement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

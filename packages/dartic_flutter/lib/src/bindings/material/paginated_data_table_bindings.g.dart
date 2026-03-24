@@ -299,13 +299,6 @@ class _$PaginatedDataTable extends PaginatedDataTable implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -313,10 +306,20 @@ class _$PaginatedDataTable extends PaginatedDataTable implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -357,8 +360,8 @@ class _$PaginatedDataTable extends PaginatedDataTable implements DarticObjectHol
   bool? get _super$primary => super.primary;
   WidgetStateProperty<Color?>? get _super$headingRowColor => super.headingRowColor;
   bool get _super$showEmptyRows => super.showEmptyRows;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -416,8 +419,8 @@ abstract final class PaginatedDataTableBindings {
     ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$primary#0', (args) => (args[0] as _$PaginatedDataTable)._super$primary);
     ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$headingRowColor#0', (args) => (args[0] as _$PaginatedDataTable)._super$headingRowColor);
     ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$showEmptyRows#0', (args) => (args[0] as _$PaginatedDataTable)._super$showEmptyRows);
-    ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$hashCode#0', (args) => (args[0] as _$PaginatedDataTable)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$key#0', (args) => (args[0] as _$PaginatedDataTable)._super$key);
+    ctx.registerBinding('package:flutter/src/material/paginated_data_table.dart::PaginatedDataTable::\$super\$hashCode#0', (args) => (args[0] as _$PaginatedDataTable)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

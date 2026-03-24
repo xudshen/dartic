@@ -252,13 +252,6 @@ class _$NavigationRail extends NavigationRail implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -266,10 +259,20 @@ class _$NavigationRail extends NavigationRail implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -304,8 +307,8 @@ class _$NavigationRail extends NavigationRail implements DarticObjectHolder {
   bool get _super$leadingAtTop => super.leadingAtTop;
   bool get _super$trailingAtBottom => super.trailingAtBottom;
   bool get _super$scrollable => super.scrollable;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -357,8 +360,8 @@ abstract final class NavigationRailBindings {
     ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$leadingAtTop#0', (args) => (args[0] as _$NavigationRail)._super$leadingAtTop);
     ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$trailingAtBottom#0', (args) => (args[0] as _$NavigationRail)._super$trailingAtBottom);
     ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$scrollable#0', (args) => (args[0] as _$NavigationRail)._super$scrollable);
-    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$hashCode#0', (args) => (args[0] as _$NavigationRail)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$key#0', (args) => (args[0] as _$NavigationRail)._super$key);
+    ctx.registerBinding('package:flutter/src/material/navigation_rail.dart::NavigationRail::\$super\$hashCode#0', (args) => (args[0] as _$NavigationRail)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

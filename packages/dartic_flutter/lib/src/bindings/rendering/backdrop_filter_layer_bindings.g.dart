@@ -213,13 +213,6 @@ class _$BackdropFilterLayer extends BackdropFilterLayer implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -367,10 +360,20 @@ class _$BackdropFilterLayer extends BackdropFilterLayer implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -403,7 +406,6 @@ class _$BackdropFilterLayer extends BackdropFilterLayer implements DarticObjectH
   ui.ImageFilter? get _super$filter => super.filter;
   ui.BlendMode get _super$blendMode => super.blendMode;
   BackdropKey? get _super$backdropKey => super.backdropKey;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -425,6 +427,7 @@ class _$BackdropFilterLayer extends BackdropFilterLayer implements DarticObjectH
   set _super$backdropKey(BackdropKey? value) { super.backdropKey = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -473,7 +476,6 @@ abstract final class BackdropFilterLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$filter#0', (args) => (args[0] as _$BackdropFilterLayer)._super$filter);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$blendMode#0', (args) => (args[0] as _$BackdropFilterLayer)._super$blendMode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$backdropKey#0', (args) => (args[0] as _$BackdropFilterLayer)._super$backdropKey);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$hashCode#0', (args) => (args[0] as _$BackdropFilterLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$firstChild#0', (args) => (args[0] as _$BackdropFilterLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$lastChild#0', (args) => (args[0] as _$BackdropFilterLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$hasChildren#0', (args) => (args[0] as _$BackdropFilterLayer)._super$hasChildren);
@@ -495,6 +497,7 @@ abstract final class BackdropFilterLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$backdropKey=#1', (args) { (args[0] as _$BackdropFilterLayer)._super$backdropKey = args[1] as BackdropKey?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$BackdropFilterLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$BackdropFilterLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::BackdropFilterLayer::\$super\$hashCode#0', (args) => (args[0] as _$BackdropFilterLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

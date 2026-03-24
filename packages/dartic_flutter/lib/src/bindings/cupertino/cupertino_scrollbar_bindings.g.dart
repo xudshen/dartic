@@ -107,13 +107,6 @@ class _$CupertinoScrollbar extends CupertinoScrollbar implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -275,10 +268,20 @@ class _$CupertinoScrollbar extends CupertinoScrollbar implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -293,7 +296,6 @@ class _$CupertinoScrollbar extends CupertinoScrollbar implements DarticObjectHol
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   double get _super$thicknessWhileDragging => super.thicknessWhileDragging;
   Radius get _super$radiusWhileDragging => super.radiusWhileDragging;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   ScrollController? get _super$controller => super.controller;
   bool? get _super$thumbVisibility => super.thumbVisibility;
@@ -317,6 +319,7 @@ class _$CupertinoScrollbar extends CupertinoScrollbar implements DarticObjectHol
   double get _super$crossAxisMargin => super.crossAxisMargin;
   EdgeInsetsGeometry? get _super$padding => super.padding;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -351,7 +354,6 @@ abstract final class CupertinoScrollbarBindings {
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$CupertinoScrollbar)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$thicknessWhileDragging#0', (args) => (args[0] as _$CupertinoScrollbar)._super$thicknessWhileDragging);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$radiusWhileDragging#0', (args) => (args[0] as _$CupertinoScrollbar)._super$radiusWhileDragging);
-    ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoScrollbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$child#0', (args) => (args[0] as _$CupertinoScrollbar)._super$child);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$controller#0', (args) => (args[0] as _$CupertinoScrollbar)._super$controller);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$thumbVisibility#0', (args) => (args[0] as _$CupertinoScrollbar)._super$thumbVisibility);
@@ -375,6 +377,7 @@ abstract final class CupertinoScrollbarBindings {
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$crossAxisMargin#0', (args) => (args[0] as _$CupertinoScrollbar)._super$crossAxisMargin);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$padding#0', (args) => (args[0] as _$CupertinoScrollbar)._super$padding);
     ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$key#0', (args) => (args[0] as _$CupertinoScrollbar)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/scrollbar.dart::CupertinoScrollbar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoScrollbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

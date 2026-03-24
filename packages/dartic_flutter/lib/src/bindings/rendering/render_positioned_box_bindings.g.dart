@@ -558,13 +558,6 @@ class _$RenderPositionedBox extends RenderPositionedBox implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Alignment get resolvedAlignment {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'resolvedAlignment');
     if (identical(r, notOverridden)) return super.resolvedAlignment;
@@ -866,10 +859,20 @@ class _$RenderPositionedBox extends RenderPositionedBox implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -953,7 +956,6 @@ class _$RenderPositionedBox extends RenderPositionedBox implements DarticObjectH
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   double? get _super$widthFactor => super.widthFactor;
   double? get _super$heightFactor => super.heightFactor;
-  int get _super$hashCode => super.hashCode;
   Alignment get _super$resolvedAlignment => super.resolvedAlignment;
   AlignmentGeometry get _super$alignment => super.alignment;
   TextDirection? get _super$textDirection => super.textDirection;
@@ -997,6 +999,7 @@ class _$RenderPositionedBox extends RenderPositionedBox implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1096,7 +1099,6 @@ abstract final class RenderPositionedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderPositionedBox)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$widthFactor#0', (args) => (args[0] as _$RenderPositionedBox)._super$widthFactor);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$heightFactor#0', (args) => (args[0] as _$RenderPositionedBox)._super$heightFactor);
-    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderPositionedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$resolvedAlignment#0', (args) => (args[0] as _$RenderPositionedBox)._super$resolvedAlignment);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$alignment#0', (args) => (args[0] as _$RenderPositionedBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$textDirection#0', (args) => (args[0] as _$RenderPositionedBox)._super$textDirection);
@@ -1140,6 +1142,7 @@ abstract final class RenderPositionedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderPositionedBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$layer=#1', (args) { (args[0] as _$RenderPositionedBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$child=#1', (args) { (args[0] as _$RenderPositionedBox)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderPositionedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderPositionedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

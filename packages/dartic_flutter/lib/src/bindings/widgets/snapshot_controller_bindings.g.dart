@@ -68,13 +68,6 @@ class _$SnapshotController extends SnapshotController implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -89,10 +82,20 @@ class _$SnapshotController extends SnapshotController implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -103,9 +106,9 @@ class _$SnapshotController extends SnapshotController implements DarticObjectHol
   void _super$dispose() { super.dispose(); }
   void _super$notifyListeners() { super.notifyListeners(); }
   bool get _super$allowSnapshotting => super.allowSnapshotting;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$allowSnapshotting(bool value) { super.allowSnapshotting = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -132,9 +135,9 @@ abstract final class SnapshotControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$dispose#0', (args) { (args[0] as _$SnapshotController)._super$dispose(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$notifyListeners#0', (args) { (args[0] as _$SnapshotController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$allowSnapshotting#0', (args) => (args[0] as _$SnapshotController)._super$allowSnapshotting);
-    ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$hashCode#0', (args) => (args[0] as _$SnapshotController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$hasListeners#0', (args) => (args[0] as _$SnapshotController)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$allowSnapshotting=#1', (args) { (args[0] as _$SnapshotController)._super$allowSnapshotting = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/snapshot_widget.dart::SnapshotController::\$super\$hashCode#0', (args) => (args[0] as _$SnapshotController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

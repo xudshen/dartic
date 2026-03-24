@@ -539,13 +539,6 @@ class _$RenderRotatedBox extends RenderRotatedBox implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -805,10 +798,20 @@ class _$RenderRotatedBox extends RenderRotatedBox implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -890,7 +893,6 @@ class _$RenderRotatedBox extends RenderRotatedBox implements DarticObjectHolder 
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   int get _super$quarterTurns => super.quarterTurns;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -928,6 +930,7 @@ class _$RenderRotatedBox extends RenderRotatedBox implements DarticObjectHolder 
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1025,7 +1028,6 @@ abstract final class RenderRotatedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderRotatedBox)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderRotatedBox)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$quarterTurns#0', (args) => (args[0] as _$RenderRotatedBox)._super$quarterTurns);
-    ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderRotatedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$hasSize#0', (args) => (args[0] as _$RenderRotatedBox)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$size#0', (args) => (args[0] as _$RenderRotatedBox)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderRotatedBox)._super$semanticBounds);
@@ -1063,6 +1065,7 @@ abstract final class RenderRotatedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderRotatedBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$layer=#1', (args) { (args[0] as _$RenderRotatedBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$child=#1', (args) { (args[0] as _$RenderRotatedBox)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/rotated_box.dart::RenderRotatedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderRotatedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

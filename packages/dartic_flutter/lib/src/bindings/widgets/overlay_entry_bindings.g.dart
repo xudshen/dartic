@@ -99,13 +99,6 @@ class _$OverlayEntry extends OverlayEntry implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set opaque(bool value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'opaque', value)) {
       super.opaque = value;
@@ -120,10 +113,20 @@ class _$OverlayEntry extends OverlayEntry implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -138,9 +141,9 @@ class _$OverlayEntry extends OverlayEntry implements DarticObjectHolder {
   bool get _super$maintainState => super.maintainState;
   bool get _super$canSizeOverlay => super.canSizeOverlay;
   bool get _super$mounted => super.mounted;
-  int get _super$hashCode => super.hashCode;
   set _super$opaque(bool value) { super.opaque = value; }
   set _super$maintainState(bool value) { super.maintainState = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -171,9 +174,9 @@ abstract final class OverlayEntryBindings {
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$maintainState#0', (args) => (args[0] as _$OverlayEntry)._super$maintainState);
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$canSizeOverlay#0', (args) => (args[0] as _$OverlayEntry)._super$canSizeOverlay);
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$mounted#0', (args) => (args[0] as _$OverlayEntry)._super$mounted);
-    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$hashCode#0', (args) => (args[0] as _$OverlayEntry)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$opaque=#1', (args) { (args[0] as _$OverlayEntry)._super$opaque = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$maintainState=#1', (args) { (args[0] as _$OverlayEntry)._super$maintainState = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/overlay.dart::OverlayEntry::\$super\$hashCode#0', (args) => (args[0] as _$OverlayEntry)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

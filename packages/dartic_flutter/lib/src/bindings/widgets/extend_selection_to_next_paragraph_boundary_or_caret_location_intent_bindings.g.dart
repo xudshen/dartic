@@ -50,13 +50,6 @@ class _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent extends Exte
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get collapseSelection {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'collapseSelection');
     if (identical(r, notOverridden)) return super.collapseSelection;
@@ -85,10 +78,20 @@ class _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent extends Exte
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -96,11 +99,11 @@ class _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent extends Exte
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$collapseSelection => super.collapseSelection;
   bool get _super$collapseAtReversal => super.collapseAtReversal;
   bool get _super$continuesAtWrap => super.continuesAtWrap;
   bool get _super$forward => super.forward;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -124,11 +127,11 @@ abstract final class ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$toStringShort#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$debugFillProperties#1', (args) { (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$hashCode#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$collapseSelection#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$collapseSelection);
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$collapseAtReversal#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$collapseAtReversal);
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$continuesAtWrap#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$continuesAtWrap);
     ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$forward#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$forward);
+    ctx.registerBinding('package:flutter/src/widgets/text_editing_intents.dart::ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent::\$super\$hashCode#0', (args) => (args[0] as _$ExtendSelectionToNextParagraphBoundaryOrCaretLocationIntent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

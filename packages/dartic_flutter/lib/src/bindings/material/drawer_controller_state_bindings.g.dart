@@ -134,13 +134,6 @@ class _$DrawerControllerState extends DrawerControllerState implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   DrawerController get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -162,10 +155,20 @@ class _$DrawerControllerState extends DrawerControllerState implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -185,10 +188,10 @@ class _$DrawerControllerState extends DrawerControllerState implements DarticObj
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   Ticker _super$createTicker(TickerCallback onTick) => super.createTicker(onTick);
-  int get _super$hashCode => super.hashCode;
   DrawerController get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -224,10 +227,10 @@ abstract final class DrawerControllerStateBindings {
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$toStringShort#0', (args) => (args[0] as _$DrawerControllerState)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DrawerControllerState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$createTicker#1', (args) => (args[0] as _$DrawerControllerState)._super$createTicker((a) => (args[1] as Function)(a)));
-    ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$hashCode#0', (args) => (args[0] as _$DrawerControllerState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$widget#0', (args) => (args[0] as _$DrawerControllerState)._super$widget);
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$context#0', (args) => (args[0] as _$DrawerControllerState)._super$context);
     ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$mounted#0', (args) => (args[0] as _$DrawerControllerState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/material/drawer.dart::DrawerControllerState::\$super\$hashCode#0', (args) => (args[0] as _$DrawerControllerState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -152,13 +152,6 @@ class _$CardTheme extends CardTheme implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -173,10 +166,20 @@ class _$CardTheme extends CardTheme implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -198,9 +201,9 @@ class _$CardTheme extends CardTheme implements DarticObjectHolder {
   EdgeInsetsGeometry? get _super$margin => super.margin;
   ShapeBorder? get _super$shape => super.shape;
   CardThemeData get _super$data => super.data;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -240,9 +243,9 @@ abstract final class CardThemeBindings {
     ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$margin#0', (args) => (args[0] as _$CardTheme)._super$margin);
     ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$shape#0', (args) => (args[0] as _$CardTheme)._super$shape);
     ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$data#0', (args) => (args[0] as _$CardTheme)._super$data);
-    ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$hashCode#0', (args) => (args[0] as _$CardTheme)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$child#0', (args) => (args[0] as _$CardTheme)._super$child);
     ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$key#0', (args) => (args[0] as _$CardTheme)._super$key);
+    ctx.registerBinding('package:flutter/src/material/card_theme.dart::CardTheme::\$super\$hashCode#0', (args) => (args[0] as _$CardTheme)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

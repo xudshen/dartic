@@ -127,13 +127,6 @@ class _$SearchController extends SearchController implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get text {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'text');
     if (identical(r, notOverridden)) return super.text;
@@ -183,10 +176,20 @@ class _$SearchController extends SearchController implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -202,7 +205,6 @@ class _$SearchController extends SearchController implements DarticObjectHolder 
   void _super$notifyListeners() { super.notifyListeners(); }
   bool get _super$isAttached => super.isAttached;
   bool get _super$isOpen => super.isOpen;
-  int get _super$hashCode => super.hashCode;
   String get _super$text => super.text;
   TextSelection get _super$selection => super.selection;
   TextEditingValue get _super$value => super.value;
@@ -210,6 +212,7 @@ class _$SearchController extends SearchController implements DarticObjectHolder 
   set _super$text(String value) { super.text = value; }
   set _super$value(TextEditingValue value) { super.value = value; }
   set _super$selection(TextSelection value) { super.selection = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -241,7 +244,6 @@ abstract final class SearchControllerBindings {
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$notifyListeners#0', (args) { (args[0] as _$SearchController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$isAttached#0', (args) => (args[0] as _$SearchController)._super$isAttached);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$isOpen#0', (args) => (args[0] as _$SearchController)._super$isOpen);
-    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$hashCode#0', (args) => (args[0] as _$SearchController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$text#0', (args) => (args[0] as _$SearchController)._super$text);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$selection#0', (args) => (args[0] as _$SearchController)._super$selection);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$value#0', (args) => (args[0] as _$SearchController)._super$value);
@@ -249,6 +251,7 @@ abstract final class SearchControllerBindings {
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$text=#1', (args) { (args[0] as _$SearchController)._super$text = args[1] as String; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$value=#1', (args) { (args[0] as _$SearchController)._super$value = args[1] as TextEditingValue; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$selection=#1', (args) { (args[0] as _$SearchController)._super$selection = args[1] as TextSelection; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchController::\$super\$hashCode#0', (args) => (args[0] as _$SearchController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

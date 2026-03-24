@@ -273,13 +273,6 @@ class _$ScaffoldState extends ScaffoldState implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Scaffold get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -315,10 +308,20 @@ class _$ScaffoldState extends ScaffoldState implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -356,12 +359,12 @@ class _$ScaffoldState extends ScaffoldState implements DarticObjectHolder {
   bool get _super$isDrawerOpen => super.isDrawerOpen;
   bool get _super$isDrawerBarrierDismissible => super.isDrawerBarrierDismissible;
   bool get _super$isEndDrawerOpen => super.isEndDrawerOpen;
-  int get _super$hashCode => super.hashCode;
   Scaffold get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
   RestorationBucket? get _super$bucket => super.bucket;
   bool get _super$restorePending => super.restorePending;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -415,12 +418,12 @@ abstract final class ScaffoldStateBindings {
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$isDrawerOpen#0', (args) => (args[0] as _$ScaffoldState)._super$isDrawerOpen);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$isDrawerBarrierDismissible#0', (args) => (args[0] as _$ScaffoldState)._super$isDrawerBarrierDismissible);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$isEndDrawerOpen#0', (args) => (args[0] as _$ScaffoldState)._super$isEndDrawerOpen);
-    ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$hashCode#0', (args) => (args[0] as _$ScaffoldState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$widget#0', (args) => (args[0] as _$ScaffoldState)._super$widget);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$context#0', (args) => (args[0] as _$ScaffoldState)._super$context);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$mounted#0', (args) => (args[0] as _$ScaffoldState)._super$mounted);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$bucket#0', (args) => (args[0] as _$ScaffoldState)._super$bucket);
     ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$restorePending#0', (args) => (args[0] as _$ScaffoldState)._super$restorePending);
+    ctx.registerBinding('package:flutter/src/material/scaffold.dart::ScaffoldState::\$super\$hashCode#0', (args) => (args[0] as _$ScaffoldState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

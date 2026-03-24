@@ -285,13 +285,6 @@ class _$IconButton extends IconButton implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -299,10 +292,20 @@ class _$IconButton extends IconButton implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -340,8 +343,8 @@ class _$IconButton extends IconButton implements DarticObjectHolder {
   bool? get _super$isSelected => super.isSelected;
   Widget? get _super$selectedIcon => super.selectedIcon;
   WidgetStatesController? get _super$statesController => super.statesController;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -396,8 +399,8 @@ abstract final class IconButtonBindings {
     ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$isSelected#0', (args) => (args[0] as _$IconButton)._super$isSelected);
     ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$selectedIcon#0', (args) => (args[0] as _$IconButton)._super$selectedIcon);
     ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$statesController#0', (args) => (args[0] as _$IconButton)._super$statesController);
-    ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$hashCode#0', (args) => (args[0] as _$IconButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$key#0', (args) => (args[0] as _$IconButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/icon_button.dart::IconButton::\$super\$hashCode#0', (args) => (args[0] as _$IconButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

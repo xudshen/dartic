@@ -175,13 +175,6 @@ class _$DelayedMultiDragGestureRecognizer extends DelayedMultiDragGestureRecogni
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   GestureMultiDragStartCallback? get onStart {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onStart');
     if (identical(r, notOverridden)) return super.onStart;
@@ -238,10 +231,20 @@ class _$DelayedMultiDragGestureRecognizer extends DelayedMultiDragGestureRecogni
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -267,7 +270,6 @@ class _$DelayedMultiDragGestureRecognizer extends DelayedMultiDragGestureRecogni
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Duration get _super$delay => super.delay;
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   GestureMultiDragStartCallback? get _super$onStart => super.onStart;
   Object? get _super$debugOwner => super.debugOwner;
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
@@ -276,6 +278,7 @@ class _$DelayedMultiDragGestureRecognizer extends DelayedMultiDragGestureRecogni
   set _super$onStart(GestureMultiDragStartCallback? value) { super.onStart = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -317,7 +320,6 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$delay#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$delay);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$onStart#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$onStart);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$debugOwner#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$debugOwner);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$gestureSettings);
@@ -326,6 +328,7 @@ abstract final class DelayedMultiDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$onStart=#1', (args) { (args[0] as _$DelayedMultiDragGestureRecognizer)._super$onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$DelayedMultiDragGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$DelayedMultiDragGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::DelayedMultiDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$DelayedMultiDragGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

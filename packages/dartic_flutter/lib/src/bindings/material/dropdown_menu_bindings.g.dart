@@ -362,13 +362,6 @@ class _$DropdownMenu extends DropdownMenu<dynamic> implements DarticObjectHolder
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -376,10 +369,20 @@ class _$DropdownMenu extends DropdownMenu<dynamic> implements DarticObjectHolder
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -428,8 +431,8 @@ class _$DropdownMenu extends DropdownMenu<dynamic> implements DarticObjectHolder
   double? get _super$cursorHeight => super.cursorHeight;
   String? get _super$restorationId => super.restorationId;
   MenuController? get _super$menuController => super.menuController;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -494,8 +497,8 @@ abstract final class DropdownMenuBindings {
     ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$cursorHeight#0', (args) => (args[0] as _$DropdownMenu)._super$cursorHeight);
     ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$restorationId#0', (args) => (args[0] as _$DropdownMenu)._super$restorationId);
     ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$menuController#0', (args) => (args[0] as _$DropdownMenu)._super$menuController);
-    ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$hashCode#0', (args) => (args[0] as _$DropdownMenu)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$key#0', (args) => (args[0] as _$DropdownMenu)._super$key);
+    ctx.registerBinding('package:flutter/src/material/dropdown_menu.dart::DropdownMenu::\$super\$hashCode#0', (args) => (args[0] as _$DropdownMenu)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

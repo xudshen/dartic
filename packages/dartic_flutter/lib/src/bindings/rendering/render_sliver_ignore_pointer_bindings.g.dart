@@ -437,13 +437,6 @@ class _$RenderSliverIgnorePointer extends RenderSliverIgnorePointer implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Rect get semanticBounds {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticBounds');
     if (identical(r, notOverridden)) return super.semanticBounds;
@@ -717,10 +710,20 @@ class _$RenderSliverIgnorePointer extends RenderSliverIgnorePointer implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -787,7 +790,6 @@ class _$RenderSliverIgnorePointer extends RenderSliverIgnorePointer implements D
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   bool get _super$ignoring => super.ignoring;
   bool? get _super$ignoringSemantics => super.ignoringSemantics;
-  int get _super$hashCode => super.hashCode;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
@@ -827,6 +829,7 @@ class _$RenderSliverIgnorePointer extends RenderSliverIgnorePointer implements D
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderSliver? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -909,7 +912,6 @@ abstract final class RenderSliverIgnorePointerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$ignoring#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$ignoring);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$ignoringSemantics#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$ignoringSemantics);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$semanticBounds);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$constraints);
@@ -949,6 +951,7 @@ abstract final class RenderSliverIgnorePointerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverIgnorePointer)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverIgnorePointer)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$child=#1', (args) { (args[0] as _$RenderSliverIgnorePointer)._super$child = args[1] as RenderSliver?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverIgnorePointer::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverIgnorePointer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

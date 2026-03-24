@@ -565,13 +565,6 @@ class _$PlatformViewRenderBox extends PlatformViewRenderBox implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -831,10 +824,20 @@ class _$PlatformViewRenderBox extends PlatformViewRenderBox implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -919,7 +922,6 @@ class _$PlatformViewRenderBox extends PlatformViewRenderBox implements DarticObj
   bool get _super$sizedByParent => super.sizedByParent;
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
   bool get _super$isRepaintBoundary => super.isRepaintBoundary;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -957,6 +959,7 @@ class _$PlatformViewRenderBox extends PlatformViewRenderBox implements DarticObj
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$hitTestBehavior(PlatformViewHitTestBehavior value) { super.hitTestBehavior = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1057,7 +1060,6 @@ abstract final class PlatformViewRenderBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$sizedByParent#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$sizedByParent);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$alwaysNeedsCompositing);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$isRepaintBoundary#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$isRepaintBoundary);
-    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$hashCode#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$hasSize#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$size#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$semanticBounds#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$semanticBounds);
@@ -1095,6 +1097,7 @@ abstract final class PlatformViewRenderBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$debugCreator=#1', (args) { (args[0] as _$PlatformViewRenderBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$layer=#1', (args) { (args[0] as _$PlatformViewRenderBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$hitTestBehavior=#1', (args) { (args[0] as _$PlatformViewRenderBox)._super$hitTestBehavior = args[1] as PlatformViewHitTestBehavior; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::PlatformViewRenderBox::\$super\$hashCode#0', (args) => (args[0] as _$PlatformViewRenderBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

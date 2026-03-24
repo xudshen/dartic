@@ -232,13 +232,6 @@ class _$RawScrollbarState extends RawScrollbarState<RawScrollbar> implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   RawScrollbar get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -267,10 +260,20 @@ class _$RawScrollbarState extends RawScrollbarState<RawScrollbar> implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -303,11 +306,11 @@ class _$RawScrollbarState extends RawScrollbarState<RawScrollbar> implements Dar
   ScrollbarPainter get _super$scrollbarPainter => super.scrollbarPainter;
   bool get _super$showScrollbar => super.showScrollbar;
   bool get _super$enableGestures => super.enableGestures;
-  int get _super$hashCode => super.hashCode;
   RawScrollbar get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
   set _super$scrollbarPainter(ScrollbarPainter value) { super.scrollbarPainter = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -356,11 +359,11 @@ abstract final class RawScrollbarStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$scrollbarPainter#0', (args) => (args[0] as _$RawScrollbarState)._super$scrollbarPainter);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$showScrollbar#0', (args) => (args[0] as _$RawScrollbarState)._super$showScrollbar);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$enableGestures#0', (args) => (args[0] as _$RawScrollbarState)._super$enableGestures);
-    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$hashCode#0', (args) => (args[0] as _$RawScrollbarState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$widget#0', (args) => (args[0] as _$RawScrollbarState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$context#0', (args) => (args[0] as _$RawScrollbarState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$mounted#0', (args) => (args[0] as _$RawScrollbarState)._super$mounted);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$scrollbarPainter=#1', (args) { (args[0] as _$RawScrollbarState)._super$scrollbarPainter = args[1] as ScrollbarPainter; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbarState::\$super\$hashCode#0', (args) => (args[0] as _$RawScrollbarState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

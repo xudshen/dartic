@@ -108,13 +108,6 @@ class _$CupertinoLinearActivityIndicator extends CupertinoLinearActivityIndicato
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -122,10 +115,20 @@ class _$CupertinoLinearActivityIndicator extends CupertinoLinearActivityIndicato
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -141,8 +144,8 @@ class _$CupertinoLinearActivityIndicator extends CupertinoLinearActivityIndicato
   double get _super$progress => super.progress;
   double get _super$height => super.height;
   Color? get _super$color => super.color;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -174,8 +177,8 @@ abstract final class CupertinoLinearActivityIndicatorBindings {
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$progress#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$progress);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$height#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$height);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$color#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$color);
-    ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$key#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoLinearActivityIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoLinearActivityIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

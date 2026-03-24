@@ -129,13 +129,6 @@ class _$PopupMenuButtonState extends PopupMenuButtonState<dynamic> implements Da
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   PopupMenuButton get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -157,10 +150,20 @@ class _$PopupMenuButtonState extends PopupMenuButtonState<dynamic> implements Da
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -178,10 +181,10 @@ class _$PopupMenuButtonState extends PopupMenuButtonState<dynamic> implements Da
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   PopupMenuButton get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -215,10 +218,10 @@ abstract final class PopupMenuButtonStateBindings {
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$debugFillProperties#1', (args) { (args[0] as _$PopupMenuButtonState)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$toStringShort#0', (args) => (args[0] as _$PopupMenuButtonState)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$PopupMenuButtonState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$hashCode#0', (args) => (args[0] as _$PopupMenuButtonState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$widget#0', (args) => (args[0] as _$PopupMenuButtonState)._super$widget);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$context#0', (args) => (args[0] as _$PopupMenuButtonState)._super$context);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$mounted#0', (args) => (args[0] as _$PopupMenuButtonState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuButtonState::\$super\$hashCode#0', (args) => (args[0] as _$PopupMenuButtonState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

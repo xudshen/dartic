@@ -56,13 +56,6 @@ class _$TextEditingDeltaNonTextUpdate extends TextEditingDeltaNonTextUpdate impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get oldText {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'oldText');
     if (identical(r, notOverridden)) return super.oldText;
@@ -84,10 +77,20 @@ class _$TextEditingDeltaNonTextUpdate extends TextEditingDeltaNonTextUpdate impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -96,10 +99,10 @@ class _$TextEditingDeltaNonTextUpdate extends TextEditingDeltaNonTextUpdate impl
   String _super$toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) => super.toString(minLevel: minLevel);
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   String get _super$oldText => super.oldText;
   TextSelection get _super$selection => super.selection;
   TextRange get _super$composing => super.composing;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -124,10 +127,10 @@ abstract final class TextEditingDeltaNonTextUpdateBindings {
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$toString#1', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$toString(minLevel: identical(args[1], darticAbsent) ? DiagnosticLevel.info : args[1] as DiagnosticLevel));
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$toStringShort#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$oldText#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$oldText);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$selection#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$selection);
     ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$composing#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$composing);
+    ctx.registerBinding('package:flutter/src/services/text_editing_delta.dart::TextEditingDeltaNonTextUpdate::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingDeltaNonTextUpdate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

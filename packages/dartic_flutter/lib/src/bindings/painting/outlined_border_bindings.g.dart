@@ -114,23 +114,9 @@ class _$OutlinedBorder extends OutlinedBorder implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get preferPaintInterior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'preferPaintInterior');
     if (identical(r, notOverridden)) return super.preferPaintInterior;
-    return r as bool;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
     return r as bool;
   }
 
@@ -141,6 +127,23 @@ class _$OutlinedBorder extends OutlinedBorder implements DarticObjectHolder {
     return r as ShapeBorder;
   }
 
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
+  }
+
   // ── Super trampolines ──
   ShapeBorder? _super$lerpFrom(ShapeBorder? a, double t) => super.lerpFrom(a, t);
   ShapeBorder? _super$lerpTo(ShapeBorder? b, double t) => super.lerpTo(b, t);
@@ -149,8 +152,8 @@ class _$OutlinedBorder extends OutlinedBorder implements DarticObjectHolder {
   void _super$paintInterior(ui.Canvas canvas, ui.Rect rect, ui.Paint paint, {ui.TextDirection? textDirection}) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); }
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   BorderSide get _super$side => super.side;
-  int get _super$hashCode => super.hashCode;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -178,8 +181,8 @@ abstract final class OutlinedBorderBindings {
     ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$paintInterior#4', (args) { (args[0] as _$OutlinedBorder)._super$paintInterior(args[1] as ui.Canvas, args[2] as ui.Rect, args[3] as ui.Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as ui.TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$dimensions#0', (args) => (args[0] as _$OutlinedBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$side#0', (args) => (args[0] as _$OutlinedBorder)._super$side);
-    ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$hashCode#0', (args) => (args[0] as _$OutlinedBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$OutlinedBorder)._super$preferPaintInterior);
+    ctx.registerBinding('package:flutter/src/painting/borders.dart::OutlinedBorder::\$super\$hashCode#0', (args) => (args[0] as _$OutlinedBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

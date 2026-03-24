@@ -351,13 +351,6 @@ class _$RadioListTile extends RadioListTile<dynamic> implements DarticObjectHold
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -365,10 +358,20 @@ class _$RadioListTile extends RadioListTile<dynamic> implements DarticObjectHold
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -417,8 +420,8 @@ class _$RadioListTile extends RadioListTile<dynamic> implements DarticObjectHold
   BorderSide? get _super$radioSide => super.radioSide;
   WidgetStateProperty<double?>? get _super$radioInnerRadius => super.radioInnerRadius;
   bool get _super$checked => super.checked;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -483,8 +486,8 @@ abstract final class RadioListTileBindings {
     ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$radioSide#0', (args) => (args[0] as _$RadioListTile)._super$radioSide);
     ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$radioInnerRadius#0', (args) => (args[0] as _$RadioListTile)._super$radioInnerRadius);
     ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$checked#0', (args) => (args[0] as _$RadioListTile)._super$checked);
-    ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$hashCode#0', (args) => (args[0] as _$RadioListTile)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$key#0', (args) => (args[0] as _$RadioListTile)._super$key);
+    ctx.registerBinding('package:flutter/src/material/radio_list_tile.dart::RadioListTile::\$super\$hashCode#0', (args) => (args[0] as _$RadioListTile)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

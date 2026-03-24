@@ -89,13 +89,6 @@ class _$RestorableInt extends RestorableInt implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -138,10 +131,20 @@ class _$RestorableInt extends RestorableInt implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -155,13 +158,13 @@ class _$RestorableInt extends RestorableInt implements DarticObjectHolder {
   void _super$addListener(VoidCallback listener) { super.addListener(listener); }
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$notifyListeners() { super.notifyListeners(); }
-  int get _super$hashCode => super.hashCode;
   int get _super$value => super.value;
   bool get _super$enabled => super.enabled;
   State<StatefulWidget> get _super$state => super.state;
   bool get _super$isRegistered => super.isRegistered;
   bool get _super$hasListeners => super.hasListeners;
   set _super$value(int value) { super.value = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -191,13 +194,13 @@ abstract final class RestorableIntBindings {
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$addListener#1', (args) { (args[0] as _$RestorableInt)._super$addListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$removeListener#1', (args) { (args[0] as _$RestorableInt)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$notifyListeners#0', (args) { (args[0] as _$RestorableInt)._super$notifyListeners(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$hashCode#0', (args) => (args[0] as _$RestorableInt)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$value#0', (args) => (args[0] as _$RestorableInt)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$enabled#0', (args) => (args[0] as _$RestorableInt)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$state#0', (args) => (args[0] as _$RestorableInt)._super$state);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableInt)._super$isRegistered);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableInt)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$value=#1', (args) { (args[0] as _$RestorableInt)._super$value = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableInt::\$super\$hashCode#0', (args) => (args[0] as _$RestorableInt)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

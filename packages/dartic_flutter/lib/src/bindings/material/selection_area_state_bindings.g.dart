@@ -120,13 +120,6 @@ class _$SelectionAreaState extends SelectionAreaState implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SelectionArea get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -148,10 +141,20 @@ class _$SelectionAreaState extends SelectionAreaState implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -169,10 +172,10 @@ class _$SelectionAreaState extends SelectionAreaState implements DarticObjectHol
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   SelectableRegionState get _super$selectableRegion => super.selectableRegion;
-  int get _super$hashCode => super.hashCode;
   SelectionArea get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -206,10 +209,10 @@ abstract final class SelectionAreaStateBindings {
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$toStringShort#0', (args) => (args[0] as _$SelectionAreaState)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SelectionAreaState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$selectableRegion#0', (args) => (args[0] as _$SelectionAreaState)._super$selectableRegion);
-    ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$hashCode#0', (args) => (args[0] as _$SelectionAreaState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$widget#0', (args) => (args[0] as _$SelectionAreaState)._super$widget);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$context#0', (args) => (args[0] as _$SelectionAreaState)._super$context);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$mounted#0', (args) => (args[0] as _$SelectionAreaState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionAreaState::\$super\$hashCode#0', (args) => (args[0] as _$SelectionAreaState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -188,13 +188,6 @@ class _$NestedScrollView extends NestedScrollView implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -202,10 +195,20 @@ class _$NestedScrollView extends NestedScrollView implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -230,8 +233,8 @@ class _$NestedScrollView extends NestedScrollView implements DarticObjectHolder 
   HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   String? get _super$restorationId => super.restorationId;
   ScrollBehavior? get _super$scrollBehavior => super.scrollBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -273,8 +276,8 @@ abstract final class NestedScrollViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$NestedScrollView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$restorationId#0', (args) => (args[0] as _$NestedScrollView)._super$restorationId);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$scrollBehavior#0', (args) => (args[0] as _$NestedScrollView)._super$scrollBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$hashCode#0', (args) => (args[0] as _$NestedScrollView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$key#0', (args) => (args[0] as _$NestedScrollView)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::NestedScrollView::\$super\$hashCode#0', (args) => (args[0] as _$NestedScrollView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

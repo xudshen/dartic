@@ -213,13 +213,6 @@ class _$ShaderMaskLayer extends ShaderMaskLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -367,10 +360,20 @@ class _$ShaderMaskLayer extends ShaderMaskLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -403,7 +406,6 @@ class _$ShaderMaskLayer extends ShaderMaskLayer implements DarticObjectHolder {
   ui.Shader? get _super$shader => super.shader;
   ui.Rect? get _super$maskRect => super.maskRect;
   ui.BlendMode? get _super$blendMode => super.blendMode;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -425,6 +427,7 @@ class _$ShaderMaskLayer extends ShaderMaskLayer implements DarticObjectHolder {
   set _super$blendMode(ui.BlendMode? value) { super.blendMode = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -473,7 +476,6 @@ abstract final class ShaderMaskLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$shader#0', (args) => (args[0] as _$ShaderMaskLayer)._super$shader);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$maskRect#0', (args) => (args[0] as _$ShaderMaskLayer)._super$maskRect);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$blendMode#0', (args) => (args[0] as _$ShaderMaskLayer)._super$blendMode);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$hashCode#0', (args) => (args[0] as _$ShaderMaskLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$firstChild#0', (args) => (args[0] as _$ShaderMaskLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$lastChild#0', (args) => (args[0] as _$ShaderMaskLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$hasChildren#0', (args) => (args[0] as _$ShaderMaskLayer)._super$hasChildren);
@@ -495,6 +497,7 @@ abstract final class ShaderMaskLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$blendMode=#1', (args) { (args[0] as _$ShaderMaskLayer)._super$blendMode = args[1] as ui.BlendMode?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$ShaderMaskLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$ShaderMaskLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ShaderMaskLayer::\$super\$hashCode#0', (args) => (args[0] as _$ShaderMaskLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

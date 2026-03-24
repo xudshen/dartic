@@ -154,13 +154,6 @@ class _$RegularWindowControllerWin32 extends RegularWindowControllerWin32 implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   FlutterView get rootView {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'rootView');
     if (identical(r, notOverridden)) return super.rootView;
@@ -182,10 +175,20 @@ class _$RegularWindowControllerWin32 extends RegularWindowControllerWin32 implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -209,10 +212,10 @@ class _$RegularWindowControllerWin32 extends RegularWindowControllerWin32 implem
   bool get _super$isMaximized => super.isMaximized;
   bool get _super$isMinimized => super.isMinimized;
   bool get _super$isFullscreen => super.isFullscreen;
-  int get _super$hashCode => super.hashCode;
   FlutterView get _super$rootView => super.rootView;
   bool get _super$hasListeners => super.hasListeners;
   set _super$rootView(FlutterView value) { super.rootView = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -252,10 +255,10 @@ abstract final class RegularWindowControllerWin32Bindings {
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$isMaximized#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$isMaximized);
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$isMinimized#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$isMinimized);
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$isFullscreen#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$isFullscreen);
-    ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$hashCode#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$rootView#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$rootView);
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$hasListeners#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$rootView=#1', (args) { (args[0] as _$RegularWindowControllerWin32)._super$rootView = args[1] as FlutterView; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/_window_win32.dart::RegularWindowControllerWin32::\$super\$hashCode#0', (args) => (args[0] as _$RegularWindowControllerWin32)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -113,13 +113,6 @@ class _$PointerPanZoomUpdateEvent extends PointerPanZoomUpdateEvent implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get viewId {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewId');
     if (identical(r, notOverridden)) return super.viewId;
@@ -330,10 +323,20 @@ class _$PointerPanZoomUpdateEvent extends PointerPanZoomUpdateEvent implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -350,7 +353,6 @@ class _$PointerPanZoomUpdateEvent extends PointerPanZoomUpdateEvent implements D
   Offset get _super$localPanDelta => super.localPanDelta;
   double get _super$scale => super.scale;
   double get _super$rotation => super.rotation;
-  int get _super$hashCode => super.hashCode;
   int get _super$viewId => super.viewId;
   int get _super$embedderId => super.embedderId;
   Duration get _super$timeStamp => super.timeStamp;
@@ -381,6 +383,7 @@ class _$PointerPanZoomUpdateEvent extends PointerPanZoomUpdateEvent implements D
   bool get _super$synthesized => super.synthesized;
   Matrix4? get _super$transform => super.transform;
   PointerEvent? get _super$original => super.original;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -413,7 +416,6 @@ abstract final class PointerPanZoomUpdateEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$localPanDelta#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$localPanDelta);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$scale#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$scale);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$rotation#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$rotation);
-    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$viewId#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$viewId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$embedderId#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$embedderId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$timeStamp#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$timeStamp);
@@ -444,6 +446,7 @@ abstract final class PointerPanZoomUpdateEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$synthesized#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$synthesized);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$transform#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$transform);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$original#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$original);
+    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerPanZoomUpdateEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerPanZoomUpdateEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

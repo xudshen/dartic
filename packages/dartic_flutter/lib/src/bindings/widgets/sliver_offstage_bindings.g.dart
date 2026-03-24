@@ -110,13 +110,6 @@ class _$SliverOffstage extends SliverOffstage implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -131,10 +124,20 @@ class _$SliverOffstage extends SliverOffstage implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -150,9 +153,9 @@ class _$SliverOffstage extends SliverOffstage implements DarticObjectHolder {
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   bool get _super$offstage => super.offstage;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -184,9 +187,9 @@ abstract final class SliverOffstageBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SliverOffstage)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverOffstage)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$offstage#0', (args) => (args[0] as _$SliverOffstage)._super$offstage);
-    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$hashCode#0', (args) => (args[0] as _$SliverOffstage)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$child#0', (args) => (args[0] as _$SliverOffstage)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$key#0', (args) => (args[0] as _$SliverOffstage)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverOffstage::\$super\$hashCode#0', (args) => (args[0] as _$SliverOffstage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -119,13 +119,6 @@ class _$CupertinoDesktopTextSelectionToolbarButton extends CupertinoDesktopTextS
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -133,10 +126,20 @@ class _$CupertinoDesktopTextSelectionToolbarButton extends CupertinoDesktopTextS
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -153,8 +156,8 @@ class _$CupertinoDesktopTextSelectionToolbarButton extends CupertinoDesktopTextS
   Widget? get _super$child => super.child;
   ContextMenuButtonItem? get _super$buttonItem => super.buttonItem;
   String? get _super$text => super.text;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -187,8 +190,8 @@ abstract final class CupertinoDesktopTextSelectionToolbarButtonBindings {
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$child#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$child);
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$buttonItem#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$buttonItem);
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$text#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$text);
-    ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$key#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/desktop_text_selection_toolbar_button.dart::CupertinoDesktopTextSelectionToolbarButton::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDesktopTextSelectionToolbarButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

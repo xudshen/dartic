@@ -108,13 +108,6 @@ class _$SliverPersistentHeader extends SliverPersistentHeader implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -122,10 +115,20 @@ class _$SliverPersistentHeader extends SliverPersistentHeader implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -141,8 +144,8 @@ class _$SliverPersistentHeader extends SliverPersistentHeader implements DarticO
   SliverPersistentHeaderDelegate get _super$delegate => super.delegate;
   bool get _super$pinned => super.pinned;
   bool get _super$floating => super.floating;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -174,8 +177,8 @@ abstract final class SliverPersistentHeaderBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$delegate#0', (args) => (args[0] as _$SliverPersistentHeader)._super$delegate);
     ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$pinned#0', (args) => (args[0] as _$SliverPersistentHeader)._super$pinned);
     ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$floating#0', (args) => (args[0] as _$SliverPersistentHeader)._super$floating);
-    ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$hashCode#0', (args) => (args[0] as _$SliverPersistentHeader)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$key#0', (args) => (args[0] as _$SliverPersistentHeader)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver_persistent_header.dart::SliverPersistentHeader::\$super\$hashCode#0', (args) => (args[0] as _$SliverPersistentHeader)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

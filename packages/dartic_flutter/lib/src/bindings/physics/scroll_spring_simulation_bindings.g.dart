@@ -51,13 +51,6 @@ class _$ScrollSpringSimulation extends ScrollSpringSimulation implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SpringType get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -79,10 +72,20 @@ class _$ScrollSpringSimulation extends ScrollSpringSimulation implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -90,10 +93,10 @@ class _$ScrollSpringSimulation extends ScrollSpringSimulation implements DarticO
   String _super$toString() => super.toString();
   double _super$dx(double time) => super.dx(time);
   bool _super$isDone(double time) => super.isDone(time);
-  int get _super$hashCode => super.hashCode;
   SpringType get _super$type => super.type;
   Tolerance get _super$tolerance => super.tolerance;
   set _super$tolerance(Tolerance value) { super.tolerance = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -117,10 +120,10 @@ abstract final class ScrollSpringSimulationBindings {
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$toString#0', (args) => (args[0] as _$ScrollSpringSimulation)._super$toString());
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$dx#1', (args) => (args[0] as _$ScrollSpringSimulation)._super$dx(args[1] as double));
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$isDone#1', (args) => (args[0] as _$ScrollSpringSimulation)._super$isDone(args[1] as double));
-    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$hashCode#0', (args) => (args[0] as _$ScrollSpringSimulation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$type#0', (args) => (args[0] as _$ScrollSpringSimulation)._super$type);
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$tolerance#0', (args) => (args[0] as _$ScrollSpringSimulation)._super$tolerance);
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$ScrollSpringSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::ScrollSpringSimulation::\$super\$hashCode#0', (args) => (args[0] as _$ScrollSpringSimulation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

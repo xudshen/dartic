@@ -138,13 +138,6 @@ class _$Stack extends Stack implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -159,10 +152,20 @@ class _$Stack extends Stack implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -181,9 +184,9 @@ class _$Stack extends Stack implements DarticObjectHolder {
   ui.TextDirection? get _super$textDirection => super.textDirection;
   StackFit get _super$fit => super.fit;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -218,9 +221,9 @@ abstract final class StackBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$textDirection#0', (args) => (args[0] as _$Stack)._super$textDirection);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$fit#0', (args) => (args[0] as _$Stack)._super$fit);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$clipBehavior#0', (args) => (args[0] as _$Stack)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$hashCode#0', (args) => (args[0] as _$Stack)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$children#0', (args) => (args[0] as _$Stack)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$key#0', (args) => (args[0] as _$Stack)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Stack::\$super\$hashCode#0', (args) => (args[0] as _$Stack)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

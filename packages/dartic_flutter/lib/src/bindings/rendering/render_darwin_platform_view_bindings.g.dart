@@ -572,13 +572,6 @@ class _$RenderDarwinPlatformView extends RenderDarwinPlatformView<DarwinPlatform
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -810,10 +803,20 @@ class _$RenderDarwinPlatformView extends RenderDarwinPlatformView<DarwinPlatform
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -898,7 +901,6 @@ class _$RenderDarwinPlatformView extends RenderDarwinPlatformView<DarwinPlatform
   bool get _super$sizedByParent => super.sizedByParent;
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
   bool get _super$isRepaintBoundary => super.isRepaintBoundary;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -932,6 +934,7 @@ class _$RenderDarwinPlatformView extends RenderDarwinPlatformView<DarwinPlatform
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1032,7 +1035,6 @@ abstract final class RenderDarwinPlatformViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$sizedByParent#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$sizedByParent);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$alwaysNeedsCompositing);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$isRepaintBoundary#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$isRepaintBoundary);
-    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$hashCode#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$hasSize#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$size#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$semanticBounds);
@@ -1066,6 +1068,7 @@ abstract final class RenderDarwinPlatformViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$parentData=#1', (args) { (args[0] as _$RenderDarwinPlatformView)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderDarwinPlatformView)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$layer=#1', (args) { (args[0] as _$RenderDarwinPlatformView)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderDarwinPlatformView::\$super\$hashCode#0', (args) => (args[0] as _$RenderDarwinPlatformView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

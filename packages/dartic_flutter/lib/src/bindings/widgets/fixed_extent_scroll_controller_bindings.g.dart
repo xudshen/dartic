@@ -134,13 +134,6 @@ class _$FixedExtentScrollController extends FixedExtentScrollController implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get initialScrollOffset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'initialScrollOffset');
     if (identical(r, notOverridden)) return super.initialScrollOffset;
@@ -211,10 +204,20 @@ class _$FixedExtentScrollController extends FixedExtentScrollController implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -233,7 +236,6 @@ class _$FixedExtentScrollController extends FixedExtentScrollController implemen
   void _super$notifyListeners() { super.notifyListeners(); }
   int get _super$initialItem => super.initialItem;
   int get _super$selectedItem => super.selectedItem;
-  int get _super$hashCode => super.hashCode;
   double get _super$initialScrollOffset => super.initialScrollOffset;
   bool get _super$keepScrollOffset => super.keepScrollOffset;
   ScrollControllerCallback? get _super$onAttach => super.onAttach;
@@ -244,6 +246,7 @@ class _$FixedExtentScrollController extends FixedExtentScrollController implemen
   ScrollPosition get _super$position => super.position;
   double get _super$offset => super.offset;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -278,7 +281,6 @@ abstract final class FixedExtentScrollControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$notifyListeners#0', (args) { (args[0] as _$FixedExtentScrollController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$initialItem#0', (args) => (args[0] as _$FixedExtentScrollController)._super$initialItem);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$selectedItem#0', (args) => (args[0] as _$FixedExtentScrollController)._super$selectedItem);
-    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentScrollController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$initialScrollOffset#0', (args) => (args[0] as _$FixedExtentScrollController)._super$initialScrollOffset);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$keepScrollOffset#0', (args) => (args[0] as _$FixedExtentScrollController)._super$keepScrollOffset);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$onAttach#0', (args) => (args[0] as _$FixedExtentScrollController)._super$onAttach);
@@ -289,6 +291,7 @@ abstract final class FixedExtentScrollControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$position#0', (args) => (args[0] as _$FixedExtentScrollController)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$offset#0', (args) => (args[0] as _$FixedExtentScrollController)._super$offset);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$hasListeners#0', (args) => (args[0] as _$FixedExtentScrollController)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollController::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentScrollController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

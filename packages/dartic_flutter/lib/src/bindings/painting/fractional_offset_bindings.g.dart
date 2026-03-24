@@ -84,13 +84,6 @@ class _$FractionalOffset extends FractionalOffset implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get x {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'x');
     if (identical(r, notOverridden)) return super.x;
@@ -154,10 +147,20 @@ class _$FractionalOffset extends FractionalOffset implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -170,9 +173,9 @@ class _$FractionalOffset extends FractionalOffset implements DarticObjectHolder 
   Alignment _super$resolve(ui.TextDirection? direction) => super.resolve(direction);
   double get _super$dx => super.dx;
   double get _super$dy => super.dy;
-  int get _super$hashCode => super.hashCode;
   double get _super$x => super.x;
   double get _super$y => super.y;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,9 +214,9 @@ abstract final class FractionalOffsetBindings {
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$resolve#1', (args) => (args[0] as _$FractionalOffset)._super$resolve(args[1] as ui.TextDirection?));
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$dx#0', (args) => (args[0] as _$FractionalOffset)._super$dx);
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$dy#0', (args) => (args[0] as _$FractionalOffset)._super$dy);
-    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$hashCode#0', (args) => (args[0] as _$FractionalOffset)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$x#0', (args) => (args[0] as _$FractionalOffset)._super$x);
     ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$y#0', (args) => (args[0] as _$FractionalOffset)._super$y);
+    ctx.registerBinding('package:flutter/src/painting/fractional_offset.dart::FractionalOffset::\$super\$hashCode#0', (args) => (args[0] as _$FractionalOffset)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

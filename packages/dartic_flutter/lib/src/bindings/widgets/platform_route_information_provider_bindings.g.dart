@@ -176,13 +176,6 @@ class _$PlatformRouteInformationProvider extends PlatformRouteInformationProvide
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -190,10 +183,20 @@ class _$PlatformRouteInformationProvider extends PlatformRouteInformationProvide
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -220,8 +223,8 @@ class _$PlatformRouteInformationProvider extends PlatformRouteInformationProvide
   void _super$didChangeAccessibilityFeatures() { super.didChangeAccessibilityFeatures(); }
   void _super$notifyListeners() { super.notifyListeners(); }
   RouteInformation get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -264,8 +267,8 @@ abstract final class PlatformRouteInformationProviderBindings {
     ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$didChangeAccessibilityFeatures#0', (args) { (args[0] as _$PlatformRouteInformationProvider)._super$didChangeAccessibilityFeatures(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$notifyListeners#0', (args) { (args[0] as _$PlatformRouteInformationProvider)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$value#0', (args) => (args[0] as _$PlatformRouteInformationProvider)._super$value);
-    ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$hashCode#0', (args) => (args[0] as _$PlatformRouteInformationProvider)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$hasListeners#0', (args) => (args[0] as _$PlatformRouteInformationProvider)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::PlatformRouteInformationProvider::\$super\$hashCode#0', (args) => (args[0] as _$PlatformRouteInformationProvider)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

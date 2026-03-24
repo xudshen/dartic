@@ -77,13 +77,6 @@ class _$PointerScrollInertiaCancelEvent extends PointerScrollInertiaCancelEvent 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get viewId {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewId');
     if (identical(r, notOverridden)) return super.viewId;
@@ -294,10 +287,20 @@ class _$PointerScrollInertiaCancelEvent extends PointerScrollInertiaCancelEvent 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -309,7 +312,6 @@ class _$PointerScrollInertiaCancelEvent extends PointerScrollInertiaCancelEvent 
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
   void _super$respond({required bool allowPlatformDefault}) { super.respond(allowPlatformDefault: allowPlatformDefault); }
   String _super$toStringFull() => super.toStringFull();
-  int get _super$hashCode => super.hashCode;
   int get _super$viewId => super.viewId;
   int get _super$embedderId => super.embedderId;
   Duration get _super$timeStamp => super.timeStamp;
@@ -340,6 +342,7 @@ class _$PointerScrollInertiaCancelEvent extends PointerScrollInertiaCancelEvent 
   bool get _super$synthesized => super.synthesized;
   Matrix4? get _super$transform => super.transform;
   PointerEvent? get _super$original => super.original;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -367,7 +370,6 @@ abstract final class PointerScrollInertiaCancelEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$debugFillProperties#1', (args) { (args[0] as _$PointerScrollInertiaCancelEvent)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$respond#1', (args) { (args[0] as _$PointerScrollInertiaCancelEvent)._super$respond(allowPlatformDefault: args[1] as bool); return null; });
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$toStringFull#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$toStringFull());
-    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$viewId#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$viewId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$embedderId#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$embedderId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$timeStamp#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$timeStamp);
@@ -398,6 +400,7 @@ abstract final class PointerScrollInertiaCancelEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$synthesized#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$synthesized);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$transform#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$transform);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$original#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$original);
+    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollInertiaCancelEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerScrollInertiaCancelEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

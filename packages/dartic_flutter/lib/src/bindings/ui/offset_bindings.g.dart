@@ -83,13 +83,6 @@ class _$Offset extends Offset implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isInfinite {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isInfinite');
     if (identical(r, notOverridden)) return super.isInfinite;
@@ -160,13 +153,6 @@ class _$Offset extends Offset implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   bool operator <(OffsetBase other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<', [other]);
     if (identical(r, notOverridden)) return super < other;
@@ -194,6 +180,23 @@ class _$Offset extends Offset implements DarticObjectHolder {
     return r as bool;
   }
 
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
+  }
+
   // ── Super trampolines ──
   Offset _super$scale(double scaleX, double scaleY) => super.scale(scaleX, scaleY);
   Offset _super$translate(double translateX, double translateY) => super.translate(translateX, translateY);
@@ -203,9 +206,9 @@ class _$Offset extends Offset implements DarticObjectHolder {
   double get _super$distance => super.distance;
   double get _super$distanceSquared => super.distanceSquared;
   double get _super$direction => super.direction;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isInfinite => super.isInfinite;
   bool get _super$isFinite => super.isFinite;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -236,9 +239,9 @@ abstract final class OffsetBindings {
     ctx.registerBinding('dart:ui::Offset::\$super\$distance#0', (args) => (args[0] as _$Offset)._super$distance);
     ctx.registerBinding('dart:ui::Offset::\$super\$distanceSquared#0', (args) => (args[0] as _$Offset)._super$distanceSquared);
     ctx.registerBinding('dart:ui::Offset::\$super\$direction#0', (args) => (args[0] as _$Offset)._super$direction);
-    ctx.registerBinding('dart:ui::Offset::\$super\$hashCode#0', (args) => (args[0] as _$Offset)._super$hashCode);
     ctx.registerBinding('dart:ui::Offset::\$super\$isInfinite#0', (args) => (args[0] as _$Offset)._super$isInfinite);
     ctx.registerBinding('dart:ui::Offset::\$super\$isFinite#0', (args) => (args[0] as _$Offset)._super$isFinite);
+    ctx.registerBinding('dart:ui::Offset::\$super\$hashCode#0', (args) => (args[0] as _$Offset)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

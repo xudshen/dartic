@@ -203,13 +203,6 @@ class _$MultiTapGestureRecognizer extends MultiTapGestureRecognizer implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object? get debugOwner {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugOwner');
     if (identical(r, notOverridden)) return super.debugOwner;
@@ -294,10 +287,20 @@ class _$MultiTapGestureRecognizer extends MultiTapGestureRecognizer implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -327,7 +330,6 @@ class _$MultiTapGestureRecognizer extends MultiTapGestureRecognizer implements D
   Duration get _super$longTapDelay => super.longTapDelay;
   GestureMultiTapDownCallback? get _super$onLongTapDown => super.onLongTapDown;
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   Object? get _super$debugOwner => super.debugOwner;
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
   Set<PointerDeviceKind>? get _super$supportedDevices => super.supportedDevices;
@@ -340,6 +342,7 @@ class _$MultiTapGestureRecognizer extends MultiTapGestureRecognizer implements D
   set _super$onLongTapDown(GestureMultiTapDownCallback? value) { super.onLongTapDown = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -385,7 +388,6 @@ abstract final class MultiTapGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$longTapDelay#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$longTapDelay);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$onLongTapDown#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$onLongTapDown);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$debugOwner#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$debugOwner);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$gestureSettings);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$supportedDevices#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$supportedDevices);
@@ -398,6 +400,7 @@ abstract final class MultiTapGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$onLongTapDown=#1', (args) { (args[0] as _$MultiTapGestureRecognizer)._super$onLongTapDown = args[1] as GestureMultiTapDownCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$MultiTapGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$MultiTapGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::MultiTapGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$MultiTapGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

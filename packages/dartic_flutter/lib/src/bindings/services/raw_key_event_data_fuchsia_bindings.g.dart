@@ -113,13 +113,6 @@ class _$RawKeyEventDataFuchsia extends RawKeyEventDataFuchsia implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isControlPressed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isControlPressed');
     if (identical(r, notOverridden)) return super.isControlPressed;
@@ -155,10 +148,20 @@ class _$RawKeyEventDataFuchsia extends RawKeyEventDataFuchsia implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -175,12 +178,12 @@ class _$RawKeyEventDataFuchsia extends RawKeyEventDataFuchsia implements DarticO
   String get _super$keyLabel => super.keyLabel;
   LogicalKeyboardKey get _super$logicalKey => super.logicalKey;
   PhysicalKeyboardKey get _super$physicalKey => super.physicalKey;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isControlPressed => super.isControlPressed;
   bool get _super$isShiftPressed => super.isShiftPressed;
   bool get _super$isAltPressed => super.isAltPressed;
   bool get _super$isMetaPressed => super.isMetaPressed;
   Map<ModifierKey, KeyboardSide> get _super$modifiersPressed => super.modifiersPressed;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -227,12 +230,12 @@ abstract final class RawKeyEventDataFuchsiaBindings {
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$keyLabel#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$keyLabel);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$logicalKey#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$logicalKey);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$physicalKey#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$physicalKey);
-    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isControlPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isControlPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isShiftPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isShiftPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isAltPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isAltPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$isMetaPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$isMetaPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$modifiersPressed#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$modifiersPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_fuchsia.dart::RawKeyEventDataFuchsia::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyEventDataFuchsia)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

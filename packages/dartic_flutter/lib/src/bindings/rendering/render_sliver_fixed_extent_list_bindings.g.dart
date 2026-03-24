@@ -592,13 +592,6 @@ class _$RenderSliverFixedExtentList extends RenderSliverFixedExtentList implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ItemExtentBuilder? get itemExtentBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'itemExtentBuilder');
     if (identical(r, notOverridden)) return super.itemExtentBuilder;
@@ -900,10 +893,20 @@ class _$RenderSliverFixedExtentList extends RenderSliverFixedExtentList implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -993,7 +996,6 @@ class _$RenderSliverFixedExtentList extends RenderSliverFixedExtentList implemen
   bool _super$hitTestBoxChild(BoxHitTestResult result, RenderBox child, {required double mainAxisPosition, required double crossAxisPosition}) => super.hitTestBoxChild(result, child, mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition);
   void _super$applyPaintTransformForBoxChild(RenderBox child, Matrix4 transform) { super.applyPaintTransformForBoxChild(child, transform); }
   double get _super$itemExtent => super.itemExtent;
-  int get _super$hashCode => super.hashCode;
   ItemExtentBuilder? get _super$itemExtentBuilder => super.itemExtentBuilder;
   RenderSliverBoxChildManager get _super$childManager => super.childManager;
   bool get _super$debugChildIntegrityEnabled => super.debugChildIntegrityEnabled;
@@ -1037,6 +1039,7 @@ class _$RenderSliverFixedExtentList extends RenderSliverFixedExtentList implemen
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1142,7 +1145,6 @@ abstract final class RenderSliverFixedExtentListBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$hitTestBoxChild#4', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double));
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$applyPaintTransformForBoxChild#2', (args) { (args[0] as _$RenderSliverFixedExtentList)._super$applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$itemExtent#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$itemExtent);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$itemExtentBuilder#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$itemExtentBuilder);
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$childManager#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$childManager);
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$debugChildIntegrityEnabled#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$debugChildIntegrityEnabled);
@@ -1186,6 +1188,7 @@ abstract final class RenderSliverFixedExtentListBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$parentData=#1', (args) { (args[0] as _$RenderSliverFixedExtentList)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverFixedExtentList)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverFixedExtentList)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_fixed_extent_list.dart::RenderSliverFixedExtentList::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverFixedExtentList)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

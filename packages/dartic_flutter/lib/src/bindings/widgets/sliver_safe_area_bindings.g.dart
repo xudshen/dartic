@@ -131,13 +131,6 @@ class _$SliverSafeArea extends SliverSafeArea implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -145,10 +138,20 @@ class _$SliverSafeArea extends SliverSafeArea implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -167,8 +170,8 @@ class _$SliverSafeArea extends SliverSafeArea implements DarticObjectHolder {
   bool get _super$bottom => super.bottom;
   EdgeInsets get _super$minimum => super.minimum;
   Widget get _super$sliver => super.sliver;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -203,8 +206,8 @@ abstract final class SliverSafeAreaBindings {
     ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$bottom#0', (args) => (args[0] as _$SliverSafeArea)._super$bottom);
     ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$minimum#0', (args) => (args[0] as _$SliverSafeArea)._super$minimum);
     ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$sliver#0', (args) => (args[0] as _$SliverSafeArea)._super$sliver);
-    ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$hashCode#0', (args) => (args[0] as _$SliverSafeArea)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$key#0', (args) => (args[0] as _$SliverSafeArea)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/safe_area.dart::SliverSafeArea::\$super\$hashCode#0', (args) => (args[0] as _$SliverSafeArea)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

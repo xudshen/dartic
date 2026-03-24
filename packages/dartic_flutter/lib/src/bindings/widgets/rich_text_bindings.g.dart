@@ -212,13 +212,6 @@ class _$RichText extends RichText implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -233,10 +226,20 @@ class _$RichText extends RichText implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -265,9 +268,9 @@ class _$RichText extends RichText implements DarticObjectHolder {
   ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
   SelectionRegistrar? get _super$selectionRegistrar => super.selectionRegistrar;
   ui.Color? get _super$selectionColor => super.selectionColor;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -312,9 +315,9 @@ abstract final class RichTextBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$textHeightBehavior#0', (args) => (args[0] as _$RichText)._super$textHeightBehavior);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$selectionRegistrar#0', (args) => (args[0] as _$RichText)._super$selectionRegistrar);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$selectionColor#0', (args) => (args[0] as _$RichText)._super$selectionColor);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$hashCode#0', (args) => (args[0] as _$RichText)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$children#0', (args) => (args[0] as _$RichText)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$key#0', (args) => (args[0] as _$RichText)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::RichText::\$super\$hashCode#0', (args) => (args[0] as _$RichText)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

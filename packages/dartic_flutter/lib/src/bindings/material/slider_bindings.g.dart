@@ -254,13 +254,6 @@ class _$Slider extends Slider implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -268,10 +261,20 @@ class _$Slider extends Slider implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -305,8 +308,8 @@ class _$Slider extends Slider implements DarticObjectHolder {
   SliderInteraction? get _super$allowedInteraction => super.allowedInteraction;
   EdgeInsetsGeometry? get _super$padding => super.padding;
   bool? get _super$year2023 => super.year2023;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -356,8 +359,8 @@ abstract final class SliderBindings {
     ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$allowedInteraction#0', (args) => (args[0] as _$Slider)._super$allowedInteraction);
     ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$padding#0', (args) => (args[0] as _$Slider)._super$padding);
     ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$year2023#0', (args) => (args[0] as _$Slider)._super$year2023);
-    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$hashCode#0', (args) => (args[0] as _$Slider)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$key#0', (args) => (args[0] as _$Slider)._super$key);
+    ctx.registerBinding('package:flutter/src/material/slider.dart::Slider::\$super\$hashCode#0', (args) => (args[0] as _$Slider)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

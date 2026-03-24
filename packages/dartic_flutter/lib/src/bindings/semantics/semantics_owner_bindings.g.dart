@@ -89,13 +89,6 @@ class _$SemanticsOwner extends SemanticsOwner implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -103,10 +96,20 @@ class _$SemanticsOwner extends SemanticsOwner implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -120,8 +123,8 @@ class _$SemanticsOwner extends SemanticsOwner implements DarticObjectHolder {
   void _super$notifyListeners() { super.notifyListeners(); }
   SemanticsUpdateCallback get _super$onSemanticsUpdate => super.onSemanticsUpdate;
   SemanticsNode? get _super$rootSemanticsNode => super.rootSemanticsNode;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -151,8 +154,8 @@ abstract final class SemanticsOwnerBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$notifyListeners#0', (args) { (args[0] as _$SemanticsOwner)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$onSemanticsUpdate#0', (args) => (args[0] as _$SemanticsOwner)._super$onSemanticsUpdate);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$rootSemanticsNode#0', (args) => (args[0] as _$SemanticsOwner)._super$rootSemanticsNode);
-    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsOwner)._super$hashCode);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$hasListeners#0', (args) => (args[0] as _$SemanticsOwner)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsOwner::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsOwner)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -302,13 +302,6 @@ class _$TransitionRoute extends TransitionRoute<dynamic> implements DarticObject
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<OverlayEntry> get overlayEntries {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'overlayEntries');
     if (identical(r, notOverridden)) return super.overlayEntries;
@@ -416,10 +409,20 @@ class _$TransitionRoute extends TransitionRoute<dynamic> implements DarticObject
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -458,7 +461,6 @@ class _$TransitionRoute extends TransitionRoute<dynamic> implements DarticObject
   Animation<double>? get _super$secondaryAnimation => super.secondaryAnimation;
   bool get _super$willDisposeAnimationController => super.willDisposeAnimationController;
   String get _super$debugLabel => super.debugLabel;
-  int get _super$hashCode => super.hashCode;
   List<OverlayEntry> get _super$overlayEntries => super.overlayEntries;
   bool get _super$requestFocus => super.requestFocus;
   NavigatorState? get _super$navigator => super.navigator;
@@ -473,6 +475,7 @@ class _$TransitionRoute extends TransitionRoute<dynamic> implements DarticObject
   bool get _super$hasActiveRouteBelow => super.hasActiveRouteBelow;
   bool get _super$isActive => super.isActive;
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -527,7 +530,6 @@ abstract final class TransitionRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$secondaryAnimation#0', (args) => (args[0] as _$TransitionRoute)._super$secondaryAnimation);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$willDisposeAnimationController#0', (args) => (args[0] as _$TransitionRoute)._super$willDisposeAnimationController);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$debugLabel#0', (args) => (args[0] as _$TransitionRoute)._super$debugLabel);
-    ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$hashCode#0', (args) => (args[0] as _$TransitionRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$overlayEntries#0', (args) => (args[0] as _$TransitionRoute)._super$overlayEntries);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$requestFocus#0', (args) => (args[0] as _$TransitionRoute)._super$requestFocus);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$navigator#0', (args) => (args[0] as _$TransitionRoute)._super$navigator);
@@ -542,6 +544,7 @@ abstract final class TransitionRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$hasActiveRouteBelow#0', (args) => (args[0] as _$TransitionRoute)._super$hasActiveRouteBelow);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$isActive#0', (args) => (args[0] as _$TransitionRoute)._super$isActive);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$TransitionRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::TransitionRoute::\$super\$hashCode#0', (args) => (args[0] as _$TransitionRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

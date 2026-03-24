@@ -60,13 +60,6 @@ class _$Simulation extends Simulation implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set tolerance(Tolerance value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance', value)) {
       super.tolerance = value;
@@ -74,17 +67,27 @@ class _$Simulation extends Simulation implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Tolerance get _super$tolerance => super.tolerance;
-  int get _super$hashCode => super.hashCode;
   set _super$tolerance(Tolerance value) { super.tolerance = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -105,8 +108,8 @@ abstract final class SimulationBindings {
     );
     ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$toString#0', (args) => (args[0] as _$Simulation)._super$toString());
     ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$tolerance#0', (args) => (args[0] as _$Simulation)._super$tolerance);
-    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$hashCode#0', (args) => (args[0] as _$Simulation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$tolerance=#1', (args) { (args[0] as _$Simulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
+    ctx.registerBinding('package:flutter/src/physics/simulation.dart::Simulation::\$super\$hashCode#0', (args) => (args[0] as _$Simulation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

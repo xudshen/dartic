@@ -105,13 +105,6 @@ class _$FutureBuilder extends FutureBuilder<dynamic> implements DarticObjectHold
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -119,10 +112,20 @@ class _$FutureBuilder extends FutureBuilder<dynamic> implements DarticObjectHold
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -138,8 +141,8 @@ class _$FutureBuilder extends FutureBuilder<dynamic> implements DarticObjectHold
   Future? get _super$future => super.future;
   Widget Function(BuildContext, AsyncSnapshot) get _super$builder => super.builder;
   dynamic get _super$initialData => super.initialData;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -172,8 +175,8 @@ abstract final class FutureBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$future#0', (args) => (args[0] as _$FutureBuilder)._super$future);
     ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$builder#0', (args) => (args[0] as _$FutureBuilder)._super$builder);
     ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$initialData#0', (args) => (args[0] as _$FutureBuilder)._super$initialData);
-    ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$hashCode#0', (args) => (args[0] as _$FutureBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$key#0', (args) => (args[0] as _$FutureBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/async.dart::FutureBuilder::\$super\$hashCode#0', (args) => (args[0] as _$FutureBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -120,13 +120,6 @@ class _$RelativePositionedTransition extends RelativePositionedTransition implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Listenable get listenable {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'listenable');
     if (identical(r, notOverridden)) return super.listenable;
@@ -141,10 +134,20 @@ class _$RelativePositionedTransition extends RelativePositionedTransition implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -161,9 +164,9 @@ class _$RelativePositionedTransition extends RelativePositionedTransition implem
   Animation<Rect?> get _super$rect => super.rect;
   Size get _super$size => super.size;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Listenable get _super$listenable => super.listenable;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -196,9 +199,9 @@ abstract final class RelativePositionedTransitionBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$rect#0', (args) => (args[0] as _$RelativePositionedTransition)._super$rect);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$size#0', (args) => (args[0] as _$RelativePositionedTransition)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$child#0', (args) => (args[0] as _$RelativePositionedTransition)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$hashCode#0', (args) => (args[0] as _$RelativePositionedTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$listenable#0', (args) => (args[0] as _$RelativePositionedTransition)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$key#0', (args) => (args[0] as _$RelativePositionedTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::RelativePositionedTransition::\$super\$hashCode#0', (args) => (args[0] as _$RelativePositionedTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

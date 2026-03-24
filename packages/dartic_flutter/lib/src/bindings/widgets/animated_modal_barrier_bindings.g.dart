@@ -153,13 +153,6 @@ class _$AnimatedModalBarrier extends AnimatedModalBarrier implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Listenable get listenable {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'listenable');
     if (identical(r, notOverridden)) return super.listenable;
@@ -174,10 +167,20 @@ class _$AnimatedModalBarrier extends AnimatedModalBarrier implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -198,9 +201,9 @@ class _$AnimatedModalBarrier extends AnimatedModalBarrier implements DarticObjec
   VoidCallback? get _super$onDismiss => super.onDismiss;
   ValueNotifier<EdgeInsets>? get _super$clipDetailsNotifier => super.clipDetailsNotifier;
   String? get _super$semanticsOnTapHint => super.semanticsOnTapHint;
-  int get _super$hashCode => super.hashCode;
   Listenable get _super$listenable => super.listenable;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -237,9 +240,9 @@ abstract final class AnimatedModalBarrierBindings {
     ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$onDismiss#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$onDismiss);
     ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$clipDetailsNotifier#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$clipDetailsNotifier);
     ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$semanticsOnTapHint#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$semanticsOnTapHint);
-    ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$listenable#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$key#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/modal_barrier.dart::AnimatedModalBarrier::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedModalBarrier)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

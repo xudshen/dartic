@@ -120,13 +120,6 @@ class _$GridPaper extends GridPaper implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -134,10 +127,20 @@ class _$GridPaper extends GridPaper implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -155,8 +158,8 @@ class _$GridPaper extends GridPaper implements DarticObjectHolder {
   int get _super$divisions => super.divisions;
   int get _super$subdivisions => super.subdivisions;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -190,8 +193,8 @@ abstract final class GridPaperBindings {
     ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$divisions#0', (args) => (args[0] as _$GridPaper)._super$divisions);
     ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$subdivisions#0', (args) => (args[0] as _$GridPaper)._super$subdivisions);
     ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$child#0', (args) => (args[0] as _$GridPaper)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$hashCode#0', (args) => (args[0] as _$GridPaper)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$key#0', (args) => (args[0] as _$GridPaper)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/grid_paper.dart::GridPaper::\$super\$hashCode#0', (args) => (args[0] as _$GridPaper)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -143,13 +143,6 @@ class _$AboutDialog extends AboutDialog implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -157,10 +150,20 @@ class _$AboutDialog extends AboutDialog implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -178,8 +181,8 @@ class _$AboutDialog extends AboutDialog implements DarticObjectHolder {
   Widget? get _super$applicationIcon => super.applicationIcon;
   String? get _super$applicationLegalese => super.applicationLegalese;
   List<Widget>? get _super$children => super.children;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -213,8 +216,8 @@ abstract final class AboutDialogBindings {
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$applicationIcon#0', (args) => (args[0] as _$AboutDialog)._super$applicationIcon);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$applicationLegalese#0', (args) => (args[0] as _$AboutDialog)._super$applicationLegalese);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$children#0', (args) => (args[0] as _$AboutDialog)._super$children);
-    ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$hashCode#0', (args) => (args[0] as _$AboutDialog)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$key#0', (args) => (args[0] as _$AboutDialog)._super$key);
+    ctx.registerBinding('package:flutter/src/material/about.dart::AboutDialog::\$super\$hashCode#0', (args) => (args[0] as _$AboutDialog)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

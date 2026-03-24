@@ -324,13 +324,6 @@ class _$MaterialButton extends MaterialButton implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -338,10 +331,20 @@ class _$MaterialButton extends MaterialButton implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -386,8 +389,8 @@ class _$MaterialButton extends MaterialButton implements DarticObjectHolder {
   double? get _super$minWidth => super.minWidth;
   double? get _super$height => super.height;
   bool get _super$enableFeedback => super.enableFeedback;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -448,8 +451,8 @@ abstract final class MaterialButtonBindings {
     ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$minWidth#0', (args) => (args[0] as _$MaterialButton)._super$minWidth);
     ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$height#0', (args) => (args[0] as _$MaterialButton)._super$height);
     ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$enableFeedback#0', (args) => (args[0] as _$MaterialButton)._super$enableFeedback);
-    ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$hashCode#0', (args) => (args[0] as _$MaterialButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$key#0', (args) => (args[0] as _$MaterialButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/material_button.dart::MaterialButton::\$super\$hashCode#0', (args) => (args[0] as _$MaterialButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

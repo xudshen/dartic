@@ -137,13 +137,6 @@ class _$TrainHoppingAnimation extends TrainHoppingAnimation implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isDismissed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDismissed');
     if (identical(r, notOverridden)) return super.isDismissed;
@@ -179,10 +172,20 @@ class _$TrainHoppingAnimation extends TrainHoppingAnimation implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -201,12 +204,12 @@ class _$TrainHoppingAnimation extends TrainHoppingAnimation implements DarticObj
   VoidCallback? get _super$onSwitchedTrain => super.onSwitchedTrain;
   AnimationStatus get _super$status => super.status;
   double get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
   bool get _super$isAnimating => super.isAnimating;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
   set _super$onSwitchedTrain(VoidCallback? value) { super.onSwitchedTrain = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -241,12 +244,12 @@ abstract final class TrainHoppingAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$onSwitchedTrain#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$onSwitchedTrain);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$status#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$status);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$value#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$value);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$hashCode#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$isCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$isAnimating#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$isForwardOrCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$onSwitchedTrain=#1', (args) { (args[0] as _$TrainHoppingAnimation)._super$onSwitchedTrain = args[1] as VoidCallback?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::TrainHoppingAnimation::\$super\$hashCode#0', (args) => (args[0] as _$TrainHoppingAnimation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

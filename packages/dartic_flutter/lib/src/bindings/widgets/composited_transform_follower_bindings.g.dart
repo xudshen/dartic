@@ -146,13 +146,6 @@ class _$CompositedTransformFollower extends CompositedTransformFollower implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -167,10 +160,20 @@ class _$CompositedTransformFollower extends CompositedTransformFollower implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -190,9 +193,9 @@ class _$CompositedTransformFollower extends CompositedTransformFollower implemen
   Alignment get _super$targetAnchor => super.targetAnchor;
   Alignment get _super$followerAnchor => super.followerAnchor;
   ui.Offset get _super$offset => super.offset;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -228,9 +231,9 @@ abstract final class CompositedTransformFollowerBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$targetAnchor#0', (args) => (args[0] as _$CompositedTransformFollower)._super$targetAnchor);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$followerAnchor#0', (args) => (args[0] as _$CompositedTransformFollower)._super$followerAnchor);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$offset#0', (args) => (args[0] as _$CompositedTransformFollower)._super$offset);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$hashCode#0', (args) => (args[0] as _$CompositedTransformFollower)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$child#0', (args) => (args[0] as _$CompositedTransformFollower)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$key#0', (args) => (args[0] as _$CompositedTransformFollower)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformFollower::\$super\$hashCode#0', (args) => (args[0] as _$CompositedTransformFollower)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

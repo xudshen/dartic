@@ -718,13 +718,6 @@ class _$SemanticsConfiguration extends SemanticsConfiguration implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set isSemanticBoundary(bool value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'isSemanticBoundary', value)) {
       super.isSemanticBoundary = value;
@@ -1355,10 +1348,20 @@ class _$SemanticsConfiguration extends SemanticsConfiguration implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1461,7 +1464,6 @@ class _$SemanticsConfiguration extends SemanticsConfiguration implements DarticO
   SemanticsValidationResult get _super$validationResult => super.validationResult;
   SemanticsInputType get _super$inputType => super.inputType;
   Iterable<SemanticsTag>? get _super$tagsForChildren => super.tagsForChildren;
-  int get _super$hashCode => super.hashCode;
   set _super$isSemanticBoundary(bool value) { super.isSemanticBoundary = value; }
   set _super$localeForSubtree(Locale? value) { super.localeForSubtree = value; }
   set _super$locale(Locale? value) { super.locale = value; }
@@ -1552,6 +1554,7 @@ class _$SemanticsConfiguration extends SemanticsConfiguration implements DarticO
   set _super$controlsNodes(Set<String>? value) { super.controlsNodes = value; }
   set _super$validationResult(SemanticsValidationResult value) { super.validationResult = value; }
   set _super$inputType(SemanticsInputType value) { super.inputType = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1669,7 +1672,6 @@ abstract final class SemanticsConfigurationBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$validationResult#0', (args) => (args[0] as _$SemanticsConfiguration)._super$validationResult);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$inputType#0', (args) => (args[0] as _$SemanticsConfiguration)._super$inputType);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$tagsForChildren#0', (args) => (args[0] as _$SemanticsConfiguration)._super$tagsForChildren);
-    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsConfiguration)._super$hashCode);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$isSemanticBoundary=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$isSemanticBoundary = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$localeForSubtree=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$localeForSubtree = args[1] as Locale?; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$locale=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$locale = args[1] as Locale?; return args[1]; });
@@ -1760,6 +1762,7 @@ abstract final class SemanticsConfigurationBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$controlsNodes=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$controlsNodes = args[1] == null ? null : (args[1] as Set).cast<String>(); return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$validationResult=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$validationResult = args[1] as SemanticsValidationResult; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$inputType=#1', (args) { (args[0] as _$SemanticsConfiguration)._super$inputType = args[1] as SemanticsInputType; return args[1]; });
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsConfiguration::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsConfiguration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -164,13 +164,6 @@ class _$OverlayRoute extends OverlayRoute<dynamic> implements DarticObjectHolder
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get requestFocus {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'requestFocus');
     if (identical(r, notOverridden)) return super.requestFocus;
@@ -255,10 +248,20 @@ class _$OverlayRoute extends OverlayRoute<dynamic> implements DarticObjectHolder
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -280,7 +283,6 @@ class _$OverlayRoute extends OverlayRoute<dynamic> implements DarticObjectHolder
   void _super$changedExternalState() { super.changedExternalState(); }
   List<OverlayEntry> get _super$overlayEntries => super.overlayEntries;
   bool get _super$finishedWhenPopped => super.finishedWhenPopped;
-  int get _super$hashCode => super.hashCode;
   bool get _super$requestFocus => super.requestFocus;
   NavigatorState? get _super$navigator => super.navigator;
   RouteSettings get _super$settings => super.settings;
@@ -293,6 +295,7 @@ class _$OverlayRoute extends OverlayRoute<dynamic> implements DarticObjectHolder
   bool get _super$isFirst => super.isFirst;
   bool get _super$hasActiveRouteBelow => super.hasActiveRouteBelow;
   bool get _super$isActive => super.isActive;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -330,7 +333,6 @@ abstract final class OverlayRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$changedExternalState#0', (args) { (args[0] as _$OverlayRoute)._super$changedExternalState(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$overlayEntries#0', (args) => (args[0] as _$OverlayRoute)._super$overlayEntries);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$finishedWhenPopped#0', (args) => (args[0] as _$OverlayRoute)._super$finishedWhenPopped);
-    ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$hashCode#0', (args) => (args[0] as _$OverlayRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$requestFocus#0', (args) => (args[0] as _$OverlayRoute)._super$requestFocus);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$navigator#0', (args) => (args[0] as _$OverlayRoute)._super$navigator);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$settings#0', (args) => (args[0] as _$OverlayRoute)._super$settings);
@@ -343,6 +345,7 @@ abstract final class OverlayRouteBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$isFirst#0', (args) => (args[0] as _$OverlayRoute)._super$isFirst);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$hasActiveRouteBelow#0', (args) => (args[0] as _$OverlayRoute)._super$hasActiveRouteBelow);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$isActive#0', (args) => (args[0] as _$OverlayRoute)._super$isActive);
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::OverlayRoute::\$super\$hashCode#0', (args) => (args[0] as _$OverlayRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

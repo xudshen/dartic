@@ -122,13 +122,6 @@ class _$DecoratedBoxTransition extends DecoratedBoxTransition implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Listenable get listenable {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'listenable');
     if (identical(r, notOverridden)) return super.listenable;
@@ -143,10 +136,20 @@ class _$DecoratedBoxTransition extends DecoratedBoxTransition implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -163,9 +166,9 @@ class _$DecoratedBoxTransition extends DecoratedBoxTransition implements DarticO
   Animation<Decoration> get _super$decoration => super.decoration;
   DecorationPosition get _super$position => super.position;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Listenable get _super$listenable => super.listenable;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -198,9 +201,9 @@ abstract final class DecoratedBoxTransitionBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$decoration#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$decoration);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$position#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$child#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$hashCode#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$listenable#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$key#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::DecoratedBoxTransition::\$super\$hashCode#0', (args) => (args[0] as _$DecoratedBoxTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

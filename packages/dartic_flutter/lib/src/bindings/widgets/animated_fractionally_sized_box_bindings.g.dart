@@ -124,13 +124,6 @@ class _$AnimatedFractionallySizedBox extends AnimatedFractionallySizedBox implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -159,10 +152,20 @@ class _$AnimatedFractionallySizedBox extends AnimatedFractionallySizedBox implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -179,11 +182,11 @@ class _$AnimatedFractionallySizedBox extends AnimatedFractionallySizedBox implem
   double? get _super$heightFactor => super.heightFactor;
   double? get _super$widthFactor => super.widthFactor;
   AlignmentGeometry get _super$alignment => super.alignment;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -216,11 +219,11 @@ abstract final class AnimatedFractionallySizedBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$heightFactor#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$heightFactor);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$widthFactor#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$widthFactor);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$alignment#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$alignment);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$curve#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$duration#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$key#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedFractionallySizedBox::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedFractionallySizedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

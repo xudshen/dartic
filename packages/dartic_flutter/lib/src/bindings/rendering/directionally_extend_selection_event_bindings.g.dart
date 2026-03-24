@@ -56,13 +56,6 @@ class _$DirectionallyExtendSelectionEvent extends DirectionallyExtendSelectionEv
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SelectionEventType get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -70,10 +63,20 @@ class _$DirectionallyExtendSelectionEvent extends DirectionallyExtendSelectionEv
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -82,8 +85,8 @@ class _$DirectionallyExtendSelectionEvent extends DirectionallyExtendSelectionEv
   double get _super$dx => super.dx;
   bool get _super$isEnd => super.isEnd;
   SelectionExtendDirection get _super$direction => super.direction;
-  int get _super$hashCode => super.hashCode;
   SelectionEventType get _super$type => super.type;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -108,8 +111,8 @@ abstract final class DirectionallyExtendSelectionEventBindings {
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$dx#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$dx);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$isEnd#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$isEnd);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$direction#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$direction);
-    ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$type#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$type);
+    ctx.registerBinding('package:flutter/src/rendering/selection.dart::DirectionallyExtendSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$DirectionallyExtendSelectionEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

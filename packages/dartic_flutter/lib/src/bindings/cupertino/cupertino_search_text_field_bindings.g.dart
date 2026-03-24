@@ -333,13 +333,6 @@ class _$CupertinoSearchTextField extends CupertinoSearchTextField implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -347,10 +340,20 @@ class _$CupertinoSearchTextField extends CupertinoSearchTextField implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -396,8 +399,8 @@ class _$CupertinoSearchTextField extends CupertinoSearchTextField implements Dar
   Radius get _super$cursorRadius => super.cursorRadius;
   bool get _super$cursorOpacityAnimates => super.cursorOpacityAnimates;
   Color? get _super$cursorColor => super.cursorColor;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -459,8 +462,8 @@ abstract final class CupertinoSearchTextFieldBindings {
     ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$cursorRadius#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$cursorRadius);
     ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$cursorOpacityAnimates#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$cursorOpacityAnimates);
     ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$cursorColor#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$cursorColor);
-    ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$key#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/search_field.dart::CupertinoSearchTextField::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSearchTextField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

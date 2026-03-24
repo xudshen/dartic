@@ -52,24 +52,10 @@ class _$Point extends Point<num> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get magnitude {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'magnitude');
     if (identical(r, notOverridden)) return super.magnitude;
     return r as double;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
   }
 
   @override
@@ -93,14 +79,31 @@ class _$Point extends Point<num> implements DarticObjectHolder {
     return r as Point<num>;
   }
 
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
+  }
+
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   double _super$distanceTo(Point<num> other) => super.distanceTo(other);
   num _super$squaredDistanceTo(Point<num> other) => super.squaredDistanceTo(other);
   num get _super$x => super.x;
   num get _super$y => super.y;
-  int get _super$hashCode => super.hashCode;
   double get _super$magnitude => super.magnitude;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -124,8 +127,8 @@ abstract final class PointBindings {
     ctx.registerBinding('dart:math::Point::\$super\$squaredDistanceTo#1', (args) => (args[0] as _$Point)._super$squaredDistanceTo(args[1] as Point<num>));
     ctx.registerBinding('dart:math::Point::\$super\$x#0', (args) => (args[0] as _$Point)._super$x);
     ctx.registerBinding('dart:math::Point::\$super\$y#0', (args) => (args[0] as _$Point)._super$y);
-    ctx.registerBinding('dart:math::Point::\$super\$hashCode#0', (args) => (args[0] as _$Point)._super$hashCode);
     ctx.registerBinding('dart:math::Point::\$super\$magnitude#0', (args) => (args[0] as _$Point)._super$magnitude);
+    ctx.registerBinding('dart:math::Point::\$super\$hashCode#0', (args) => (args[0] as _$Point)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

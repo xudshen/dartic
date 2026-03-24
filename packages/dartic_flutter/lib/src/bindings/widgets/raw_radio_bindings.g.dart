@@ -147,13 +147,6 @@ class _$RawRadio extends RawRadio<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -161,10 +154,20 @@ class _$RawRadio extends RawRadio<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -185,8 +188,8 @@ class _$RawRadio extends RawRadio<dynamic> implements DarticObjectHolder {
   RadioBuilder get _super$builder => super.builder;
   bool get _super$enabled => super.enabled;
   RadioGroupRegistry? get _super$groupRegistry => super.groupRegistry;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -223,8 +226,8 @@ abstract final class RawRadioBindings {
     ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$builder#0', (args) => (args[0] as _$RawRadio)._super$builder);
     ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$enabled#0', (args) => (args[0] as _$RawRadio)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$groupRegistry#0', (args) => (args[0] as _$RawRadio)._super$groupRegistry);
-    ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$hashCode#0', (args) => (args[0] as _$RawRadio)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$key#0', (args) => (args[0] as _$RawRadio)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/raw_radio.dart::RawRadio::\$super\$hashCode#0', (args) => (args[0] as _$RawRadio)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

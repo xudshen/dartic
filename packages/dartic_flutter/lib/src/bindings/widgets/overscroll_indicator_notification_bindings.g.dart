@@ -77,13 +77,6 @@ class _$OverscrollIndicatorNotification extends OverscrollIndicatorNotification 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get depth {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'depth');
     if (identical(r, notOverridden)) return super.depth;
@@ -105,10 +98,20 @@ class _$OverscrollIndicatorNotification extends OverscrollIndicatorNotification 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -119,10 +122,10 @@ class _$OverscrollIndicatorNotification extends OverscrollIndicatorNotification 
   bool get _super$leading => super.leading;
   double get _super$paintOffset => super.paintOffset;
   bool get _super$accepted => super.accepted;
-  int get _super$hashCode => super.hashCode;
   int get _super$depth => super.depth;
   set _super$paintOffset(double value) { super.paintOffset = value; }
   set _super$accepted(bool value) { super.accepted = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -149,10 +152,10 @@ abstract final class OverscrollIndicatorNotificationBindings {
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$leading#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$leading);
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$paintOffset#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$paintOffset);
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$accepted#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$accepted);
-    ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$hashCode#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$depth#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$depth);
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$paintOffset=#1', (args) { (args[0] as _$OverscrollIndicatorNotification)._super$paintOffset = args[1] as double; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$accepted=#1', (args) { (args[0] as _$OverscrollIndicatorNotification)._super$accepted = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/overscroll_indicator.dart::OverscrollIndicatorNotification::\$super\$hashCode#0', (args) => (args[0] as _$OverscrollIndicatorNotification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -118,13 +118,6 @@ class _$CupertinoSliverRefreshControl extends CupertinoSliverRefreshControl impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -132,10 +125,20 @@ class _$CupertinoSliverRefreshControl extends CupertinoSliverRefreshControl impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -152,8 +155,8 @@ class _$CupertinoSliverRefreshControl extends CupertinoSliverRefreshControl impl
   double get _super$refreshIndicatorExtent => super.refreshIndicatorExtent;
   RefreshControlIndicatorBuilder? get _super$builder => super.builder;
   RefreshCallback? get _super$onRefresh => super.onRefresh;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -188,8 +191,8 @@ abstract final class CupertinoSliverRefreshControlBindings {
     ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$refreshIndicatorExtent#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$refreshIndicatorExtent);
     ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$builder#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$builder);
     ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$onRefresh#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$onRefresh);
-    ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$key#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/refresh.dart::CupertinoSliverRefreshControl::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSliverRefreshControl)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

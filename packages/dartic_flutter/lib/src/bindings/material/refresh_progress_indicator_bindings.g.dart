@@ -126,13 +126,6 @@ class _$RefreshProgressIndicator extends RefreshProgressIndicator implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double? get strokeWidth {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'strokeWidth');
     if (identical(r, notOverridden)) return super.strokeWidth;
@@ -231,10 +224,20 @@ class _$RefreshProgressIndicator extends RefreshProgressIndicator implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -251,7 +254,6 @@ class _$RefreshProgressIndicator extends RefreshProgressIndicator implements Dar
   EdgeInsetsGeometry get _super$indicatorMargin => super.indicatorMargin;
   EdgeInsetsGeometry get _super$indicatorPadding => super.indicatorPadding;
   Color? get _super$backgroundColor => super.backgroundColor;
-  int get _super$hashCode => super.hashCode;
   double? get _super$strokeWidth => super.strokeWidth;
   double? get _super$strokeAlign => super.strokeAlign;
   StrokeCap? get _super$strokeCap => super.strokeCap;
@@ -266,6 +268,7 @@ class _$RefreshProgressIndicator extends RefreshProgressIndicator implements Dar
   String? get _super$semanticsLabel => super.semanticsLabel;
   String? get _super$semanticsValue => super.semanticsValue;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -299,7 +302,6 @@ abstract final class RefreshProgressIndicatorBindings {
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$indicatorMargin#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$indicatorMargin);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$indicatorPadding#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$indicatorPadding);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$backgroundColor#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$backgroundColor);
-    ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$hashCode#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$strokeWidth#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$strokeWidth);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$strokeAlign#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$strokeAlign);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$strokeCap#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$strokeCap);
@@ -314,6 +316,7 @@ abstract final class RefreshProgressIndicatorBindings {
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$semanticsLabel#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$semanticsLabel);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$semanticsValue#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$semanticsValue);
     ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$key#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$key);
+    ctx.registerBinding('package:flutter/src/material/progress_indicator.dart::RefreshProgressIndicator::\$super\$hashCode#0', (args) => (args[0] as _$RefreshProgressIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

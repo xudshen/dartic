@@ -112,13 +112,6 @@ class _$AnnotatedRegion extends AnnotatedRegion<Object> implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -133,10 +126,20 @@ class _$AnnotatedRegion extends AnnotatedRegion<Object> implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -153,9 +156,9 @@ class _$AnnotatedRegion extends AnnotatedRegion<Object> implements DarticObjectH
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Object get _super$value => super.value;
   bool get _super$sized => super.sized;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -188,9 +191,9 @@ abstract final class AnnotatedRegionBindings {
     ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$AnnotatedRegion)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$value#0', (args) => (args[0] as _$AnnotatedRegion)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$sized#0', (args) => (args[0] as _$AnnotatedRegion)._super$sized);
-    ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$hashCode#0', (args) => (args[0] as _$AnnotatedRegion)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$child#0', (args) => (args[0] as _$AnnotatedRegion)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$key#0', (args) => (args[0] as _$AnnotatedRegion)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/annotated_region.dart::AnnotatedRegion::\$super\$hashCode#0', (args) => (args[0] as _$AnnotatedRegion)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

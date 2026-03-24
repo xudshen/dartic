@@ -304,13 +304,6 @@ class _$DropdownButton extends DropdownButton<dynamic> implements DarticObjectHo
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -318,10 +311,20 @@ class _$DropdownButton extends DropdownButton<dynamic> implements DarticObjectHo
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -362,8 +365,8 @@ class _$DropdownButton extends DropdownButton<dynamic> implements DarticObjectHo
   AlignmentGeometry get _super$alignment => super.alignment;
   BorderRadius? get _super$borderRadius => super.borderRadius;
   bool get _super$barrierDismissible => super.barrierDismissible;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -420,8 +423,8 @@ abstract final class DropdownButtonBindings {
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$alignment#0', (args) => (args[0] as _$DropdownButton)._super$alignment);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$borderRadius#0', (args) => (args[0] as _$DropdownButton)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$barrierDismissible#0', (args) => (args[0] as _$DropdownButton)._super$barrierDismissible);
-    ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$hashCode#0', (args) => (args[0] as _$DropdownButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$key#0', (args) => (args[0] as _$DropdownButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButton::\$super\$hashCode#0', (args) => (args[0] as _$DropdownButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

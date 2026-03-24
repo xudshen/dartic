@@ -551,13 +551,6 @@ class _$RenderSizedOverflowBox extends RenderSizedOverflowBox implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Alignment get resolvedAlignment {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'resolvedAlignment');
     if (identical(r, notOverridden)) return super.resolvedAlignment;
@@ -852,10 +845,20 @@ class _$RenderSizedOverflowBox extends RenderSizedOverflowBox implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -938,7 +941,6 @@ class _$RenderSizedOverflowBox extends RenderSizedOverflowBox implements DarticO
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   Size get _super$requestedSize => super.requestedSize;
-  int get _super$hashCode => super.hashCode;
   Alignment get _super$resolvedAlignment => super.resolvedAlignment;
   AlignmentGeometry get _super$alignment => super.alignment;
   TextDirection? get _super$textDirection => super.textDirection;
@@ -981,6 +983,7 @@ class _$RenderSizedOverflowBox extends RenderSizedOverflowBox implements DarticO
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1079,7 +1082,6 @@ abstract final class RenderSizedOverflowBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderSizedOverflowBox)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderSizedOverflowBox)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$requestedSize#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$requestedSize);
-    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$resolvedAlignment#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$resolvedAlignment);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$alignment#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$textDirection#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$textDirection);
@@ -1122,6 +1124,7 @@ abstract final class RenderSizedOverflowBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSizedOverflowBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$layer=#1', (args) { (args[0] as _$RenderSizedOverflowBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$child=#1', (args) { (args[0] as _$RenderSizedOverflowBox)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderSizedOverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderSizedOverflowBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -119,13 +119,6 @@ class _$SelectionListener extends SelectionListener implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -133,10 +126,20 @@ class _$SelectionListener extends SelectionListener implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -151,8 +154,8 @@ class _$SelectionListener extends SelectionListener implements DarticObjectHolde
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   SelectionListenerNotifier get _super$selectionNotifier => super.selectionNotifier;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -183,8 +186,8 @@ abstract final class SelectionListenerBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SelectionListener)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$selectionNotifier#0', (args) => (args[0] as _$SelectionListener)._super$selectionNotifier);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$child#0', (args) => (args[0] as _$SelectionListener)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$hashCode#0', (args) => (args[0] as _$SelectionListener)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$key#0', (args) => (args[0] as _$SelectionListener)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectionListener::\$super\$hashCode#0', (args) => (args[0] as _$SelectionListener)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

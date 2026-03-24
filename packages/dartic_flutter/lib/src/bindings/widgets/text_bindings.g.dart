@@ -217,13 +217,6 @@ class _$Text extends Text implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -231,10 +224,20 @@ class _$Text extends Text implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -264,8 +267,8 @@ class _$Text extends Text implements DarticObjectHolder {
   TextWidthBasis? get _super$textWidthBasis => super.textWidthBasis;
   ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
   ui.Color? get _super$selectionColor => super.selectionColor;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -311,8 +314,8 @@ abstract final class TextBindings {
     ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textWidthBasis#0', (args) => (args[0] as _$Text)._super$textWidthBasis);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$textHeightBehavior#0', (args) => (args[0] as _$Text)._super$textHeightBehavior);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$selectionColor#0', (args) => (args[0] as _$Text)._super$selectionColor);
-    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$hashCode#0', (args) => (args[0] as _$Text)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$key#0', (args) => (args[0] as _$Text)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/text.dart::Text::\$super\$hashCode#0', (args) => (args[0] as _$Text)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -535,13 +535,6 @@ class _$RenderUiKitView extends RenderUiKitView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   UiKitViewController get viewController {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewController');
     if (identical(r, notOverridden)) return super.viewController;
@@ -808,10 +801,20 @@ class _$RenderUiKitView extends RenderUiKitView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -892,7 +895,6 @@ class _$RenderUiKitView extends RenderUiKitView implements DarticObjectHolder {
   void _super$showOnScreen({RenderObject? descendant, Rect? rect, Duration duration = Duration.zero, Curve curve = Curves.ease}) { super.showOnScreen(descendant: descendant, rect: rect, duration: duration, curve: curve); }
   DiagnosticsNode _super$describeForError(String name, {DiagnosticsTreeStyle style = DiagnosticsTreeStyle.shallow}) => super.describeForError(name, style: style);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   UiKitViewController get _super$viewController => super.viewController;
   PlatformViewHitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   bool get _super$sizedByParent => super.sizedByParent;
@@ -931,6 +933,7 @@ class _$RenderUiKitView extends RenderUiKitView implements DarticObjectHolder {
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1027,7 +1030,6 @@ abstract final class RenderUiKitViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$showOnScreen#4', (args) { (args[0] as _$RenderUiKitView)._super$showOnScreen(descendant: identical(args[1], darticAbsent) ? null : args[1] as RenderObject?, rect: identical(args[2], darticAbsent) ? null : args[2] as Rect?, duration: identical(args[3], darticAbsent) ? Duration.zero : args[3] as Duration, curve: identical(args[4], darticAbsent) ? Curves.ease : args[4] as Curve); return null; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$describeForError#2', (args) => (args[0] as _$RenderUiKitView)._super$describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle));
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderUiKitView)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$hashCode#0', (args) => (args[0] as _$RenderUiKitView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$viewController#0', (args) => (args[0] as _$RenderUiKitView)._super$viewController);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$RenderUiKitView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$sizedByParent#0', (args) => (args[0] as _$RenderUiKitView)._super$sizedByParent);
@@ -1066,6 +1068,7 @@ abstract final class RenderUiKitViewBindings {
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$parentData=#1', (args) { (args[0] as _$RenderUiKitView)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderUiKitView)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$layer=#1', (args) { (args[0] as _$RenderUiKitView)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/platform_view.dart::RenderUiKitView::\$super\$hashCode#0', (args) => (args[0] as _$RenderUiKitView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

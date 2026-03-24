@@ -203,13 +203,6 @@ class _$LocalizationsResolver extends LocalizationsResolver implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -217,10 +210,20 @@ class _$LocalizationsResolver extends LocalizationsResolver implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -251,8 +254,8 @@ class _$LocalizationsResolver extends LocalizationsResolver implements DarticObj
   LocaleListResolutionCallback? get _super$localeListResolutionCallback => super.localeListResolutionCallback;
   LocaleResolutionCallback? get _super$localeResolutionCallback => super.localeResolutionCallback;
   Iterable<Locale> get _super$supportedLocales => super.supportedLocales;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -299,8 +302,8 @@ abstract final class LocalizationsResolverBindings {
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$localeListResolutionCallback#0', (args) => (args[0] as _$LocalizationsResolver)._super$localeListResolutionCallback);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$localeResolutionCallback#0', (args) => (args[0] as _$LocalizationsResolver)._super$localeResolutionCallback);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$supportedLocales#0', (args) => (args[0] as _$LocalizationsResolver)._super$supportedLocales);
-    ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$hashCode#0', (args) => (args[0] as _$LocalizationsResolver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$hasListeners#0', (args) => (args[0] as _$LocalizationsResolver)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/localizations.dart::LocalizationsResolver::\$super\$hashCode#0', (args) => (args[0] as _$LocalizationsResolver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

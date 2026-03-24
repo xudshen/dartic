@@ -130,13 +130,6 @@ class _$AnimatedIcon extends AnimatedIcon implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -144,10 +137,20 @@ class _$AnimatedIcon extends AnimatedIcon implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -166,8 +169,8 @@ class _$AnimatedIcon extends AnimatedIcon implements DarticObjectHolder {
   AnimatedIconData get _super$icon => super.icon;
   String? get _super$semanticLabel => super.semanticLabel;
   ui.TextDirection? get _super$textDirection => super.textDirection;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -202,8 +205,8 @@ abstract final class AnimatedIconBindings {
     ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$icon#0', (args) => (args[0] as _$AnimatedIcon)._super$icon);
     ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$semanticLabel#0', (args) => (args[0] as _$AnimatedIcon)._super$semanticLabel);
     ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$textDirection#0', (args) => (args[0] as _$AnimatedIcon)._super$textDirection);
-    ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedIcon)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$key#0', (args) => (args[0] as _$AnimatedIcon)._super$key);
+    ctx.registerBinding('package:flutter/src/material/animated_icons.dart::AnimatedIcon::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedIcon)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

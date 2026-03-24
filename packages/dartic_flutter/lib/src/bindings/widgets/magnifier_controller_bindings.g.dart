@@ -77,13 +77,6 @@ class _$MagnifierController extends MagnifierController implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set animationController(AnimationController? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'animationController', value)) {
       super.animationController = value;
@@ -91,10 +84,20 @@ class _$MagnifierController extends MagnifierController implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -105,8 +108,8 @@ class _$MagnifierController extends MagnifierController implements DarticObjectH
   AnimationController? get _super$animationController => super.animationController;
   OverlayEntry? get _super$overlayEntry => super.overlayEntry;
   bool get _super$shown => super.shown;
-  int get _super$hashCode => super.hashCode;
   set _super$animationController(AnimationController? value) { super.animationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -133,8 +136,8 @@ abstract final class MagnifierControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$animationController#0', (args) => (args[0] as _$MagnifierController)._super$animationController);
     ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$overlayEntry#0', (args) => (args[0] as _$MagnifierController)._super$overlayEntry);
     ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$shown#0', (args) => (args[0] as _$MagnifierController)._super$shown);
-    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$hashCode#0', (args) => (args[0] as _$MagnifierController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$animationController=#1', (args) { (args[0] as _$MagnifierController)._super$animationController = args[1] as AnimationController?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/magnifier.dart::MagnifierController::\$super\$hashCode#0', (args) => (args[0] as _$MagnifierController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

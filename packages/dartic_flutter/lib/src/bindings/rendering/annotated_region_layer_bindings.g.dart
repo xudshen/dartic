@@ -220,13 +220,6 @@ class _$AnnotatedRegionLayer extends AnnotatedRegionLayer<Object> implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -353,10 +346,20 @@ class _$AnnotatedRegionLayer extends AnnotatedRegionLayer<Object> implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -390,7 +393,6 @@ class _$AnnotatedRegionLayer extends AnnotatedRegionLayer<Object> implements Dar
   ui.Size? get _super$size => super.size;
   ui.Offset get _super$offset => super.offset;
   bool get _super$opaque => super.opaque;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -409,6 +411,7 @@ class _$AnnotatedRegionLayer extends AnnotatedRegionLayer<Object> implements Dar
   Object? get _super$debugCreator => super.debugCreator;
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -458,7 +461,6 @@ abstract final class AnnotatedRegionLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$size#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$offset#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$opaque#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$opaque);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$hashCode#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$firstChild#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$lastChild#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$hasChildren#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$hasChildren);
@@ -477,6 +479,7 @@ abstract final class AnnotatedRegionLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$debugCreator#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$debugCreator);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$AnnotatedRegionLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$AnnotatedRegionLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::AnnotatedRegionLayer::\$super\$hashCode#0', (args) => (args[0] as _$AnnotatedRegionLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -50,13 +50,6 @@ class _$SliverMultiBoxAdaptorParentData extends SliverMultiBoxAdaptorParentData 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double? get layoutOffset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'layoutOffset');
     if (identical(r, notOverridden)) return super.layoutOffset;
@@ -120,10 +113,20 @@ class _$SliverMultiBoxAdaptorParentData extends SliverMultiBoxAdaptorParentData 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -131,7 +134,6 @@ class _$SliverMultiBoxAdaptorParentData extends SliverMultiBoxAdaptorParentData 
   void _super$detach() { super.detach(); }
   int? get _super$index => super.index;
   bool get _super$keptAlive => super.keptAlive;
-  int get _super$hashCode => super.hashCode;
   double? get _super$layoutOffset => super.layoutOffset;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
@@ -141,6 +143,7 @@ class _$SliverMultiBoxAdaptorParentData extends SliverMultiBoxAdaptorParentData 
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
   set _super$keepAlive(bool value) { super.keepAlive = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -164,7 +167,6 @@ abstract final class SliverMultiBoxAdaptorParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$detach#0', (args) { (args[0] as _$SliverMultiBoxAdaptorParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$index#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$index);
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$keptAlive#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$keptAlive);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$layoutOffset#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$layoutOffset);
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$previousSibling#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$nextSibling#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$nextSibling);
@@ -174,6 +176,7 @@ abstract final class SliverMultiBoxAdaptorParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$SliverMultiBoxAdaptorParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$SliverMultiBoxAdaptorParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$keepAlive=#1', (args) { (args[0] as _$SliverMultiBoxAdaptorParentData)._super$keepAlive = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_multi_box_adaptor.dart::SliverMultiBoxAdaptorParentData::\$super\$hashCode#0', (args) => (args[0] as _$SliverMultiBoxAdaptorParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

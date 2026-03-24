@@ -408,13 +408,6 @@ class _$ScrollPosition extends ScrollPosition implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollDirection get userScrollDirection {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'userScrollDirection');
     if (identical(r, notOverridden)) {
@@ -489,10 +482,20 @@ class _$ScrollPosition extends ScrollPosition implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -544,7 +547,6 @@ class _$ScrollPosition extends ScrollPosition implements DarticObjectHolder {
   ValueNotifier<bool> get _super$isScrollingNotifier => super.isScrollingNotifier;
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
   ScrollActivity? get _super$activity => super.activity;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   Axis get _super$axis => super.axis;
   bool get _super$outOfRange => super.outOfRange;
@@ -553,6 +555,7 @@ class _$ScrollPosition extends ScrollPosition implements DarticObjectHolder {
   double get _super$extentInside => super.extentInside;
   double get _super$extentAfter => super.extentAfter;
   double get _super$extentTotal => super.extentTotal;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -620,7 +623,6 @@ abstract final class ScrollPositionBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$isScrollingNotifier#0', (args) => (args[0] as _$ScrollPosition)._super$isScrollingNotifier);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$ScrollPosition)._super$allowImplicitScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$activity#0', (args) => (args[0] as _$ScrollPosition)._super$activity);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$hashCode#0', (args) => (args[0] as _$ScrollPosition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$hasListeners#0', (args) => (args[0] as _$ScrollPosition)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$axis#0', (args) => (args[0] as _$ScrollPosition)._super$axis);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$outOfRange#0', (args) => (args[0] as _$ScrollPosition)._super$outOfRange);
@@ -629,6 +631,7 @@ abstract final class ScrollPositionBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$extentInside#0', (args) => (args[0] as _$ScrollPosition)._super$extentInside);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$extentAfter#0', (args) => (args[0] as _$ScrollPosition)._super$extentAfter);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$extentTotal#0', (args) => (args[0] as _$ScrollPosition)._super$extentTotal);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position.dart::ScrollPosition::\$super\$hashCode#0', (args) => (args[0] as _$ScrollPosition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

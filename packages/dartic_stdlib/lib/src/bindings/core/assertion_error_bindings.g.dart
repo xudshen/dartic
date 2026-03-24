@@ -34,13 +34,6 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   StackTrace? get stackTrace {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
@@ -48,17 +41,27 @@ class _$AssertionError extends AssertionError implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Object? get _super$message => super.message;
-  int get _super$hashCode => super.hashCode;
   StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -80,8 +83,8 @@ abstract final class AssertionErrorBindings {
     );
     ctx.registerBinding('dart:core::AssertionError::\$super\$toString#0', (args) => (args[0] as _$AssertionError)._super$toString());
     ctx.registerBinding('dart:core::AssertionError::\$super\$message#0', (args) => (args[0] as _$AssertionError)._super$message);
-    ctx.registerBinding('dart:core::AssertionError::\$super\$hashCode#0', (args) => (args[0] as _$AssertionError)._super$hashCode);
     ctx.registerBinding('dart:core::AssertionError::\$super\$stackTrace#0', (args) => (args[0] as _$AssertionError)._super$stackTrace);
+    ctx.registerBinding('dart:core::AssertionError::\$super\$hashCode#0', (args) => (args[0] as _$AssertionError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

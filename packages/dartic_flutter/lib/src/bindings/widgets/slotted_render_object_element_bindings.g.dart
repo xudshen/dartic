@@ -327,13 +327,6 @@ class _$SlottedRenderObjectElement extends SlottedRenderObjectElement<dynamic, R
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Element? get renderObjectAttachingChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'renderObjectAttachingChild');
     if (identical(r, notOverridden)) return super.renderObjectAttachingChild;
@@ -418,10 +411,20 @@ class _$SlottedRenderObjectElement extends SlottedRenderObjectElement<dynamic, R
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -472,7 +475,6 @@ class _$SlottedRenderObjectElement extends SlottedRenderObjectElement<dynamic, R
   String _super$toStringShallow({String joiner = ', ', DiagnosticLevel minLevel = DiagnosticLevel.debug}) => super.toStringShallow(joiner: joiner, minLevel: minLevel);
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   SlottedContainerRenderObjectMixin<dynamic, RenderObject> get _super$renderObject => super.renderObject;
-  int get _super$hashCode => super.hashCode;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
   bool get _super$debugDoingBuild => super.debugDoingBuild;
   Object? get _super$slot => super.slot;
@@ -485,6 +487,7 @@ class _$SlottedRenderObjectElement extends SlottedRenderObjectElement<dynamic, R
   BuildScope get _super$buildScope => super.buildScope;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -551,7 +554,6 @@ abstract final class SlottedRenderObjectElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$toStringShallow#2', (args) => (args[0] as _$SlottedRenderObjectElement)._super$toStringShallow(joiner: identical(args[1], darticAbsent) ? ', ' : args[1] as String, minLevel: identical(args[2], darticAbsent) ? DiagnosticLevel.debug : args[2] as DiagnosticLevel));
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$toStringDeep#4', (args) => (args[0] as _$SlottedRenderObjectElement)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$renderObject#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$renderObject);
-    ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$hashCode#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$renderObjectAttachingChild);
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$debugDoingBuild);
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$slot#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$slot);
@@ -564,6 +566,7 @@ abstract final class SlottedRenderObjectElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$buildScope#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$buildScope);
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$size#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$dirty#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/slotted_render_object_widget.dart::SlottedRenderObjectElement::\$super\$hashCode#0', (args) => (args[0] as _$SlottedRenderObjectElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

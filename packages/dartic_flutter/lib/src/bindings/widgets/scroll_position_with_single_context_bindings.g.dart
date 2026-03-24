@@ -315,13 +315,6 @@ class _$ScrollPositionWithSingleContext extends ScrollPositionWithSingleContext 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics get physics {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'physics');
     if (identical(r, notOverridden)) return super.physics;
@@ -497,10 +490,20 @@ class _$ScrollPositionWithSingleContext extends ScrollPositionWithSingleContext 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -547,7 +550,6 @@ class _$ScrollPositionWithSingleContext extends ScrollPositionWithSingleContext 
   ScrollMetrics _super$copyWith({double? minScrollExtent, double? maxScrollExtent, double? pixels, double? viewportDimension, AxisDirection? axisDirection, double? devicePixelRatio}) => super.copyWith(minScrollExtent: minScrollExtent, maxScrollExtent: maxScrollExtent, pixels: pixels, viewportDimension: viewportDimension, axisDirection: axisDirection, devicePixelRatio: devicePixelRatio);
   AxisDirection get _super$axisDirection => super.axisDirection;
   ScrollDirection get _super$userScrollDirection => super.userScrollDirection;
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics get _super$physics => super.physics;
   ScrollContext get _super$context => super.context;
   bool get _super$keepScrollOffset => super.keepScrollOffset;
@@ -573,6 +575,7 @@ class _$ScrollPositionWithSingleContext extends ScrollPositionWithSingleContext 
   double get _super$extentInside => super.extentInside;
   double get _super$extentAfter => super.extentAfter;
   double get _super$extentTotal => super.extentTotal;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -635,7 +638,6 @@ abstract final class ScrollPositionWithSingleContextBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$copyWith#6', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, devicePixelRatio: identical(args[6], darticAbsent) ? null : args[6] as double?));
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$axisDirection#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$axisDirection);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$userScrollDirection#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$userScrollDirection);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$hashCode#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$physics#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$physics);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$context#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$keepScrollOffset#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$keepScrollOffset);
@@ -661,6 +663,7 @@ abstract final class ScrollPositionWithSingleContextBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$extentInside#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$extentInside);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$extentAfter#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$extentAfter);
     ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$extentTotal#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$extentTotal);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_position_with_single_context.dart::ScrollPositionWithSingleContext::\$super\$hashCode#0', (args) => (args[0] as _$ScrollPositionWithSingleContext)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

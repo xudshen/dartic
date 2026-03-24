@@ -64,13 +64,6 @@ class _$StepTween extends StepTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -99,10 +92,20 @@ class _$StepTween extends StepTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -112,11 +115,11 @@ class _$StepTween extends StepTween implements DarticObjectHolder {
   int _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<int> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<int> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   int? get _super$begin => super.begin;
   int? get _super$end => super.end;
   set _super$begin(int? value) { super.begin = value; }
   set _super$end(int? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -142,11 +145,11 @@ abstract final class StepTweenBindings {
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$evaluate#1', (args) => (args[0] as _$StepTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$animate#1', (args) => (args[0] as _$StepTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$chain#1', (args) => (args[0] as _$StepTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$hashCode#0', (args) => (args[0] as _$StepTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$begin#0', (args) => (args[0] as _$StepTween)._super$begin);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$end#0', (args) => (args[0] as _$StepTween)._super$end);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$begin=#1', (args) { (args[0] as _$StepTween)._super$begin = args[1] as int?; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$end=#1', (args) { (args[0] as _$StepTween)._super$end = args[1] as int?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::StepTween::\$super\$hashCode#0', (args) => (args[0] as _$StepTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

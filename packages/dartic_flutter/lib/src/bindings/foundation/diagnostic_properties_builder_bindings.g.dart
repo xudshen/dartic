@@ -59,13 +59,6 @@ class _$DiagnosticPropertiesBuilder extends DiagnosticPropertiesBuilder implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set defaultDiagnosticsTreeStyle(DiagnosticsTreeStyle value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'defaultDiagnosticsTreeStyle', value)) {
       super.defaultDiagnosticsTreeStyle = value;
@@ -80,10 +73,20 @@ class _$DiagnosticPropertiesBuilder extends DiagnosticPropertiesBuilder implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -92,9 +95,9 @@ class _$DiagnosticPropertiesBuilder extends DiagnosticPropertiesBuilder implemen
   List<DiagnosticsNode> get _super$properties => super.properties;
   DiagnosticsTreeStyle get _super$defaultDiagnosticsTreeStyle => super.defaultDiagnosticsTreeStyle;
   String? get _super$emptyBodyDescription => super.emptyBodyDescription;
-  int get _super$hashCode => super.hashCode;
   set _super$defaultDiagnosticsTreeStyle(DiagnosticsTreeStyle value) { super.defaultDiagnosticsTreeStyle = value; }
   set _super$emptyBodyDescription(String? value) { super.emptyBodyDescription = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -118,9 +121,9 @@ abstract final class DiagnosticPropertiesBuilderBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$properties#0', (args) => (args[0] as _$DiagnosticPropertiesBuilder)._super$properties);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$defaultDiagnosticsTreeStyle#0', (args) => (args[0] as _$DiagnosticPropertiesBuilder)._super$defaultDiagnosticsTreeStyle);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$emptyBodyDescription#0', (args) => (args[0] as _$DiagnosticPropertiesBuilder)._super$emptyBodyDescription);
-    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticPropertiesBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$defaultDiagnosticsTreeStyle=#1', (args) { (args[0] as _$DiagnosticPropertiesBuilder)._super$defaultDiagnosticsTreeStyle = args[1] as DiagnosticsTreeStyle; return args[1]; });
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$emptyBodyDescription=#1', (args) { (args[0] as _$DiagnosticPropertiesBuilder)._super$emptyBodyDescription = args[1] as String?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticPropertiesBuilder::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticPropertiesBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

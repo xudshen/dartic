@@ -31,13 +31,6 @@ class _$PathAccessException extends PathAccessException implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get message {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'message');
     if (identical(r, notOverridden)) return super.message;
@@ -59,18 +52,28 @@ class _$PathAccessException extends PathAccessException implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   String get _super$message => super.message;
   String? get _super$path => super.path;
   OSError? get _super$osError => super.osError;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -91,10 +94,10 @@ abstract final class PathAccessExceptionBindings {
           _$PathAccessException(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:io::PathAccessException::\$super\$toString#0', (args) => (args[0] as _$PathAccessException)._super$toString());
-    ctx.registerBinding('dart:io::PathAccessException::\$super\$hashCode#0', (args) => (args[0] as _$PathAccessException)._super$hashCode);
     ctx.registerBinding('dart:io::PathAccessException::\$super\$message#0', (args) => (args[0] as _$PathAccessException)._super$message);
     ctx.registerBinding('dart:io::PathAccessException::\$super\$path#0', (args) => (args[0] as _$PathAccessException)._super$path);
     ctx.registerBinding('dart:io::PathAccessException::\$super\$osError#0', (args) => (args[0] as _$PathAccessException)._super$osError);
+    ctx.registerBinding('dart:io::PathAccessException::\$super\$hashCode#0', (args) => (args[0] as _$PathAccessException)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

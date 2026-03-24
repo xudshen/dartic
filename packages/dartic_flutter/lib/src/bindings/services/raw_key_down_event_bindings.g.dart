@@ -66,13 +66,6 @@ class _$RawKeyDownEvent extends RawKeyDownEvent implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isControlPressed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isControlPressed');
     if (identical(r, notOverridden)) return super.isControlPressed;
@@ -136,10 +129,20 @@ class _$RawKeyDownEvent extends RawKeyDownEvent implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -148,7 +151,6 @@ class _$RawKeyDownEvent extends RawKeyDownEvent implements DarticObjectHolder {
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   bool get _super$isControlPressed => super.isControlPressed;
   bool get _super$isShiftPressed => super.isShiftPressed;
   bool get _super$isAltPressed => super.isAltPressed;
@@ -158,6 +160,7 @@ class _$RawKeyDownEvent extends RawKeyDownEvent implements DarticObjectHolder {
   String? get _super$character => super.character;
   bool get _super$repeat => super.repeat;
   RawKeyEventData get _super$data => super.data;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -182,7 +185,6 @@ abstract final class RawKeyDownEventBindings {
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$debugFillProperties#1', (args) { (args[0] as _$RawKeyDownEvent)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$toStringShort#0', (args) => (args[0] as _$RawKeyDownEvent)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RawKeyDownEvent)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyDownEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$isControlPressed#0', (args) => (args[0] as _$RawKeyDownEvent)._super$isControlPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$isShiftPressed#0', (args) => (args[0] as _$RawKeyDownEvent)._super$isShiftPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$isAltPressed#0', (args) => (args[0] as _$RawKeyDownEvent)._super$isAltPressed);
@@ -192,6 +194,7 @@ abstract final class RawKeyDownEventBindings {
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$character#0', (args) => (args[0] as _$RawKeyDownEvent)._super$character);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$repeat#0', (args) => (args[0] as _$RawKeyDownEvent)._super$repeat);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$data#0', (args) => (args[0] as _$RawKeyDownEvent)._super$data);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard.dart::RawKeyDownEvent::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyDownEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

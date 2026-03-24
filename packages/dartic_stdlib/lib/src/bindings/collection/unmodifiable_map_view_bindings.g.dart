@@ -96,13 +96,6 @@ class _$UnmodifiableMapView extends UnmodifiableMapView<dynamic, dynamic> implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isEmpty {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
     if (identical(r, notOverridden)) return super.isEmpty;
@@ -145,13 +138,6 @@ class _$UnmodifiableMapView extends UnmodifiableMapView<dynamic, dynamic> implem
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   dynamic operator [](Object? index) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) return super[index];
@@ -162,6 +148,23 @@ class _$UnmodifiableMapView extends UnmodifiableMapView<dynamic, dynamic> implem
   void operator []=(dynamic index, dynamic value) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]=', [index, value]);
     if (identical(r, notOverridden)) { super[index] = value; return; }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -179,13 +182,13 @@ class _$UnmodifiableMapView extends UnmodifiableMapView<dynamic, dynamic> implem
   }
   void _super$updateAll(dynamic update) { super.updateAll(update); }
   void _super$removeWhere(dynamic test) { super.removeWhere(test); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;
   int get _super$length => super.length;
   Iterable get _super$keys => super.keys;
   Iterable get _super$values => super.values;
   Iterable<MapEntry> get _super$entries => super.entries;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -217,13 +220,13 @@ abstract final class UnmodifiableMapViewBindings {
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$update#3', (args) => (args[0] as _$UnmodifiableMapView)._super$update(args[1], (a) => (args[2] as Function)(a), ifAbsent: identical(args[3], darticAbsent) ? null : (args[3] as Function?) == null ? null : () => (args[3] as Function?)!()));
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$updateAll#1', (args) { (args[0] as _$UnmodifiableMapView)._super$updateAll((a, b) => (args[1] as Function)(a, b)); return null; });
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$removeWhere#1', (args) { (args[0] as _$UnmodifiableMapView)._super$removeWhere((a, b) => (args[1] as Function)(a, b) as bool); return null; });
-    ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableMapView)._super$hashCode);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$isEmpty#0', (args) => (args[0] as _$UnmodifiableMapView)._super$isEmpty);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$isNotEmpty#0', (args) => (args[0] as _$UnmodifiableMapView)._super$isNotEmpty);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$length#0', (args) => (args[0] as _$UnmodifiableMapView)._super$length);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$keys#0', (args) => (args[0] as _$UnmodifiableMapView)._super$keys);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$values#0', (args) => (args[0] as _$UnmodifiableMapView)._super$values);
     ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$entries#0', (args) => (args[0] as _$UnmodifiableMapView)._super$entries);
+    ctx.registerBinding('dart:collection::UnmodifiableMapView::\$super\$hashCode#0', (args) => (args[0] as _$UnmodifiableMapView)._super$hashCode);
     ctx.registerBinding('dart:_internal::UnmodifiableMapBase::[]=#2', methodMap()['[]=#2']!);
     ctx.registerBinding('dart:_internal::UnmodifiableMapBase::addAll#1', methodMap()['addAll#1']!);
     ctx.registerBinding('dart:_internal::UnmodifiableMapBase::clear#0', methodMap()['clear#0']!);

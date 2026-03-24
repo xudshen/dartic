@@ -64,13 +64,6 @@ class _$ColorTween extends ColorTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Color? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -99,10 +92,20 @@ class _$ColorTween extends ColorTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -112,11 +115,11 @@ class _$ColorTween extends ColorTween implements DarticObjectHolder {
   Color? _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<Color?> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<Color?> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   Color? get _super$begin => super.begin;
   Color? get _super$end => super.end;
   set _super$begin(Color? value) { super.begin = value; }
   set _super$end(Color? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -142,11 +145,11 @@ abstract final class ColorTweenBindings {
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$evaluate#1', (args) => (args[0] as _$ColorTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$animate#1', (args) => (args[0] as _$ColorTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$chain#1', (args) => (args[0] as _$ColorTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$hashCode#0', (args) => (args[0] as _$ColorTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$begin#0', (args) => (args[0] as _$ColorTween)._super$begin);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$end#0', (args) => (args[0] as _$ColorTween)._super$end);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$begin=#1', (args) { (args[0] as _$ColorTween)._super$begin = args[1] as Color?; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$end=#1', (args) { (args[0] as _$ColorTween)._super$end = args[1] as Color?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::ColorTween::\$super\$hashCode#0', (args) => (args[0] as _$ColorTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

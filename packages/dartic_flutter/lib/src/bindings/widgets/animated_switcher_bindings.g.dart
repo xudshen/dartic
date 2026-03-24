@@ -138,13 +138,6 @@ class _$AnimatedSwitcher extends AnimatedSwitcher implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -152,10 +145,20 @@ class _$AnimatedSwitcher extends AnimatedSwitcher implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -175,8 +178,8 @@ class _$AnimatedSwitcher extends AnimatedSwitcher implements DarticObjectHolder 
   Curve get _super$switchOutCurve => super.switchOutCurve;
   AnimatedSwitcherTransitionBuilder get _super$transitionBuilder => super.transitionBuilder;
   AnimatedSwitcherLayoutBuilder get _super$layoutBuilder => super.layoutBuilder;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -214,8 +217,8 @@ abstract final class AnimatedSwitcherBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$switchOutCurve#0', (args) => (args[0] as _$AnimatedSwitcher)._super$switchOutCurve);
     ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$transitionBuilder#0', (args) => (args[0] as _$AnimatedSwitcher)._super$transitionBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$layoutBuilder#0', (args) => (args[0] as _$AnimatedSwitcher)._super$layoutBuilder);
-    ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedSwitcher)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$key#0', (args) => (args[0] as _$AnimatedSwitcher)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/animated_switcher.dart::AnimatedSwitcher::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedSwitcher)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -135,13 +135,6 @@ class _$TextFormField extends TextFormField implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   FormFieldBuilder<String> get builder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
     if (identical(r, notOverridden)) return super.builder;
@@ -219,10 +212,20 @@ class _$TextFormField extends TextFormField implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -238,7 +241,6 @@ class _$TextFormField extends TextFormField implements DarticObjectHolder {
   TextEditingController? get _super$controller => super.controller;
   Object get _super$groupId => super.groupId;
   ValueChanged<String>? get _super$onChanged => super.onChanged;
-  int get _super$hashCode => super.hashCode;
   FormFieldBuilder<String> get _super$builder => super.builder;
   FormFieldSetter<String>? get _super$onSaved => super.onSaved;
   ui.VoidCallback? get _super$onReset => super.onReset;
@@ -250,6 +252,7 @@ class _$TextFormField extends TextFormField implements DarticObjectHolder {
   AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
   String? get _super$restorationId => super.restorationId;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -281,7 +284,6 @@ abstract final class TextFormFieldBindings {
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$controller#0', (args) => (args[0] as _$TextFormField)._super$controller);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$groupId#0', (args) => (args[0] as _$TextFormField)._super$groupId);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onChanged#0', (args) => (args[0] as _$TextFormField)._super$onChanged);
-    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$hashCode#0', (args) => (args[0] as _$TextFormField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$builder#0', (args) => (args[0] as _$TextFormField)._super$builder);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onSaved#0', (args) => (args[0] as _$TextFormField)._super$onSaved);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$onReset#0', (args) => (args[0] as _$TextFormField)._super$onReset);
@@ -293,6 +295,7 @@ abstract final class TextFormFieldBindings {
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$autovalidateMode#0', (args) => (args[0] as _$TextFormField)._super$autovalidateMode);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$restorationId#0', (args) => (args[0] as _$TextFormField)._super$restorationId);
     ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$key#0', (args) => (args[0] as _$TextFormField)._super$key);
+    ctx.registerBinding('package:flutter/src/material/text_form_field.dart::TextFormField::\$super\$hashCode#0', (args) => (args[0] as _$TextFormField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

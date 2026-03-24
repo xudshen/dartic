@@ -151,13 +151,6 @@ class _$YearPicker extends YearPicker implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -165,10 +158,20 @@ class _$YearPicker extends YearPicker implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -188,8 +191,8 @@ class _$YearPicker extends YearPicker implements DarticObjectHolder {
   ValueChanged<DateTime> get _super$onChanged => super.onChanged;
   DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
   CalendarDelegate<DateTime> get _super$calendarDelegate => super.calendarDelegate;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -225,8 +228,8 @@ abstract final class YearPickerBindings {
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$onChanged#0', (args) => (args[0] as _$YearPicker)._super$onChanged);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$dragStartBehavior#0', (args) => (args[0] as _$YearPicker)._super$dragStartBehavior);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$calendarDelegate#0', (args) => (args[0] as _$YearPicker)._super$calendarDelegate);
-    ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$hashCode#0', (args) => (args[0] as _$YearPicker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$key#0', (args) => (args[0] as _$YearPicker)._super$key);
+    ctx.registerBinding('package:flutter/src/material/calendar_date_picker.dart::YearPicker::\$super\$hashCode#0', (args) => (args[0] as _$YearPicker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

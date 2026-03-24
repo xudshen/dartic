@@ -225,13 +225,6 @@ class _$FocusScopeNode extends FocusScopeNode implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get skipTraversal {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'skipTraversal');
     if (identical(r, notOverridden)) return super.skipTraversal;
@@ -428,10 +421,20 @@ class _$FocusScopeNode extends FocusScopeNode implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -464,7 +467,6 @@ class _$FocusScopeNode extends FocusScopeNode implements DarticObjectHolder {
   FocusNode? get _super$focusedChild => super.focusedChild;
   Iterable<FocusNode> get _super$traversalChildren => super.traversalChildren;
   Iterable<FocusNode> get _super$traversalDescendants => super.traversalDescendants;
-  int get _super$hashCode => super.hashCode;
   bool get _super$skipTraversal => super.skipTraversal;
   bool get _super$canRequestFocus => super.canRequestFocus;
   bool get _super$descendantsAreTraversable => super.descendantsAreTraversable;
@@ -493,6 +495,7 @@ class _$FocusScopeNode extends FocusScopeNode implements DarticObjectHolder {
   set _super$onKey(FocusOnKeyCallback? value) { super.onKey = value; }
   set _super$onKeyEvent(FocusOnKeyEventCallback? value) { super.onKeyEvent = value; }
   set _super$debugLabel(String? value) { super.debugLabel = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -541,7 +544,6 @@ abstract final class FocusScopeNodeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$focusedChild#0', (args) => (args[0] as _$FocusScopeNode)._super$focusedChild);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$traversalChildren#0', (args) => (args[0] as _$FocusScopeNode)._super$traversalChildren);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$traversalDescendants#0', (args) => (args[0] as _$FocusScopeNode)._super$traversalDescendants);
-    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$hashCode#0', (args) => (args[0] as _$FocusScopeNode)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$skipTraversal#0', (args) => (args[0] as _$FocusScopeNode)._super$skipTraversal);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$canRequestFocus#0', (args) => (args[0] as _$FocusScopeNode)._super$canRequestFocus);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$descendantsAreTraversable#0', (args) => (args[0] as _$FocusScopeNode)._super$descendantsAreTraversable);
@@ -570,6 +572,7 @@ abstract final class FocusScopeNodeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$onKey=#1', (args) { (args[0] as _$FocusScopeNode)._super$onKey = args[1] as FocusOnKeyCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$onKeyEvent=#1', (args) { (args[0] as _$FocusScopeNode)._super$onKeyEvent = args[1] as FocusOnKeyEventCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$debugLabel=#1', (args) { (args[0] as _$FocusScopeNode)._super$debugLabel = args[1] as String?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusScopeNode::\$super\$hashCode#0', (args) => (args[0] as _$FocusScopeNode)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

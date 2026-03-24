@@ -170,13 +170,6 @@ class _$DraggableScrollableSheet extends DraggableScrollableSheet implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -184,10 +177,20 @@ class _$DraggableScrollableSheet extends DraggableScrollableSheet implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -210,8 +213,8 @@ class _$DraggableScrollableSheet extends DraggableScrollableSheet implements Dar
   DraggableScrollableController? get _super$controller => super.controller;
   bool get _super$shouldCloseOnMinExtent => super.shouldCloseOnMinExtent;
   ScrollableWidgetBuilder get _super$builder => super.builder;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -250,8 +253,8 @@ abstract final class DraggableScrollableSheetBindings {
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$controller#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$controller);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$shouldCloseOnMinExtent#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$shouldCloseOnMinExtent);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$builder#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$builder);
-    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$key#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableSheet::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableSheet)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

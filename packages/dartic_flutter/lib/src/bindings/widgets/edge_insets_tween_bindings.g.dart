@@ -75,13 +75,6 @@ class _$EdgeInsetsTween extends EdgeInsetsTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsets? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -110,10 +103,20 @@ class _$EdgeInsetsTween extends EdgeInsetsTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -123,11 +126,11 @@ class _$EdgeInsetsTween extends EdgeInsetsTween implements DarticObjectHolder {
   EdgeInsets _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<EdgeInsets> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<EdgeInsets> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   EdgeInsets? get _super$begin => super.begin;
   EdgeInsets? get _super$end => super.end;
   set _super$begin(EdgeInsets? value) { super.begin = value; }
   set _super$end(EdgeInsets? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,11 +156,11 @@ abstract final class EdgeInsetsTweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$evaluate#1', (args) => (args[0] as _$EdgeInsetsTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$animate#1', (args) => (args[0] as _$EdgeInsetsTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$chain#1', (args) => (args[0] as _$EdgeInsetsTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$hashCode#0', (args) => (args[0] as _$EdgeInsetsTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$begin#0', (args) => (args[0] as _$EdgeInsetsTween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$end#0', (args) => (args[0] as _$EdgeInsetsTween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$begin=#1', (args) { (args[0] as _$EdgeInsetsTween)._super$begin = args[1] as EdgeInsets?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$end=#1', (args) { (args[0] as _$EdgeInsetsTween)._super$end = args[1] as EdgeInsets?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::EdgeInsetsTween::\$super\$hashCode#0', (args) => (args[0] as _$EdgeInsetsTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

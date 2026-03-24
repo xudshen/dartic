@@ -285,13 +285,6 @@ class _$CupertinoDialogRoute extends CupertinoDialogRoute<dynamic> implements Da
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get barrierDismissible {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'barrierDismissible');
     if (identical(r, notOverridden)) return super.barrierDismissible;
@@ -628,10 +621,20 @@ class _$CupertinoDialogRoute extends CupertinoDialogRoute<dynamic> implements Da
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -673,7 +676,6 @@ class _$CupertinoDialogRoute extends CupertinoDialogRoute<dynamic> implements Da
   void _super$addLocalHistoryEntry(LocalHistoryEntry entry) { super.addLocalHistoryEntry(entry); }
   void _super$removeLocalHistoryEntry(LocalHistoryEntry entry) { super.removeLocalHistoryEntry(entry); }
   RouteTransitionsBuilder? get _super$transitionBuilder => super.transitionBuilder;
-  int get _super$hashCode => super.hashCode;
   bool get _super$barrierDismissible => super.barrierDismissible;
   String? get _super$barrierLabel => super.barrierLabel;
   Color? get _super$barrierColor => super.barrierColor;
@@ -722,6 +724,7 @@ class _$CupertinoDialogRoute extends CupertinoDialogRoute<dynamic> implements Da
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -779,7 +782,6 @@ abstract final class CupertinoDialogRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$addLocalHistoryEntry#1', (args) { (args[0] as _$CupertinoDialogRoute)._super$addLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$removeLocalHistoryEntry#1', (args) { (args[0] as _$CupertinoDialogRoute)._super$removeLocalHistoryEntry(args[1] as LocalHistoryEntry); return null; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$transitionBuilder#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$transitionBuilder);
-    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$barrierDismissible#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$barrierDismissible);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$barrierLabel#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$barrierLabel);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$barrierColor#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$barrierColor);
@@ -828,6 +830,7 @@ abstract final class CupertinoDialogRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$CupertinoDialogRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$offstage=#1', (args) { (args[0] as _$CupertinoDialogRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$CupertinoDialogRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoDialogRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoDialogRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

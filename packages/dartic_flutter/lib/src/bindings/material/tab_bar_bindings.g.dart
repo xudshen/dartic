@@ -337,13 +337,6 @@ class _$TabBar extends TabBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -351,10 +344,20 @@ class _$TabBar extends TabBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -399,8 +402,8 @@ class _$TabBar extends TabBar implements DarticObjectHolder {
   TabIndicatorAnimation? get _super$indicatorAnimation => super.indicatorAnimation;
   Size get _super$preferredSize => super.preferredSize;
   bool get _super$tabHasTextAndIcon => super.tabHasTextAndIcon;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -461,8 +464,8 @@ abstract final class TabBarBindings {
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$indicatorAnimation#0', (args) => (args[0] as _$TabBar)._super$indicatorAnimation);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$preferredSize#0', (args) => (args[0] as _$TabBar)._super$preferredSize);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$tabHasTextAndIcon#0', (args) => (args[0] as _$TabBar)._super$tabHasTextAndIcon);
-    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$hashCode#0', (args) => (args[0] as _$TabBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$key#0', (args) => (args[0] as _$TabBar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBar::\$super\$hashCode#0', (args) => (args[0] as _$TabBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

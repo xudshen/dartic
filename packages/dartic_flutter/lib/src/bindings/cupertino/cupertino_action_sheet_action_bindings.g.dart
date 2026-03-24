@@ -130,13 +130,6 @@ class _$CupertinoActionSheetAction extends CupertinoActionSheetAction implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -144,10 +137,20 @@ class _$CupertinoActionSheetAction extends CupertinoActionSheetAction implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -165,8 +168,8 @@ class _$CupertinoActionSheetAction extends CupertinoActionSheetAction implements
   bool get _super$isDestructiveAction => super.isDestructiveAction;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -200,8 +203,8 @@ abstract final class CupertinoActionSheetActionBindings {
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$isDestructiveAction#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$isDestructiveAction);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$mouseCursor#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$mouseCursor);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$child#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$child);
-    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$key#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheetAction::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActionSheetAction)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

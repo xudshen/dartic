@@ -136,13 +136,6 @@ class _$CompoundAnimation extends CompoundAnimation<dynamic> implements DarticOb
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   dynamic get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) {
@@ -187,10 +180,20 @@ class _$CompoundAnimation extends CompoundAnimation<dynamic> implements DarticOb
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -209,12 +212,12 @@ class _$CompoundAnimation extends CompoundAnimation<dynamic> implements DarticOb
   Animation get _super$first => super.first;
   Animation get _super$next => super.next;
   AnimationStatus get _super$status => super.status;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
   bool get _super$isAnimating => super.isAnimating;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
   bool get _super$isListening => super.isListening;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -249,12 +252,12 @@ abstract final class CompoundAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$first#0', (args) => (args[0] as _$CompoundAnimation)._super$first);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$next#0', (args) => (args[0] as _$CompoundAnimation)._super$next);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$status#0', (args) => (args[0] as _$CompoundAnimation)._super$status);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$hashCode#0', (args) => (args[0] as _$CompoundAnimation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$CompoundAnimation)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$CompoundAnimation)._super$isCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isAnimating#0', (args) => (args[0] as _$CompoundAnimation)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$CompoundAnimation)._super$isForwardOrCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$isListening#0', (args) => (args[0] as _$CompoundAnimation)._super$isListening);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CompoundAnimation::\$super\$hashCode#0', (args) => (args[0] as _$CompoundAnimation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

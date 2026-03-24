@@ -41,13 +41,6 @@ class _$GlobalObjectKey extends GlobalObjectKey<State<StatefulWidget>> implement
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   BuildContext? get currentContext {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'currentContext');
     if (identical(r, notOverridden)) return super.currentContext;
@@ -69,19 +62,29 @@ class _$GlobalObjectKey extends GlobalObjectKey<State<StatefulWidget>> implement
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Object get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   BuildContext? get _super$currentContext => super.currentContext;
   Widget? get _super$currentWidget => super.currentWidget;
   State<StatefulWidget>? get _super$currentState => super.currentState;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -103,10 +106,10 @@ abstract final class GlobalObjectKeyBindings {
     );
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$toString#0', (args) => (args[0] as _$GlobalObjectKey)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$value#0', (args) => (args[0] as _$GlobalObjectKey)._super$value);
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$hashCode#0', (args) => (args[0] as _$GlobalObjectKey)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$currentContext#0', (args) => (args[0] as _$GlobalObjectKey)._super$currentContext);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$currentWidget#0', (args) => (args[0] as _$GlobalObjectKey)._super$currentWidget);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$currentState#0', (args) => (args[0] as _$GlobalObjectKey)._super$currentState);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::GlobalObjectKey::\$super\$hashCode#0', (args) => (args[0] as _$GlobalObjectKey)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

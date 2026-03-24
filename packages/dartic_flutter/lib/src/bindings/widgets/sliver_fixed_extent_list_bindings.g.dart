@@ -118,13 +118,6 @@ class _$SliverFixedExtentList extends SliverFixedExtentList implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SliverChildDelegate get delegate {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegate');
     if (identical(r, notOverridden)) return super.delegate;
@@ -139,10 +132,20 @@ class _$SliverFixedExtentList extends SliverFixedExtentList implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -159,9 +162,9 @@ class _$SliverFixedExtentList extends SliverFixedExtentList implements DarticObj
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   double get _super$itemExtent => super.itemExtent;
-  int get _super$hashCode => super.hashCode;
   SliverChildDelegate get _super$delegate => super.delegate;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -194,9 +197,9 @@ abstract final class SliverFixedExtentListBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SliverFixedExtentList)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverFixedExtentList)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$itemExtent#0', (args) => (args[0] as _$SliverFixedExtentList)._super$itemExtent);
-    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$hashCode#0', (args) => (args[0] as _$SliverFixedExtentList)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$delegate#0', (args) => (args[0] as _$SliverFixedExtentList)._super$delegate);
     ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$key#0', (args) => (args[0] as _$SliverFixedExtentList)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver.dart::SliverFixedExtentList::\$super\$hashCode#0', (args) => (args[0] as _$SliverFixedExtentList)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

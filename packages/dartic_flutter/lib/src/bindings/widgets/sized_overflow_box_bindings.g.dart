@@ -124,13 +124,6 @@ class _$SizedOverflowBox extends SizedOverflowBox implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -145,10 +138,20 @@ class _$SizedOverflowBox extends SizedOverflowBox implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -165,9 +168,9 @@ class _$SizedOverflowBox extends SizedOverflowBox implements DarticObjectHolder 
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   AlignmentGeometry get _super$alignment => super.alignment;
   ui.Size get _super$size => super.size;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -200,9 +203,9 @@ abstract final class SizedOverflowBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SizedOverflowBox)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$alignment#0', (args) => (args[0] as _$SizedOverflowBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$size#0', (args) => (args[0] as _$SizedOverflowBox)._super$size);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$SizedOverflowBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$child#0', (args) => (args[0] as _$SizedOverflowBox)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$key#0', (args) => (args[0] as _$SizedOverflowBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedOverflowBox::\$super\$hashCode#0', (args) => (args[0] as _$SizedOverflowBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

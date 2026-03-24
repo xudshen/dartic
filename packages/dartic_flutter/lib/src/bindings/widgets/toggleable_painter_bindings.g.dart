@@ -208,13 +208,6 @@ class _$ToggleablePainter extends ToggleablePainter implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -327,10 +320,20 @@ class _$ToggleablePainter extends ToggleablePainter implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -359,7 +362,6 @@ class _$ToggleablePainter extends ToggleablePainter implements DarticObjectHolde
   bool get _super$isHovered => super.isHovered;
   bool get _super$isActive => super.isActive;
   SemanticsBuilderCallback? get _super$semanticsBuilder => super.semanticsBuilder;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$position(Animation<double> value) { super.position = value; }
   set _super$reaction(Animation<double> value) { super.reaction = value; }
@@ -376,6 +378,7 @@ class _$ToggleablePainter extends ToggleablePainter implements DarticObjectHolde
   set _super$isFocused(bool? value) { super.isFocused = value; }
   set _super$isHovered(bool? value) { super.isHovered = value; }
   set _super$isActive(bool? value) { super.isActive = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -420,7 +423,6 @@ abstract final class ToggleablePainterBindings {
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$isHovered#0', (args) => (args[0] as _$ToggleablePainter)._super$isHovered);
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$isActive#0', (args) => (args[0] as _$ToggleablePainter)._super$isActive);
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$semanticsBuilder#0', (args) => (args[0] as _$ToggleablePainter)._super$semanticsBuilder);
-    ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$hashCode#0', (args) => (args[0] as _$ToggleablePainter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$hasListeners#0', (args) => (args[0] as _$ToggleablePainter)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$position=#1', (args) { (args[0] as _$ToggleablePainter)._super$position = args[1] as Animation<double>; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$reaction=#1', (args) { (args[0] as _$ToggleablePainter)._super$reaction = args[1] as Animation<double>; return args[1]; });
@@ -437,6 +439,7 @@ abstract final class ToggleablePainterBindings {
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$isFocused=#1', (args) { (args[0] as _$ToggleablePainter)._super$isFocused = args[1] as bool?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$isHovered=#1', (args) { (args[0] as _$ToggleablePainter)._super$isHovered = args[1] as bool?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$isActive=#1', (args) { (args[0] as _$ToggleablePainter)._super$isActive = args[1] as bool?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/toggleable.dart::ToggleablePainter::\$super\$hashCode#0', (args) => (args[0] as _$ToggleablePainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

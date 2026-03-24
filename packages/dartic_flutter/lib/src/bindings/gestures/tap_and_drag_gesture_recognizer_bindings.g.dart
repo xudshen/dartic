@@ -205,13 +205,6 @@ class _$TapAndDragGestureRecognizer extends TapAndDragGestureRecognizer implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   DragStartBehavior get dragStartBehavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragStartBehavior');
     if (identical(r, notOverridden)) return super.dragStartBehavior;
@@ -457,10 +450,20 @@ class _$TapAndDragGestureRecognizer extends TapAndDragGestureRecognizer implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -491,7 +494,6 @@ class _$TapAndDragGestureRecognizer extends TapAndDragGestureRecognizer implemen
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
   Duration? get _super$dragUpdateThrottleFrequency => super.dragUpdateThrottleFrequency;
   int? get _super$maxConsecutiveTap => super.maxConsecutiveTap;
@@ -527,6 +529,7 @@ class _$TapAndDragGestureRecognizer extends TapAndDragGestureRecognizer implemen
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
   set _super$onTapTrackStart(VoidCallback? value) { super.onTapTrackStart = value; }
   set _super$onTapTrackReset(VoidCallback? value) { super.onTapTrackReset = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -573,7 +576,6 @@ abstract final class TapAndDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$dragStartBehavior#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$dragStartBehavior);
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$dragUpdateThrottleFrequency#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$dragUpdateThrottleFrequency);
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$maxConsecutiveTap#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$maxConsecutiveTap);
@@ -609,6 +611,7 @@ abstract final class TapAndDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$TapAndDragGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$onTapTrackStart=#1', (args) { (args[0] as _$TapAndDragGestureRecognizer)._super$onTapTrackStart = args[1] as VoidCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$onTapTrackReset=#1', (args) { (args[0] as _$TapAndDragGestureRecognizer)._super$onTapTrackReset = args[1] as VoidCallback?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/tap_and_drag.dart::TapAndDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$TapAndDragGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -136,13 +136,6 @@ class _$ProxyAnimation extends ProxyAnimation implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isDismissed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDismissed');
     if (identical(r, notOverridden)) return super.isDismissed;
@@ -185,10 +178,20 @@ class _$ProxyAnimation extends ProxyAnimation implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -207,13 +210,13 @@ class _$ProxyAnimation extends ProxyAnimation implements DarticObjectHolder {
   Animation<double>? get _super$parent => super.parent;
   AnimationStatus get _super$status => super.status;
   double get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
   bool get _super$isAnimating => super.isAnimating;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
   bool get _super$isListening => super.isListening;
   set _super$parent(Animation<double>? value) { super.parent = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -248,13 +251,13 @@ abstract final class ProxyAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$parent#0', (args) => (args[0] as _$ProxyAnimation)._super$parent);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$status#0', (args) => (args[0] as _$ProxyAnimation)._super$status);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$value#0', (args) => (args[0] as _$ProxyAnimation)._super$value);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$hashCode#0', (args) => (args[0] as _$ProxyAnimation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$ProxyAnimation)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$ProxyAnimation)._super$isCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$isAnimating#0', (args) => (args[0] as _$ProxyAnimation)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$ProxyAnimation)._super$isForwardOrCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$isListening#0', (args) => (args[0] as _$ProxyAnimation)._super$isListening);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$parent=#1', (args) { (args[0] as _$ProxyAnimation)._super$parent = args[1] as Animation<double>?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::ProxyAnimation::\$super\$hashCode#0', (args) => (args[0] as _$ProxyAnimation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -135,13 +135,6 @@ class _$CupertinoTextFormFieldRow extends CupertinoTextFormFieldRow implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   FormFieldBuilder<String> get builder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
     if (identical(r, notOverridden)) return super.builder;
@@ -219,10 +212,20 @@ class _$CupertinoTextFormFieldRow extends CupertinoTextFormFieldRow implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -239,7 +242,6 @@ class _$CupertinoTextFormFieldRow extends CupertinoTextFormFieldRow implements D
   EdgeInsetsGeometry? get _super$padding => super.padding;
   TextEditingController? get _super$controller => super.controller;
   ValueChanged<String>? get _super$onChanged => super.onChanged;
-  int get _super$hashCode => super.hashCode;
   FormFieldBuilder<String> get _super$builder => super.builder;
   FormFieldSetter<String>? get _super$onSaved => super.onSaved;
   ui.VoidCallback? get _super$onReset => super.onReset;
@@ -251,6 +253,7 @@ class _$CupertinoTextFormFieldRow extends CupertinoTextFormFieldRow implements D
   AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
   String? get _super$restorationId => super.restorationId;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -283,7 +286,6 @@ abstract final class CupertinoTextFormFieldRowBindings {
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$padding#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$padding);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$controller#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$controller);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$onChanged#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$onChanged);
-    ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$builder#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$builder);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$onSaved#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$onSaved);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$onReset#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$onReset);
@@ -295,6 +297,7 @@ abstract final class CupertinoTextFormFieldRowBindings {
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$autovalidateMode#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$autovalidateMode);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$restorationId#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$restorationId);
     ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$key#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/text_form_field_row.dart::CupertinoTextFormFieldRow::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextFormFieldRow)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

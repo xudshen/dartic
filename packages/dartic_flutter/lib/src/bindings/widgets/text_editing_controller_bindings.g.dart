@@ -135,13 +135,6 @@ class _$TextEditingController extends TextEditingController implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   TextEditingValue get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -177,10 +170,20 @@ class _$TextEditingController extends TextEditingController implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -194,12 +197,12 @@ class _$TextEditingController extends TextEditingController implements DarticObj
   void _super$notifyListeners() { super.notifyListeners(); }
   String get _super$text => super.text;
   TextSelection get _super$selection => super.selection;
-  int get _super$hashCode => super.hashCode;
   TextEditingValue get _super$value => super.value;
   bool get _super$hasListeners => super.hasListeners;
   set _super$text(String value) { super.text = value; }
   set _super$value(TextEditingValue value) { super.value = value; }
   set _super$selection(TextSelection value) { super.selection = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -229,12 +232,12 @@ abstract final class TextEditingControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$notifyListeners#0', (args) { (args[0] as _$TextEditingController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$text#0', (args) => (args[0] as _$TextEditingController)._super$text);
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$selection#0', (args) => (args[0] as _$TextEditingController)._super$selection);
-    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$value#0', (args) => (args[0] as _$TextEditingController)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$hasListeners#0', (args) => (args[0] as _$TextEditingController)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$text=#1', (args) { (args[0] as _$TextEditingController)._super$text = args[1] as String; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$value=#1', (args) { (args[0] as _$TextEditingController)._super$value = args[1] as TextEditingValue; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$selection=#1', (args) { (args[0] as _$TextEditingController)._super$selection = args[1] as TextSelection; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/editable_text.dart::TextEditingController::\$super\$hashCode#0', (args) => (args[0] as _$TextEditingController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

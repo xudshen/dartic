@@ -358,13 +358,6 @@ class _$InkResponse extends InkResponse implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -372,10 +365,20 @@ class _$InkResponse extends InkResponse implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -424,8 +427,8 @@ class _$InkResponse extends InkResponse implements DarticObjectHolder {
   bool get _super$canRequestFocus => super.canRequestFocus;
   WidgetStatesController? get _super$statesController => super.statesController;
   Duration? get _super$hoverDuration => super.hoverDuration;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -490,8 +493,8 @@ abstract final class InkResponseBindings {
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$canRequestFocus#0', (args) => (args[0] as _$InkResponse)._super$canRequestFocus);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$statesController#0', (args) => (args[0] as _$InkResponse)._super$statesController);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$hoverDuration#0', (args) => (args[0] as _$InkResponse)._super$hoverDuration);
-    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$hashCode#0', (args) => (args[0] as _$InkResponse)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$key#0', (args) => (args[0] as _$InkResponse)._super$key);
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InkResponse::\$super\$hashCode#0', (args) => (args[0] as _$InkResponse)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

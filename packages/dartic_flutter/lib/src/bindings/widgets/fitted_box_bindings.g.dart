@@ -132,13 +132,6 @@ class _$FittedBox extends FittedBox implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -153,10 +146,20 @@ class _$FittedBox extends FittedBox implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -174,9 +177,9 @@ class _$FittedBox extends FittedBox implements DarticObjectHolder {
   BoxFit get _super$fit => super.fit;
   AlignmentGeometry get _super$alignment => super.alignment;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -210,9 +213,9 @@ abstract final class FittedBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$fit#0', (args) => (args[0] as _$FittedBox)._super$fit);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$alignment#0', (args) => (args[0] as _$FittedBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$clipBehavior#0', (args) => (args[0] as _$FittedBox)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$hashCode#0', (args) => (args[0] as _$FittedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$child#0', (args) => (args[0] as _$FittedBox)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$key#0', (args) => (args[0] as _$FittedBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::FittedBox::\$super\$hashCode#0', (args) => (args[0] as _$FittedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

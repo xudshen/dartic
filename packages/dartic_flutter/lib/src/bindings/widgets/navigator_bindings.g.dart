@@ -208,13 +208,6 @@ class _$Navigator extends Navigator implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -222,10 +215,20 @@ class _$Navigator extends Navigator implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -253,8 +256,8 @@ class _$Navigator extends Navigator implements DarticObjectHolder {
   bool get _super$reportsRouteUpdateToEngine => super.reportsRouteUpdateToEngine;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
   bool get _super$requestFocus => super.requestFocus;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -326,8 +329,8 @@ abstract final class NavigatorBindings {
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$reportsRouteUpdateToEngine#0', (args) => (args[0] as _$Navigator)._super$reportsRouteUpdateToEngine);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$clipBehavior#0', (args) => (args[0] as _$Navigator)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$requestFocus#0', (args) => (args[0] as _$Navigator)._super$requestFocus);
-    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$hashCode#0', (args) => (args[0] as _$Navigator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$key#0', (args) => (args[0] as _$Navigator)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Navigator::\$super\$hashCode#0', (args) => (args[0] as _$Navigator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

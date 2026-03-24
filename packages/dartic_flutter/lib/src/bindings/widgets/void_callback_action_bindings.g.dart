@@ -102,13 +102,6 @@ class _$VoidCallbackAction extends VoidCallbackAction implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Action<VoidCallbackIntent>? get callingAction {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'callingAction');
     if (identical(r, notOverridden)) return super.callingAction;
@@ -130,10 +123,20 @@ class _$VoidCallbackAction extends VoidCallbackAction implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -148,10 +151,10 @@ class _$VoidCallbackAction extends VoidCallbackAction implements DarticObjectHol
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
-  int get _super$hashCode => super.hashCode;
   Action<VoidCallbackIntent>? get _super$callingAction => super.callingAction;
   Type get _super$intentType => super.intentType;
   bool get _super$isActionEnabled => super.isActionEnabled;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -182,10 +185,10 @@ abstract final class VoidCallbackActionBindings {
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$toStringShort#0', (args) => (args[0] as _$VoidCallbackAction)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$VoidCallbackAction)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$debugFillProperties#1', (args) { (args[0] as _$VoidCallbackAction)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$hashCode#0', (args) => (args[0] as _$VoidCallbackAction)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$callingAction#0', (args) => (args[0] as _$VoidCallbackAction)._super$callingAction);
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$intentType#0', (args) => (args[0] as _$VoidCallbackAction)._super$intentType);
     ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$isActionEnabled#0', (args) => (args[0] as _$VoidCallbackAction)._super$isActionEnabled);
+    ctx.registerBinding('package:flutter/src/widgets/actions.dart::VoidCallbackAction::\$super\$hashCode#0', (args) => (args[0] as _$VoidCallbackAction)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

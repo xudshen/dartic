@@ -45,13 +45,6 @@ class _$TreeSliverNodeParentData extends TreeSliverNodeParentData implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int? get index {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'index');
     if (identical(r, notOverridden)) return super.index;
@@ -136,17 +129,26 @@ class _$TreeSliverNodeParentData extends TreeSliverNodeParentData implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
   int get _super$depth => super.depth;
-  int get _super$hashCode => super.hashCode;
   int? get _super$index => super.index;
   bool get _super$keptAlive => super.keptAlive;
   double? get _super$layoutOffset => super.layoutOffset;
@@ -159,6 +161,7 @@ class _$TreeSliverNodeParentData extends TreeSliverNodeParentData implements Dar
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
   set _super$keepAlive(bool value) { super.keepAlive = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -181,7 +184,6 @@ abstract final class TreeSliverNodeParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$toString#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$detach#0', (args) { (args[0] as _$TreeSliverNodeParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$depth#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$depth);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$hashCode#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$index#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$index);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$keptAlive#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$keptAlive);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$layoutOffset#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$layoutOffset);
@@ -194,6 +196,7 @@ abstract final class TreeSliverNodeParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$TreeSliverNodeParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$TreeSliverNodeParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$keepAlive=#1', (args) { (args[0] as _$TreeSliverNodeParentData)._super$keepAlive = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::TreeSliverNodeParentData::\$super\$hashCode#0', (args) => (args[0] as _$TreeSliverNodeParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

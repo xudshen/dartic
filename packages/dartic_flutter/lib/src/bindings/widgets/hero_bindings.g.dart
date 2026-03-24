@@ -139,13 +139,6 @@ class _$Hero extends Hero implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -153,10 +146,20 @@ class _$Hero extends Hero implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -175,8 +178,8 @@ class _$Hero extends Hero implements DarticObjectHolder {
   HeroFlightShuttleBuilder? get _super$flightShuttleBuilder => super.flightShuttleBuilder;
   HeroPlaceholderBuilder? get _super$placeholderBuilder => super.placeholderBuilder;
   bool get _super$transitionOnUserGestures => super.transitionOnUserGestures;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,8 +214,8 @@ abstract final class HeroBindings {
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$flightShuttleBuilder#0', (args) => (args[0] as _$Hero)._super$flightShuttleBuilder);
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$placeholderBuilder#0', (args) => (args[0] as _$Hero)._super$placeholderBuilder);
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$transitionOnUserGestures#0', (args) => (args[0] as _$Hero)._super$transitionOnUserGestures);
-    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$hashCode#0', (args) => (args[0] as _$Hero)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$key#0', (args) => (args[0] as _$Hero)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::Hero::\$super\$hashCode#0', (args) => (args[0] as _$Hero)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

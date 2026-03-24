@@ -330,13 +330,6 @@ class _$ComponentElement extends ComponentElement implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object? get slot {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'slot');
     if (identical(r, notOverridden)) return super.slot;
@@ -414,10 +407,20 @@ class _$ComponentElement extends ComponentElement implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -466,7 +469,6 @@ class _$ComponentElement extends ComponentElement implements DarticObjectHolder 
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   bool get _super$debugDoingBuild => super.debugDoingBuild;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
-  int get _super$hashCode => super.hashCode;
   Object? get _super$slot => super.slot;
   int get _super$depth => super.depth;
   Widget get _super$widget => super.widget;
@@ -478,6 +480,7 @@ class _$ComponentElement extends ComponentElement implements DarticObjectHolder 
   RenderObject? get _super$renderObject => super.renderObject;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -542,7 +545,6 @@ abstract final class ComponentElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$toStringDeep#4', (args) => (args[0] as _$ComponentElement)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$ComponentElement)._super$debugDoingBuild);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$ComponentElement)._super$renderObjectAttachingChild);
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$hashCode#0', (args) => (args[0] as _$ComponentElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$slot#0', (args) => (args[0] as _$ComponentElement)._super$slot);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$depth#0', (args) => (args[0] as _$ComponentElement)._super$depth);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$widget#0', (args) => (args[0] as _$ComponentElement)._super$widget);
@@ -554,6 +556,7 @@ abstract final class ComponentElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$renderObject#0', (args) => (args[0] as _$ComponentElement)._super$renderObject);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$size#0', (args) => (args[0] as _$ComponentElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$dirty#0', (args) => (args[0] as _$ComponentElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::ComponentElement::\$super\$hashCode#0', (args) => (args[0] as _$ComponentElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

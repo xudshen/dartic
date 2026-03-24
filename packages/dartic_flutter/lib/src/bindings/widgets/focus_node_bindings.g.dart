@@ -305,13 +305,6 @@ class _$FocusNode extends FocusNode implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -368,10 +361,20 @@ class _$FocusNode extends FocusNode implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -415,7 +418,6 @@ class _$FocusNode extends FocusNode implements DarticObjectHolder {
   Size get _super$size => super.size;
   Offset get _super$offset => super.offset;
   Rect get _super$rect => super.rect;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$skipTraversal(bool value) { super.skipTraversal = value; }
   set _super$canRequestFocus(bool value) { super.canRequestFocus = value; }
@@ -424,6 +426,7 @@ class _$FocusNode extends FocusNode implements DarticObjectHolder {
   set _super$onKey(FocusOnKeyCallback? value) { super.onKey = value; }
   set _super$onKeyEvent(FocusOnKeyEventCallback? value) { super.onKeyEvent = value; }
   set _super$debugLabel(String? value) { super.debugLabel = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -483,7 +486,6 @@ abstract final class FocusNodeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$size#0', (args) => (args[0] as _$FocusNode)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$offset#0', (args) => (args[0] as _$FocusNode)._super$offset);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$rect#0', (args) => (args[0] as _$FocusNode)._super$rect);
-    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$hashCode#0', (args) => (args[0] as _$FocusNode)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$hasListeners#0', (args) => (args[0] as _$FocusNode)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$skipTraversal=#1', (args) { (args[0] as _$FocusNode)._super$skipTraversal = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$canRequestFocus=#1', (args) { (args[0] as _$FocusNode)._super$canRequestFocus = args[1] as bool; return args[1]; });
@@ -492,6 +494,7 @@ abstract final class FocusNodeBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$onKey=#1', (args) { (args[0] as _$FocusNode)._super$onKey = args[1] as FocusOnKeyCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$onKeyEvent=#1', (args) { (args[0] as _$FocusNode)._super$onKeyEvent = args[1] as FocusOnKeyEventCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$debugLabel=#1', (args) { (args[0] as _$FocusNode)._super$debugLabel = args[1] as String?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusNode::\$super\$hashCode#0', (args) => (args[0] as _$FocusNode)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

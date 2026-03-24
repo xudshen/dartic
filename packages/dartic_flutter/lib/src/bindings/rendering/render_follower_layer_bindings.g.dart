@@ -598,13 +598,6 @@ class _$RenderFollowerLayer extends RenderFollowerLayer implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -878,10 +871,20 @@ class _$RenderFollowerLayer extends RenderFollowerLayer implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -971,7 +974,6 @@ class _$RenderFollowerLayer extends RenderFollowerLayer implements DarticObjectH
   Alignment get _super$followerAnchor => super.followerAnchor;
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
   FollowerLayer? get _super$layer => super.layer;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -1011,6 +1013,7 @@ class _$RenderFollowerLayer extends RenderFollowerLayer implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1116,7 +1119,6 @@ abstract final class RenderFollowerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$followerAnchor#0', (args) => (args[0] as _$RenderFollowerLayer)._super$followerAnchor);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$RenderFollowerLayer)._super$alwaysNeedsCompositing);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$layer#0', (args) => (args[0] as _$RenderFollowerLayer)._super$layer);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$hashCode#0', (args) => (args[0] as _$RenderFollowerLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$hasSize#0', (args) => (args[0] as _$RenderFollowerLayer)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$size#0', (args) => (args[0] as _$RenderFollowerLayer)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderFollowerLayer)._super$semanticBounds);
@@ -1156,6 +1158,7 @@ abstract final class RenderFollowerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderFollowerLayer)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$layer=#1', (args) { (args[0] as _$RenderFollowerLayer)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$child=#1', (args) { (args[0] as _$RenderFollowerLayer)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFollowerLayer::\$super\$hashCode#0', (args) => (args[0] as _$RenderFollowerLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

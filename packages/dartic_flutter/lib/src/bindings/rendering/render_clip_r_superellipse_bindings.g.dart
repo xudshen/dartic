@@ -556,13 +556,6 @@ class _$RenderClipRSuperellipse extends RenderClipRSuperellipse implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   CustomClipper<ui.RSuperellipse>? get clipper {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipper');
     if (identical(r, notOverridden)) return super.clipper;
@@ -857,10 +850,20 @@ class _$RenderClipRSuperellipse extends RenderClipRSuperellipse implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -944,7 +947,6 @@ class _$RenderClipRSuperellipse extends RenderClipRSuperellipse implements Darti
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   BorderRadiusGeometry get _super$borderRadius => super.borderRadius;
   ui.TextDirection? get _super$textDirection => super.textDirection;
-  int get _super$hashCode => super.hashCode;
   CustomClipper<ui.RSuperellipse>? get _super$clipper => super.clipper;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
   bool get _super$hasSize => super.hasSize;
@@ -987,6 +989,7 @@ class _$RenderClipRSuperellipse extends RenderClipRSuperellipse implements Darti
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1086,7 +1089,6 @@ abstract final class RenderClipRSuperellipseBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderClipRSuperellipse)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$borderRadius#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$textDirection#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$textDirection);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$hashCode#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$clipper#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$clipper);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$clipBehavior#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$hasSize#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$hasSize);
@@ -1129,6 +1131,7 @@ abstract final class RenderClipRSuperellipseBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderClipRSuperellipse)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$layer=#1', (args) { (args[0] as _$RenderClipRSuperellipse)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$child=#1', (args) { (args[0] as _$RenderClipRSuperellipse)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipRSuperellipse::\$super\$hashCode#0', (args) => (args[0] as _$RenderClipRSuperellipse)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

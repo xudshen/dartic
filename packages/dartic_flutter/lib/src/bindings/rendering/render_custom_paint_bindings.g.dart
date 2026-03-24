@@ -576,13 +576,6 @@ class _$RenderCustomPaint extends RenderCustomPaint implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -870,10 +863,20 @@ class _$RenderCustomPaint extends RenderCustomPaint implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -960,7 +963,6 @@ class _$RenderCustomPaint extends RenderCustomPaint implements DarticObjectHolde
   Size get _super$preferredSize => super.preferredSize;
   bool get _super$isComplex => super.isComplex;
   bool get _super$willChange => super.willChange;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -1002,6 +1004,7 @@ class _$RenderCustomPaint extends RenderCustomPaint implements DarticObjectHolde
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1104,7 +1107,6 @@ abstract final class RenderCustomPaintBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$preferredSize#0', (args) => (args[0] as _$RenderCustomPaint)._super$preferredSize);
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$isComplex#0', (args) => (args[0] as _$RenderCustomPaint)._super$isComplex);
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$willChange#0', (args) => (args[0] as _$RenderCustomPaint)._super$willChange);
-    ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$hashCode#0', (args) => (args[0] as _$RenderCustomPaint)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$hasSize#0', (args) => (args[0] as _$RenderCustomPaint)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$size#0', (args) => (args[0] as _$RenderCustomPaint)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderCustomPaint)._super$semanticBounds);
@@ -1146,6 +1148,7 @@ abstract final class RenderCustomPaintBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderCustomPaint)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$layer=#1', (args) { (args[0] as _$RenderCustomPaint)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$child=#1', (args) { (args[0] as _$RenderCustomPaint)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/custom_paint.dart::RenderCustomPaint::\$super\$hashCode#0', (args) => (args[0] as _$RenderCustomPaint)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

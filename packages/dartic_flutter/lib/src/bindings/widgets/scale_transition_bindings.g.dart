@@ -109,13 +109,6 @@ class _$ScaleTransition extends ScaleTransition implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   TransformCallback get onTransform {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onTransform');
     if (identical(r, notOverridden)) return super.onTransform;
@@ -165,10 +158,20 @@ class _$ScaleTransition extends ScaleTransition implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -183,7 +186,6 @@ class _$ScaleTransition extends ScaleTransition implements DarticObjectHolder {
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Animation<double> get _super$scale => super.scale;
-  int get _super$hashCode => super.hashCode;
   TransformCallback get _super$onTransform => super.onTransform;
   Animation<double> get _super$animation => super.animation;
   Alignment get _super$alignment => super.alignment;
@@ -191,6 +193,7 @@ class _$ScaleTransition extends ScaleTransition implements DarticObjectHolder {
   Widget? get _super$child => super.child;
   Listenable get _super$listenable => super.listenable;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -221,7 +224,6 @@ abstract final class ScaleTransitionBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ScaleTransition)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$ScaleTransition)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$scale#0', (args) => (args[0] as _$ScaleTransition)._super$scale);
-    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$hashCode#0', (args) => (args[0] as _$ScaleTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$onTransform#0', (args) => (args[0] as _$ScaleTransition)._super$onTransform);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$animation#0', (args) => (args[0] as _$ScaleTransition)._super$animation);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$alignment#0', (args) => (args[0] as _$ScaleTransition)._super$alignment);
@@ -229,6 +231,7 @@ abstract final class ScaleTransitionBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$child#0', (args) => (args[0] as _$ScaleTransition)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$listenable#0', (args) => (args[0] as _$ScaleTransition)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$key#0', (args) => (args[0] as _$ScaleTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::ScaleTransition::\$super\$hashCode#0', (args) => (args[0] as _$ScaleTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

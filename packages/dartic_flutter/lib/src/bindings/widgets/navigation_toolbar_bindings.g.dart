@@ -121,13 +121,6 @@ class _$NavigationToolbar extends NavigationToolbar implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -135,10 +128,20 @@ class _$NavigationToolbar extends NavigationToolbar implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -156,8 +159,8 @@ class _$NavigationToolbar extends NavigationToolbar implements DarticObjectHolde
   Widget? get _super$trailing => super.trailing;
   bool get _super$centerMiddle => super.centerMiddle;
   double get _super$middleSpacing => super.middleSpacing;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -192,8 +195,8 @@ abstract final class NavigationToolbarBindings {
     ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$trailing#0', (args) => (args[0] as _$NavigationToolbar)._super$trailing);
     ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$centerMiddle#0', (args) => (args[0] as _$NavigationToolbar)._super$centerMiddle);
     ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$middleSpacing#0', (args) => (args[0] as _$NavigationToolbar)._super$middleSpacing);
-    ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$hashCode#0', (args) => (args[0] as _$NavigationToolbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$key#0', (args) => (args[0] as _$NavigationToolbar)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/navigation_toolbar.dart::NavigationToolbar::\$super\$hashCode#0', (args) => (args[0] as _$NavigationToolbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

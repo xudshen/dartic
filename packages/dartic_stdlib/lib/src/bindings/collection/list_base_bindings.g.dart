@@ -353,13 +353,6 @@ class _$ListBase extends ListBase<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get length {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
     if (identical(r, notOverridden)) {
@@ -397,13 +390,6 @@ class _$ListBase extends ListBase<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   dynamic operator [](int index) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator [] must be overridden in dartic code'); }
@@ -414,6 +400,23 @@ class _$ListBase extends ListBase<dynamic> implements DarticObjectHolder {
   void operator []=(int index, dynamic value) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]=', [index, value]);
     if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator []= must be overridden in dartic code'); }
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -473,9 +476,9 @@ class _$ListBase extends ListBase<dynamic> implements DarticObjectHolder {
   dynamic get _super$last => super.last;
   dynamic get _super$single => super.single;
   Iterable get _super$reversed => super.reversed;
-  int get _super$hashCode => super.hashCode;
   set _super$first(dynamic value) { super.first = value; }
   set _super$last(dynamic value) { super.last = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -546,9 +549,9 @@ abstract final class ListBaseBindings {
     ctx.registerBinding('dart:collection::ListBase::\$super\$last#0', (args) => (args[0] as _$ListBase)._super$last);
     ctx.registerBinding('dart:collection::ListBase::\$super\$single#0', (args) => (args[0] as _$ListBase)._super$single);
     ctx.registerBinding('dart:collection::ListBase::\$super\$reversed#0', (args) => (args[0] as _$ListBase)._super$reversed);
-    ctx.registerBinding('dart:collection::ListBase::\$super\$hashCode#0', (args) => (args[0] as _$ListBase)._super$hashCode);
     ctx.registerBinding('dart:collection::ListBase::\$super\$first=#1', (args) { (args[0] as _$ListBase)._super$first = args[1]; return args[1]; });
     ctx.registerBinding('dart:collection::ListBase::\$super\$last=#1', (args) { (args[0] as _$ListBase)._super$last = args[1]; return args[1]; });
+    ctx.registerBinding('dart:collection::ListBase::\$super\$hashCode#0', (args) => (args[0] as _$ListBase)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

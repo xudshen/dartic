@@ -320,13 +320,6 @@ class _$SearchBar extends SearchBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -334,10 +327,20 @@ class _$SearchBar extends SearchBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -378,8 +381,8 @@ class _$SearchBar extends SearchBar implements DarticObjectHolder {
   EdgeInsets get _super$scrollPadding => super.scrollPadding;
   EditableTextContextMenuBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
   bool get _super$readOnly => super.readOnly;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -436,8 +439,8 @@ abstract final class SearchBarBindings {
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$scrollPadding#0', (args) => (args[0] as _$SearchBar)._super$scrollPadding);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$SearchBar)._super$contextMenuBuilder);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$readOnly#0', (args) => (args[0] as _$SearchBar)._super$readOnly);
-    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$hashCode#0', (args) => (args[0] as _$SearchBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$key#0', (args) => (args[0] as _$SearchBar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/search_anchor.dart::SearchBar::\$super\$hashCode#0', (args) => (args[0] as _$SearchBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

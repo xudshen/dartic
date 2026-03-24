@@ -257,13 +257,6 @@ class _$CupertinoSliverNavigationBar extends CupertinoSliverNavigationBar implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -271,10 +264,20 @@ class _$CupertinoSliverNavigationBar extends CupertinoSliverNavigationBar implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -309,8 +312,8 @@ class _$CupertinoSliverNavigationBar extends CupertinoSliverNavigationBar implem
   bool get _super$opaque => super.opaque;
   bool get _super$stretch => super.stretch;
   Widget? get _super$searchField => super.searchField;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -361,8 +364,8 @@ abstract final class CupertinoSliverNavigationBarBindings {
     ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$opaque#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$opaque);
     ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$stretch#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$stretch);
     ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$searchField#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$searchField);
-    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$key#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/nav_bar.dart::CupertinoSliverNavigationBar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSliverNavigationBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

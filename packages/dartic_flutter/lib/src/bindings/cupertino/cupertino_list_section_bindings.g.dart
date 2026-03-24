@@ -174,13 +174,6 @@ class _$CupertinoListSection extends CupertinoListSection implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -188,10 +181,20 @@ class _$CupertinoListSection extends CupertinoListSection implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -216,8 +219,8 @@ class _$CupertinoListSection extends CupertinoListSection implements DarticObjec
   double get _super$additionalDividerMargin => super.additionalDividerMargin;
   double? get _super$topMargin => super.topMargin;
   Color? get _super$separatorColor => super.separatorColor;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -258,8 +261,8 @@ abstract final class CupertinoListSectionBindings {
     ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$additionalDividerMargin#0', (args) => (args[0] as _$CupertinoListSection)._super$additionalDividerMargin);
     ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$topMargin#0', (args) => (args[0] as _$CupertinoListSection)._super$topMargin);
     ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$separatorColor#0', (args) => (args[0] as _$CupertinoListSection)._super$separatorColor);
-    ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoListSection)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$key#0', (args) => (args[0] as _$CupertinoListSection)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/list_section.dart::CupertinoListSection::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoListSection)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

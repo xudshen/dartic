@@ -111,13 +111,6 @@ class _$CupertinoPickerDefaultSelectionOverlay extends CupertinoPickerDefaultSel
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -125,10 +118,20 @@ class _$CupertinoPickerDefaultSelectionOverlay extends CupertinoPickerDefaultSel
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -144,8 +147,8 @@ class _$CupertinoPickerDefaultSelectionOverlay extends CupertinoPickerDefaultSel
   bool get _super$capStartEdge => super.capStartEdge;
   bool get _super$capEndEdge => super.capEndEdge;
   Color get _super$background => super.background;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -177,8 +180,8 @@ abstract final class CupertinoPickerDefaultSelectionOverlayBindings {
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$capStartEdge#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$capStartEdge);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$capEndEdge#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$capEndEdge);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$background#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$background);
-    ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$key#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/picker.dart::CupertinoPickerDefaultSelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPickerDefaultSelectionOverlay)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

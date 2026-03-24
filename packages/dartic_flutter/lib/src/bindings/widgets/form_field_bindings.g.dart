@@ -168,13 +168,6 @@ class _$FormField extends FormField<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -182,10 +175,20 @@ class _$FormField extends FormField<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -208,8 +211,8 @@ class _$FormField extends FormField<dynamic> implements DarticObjectHolder {
   bool get _super$enabled => super.enabled;
   AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
   String? get _super$restorationId => super.restorationId;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -248,8 +251,8 @@ abstract final class FormFieldBindings {
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$enabled#0', (args) => (args[0] as _$FormField)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$autovalidateMode#0', (args) => (args[0] as _$FormField)._super$autovalidateMode);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$restorationId#0', (args) => (args[0] as _$FormField)._super$restorationId);
-    ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$hashCode#0', (args) => (args[0] as _$FormField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$key#0', (args) => (args[0] as _$FormField)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/form.dart::FormField::\$super\$hashCode#0', (args) => (args[0] as _$FormField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

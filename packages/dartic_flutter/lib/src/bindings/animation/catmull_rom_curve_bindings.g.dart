@@ -56,13 +56,6 @@ class _$CatmullRomCurve extends CatmullRomCurve implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get flipped {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'flipped');
     if (identical(r, notOverridden)) return super.flipped;
@@ -70,10 +63,20 @@ class _$CatmullRomCurve extends CatmullRomCurve implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -82,8 +85,8 @@ class _$CatmullRomCurve extends CatmullRomCurve implements DarticObjectHolder {
   double _super$transform(double t) => super.transform(t);
   List<Offset> get _super$controlPoints => super.controlPoints;
   double get _super$tension => super.tension;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$flipped => super.flipped;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -109,8 +112,8 @@ abstract final class CatmullRomCurveBindings {
     ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$transform#1', (args) => (args[0] as _$CatmullRomCurve)._super$transform(args[1] as double));
     ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$controlPoints#0', (args) => (args[0] as _$CatmullRomCurve)._super$controlPoints);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$tension#0', (args) => (args[0] as _$CatmullRomCurve)._super$tension);
-    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$hashCode#0', (args) => (args[0] as _$CatmullRomCurve)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$flipped#0', (args) => (args[0] as _$CatmullRomCurve)._super$flipped);
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::CatmullRomCurve::\$super\$hashCode#0', (args) => (args[0] as _$CatmullRomCurve)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

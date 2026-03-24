@@ -447,13 +447,6 @@ class _$RenderSliverSingleBoxAdapter extends RenderSliverSingleBoxAdapter implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get ensureSemantics {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics');
     if (identical(r, notOverridden)) return super.ensureSemantics;
@@ -713,10 +706,20 @@ class _$RenderSliverSingleBoxAdapter extends RenderSliverSingleBoxAdapter implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -783,7 +786,6 @@ class _$RenderSliverSingleBoxAdapter extends RenderSliverSingleBoxAdapter implem
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   bool _super$hitTestBoxChild(BoxHitTestResult result, RenderBox child, {required double mainAxisPosition, required double crossAxisPosition}) => super.hitTestBoxChild(result, child, mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition);
   void _super$applyPaintTransformForBoxChild(RenderBox child, Matrix4 transform) { super.applyPaintTransformForBoxChild(child, transform); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
   SliverGeometry? get _super$geometry => super.geometry;
@@ -821,6 +823,7 @@ class _$RenderSliverSingleBoxAdapter extends RenderSliverSingleBoxAdapter implem
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -903,7 +906,6 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$hitTestBoxChild#4', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double));
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$applyPaintTransformForBoxChild#2', (args) { (args[0] as _$RenderSliverSingleBoxAdapter)._super$applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$constraints);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$geometry#0', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$geometry);
@@ -941,6 +943,7 @@ abstract final class RenderSliverSingleBoxAdapterBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverSingleBoxAdapter)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverSingleBoxAdapter)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$child=#1', (args) { (args[0] as _$RenderSliverSingleBoxAdapter)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::RenderSliverSingleBoxAdapter::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverSingleBoxAdapter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

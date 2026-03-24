@@ -75,13 +75,6 @@ class _$Encoding extends Encoding implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Codec<List<int>, String> get inverted {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inverted');
     if (identical(r, notOverridden)) return super.inverted;
@@ -89,10 +82,20 @@ class _$Encoding extends Encoding implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -100,8 +103,8 @@ class _$Encoding extends Encoding implements DarticObjectHolder {
   String _super$toString() => super.toString();
   List<int> _super$encode(String input) => super.encode(input);
   String _super$decode(List<int> encoded) => super.decode(encoded);
-  int get _super$hashCode => super.hashCode;
   Codec<List<int>, String> get _super$inverted => super.inverted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -126,8 +129,8 @@ abstract final class EncodingBindings {
     ctx.registerBinding('dart:convert::Encoding::\$super\$toString#0', (args) => (args[0] as _$Encoding)._super$toString());
     ctx.registerBinding('dart:convert::Encoding::\$super\$encode#1', (args) => (args[0] as _$Encoding)._super$encode(args[1] as String));
     ctx.registerBinding('dart:convert::Encoding::\$super\$decode#1', (args) => (args[0] as _$Encoding)._super$decode((args[1] as List).cast<int>()));
-    ctx.registerBinding('dart:convert::Encoding::\$super\$hashCode#0', (args) => (args[0] as _$Encoding)._super$hashCode);
     ctx.registerBinding('dart:convert::Encoding::\$super\$inverted#0', (args) => (args[0] as _$Encoding)._super$inverted);
+    ctx.registerBinding('dart:convert::Encoding::\$super\$hashCode#0', (args) => (args[0] as _$Encoding)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

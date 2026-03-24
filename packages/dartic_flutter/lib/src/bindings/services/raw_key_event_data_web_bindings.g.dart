@@ -127,13 +127,6 @@ class _$RawKeyEventDataWeb extends RawKeyEventDataWeb implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isControlPressed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isControlPressed');
     if (identical(r, notOverridden)) return super.isControlPressed;
@@ -169,10 +162,20 @@ class _$RawKeyEventDataWeb extends RawKeyEventDataWeb implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -191,12 +194,12 @@ class _$RawKeyEventDataWeb extends RawKeyEventDataWeb implements DarticObjectHol
   String get _super$keyLabel => super.keyLabel;
   PhysicalKeyboardKey get _super$physicalKey => super.physicalKey;
   LogicalKeyboardKey get _super$logicalKey => super.logicalKey;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isControlPressed => super.isControlPressed;
   bool get _super$isShiftPressed => super.isShiftPressed;
   bool get _super$isAltPressed => super.isAltPressed;
   bool get _super$isMetaPressed => super.isMetaPressed;
   Map<ModifierKey, KeyboardSide> get _super$modifiersPressed => super.modifiersPressed;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -239,12 +242,12 @@ abstract final class RawKeyEventDataWebBindings {
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$keyLabel#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$keyLabel);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$physicalKey#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$physicalKey);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$logicalKey#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$logicalKey);
-    ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$isControlPressed#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$isControlPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$isShiftPressed#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$isShiftPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$isAltPressed#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$isAltPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$isMetaPressed#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$isMetaPressed);
     ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$modifiersPressed#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$modifiersPressed);
+    ctx.registerBinding('package:flutter/src/services/raw_keyboard_web.dart::RawKeyEventDataWeb::\$super\$hashCode#0', (args) => (args[0] as _$RawKeyEventDataWeb)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

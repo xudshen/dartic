@@ -536,13 +536,6 @@ class _$RenderShiftedBox extends RenderShiftedBox implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -795,10 +788,20 @@ class _$RenderShiftedBox extends RenderShiftedBox implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -879,7 +882,6 @@ class _$RenderShiftedBox extends RenderShiftedBox implements DarticObjectHolder 
   DiagnosticsNode _super$describeForError(String name, {DiagnosticsTreeStyle style = DiagnosticsTreeStyle.shallow}) => super.describeForError(name, style: style);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -916,6 +918,7 @@ class _$RenderShiftedBox extends RenderShiftedBox implements DarticObjectHolder 
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1012,7 +1015,6 @@ abstract final class RenderShiftedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$describeForError#2', (args) => (args[0] as _$RenderShiftedBox)._super$describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle));
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderShiftedBox)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderShiftedBox)._super$debugValidateChild(args[1] as RenderObject));
-    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderShiftedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$hasSize#0', (args) => (args[0] as _$RenderShiftedBox)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$size#0', (args) => (args[0] as _$RenderShiftedBox)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderShiftedBox)._super$semanticBounds);
@@ -1049,6 +1051,7 @@ abstract final class RenderShiftedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderShiftedBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$layer=#1', (args) { (args[0] as _$RenderShiftedBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$child=#1', (args) { (args[0] as _$RenderShiftedBox)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/shifted_box.dart::RenderShiftedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderShiftedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -258,13 +258,6 @@ class _$DataTable extends DataTable implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -272,10 +265,20 @@ class _$DataTable extends DataTable implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -310,8 +313,8 @@ class _$DataTable extends DataTable implements DarticObjectHolder {
   double? get _super$checkboxHorizontalMargin => super.checkboxHorizontalMargin;
   TableBorder? get _super$border => super.border;
   Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -362,8 +365,8 @@ abstract final class DataTableBindings {
     ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$checkboxHorizontalMargin#0', (args) => (args[0] as _$DataTable)._super$checkboxHorizontalMargin);
     ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$border#0', (args) => (args[0] as _$DataTable)._super$border);
     ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$clipBehavior#0', (args) => (args[0] as _$DataTable)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$hashCode#0', (args) => (args[0] as _$DataTable)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$key#0', (args) => (args[0] as _$DataTable)._super$key);
+    ctx.registerBinding('package:flutter/src/material/data_table.dart::DataTable::\$super\$hashCode#0', (args) => (args[0] as _$DataTable)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

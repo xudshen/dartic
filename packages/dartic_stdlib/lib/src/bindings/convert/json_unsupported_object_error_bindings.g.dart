@@ -48,13 +48,6 @@ class _$JsonUnsupportedObjectError extends JsonUnsupportedObjectError implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   StackTrace? get stackTrace {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
@@ -62,10 +55,20 @@ class _$JsonUnsupportedObjectError extends JsonUnsupportedObjectError implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -73,8 +76,8 @@ class _$JsonUnsupportedObjectError extends JsonUnsupportedObjectError implements
   Object? get _super$unsupportedObject => super.unsupportedObject;
   Object? get _super$cause => super.cause;
   String? get _super$partialResult => super.partialResult;
-  int get _super$hashCode => super.hashCode;
   StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -98,8 +101,8 @@ abstract final class JsonUnsupportedObjectErrorBindings {
     ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$unsupportedObject#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$unsupportedObject);
     ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$cause#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$cause);
     ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$partialResult#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$partialResult);
-    ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$hashCode#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$hashCode);
     ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$stackTrace#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$stackTrace);
+    ctx.registerBinding('dart:convert::JsonUnsupportedObjectError::\$super\$hashCode#0', (args) => (args[0] as _$JsonUnsupportedObjectError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

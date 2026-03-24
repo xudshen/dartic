@@ -254,13 +254,6 @@ class _$MultiSelectableSelectionContainerDelegate extends MultiSelectableSelecti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -303,10 +296,20 @@ class _$MultiSelectableSelectionContainerDelegate extends MultiSelectableSelecti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -340,13 +343,13 @@ class _$MultiSelectableSelectionContainerDelegate extends MultiSelectableSelecti
   SelectionGeometry get _super$value => super.value;
   Comparator<Selectable> get _super$compareOrder => super.compareOrder;
   int get _super$contentLength => super.contentLength;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$containerSize => super.containerSize;
   bool get _super$hasListeners => super.hasListeners;
   set _super$selectables(List<Selectable> value) { super.selectables = value; }
   set _super$currentSelectionEndIndex(int value) { super.currentSelectionEndIndex = value; }
   set _super$currentSelectionStartIndex(int value) { super.currentSelectionStartIndex = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -396,13 +399,13 @@ abstract final class MultiSelectableSelectionContainerDelegateBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$value#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$compareOrder#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$compareOrder);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$contentLength#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$contentLength);
-    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$hashCode#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$hasSize#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$hasSize);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$containerSize#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$containerSize);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$hasListeners#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$selectables=#1', (args) { (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$selectables = (args[1] as List).cast<Selectable>(); return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$currentSelectionEndIndex=#1', (args) { (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$currentSelectionEndIndex = args[1] as int; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$currentSelectionStartIndex=#1', (args) { (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$currentSelectionStartIndex = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::MultiSelectableSelectionContainerDelegate::\$super\$hashCode#0', (args) => (args[0] as _$MultiSelectableSelectionContainerDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

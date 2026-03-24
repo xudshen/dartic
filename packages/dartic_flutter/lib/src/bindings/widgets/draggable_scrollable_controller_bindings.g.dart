@@ -125,13 +125,6 @@ class _$DraggableScrollableController extends DraggableScrollableController impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -139,10 +132,20 @@ class _$DraggableScrollableController extends DraggableScrollableController impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -159,8 +162,8 @@ class _$DraggableScrollableController extends DraggableScrollableController impl
   double get _super$size => super.size;
   double get _super$pixels => super.pixels;
   bool get _super$isAttached => super.isAttached;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -193,8 +196,8 @@ abstract final class DraggableScrollableControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$size#0', (args) => (args[0] as _$DraggableScrollableController)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$pixels#0', (args) => (args[0] as _$DraggableScrollableController)._super$pixels);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$isAttached#0', (args) => (args[0] as _$DraggableScrollableController)._super$isAttached);
-    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$hasListeners#0', (args) => (args[0] as _$DraggableScrollableController)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableController::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

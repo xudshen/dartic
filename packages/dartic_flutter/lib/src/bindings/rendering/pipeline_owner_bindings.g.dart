@@ -228,13 +228,6 @@ base class _$PipelineOwner extends PipelineOwner implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set rootNode(RenderObject? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'rootNode', value)) {
       super.rootNode = value;
@@ -242,10 +235,20 @@ base class _$PipelineOwner extends PipelineOwner implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -279,8 +282,8 @@ base class _$PipelineOwner extends PipelineOwner implements DarticObjectHolder {
   bool get _super$debugDoingPaint => super.debugDoingPaint;
   SemanticsOwner? get _super$semanticsOwner => super.semanticsOwner;
   int get _super$debugOutstandingSemanticsHandles => super.debugOutstandingSemanticsHandles;
-  int get _super$hashCode => super.hashCode;
   set _super$rootNode(RenderObject? value) { super.rootNode = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -330,8 +333,8 @@ abstract final class PipelineOwnerBindings {
     ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$debugDoingPaint#0', (args) => (args[0] as _$PipelineOwner)._super$debugDoingPaint);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$semanticsOwner#0', (args) => (args[0] as _$PipelineOwner)._super$semanticsOwner);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$debugOutstandingSemanticsHandles#0', (args) => (args[0] as _$PipelineOwner)._super$debugOutstandingSemanticsHandles);
-    ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$hashCode#0', (args) => (args[0] as _$PipelineOwner)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$rootNode=#1', (args) { (args[0] as _$PipelineOwner)._super$rootNode = args[1] as RenderObject?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/object.dart::PipelineOwner::\$super\$hashCode#0', (args) => (args[0] as _$PipelineOwner)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

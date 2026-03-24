@@ -40,13 +40,6 @@ class _$PolynomialFit extends PolynomialFit implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set confidence(double value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'confidence', value)) {
       super.confidence = value;
@@ -54,18 +47,28 @@ class _$PolynomialFit extends PolynomialFit implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   List<double> get _super$coefficients => super.coefficients;
   double get _super$confidence => super.confidence;
-  int get _super$hashCode => super.hashCode;
   set _super$confidence(double value) { super.confidence = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -87,8 +90,8 @@ abstract final class PolynomialFitBindings {
     ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$toString#0', (args) => (args[0] as _$PolynomialFit)._super$toString());
     ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$coefficients#0', (args) => (args[0] as _$PolynomialFit)._super$coefficients);
     ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$confidence#0', (args) => (args[0] as _$PolynomialFit)._super$confidence);
-    ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$hashCode#0', (args) => (args[0] as _$PolynomialFit)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$confidence=#1', (args) { (args[0] as _$PolynomialFit)._super$confidence = args[1] as double; return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/lsq_solver.dart::PolynomialFit::\$super\$hashCode#0', (args) => (args[0] as _$PolynomialFit)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

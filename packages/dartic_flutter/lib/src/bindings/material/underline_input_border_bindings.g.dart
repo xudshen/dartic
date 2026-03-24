@@ -121,13 +121,6 @@ class _$UnderlineInputBorder extends UnderlineInputBorder implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   BorderSide get borderSide {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'borderSide');
     if (identical(r, notOverridden)) return super.borderSide;
@@ -135,17 +128,27 @@ class _$UnderlineInputBorder extends UnderlineInputBorder implements DarticObjec
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -163,8 +166,8 @@ class _$UnderlineInputBorder extends UnderlineInputBorder implements DarticObjec
   bool get _super$isOutline => super.isOutline;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
-  int get _super$hashCode => super.hashCode;
   BorderSide get _super$borderSide => super.borderSide;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -198,8 +201,8 @@ abstract final class UnderlineInputBorderBindings {
     ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$isOutline#0', (args) => (args[0] as _$UnderlineInputBorder)._super$isOutline);
     ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$dimensions#0', (args) => (args[0] as _$UnderlineInputBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$UnderlineInputBorder)._super$preferPaintInterior);
-    ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$hashCode#0', (args) => (args[0] as _$UnderlineInputBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$borderSide#0', (args) => (args[0] as _$UnderlineInputBorder)._super$borderSide);
+    ctx.registerBinding('package:flutter/src/material/input_border.dart::UnderlineInputBorder::\$super\$hashCode#0', (args) => (args[0] as _$UnderlineInputBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

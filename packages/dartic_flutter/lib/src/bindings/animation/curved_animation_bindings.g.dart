@@ -104,13 +104,6 @@ class _$CurvedAnimation extends CurvedAnimation implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AnimationStatus get status {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'status');
     if (identical(r, notOverridden)) return super.status;
@@ -167,10 +160,20 @@ class _$CurvedAnimation extends CurvedAnimation implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -186,7 +189,6 @@ class _$CurvedAnimation extends CurvedAnimation implements DarticObjectHolder {
   Curve? get _super$reverseCurve => super.reverseCurve;
   bool get _super$isDisposed => super.isDisposed;
   double get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   AnimationStatus get _super$status => super.status;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
@@ -195,6 +197,7 @@ class _$CurvedAnimation extends CurvedAnimation implements DarticObjectHolder {
   set _super$curve(Curve value) { super.curve = value; }
   set _super$reverseCurve(Curve? value) { super.reverseCurve = value; }
   set _super$isDisposed(bool value) { super.isDisposed = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -226,7 +229,6 @@ abstract final class CurvedAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$reverseCurve#0', (args) => (args[0] as _$CurvedAnimation)._super$reverseCurve);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$isDisposed#0', (args) => (args[0] as _$CurvedAnimation)._super$isDisposed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$value#0', (args) => (args[0] as _$CurvedAnimation)._super$value);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$hashCode#0', (args) => (args[0] as _$CurvedAnimation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$status#0', (args) => (args[0] as _$CurvedAnimation)._super$status);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$CurvedAnimation)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$CurvedAnimation)._super$isCompleted);
@@ -235,6 +237,7 @@ abstract final class CurvedAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$curve=#1', (args) { (args[0] as _$CurvedAnimation)._super$curve = args[1] as Curve; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$reverseCurve=#1', (args) { (args[0] as _$CurvedAnimation)._super$reverseCurve = args[1] as Curve?; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$isDisposed=#1', (args) { (args[0] as _$CurvedAnimation)._super$isDisposed = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::CurvedAnimation::\$super\$hashCode#0', (args) => (args[0] as _$CurvedAnimation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -137,13 +137,6 @@ class _$RawWebImage extends RawWebImage implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -151,10 +144,20 @@ class _$RawWebImage extends RawWebImage implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -174,8 +177,8 @@ class _$RawWebImage extends RawWebImage implements DarticObjectHolder {
   BoxFit? get _super$fit => super.fit;
   AlignmentGeometry get _super$alignment => super.alignment;
   bool get _super$matchTextDirection => super.matchTextDirection;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,8 +214,8 @@ abstract final class RawWebImageBindings {
     ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$fit#0', (args) => (args[0] as _$RawWebImage)._super$fit);
     ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$alignment#0', (args) => (args[0] as _$RawWebImage)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$matchTextDirection#0', (args) => (args[0] as _$RawWebImage)._super$matchTextDirection);
-    ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$hashCode#0', (args) => (args[0] as _$RawWebImage)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$key#0', (args) => (args[0] as _$RawWebImage)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/_web_image_io.dart::RawWebImage::\$super\$hashCode#0', (args) => (args[0] as _$RawWebImage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

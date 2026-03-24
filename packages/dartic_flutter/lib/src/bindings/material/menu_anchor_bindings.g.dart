@@ -227,13 +227,6 @@ class _$MenuAnchor extends MenuAnchor implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -241,10 +234,20 @@ class _$MenuAnchor extends MenuAnchor implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -273,8 +276,8 @@ class _$MenuAnchor extends MenuAnchor implements DarticObjectHolder {
   MenuAnchorChildBuilder? get _super$builder => super.builder;
   Widget? get _super$child => super.child;
   EdgeInsetsGeometry? get _super$reservedPadding => super.reservedPadding;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -319,8 +322,8 @@ abstract final class MenuAnchorBindings {
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$builder#0', (args) => (args[0] as _$MenuAnchor)._super$builder);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$child#0', (args) => (args[0] as _$MenuAnchor)._super$child);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$reservedPadding#0', (args) => (args[0] as _$MenuAnchor)._super$reservedPadding);
-    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$hashCode#0', (args) => (args[0] as _$MenuAnchor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$key#0', (args) => (args[0] as _$MenuAnchor)._super$key);
+    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::MenuAnchor::\$super\$hashCode#0', (args) => (args[0] as _$MenuAnchor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

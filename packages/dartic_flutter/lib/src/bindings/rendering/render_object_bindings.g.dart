@@ -552,13 +552,6 @@ class _$RenderObject extends RenderObject implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set parentData(ParentData? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'parentData', value)) {
       super.parentData = value;
@@ -580,10 +573,20 @@ class _$RenderObject extends RenderObject implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -660,10 +663,10 @@ class _$RenderObject extends RenderObject implements DarticObjectHolder {
   bool get _super$debugNeedsCompositedLayerUpdate => super.debugNeedsCompositedLayerUpdate;
   bool get _super$debugNeedsSemanticsUpdate => super.debugNeedsSemanticsUpdate;
   SemanticsNode? get _super$debugSemantics => super.debugSemantics;
-  int get _super$hashCode => super.hashCode;
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -759,10 +762,10 @@ abstract final class RenderObjectBindings {
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$debugNeedsCompositedLayerUpdate#0', (args) => (args[0] as _$RenderObject)._super$debugNeedsCompositedLayerUpdate);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$debugNeedsSemanticsUpdate#0', (args) => (args[0] as _$RenderObject)._super$debugNeedsSemanticsUpdate);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$debugSemantics#0', (args) => (args[0] as _$RenderObject)._super$debugSemantics);
-    ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$hashCode#0', (args) => (args[0] as _$RenderObject)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$parentData=#1', (args) { (args[0] as _$RenderObject)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderObject)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$layer=#1', (args) { (args[0] as _$RenderObject)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/object.dart::RenderObject::\$super\$hashCode#0', (args) => (args[0] as _$RenderObject)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

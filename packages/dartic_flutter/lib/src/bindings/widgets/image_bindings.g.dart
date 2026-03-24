@@ -243,13 +243,6 @@ class _$Image extends Image implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -257,10 +250,20 @@ class _$Image extends Image implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -292,8 +295,8 @@ class _$Image extends Image implements DarticObjectHolder {
   String? get _super$semanticLabel => super.semanticLabel;
   bool get _super$excludeFromSemantics => super.excludeFromSemantics;
   bool get _super$isAntiAlias => super.isAntiAlias;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -341,8 +344,8 @@ abstract final class ImageBindings {
     ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$semanticLabel#0', (args) => (args[0] as _$Image)._super$semanticLabel);
     ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$excludeFromSemantics#0', (args) => (args[0] as _$Image)._super$excludeFromSemantics);
     ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$isAntiAlias#0', (args) => (args[0] as _$Image)._super$isAntiAlias);
-    ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$hashCode#0', (args) => (args[0] as _$Image)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$key#0', (args) => (args[0] as _$Image)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/image.dart::Image::\$super\$hashCode#0', (args) => (args[0] as _$Image)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

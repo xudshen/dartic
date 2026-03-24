@@ -499,13 +499,6 @@ class _$SemanticsNode extends SemanticsNode implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set transform(Matrix4? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'transform', value)) {
       super.transform = value;
@@ -562,10 +555,20 @@ class _$SemanticsNode extends SemanticsNode implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -637,7 +640,6 @@ class _$SemanticsNode extends SemanticsNode implements DarticObjectHolder {
   Set<String>? get _super$controlsNodes => super.controlsNodes;
   SemanticsValidationResult get _super$validationResult => super.validationResult;
   SemanticsInputType get _super$inputType => super.inputType;
-  int get _super$hashCode => super.hashCode;
   set _super$transform(Matrix4? value) { super.transform = value; }
   set _super$rect(Rect value) { super.rect = value; }
   set _super$parentSemanticsClipRect(Rect? value) { super.parentSemanticsClipRect = value; }
@@ -646,6 +648,7 @@ class _$SemanticsNode extends SemanticsNode implements DarticObjectHolder {
   set _super$isMergedIntoParent(bool value) { super.isMergedIntoParent = value; }
   set _super$areUserActionsBlocked(bool value) { super.areUserActionsBlocked = value; }
   set _super$tags(Set<SemanticsTag>? value) { super.tags = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -733,7 +736,6 @@ abstract final class SemanticsNodeBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$controlsNodes#0', (args) => (args[0] as _$SemanticsNode)._super$controlsNodes);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$validationResult#0', (args) => (args[0] as _$SemanticsNode)._super$validationResult);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$inputType#0', (args) => (args[0] as _$SemanticsNode)._super$inputType);
-    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsNode)._super$hashCode);
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$transform=#1', (args) { (args[0] as _$SemanticsNode)._super$transform = args[1] as Matrix4?; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$rect=#1', (args) { (args[0] as _$SemanticsNode)._super$rect = args[1] as Rect; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$parentSemanticsClipRect=#1', (args) { (args[0] as _$SemanticsNode)._super$parentSemanticsClipRect = args[1] as Rect?; return args[1]; });
@@ -742,6 +744,7 @@ abstract final class SemanticsNodeBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$isMergedIntoParent=#1', (args) { (args[0] as _$SemanticsNode)._super$isMergedIntoParent = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$areUserActionsBlocked=#1', (args) { (args[0] as _$SemanticsNode)._super$areUserActionsBlocked = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$tags=#1', (args) { (args[0] as _$SemanticsNode)._super$tags = args[1] == null ? null : (args[1] as Set).cast<SemanticsTag>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/semantics/semantics.dart::SemanticsNode::\$super\$hashCode#0', (args) => (args[0] as _$SemanticsNode)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

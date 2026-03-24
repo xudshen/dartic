@@ -122,13 +122,6 @@ class _$CupertinoThemeData extends CupertinoThemeData implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Brightness? get brightness {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'brightness');
     if (identical(r, notOverridden)) return super.brightness;
@@ -136,10 +129,20 @@ class _$CupertinoThemeData extends CupertinoThemeData implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -157,8 +160,8 @@ class _$CupertinoThemeData extends CupertinoThemeData implements DarticObjectHol
   Color get _super$scaffoldBackgroundColor => super.scaffoldBackgroundColor;
   Color get _super$selectionHandleColor => super.selectionHandleColor;
   bool get _super$applyThemeToAll => super.applyThemeToAll;
-  int get _super$hashCode => super.hashCode;
   Brightness? get _super$brightness => super.brightness;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -192,8 +195,8 @@ abstract final class CupertinoThemeDataBindings {
     ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$scaffoldBackgroundColor#0', (args) => (args[0] as _$CupertinoThemeData)._super$scaffoldBackgroundColor);
     ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$selectionHandleColor#0', (args) => (args[0] as _$CupertinoThemeData)._super$selectionHandleColor);
     ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$applyThemeToAll#0', (args) => (args[0] as _$CupertinoThemeData)._super$applyThemeToAll);
-    ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoThemeData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$brightness#0', (args) => (args[0] as _$CupertinoThemeData)._super$brightness);
+    ctx.registerBinding('package:flutter/src/cupertino/theme.dart::CupertinoThemeData::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoThemeData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

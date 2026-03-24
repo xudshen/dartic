@@ -67,13 +67,6 @@ class _$InkDecoration extends InkDecoration implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   MaterialInkController get controller {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
     if (identical(r, notOverridden)) return super.controller;
@@ -116,10 +109,20 @@ class _$InkDecoration extends InkDecoration implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -129,13 +132,13 @@ class _$InkDecoration extends InkDecoration implements DarticObjectHolder {
   Decoration? get _super$decoration => super.decoration;
   bool get _super$isVisible => super.isVisible;
   ImageConfiguration get _super$configuration => super.configuration;
-  int get _super$hashCode => super.hashCode;
   MaterialInkController get _super$controller => super.controller;
   RenderBox get _super$referenceBox => super.referenceBox;
   VoidCallback? get _super$onRemoved => super.onRemoved;
   set _super$decoration(Decoration? value) { super.decoration = value; }
   set _super$isVisible(bool value) { super.isVisible = value; }
   set _super$configuration(ImageConfiguration value) { super.configuration = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -161,13 +164,13 @@ abstract final class InkDecorationBindings {
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$decoration#0', (args) => (args[0] as _$InkDecoration)._super$decoration);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$isVisible#0', (args) => (args[0] as _$InkDecoration)._super$isVisible);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$configuration#0', (args) => (args[0] as _$InkDecoration)._super$configuration);
-    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$hashCode#0', (args) => (args[0] as _$InkDecoration)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$controller#0', (args) => (args[0] as _$InkDecoration)._super$controller);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$referenceBox#0', (args) => (args[0] as _$InkDecoration)._super$referenceBox);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$onRemoved#0', (args) => (args[0] as _$InkDecoration)._super$onRemoved);
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$decoration=#1', (args) { (args[0] as _$InkDecoration)._super$decoration = args[1] as Decoration?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$isVisible=#1', (args) { (args[0] as _$InkDecoration)._super$isVisible = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$configuration=#1', (args) { (args[0] as _$InkDecoration)._super$configuration = args[1] as ImageConfiguration; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_decoration.dart::InkDecoration::\$super\$hashCode#0', (args) => (args[0] as _$InkDecoration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

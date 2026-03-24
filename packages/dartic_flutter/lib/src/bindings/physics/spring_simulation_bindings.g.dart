@@ -58,13 +58,6 @@ class _$SpringSimulation extends SpringSimulation implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Tolerance get tolerance {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance');
     if (identical(r, notOverridden)) return super.tolerance;
@@ -79,10 +72,20 @@ class _$SpringSimulation extends SpringSimulation implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -91,9 +94,9 @@ class _$SpringSimulation extends SpringSimulation implements DarticObjectHolder 
   bool _super$isDone(double time) => super.isDone(time);
   String _super$toString() => super.toString();
   SpringType get _super$type => super.type;
-  int get _super$hashCode => super.hashCode;
   Tolerance get _super$tolerance => super.tolerance;
   set _super$tolerance(Tolerance value) { super.tolerance = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -118,9 +121,9 @@ abstract final class SpringSimulationBindings {
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$isDone#1', (args) => (args[0] as _$SpringSimulation)._super$isDone(args[1] as double));
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$toString#0', (args) => (args[0] as _$SpringSimulation)._super$toString());
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$type#0', (args) => (args[0] as _$SpringSimulation)._super$type);
-    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$hashCode#0', (args) => (args[0] as _$SpringSimulation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$tolerance#0', (args) => (args[0] as _$SpringSimulation)._super$tolerance);
     ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$SpringSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
+    ctx.registerBinding('package:flutter/src/physics/spring_simulation.dart::SpringSimulation::\$super\$hashCode#0', (args) => (args[0] as _$SpringSimulation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -114,13 +114,6 @@ class _$FixedExtentScrollPhysics extends FixedExtentScrollPhysics implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics? get parent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
@@ -184,10 +177,20 @@ class _$FixedExtentScrollPhysics extends FixedExtentScrollPhysics implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -202,7 +205,6 @@ class _$FixedExtentScrollPhysics extends FixedExtentScrollPhysics implements Dar
   double _super$adjustPositionForNewDimensions({required ScrollMetrics oldPosition, required ScrollMetrics newPosition, required bool isScrolling, required double velocity}) => super.adjustPositionForNewDimensions(oldPosition: oldPosition, newPosition: newPosition, isScrolling: isScrolling, velocity: velocity);
   Tolerance _super$toleranceFor(ScrollMetrics metrics) => super.toleranceFor(metrics);
   double _super$carriedMomentum(double existingVelocity) => super.carriedMomentum(existingVelocity);
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics? get _super$parent => super.parent;
   SpringDescription get _super$spring => super.spring;
   Tolerance get _super$tolerance => super.tolerance;
@@ -212,6 +214,7 @@ class _$FixedExtentScrollPhysics extends FixedExtentScrollPhysics implements Dar
   double? get _super$dragStartDistanceMotionThreshold => super.dragStartDistanceMotionThreshold;
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
   bool get _super$allowUserScrolling => super.allowUserScrolling;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -242,7 +245,6 @@ abstract final class FixedExtentScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$adjustPositionForNewDimensions#4', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$adjustPositionForNewDimensions(oldPosition: args[1] as ScrollMetrics, newPosition: args[2] as ScrollMetrics, isScrolling: args[3] as bool, velocity: args[4] as double));
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$toleranceFor#1', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$toleranceFor(args[1] as ScrollMetrics));
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$carriedMomentum#1', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$carriedMomentum(args[1] as double));
-    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$parent#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$parent);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$spring#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$spring);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$tolerance#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$tolerance);
@@ -252,6 +254,7 @@ abstract final class FixedExtentScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$dragStartDistanceMotionThreshold#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$dragStartDistanceMotionThreshold);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$allowImplicitScrolling);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$allowUserScrolling#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$allowUserScrolling);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentScrollPhysics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

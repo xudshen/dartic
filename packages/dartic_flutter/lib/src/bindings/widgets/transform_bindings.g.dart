@@ -146,13 +146,6 @@ class _$Transform extends Transform implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -167,10 +160,20 @@ class _$Transform extends Transform implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -190,9 +193,9 @@ class _$Transform extends Transform implements DarticObjectHolder {
   AlignmentGeometry? get _super$alignment => super.alignment;
   bool get _super$transformHitTests => super.transformHitTests;
   ui.FilterQuality? get _super$filterQuality => super.filterQuality;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -228,9 +231,9 @@ abstract final class TransformBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$alignment#0', (args) => (args[0] as _$Transform)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$transformHitTests#0', (args) => (args[0] as _$Transform)._super$transformHitTests);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$filterQuality#0', (args) => (args[0] as _$Transform)._super$filterQuality);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$hashCode#0', (args) => (args[0] as _$Transform)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$child#0', (args) => (args[0] as _$Transform)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$key#0', (args) => (args[0] as _$Transform)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Transform::\$super\$hashCode#0', (args) => (args[0] as _$Transform)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

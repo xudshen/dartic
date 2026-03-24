@@ -158,13 +158,6 @@ class _$Positioned extends Positioned implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get debugTypicalAncestorWidgetDescription {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugTypicalAncestorWidgetDescription');
     if (identical(r, notOverridden)) return super.debugTypicalAncestorWidgetDescription;
@@ -186,10 +179,20 @@ class _$Positioned extends Positioned implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -211,10 +214,10 @@ class _$Positioned extends Positioned implements DarticObjectHolder {
   double? get _super$width => super.width;
   double? get _super$height => super.height;
   Type get _super$debugTypicalAncestorWidgetClass => super.debugTypicalAncestorWidgetClass;
-  int get _super$hashCode => super.hashCode;
   String get _super$debugTypicalAncestorWidgetDescription => super.debugTypicalAncestorWidgetDescription;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -252,10 +255,10 @@ abstract final class PositionedBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$width#0', (args) => (args[0] as _$Positioned)._super$width);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$height#0', (args) => (args[0] as _$Positioned)._super$height);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$debugTypicalAncestorWidgetClass#0', (args) => (args[0] as _$Positioned)._super$debugTypicalAncestorWidgetClass);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$hashCode#0', (args) => (args[0] as _$Positioned)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$debugTypicalAncestorWidgetDescription#0', (args) => (args[0] as _$Positioned)._super$debugTypicalAncestorWidgetDescription);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$child#0', (args) => (args[0] as _$Positioned)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$key#0', (args) => (args[0] as _$Positioned)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Positioned::\$super\$hashCode#0', (args) => (args[0] as _$Positioned)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

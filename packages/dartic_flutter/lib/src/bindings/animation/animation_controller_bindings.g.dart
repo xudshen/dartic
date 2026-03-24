@@ -279,13 +279,6 @@ class _$AnimationController extends AnimationController implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isDismissed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDismissed');
     if (identical(r, notOverridden)) return super.isDismissed;
@@ -328,10 +321,20 @@ class _$AnimationController extends AnimationController implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -370,13 +373,13 @@ class _$AnimationController extends AnimationController implements DarticObjectH
   Duration? get _super$lastElapsedDuration => super.lastElapsedDuration;
   bool get _super$isAnimating => super.isAnimating;
   AnimationStatus get _super$status => super.status;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
   set _super$duration(Duration? value) { super.duration = value; }
   set _super$reverseDuration(Duration? value) { super.reverseDuration = value; }
   set _super$value(double value) { super.value = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -431,13 +434,13 @@ abstract final class AnimationControllerBindings {
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$lastElapsedDuration#0', (args) => (args[0] as _$AnimationController)._super$lastElapsedDuration);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$isAnimating#0', (args) => (args[0] as _$AnimationController)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$status#0', (args) => (args[0] as _$AnimationController)._super$status);
-    ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$hashCode#0', (args) => (args[0] as _$AnimationController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$isDismissed#0', (args) => (args[0] as _$AnimationController)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$isCompleted#0', (args) => (args[0] as _$AnimationController)._super$isCompleted);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$AnimationController)._super$isForwardOrCompleted);
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$duration=#1', (args) { (args[0] as _$AnimationController)._super$duration = args[1] as Duration?; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$reverseDuration=#1', (args) { (args[0] as _$AnimationController)._super$reverseDuration = args[1] as Duration?; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$value=#1', (args) { (args[0] as _$AnimationController)._super$value = args[1] as double; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/animation_controller.dart::AnimationController::\$super\$hashCode#0', (args) => (args[0] as _$AnimationController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

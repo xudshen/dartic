@@ -591,13 +591,6 @@ class _$RenderMouseRegion extends RenderMouseRegion implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   HitTestBehavior get behavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'behavior');
     if (identical(r, notOverridden)) return super.behavior;
@@ -906,10 +899,20 @@ class _$RenderMouseRegion extends RenderMouseRegion implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -998,7 +1001,6 @@ class _$RenderMouseRegion extends RenderMouseRegion implements DarticObjectHolde
   PointerExitEventListener? get _super$onExit => super.onExit;
   MouseCursor get _super$cursor => super.cursor;
   bool get _super$validForMouseTracker => super.validForMouseTracker;
-  int get _super$hashCode => super.hashCode;
   HitTestBehavior get _super$behavior => super.behavior;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
@@ -1043,6 +1045,7 @@ class _$RenderMouseRegion extends RenderMouseRegion implements DarticObjectHolde
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1147,7 +1150,6 @@ abstract final class RenderMouseRegionBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$onExit#0', (args) => (args[0] as _$RenderMouseRegion)._super$onExit);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$cursor#0', (args) => (args[0] as _$RenderMouseRegion)._super$cursor);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$validForMouseTracker#0', (args) => (args[0] as _$RenderMouseRegion)._super$validForMouseTracker);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderMouseRegion)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$behavior#0', (args) => (args[0] as _$RenderMouseRegion)._super$behavior);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$hasSize#0', (args) => (args[0] as _$RenderMouseRegion)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$size#0', (args) => (args[0] as _$RenderMouseRegion)._super$size);
@@ -1192,6 +1194,7 @@ abstract final class RenderMouseRegionBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderMouseRegion)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$layer=#1', (args) { (args[0] as _$RenderMouseRegion)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$child=#1', (args) { (args[0] as _$RenderMouseRegion)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMouseRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderMouseRegion)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

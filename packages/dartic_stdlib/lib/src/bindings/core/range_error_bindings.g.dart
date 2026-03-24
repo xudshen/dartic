@@ -48,13 +48,6 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String? get name {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -76,10 +69,20 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -87,10 +90,10 @@ class _$RangeError extends RangeError implements DarticObjectHolder {
   num? get _super$start => super.start;
   num? get _super$end => super.end;
   num? get _super$invalidValue => super.invalidValue;
-  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   dynamic get _super$message => super.message;
   StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -118,10 +121,10 @@ abstract final class RangeErrorBindings {
     ctx.registerBinding('dart:core::RangeError::\$super\$start#0', (args) => (args[0] as _$RangeError)._super$start);
     ctx.registerBinding('dart:core::RangeError::\$super\$end#0', (args) => (args[0] as _$RangeError)._super$end);
     ctx.registerBinding('dart:core::RangeError::\$super\$invalidValue#0', (args) => (args[0] as _$RangeError)._super$invalidValue);
-    ctx.registerBinding('dart:core::RangeError::\$super\$hashCode#0', (args) => (args[0] as _$RangeError)._super$hashCode);
     ctx.registerBinding('dart:core::RangeError::\$super\$name#0', (args) => (args[0] as _$RangeError)._super$name);
     ctx.registerBinding('dart:core::RangeError::\$super\$message#0', (args) => (args[0] as _$RangeError)._super$message);
     ctx.registerBinding('dart:core::RangeError::\$super\$stackTrace#0', (args) => (args[0] as _$RangeError)._super$stackTrace);
+    ctx.registerBinding('dart:core::RangeError::\$super\$hashCode#0', (args) => (args[0] as _$RangeError)._super$hashCode);
     ctx.registerBinding('dart:core::RangeError::value#3', methodMap()['value#3']!);
     ctx.registerBinding('dart:core::RangeError::range#5', methodMap()['range#5']!);
     ctx.registerBinding('dart:core::RangeError::index#5', methodMap()['index#5']!);

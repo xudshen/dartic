@@ -138,13 +138,6 @@ class _$TabPageSelector extends TabPageSelector implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -152,10 +145,20 @@ class _$TabPageSelector extends TabPageSelector implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -173,8 +176,8 @@ class _$TabPageSelector extends TabPageSelector implements DarticObjectHolder {
   Color? get _super$color => super.color;
   Color? get _super$selectedColor => super.selectedColor;
   BorderStyle? get _super$borderStyle => super.borderStyle;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -208,8 +211,8 @@ abstract final class TabPageSelectorBindings {
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$color#0', (args) => (args[0] as _$TabPageSelector)._super$color);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$selectedColor#0', (args) => (args[0] as _$TabPageSelector)._super$selectedColor);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$borderStyle#0', (args) => (args[0] as _$TabPageSelector)._super$borderStyle);
-    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$hashCode#0', (args) => (args[0] as _$TabPageSelector)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$key#0', (args) => (args[0] as _$TabPageSelector)._super$key);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabPageSelector::\$super\$hashCode#0', (args) => (args[0] as _$TabPageSelector)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

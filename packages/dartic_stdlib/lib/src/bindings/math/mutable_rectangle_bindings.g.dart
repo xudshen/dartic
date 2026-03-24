@@ -87,13 +87,6 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   num get right {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'right');
     if (identical(r, notOverridden)) return super.right;
@@ -164,10 +157,20 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -181,7 +184,6 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
   num get _super$top => super.top;
   num get _super$width => super.width;
   num get _super$height => super.height;
-  int get _super$hashCode => super.hashCode;
   num get _super$right => super.right;
   num get _super$bottom => super.bottom;
   Point<num> get _super$topLeft => super.topLeft;
@@ -192,6 +194,7 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
   set _super$top(num value) { super.top = value; }
   set _super$width(num value) { super.width = value; }
   set _super$height(num value) { super.height = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -221,7 +224,6 @@ abstract final class MutableRectangleBindings {
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$top#0', (args) => (args[0] as _$MutableRectangle)._super$top);
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$width#0', (args) => (args[0] as _$MutableRectangle)._super$width);
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$height#0', (args) => (args[0] as _$MutableRectangle)._super$height);
-    ctx.registerBinding('dart:math::MutableRectangle::\$super\$hashCode#0', (args) => (args[0] as _$MutableRectangle)._super$hashCode);
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$right#0', (args) => (args[0] as _$MutableRectangle)._super$right);
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$bottom#0', (args) => (args[0] as _$MutableRectangle)._super$bottom);
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$topLeft#0', (args) => (args[0] as _$MutableRectangle)._super$topLeft);
@@ -232,6 +234,7 @@ abstract final class MutableRectangleBindings {
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$top=#1', (args) { (args[0] as _$MutableRectangle)._super$top = args[1] as num; return args[1]; });
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$width=#1', (args) { (args[0] as _$MutableRectangle)._super$width = args[1] as num; return args[1]; });
     ctx.registerBinding('dart:math::MutableRectangle::\$super\$height=#1', (args) { (args[0] as _$MutableRectangle)._super$height = args[1] as num; return args[1]; });
+    ctx.registerBinding('dart:math::MutableRectangle::\$super\$hashCode#0', (args) => (args[0] as _$MutableRectangle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

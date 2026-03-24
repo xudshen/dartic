@@ -122,13 +122,6 @@ class _$CupertinoPageTransition extends CupertinoPageTransition implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -136,10 +129,20 @@ class _$CupertinoPageTransition extends CupertinoPageTransition implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -156,8 +159,8 @@ class _$CupertinoPageTransition extends CupertinoPageTransition implements Darti
   Animation<double> get _super$primaryRouteAnimation => super.primaryRouteAnimation;
   Animation<double> get _super$secondaryRouteAnimation => super.secondaryRouteAnimation;
   bool get _super$linearTransition => super.linearTransition;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -191,8 +194,8 @@ abstract final class CupertinoPageTransitionBindings {
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$primaryRouteAnimation#0', (args) => (args[0] as _$CupertinoPageTransition)._super$primaryRouteAnimation);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$secondaryRouteAnimation#0', (args) => (args[0] as _$CupertinoPageTransition)._super$secondaryRouteAnimation);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$linearTransition#0', (args) => (args[0] as _$CupertinoPageTransition)._super$linearTransition);
-    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPageTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$key#0', (args) => (args[0] as _$CupertinoPageTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoPageTransition::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoPageTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

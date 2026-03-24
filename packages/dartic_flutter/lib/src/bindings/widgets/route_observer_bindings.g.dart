@@ -107,13 +107,6 @@ class _$RouteObserver extends RouteObserver<Route<dynamic>> implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   NavigatorState? get navigator {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigator');
     if (identical(r, notOverridden)) return super.navigator;
@@ -121,10 +114,20 @@ class _$RouteObserver extends RouteObserver<Route<dynamic>> implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -139,8 +142,8 @@ class _$RouteObserver extends RouteObserver<Route<dynamic>> implements DarticObj
   void _super$didChangeTop(Route<dynamic> topRoute, Route<dynamic>? previousTopRoute) { super.didChangeTop(topRoute, previousTopRoute); }
   void _super$didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didStartUserGesture(route, previousRoute); }
   void _super$didStopUserGesture() { super.didStopUserGesture(); }
-  int get _super$hashCode => super.hashCode;
   NavigatorState? get _super$navigator => super.navigator;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -171,8 +174,8 @@ abstract final class RouteObserverBindings {
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$didChangeTop#2', (args) { (args[0] as _$RouteObserver)._super$didChangeTop(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$didStartUserGesture#2', (args) { (args[0] as _$RouteObserver)._super$didStartUserGesture(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$didStopUserGesture#0', (args) { (args[0] as _$RouteObserver)._super$didStopUserGesture(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$hashCode#0', (args) => (args[0] as _$RouteObserver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$navigator#0', (args) => (args[0] as _$RouteObserver)._super$navigator);
+    ctx.registerBinding('package:flutter/src/widgets/routes.dart::RouteObserver::\$super\$hashCode#0', (args) => (args[0] as _$RouteObserver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

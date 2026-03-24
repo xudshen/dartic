@@ -39,13 +39,6 @@ class _$FadeUpwardsPageTransitionsBuilder extends FadeUpwardsPageTransitionsBuil
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   DelegatedTransitionBuilder? get delegatedTransition {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegatedTransition');
     if (identical(r, notOverridden)) return super.delegatedTransition;
@@ -67,18 +60,28 @@ class _$FadeUpwardsPageTransitionsBuilder extends FadeUpwardsPageTransitionsBuil
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   DelegatedTransitionBuilder? get _super$delegatedTransition => super.delegatedTransition;
   Duration get _super$transitionDuration => super.transitionDuration;
   Duration get _super$reverseTransitionDuration => super.reverseTransitionDuration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -99,10 +102,10 @@ abstract final class FadeUpwardsPageTransitionsBuilderBindings {
           _$FadeUpwardsPageTransitionsBuilder(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$toString#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$toString());
-    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$delegatedTransition#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$delegatedTransition);
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$transitionDuration#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$transitionDuration);
     ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$reverseTransitionDuration#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$reverseTransitionDuration);
+    ctx.registerBinding('package:flutter/src/material/page_transitions_theme.dart::FadeUpwardsPageTransitionsBuilder::\$super\$hashCode#0', (args) => (args[0] as _$FadeUpwardsPageTransitionsBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

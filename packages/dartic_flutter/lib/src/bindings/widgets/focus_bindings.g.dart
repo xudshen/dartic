@@ -181,13 +181,6 @@ class _$Focus extends Focus implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -195,10 +188,20 @@ class _$Focus extends Focus implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -224,8 +227,8 @@ class _$Focus extends Focus implements DarticObjectHolder {
   bool get _super$descendantsAreTraversable => super.descendantsAreTraversable;
   bool get _super$includeSemantics => super.includeSemantics;
   String? get _super$debugLabel => super.debugLabel;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -270,8 +273,8 @@ abstract final class FocusBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$descendantsAreTraversable#0', (args) => (args[0] as _$Focus)._super$descendantsAreTraversable);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$includeSemantics#0', (args) => (args[0] as _$Focus)._super$includeSemantics);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$debugLabel#0', (args) => (args[0] as _$Focus)._super$debugLabel);
-    ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$hashCode#0', (args) => (args[0] as _$Focus)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$key#0', (args) => (args[0] as _$Focus)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/focus_scope.dart::Focus::\$super\$hashCode#0', (args) => (args[0] as _$Focus)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

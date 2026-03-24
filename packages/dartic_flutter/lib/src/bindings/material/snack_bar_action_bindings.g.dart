@@ -139,13 +139,6 @@ class _$SnackBarAction extends SnackBarAction implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -153,10 +146,20 @@ class _$SnackBarAction extends SnackBarAction implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -175,8 +178,8 @@ class _$SnackBarAction extends SnackBarAction implements DarticObjectHolder {
   Color? get _super$disabledBackgroundColor => super.disabledBackgroundColor;
   String get _super$label => super.label;
   VoidCallback get _super$onPressed => super.onPressed;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,8 +214,8 @@ abstract final class SnackBarActionBindings {
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$disabledBackgroundColor#0', (args) => (args[0] as _$SnackBarAction)._super$disabledBackgroundColor);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$label#0', (args) => (args[0] as _$SnackBarAction)._super$label);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$onPressed#0', (args) => (args[0] as _$SnackBarAction)._super$onPressed);
-    ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$hashCode#0', (args) => (args[0] as _$SnackBarAction)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$key#0', (args) => (args[0] as _$SnackBarAction)._super$key);
+    ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBarAction::\$super\$hashCode#0', (args) => (args[0] as _$SnackBarAction)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

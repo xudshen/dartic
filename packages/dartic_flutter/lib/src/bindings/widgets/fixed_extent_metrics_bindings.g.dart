@@ -57,13 +57,6 @@ class _$FixedExtentMetrics extends FixedExtentMetrics implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get minScrollExtent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'minScrollExtent');
     if (identical(r, notOverridden)) return super.minScrollExtent;
@@ -176,17 +169,26 @@ class _$FixedExtentMetrics extends FixedExtentMetrics implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   FixedExtentMetrics _super$copyWith({double? minScrollExtent, double? maxScrollExtent, double? pixels, double? viewportDimension, AxisDirection? axisDirection, int? itemIndex, double? devicePixelRatio}) => super.copyWith(minScrollExtent: minScrollExtent, maxScrollExtent: maxScrollExtent, pixels: pixels, viewportDimension: viewportDimension, axisDirection: axisDirection, itemIndex: itemIndex, devicePixelRatio: devicePixelRatio);
   String _super$toString() => super.toString();
   int get _super$itemIndex => super.itemIndex;
-  int get _super$hashCode => super.hashCode;
   double get _super$minScrollExtent => super.minScrollExtent;
   double get _super$maxScrollExtent => super.maxScrollExtent;
   bool get _super$hasContentDimensions => super.hasContentDimensions;
@@ -203,6 +205,7 @@ class _$FixedExtentMetrics extends FixedExtentMetrics implements DarticObjectHol
   double get _super$extentInside => super.extentInside;
   double get _super$extentAfter => super.extentAfter;
   double get _super$extentTotal => super.extentTotal;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -225,7 +228,6 @@ abstract final class FixedExtentMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$copyWith#7', (args) => (args[0] as _$FixedExtentMetrics)._super$copyWith(minScrollExtent: identical(args[1], darticAbsent) ? null : args[1] as double?, maxScrollExtent: identical(args[2], darticAbsent) ? null : args[2] as double?, pixels: identical(args[3], darticAbsent) ? null : args[3] as double?, viewportDimension: identical(args[4], darticAbsent) ? null : args[4] as double?, axisDirection: identical(args[5], darticAbsent) ? null : args[5] as AxisDirection?, itemIndex: identical(args[6], darticAbsent) ? null : args[6] as int?, devicePixelRatio: identical(args[7], darticAbsent) ? null : args[7] as double?));
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$toString#0', (args) => (args[0] as _$FixedExtentMetrics)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$itemIndex#0', (args) => (args[0] as _$FixedExtentMetrics)._super$itemIndex);
-    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentMetrics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$minScrollExtent#0', (args) => (args[0] as _$FixedExtentMetrics)._super$minScrollExtent);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$maxScrollExtent#0', (args) => (args[0] as _$FixedExtentMetrics)._super$maxScrollExtent);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$hasContentDimensions#0', (args) => (args[0] as _$FixedExtentMetrics)._super$hasContentDimensions);
@@ -242,6 +244,7 @@ abstract final class FixedExtentMetricsBindings {
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$extentInside#0', (args) => (args[0] as _$FixedExtentMetrics)._super$extentInside);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$extentAfter#0', (args) => (args[0] as _$FixedExtentMetrics)._super$extentAfter);
     ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$extentTotal#0', (args) => (args[0] as _$FixedExtentMetrics)._super$extentTotal);
+    ctx.registerBinding('package:flutter/src/widgets/list_wheel_scroll_view.dart::FixedExtentMetrics::\$super\$hashCode#0', (args) => (args[0] as _$FixedExtentMetrics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

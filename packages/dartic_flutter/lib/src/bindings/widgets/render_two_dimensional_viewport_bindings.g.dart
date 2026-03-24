@@ -716,13 +716,6 @@ class _$RenderTwoDimensionalViewport extends RenderTwoDimensionalViewport implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -1003,10 +996,20 @@ class _$RenderTwoDimensionalViewport extends RenderTwoDimensionalViewport implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1111,7 +1114,6 @@ class _$RenderTwoDimensionalViewport extends RenderTwoDimensionalViewport implem
   Size get _super$viewportDimension => super.viewportDimension;
   bool get _super$didResize => super.didResize;
   bool get _super$needsDelegateRebuild => super.needsDelegateRebuild;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -1152,6 +1154,7 @@ class _$RenderTwoDimensionalViewport extends RenderTwoDimensionalViewport implem
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1273,7 +1276,6 @@ abstract final class RenderTwoDimensionalViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$viewportDimension#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$viewportDimension);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$didResize#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$didResize);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$needsDelegateRebuild#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$needsDelegateRebuild);
-    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$hasSize#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$hasSize);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$size#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$semanticBounds);
@@ -1314,6 +1316,7 @@ abstract final class RenderTwoDimensionalViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$parentData=#1', (args) { (args[0] as _$RenderTwoDimensionalViewport)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderTwoDimensionalViewport)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$layer=#1', (args) { (args[0] as _$RenderTwoDimensionalViewport)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::RenderTwoDimensionalViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderTwoDimensionalViewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

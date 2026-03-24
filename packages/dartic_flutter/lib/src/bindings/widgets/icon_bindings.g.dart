@@ -182,13 +182,6 @@ class _$Icon extends Icon implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -196,10 +189,20 @@ class _$Icon extends Icon implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -225,8 +228,8 @@ class _$Icon extends Icon implements DarticObjectHolder {
   bool? get _super$applyTextScaling => super.applyTextScaling;
   BlendMode? get _super$blendMode => super.blendMode;
   FontWeight? get _super$fontWeight => super.fontWeight;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -268,8 +271,8 @@ abstract final class IconBindings {
     ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$applyTextScaling#0', (args) => (args[0] as _$Icon)._super$applyTextScaling);
     ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$blendMode#0', (args) => (args[0] as _$Icon)._super$blendMode);
     ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$fontWeight#0', (args) => (args[0] as _$Icon)._super$fontWeight);
-    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$hashCode#0', (args) => (args[0] as _$Icon)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$key#0', (args) => (args[0] as _$Icon)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/icon.dart::Icon::\$super\$hashCode#0', (args) => (args[0] as _$Icon)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

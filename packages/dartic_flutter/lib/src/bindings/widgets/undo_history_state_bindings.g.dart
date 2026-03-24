@@ -141,13 +141,6 @@ class _$UndoHistoryState extends UndoHistoryState<dynamic> implements DarticObje
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   UndoHistory get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -169,10 +162,20 @@ class _$UndoHistoryState extends UndoHistoryState<dynamic> implements DarticObje
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -194,10 +197,10 @@ class _$UndoHistoryState extends UndoHistoryState<dynamic> implements DarticObje
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool get _super$canUndo => super.canUndo;
   bool get _super$canRedo => super.canRedo;
-  int get _super$hashCode => super.hashCode;
   UndoHistory get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -235,10 +238,10 @@ abstract final class UndoHistoryStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$UndoHistoryState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$canUndo#0', (args) => (args[0] as _$UndoHistoryState)._super$canUndo);
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$canRedo#0', (args) => (args[0] as _$UndoHistoryState)._super$canRedo);
-    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$hashCode#0', (args) => (args[0] as _$UndoHistoryState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$widget#0', (args) => (args[0] as _$UndoHistoryState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$context#0', (args) => (args[0] as _$UndoHistoryState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$mounted#0', (args) => (args[0] as _$UndoHistoryState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/widgets/undo_history.dart::UndoHistoryState::\$super\$hashCode#0', (args) => (args[0] as _$UndoHistoryState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

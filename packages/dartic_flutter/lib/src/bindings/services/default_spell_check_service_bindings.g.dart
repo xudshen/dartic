@@ -51,13 +51,6 @@ class _$DefaultSpellCheckService extends DefaultSpellCheckService implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set lastSavedResults(SpellCheckResults? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'lastSavedResults', value)) {
       super.lastSavedResults = value;
@@ -72,10 +65,20 @@ class _$DefaultSpellCheckService extends DefaultSpellCheckService implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -83,9 +86,9 @@ class _$DefaultSpellCheckService extends DefaultSpellCheckService implements Dar
   String _super$toString() => super.toString();
   SpellCheckResults? get _super$lastSavedResults => super.lastSavedResults;
   MethodChannel get _super$spellCheckChannel => super.spellCheckChannel;
-  int get _super$hashCode => super.hashCode;
   set _super$lastSavedResults(SpellCheckResults? value) { super.lastSavedResults = value; }
   set _super$spellCheckChannel(MethodChannel value) { super.spellCheckChannel = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -110,9 +113,9 @@ abstract final class DefaultSpellCheckServiceBindings {
     ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$toString#0', (args) => (args[0] as _$DefaultSpellCheckService)._super$toString());
     ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$lastSavedResults#0', (args) => (args[0] as _$DefaultSpellCheckService)._super$lastSavedResults);
     ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$spellCheckChannel#0', (args) => (args[0] as _$DefaultSpellCheckService)._super$spellCheckChannel);
-    ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$hashCode#0', (args) => (args[0] as _$DefaultSpellCheckService)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$lastSavedResults=#1', (args) { (args[0] as _$DefaultSpellCheckService)._super$lastSavedResults = args[1] as SpellCheckResults?; return args[1]; });
     ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$spellCheckChannel=#1', (args) { (args[0] as _$DefaultSpellCheckService)._super$spellCheckChannel = args[1] as MethodChannel; return args[1]; });
+    ctx.registerBinding('package:flutter/src/services/spell_check.dart::DefaultSpellCheckService::\$super\$hashCode#0', (args) => (args[0] as _$DefaultSpellCheckService)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

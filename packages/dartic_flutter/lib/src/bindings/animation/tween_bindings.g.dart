@@ -78,13 +78,6 @@ class _$Tween extends Tween<Object?> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set begin(Object? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'begin', value)) {
       super.begin = value;
@@ -99,10 +92,20 @@ class _$Tween extends Tween<Object?> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -114,9 +117,9 @@ class _$Tween extends Tween<Object?> implements DarticObjectHolder {
   Animatable _super$chain(Animatable<double> parent) => super.chain(parent);
   Object? get _super$begin => super.begin;
   Object? get _super$end => super.end;
-  int get _super$hashCode => super.hashCode;
   set _super$begin(Object? value) { super.begin = value; }
   set _super$end(Object? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -144,9 +147,9 @@ abstract final class TweenBindings {
     ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$chain#1', (args) => (args[0] as _$Tween)._super$chain(args[1] as Animatable<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$begin#0', (args) => (args[0] as _$Tween)._super$begin);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$end#0', (args) => (args[0] as _$Tween)._super$end);
-    ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$hashCode#0', (args) => (args[0] as _$Tween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$begin=#1', (args) { (args[0] as _$Tween)._super$begin = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$end=#1', (args) { (args[0] as _$Tween)._super$end = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::Tween::\$super\$hashCode#0', (args) => (args[0] as _$Tween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -310,13 +310,6 @@ class _$MaterialPageRoute extends MaterialPageRoute<dynamic> implements DarticOb
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get fullscreenDialog {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fullscreenDialog');
     if (identical(r, notOverridden)) return super.fullscreenDialog;
@@ -632,10 +625,20 @@ class _$MaterialPageRoute extends MaterialPageRoute<dynamic> implements DarticOb
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -681,7 +684,6 @@ class _$MaterialPageRoute extends MaterialPageRoute<dynamic> implements DarticOb
   WidgetBuilder get _super$builder => super.builder;
   bool get _super$maintainState => super.maintainState;
   String get _super$debugLabel => super.debugLabel;
-  int get _super$hashCode => super.hashCode;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
   bool get _super$opaque => super.opaque;
@@ -727,6 +729,7 @@ class _$MaterialPageRoute extends MaterialPageRoute<dynamic> implements DarticOb
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -788,7 +791,6 @@ abstract final class MaterialPageRouteBindings {
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$builder#0', (args) => (args[0] as _$MaterialPageRoute)._super$builder);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$maintainState#0', (args) => (args[0] as _$MaterialPageRoute)._super$maintainState);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$debugLabel#0', (args) => (args[0] as _$MaterialPageRoute)._super$debugLabel);
-    ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPageRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$fullscreenDialog#0', (args) => (args[0] as _$MaterialPageRoute)._super$fullscreenDialog);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$MaterialPageRoute)._super$allowSnapshotting);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$opaque#0', (args) => (args[0] as _$MaterialPageRoute)._super$opaque);
@@ -834,6 +836,7 @@ abstract final class MaterialPageRouteBindings {
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$MaterialPageRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$offstage=#1', (args) { (args[0] as _$MaterialPageRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$MaterialPageRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPageRoute::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPageRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

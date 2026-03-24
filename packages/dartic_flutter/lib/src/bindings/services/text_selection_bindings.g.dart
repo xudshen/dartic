@@ -110,13 +110,6 @@ class _$TextSelection extends TextSelection implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get start {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'start');
     if (identical(r, notOverridden)) return super.start;
@@ -152,10 +145,20 @@ class _$TextSelection extends TextSelection implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -172,12 +175,12 @@ class _$TextSelection extends TextSelection implements DarticObjectHolder {
   bool get _super$isDirectional => super.isDirectional;
   TextPosition get _super$base => super.base;
   TextPosition get _super$extent => super.extent;
-  int get _super$hashCode => super.hashCode;
   int get _super$start => super.start;
   int get _super$end => super.end;
   bool get _super$isValid => super.isValid;
   bool get _super$isCollapsed => super.isCollapsed;
   bool get _super$isNormalized => super.isNormalized;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -210,12 +213,12 @@ abstract final class TextSelectionBindings {
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$isDirectional#0', (args) => (args[0] as _$TextSelection)._super$isDirectional);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$base#0', (args) => (args[0] as _$TextSelection)._super$base);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$extent#0', (args) => (args[0] as _$TextSelection)._super$extent);
-    ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$hashCode#0', (args) => (args[0] as _$TextSelection)._super$hashCode);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$start#0', (args) => (args[0] as _$TextSelection)._super$start);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$end#0', (args) => (args[0] as _$TextSelection)._super$end);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$isValid#0', (args) => (args[0] as _$TextSelection)._super$isValid);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$isCollapsed#0', (args) => (args[0] as _$TextSelection)._super$isCollapsed);
     ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$isNormalized#0', (args) => (args[0] as _$TextSelection)._super$isNormalized);
+    ctx.registerBinding('package:flutter/src/services/text_editing.dart::TextSelection::\$super\$hashCode#0', (args) => (args[0] as _$TextSelection)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

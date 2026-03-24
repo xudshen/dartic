@@ -96,13 +96,6 @@ class _$RestorableEnum extends RestorableEnum<Enum> implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Enum get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -152,10 +145,20 @@ class _$RestorableEnum extends RestorableEnum<Enum> implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -170,7 +173,6 @@ class _$RestorableEnum extends RestorableEnum<Enum> implements DarticObjectHolde
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$notifyListeners() { super.notifyListeners(); }
   Set<Enum> get _super$values => super.values;
-  int get _super$hashCode => super.hashCode;
   Enum get _super$value => super.value;
   bool get _super$enabled => super.enabled;
   State<StatefulWidget> get _super$state => super.state;
@@ -178,6 +180,7 @@ class _$RestorableEnum extends RestorableEnum<Enum> implements DarticObjectHolde
   bool get _super$hasListeners => super.hasListeners;
   set _super$value(Enum value) { super.value = value; }
   set _super$values(Set<Enum> value) { super.values = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -208,7 +211,6 @@ abstract final class RestorableEnumBindings {
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$removeListener#1', (args) { (args[0] as _$RestorableEnum)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$notifyListeners#0', (args) { (args[0] as _$RestorableEnum)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$values#0', (args) => (args[0] as _$RestorableEnum)._super$values);
-    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$hashCode#0', (args) => (args[0] as _$RestorableEnum)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$value#0', (args) => (args[0] as _$RestorableEnum)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$enabled#0', (args) => (args[0] as _$RestorableEnum)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$state#0', (args) => (args[0] as _$RestorableEnum)._super$state);
@@ -216,6 +218,7 @@ abstract final class RestorableEnumBindings {
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableEnum)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$value=#1', (args) { (args[0] as _$RestorableEnum)._super$value = args[1] as Enum; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$values=#1', (args) { (args[0] as _$RestorableEnum)._super$values = (args[1] as Set).cast<Enum>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/restoration_properties.dart::RestorableEnum::\$super\$hashCode#0', (args) => (args[0] as _$RestorableEnum)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

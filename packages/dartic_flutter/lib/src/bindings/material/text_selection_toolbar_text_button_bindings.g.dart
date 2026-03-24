@@ -127,13 +127,6 @@ class _$TextSelectionToolbarTextButton extends TextSelectionToolbarTextButton im
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -141,10 +134,20 @@ class _$TextSelectionToolbarTextButton extends TextSelectionToolbarTextButton im
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -162,8 +165,8 @@ class _$TextSelectionToolbarTextButton extends TextSelectionToolbarTextButton im
   VoidCallback? get _super$onPressed => super.onPressed;
   EdgeInsetsGeometry get _super$padding => super.padding;
   AlignmentGeometry? get _super$alignment => super.alignment;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -198,8 +201,8 @@ abstract final class TextSelectionToolbarTextButtonBindings {
     ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$onPressed#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$onPressed);
     ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$padding#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$padding);
     ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$alignment#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$alignment);
-    ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$key#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/text_selection_toolbar_text_button.dart::TextSelectionToolbarTextButton::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionToolbarTextButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

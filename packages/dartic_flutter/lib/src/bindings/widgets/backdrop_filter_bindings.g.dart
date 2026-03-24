@@ -137,13 +137,6 @@ class _$BackdropFilter extends BackdropFilter implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -158,10 +151,20 @@ class _$BackdropFilter extends BackdropFilter implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -180,9 +183,9 @@ class _$BackdropFilter extends BackdropFilter implements DarticObjectHolder {
   ui.BlendMode get _super$blendMode => super.blendMode;
   bool get _super$enabled => super.enabled;
   BackdropKey? get _super$backdropGroupKey => super.backdropGroupKey;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -217,9 +220,9 @@ abstract final class BackdropFilterBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$blendMode#0', (args) => (args[0] as _$BackdropFilter)._super$blendMode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$enabled#0', (args) => (args[0] as _$BackdropFilter)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$backdropGroupKey#0', (args) => (args[0] as _$BackdropFilter)._super$backdropGroupKey);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$hashCode#0', (args) => (args[0] as _$BackdropFilter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$child#0', (args) => (args[0] as _$BackdropFilter)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$key#0', (args) => (args[0] as _$BackdropFilter)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::BackdropFilter::\$super\$hashCode#0', (args) => (args[0] as _$BackdropFilter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -97,13 +97,6 @@ class _$DraggableScrollableNotification extends DraggableScrollableNotification 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get depth {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'depth');
     if (identical(r, notOverridden)) return super.depth;
@@ -111,10 +104,20 @@ class _$DraggableScrollableNotification extends DraggableScrollableNotification 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -127,8 +130,8 @@ class _$DraggableScrollableNotification extends DraggableScrollableNotification 
   double get _super$initialExtent => super.initialExtent;
   BuildContext get _super$context => super.context;
   bool get _super$shouldCloseOnMinExtent => super.shouldCloseOnMinExtent;
-  int get _super$hashCode => super.hashCode;
   int get _super$depth => super.depth;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -157,8 +160,8 @@ abstract final class DraggableScrollableNotificationBindings {
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$initialExtent#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$initialExtent);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$context#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$shouldCloseOnMinExtent#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$shouldCloseOnMinExtent);
-    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$depth#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$depth);
+    ctx.registerBinding('package:flutter/src/widgets/draggable_scrollable_sheet.dart::DraggableScrollableNotification::\$super\$hashCode#0', (args) => (args[0] as _$DraggableScrollableNotification)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -129,13 +129,6 @@ class _$BannerPainter extends BannerPainter implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SemanticsBuilderCallback? get semanticsBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticsBuilder');
     if (identical(r, notOverridden)) return super.semanticsBuilder;
@@ -143,10 +136,20 @@ class _$BannerPainter extends BannerPainter implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -165,8 +168,8 @@ class _$BannerPainter extends BannerPainter implements DarticObjectHolder {
   Color get _super$color => super.color;
   TextStyle get _super$textStyle => super.textStyle;
   BoxShadow get _super$shadow => super.shadow;
-  int get _super$hashCode => super.hashCode;
   SemanticsBuilderCallback? get _super$semanticsBuilder => super.semanticsBuilder;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -201,8 +204,8 @@ abstract final class BannerPainterBindings {
     ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$color#0', (args) => (args[0] as _$BannerPainter)._super$color);
     ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$textStyle#0', (args) => (args[0] as _$BannerPainter)._super$textStyle);
     ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$shadow#0', (args) => (args[0] as _$BannerPainter)._super$shadow);
-    ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$hashCode#0', (args) => (args[0] as _$BannerPainter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$semanticsBuilder#0', (args) => (args[0] as _$BannerPainter)._super$semanticsBuilder);
+    ctx.registerBinding('package:flutter/src/widgets/banner.dart::BannerPainter::\$super\$hashCode#0', (args) => (args[0] as _$BannerPainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

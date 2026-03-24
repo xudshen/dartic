@@ -57,13 +57,6 @@ class _$BoundedFrictionSimulation extends BoundedFrictionSimulation implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get finalX {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'finalX');
     if (identical(r, notOverridden)) return super.finalX;
@@ -85,10 +78,20 @@ class _$BoundedFrictionSimulation extends BoundedFrictionSimulation implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -97,10 +100,10 @@ class _$BoundedFrictionSimulation extends BoundedFrictionSimulation implements D
   String _super$toString() => super.toString();
   double _super$dx(double time) => super.dx(time);
   double _super$timeAtX(double x) => super.timeAtX(x);
-  int get _super$hashCode => super.hashCode;
   double get _super$finalX => super.finalX;
   Tolerance get _super$tolerance => super.tolerance;
   set _super$tolerance(Tolerance value) { super.tolerance = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -125,10 +128,10 @@ abstract final class BoundedFrictionSimulationBindings {
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$toString#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$toString());
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$dx#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$dx(args[1] as double));
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$timeAtX#1', (args) => (args[0] as _$BoundedFrictionSimulation)._super$timeAtX(args[1] as double));
-    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$hashCode#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$finalX#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$finalX);
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$tolerance#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$tolerance);
     ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$BoundedFrictionSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
+    ctx.registerBinding('package:flutter/src/physics/friction_simulation.dart::BoundedFrictionSimulation::\$super\$hashCode#0', (args) => (args[0] as _$BoundedFrictionSimulation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

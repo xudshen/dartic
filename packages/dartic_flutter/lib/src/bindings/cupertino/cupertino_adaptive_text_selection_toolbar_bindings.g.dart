@@ -116,13 +116,6 @@ class _$CupertinoAdaptiveTextSelectionToolbar extends CupertinoAdaptiveTextSelec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -130,10 +123,20 @@ class _$CupertinoAdaptiveTextSelectionToolbar extends CupertinoAdaptiveTextSelec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -149,8 +152,8 @@ class _$CupertinoAdaptiveTextSelectionToolbar extends CupertinoAdaptiveTextSelec
   TextSelectionToolbarAnchors get _super$anchors => super.anchors;
   List<Widget>? get _super$children => super.children;
   List<ContextMenuButtonItem>? get _super$buttonItems => super.buttonItems;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -183,8 +186,8 @@ abstract final class CupertinoAdaptiveTextSelectionToolbarBindings {
     ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$anchors#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$anchors);
     ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$children#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$children);
     ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$buttonItems#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$buttonItems);
-    ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$key#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/adaptive_text_selection_toolbar.dart::CupertinoAdaptiveTextSelectionToolbar::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoAdaptiveTextSelectionToolbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

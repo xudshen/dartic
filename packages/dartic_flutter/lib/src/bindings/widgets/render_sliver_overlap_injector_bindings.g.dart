@@ -436,13 +436,6 @@ class _$RenderSliverOverlapInjector extends RenderSliverOverlapInjector implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get ensureSemantics {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'ensureSemantics');
     if (identical(r, notOverridden)) return super.ensureSemantics;
@@ -695,10 +688,20 @@ class _$RenderSliverOverlapInjector extends RenderSliverOverlapInjector implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -763,7 +766,6 @@ class _$RenderSliverOverlapInjector extends RenderSliverOverlapInjector implemen
   DiagnosticsNode _super$describeForError(String name, {DiagnosticsTreeStyle style = DiagnosticsTreeStyle.shallow}) => super.describeForError(name, style: style);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   SliverOverlapAbsorberHandle get _super$handle => super.handle;
-  int get _super$hashCode => super.hashCode;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
   SliverGeometry? get _super$geometry => super.geometry;
@@ -800,6 +802,7 @@ class _$RenderSliverOverlapInjector extends RenderSliverOverlapInjector implemen
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -880,7 +883,6 @@ abstract final class RenderSliverOverlapInjectorBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$describeForError#2', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$describeForError(args[1] as String, style: identical(args[2], darticAbsent) ? DiagnosticsTreeStyle.shallow : args[2] as DiagnosticsTreeStyle));
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$handle#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$handle);
-    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$constraints);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$geometry#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$geometry);
@@ -917,6 +919,7 @@ abstract final class RenderSliverOverlapInjectorBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$parentData=#1', (args) { (args[0] as _$RenderSliverOverlapInjector)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverOverlapInjector)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverOverlapInjector)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderSliverOverlapInjector::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverOverlapInjector)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -84,13 +84,6 @@ class _$BoxHitTestResult extends BoxHitTestResult implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Iterable<HitTestEntry<HitTestTarget>> get path {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
     if (identical(r, notOverridden)) return super.path;
@@ -98,10 +91,20 @@ class _$BoxHitTestResult extends BoxHitTestResult implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -114,8 +117,8 @@ class _$BoxHitTestResult extends BoxHitTestResult implements DarticObjectHolder 
   void _super$pushTransform(Matrix4 transform) { super.pushTransform(transform); }
   void _super$pushOffset(ui.Offset offset) { super.pushOffset(offset); }
   void _super$popTransform() { super.popTransform(); }
-  int get _super$hashCode => super.hashCode;
   Iterable<HitTestEntry<HitTestTarget>> get _super$path => super.path;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -144,8 +147,8 @@ abstract final class BoxHitTestResultBindings {
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$pushTransform#1', (args) { (args[0] as _$BoxHitTestResult)._super$pushTransform(args[1] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$pushOffset#1', (args) { (args[0] as _$BoxHitTestResult)._super$pushOffset(args[1] as ui.Offset); return null; });
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$popTransform#0', (args) { (args[0] as _$BoxHitTestResult)._super$popTransform(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$hashCode#0', (args) => (args[0] as _$BoxHitTestResult)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$path#0', (args) => (args[0] as _$BoxHitTestResult)._super$path);
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxHitTestResult::\$super\$hashCode#0', (args) => (args[0] as _$BoxHitTestResult)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

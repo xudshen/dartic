@@ -115,13 +115,6 @@ class _$CupertinoActivityIndicator extends CupertinoActivityIndicator implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -129,10 +122,20 @@ class _$CupertinoActivityIndicator extends CupertinoActivityIndicator implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -149,8 +152,8 @@ class _$CupertinoActivityIndicator extends CupertinoActivityIndicator implements
   bool get _super$animating => super.animating;
   double get _super$radius => super.radius;
   double get _super$progress => super.progress;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -183,8 +186,8 @@ abstract final class CupertinoActivityIndicatorBindings {
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$animating#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$animating);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$radius#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$radius);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$progress#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$progress);
-    ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$key#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/activity_indicator.dart::CupertinoActivityIndicator::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActivityIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

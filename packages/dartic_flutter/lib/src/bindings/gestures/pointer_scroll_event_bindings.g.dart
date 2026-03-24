@@ -84,13 +84,6 @@ class _$PointerScrollEvent extends PointerScrollEvent implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get viewId {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'viewId');
     if (identical(r, notOverridden)) return super.viewId;
@@ -301,10 +294,20 @@ class _$PointerScrollEvent extends PointerScrollEvent implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -317,7 +320,6 @@ class _$PointerScrollEvent extends PointerScrollEvent implements DarticObjectHol
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   String _super$toStringFull() => super.toStringFull();
   Offset get _super$scrollDelta => super.scrollDelta;
-  int get _super$hashCode => super.hashCode;
   int get _super$viewId => super.viewId;
   int get _super$embedderId => super.embedderId;
   Duration get _super$timeStamp => super.timeStamp;
@@ -348,6 +350,7 @@ class _$PointerScrollEvent extends PointerScrollEvent implements DarticObjectHol
   bool get _super$synthesized => super.synthesized;
   Matrix4? get _super$transform => super.transform;
   PointerEvent? get _super$original => super.original;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -376,7 +379,6 @@ abstract final class PointerScrollEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$PointerScrollEvent)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$toStringFull#0', (args) => (args[0] as _$PointerScrollEvent)._super$toStringFull());
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$scrollDelta#0', (args) => (args[0] as _$PointerScrollEvent)._super$scrollDelta);
-    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerScrollEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$viewId#0', (args) => (args[0] as _$PointerScrollEvent)._super$viewId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$embedderId#0', (args) => (args[0] as _$PointerScrollEvent)._super$embedderId);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$timeStamp#0', (args) => (args[0] as _$PointerScrollEvent)._super$timeStamp);
@@ -407,6 +409,7 @@ abstract final class PointerScrollEventBindings {
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$synthesized#0', (args) => (args[0] as _$PointerScrollEvent)._super$synthesized);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$transform#0', (args) => (args[0] as _$PointerScrollEvent)._super$transform);
     ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$original#0', (args) => (args[0] as _$PointerScrollEvent)._super$original);
+    ctx.registerBinding('package:flutter/src/gestures/events.dart::PointerScrollEvent::\$super\$hashCode#0', (args) => (args[0] as _$PointerScrollEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

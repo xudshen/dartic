@@ -546,13 +546,6 @@ class _$RenderSemanticsAnnotations extends RenderSemanticsAnnotations implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -903,10 +896,20 @@ class _$RenderSemanticsAnnotations extends RenderSemanticsAnnotations implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -989,7 +992,6 @@ class _$RenderSemanticsAnnotations extends RenderSemanticsAnnotations implements
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   void _super$initSemanticsAnnotations({required SemanticsProperties properties, required bool container, required bool explicitChildNodes, required bool excludeSemantics, required bool blockUserActions, required ui.Locale? localeForSubtree, required ui.TextDirection? textDirection}) { super.initSemanticsAnnotations(properties: properties, container: container, explicitChildNodes: explicitChildNodes, excludeSemantics: excludeSemantics, blockUserActions: blockUserActions, localeForSubtree: localeForSubtree, textDirection: textDirection); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -1040,6 +1042,7 @@ class _$RenderSemanticsAnnotations extends RenderSemanticsAnnotations implements
   set _super$blockUserActions(bool value) { super.blockUserActions = value; }
   set _super$localeForSubtree(ui.Locale? value) { super.localeForSubtree = value; }
   set _super$textDirection(ui.TextDirection? value) { super.textDirection = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1138,7 +1141,6 @@ abstract final class RenderSemanticsAnnotationsBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$initSemanticsAnnotations#7', (args) { (args[0] as _$RenderSemanticsAnnotations)._super$initSemanticsAnnotations(properties: args[1] as SemanticsProperties, container: args[2] as bool, explicitChildNodes: args[3] as bool, excludeSemantics: args[4] as bool, blockUserActions: args[5] as bool, localeForSubtree: args[6] as ui.Locale?, textDirection: args[7] as ui.TextDirection?); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$hashCode#0', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$hasSize#0', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$size#0', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$semanticBounds);
@@ -1189,6 +1191,7 @@ abstract final class RenderSemanticsAnnotationsBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$blockUserActions=#1', (args) { (args[0] as _$RenderSemanticsAnnotations)._super$blockUserActions = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$localeForSubtree=#1', (args) { (args[0] as _$RenderSemanticsAnnotations)._super$localeForSubtree = args[1] as ui.Locale?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$textDirection=#1', (args) { (args[0] as _$RenderSemanticsAnnotations)._super$textDirection = args[1] as ui.TextDirection?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderSemanticsAnnotations::\$super\$hashCode#0', (args) => (args[0] as _$RenderSemanticsAnnotations)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -113,13 +113,6 @@ class _$BallisticScrollActivity extends BallisticScrollActivity implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollActivityDelegate get delegate {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegate');
     if (identical(r, notOverridden)) return super.delegate;
@@ -127,10 +120,20 @@ class _$BallisticScrollActivity extends BallisticScrollActivity implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -147,8 +150,8 @@ class _$BallisticScrollActivity extends BallisticScrollActivity implements Darti
   bool get _super$shouldIgnorePointer => super.shouldIgnorePointer;
   bool get _super$isScrolling => super.isScrolling;
   double get _super$velocity => super.velocity;
-  int get _super$hashCode => super.hashCode;
   ScrollActivityDelegate get _super$delegate => super.delegate;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -181,8 +184,8 @@ abstract final class BallisticScrollActivityBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$shouldIgnorePointer#0', (args) => (args[0] as _$BallisticScrollActivity)._super$shouldIgnorePointer);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$isScrolling#0', (args) => (args[0] as _$BallisticScrollActivity)._super$isScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$velocity#0', (args) => (args[0] as _$BallisticScrollActivity)._super$velocity);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$hashCode#0', (args) => (args[0] as _$BallisticScrollActivity)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$delegate#0', (args) => (args[0] as _$BallisticScrollActivity)._super$delegate);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::BallisticScrollActivity::\$super\$hashCode#0', (args) => (args[0] as _$BallisticScrollActivity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

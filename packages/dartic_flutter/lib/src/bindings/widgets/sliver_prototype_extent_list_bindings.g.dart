@@ -115,13 +115,6 @@ class _$SliverPrototypeExtentList extends SliverPrototypeExtentList implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SliverChildDelegate get delegate {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegate');
     if (identical(r, notOverridden)) return super.delegate;
@@ -136,10 +129,20 @@ class _$SliverPrototypeExtentList extends SliverPrototypeExtentList implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -156,9 +159,9 @@ class _$SliverPrototypeExtentList extends SliverPrototypeExtentList implements D
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Widget get _super$prototypeItem => super.prototypeItem;
-  int get _super$hashCode => super.hashCode;
   SliverChildDelegate get _super$delegate => super.delegate;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -191,9 +194,9 @@ abstract final class SliverPrototypeExtentListBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SliverPrototypeExtentList)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$prototypeItem#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$prototypeItem);
-    ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$hashCode#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$delegate#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$delegate);
     ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$key#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver_prototype_extent_list.dart::SliverPrototypeExtentList::\$super\$hashCode#0', (args) => (args[0] as _$SliverPrototypeExtentList)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -190,13 +190,6 @@ class _$ObserverList extends ObserverList<dynamic> implements DarticObjectHolder
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   int get length {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
     if (identical(r, notOverridden)) return super.length;
@@ -225,10 +218,20 @@ class _$ObserverList extends ObserverList<dynamic> implements DarticObjectHolder
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -263,11 +266,11 @@ class _$ObserverList extends ObserverList<dynamic> implements DarticObjectHolder
   Iterator get _super$iterator => super.iterator;
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;
-  int get _super$hashCode => super.hashCode;
   int get _super$length => super.length;
   dynamic get _super$first => super.first;
   dynamic get _super$last => super.last;
   dynamic get _super$single => super.single;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -312,11 +315,11 @@ abstract final class ObserverListBindings {
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$iterator#0', (args) => (args[0] as _$ObserverList)._super$iterator);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$isEmpty#0', (args) => (args[0] as _$ObserverList)._super$isEmpty);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$isNotEmpty#0', (args) => (args[0] as _$ObserverList)._super$isNotEmpty);
-    ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$hashCode#0', (args) => (args[0] as _$ObserverList)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$length#0', (args) => (args[0] as _$ObserverList)._super$length);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$first#0', (args) => (args[0] as _$ObserverList)._super$first);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$last#0', (args) => (args[0] as _$ObserverList)._super$last);
     ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$single#0', (args) => (args[0] as _$ObserverList)._super$single);
+    ctx.registerBinding('package:flutter/src/foundation/observer_list.dart::ObserverList::\$super\$hashCode#0', (args) => (args[0] as _$ObserverList)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

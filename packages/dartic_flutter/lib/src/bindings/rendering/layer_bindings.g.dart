@@ -241,13 +241,6 @@ class _$Layer extends Layer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set engineLayer(ui.EngineLayer? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'engineLayer', value)) {
       super.engineLayer = value;
@@ -262,10 +255,20 @@ class _$Layer extends Layer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -300,9 +303,9 @@ class _$Layer extends Layer implements DarticObjectHolder {
   Layer? get _super$nextSibling => super.nextSibling;
   Layer? get _super$previousSibling => super.previousSibling;
   Object? get _super$debugCreator => super.debugCreator;
-  int get _super$hashCode => super.hashCode;
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -353,9 +356,9 @@ abstract final class LayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$nextSibling#0', (args) => (args[0] as _$Layer)._super$nextSibling);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$previousSibling#0', (args) => (args[0] as _$Layer)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$debugCreator#0', (args) => (args[0] as _$Layer)._super$debugCreator);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$hashCode#0', (args) => (args[0] as _$Layer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$engineLayer=#1', (args) { (args[0] as _$Layer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$debugCreator=#1', (args) { (args[0] as _$Layer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::Layer::\$super\$hashCode#0', (args) => (args[0] as _$Layer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

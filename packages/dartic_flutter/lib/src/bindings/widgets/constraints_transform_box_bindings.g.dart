@@ -139,13 +139,6 @@ class _$ConstraintsTransformBox extends ConstraintsTransformBox implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -160,10 +153,20 @@ class _$ConstraintsTransformBox extends ConstraintsTransformBox implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -182,9 +185,9 @@ class _$ConstraintsTransformBox extends ConstraintsTransformBox implements Darti
   AlignmentGeometry get _super$alignment => super.alignment;
   BoxConstraintsTransform get _super$constraintsTransform => super.constraintsTransform;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -226,9 +229,9 @@ abstract final class ConstraintsTransformBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$alignment#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$constraintsTransform#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$constraintsTransform);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$clipBehavior#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$hashCode#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$child#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$key#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::ConstraintsTransformBox::\$super\$hashCode#0', (args) => (args[0] as _$ConstraintsTransformBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

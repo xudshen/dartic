@@ -297,13 +297,6 @@ class _$AlertDialog extends AlertDialog implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -311,10 +304,20 @@ class _$AlertDialog extends AlertDialog implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -354,8 +357,8 @@ class _$AlertDialog extends AlertDialog implements DarticObjectHolder {
   AlignmentGeometry? get _super$alignment => super.alignment;
   BoxConstraints? get _super$constraints => super.constraints;
   bool get _super$scrollable => super.scrollable;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -411,8 +414,8 @@ abstract final class AlertDialogBindings {
     ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$alignment#0', (args) => (args[0] as _$AlertDialog)._super$alignment);
     ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$constraints#0', (args) => (args[0] as _$AlertDialog)._super$constraints);
     ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$scrollable#0', (args) => (args[0] as _$AlertDialog)._super$scrollable);
-    ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$hashCode#0', (args) => (args[0] as _$AlertDialog)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$key#0', (args) => (args[0] as _$AlertDialog)._super$key);
+    ctx.registerBinding('package:flutter/src/material/dialog.dart::AlertDialog::\$super\$hashCode#0', (args) => (args[0] as _$AlertDialog)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

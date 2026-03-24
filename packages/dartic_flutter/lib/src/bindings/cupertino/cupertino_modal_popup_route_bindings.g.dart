@@ -327,13 +327,6 @@ class _$CupertinoModalPopupRoute extends CupertinoModalPopupRoute<dynamic> imple
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get opaque {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
     if (identical(r, notOverridden)) return super.opaque;
@@ -621,10 +614,20 @@ class _$CupertinoModalPopupRoute extends CupertinoModalPopupRoute<dynamic> imple
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -672,7 +675,6 @@ class _$CupertinoModalPopupRoute extends CupertinoModalPopupRoute<dynamic> imple
   bool get _super$semanticsDismissible => super.semanticsDismissible;
   Duration get _super$transitionDuration => super.transitionDuration;
   Offset? get _super$anchorPoint => super.anchorPoint;
-  int get _super$hashCode => super.hashCode;
   bool get _super$opaque => super.opaque;
   bool get _super$maintainState => super.maintainState;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
@@ -714,6 +716,7 @@ class _$CupertinoModalPopupRoute extends CupertinoModalPopupRoute<dynamic> imple
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -777,7 +780,6 @@ abstract final class CupertinoModalPopupRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$semanticsDismissible#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$semanticsDismissible);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$transitionDuration#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$transitionDuration);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$anchorPoint#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$anchorPoint);
-    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$opaque#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$opaque);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$maintainState#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$maintainState);
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$allowSnapshotting);
@@ -819,6 +821,7 @@ abstract final class CupertinoModalPopupRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$CupertinoModalPopupRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$offstage=#1', (args) { (args[0] as _$CupertinoModalPopupRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$CupertinoModalPopupRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/cupertino/route.dart::CupertinoModalPopupRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoModalPopupRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

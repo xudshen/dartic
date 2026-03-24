@@ -65,13 +65,6 @@ class _$CurveTween extends CurveTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set curve(Curve value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'curve', value)) {
       super.curve = value;
@@ -79,10 +72,20 @@ class _$CurveTween extends CurveTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -92,8 +95,8 @@ class _$CurveTween extends CurveTween implements DarticObjectHolder {
   Animation<double> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<double> _super$chain(Animatable<double> parent) => super.chain(parent);
   Curve get _super$curve => super.curve;
-  int get _super$hashCode => super.hashCode;
   set _super$curve(Curve value) { super.curve = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -119,8 +122,8 @@ abstract final class CurveTweenBindings {
     ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$animate#1', (args) => (args[0] as _$CurveTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$chain#1', (args) => (args[0] as _$CurveTween)._super$chain(args[1] as Animatable<double>));
     ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$curve#0', (args) => (args[0] as _$CurveTween)._super$curve);
-    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$hashCode#0', (args) => (args[0] as _$CurveTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$curve=#1', (args) { (args[0] as _$CurveTween)._super$curve = args[1] as Curve; return args[1]; });
+    ctx.registerBinding('package:flutter/src/animation/tween.dart::CurveTween::\$super\$hashCode#0', (args) => (args[0] as _$CurveTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

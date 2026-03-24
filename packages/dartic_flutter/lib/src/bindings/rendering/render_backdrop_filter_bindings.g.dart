@@ -582,13 +582,6 @@ class _$RenderBackdropFilter extends RenderBackdropFilter implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -855,10 +848,20 @@ class _$RenderBackdropFilter extends RenderBackdropFilter implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -946,7 +949,6 @@ class _$RenderBackdropFilter extends RenderBackdropFilter implements DarticObjec
   ui.BlendMode get _super$blendMode => super.blendMode;
   BackdropKey? get _super$backdropKey => super.backdropKey;
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -985,6 +987,7 @@ class _$RenderBackdropFilter extends RenderBackdropFilter implements DarticObjec
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1088,7 +1091,6 @@ abstract final class RenderBackdropFilterBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$blendMode#0', (args) => (args[0] as _$RenderBackdropFilter)._super$blendMode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$backdropKey#0', (args) => (args[0] as _$RenderBackdropFilter)._super$backdropKey);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$RenderBackdropFilter)._super$alwaysNeedsCompositing);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$hashCode#0', (args) => (args[0] as _$RenderBackdropFilter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$hasSize#0', (args) => (args[0] as _$RenderBackdropFilter)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$size#0', (args) => (args[0] as _$RenderBackdropFilter)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderBackdropFilter)._super$semanticBounds);
@@ -1127,6 +1129,7 @@ abstract final class RenderBackdropFilterBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderBackdropFilter)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$layer=#1', (args) { (args[0] as _$RenderBackdropFilter)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$child=#1', (args) { (args[0] as _$RenderBackdropFilter)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderBackdropFilter::\$super\$hashCode#0', (args) => (args[0] as _$RenderBackdropFilter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -547,13 +547,6 @@ class _$RenderMetaData extends RenderMetaData implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   HitTestBehavior get behavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'behavior');
     if (identical(r, notOverridden)) return super.behavior;
@@ -827,10 +820,20 @@ class _$RenderMetaData extends RenderMetaData implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -913,7 +916,6 @@ class _$RenderMetaData extends RenderMetaData implements DarticObjectHolder {
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
   dynamic get _super$metaData => super.metaData;
-  int get _super$hashCode => super.hashCode;
   HitTestBehavior get _super$behavior => super.behavior;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
@@ -953,6 +955,7 @@ class _$RenderMetaData extends RenderMetaData implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1051,7 +1054,6 @@ abstract final class RenderMetaDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderMetaData)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderMetaData)._super$computeSizeForNoChild(args[1] as BoxConstraints));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$metaData#0', (args) => (args[0] as _$RenderMetaData)._super$metaData);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$hashCode#0', (args) => (args[0] as _$RenderMetaData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$behavior#0', (args) => (args[0] as _$RenderMetaData)._super$behavior);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$hasSize#0', (args) => (args[0] as _$RenderMetaData)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$size#0', (args) => (args[0] as _$RenderMetaData)._super$size);
@@ -1091,6 +1093,7 @@ abstract final class RenderMetaDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderMetaData)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$layer=#1', (args) { (args[0] as _$RenderMetaData)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$child=#1', (args) { (args[0] as _$RenderMetaData)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderMetaData::\$super\$hashCode#0', (args) => (args[0] as _$RenderMetaData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

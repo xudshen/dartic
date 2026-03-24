@@ -43,13 +43,6 @@ class _$SelectParagraphSelectionEvent extends SelectParagraphSelectionEvent impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SelectionEventType get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -57,18 +50,28 @@ class _$SelectParagraphSelectionEvent extends SelectParagraphSelectionEvent impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Offset get _super$globalPosition => super.globalPosition;
   bool get _super$absorb => super.absorb;
-  int get _super$hashCode => super.hashCode;
   SelectionEventType get _super$type => super.type;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -91,8 +94,8 @@ abstract final class SelectParagraphSelectionEventBindings {
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$toString#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$globalPosition#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$globalPosition);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$absorb#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$absorb);
-    ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$type#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$type);
+    ctx.registerBinding('package:flutter/src/rendering/selection.dart::SelectParagraphSelectionEvent::\$super\$hashCode#0', (args) => (args[0] as _$SelectParagraphSelectionEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -102,13 +102,6 @@ class _$MaterialStateOutlineInputBorder extends MaterialStateOutlineInputBorder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get gapPadding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'gapPadding');
     if (identical(r, notOverridden)) return super.gapPadding;
@@ -151,17 +144,27 @@ class _$MaterialStateOutlineInputBorder extends MaterialStateOutlineInputBorder 
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -175,13 +178,13 @@ class _$MaterialStateOutlineInputBorder extends MaterialStateOutlineInputBorder 
   void _super$paintInterior(Canvas canvas, Rect rect, Paint paint, {TextDirection? textDirection}) { super.paintInterior(canvas, rect, paint, textDirection: textDirection); }
   void _super$paint(Canvas canvas, Rect rect, {double? gapStart, double gapExtent = 0.0, double gapPercentage = 0.0, TextDirection? textDirection}) { super.paint(canvas, rect, gapStart: gapStart, gapExtent: gapExtent, gapPercentage: gapPercentage, textDirection: textDirection); }
   ShapeBorder? _super$add(ShapeBorder other, {bool reversed = false}) => super.add(other, reversed: reversed);
-  int get _super$hashCode => super.hashCode;
   double get _super$gapPadding => super.gapPadding;
   BorderRadius get _super$borderRadius => super.borderRadius;
   bool get _super$isOutline => super.isOutline;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
   BorderSide get _super$borderSide => super.borderSide;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -211,13 +214,13 @@ abstract final class MaterialStateOutlineInputBorderBindings {
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$paintInterior#4', (args) { (args[0] as _$MaterialStateOutlineInputBorder)._super$paintInterior(args[1] as Canvas, args[2] as Rect, args[3] as Paint, textDirection: identical(args[4], darticAbsent) ? null : args[4] as TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$paint#6', (args) { (args[0] as _$MaterialStateOutlineInputBorder)._super$paint(args[1] as Canvas, args[2] as Rect, gapStart: identical(args[3], darticAbsent) ? null : args[3] as double?, gapExtent: identical(args[4], darticAbsent) ? 0.0 : args[4] as double, gapPercentage: identical(args[5], darticAbsent) ? 0.0 : args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?); return null; });
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$add#2', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$add(args[1] as ShapeBorder, reversed: identical(args[2], darticAbsent) ? false : args[2] as bool));
-    ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$hashCode#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$gapPadding#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$gapPadding);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$borderRadius#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$isOutline#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$isOutline);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$dimensions#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$preferPaintInterior);
     ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$borderSide#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$borderSide);
+    ctx.registerBinding('package:flutter/src/material/material_state.dart::MaterialStateOutlineInputBorder::\$super\$hashCode#0', (args) => (args[0] as _$MaterialStateOutlineInputBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -649,13 +649,6 @@ class _$RenderFlow extends RenderFlow implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -922,10 +915,20 @@ class _$RenderFlow extends RenderFlow implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1024,7 +1027,6 @@ class _$RenderFlow extends RenderFlow implements DarticObjectHolder {
   FlowDelegate get _super$delegate => super.delegate;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
   bool get _super$isRepaintBoundary => super.isRepaintBoundary;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -1063,6 +1065,7 @@ class _$RenderFlow extends RenderFlow implements DarticObjectHolder {
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1177,7 +1180,6 @@ abstract final class RenderFlowBindings {
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$delegate#0', (args) => (args[0] as _$RenderFlow)._super$delegate);
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$clipBehavior#0', (args) => (args[0] as _$RenderFlow)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$isRepaintBoundary#0', (args) => (args[0] as _$RenderFlow)._super$isRepaintBoundary);
-    ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$hashCode#0', (args) => (args[0] as _$RenderFlow)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$hasSize#0', (args) => (args[0] as _$RenderFlow)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$size#0', (args) => (args[0] as _$RenderFlow)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderFlow)._super$semanticBounds);
@@ -1216,6 +1218,7 @@ abstract final class RenderFlowBindings {
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$parentData=#1', (args) { (args[0] as _$RenderFlow)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderFlow)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$layer=#1', (args) { (args[0] as _$RenderFlow)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/flow.dart::RenderFlow::\$super\$hashCode#0', (args) => (args[0] as _$RenderFlow)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

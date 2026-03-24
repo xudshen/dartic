@@ -162,13 +162,6 @@ class _$PerformanceOverlayLayer extends PerformanceOverlayLayer implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get subtreeHasCompositionCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtreeHasCompositionCallbacks');
     if (identical(r, notOverridden)) return super.subtreeHasCompositionCallbacks;
@@ -281,10 +274,20 @@ class _$PerformanceOverlayLayer extends PerformanceOverlayLayer implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -309,7 +312,6 @@ class _$PerformanceOverlayLayer extends PerformanceOverlayLayer implements Darti
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   ui.Rect get _super$overlayRect => super.overlayRect;
   int get _super$optionsMask => super.optionsMask;
-  int get _super$hashCode => super.hashCode;
   bool get _super$subtreeHasCompositionCallbacks => super.subtreeHasCompositionCallbacks;
   bool get _super$debugDisposed => super.debugDisposed;
   int get _super$debugHandleCount => super.debugHandleCount;
@@ -326,6 +328,7 @@ class _$PerformanceOverlayLayer extends PerformanceOverlayLayer implements Darti
   set _super$overlayRect(ui.Rect value) { super.overlayRect = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -366,7 +369,6 @@ abstract final class PerformanceOverlayLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$overlayRect#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$overlayRect);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$optionsMask#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$optionsMask);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$hashCode#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$subtreeHasCompositionCallbacks#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$subtreeHasCompositionCallbacks);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$debugDisposed#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$debugDisposed);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$debugHandleCount#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$debugHandleCount);
@@ -383,6 +385,7 @@ abstract final class PerformanceOverlayLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$overlayRect=#1', (args) { (args[0] as _$PerformanceOverlayLayer)._super$overlayRect = args[1] as ui.Rect; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$PerformanceOverlayLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$PerformanceOverlayLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::PerformanceOverlayLayer::\$super\$hashCode#0', (args) => (args[0] as _$PerformanceOverlayLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

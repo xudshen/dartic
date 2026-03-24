@@ -139,13 +139,6 @@ class _$AutofillGroupState extends AutofillGroupState implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AutofillGroup get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -167,10 +160,20 @@ class _$AutofillGroupState extends AutofillGroupState implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -192,10 +195,10 @@ class _$AutofillGroupState extends AutofillGroupState implements DarticObjectHol
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   TextInputConnection _super$attach(TextInputClient trigger, TextInputConfiguration configuration) => super.attach(trigger, configuration);
   Iterable<AutofillClient> get _super$autofillClients => super.autofillClients;
-  int get _super$hashCode => super.hashCode;
   AutofillGroup get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -233,10 +236,10 @@ abstract final class AutofillGroupStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$AutofillGroupState)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$attach#2', (args) => (args[0] as _$AutofillGroupState)._super$attach(args[1] as TextInputClient, args[2] as TextInputConfiguration));
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$autofillClients#0', (args) => (args[0] as _$AutofillGroupState)._super$autofillClients);
-    ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$hashCode#0', (args) => (args[0] as _$AutofillGroupState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$widget#0', (args) => (args[0] as _$AutofillGroupState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$context#0', (args) => (args[0] as _$AutofillGroupState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$mounted#0', (args) => (args[0] as _$AutofillGroupState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/widgets/autofill.dart::AutofillGroupState::\$super\$hashCode#0', (args) => (args[0] as _$AutofillGroupState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

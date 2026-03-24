@@ -66,13 +66,6 @@ class _$SliverHitTestResult extends SliverHitTestResult implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Iterable<HitTestEntry<HitTestTarget>> get path {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
     if (identical(r, notOverridden)) return super.path;
@@ -80,10 +73,20 @@ class _$SliverHitTestResult extends SliverHitTestResult implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -93,8 +96,8 @@ class _$SliverHitTestResult extends SliverHitTestResult implements DarticObjectH
   void _super$pushTransform(Matrix4 transform) { super.pushTransform(transform); }
   void _super$pushOffset(Offset offset) { super.pushOffset(offset); }
   void _super$popTransform() { super.popTransform(); }
-  int get _super$hashCode => super.hashCode;
   Iterable<HitTestEntry<HitTestTarget>> get _super$path => super.path;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -120,8 +123,8 @@ abstract final class SliverHitTestResultBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$pushTransform#1', (args) { (args[0] as _$SliverHitTestResult)._super$pushTransform(args[1] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$pushOffset#1', (args) { (args[0] as _$SliverHitTestResult)._super$pushOffset(args[1] as Offset); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$popTransform#0', (args) { (args[0] as _$SliverHitTestResult)._super$popTransform(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$hashCode#0', (args) => (args[0] as _$SliverHitTestResult)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$path#0', (args) => (args[0] as _$SliverHitTestResult)._super$path);
+    ctx.registerBinding('package:flutter/src/rendering/sliver.dart::SliverHitTestResult::\$super\$hashCode#0', (args) => (args[0] as _$SliverHitTestResult)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

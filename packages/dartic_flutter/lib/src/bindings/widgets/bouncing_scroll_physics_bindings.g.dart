@@ -150,13 +150,6 @@ class _$BouncingScrollPhysics extends BouncingScrollPhysics implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics? get parent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
@@ -192,10 +185,20 @@ class _$BouncingScrollPhysics extends BouncingScrollPhysics implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -216,12 +219,12 @@ class _$BouncingScrollPhysics extends BouncingScrollPhysics implements DarticObj
   double get _super$dragStartDistanceMotionThreshold => super.dragStartDistanceMotionThreshold;
   double get _super$maxFlingVelocity => super.maxFlingVelocity;
   SpringDescription get _super$spring => super.spring;
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics? get _super$parent => super.parent;
   Tolerance get _super$tolerance => super.tolerance;
   double get _super$minFlingDistance => super.minFlingDistance;
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
   bool get _super$allowUserScrolling => super.allowUserScrolling;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -258,12 +261,12 @@ abstract final class BouncingScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$dragStartDistanceMotionThreshold#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$dragStartDistanceMotionThreshold);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$maxFlingVelocity#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$maxFlingVelocity);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$spring#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$spring);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$parent#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$parent);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$tolerance#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$tolerance);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$minFlingDistance#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$minFlingDistance);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$allowImplicitScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$allowUserScrolling#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$allowUserScrolling);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::BouncingScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$BouncingScrollPhysics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

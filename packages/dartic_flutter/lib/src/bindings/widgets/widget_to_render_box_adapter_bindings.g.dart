@@ -129,13 +129,6 @@ class _$WidgetToRenderBoxAdapter extends WidgetToRenderBoxAdapter implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -143,10 +136,20 @@ class _$WidgetToRenderBoxAdapter extends WidgetToRenderBoxAdapter implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -164,8 +167,8 @@ class _$WidgetToRenderBoxAdapter extends WidgetToRenderBoxAdapter implements Dar
   RenderBox get _super$renderBox => super.renderBox;
   ui.VoidCallback? get _super$onBuild => super.onBuild;
   ui.VoidCallback? get _super$onUnmount => super.onUnmount;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -199,8 +202,8 @@ abstract final class WidgetToRenderBoxAdapterBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$renderBox#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$renderBox);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$onBuild#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$onBuild);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$onUnmount#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$onUnmount);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$hashCode#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$key#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::WidgetToRenderBoxAdapter::\$super\$hashCode#0', (args) => (args[0] as _$WidgetToRenderBoxAdapter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

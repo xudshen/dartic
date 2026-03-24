@@ -59,13 +59,6 @@ class _$TableCellParentData extends TableCellParentData implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -101,10 +94,20 @@ class _$TableCellParentData extends TableCellParentData implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -113,12 +116,12 @@ class _$TableCellParentData extends TableCellParentData implements DarticObjectH
   TableCellVerticalAlignment? get _super$verticalAlignment => super.verticalAlignment;
   int? get _super$x => super.x;
   int? get _super$y => super.y;
-  int get _super$hashCode => super.hashCode;
   Offset get _super$offset => super.offset;
   set _super$verticalAlignment(TableCellVerticalAlignment? value) { super.verticalAlignment = value; }
   set _super$x(int? value) { super.x = value; }
   set _super$y(int? value) { super.y = value; }
   set _super$offset(Offset value) { super.offset = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -143,12 +146,12 @@ abstract final class TableCellParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$verticalAlignment#0', (args) => (args[0] as _$TableCellParentData)._super$verticalAlignment);
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$x#0', (args) => (args[0] as _$TableCellParentData)._super$x);
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$y#0', (args) => (args[0] as _$TableCellParentData)._super$y);
-    ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$hashCode#0', (args) => (args[0] as _$TableCellParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$offset#0', (args) => (args[0] as _$TableCellParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$verticalAlignment=#1', (args) { (args[0] as _$TableCellParentData)._super$verticalAlignment = args[1] as TableCellVerticalAlignment?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$x=#1', (args) { (args[0] as _$TableCellParentData)._super$x = args[1] as int?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$y=#1', (args) { (args[0] as _$TableCellParentData)._super$y = args[1] as int?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$offset=#1', (args) { (args[0] as _$TableCellParentData)._super$offset = args[1] as Offset; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/table.dart::TableCellParentData::\$super\$hashCode#0', (args) => (args[0] as _$TableCellParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -130,13 +130,6 @@ class _$DropdownButtonFormField extends DropdownButtonFormField<dynamic> impleme
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget Function(FormFieldState) get builder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'builder');
     if (identical(r, notOverridden)) return super.builder;
@@ -214,10 +207,20 @@ class _$DropdownButtonFormField extends DropdownButtonFormField<dynamic> impleme
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -233,7 +236,6 @@ class _$DropdownButtonFormField extends DropdownButtonFormField<dynamic> impleme
   void Function(dynamic)? get _super$onChanged => super.onChanged;
   InputDecoration get _super$decoration => super.decoration;
   bool get _super$barrierDismissible => super.barrierDismissible;
-  int get _super$hashCode => super.hashCode;
   Widget Function(FormFieldState) get _super$builder => super.builder;
   void Function(dynamic)? get _super$onSaved => super.onSaved;
   VoidCallback? get _super$onReset => super.onReset;
@@ -245,6 +247,7 @@ class _$DropdownButtonFormField extends DropdownButtonFormField<dynamic> impleme
   AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
   String? get _super$restorationId => super.restorationId;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -276,7 +279,6 @@ abstract final class DropdownButtonFormFieldBindings {
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$onChanged#0', (args) => (args[0] as _$DropdownButtonFormField)._super$onChanged);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$decoration#0', (args) => (args[0] as _$DropdownButtonFormField)._super$decoration);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$barrierDismissible#0', (args) => (args[0] as _$DropdownButtonFormField)._super$barrierDismissible);
-    ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$hashCode#0', (args) => (args[0] as _$DropdownButtonFormField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$builder#0', (args) => (args[0] as _$DropdownButtonFormField)._super$builder);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$onSaved#0', (args) => (args[0] as _$DropdownButtonFormField)._super$onSaved);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$onReset#0', (args) => (args[0] as _$DropdownButtonFormField)._super$onReset);
@@ -288,6 +290,7 @@ abstract final class DropdownButtonFormFieldBindings {
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$autovalidateMode#0', (args) => (args[0] as _$DropdownButtonFormField)._super$autovalidateMode);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$restorationId#0', (args) => (args[0] as _$DropdownButtonFormField)._super$restorationId);
     ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$key#0', (args) => (args[0] as _$DropdownButtonFormField)._super$key);
+    ctx.registerBinding('package:flutter/src/material/dropdown.dart::DropdownButtonFormField::\$super\$hashCode#0', (args) => (args[0] as _$DropdownButtonFormField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

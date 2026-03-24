@@ -95,13 +95,6 @@ class _$ChildBackButtonDispatcher extends ChildBackButtonDispatcher implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasCallbacks');
     if (identical(r, notOverridden)) return super.hasCallbacks;
@@ -109,10 +102,20 @@ class _$ChildBackButtonDispatcher extends ChildBackButtonDispatcher implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -126,8 +129,8 @@ class _$ChildBackButtonDispatcher extends ChildBackButtonDispatcher implements D
   void _super$forget(ChildBackButtonDispatcher child) { super.forget(child); }
   void _super$addCallback(ValueGetter<Future<bool>> callback) { super.addCallback(callback); }
   BackButtonDispatcher get _super$parent => super.parent;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasCallbacks => super.hasCallbacks;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -157,8 +160,8 @@ abstract final class ChildBackButtonDispatcherBindings {
     ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$forget#1', (args) { (args[0] as _$ChildBackButtonDispatcher)._super$forget(args[1] as ChildBackButtonDispatcher); return null; });
     ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$addCallback#1', (args) { (args[0] as _$ChildBackButtonDispatcher)._super$addCallback(() => (args[1] as Function)() as Future<bool>); return null; });
     ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$parent#0', (args) => (args[0] as _$ChildBackButtonDispatcher)._super$parent);
-    ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$ChildBackButtonDispatcher)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$hasCallbacks#0', (args) => (args[0] as _$ChildBackButtonDispatcher)._super$hasCallbacks);
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::ChildBackButtonDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$ChildBackButtonDispatcher)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -124,13 +124,6 @@ class _$AnimatedRotation extends AnimatedRotation implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -159,10 +152,20 @@ class _$AnimatedRotation extends AnimatedRotation implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -179,11 +182,11 @@ class _$AnimatedRotation extends AnimatedRotation implements DarticObjectHolder 
   double get _super$turns => super.turns;
   Alignment get _super$alignment => super.alignment;
   ui.FilterQuality? get _super$filterQuality => super.filterQuality;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -216,11 +219,11 @@ abstract final class AnimatedRotationBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$turns#0', (args) => (args[0] as _$AnimatedRotation)._super$turns);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$alignment#0', (args) => (args[0] as _$AnimatedRotation)._super$alignment);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$filterQuality#0', (args) => (args[0] as _$AnimatedRotation)._super$filterQuality);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedRotation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$curve#0', (args) => (args[0] as _$AnimatedRotation)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$duration#0', (args) => (args[0] as _$AnimatedRotation)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedRotation)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$key#0', (args) => (args[0] as _$AnimatedRotation)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedRotation::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedRotation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

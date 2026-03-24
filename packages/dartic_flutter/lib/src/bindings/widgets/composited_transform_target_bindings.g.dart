@@ -116,13 +116,6 @@ class _$CompositedTransformTarget extends CompositedTransformTarget implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -137,10 +130,20 @@ class _$CompositedTransformTarget extends CompositedTransformTarget implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -156,9 +159,9 @@ class _$CompositedTransformTarget extends CompositedTransformTarget implements D
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   LayerLink get _super$link => super.link;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -190,9 +193,9 @@ abstract final class CompositedTransformTargetBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$CompositedTransformTarget)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$CompositedTransformTarget)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$link#0', (args) => (args[0] as _$CompositedTransformTarget)._super$link);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$hashCode#0', (args) => (args[0] as _$CompositedTransformTarget)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$child#0', (args) => (args[0] as _$CompositedTransformTarget)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$key#0', (args) => (args[0] as _$CompositedTransformTarget)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::CompositedTransformTarget::\$super\$hashCode#0', (args) => (args[0] as _$CompositedTransformTarget)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

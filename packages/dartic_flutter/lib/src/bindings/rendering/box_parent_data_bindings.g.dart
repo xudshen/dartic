@@ -44,13 +44,6 @@ class _$BoxParentData extends BoxParentData implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set offset(ui.Offset value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'offset', value)) {
       super.offset = value;
@@ -58,18 +51,28 @@ class _$BoxParentData extends BoxParentData implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
   ui.Offset get _super$offset => super.offset;
-  int get _super$hashCode => super.hashCode;
   set _super$offset(ui.Offset value) { super.offset = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -92,8 +95,8 @@ abstract final class BoxParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$toString#0', (args) => (args[0] as _$BoxParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$detach#0', (args) { (args[0] as _$BoxParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$offset#0', (args) => (args[0] as _$BoxParentData)._super$offset);
-    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$hashCode#0', (args) => (args[0] as _$BoxParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$offset=#1', (args) { (args[0] as _$BoxParentData)._super$offset = args[1] as ui.Offset; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/box.dart::BoxParentData::\$super\$hashCode#0', (args) => (args[0] as _$BoxParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

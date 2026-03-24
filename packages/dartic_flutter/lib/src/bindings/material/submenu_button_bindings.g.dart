@@ -247,13 +247,6 @@ class _$SubmenuButton extends SubmenuButton implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -261,10 +254,20 @@ class _$SubmenuButton extends SubmenuButton implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -296,8 +299,8 @@ class _$SubmenuButton extends SubmenuButton implements DarticObjectHolder {
   bool get _super$useRootOverlay => super.useRootOverlay;
   List<Widget> get _super$menuChildren => super.menuChildren;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -346,8 +349,8 @@ abstract final class SubmenuButtonBindings {
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$useRootOverlay#0', (args) => (args[0] as _$SubmenuButton)._super$useRootOverlay);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$menuChildren#0', (args) => (args[0] as _$SubmenuButton)._super$menuChildren);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$child#0', (args) => (args[0] as _$SubmenuButton)._super$child);
-    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$hashCode#0', (args) => (args[0] as _$SubmenuButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$key#0', (args) => (args[0] as _$SubmenuButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::SubmenuButton::\$super\$hashCode#0', (args) => (args[0] as _$SubmenuButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

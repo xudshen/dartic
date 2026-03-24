@@ -352,13 +352,6 @@ class _$RenderObjectElement extends RenderObjectElement implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object? get slot {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'slot');
     if (identical(r, notOverridden)) return super.slot;
@@ -429,10 +422,20 @@ class _$RenderObjectElement extends RenderObjectElement implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -482,7 +485,6 @@ class _$RenderObjectElement extends RenderObjectElement implements DarticObjectH
   RenderObject get _super$renderObject => super.renderObject;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
   bool get _super$debugDoingBuild => super.debugDoingBuild;
-  int get _super$hashCode => super.hashCode;
   Object? get _super$slot => super.slot;
   int get _super$depth => super.depth;
   Widget get _super$widget => super.widget;
@@ -493,6 +495,7 @@ class _$RenderObjectElement extends RenderObjectElement implements DarticObjectH
   BuildScope get _super$buildScope => super.buildScope;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -558,7 +561,6 @@ abstract final class RenderObjectElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$renderObject#0', (args) => (args[0] as _$RenderObjectElement)._super$renderObject);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$RenderObjectElement)._super$renderObjectAttachingChild);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$RenderObjectElement)._super$debugDoingBuild);
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$hashCode#0', (args) => (args[0] as _$RenderObjectElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$slot#0', (args) => (args[0] as _$RenderObjectElement)._super$slot);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$depth#0', (args) => (args[0] as _$RenderObjectElement)._super$depth);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$widget#0', (args) => (args[0] as _$RenderObjectElement)._super$widget);
@@ -569,6 +571,7 @@ abstract final class RenderObjectElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$buildScope#0', (args) => (args[0] as _$RenderObjectElement)._super$buildScope);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$size#0', (args) => (args[0] as _$RenderObjectElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$dirty#0', (args) => (args[0] as _$RenderObjectElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::RenderObjectElement::\$super\$hashCode#0', (args) => (args[0] as _$RenderObjectElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

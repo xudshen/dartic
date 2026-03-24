@@ -91,13 +91,6 @@ class _$Page extends Page<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String? get name {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -112,10 +105,20 @@ class _$Page extends Page<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -125,9 +128,9 @@ class _$Page extends Page<dynamic> implements DarticObjectHolder {
   String? get _super$restorationId => super.restorationId;
   void Function(bool, dynamic) get _super$onPopInvoked => super.onPopInvoked;
   bool get _super$canPop => super.canPop;
-  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   Object? get _super$arguments => super.arguments;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,9 +156,9 @@ abstract final class PageBindings {
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$restorationId#0', (args) => (args[0] as _$Page)._super$restorationId);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$onPopInvoked#0', (args) => (args[0] as _$Page)._super$onPopInvoked);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$canPop#0', (args) => (args[0] as _$Page)._super$canPop);
-    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$hashCode#0', (args) => (args[0] as _$Page)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$name#0', (args) => (args[0] as _$Page)._super$name);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$arguments#0', (args) => (args[0] as _$Page)._super$arguments);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::Page::\$super\$hashCode#0', (args) => (args[0] as _$Page)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

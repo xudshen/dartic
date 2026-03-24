@@ -451,13 +451,6 @@ class _$ModalBottomSheetRoute extends ModalBottomSheetRoute<dynamic> implements 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get opaque {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'opaque');
     if (identical(r, notOverridden)) return super.opaque;
@@ -745,10 +738,20 @@ class _$ModalBottomSheetRoute extends ModalBottomSheetRoute<dynamic> implements 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -812,7 +815,6 @@ class _$ModalBottomSheetRoute extends ModalBottomSheetRoute<dynamic> implements 
   bool get _super$barrierDismissible => super.barrierDismissible;
   String? get _super$barrierLabel => super.barrierLabel;
   Color get _super$barrierColor => super.barrierColor;
-  int get _super$hashCode => super.hashCode;
   bool get _super$opaque => super.opaque;
   bool get _super$maintainState => super.maintainState;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
@@ -854,6 +856,7 @@ class _$ModalBottomSheetRoute extends ModalBottomSheetRoute<dynamic> implements 
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -933,7 +936,6 @@ abstract final class ModalBottomSheetRouteBindings {
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$barrierDismissible#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$barrierDismissible);
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$barrierLabel#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$barrierLabel);
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$barrierColor#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$barrierColor);
-    ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$hashCode#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$opaque#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$opaque);
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$maintainState#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$maintainState);
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$allowSnapshotting);
@@ -975,6 +977,7 @@ abstract final class ModalBottomSheetRouteBindings {
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$ModalBottomSheetRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$offstage=#1', (args) { (args[0] as _$ModalBottomSheetRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$ModalBottomSheetRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/bottom_sheet.dart::ModalBottomSheetRoute::\$super\$hashCode#0', (args) => (args[0] as _$ModalBottomSheetRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

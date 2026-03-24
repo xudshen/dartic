@@ -166,13 +166,6 @@ class _$TwoDimensionalViewport extends TwoDimensionalViewport implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -180,10 +173,20 @@ class _$TwoDimensionalViewport extends TwoDimensionalViewport implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -204,8 +207,8 @@ class _$TwoDimensionalViewport extends TwoDimensionalViewport implements DarticO
   double? get _super$cacheExtent => super.cacheExtent;
   Clip get _super$clipBehavior => super.clipBehavior;
   TwoDimensionalChildDelegate get _super$delegate => super.delegate;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -242,8 +245,8 @@ abstract final class TwoDimensionalViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$cacheExtent#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$cacheExtent);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$clipBehavior#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$delegate#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$delegate);
-    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$key#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewport::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalViewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

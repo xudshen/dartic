@@ -145,13 +145,6 @@ class _$RestorableRouteFuture extends RestorableRouteFuture<dynamic> implements 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   State<StatefulWidget> get state {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'state');
     if (identical(r, notOverridden)) return super.state;
@@ -173,10 +166,20 @@ class _$RestorableRouteFuture extends RestorableRouteFuture<dynamic> implements 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -196,10 +199,10 @@ class _$RestorableRouteFuture extends RestorableRouteFuture<dynamic> implements 
   bool get _super$isPresent => super.isPresent;
   Route? get _super$route => super.route;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   State<StatefulWidget> get _super$state => super.state;
   bool get _super$isRegistered => super.isRegistered;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -235,10 +238,10 @@ abstract final class RestorableRouteFutureBindings {
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$isPresent#0', (args) => (args[0] as _$RestorableRouteFuture)._super$isPresent);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$route#0', (args) => (args[0] as _$RestorableRouteFuture)._super$route);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$enabled#0', (args) => (args[0] as _$RestorableRouteFuture)._super$enabled);
-    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$hashCode#0', (args) => (args[0] as _$RestorableRouteFuture)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$state#0', (args) => (args[0] as _$RestorableRouteFuture)._super$state);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableRouteFuture)._super$isRegistered);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableRouteFuture)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::RestorableRouteFuture::\$super\$hashCode#0', (args) => (args[0] as _$RestorableRouteFuture)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

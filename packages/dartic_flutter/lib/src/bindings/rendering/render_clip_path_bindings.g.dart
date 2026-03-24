@@ -540,13 +540,6 @@ class _$RenderClipPath extends RenderClipPath implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   CustomClipper<ui.Path>? get clipper {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'clipper');
     if (identical(r, notOverridden)) return super.clipper;
@@ -827,10 +820,20 @@ class _$RenderClipPath extends RenderClipPath implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -912,7 +915,6 @@ class _$RenderClipPath extends RenderClipPath implements DarticObjectHolder {
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
-  int get _super$hashCode => super.hashCode;
   CustomClipper<ui.Path>? get _super$clipper => super.clipper;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
   bool get _super$hasSize => super.hasSize;
@@ -953,6 +955,7 @@ class _$RenderClipPath extends RenderClipPath implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1050,7 +1053,6 @@ abstract final class RenderClipPathBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderClipPath)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderClipPath)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderClipPath)._super$computeSizeForNoChild(args[1] as BoxConstraints));
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$hashCode#0', (args) => (args[0] as _$RenderClipPath)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$clipper#0', (args) => (args[0] as _$RenderClipPath)._super$clipper);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$clipBehavior#0', (args) => (args[0] as _$RenderClipPath)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$hasSize#0', (args) => (args[0] as _$RenderClipPath)._super$hasSize);
@@ -1091,6 +1093,7 @@ abstract final class RenderClipPathBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderClipPath)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$layer=#1', (args) { (args[0] as _$RenderClipPath)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$child=#1', (args) { (args[0] as _$RenderClipPath)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderClipPath::\$super\$hashCode#0', (args) => (args[0] as _$RenderClipPath)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

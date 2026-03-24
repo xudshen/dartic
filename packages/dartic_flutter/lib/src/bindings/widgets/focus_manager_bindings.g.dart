@@ -186,13 +186,6 @@ class _$FocusManager extends FocusManager implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -207,10 +200,20 @@ class _$FocusManager extends FocusManager implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -238,9 +241,9 @@ class _$FocusManager extends FocusManager implements DarticObjectHolder {
   FocusHighlightMode get _super$highlightMode => super.highlightMode;
   FocusScopeNode get _super$rootScope => super.rootScope;
   FocusNode? get _super$primaryFocus => super.primaryFocus;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$highlightStrategy(FocusHighlightStrategy value) { super.highlightStrategy = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -285,9 +288,9 @@ abstract final class FocusManagerBindings {
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$highlightMode#0', (args) => (args[0] as _$FocusManager)._super$highlightMode);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$rootScope#0', (args) => (args[0] as _$FocusManager)._super$rootScope);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$primaryFocus#0', (args) => (args[0] as _$FocusManager)._super$primaryFocus);
-    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$hashCode#0', (args) => (args[0] as _$FocusManager)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$hasListeners#0', (args) => (args[0] as _$FocusManager)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$highlightStrategy=#1', (args) { (args[0] as _$FocusManager)._super$highlightStrategy = args[1] as FocusHighlightStrategy; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/focus_manager.dart::FocusManager::\$super\$hashCode#0', (args) => (args[0] as _$FocusManager)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

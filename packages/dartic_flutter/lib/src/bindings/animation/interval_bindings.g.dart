@@ -63,13 +63,6 @@ class _$Interval extends Interval implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get flipped {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'flipped');
     if (identical(r, notOverridden)) return super.flipped;
@@ -77,10 +70,20 @@ class _$Interval extends Interval implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -90,8 +93,8 @@ class _$Interval extends Interval implements DarticObjectHolder {
   double get _super$begin => super.begin;
   double get _super$end => super.end;
   Curve get _super$curve => super.curve;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$flipped => super.flipped;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -117,8 +120,8 @@ abstract final class IntervalBindings {
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$begin#0', (args) => (args[0] as _$Interval)._super$begin);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$end#0', (args) => (args[0] as _$Interval)._super$end);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$curve#0', (args) => (args[0] as _$Interval)._super$curve);
-    ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$hashCode#0', (args) => (args[0] as _$Interval)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$flipped#0', (args) => (args[0] as _$Interval)._super$flipped);
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::Interval::\$super\$hashCode#0', (args) => (args[0] as _$Interval)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

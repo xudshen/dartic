@@ -31,13 +31,6 @@ class _$HandshakeException extends HandshakeException implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -59,18 +52,28 @@ class _$HandshakeException extends HandshakeException implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   String get _super$type => super.type;
   String get _super$message => super.message;
   OSError? get _super$osError => super.osError;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -91,10 +94,10 @@ abstract final class HandshakeExceptionBindings {
           _$HandshakeException(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:io::HandshakeException::\$super\$toString#0', (args) => (args[0] as _$HandshakeException)._super$toString());
-    ctx.registerBinding('dart:io::HandshakeException::\$super\$hashCode#0', (args) => (args[0] as _$HandshakeException)._super$hashCode);
     ctx.registerBinding('dart:io::HandshakeException::\$super\$type#0', (args) => (args[0] as _$HandshakeException)._super$type);
     ctx.registerBinding('dart:io::HandshakeException::\$super\$message#0', (args) => (args[0] as _$HandshakeException)._super$message);
     ctx.registerBinding('dart:io::HandshakeException::\$super\$osError#0', (args) => (args[0] as _$HandshakeException)._super$osError);
+    ctx.registerBinding('dart:io::HandshakeException::\$super\$hashCode#0', (args) => (args[0] as _$HandshakeException)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

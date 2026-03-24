@@ -35,13 +35,6 @@ class _$ListBodyParentData extends ListBodyParentData implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -84,22 +77,32 @@ class _$ListBodyParentData extends ListBodyParentData implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
-  int get _super$hashCode => super.hashCode;
   Offset get _super$offset => super.offset;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
   set _super$offset(Offset value) { super.offset = value; }
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -121,13 +124,13 @@ abstract final class ListBodyParentDataBindings {
     );
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$toString#0', (args) => (args[0] as _$ListBodyParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$detach#0', (args) { (args[0] as _$ListBodyParentData)._super$detach(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$hashCode#0', (args) => (args[0] as _$ListBodyParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$offset#0', (args) => (args[0] as _$ListBodyParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$previousSibling#0', (args) => (args[0] as _$ListBodyParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$nextSibling#0', (args) => (args[0] as _$ListBodyParentData)._super$nextSibling);
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$offset=#1', (args) { (args[0] as _$ListBodyParentData)._super$offset = args[1] as Offset; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$ListBodyParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$ListBodyParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/list_body.dart::ListBodyParentData::\$super\$hashCode#0', (args) => (args[0] as _$ListBodyParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

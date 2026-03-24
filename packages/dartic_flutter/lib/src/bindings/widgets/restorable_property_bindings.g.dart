@@ -110,13 +110,6 @@ class _$RestorableProperty extends RestorableProperty<dynamic> implements Dartic
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -124,10 +117,20 @@ class _$RestorableProperty extends RestorableProperty<dynamic> implements Dartic
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -139,8 +142,8 @@ class _$RestorableProperty extends RestorableProperty<dynamic> implements Dartic
   bool get _super$enabled => super.enabled;
   State<StatefulWidget> get _super$state => super.state;
   bool get _super$isRegistered => super.isRegistered;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -168,8 +171,8 @@ abstract final class RestorablePropertyBindings {
     ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$enabled#0', (args) => (args[0] as _$RestorableProperty)._super$enabled);
     ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$state#0', (args) => (args[0] as _$RestorableProperty)._super$state);
     ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$isRegistered#0', (args) => (args[0] as _$RestorableProperty)._super$isRegistered);
-    ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$hashCode#0', (args) => (args[0] as _$RestorableProperty)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$hasListeners#0', (args) => (args[0] as _$RestorableProperty)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/restoration.dart::RestorableProperty::\$super\$hashCode#0', (args) => (args[0] as _$RestorableProperty)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -771,13 +771,6 @@ class _$RenderViewportBase extends RenderViewportBase<ContainerParentDataMixin<R
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -1079,10 +1072,20 @@ class _$RenderViewportBase extends RenderViewportBase<ContainerParentDataMixin<R
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1186,7 +1189,6 @@ class _$RenderViewportBase extends RenderViewportBase<ContainerParentDataMixin<R
   bool get _super$isRepaintBoundary => super.isRepaintBoundary;
   Iterable<RenderSliver> get _super$childrenInPaintOrder => super.childrenInPaintOrder;
   Iterable<RenderSliver> get _super$childrenInHitTestOrder => super.childrenInHitTestOrder;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -1230,6 +1232,7 @@ class _$RenderViewportBase extends RenderViewportBase<ContainerParentDataMixin<R
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1350,7 +1353,6 @@ abstract final class RenderViewportBaseBindings {
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$isRepaintBoundary#0', (args) => (args[0] as _$RenderViewportBase)._super$isRepaintBoundary);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$childrenInPaintOrder#0', (args) => (args[0] as _$RenderViewportBase)._super$childrenInPaintOrder);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$childrenInHitTestOrder#0', (args) => (args[0] as _$RenderViewportBase)._super$childrenInHitTestOrder);
-    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$hashCode#0', (args) => (args[0] as _$RenderViewportBase)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$hasSize#0', (args) => (args[0] as _$RenderViewportBase)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$size#0', (args) => (args[0] as _$RenderViewportBase)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderViewportBase)._super$semanticBounds);
@@ -1394,6 +1396,7 @@ abstract final class RenderViewportBaseBindings {
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$parentData=#1', (args) { (args[0] as _$RenderViewportBase)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderViewportBase)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$layer=#1', (args) { (args[0] as _$RenderViewportBase)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderViewportBase::\$super\$hashCode#0', (args) => (args[0] as _$RenderViewportBase)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

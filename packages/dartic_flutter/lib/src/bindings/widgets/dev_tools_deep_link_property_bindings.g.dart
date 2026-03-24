@@ -106,13 +106,6 @@ class _$DevToolsDeepLinkProperty extends DevToolsDeepLinkProperty implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get expandableValue {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'expandableValue');
     if (identical(r, notOverridden)) return super.expandableValue;
@@ -260,10 +253,20 @@ class _$DevToolsDeepLinkProperty extends DevToolsDeepLinkProperty implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -277,7 +280,6 @@ class _$DevToolsDeepLinkProperty extends DevToolsDeepLinkProperty implements Dar
   Map<String, String>? _super$toTimelineArguments() => super.toTimelineArguments();
   Map<String, Object?> _super$toJsonMapIterative(DiagnosticsSerializationDelegate delegate) => super.toJsonMapIterative(delegate);
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, TextTreeConfiguration? parentConfiguration, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration, minLevel: minLevel, wrapWidth: wrapWidth);
-  int get _super$hashCode => super.hashCode;
   bool get _super$expandableValue => super.expandableValue;
   bool get _super$allowWrap => super.allowWrap;
   bool get _super$allowNameWrap => super.allowNameWrap;
@@ -299,6 +301,7 @@ class _$DevToolsDeepLinkProperty extends DevToolsDeepLinkProperty implements Dar
   DiagnosticsTreeStyle? get _super$style => super.style;
   bool get _super$allowTruncate => super.allowTruncate;
   TextTreeConfiguration? get _super$textTreeConfiguration => super.textTreeConfiguration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -328,7 +331,6 @@ abstract final class DevToolsDeepLinkPropertyBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$toTimelineArguments#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$toTimelineArguments());
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$toJsonMapIterative#1', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate));
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$toStringDeep#5', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int));
-    ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$hashCode#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$expandableValue#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$expandableValue);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$allowWrap#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$allowWrap);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$allowNameWrap#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$allowNameWrap);
@@ -350,6 +352,7 @@ abstract final class DevToolsDeepLinkPropertyBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$style#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$style);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$allowTruncate#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$allowTruncate);
     ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$textTreeConfiguration#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$textTreeConfiguration);
+    ctx.registerBinding('package:flutter/src/widgets/widget_inspector.dart::DevToolsDeepLinkProperty::\$super\$hashCode#0', (args) => (args[0] as _$DevToolsDeepLinkProperty)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -64,13 +64,6 @@ class _$NoSplash extends NoSplash implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Color get color {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
     if (identical(r, notOverridden)) return super.color;
@@ -120,10 +113,20 @@ class _$NoSplash extends NoSplash implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -133,7 +136,6 @@ class _$NoSplash extends NoSplash implements DarticObjectHolder {
   String _super$toString() => super.toString();
   void _super$paintInkCircle({required Canvas canvas, required Matrix4 transform, required Paint paint, required Offset center, required double radius, TextDirection? textDirection, ShapeBorder? customBorder, BorderRadius borderRadius = BorderRadius.zero, RectCallback? clipCallback}) { super.paintInkCircle(canvas: canvas, transform: transform, paint: paint, center: center, radius: radius, textDirection: textDirection, customBorder: customBorder, borderRadius: borderRadius, clipCallback: clipCallback); }
   void _super$dispose() { super.dispose(); }
-  int get _super$hashCode => super.hashCode;
   Color get _super$color => super.color;
   ShapeBorder? get _super$customBorder => super.customBorder;
   MaterialInkController get _super$controller => super.controller;
@@ -141,6 +143,7 @@ class _$NoSplash extends NoSplash implements DarticObjectHolder {
   VoidCallback? get _super$onRemoved => super.onRemoved;
   set _super$color(Color value) { super.color = value; }
   set _super$customBorder(ShapeBorder? value) { super.customBorder = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -167,7 +170,6 @@ abstract final class NoSplashBindings {
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$toString#0', (args) => (args[0] as _$NoSplash)._super$toString());
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$paintInkCircle#9', (args) { (args[0] as _$NoSplash)._super$paintInkCircle(canvas: args[1] as Canvas, transform: args[2] as Matrix4, paint: args[3] as Paint, center: args[4] as Offset, radius: args[5] as double, textDirection: identical(args[6], darticAbsent) ? null : args[6] as TextDirection?, customBorder: identical(args[7], darticAbsent) ? null : args[7] as ShapeBorder?, borderRadius: identical(args[8], darticAbsent) ? BorderRadius.zero : args[8] as BorderRadius, clipCallback: identical(args[9], darticAbsent) ? null : (args[9] as Function?) == null ? null : () => (args[9] as Function?)!()); return null; });
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$dispose#0', (args) { (args[0] as _$NoSplash)._super$dispose(); return null; });
-    ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$hashCode#0', (args) => (args[0] as _$NoSplash)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$color#0', (args) => (args[0] as _$NoSplash)._super$color);
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$customBorder#0', (args) => (args[0] as _$NoSplash)._super$customBorder);
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$controller#0', (args) => (args[0] as _$NoSplash)._super$controller);
@@ -175,6 +177,7 @@ abstract final class NoSplashBindings {
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$onRemoved#0', (args) => (args[0] as _$NoSplash)._super$onRemoved);
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$color=#1', (args) { (args[0] as _$NoSplash)._super$color = args[1] as Color; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$customBorder=#1', (args) { (args[0] as _$NoSplash)._super$customBorder = args[1] as ShapeBorder?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/no_splash.dart::NoSplash::\$super\$hashCode#0', (args) => (args[0] as _$NoSplash)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -168,13 +168,6 @@ class _$HorizontalMultiDragGestureRecognizer extends HorizontalMultiDragGestureR
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   GestureMultiDragStartCallback? get onStart {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'onStart');
     if (identical(r, notOverridden)) return super.onStart;
@@ -231,10 +224,20 @@ class _$HorizontalMultiDragGestureRecognizer extends HorizontalMultiDragGestureR
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -259,7 +262,6 @@ class _$HorizontalMultiDragGestureRecognizer extends HorizontalMultiDragGestureR
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   GestureMultiDragStartCallback? get _super$onStart => super.onStart;
   Object? get _super$debugOwner => super.debugOwner;
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
@@ -268,6 +270,7 @@ class _$HorizontalMultiDragGestureRecognizer extends HorizontalMultiDragGestureR
   set _super$onStart(GestureMultiDragStartCallback? value) { super.onStart = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -308,7 +311,6 @@ abstract final class HorizontalMultiDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$onStart#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$onStart);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$debugOwner#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$debugOwner);
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$gestureSettings);
@@ -317,6 +319,7 @@ abstract final class HorizontalMultiDragGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$onStart=#1', (args) { (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$onStart = args[1] as GestureMultiDragStartCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/multidrag.dart::HorizontalMultiDragGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$HorizontalMultiDragGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -147,13 +147,6 @@ class _$Form extends Form implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -161,10 +154,20 @@ class _$Form extends Form implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -184,8 +187,8 @@ class _$Form extends Form implements DarticObjectHolder {
   PopInvokedWithResultCallback<Object?>? get _super$onPopInvokedWithResult => super.onPopInvokedWithResult;
   VoidCallback? get _super$onChanged => super.onChanged;
   AutovalidateMode get _super$autovalidateMode => super.autovalidateMode;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -223,8 +226,8 @@ abstract final class FormBindings {
     ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$onPopInvokedWithResult#0', (args) => (args[0] as _$Form)._super$onPopInvokedWithResult);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$onChanged#0', (args) => (args[0] as _$Form)._super$onChanged);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$autovalidateMode#0', (args) => (args[0] as _$Form)._super$autovalidateMode);
-    ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$hashCode#0', (args) => (args[0] as _$Form)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$key#0', (args) => (args[0] as _$Form)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/form.dart::Form::\$super\$hashCode#0', (args) => (args[0] as _$Form)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

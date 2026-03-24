@@ -176,13 +176,6 @@ class _$TextureLayer extends TextureLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get subtreeHasCompositionCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtreeHasCompositionCallbacks');
     if (identical(r, notOverridden)) return super.subtreeHasCompositionCallbacks;
@@ -288,10 +281,20 @@ class _$TextureLayer extends TextureLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -318,7 +321,6 @@ class _$TextureLayer extends TextureLayer implements DarticObjectHolder {
   int get _super$textureId => super.textureId;
   bool get _super$freeze => super.freeze;
   ui.FilterQuality get _super$filterQuality => super.filterQuality;
-  int get _super$hashCode => super.hashCode;
   bool get _super$subtreeHasCompositionCallbacks => super.subtreeHasCompositionCallbacks;
   bool get _super$debugDisposed => super.debugDisposed;
   int get _super$debugHandleCount => super.debugHandleCount;
@@ -334,6 +336,7 @@ class _$TextureLayer extends TextureLayer implements DarticObjectHolder {
   Object? get _super$debugCreator => super.debugCreator;
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -376,7 +379,6 @@ abstract final class TextureLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$textureId#0', (args) => (args[0] as _$TextureLayer)._super$textureId);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$freeze#0', (args) => (args[0] as _$TextureLayer)._super$freeze);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$filterQuality#0', (args) => (args[0] as _$TextureLayer)._super$filterQuality);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$hashCode#0', (args) => (args[0] as _$TextureLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$subtreeHasCompositionCallbacks#0', (args) => (args[0] as _$TextureLayer)._super$subtreeHasCompositionCallbacks);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$debugDisposed#0', (args) => (args[0] as _$TextureLayer)._super$debugDisposed);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$debugHandleCount#0', (args) => (args[0] as _$TextureLayer)._super$debugHandleCount);
@@ -392,6 +394,7 @@ abstract final class TextureLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$debugCreator#0', (args) => (args[0] as _$TextureLayer)._super$debugCreator);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$TextureLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$TextureLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::TextureLayer::\$super\$hashCode#0', (args) => (args[0] as _$TextureLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -201,13 +201,6 @@ class _$InputDatePickerFormField extends InputDatePickerFormField implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -215,10 +208,20 @@ class _$InputDatePickerFormField extends InputDatePickerFormField implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -246,8 +249,8 @@ class _$InputDatePickerFormField extends InputDatePickerFormField implements Dar
   bool get _super$acceptEmptyDate => super.acceptEmptyDate;
   FocusNode? get _super$focusNode => super.focusNode;
   CalendarDelegate<DateTime> get _super$calendarDelegate => super.calendarDelegate;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -291,8 +294,8 @@ abstract final class InputDatePickerFormFieldBindings {
     ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$acceptEmptyDate#0', (args) => (args[0] as _$InputDatePickerFormField)._super$acceptEmptyDate);
     ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$focusNode#0', (args) => (args[0] as _$InputDatePickerFormField)._super$focusNode);
     ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$calendarDelegate#0', (args) => (args[0] as _$InputDatePickerFormField)._super$calendarDelegate);
-    ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$hashCode#0', (args) => (args[0] as _$InputDatePickerFormField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$key#0', (args) => (args[0] as _$InputDatePickerFormField)._super$key);
+    ctx.registerBinding('package:flutter/src/material/input_date_picker_form_field.dart::InputDatePickerFormField::\$super\$hashCode#0', (args) => (args[0] as _$InputDatePickerFormField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

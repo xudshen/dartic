@@ -117,13 +117,6 @@ class _$Localizations extends Localizations implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -131,10 +124,20 @@ class _$Localizations extends Localizations implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -151,8 +154,8 @@ class _$Localizations extends Localizations implements DarticObjectHolder {
   List<LocalizationsDelegate<dynamic>> get _super$delegates => super.delegates;
   Widget? get _super$child => super.child;
   bool get _super$isApplicationLevel => super.isApplicationLevel;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -188,8 +191,8 @@ abstract final class LocalizationsBindings {
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$delegates#0', (args) => (args[0] as _$Localizations)._super$delegates);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$child#0', (args) => (args[0] as _$Localizations)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$isApplicationLevel#0', (args) => (args[0] as _$Localizations)._super$isApplicationLevel);
-    ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$hashCode#0', (args) => (args[0] as _$Localizations)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$key#0', (args) => (args[0] as _$Localizations)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/localizations.dart::Localizations::\$super\$hashCode#0', (args) => (args[0] as _$Localizations)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -189,13 +189,6 @@ class _$SerialTapGestureRecognizer extends SerialTapGestureRecognizer implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object? get debugOwner {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugOwner');
     if (identical(r, notOverridden)) return super.debugOwner;
@@ -259,10 +252,20 @@ class _$SerialTapGestureRecognizer extends SerialTapGestureRecognizer implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -290,7 +293,6 @@ class _$SerialTapGestureRecognizer extends SerialTapGestureRecognizer implements
   GestureSerialTapUpCallback? get _super$onSerialTapUp => super.onSerialTapUp;
   bool get _super$isTrackingPointer => super.isTrackingPointer;
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   Object? get _super$debugOwner => super.debugOwner;
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
   Set<PointerDeviceKind>? get _super$supportedDevices => super.supportedDevices;
@@ -300,6 +302,7 @@ class _$SerialTapGestureRecognizer extends SerialTapGestureRecognizer implements
   set _super$onSerialTapUp(GestureSerialTapUpCallback? value) { super.onSerialTapUp = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -343,7 +346,6 @@ abstract final class SerialTapGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$onSerialTapUp#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$onSerialTapUp);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$isTrackingPointer#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$isTrackingPointer);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$debugOwner#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$debugOwner);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$gestureSettings);
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$supportedDevices#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$supportedDevices);
@@ -353,6 +355,7 @@ abstract final class SerialTapGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$onSerialTapUp=#1', (args) { (args[0] as _$SerialTapGestureRecognizer)._super$onSerialTapUp = args[1] as GestureSerialTapUpCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$SerialTapGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$SerialTapGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/multitap.dart::SerialTapGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$SerialTapGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

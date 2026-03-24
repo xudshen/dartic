@@ -113,13 +113,6 @@ class _$TabController extends TabController implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -141,10 +134,20 @@ class _$TabController extends TabController implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -161,10 +164,10 @@ class _$TabController extends TabController implements DarticObjectHolder {
   int get _super$previousIndex => super.previousIndex;
   bool get _super$indexIsChanging => super.indexIsChanging;
   double get _super$offset => super.offset;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$index(int value) { super.index = value; }
   set _super$offset(double value) { super.offset = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -197,10 +200,10 @@ abstract final class TabControllerBindings {
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$previousIndex#0', (args) => (args[0] as _$TabController)._super$previousIndex);
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$indexIsChanging#0', (args) => (args[0] as _$TabController)._super$indexIsChanging);
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$offset#0', (args) => (args[0] as _$TabController)._super$offset);
-    ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$hashCode#0', (args) => (args[0] as _$TabController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$hasListeners#0', (args) => (args[0] as _$TabController)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$index=#1', (args) { (args[0] as _$TabController)._super$index = args[1] as int; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$offset=#1', (args) { (args[0] as _$TabController)._super$offset = args[1] as double; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/tab_controller.dart::TabController::\$super\$hashCode#0', (args) => (args[0] as _$TabController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -91,13 +91,6 @@ class _$TwoDimensionalChildListDelegate extends TwoDimensionalChildListDelegate 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -105,10 +98,20 @@ class _$TwoDimensionalChildListDelegate extends TwoDimensionalChildListDelegate 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -122,8 +125,8 @@ class _$TwoDimensionalChildListDelegate extends TwoDimensionalChildListDelegate 
   List<List<Widget>> get _super$children => super.children;
   bool get _super$addRepaintBoundaries => super.addRepaintBoundaries;
   bool get _super$addAutomaticKeepAlives => super.addAutomaticKeepAlives;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,8 +156,8 @@ abstract final class TwoDimensionalChildListDelegateBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$children#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$addRepaintBoundaries#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$addRepaintBoundaries);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$addAutomaticKeepAlives#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$addAutomaticKeepAlives);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$hasListeners#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildListDelegate::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalChildListDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

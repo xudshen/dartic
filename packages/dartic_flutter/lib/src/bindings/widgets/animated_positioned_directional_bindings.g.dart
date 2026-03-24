@@ -143,13 +143,6 @@ class _$AnimatedPositionedDirectional extends AnimatedPositionedDirectional impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -178,10 +171,20 @@ class _$AnimatedPositionedDirectional extends AnimatedPositionedDirectional impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -201,11 +204,11 @@ class _$AnimatedPositionedDirectional extends AnimatedPositionedDirectional impl
   double? get _super$bottom => super.bottom;
   double? get _super$width => super.width;
   double? get _super$height => super.height;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -241,11 +244,11 @@ abstract final class AnimatedPositionedDirectionalBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$bottom#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$bottom);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$width#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$width);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$height#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$height);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$curve#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$duration#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$key#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedPositionedDirectional::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedPositionedDirectional)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

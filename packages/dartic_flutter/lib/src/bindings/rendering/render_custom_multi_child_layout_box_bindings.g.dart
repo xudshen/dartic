@@ -623,13 +623,6 @@ class _$RenderCustomMultiChildLayoutBox extends RenderCustomMultiChildLayoutBox 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -896,10 +889,20 @@ class _$RenderCustomMultiChildLayoutBox extends RenderCustomMultiChildLayoutBox 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -994,7 +997,6 @@ class _$RenderCustomMultiChildLayoutBox extends RenderCustomMultiChildLayoutBox 
   void _super$defaultPaint(PaintingContext context, Offset offset) { super.defaultPaint(context, offset); }
   List<RenderBox> _super$getChildrenAsList() => super.getChildrenAsList();
   MultiChildLayoutDelegate get _super$delegate => super.delegate;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -1033,6 +1035,7 @@ class _$RenderCustomMultiChildLayoutBox extends RenderCustomMultiChildLayoutBox 
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1143,7 +1146,6 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$defaultPaint#2', (args) { (args[0] as _$RenderCustomMultiChildLayoutBox)._super$defaultPaint(args[1] as PaintingContext, args[2] as Offset); return null; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$getChildrenAsList#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$getChildrenAsList());
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$delegate#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$delegate);
-    ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$hasSize#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$size#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$semanticBounds);
@@ -1182,6 +1184,7 @@ abstract final class RenderCustomMultiChildLayoutBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$parentData=#1', (args) { (args[0] as _$RenderCustomMultiChildLayoutBox)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderCustomMultiChildLayoutBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$layer=#1', (args) { (args[0] as _$RenderCustomMultiChildLayoutBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::RenderCustomMultiChildLayoutBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderCustomMultiChildLayoutBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

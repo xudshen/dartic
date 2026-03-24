@@ -649,13 +649,6 @@ class _$RenderImage extends RenderImage implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -1013,10 +1006,20 @@ class _$RenderImage extends RenderImage implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1113,7 +1116,6 @@ class _$RenderImage extends RenderImage implements DarticObjectHolder {
   bool get _super$matchTextDirection => super.matchTextDirection;
   ui.TextDirection? get _super$textDirection => super.textDirection;
   bool get _super$isAntiAlias => super.isAntiAlias;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -1165,6 +1167,7 @@ class _$RenderImage extends RenderImage implements DarticObjectHolder {
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1277,7 +1280,6 @@ abstract final class RenderImageBindings {
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$matchTextDirection#0', (args) => (args[0] as _$RenderImage)._super$matchTextDirection);
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$textDirection#0', (args) => (args[0] as _$RenderImage)._super$textDirection);
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$isAntiAlias#0', (args) => (args[0] as _$RenderImage)._super$isAntiAlias);
-    ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$hashCode#0', (args) => (args[0] as _$RenderImage)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$hasSize#0', (args) => (args[0] as _$RenderImage)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$size#0', (args) => (args[0] as _$RenderImage)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderImage)._super$semanticBounds);
@@ -1329,6 +1331,7 @@ abstract final class RenderImageBindings {
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$parentData=#1', (args) { (args[0] as _$RenderImage)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderImage)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$layer=#1', (args) { (args[0] as _$RenderImage)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/image.dart::RenderImage::\$super\$hashCode#0', (args) => (args[0] as _$RenderImage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

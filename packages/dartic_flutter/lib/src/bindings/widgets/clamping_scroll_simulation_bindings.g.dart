@@ -70,13 +70,6 @@ class _$ClampingScrollSimulation extends ClampingScrollSimulation implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Tolerance get tolerance {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tolerance');
     if (identical(r, notOverridden)) return super.tolerance;
@@ -91,10 +84,20 @@ class _$ClampingScrollSimulation extends ClampingScrollSimulation implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -105,9 +108,9 @@ class _$ClampingScrollSimulation extends ClampingScrollSimulation implements Dar
   double get _super$position => super.position;
   double get _super$velocity => super.velocity;
   double get _super$friction => super.friction;
-  int get _super$hashCode => super.hashCode;
   Tolerance get _super$tolerance => super.tolerance;
   set _super$tolerance(Tolerance value) { super.tolerance = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -134,9 +137,9 @@ abstract final class ClampingScrollSimulationBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$position#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$velocity#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$velocity);
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$friction#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$friction);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$hashCode#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$tolerance#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$tolerance);
     ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$tolerance=#1', (args) { (args[0] as _$ClampingScrollSimulation)._super$tolerance = args[1] as Tolerance; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_simulation.dart::ClampingScrollSimulation::\$super\$hashCode#0', (args) => (args[0] as _$ClampingScrollSimulation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

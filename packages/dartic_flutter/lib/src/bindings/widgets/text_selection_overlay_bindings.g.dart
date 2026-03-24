@@ -209,13 +209,6 @@ class _$TextSelectionOverlay extends TextSelectionOverlay implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set handlesVisible(bool value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'handlesVisible', value)) {
       super.handlesVisible = value;
@@ -223,10 +216,20 @@ class _$TextSelectionOverlay extends TextSelectionOverlay implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -255,8 +258,8 @@ class _$TextSelectionOverlay extends TextSelectionOverlay implements DarticObjec
   bool get _super$magnifierIsVisible => super.magnifierIsVisible;
   bool get _super$magnifierExists => super.magnifierExists;
   bool get _super$spellCheckToolbarIsVisible => super.spellCheckToolbarIsVisible;
-  int get _super$hashCode => super.hashCode;
   set _super$handlesVisible(bool value) { super.handlesVisible = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -300,8 +303,8 @@ abstract final class TextSelectionOverlayBindings {
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$magnifierIsVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$magnifierIsVisible);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$magnifierExists#0', (args) => (args[0] as _$TextSelectionOverlay)._super$magnifierExists);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$spellCheckToolbarIsVisible#0', (args) => (args[0] as _$TextSelectionOverlay)._super$spellCheckToolbarIsVisible);
-    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionOverlay)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$handlesVisible=#1', (args) { (args[0] as _$TextSelectionOverlay)._super$handlesVisible = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::TextSelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$TextSelectionOverlay)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

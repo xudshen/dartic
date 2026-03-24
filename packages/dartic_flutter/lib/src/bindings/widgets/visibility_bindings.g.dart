@@ -151,13 +151,6 @@ class _$Visibility extends Visibility implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -165,10 +158,20 @@ class _$Visibility extends Visibility implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -190,8 +193,8 @@ class _$Visibility extends Visibility implements DarticObjectHolder {
   bool get _super$maintainSemantics => super.maintainSemantics;
   bool get _super$maintainInteractivity => super.maintainInteractivity;
   bool get _super$maintainFocusability => super.maintainFocusability;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -230,8 +233,8 @@ abstract final class VisibilityBindings {
     ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainSemantics#0', (args) => (args[0] as _$Visibility)._super$maintainSemantics);
     ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainInteractivity#0', (args) => (args[0] as _$Visibility)._super$maintainInteractivity);
     ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$maintainFocusability#0', (args) => (args[0] as _$Visibility)._super$maintainFocusability);
-    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$hashCode#0', (args) => (args[0] as _$Visibility)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$key#0', (args) => (args[0] as _$Visibility)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/visibility.dart::Visibility::\$super\$hashCode#0', (args) => (args[0] as _$Visibility)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

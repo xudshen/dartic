@@ -341,13 +341,6 @@ class _$CupertinoSheetRoute extends CupertinoSheetRoute<dynamic> implements Dart
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get fullscreenDialog {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fullscreenDialog');
     if (identical(r, notOverridden)) return super.fullscreenDialog;
@@ -642,10 +635,20 @@ class _$CupertinoSheetRoute extends CupertinoSheetRoute<dynamic> implements Dart
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -695,7 +698,6 @@ class _$CupertinoSheetRoute extends CupertinoSheetRoute<dynamic> implements Dart
   String? get _super$barrierLabel => super.barrierLabel;
   bool get _super$maintainState => super.maintainState;
   bool get _super$opaque => super.opaque;
-  int get _super$hashCode => super.hashCode;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
   bool get _super$popGestureEnabled => super.popGestureEnabled;
@@ -738,6 +740,7 @@ class _$CupertinoSheetRoute extends CupertinoSheetRoute<dynamic> implements Dart
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -805,7 +808,6 @@ abstract final class CupertinoSheetRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$barrierLabel#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$barrierLabel);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$maintainState#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$maintainState);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$opaque#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$opaque);
-    ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$fullscreenDialog#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$fullscreenDialog);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$allowSnapshotting#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$allowSnapshotting);
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$popGestureEnabled#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$popGestureEnabled);
@@ -848,6 +850,7 @@ abstract final class CupertinoSheetRouteBindings {
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$receivedTransition=#1', (args) { (args[0] as _$CupertinoSheetRoute)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$offstage=#1', (args) { (args[0] as _$CupertinoSheetRoute)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$CupertinoSheetRoute)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/cupertino/sheet.dart::CupertinoSheetRoute::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSheetRoute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

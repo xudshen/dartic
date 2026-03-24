@@ -93,13 +93,6 @@ class _$ErrorSpacer extends ErrorSpacer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get expandableValue {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'expandableValue');
     if (identical(r, notOverridden)) return super.expandableValue;
@@ -246,10 +239,20 @@ class _$ErrorSpacer extends ErrorSpacer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -263,7 +266,6 @@ class _$ErrorSpacer extends ErrorSpacer implements DarticObjectHolder {
   Map<String, String>? _super$toTimelineArguments() => super.toTimelineArguments();
   Map<String, Object?> _super$toJsonMapIterative(DiagnosticsSerializationDelegate delegate) => super.toJsonMapIterative(delegate);
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, TextTreeConfiguration? parentConfiguration, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, parentConfiguration: parentConfiguration, minLevel: minLevel, wrapWidth: wrapWidth);
-  int get _super$hashCode => super.hashCode;
   bool get _super$expandableValue => super.expandableValue;
   bool get _super$allowWrap => super.allowWrap;
   bool get _super$allowNameWrap => super.allowNameWrap;
@@ -285,6 +287,7 @@ class _$ErrorSpacer extends ErrorSpacer implements DarticObjectHolder {
   DiagnosticsTreeStyle? get _super$style => super.style;
   bool get _super$allowTruncate => super.allowTruncate;
   TextTreeConfiguration? get _super$textTreeConfiguration => super.textTreeConfiguration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -314,7 +317,6 @@ abstract final class ErrorSpacerBindings {
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$toTimelineArguments#0', (args) => (args[0] as _$ErrorSpacer)._super$toTimelineArguments());
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$toJsonMapIterative#1', (args) => (args[0] as _$ErrorSpacer)._super$toJsonMapIterative(args[1] as DiagnosticsSerializationDelegate));
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$toStringDeep#5', (args) => (args[0] as _$ErrorSpacer)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, parentConfiguration: identical(args[3], darticAbsent) ? null : args[3] as TextTreeConfiguration?, minLevel: identical(args[4], darticAbsent) ? DiagnosticLevel.debug : args[4] as DiagnosticLevel, wrapWidth: identical(args[5], darticAbsent) ? 65 : args[5] as int));
-    ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$hashCode#0', (args) => (args[0] as _$ErrorSpacer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$expandableValue#0', (args) => (args[0] as _$ErrorSpacer)._super$expandableValue);
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$allowWrap#0', (args) => (args[0] as _$ErrorSpacer)._super$allowWrap);
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$allowNameWrap#0', (args) => (args[0] as _$ErrorSpacer)._super$allowNameWrap);
@@ -336,6 +338,7 @@ abstract final class ErrorSpacerBindings {
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$style#0', (args) => (args[0] as _$ErrorSpacer)._super$style);
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$allowTruncate#0', (args) => (args[0] as _$ErrorSpacer)._super$allowTruncate);
     ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$textTreeConfiguration#0', (args) => (args[0] as _$ErrorSpacer)._super$textTreeConfiguration);
+    ctx.registerBinding('package:flutter/src/foundation/assertions.dart::ErrorSpacer::\$super\$hashCode#0', (args) => (args[0] as _$ErrorSpacer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

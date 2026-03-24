@@ -93,13 +93,6 @@ class _$OrientationBuilder extends OrientationBuilder implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -107,10 +100,20 @@ class _$OrientationBuilder extends OrientationBuilder implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -124,8 +127,8 @@ class _$OrientationBuilder extends OrientationBuilder implements DarticObjectHol
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   OrientationWidgetBuilder get _super$builder => super.builder;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -155,8 +158,8 @@ abstract final class OrientationBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$OrientationBuilder)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$OrientationBuilder)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$builder#0', (args) => (args[0] as _$OrientationBuilder)._super$builder);
-    ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$hashCode#0', (args) => (args[0] as _$OrientationBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$key#0', (args) => (args[0] as _$OrientationBuilder)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/orientation_builder.dart::OrientationBuilder::\$super\$hashCode#0', (args) => (args[0] as _$OrientationBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -73,13 +73,6 @@ class _$TwoDimensionalViewportParentData extends TwoDimensionalViewportParentDat
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get keepAlive {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keepAlive');
     if (identical(r, notOverridden)) return super.keepAlive;
@@ -115,10 +108,20 @@ class _$TwoDimensionalViewportParentData extends TwoDimensionalViewportParentDat
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -129,12 +132,12 @@ class _$TwoDimensionalViewportParentData extends TwoDimensionalViewportParentDat
   bool get _super$isVisible => super.isVisible;
   Offset? get _super$paintOffset => super.paintOffset;
   bool get _super$keptAlive => super.keptAlive;
-  int get _super$hashCode => super.hashCode;
   bool get _super$keepAlive => super.keepAlive;
   set _super$layoutOffset(Offset? value) { super.layoutOffset = value; }
   set _super$vicinity(ChildVicinity value) { super.vicinity = value; }
   set _super$paintOffset(Offset? value) { super.paintOffset = value; }
   set _super$keepAlive(bool value) { super.keepAlive = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -161,12 +164,12 @@ abstract final class TwoDimensionalViewportParentDataBindings {
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$isVisible#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$isVisible);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$paintOffset#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$paintOffset);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$keptAlive#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$keptAlive);
-    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$keepAlive#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$keepAlive);
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$layoutOffset=#1', (args) { (args[0] as _$TwoDimensionalViewportParentData)._super$layoutOffset = args[1] as Offset?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$vicinity=#1', (args) { (args[0] as _$TwoDimensionalViewportParentData)._super$vicinity = args[1] as ChildVicinity; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$paintOffset=#1', (args) { (args[0] as _$TwoDimensionalViewportParentData)._super$paintOffset = args[1] as Offset?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$keepAlive=#1', (args) { (args[0] as _$TwoDimensionalViewportParentData)._super$keepAlive = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/two_dimensional_viewport.dart::TwoDimensionalViewportParentData::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalViewportParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

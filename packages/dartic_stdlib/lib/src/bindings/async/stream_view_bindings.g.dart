@@ -194,13 +194,6 @@ class _$StreamView extends StreamView<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Future<int> get length {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
     if (identical(r, notOverridden)) return super.length;
@@ -236,10 +229,20 @@ class _$StreamView extends StreamView<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -282,12 +285,12 @@ class _$StreamView extends StreamView<dynamic> implements DarticObjectHolder {
     return (!identical(onTimeout, darticAbsent)) ? super.timeout(timeLimit, onTimeout: onTimeout as void Function(EventSink)?) : super.timeout(timeLimit);
   }
   bool get _super$isBroadcast => super.isBroadcast;
-  int get _super$hashCode => super.hashCode;
   Future<int> get _super$length => super.length;
   Future<bool> get _super$isEmpty => super.isEmpty;
   Future get _super$first => super.first;
   Future get _super$last => super.last;
   Future get _super$single => super.single;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -332,12 +335,12 @@ abstract final class StreamViewBindings {
     ctx.registerBinding('dart:async::StreamView::\$super\$elementAt#1', (args) => (args[0] as _$StreamView)._super$elementAt(args[1] as int));
     ctx.registerBinding('dart:async::StreamView::\$super\$timeout#2', (args) => (args[0] as _$StreamView)._super$timeout(args[1] as Duration, onTimeout: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
     ctx.registerBinding('dart:async::StreamView::\$super\$isBroadcast#0', (args) => (args[0] as _$StreamView)._super$isBroadcast);
-    ctx.registerBinding('dart:async::StreamView::\$super\$hashCode#0', (args) => (args[0] as _$StreamView)._super$hashCode);
     ctx.registerBinding('dart:async::StreamView::\$super\$length#0', (args) => (args[0] as _$StreamView)._super$length);
     ctx.registerBinding('dart:async::StreamView::\$super\$isEmpty#0', (args) => (args[0] as _$StreamView)._super$isEmpty);
     ctx.registerBinding('dart:async::StreamView::\$super\$first#0', (args) => (args[0] as _$StreamView)._super$first);
     ctx.registerBinding('dart:async::StreamView::\$super\$last#0', (args) => (args[0] as _$StreamView)._super$last);
     ctx.registerBinding('dart:async::StreamView::\$super\$single#0', (args) => (args[0] as _$StreamView)._super$single);
+    ctx.registerBinding('dart:async::StreamView::\$super\$hashCode#0', (args) => (args[0] as _$StreamView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

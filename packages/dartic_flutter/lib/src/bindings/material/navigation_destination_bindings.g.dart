@@ -132,13 +132,6 @@ class _$NavigationDestination extends NavigationDestination implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -146,10 +139,20 @@ class _$NavigationDestination extends NavigationDestination implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -167,8 +170,8 @@ class _$NavigationDestination extends NavigationDestination implements DarticObj
   String get _super$label => super.label;
   String? get _super$tooltip => super.tooltip;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -202,8 +205,8 @@ abstract final class NavigationDestinationBindings {
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$label#0', (args) => (args[0] as _$NavigationDestination)._super$label);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$tooltip#0', (args) => (args[0] as _$NavigationDestination)._super$tooltip);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$enabled#0', (args) => (args[0] as _$NavigationDestination)._super$enabled);
-    ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDestination)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$key#0', (args) => (args[0] as _$NavigationDestination)._super$key);
+    ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationDestination::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDestination)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

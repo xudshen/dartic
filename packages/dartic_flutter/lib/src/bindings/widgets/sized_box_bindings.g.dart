@@ -122,13 +122,6 @@ class _$SizedBox extends SizedBox implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -143,10 +136,20 @@ class _$SizedBox extends SizedBox implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -163,9 +166,9 @@ class _$SizedBox extends SizedBox implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   double? get _super$width => super.width;
   double? get _super$height => super.height;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -198,9 +201,9 @@ abstract final class SizedBoxBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SizedBox)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$width#0', (args) => (args[0] as _$SizedBox)._super$width);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$height#0', (args) => (args[0] as _$SizedBox)._super$height);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$hashCode#0', (args) => (args[0] as _$SizedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$child#0', (args) => (args[0] as _$SizedBox)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$key#0', (args) => (args[0] as _$SizedBox)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::SizedBox::\$super\$hashCode#0', (args) => (args[0] as _$SizedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

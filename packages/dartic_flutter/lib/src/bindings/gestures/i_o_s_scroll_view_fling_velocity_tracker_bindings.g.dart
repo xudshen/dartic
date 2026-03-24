@@ -49,13 +49,6 @@ class _$IOSScrollViewFlingVelocityTracker extends IOSScrollViewFlingVelocityTrac
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   PointerDeviceKind get kind {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'kind');
     if (identical(r, notOverridden)) return super.kind;
@@ -63,10 +56,20 @@ class _$IOSScrollViewFlingVelocityTracker extends IOSScrollViewFlingVelocityTrac
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -74,8 +77,8 @@ class _$IOSScrollViewFlingVelocityTracker extends IOSScrollViewFlingVelocityTrac
   VelocityEstimate _super$getVelocityEstimate() => super.getVelocityEstimate();
   String _super$toString() => super.toString();
   Velocity _super$getVelocity() => super.getVelocity();
-  int get _super$hashCode => super.hashCode;
   PointerDeviceKind get _super$kind => super.kind;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -99,8 +102,8 @@ abstract final class IOSScrollViewFlingVelocityTrackerBindings {
     ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$getVelocityEstimate#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$getVelocityEstimate());
     ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$toString#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$toString());
     ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$getVelocity#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$getVelocity());
-    ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$hashCode#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$kind#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$kind);
+    ctx.registerBinding('package:flutter/src/gestures/velocity_tracker.dart::IOSScrollViewFlingVelocityTracker::\$super\$hashCode#0', (args) => (args[0] as _$IOSScrollViewFlingVelocityTracker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

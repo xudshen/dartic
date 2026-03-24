@@ -67,13 +67,6 @@ class _$ThemeDataTween extends ThemeDataTween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ThemeData? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -102,10 +95,20 @@ class _$ThemeDataTween extends ThemeDataTween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -115,11 +118,11 @@ class _$ThemeDataTween extends ThemeDataTween implements DarticObjectHolder {
   ThemeData _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<ThemeData> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<ThemeData> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   ThemeData? get _super$begin => super.begin;
   ThemeData? get _super$end => super.end;
   set _super$begin(ThemeData? value) { super.begin = value; }
   set _super$end(ThemeData? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -145,11 +148,11 @@ abstract final class ThemeDataTweenBindings {
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$evaluate#1', (args) => (args[0] as _$ThemeDataTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$animate#1', (args) => (args[0] as _$ThemeDataTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$chain#1', (args) => (args[0] as _$ThemeDataTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$hashCode#0', (args) => (args[0] as _$ThemeDataTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$begin#0', (args) => (args[0] as _$ThemeDataTween)._super$begin);
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$end#0', (args) => (args[0] as _$ThemeDataTween)._super$end);
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$begin=#1', (args) { (args[0] as _$ThemeDataTween)._super$begin = args[1] as ThemeData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$end=#1', (args) { (args[0] as _$ThemeDataTween)._super$end = args[1] as ThemeData?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/theme.dart::ThemeDataTween::\$super\$hashCode#0', (args) => (args[0] as _$ThemeDataTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

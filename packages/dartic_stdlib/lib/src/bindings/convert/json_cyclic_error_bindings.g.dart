@@ -27,13 +27,6 @@ class _$JsonCyclicError extends JsonCyclicError implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object? get unsupportedObject {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'unsupportedObject');
     if (identical(r, notOverridden)) return super.unsupportedObject;
@@ -62,19 +55,29 @@ class _$JsonCyclicError extends JsonCyclicError implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   Object? get _super$unsupportedObject => super.unsupportedObject;
   Object? get _super$cause => super.cause;
   String? get _super$partialResult => super.partialResult;
   StackTrace? get _super$stackTrace => super.stackTrace;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -95,11 +98,11 @@ abstract final class JsonCyclicErrorBindings {
           _$JsonCyclicError(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$toString#0', (args) => (args[0] as _$JsonCyclicError)._super$toString());
-    ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$hashCode#0', (args) => (args[0] as _$JsonCyclicError)._super$hashCode);
     ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$unsupportedObject#0', (args) => (args[0] as _$JsonCyclicError)._super$unsupportedObject);
     ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$cause#0', (args) => (args[0] as _$JsonCyclicError)._super$cause);
     ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$partialResult#0', (args) => (args[0] as _$JsonCyclicError)._super$partialResult);
     ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$stackTrace#0', (args) => (args[0] as _$JsonCyclicError)._super$stackTrace);
+    ctx.registerBinding('dart:convert::JsonCyclicError::\$super\$hashCode#0', (args) => (args[0] as _$JsonCyclicError)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -557,13 +557,6 @@ class _$RenderSliverGrid extends RenderSliverGrid implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   RenderSliverBoxChildManager get childManager {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'childManager');
     if (identical(r, notOverridden)) return super.childManager;
@@ -858,10 +851,20 @@ class _$RenderSliverGrid extends RenderSliverGrid implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -946,7 +949,6 @@ class _$RenderSliverGrid extends RenderSliverGrid implements DarticObjectHolder 
   bool _super$hitTestBoxChild(BoxHitTestResult result, RenderBox child, {required double mainAxisPosition, required double crossAxisPosition}) => super.hitTestBoxChild(result, child, mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition);
   void _super$applyPaintTransformForBoxChild(RenderBox child, Matrix4 transform) { super.applyPaintTransformForBoxChild(child, transform); }
   SliverGridDelegate get _super$gridDelegate => super.gridDelegate;
-  int get _super$hashCode => super.hashCode;
   RenderSliverBoxChildManager get _super$childManager => super.childManager;
   bool get _super$debugChildIntegrityEnabled => super.debugChildIntegrityEnabled;
   Rect get _super$semanticBounds => super.semanticBounds;
@@ -989,6 +991,7 @@ class _$RenderSliverGrid extends RenderSliverGrid implements DarticObjectHolder 
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1089,7 +1092,6 @@ abstract final class RenderSliverGridBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$hitTestBoxChild#4', (args) => (args[0] as _$RenderSliverGrid)._super$hitTestBoxChild(args[1] as BoxHitTestResult, args[2] as RenderBox, mainAxisPosition: args[3] as double, crossAxisPosition: args[4] as double));
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$applyPaintTransformForBoxChild#2', (args) { (args[0] as _$RenderSliverGrid)._super$applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$gridDelegate#0', (args) => (args[0] as _$RenderSliverGrid)._super$gridDelegate);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverGrid)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$childManager#0', (args) => (args[0] as _$RenderSliverGrid)._super$childManager);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$debugChildIntegrityEnabled#0', (args) => (args[0] as _$RenderSliverGrid)._super$debugChildIntegrityEnabled);
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderSliverGrid)._super$semanticBounds);
@@ -1132,6 +1134,7 @@ abstract final class RenderSliverGridBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$parentData=#1', (args) { (args[0] as _$RenderSliverGrid)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverGrid)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverGrid)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_grid.dart::RenderSliverGrid::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverGrid)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -64,13 +64,6 @@ class _$BoxShadow extends BoxShadow implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Color get color {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
     if (identical(r, notOverridden)) return super.color;
@@ -99,10 +92,20 @@ class _$BoxShadow extends BoxShadow implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -112,11 +115,11 @@ class _$BoxShadow extends BoxShadow implements DarticObjectHolder {
   String _super$toString() => super.toString();
   double get _super$spreadRadius => super.spreadRadius;
   ui.BlurStyle get _super$blurStyle => super.blurStyle;
-  int get _super$hashCode => super.hashCode;
   ui.Color get _super$color => super.color;
   ui.Offset get _super$offset => super.offset;
   double get _super$blurRadius => super.blurRadius;
   double get _super$blurSigma => super.blurSigma;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -144,11 +147,11 @@ abstract final class BoxShadowBindings {
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$toString#0', (args) => (args[0] as _$BoxShadow)._super$toString());
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$spreadRadius#0', (args) => (args[0] as _$BoxShadow)._super$spreadRadius);
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurStyle#0', (args) => (args[0] as _$BoxShadow)._super$blurStyle);
-    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$hashCode#0', (args) => (args[0] as _$BoxShadow)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$color#0', (args) => (args[0] as _$BoxShadow)._super$color);
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$offset#0', (args) => (args[0] as _$BoxShadow)._super$offset);
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurRadius#0', (args) => (args[0] as _$BoxShadow)._super$blurRadius);
     ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$blurSigma#0', (args) => (args[0] as _$BoxShadow)._super$blurSigma);
+    ctx.registerBinding('package:flutter/src/painting/box_shadow.dart::BoxShadow::\$super\$hashCode#0', (args) => (args[0] as _$BoxShadow)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

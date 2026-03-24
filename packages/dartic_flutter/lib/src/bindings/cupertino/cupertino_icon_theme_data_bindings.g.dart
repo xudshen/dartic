@@ -72,13 +72,6 @@ class _$CupertinoIconThemeData extends CupertinoIconThemeData implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isConcrete {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isConcrete');
     if (identical(r, notOverridden)) return super.isConcrete;
@@ -149,10 +142,20 @@ class _$CupertinoIconThemeData extends CupertinoIconThemeData implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -163,7 +166,6 @@ class _$CupertinoIconThemeData extends CupertinoIconThemeData implements DarticO
   IconThemeData _super$merge(IconThemeData? other) => super.merge(other);
   String _super$toStringShort() => super.toStringShort();
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   bool get _super$isConcrete => super.isConcrete;
   double? get _super$size => super.size;
   double? get _super$fill => super.fill;
@@ -174,6 +176,7 @@ class _$CupertinoIconThemeData extends CupertinoIconThemeData implements DarticO
   double? get _super$opacity => super.opacity;
   List<Shadow>? get _super$shadows => super.shadows;
   bool? get _super$applyTextScaling => super.applyTextScaling;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -200,7 +203,6 @@ abstract final class CupertinoIconThemeDataBindings {
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$merge#1', (args) => (args[0] as _$CupertinoIconThemeData)._super$merge(args[1] as IconThemeData?));
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$toStringShort#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$CupertinoIconThemeData)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$isConcrete#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$isConcrete);
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$size#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$size);
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$fill#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$fill);
@@ -211,6 +213,7 @@ abstract final class CupertinoIconThemeDataBindings {
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$opacity#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$opacity);
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$shadows#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$shadows);
     ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$applyTextScaling#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$applyTextScaling);
+    ctx.registerBinding('package:flutter/src/cupertino/icon_theme_data.dart::CupertinoIconThemeData::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoIconThemeData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

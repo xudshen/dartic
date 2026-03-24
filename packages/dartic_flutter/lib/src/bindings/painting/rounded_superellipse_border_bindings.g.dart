@@ -107,13 +107,6 @@ class _$RoundedSuperellipseBorder extends RoundedSuperellipseBorder implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry get dimensions {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dimensions');
     if (identical(r, notOverridden)) return super.dimensions;
@@ -128,17 +121,27 @@ class _$RoundedSuperellipseBorder extends RoundedSuperellipseBorder implements D
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -154,9 +157,9 @@ class _$RoundedSuperellipseBorder extends RoundedSuperellipseBorder implements D
   ShapeBorder? _super$add(ShapeBorder other, {bool reversed = false}) => super.add(other, reversed: reversed);
   BorderRadiusGeometry get _super$borderRadius => super.borderRadius;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   BorderSide get _super$side => super.side;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -188,9 +191,9 @@ abstract final class RoundedSuperellipseBorderBindings {
     ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$add#2', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$add(args[1] as ShapeBorder, reversed: identical(args[2], darticAbsent) ? false : args[2] as bool));
     ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$borderRadius#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$preferPaintInterior);
-    ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$hashCode#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$dimensions#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$side#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$side);
+    ctx.registerBinding('package:flutter/src/painting/rounded_rectangle_border.dart::RoundedSuperellipseBorder::\$super\$hashCode#0', (args) => (args[0] as _$RoundedSuperellipseBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

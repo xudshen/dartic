@@ -156,13 +156,6 @@ class _$Scrollbar extends Scrollbar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -170,10 +163,20 @@ class _$Scrollbar extends Scrollbar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -195,8 +198,8 @@ class _$Scrollbar extends Scrollbar implements DarticObjectHolder {
   bool? get _super$interactive => super.interactive;
   ScrollNotificationPredicate? get _super$notificationPredicate => super.notificationPredicate;
   ScrollbarOrientation? get _super$scrollbarOrientation => super.scrollbarOrientation;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -234,8 +237,8 @@ abstract final class ScrollbarBindings {
     ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$interactive#0', (args) => (args[0] as _$Scrollbar)._super$interactive);
     ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$notificationPredicate#0', (args) => (args[0] as _$Scrollbar)._super$notificationPredicate);
     ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$scrollbarOrientation#0', (args) => (args[0] as _$Scrollbar)._super$scrollbarOrientation);
-    ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$hashCode#0', (args) => (args[0] as _$Scrollbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$key#0', (args) => (args[0] as _$Scrollbar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/scrollbar.dart::Scrollbar::\$super\$hashCode#0', (args) => (args[0] as _$Scrollbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -562,13 +562,6 @@ class _$RenderingFlutterBinding extends RenderingFlutterBinding implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.SingletonFlutterWindow get window {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'window');
     if (identical(r, notOverridden)) return super.window;
@@ -849,10 +842,20 @@ class _$RenderingFlutterBinding extends RenderingFlutterBinding implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -937,7 +940,6 @@ class _$RenderingFlutterBinding extends RenderingFlutterBinding implements Darti
   void _super$allowFirstFrame() { super.allowFirstFrame(); }
   void _super$resetFirstFrameSent() { super.resetFirstFrameSent(); }
   void _super$drawFrame() { super.drawFrame(); }
-  int get _super$hashCode => super.hashCode;
   ui.SingletonFlutterWindow get _super$window => super.window;
   ui.PlatformDispatcher get _super$platformDispatcher => super.platformDispatcher;
   bool get _super$locked => super.locked;
@@ -978,6 +980,7 @@ class _$RenderingFlutterBinding extends RenderingFlutterBinding implements Darti
   set _super$resamplingEnabled(bool value) { super.resamplingEnabled = value; }
   set _super$samplingOffset(Duration value) { super.samplingOffset = value; }
   set _super$schedulingStrategy(SchedulingStrategy value) { super.schedulingStrategy = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1079,7 +1082,6 @@ abstract final class RenderingFlutterBindingBindings {
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$allowFirstFrame#0', (args) { (args[0] as _$RenderingFlutterBinding)._super$allowFirstFrame(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$resetFirstFrameSent#0', (args) { (args[0] as _$RenderingFlutterBinding)._super$resetFirstFrameSent(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$drawFrame#0', (args) { (args[0] as _$RenderingFlutterBinding)._super$drawFrame(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$hashCode#0', (args) => (args[0] as _$RenderingFlutterBinding)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$window#0', (args) => (args[0] as _$RenderingFlutterBinding)._super$window);
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$platformDispatcher#0', (args) => (args[0] as _$RenderingFlutterBinding)._super$platformDispatcher);
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$locked#0', (args) => (args[0] as _$RenderingFlutterBinding)._super$locked);
@@ -1120,6 +1122,7 @@ abstract final class RenderingFlutterBindingBindings {
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$resamplingEnabled=#1', (args) { (args[0] as _$RenderingFlutterBinding)._super$resamplingEnabled = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$samplingOffset=#1', (args) { (args[0] as _$RenderingFlutterBinding)._super$samplingOffset = args[1] as Duration; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$schedulingStrategy=#1', (args) { (args[0] as _$RenderingFlutterBinding)._super$schedulingStrategy = args[1] as SchedulingStrategy; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/binding.dart::RenderingFlutterBinding::\$super\$hashCode#0', (args) => (args[0] as _$RenderingFlutterBinding)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -112,13 +112,6 @@ class _$CupertinoScrollBehavior extends CupertinoScrollBehavior implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Set<PointerDeviceKind> get dragDevices {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragDevices');
     if (identical(r, notOverridden)) return super.dragDevices;
@@ -133,10 +126,20 @@ class _$CupertinoScrollBehavior extends CupertinoScrollBehavior implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -150,9 +153,9 @@ class _$CupertinoScrollBehavior extends CupertinoScrollBehavior implements Darti
   GestureVelocityTrackerBuilder _super$velocityTrackerBuilder(BuildContext context) => super.velocityTrackerBuilder(context);
   bool _super$shouldNotify(ScrollBehavior oldDelegate) => super.shouldNotify(oldDelegate);
   ScrollViewKeyboardDismissBehavior _super$getKeyboardDismissBehavior(BuildContext context) => super.getKeyboardDismissBehavior(context);
-  int get _super$hashCode => super.hashCode;
   Set<PointerDeviceKind> get _super$dragDevices => super.dragDevices;
   Set<LogicalKeyboardKey> get _super$pointerAxisModifiers => super.pointerAxisModifiers;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -182,9 +185,9 @@ abstract final class CupertinoScrollBehaviorBindings {
     ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$velocityTrackerBuilder#1', (args) => (args[0] as _$CupertinoScrollBehavior)._super$velocityTrackerBuilder(args[1] as BuildContext));
     ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$shouldNotify#1', (args) => (args[0] as _$CupertinoScrollBehavior)._super$shouldNotify(args[1] as ScrollBehavior));
     ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$getKeyboardDismissBehavior#1', (args) => (args[0] as _$CupertinoScrollBehavior)._super$getKeyboardDismissBehavior(args[1] as BuildContext));
-    ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoScrollBehavior)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$dragDevices#0', (args) => (args[0] as _$CupertinoScrollBehavior)._super$dragDevices);
     ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$pointerAxisModifiers#0', (args) => (args[0] as _$CupertinoScrollBehavior)._super$pointerAxisModifiers);
+    ctx.registerBinding('package:flutter/src/cupertino/app.dart::CupertinoScrollBehavior::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoScrollBehavior)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

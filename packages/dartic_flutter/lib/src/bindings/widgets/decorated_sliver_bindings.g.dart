@@ -117,13 +117,6 @@ class _$DecoratedSliver extends DecoratedSliver implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget? get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -138,10 +131,20 @@ class _$DecoratedSliver extends DecoratedSliver implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -158,9 +161,9 @@ class _$DecoratedSliver extends DecoratedSliver implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Decoration get _super$decoration => super.decoration;
   DecorationPosition get _super$position => super.position;
-  int get _super$hashCode => super.hashCode;
   Widget? get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -193,9 +196,9 @@ abstract final class DecoratedSliverBindings {
     ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DecoratedSliver)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$decoration#0', (args) => (args[0] as _$DecoratedSliver)._super$decoration);
     ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$position#0', (args) => (args[0] as _$DecoratedSliver)._super$position);
-    ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$hashCode#0', (args) => (args[0] as _$DecoratedSliver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$child#0', (args) => (args[0] as _$DecoratedSliver)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$key#0', (args) => (args[0] as _$DecoratedSliver)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/decorated_sliver.dart::DecoratedSliver::\$super\$hashCode#0', (args) => (args[0] as _$DecoratedSliver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

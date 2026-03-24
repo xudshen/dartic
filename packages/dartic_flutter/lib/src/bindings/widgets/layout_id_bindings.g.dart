@@ -123,13 +123,6 @@ class _$LayoutId extends LayoutId implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get debugTypicalAncestorWidgetDescription {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'debugTypicalAncestorWidgetDescription');
     if (identical(r, notOverridden)) return super.debugTypicalAncestorWidgetDescription;
@@ -151,10 +144,20 @@ class _$LayoutId extends LayoutId implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -171,10 +174,10 @@ class _$LayoutId extends LayoutId implements DarticObjectHolder {
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   Object get _super$id => super.id;
   Type get _super$debugTypicalAncestorWidgetClass => super.debugTypicalAncestorWidgetClass;
-  int get _super$hashCode => super.hashCode;
   String get _super$debugTypicalAncestorWidgetDescription => super.debugTypicalAncestorWidgetDescription;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -207,10 +210,10 @@ abstract final class LayoutIdBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$LayoutId)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$id#0', (args) => (args[0] as _$LayoutId)._super$id);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$debugTypicalAncestorWidgetClass#0', (args) => (args[0] as _$LayoutId)._super$debugTypicalAncestorWidgetClass);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$hashCode#0', (args) => (args[0] as _$LayoutId)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$debugTypicalAncestorWidgetDescription#0', (args) => (args[0] as _$LayoutId)._super$debugTypicalAncestorWidgetDescription);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$child#0', (args) => (args[0] as _$LayoutId)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$key#0', (args) => (args[0] as _$LayoutId)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::LayoutId::\$super\$hashCode#0', (args) => (args[0] as _$LayoutId)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

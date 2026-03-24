@@ -138,13 +138,6 @@ class _$StarBorder extends StarBorder implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry get dimensions {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dimensions');
     if (identical(r, notOverridden)) return super.dimensions;
@@ -166,17 +159,27 @@ class _$StarBorder extends StarBorder implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   ShapeBorder operator +(ShapeBorder other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as ShapeBorder;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -196,10 +199,10 @@ class _$StarBorder extends StarBorder implements DarticObjectHolder {
   double get _super$valleyRounding => super.valleyRounding;
   double get _super$rotation => super.rotation;
   double get _super$squash => super.squash;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry get _super$dimensions => super.dimensions;
   BorderSide get _super$side => super.side;
   bool get _super$preferPaintInterior => super.preferPaintInterior;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -235,10 +238,10 @@ abstract final class StarBorderBindings {
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$valleyRounding#0', (args) => (args[0] as _$StarBorder)._super$valleyRounding);
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$rotation#0', (args) => (args[0] as _$StarBorder)._super$rotation);
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$squash#0', (args) => (args[0] as _$StarBorder)._super$squash);
-    ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$hashCode#0', (args) => (args[0] as _$StarBorder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$dimensions#0', (args) => (args[0] as _$StarBorder)._super$dimensions);
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$side#0', (args) => (args[0] as _$StarBorder)._super$side);
     ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$preferPaintInterior#0', (args) => (args[0] as _$StarBorder)._super$preferPaintInterior);
+    ctx.registerBinding('package:flutter/src/painting/star_border.dart::StarBorder::\$super\$hashCode#0', (args) => (args[0] as _$StarBorder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

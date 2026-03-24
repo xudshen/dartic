@@ -268,13 +268,6 @@ class _$CupertinoSwitch extends CupertinoSwitch implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -282,10 +275,20 @@ class _$CupertinoSwitch extends CupertinoSwitch implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -322,8 +325,8 @@ class _$CupertinoSwitch extends CupertinoSwitch implements DarticObjectHolder {
   bool get _super$autofocus => super.autofocus;
   bool? get _super$applyTheme => super.applyTheme;
   DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -376,8 +379,8 @@ abstract final class CupertinoSwitchBindings {
     ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$autofocus#0', (args) => (args[0] as _$CupertinoSwitch)._super$autofocus);
     ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$applyTheme#0', (args) => (args[0] as _$CupertinoSwitch)._super$applyTheme);
     ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$dragStartBehavior#0', (args) => (args[0] as _$CupertinoSwitch)._super$dragStartBehavior);
-    ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSwitch)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$key#0', (args) => (args[0] as _$CupertinoSwitch)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/switch.dart::CupertinoSwitch::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoSwitch)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

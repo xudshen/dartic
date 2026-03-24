@@ -249,13 +249,6 @@ class _$ForcePressGestureRecognizer extends ForcePressGestureRecognizer implemen
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   GestureArenaTeam? get team {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'team');
     if (identical(r, notOverridden)) return super.team;
@@ -340,10 +333,20 @@ class _$ForcePressGestureRecognizer extends ForcePressGestureRecognizer implemen
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -381,7 +384,6 @@ class _$ForcePressGestureRecognizer extends ForcePressGestureRecognizer implemen
   double get _super$peakPressure => super.peakPressure;
   GestureForceInterpolation get _super$interpolation => super.interpolation;
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   GestureArenaTeam? get _super$team => super.team;
   Object? get _super$debugOwner => super.debugOwner;
   DeviceGestureSettings? get _super$gestureSettings => super.gestureSettings;
@@ -394,6 +396,7 @@ class _$ForcePressGestureRecognizer extends ForcePressGestureRecognizer implemen
   set _super$team(GestureArenaTeam? value) { super.team = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -447,7 +450,6 @@ abstract final class ForcePressGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$peakPressure#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$peakPressure);
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$interpolation#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$interpolation);
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$team#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$team);
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$debugOwner#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$debugOwner);
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$gestureSettings#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$gestureSettings);
@@ -460,6 +462,7 @@ abstract final class ForcePressGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$team=#1', (args) { (args[0] as _$ForcePressGestureRecognizer)._super$team = args[1] as GestureArenaTeam?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$ForcePressGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$ForcePressGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/force_press.dart::ForcePressGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$ForcePressGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

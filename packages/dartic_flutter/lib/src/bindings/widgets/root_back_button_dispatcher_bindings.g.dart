@@ -184,13 +184,6 @@ class _$RootBackButtonDispatcher extends RootBackButtonDispatcher implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasCallbacks');
     if (identical(r, notOverridden)) return super.hasCallbacks;
@@ -198,10 +191,20 @@ class _$RootBackButtonDispatcher extends RootBackButtonDispatcher implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -229,8 +232,8 @@ class _$RootBackButtonDispatcher extends RootBackButtonDispatcher implements Dar
   Future<AppExitResponse> _super$didRequestAppExit() => super.didRequestAppExit();
   void _super$didHaveMemoryPressure() { super.didHaveMemoryPressure(); }
   void _super$didChangeAccessibilityFeatures() { super.didChangeAccessibilityFeatures(); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasCallbacks => super.hasCallbacks;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -274,8 +277,8 @@ abstract final class RootBackButtonDispatcherBindings {
     ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$didRequestAppExit#0', (args) => (args[0] as _$RootBackButtonDispatcher)._super$didRequestAppExit());
     ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$didHaveMemoryPressure#0', (args) { (args[0] as _$RootBackButtonDispatcher)._super$didHaveMemoryPressure(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$didChangeAccessibilityFeatures#0', (args) { (args[0] as _$RootBackButtonDispatcher)._super$didChangeAccessibilityFeatures(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$RootBackButtonDispatcher)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$hasCallbacks#0', (args) => (args[0] as _$RootBackButtonDispatcher)._super$hasCallbacks);
+    ctx.registerBinding('package:flutter/src/widgets/router.dart::RootBackButtonDispatcher::\$super\$hashCode#0', (args) => (args[0] as _$RootBackButtonDispatcher)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

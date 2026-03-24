@@ -222,13 +222,6 @@ class _$FormFieldState extends FormFieldState<dynamic> implements DarticObjectHo
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   FormField get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -264,10 +257,20 @@ class _$FormFieldState extends FormFieldState<dynamic> implements DarticObjectHo
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -300,12 +303,12 @@ class _$FormFieldState extends FormFieldState<dynamic> implements DarticObjectHo
   bool get _super$hasInteractedByUser => super.hasInteractedByUser;
   bool get _super$isValid => super.isValid;
   String? get _super$restorationId => super.restorationId;
-  int get _super$hashCode => super.hashCode;
   FormField get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
   RestorationBucket? get _super$bucket => super.bucket;
   bool get _super$restorePending => super.restorePending;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -354,12 +357,12 @@ abstract final class FormFieldStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$hasInteractedByUser#0', (args) => (args[0] as _$FormFieldState)._super$hasInteractedByUser);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$isValid#0', (args) => (args[0] as _$FormFieldState)._super$isValid);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$restorationId#0', (args) => (args[0] as _$FormFieldState)._super$restorationId);
-    ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$hashCode#0', (args) => (args[0] as _$FormFieldState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$widget#0', (args) => (args[0] as _$FormFieldState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$context#0', (args) => (args[0] as _$FormFieldState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$mounted#0', (args) => (args[0] as _$FormFieldState)._super$mounted);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$bucket#0', (args) => (args[0] as _$FormFieldState)._super$bucket);
     ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$restorePending#0', (args) => (args[0] as _$FormFieldState)._super$restorePending);
+    ctx.registerBinding('package:flutter/src/widgets/form.dart::FormFieldState::\$super\$hashCode#0', (args) => (args[0] as _$FormFieldState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

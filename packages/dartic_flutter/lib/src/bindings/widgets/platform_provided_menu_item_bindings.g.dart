@@ -76,13 +76,6 @@ class _$PlatformProvidedMenuItem extends PlatformProvidedMenuItem implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get label {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'label');
     if (identical(r, notOverridden)) return super.label;
@@ -139,10 +132,20 @@ class _$PlatformProvidedMenuItem extends PlatformProvidedMenuItem implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -153,7 +156,6 @@ class _$PlatformProvidedMenuItem extends PlatformProvidedMenuItem implements Dar
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   PlatformProvidedMenuItemType get _super$type => super.type;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   String get _super$label => super.label;
   MenuSerializableShortcut? get _super$shortcut => super.shortcut;
   VoidCallback? get _super$onSelected => super.onSelected;
@@ -162,6 +164,7 @@ class _$PlatformProvidedMenuItem extends PlatformProvidedMenuItem implements Dar
   Intent? get _super$onSelectedIntent => super.onSelectedIntent;
   List<PlatformMenuItem> get _super$descendants => super.descendants;
   List<PlatformMenuItem> get _super$members => super.members;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -189,7 +192,6 @@ abstract final class PlatformProvidedMenuItemBindings {
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$type#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$type);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$enabled#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$enabled);
-    ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$label#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$label);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$shortcut#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$shortcut);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$onSelected#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$onSelected);
@@ -198,6 +200,7 @@ abstract final class PlatformProvidedMenuItemBindings {
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$onSelectedIntent#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$onSelectedIntent);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$descendants#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$descendants);
     ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$members#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$members);
+    ctx.registerBinding('package:flutter/src/widgets/platform_menu_bar.dart::PlatformProvidedMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$PlatformProvidedMenuItem)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

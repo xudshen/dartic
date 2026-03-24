@@ -132,13 +132,6 @@ class _$CupertinoTextMagnifier extends CupertinoTextMagnifier implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -146,10 +139,20 @@ class _$CupertinoTextMagnifier extends CupertinoTextMagnifier implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -168,8 +171,8 @@ class _$CupertinoTextMagnifier extends CupertinoTextMagnifier implements DarticO
   double get _super$hideBelowThreshold => super.hideBelowThreshold;
   double get _super$horizontalScreenEdgePadding => super.horizontalScreenEdgePadding;
   ValueNotifier<MagnifierInfo> get _super$magnifierInfo => super.magnifierInfo;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -204,8 +207,8 @@ abstract final class CupertinoTextMagnifierBindings {
     ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$hideBelowThreshold#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$hideBelowThreshold);
     ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$horizontalScreenEdgePadding#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$horizontalScreenEdgePadding);
     ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$magnifierInfo#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$magnifierInfo);
-    ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$key#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/magnifier.dart::CupertinoTextMagnifier::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextMagnifier)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

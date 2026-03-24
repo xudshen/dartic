@@ -153,13 +153,6 @@ class _$Size extends Size implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isInfinite {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isInfinite');
     if (identical(r, notOverridden)) return super.isInfinite;
@@ -216,13 +209,6 @@ class _$Size extends Size implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   bool operator <(OffsetBase other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<', [other]);
     if (identical(r, notOverridden)) return super < other;
@@ -250,6 +236,23 @@ class _$Size extends Size implements DarticObjectHolder {
     return r as bool;
   }
 
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
+  }
+
   // ── Super trampolines ──
   Offset _super$topLeft(Offset origin) => super.topLeft(origin);
   Offset _super$topCenter(Offset origin) => super.topCenter(origin);
@@ -269,9 +272,9 @@ class _$Size extends Size implements DarticObjectHolder {
   double get _super$shortestSide => super.shortestSide;
   double get _super$longestSide => super.longestSide;
   Size get _super$flipped => super.flipped;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isInfinite => super.isInfinite;
   bool get _super$isFinite => super.isFinite;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -312,9 +315,9 @@ abstract final class SizeBindings {
     ctx.registerBinding('dart:ui::Size::\$super\$shortestSide#0', (args) => (args[0] as _$Size)._super$shortestSide);
     ctx.registerBinding('dart:ui::Size::\$super\$longestSide#0', (args) => (args[0] as _$Size)._super$longestSide);
     ctx.registerBinding('dart:ui::Size::\$super\$flipped#0', (args) => (args[0] as _$Size)._super$flipped);
-    ctx.registerBinding('dart:ui::Size::\$super\$hashCode#0', (args) => (args[0] as _$Size)._super$hashCode);
     ctx.registerBinding('dart:ui::Size::\$super\$isInfinite#0', (args) => (args[0] as _$Size)._super$isInfinite);
     ctx.registerBinding('dart:ui::Size::\$super\$isFinite#0', (args) => (args[0] as _$Size)._super$isFinite);
+    ctx.registerBinding('dart:ui::Size::\$super\$hashCode#0', (args) => (args[0] as _$Size)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -75,13 +75,6 @@ class _$BorderRadiusTween extends BorderRadiusTween implements DarticObjectHolde
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   BorderRadius? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -110,10 +103,20 @@ class _$BorderRadiusTween extends BorderRadiusTween implements DarticObjectHolde
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -123,11 +126,11 @@ class _$BorderRadiusTween extends BorderRadiusTween implements DarticObjectHolde
   BorderRadius? _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<BorderRadius?> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<BorderRadius?> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   BorderRadius? get _super$begin => super.begin;
   BorderRadius? get _super$end => super.end;
   set _super$begin(BorderRadius? value) { super.begin = value; }
   set _super$end(BorderRadius? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -153,11 +156,11 @@ abstract final class BorderRadiusTweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$evaluate#1', (args) => (args[0] as _$BorderRadiusTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$animate#1', (args) => (args[0] as _$BorderRadiusTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$chain#1', (args) => (args[0] as _$BorderRadiusTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$hashCode#0', (args) => (args[0] as _$BorderRadiusTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$begin#0', (args) => (args[0] as _$BorderRadiusTween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$end#0', (args) => (args[0] as _$BorderRadiusTween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$begin=#1', (args) { (args[0] as _$BorderRadiusTween)._super$begin = args[1] as BorderRadius?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$end=#1', (args) { (args[0] as _$BorderRadiusTween)._super$end = args[1] as BorderRadius?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BorderRadiusTween::\$super\$hashCode#0', (args) => (args[0] as _$BorderRadiusTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

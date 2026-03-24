@@ -600,13 +600,6 @@ class _$RenderTreeSliver extends RenderTreeSliver implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ItemExtentBuilder get itemExtentBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'itemExtentBuilder');
     if (identical(r, notOverridden)) return super.itemExtentBuilder;
@@ -929,10 +922,20 @@ class _$RenderTreeSliver extends RenderTreeSliver implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1023,7 +1026,6 @@ class _$RenderTreeSliver extends RenderTreeSliver implements DarticObjectHolder 
   void _super$applyPaintTransformForBoxChild(RenderBox child, Matrix4 transform) { super.applyPaintTransformForBoxChild(child, transform); }
   Map<UniqueKey, ({int fromIndex, int toIndex, double value})> get _super$activeAnimations => super.activeAnimations;
   double get _super$indentation => super.indentation;
-  int get _super$hashCode => super.hashCode;
   ItemExtentBuilder get _super$itemExtentBuilder => super.itemExtentBuilder;
   double? get _super$itemExtent => super.itemExtent;
   RenderSliverBoxChildManager get _super$childManager => super.childManager;
@@ -1070,6 +1072,7 @@ class _$RenderTreeSliver extends RenderTreeSliver implements DarticObjectHolder 
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1176,7 +1179,6 @@ abstract final class RenderTreeSliverBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$applyPaintTransformForBoxChild#2', (args) { (args[0] as _$RenderTreeSliver)._super$applyPaintTransformForBoxChild(args[1] as RenderBox, args[2] as Matrix4); return null; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$activeAnimations#0', (args) => (args[0] as _$RenderTreeSliver)._super$activeAnimations);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$indentation#0', (args) => (args[0] as _$RenderTreeSliver)._super$indentation);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$hashCode#0', (args) => (args[0] as _$RenderTreeSliver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$itemExtentBuilder#0', (args) => (args[0] as _$RenderTreeSliver)._super$itemExtentBuilder);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$itemExtent#0', (args) => (args[0] as _$RenderTreeSliver)._super$itemExtent);
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$childManager#0', (args) => (args[0] as _$RenderTreeSliver)._super$childManager);
@@ -1223,6 +1225,7 @@ abstract final class RenderTreeSliverBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$parentData=#1', (args) { (args[0] as _$RenderTreeSliver)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderTreeSliver)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$layer=#1', (args) { (args[0] as _$RenderTreeSliver)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_tree.dart::RenderTreeSliver::\$super\$hashCode#0', (args) => (args[0] as _$RenderTreeSliver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

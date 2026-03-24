@@ -116,13 +116,6 @@ class _$HoldScrollActivity extends HoldScrollActivity implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollActivityDelegate get delegate {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'delegate');
     if (identical(r, notOverridden)) return super.delegate;
@@ -130,10 +123,20 @@ class _$HoldScrollActivity extends HoldScrollActivity implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -151,8 +154,8 @@ class _$HoldScrollActivity extends HoldScrollActivity implements DarticObjectHol
   bool get _super$shouldIgnorePointer => super.shouldIgnorePointer;
   bool get _super$isScrolling => super.isScrolling;
   double get _super$velocity => super.velocity;
-  int get _super$hashCode => super.hashCode;
   ScrollActivityDelegate get _super$delegate => super.delegate;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -186,8 +189,8 @@ abstract final class HoldScrollActivityBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$shouldIgnorePointer#0', (args) => (args[0] as _$HoldScrollActivity)._super$shouldIgnorePointer);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$isScrolling#0', (args) => (args[0] as _$HoldScrollActivity)._super$isScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$velocity#0', (args) => (args[0] as _$HoldScrollActivity)._super$velocity);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$hashCode#0', (args) => (args[0] as _$HoldScrollActivity)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$delegate#0', (args) => (args[0] as _$HoldScrollActivity)._super$delegate);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_activity.dart::HoldScrollActivity::\$super\$hashCode#0', (args) => (args[0] as _$HoldScrollActivity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

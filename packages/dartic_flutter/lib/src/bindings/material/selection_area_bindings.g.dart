@@ -140,13 +140,6 @@ class _$SelectionArea extends SelectionArea implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -154,10 +147,20 @@ class _$SelectionArea extends SelectionArea implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -176,8 +179,8 @@ class _$SelectionArea extends SelectionArea implements DarticObjectHolder {
   SelectableRegionContextMenuBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
   ValueChanged<SelectedContent?>? get _super$onSelectionChanged => super.onSelectionChanged;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -212,8 +215,8 @@ abstract final class SelectionAreaBindings {
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$SelectionArea)._super$contextMenuBuilder);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$onSelectionChanged#0', (args) => (args[0] as _$SelectionArea)._super$onSelectionChanged);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$child#0', (args) => (args[0] as _$SelectionArea)._super$child);
-    ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$hashCode#0', (args) => (args[0] as _$SelectionArea)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$key#0', (args) => (args[0] as _$SelectionArea)._super$key);
+    ctx.registerBinding('package:flutter/src/material/selection_area.dart::SelectionArea::\$super\$hashCode#0', (args) => (args[0] as _$SelectionArea)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

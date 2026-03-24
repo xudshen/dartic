@@ -343,13 +343,6 @@ class _$PageRouteBuilder extends PageRouteBuilder<dynamic> implements DarticObje
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get fullscreenDialog {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'fullscreenDialog');
     if (identical(r, notOverridden)) return super.fullscreenDialog;
@@ -630,10 +623,20 @@ class _$PageRouteBuilder extends PageRouteBuilder<dynamic> implements DarticObje
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -684,7 +687,6 @@ class _$PageRouteBuilder extends PageRouteBuilder<dynamic> implements DarticObje
   Color? get _super$barrierColor => super.barrierColor;
   String? get _super$barrierLabel => super.barrierLabel;
   bool get _super$maintainState => super.maintainState;
-  int get _super$hashCode => super.hashCode;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
   bool get _super$popGestureEnabled => super.popGestureEnabled;
@@ -725,6 +727,7 @@ class _$PageRouteBuilder extends PageRouteBuilder<dynamic> implements DarticObje
   set _super$receivedTransition(DelegatedTransitionBuilder? value) { super.receivedTransition = value; }
   set _super$offstage(bool value) { super.offstage = value; }
   set _super$willDisposeAnimationController(bool value) { super.willDisposeAnimationController = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -791,7 +794,6 @@ abstract final class PageRouteBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$barrierColor#0', (args) => (args[0] as _$PageRouteBuilder)._super$barrierColor);
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$barrierLabel#0', (args) => (args[0] as _$PageRouteBuilder)._super$barrierLabel);
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$maintainState#0', (args) => (args[0] as _$PageRouteBuilder)._super$maintainState);
-    ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$hashCode#0', (args) => (args[0] as _$PageRouteBuilder)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$fullscreenDialog#0', (args) => (args[0] as _$PageRouteBuilder)._super$fullscreenDialog);
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$allowSnapshotting#0', (args) => (args[0] as _$PageRouteBuilder)._super$allowSnapshotting);
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$popGestureEnabled#0', (args) => (args[0] as _$PageRouteBuilder)._super$popGestureEnabled);
@@ -832,6 +834,7 @@ abstract final class PageRouteBuilderBindings {
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$receivedTransition=#1', (args) { (args[0] as _$PageRouteBuilder)._super$receivedTransition = args[1] as DelegatedTransitionBuilder?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$offstage=#1', (args) { (args[0] as _$PageRouteBuilder)._super$offstage = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$willDisposeAnimationController=#1', (args) { (args[0] as _$PageRouteBuilder)._super$willDisposeAnimationController = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/pages.dart::PageRouteBuilder::\$super\$hashCode#0', (args) => (args[0] as _$PageRouteBuilder)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

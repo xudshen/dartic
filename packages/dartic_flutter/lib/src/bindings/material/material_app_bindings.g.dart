@@ -412,13 +412,6 @@ class _$MaterialApp extends MaterialApp implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -426,10 +419,20 @@ class _$MaterialApp extends MaterialApp implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -485,8 +488,8 @@ class _$MaterialApp extends MaterialApp implements DarticObjectHolder {
   bool get _super$debugShowMaterialGrid => super.debugShowMaterialGrid;
   bool get _super$useInheritedMediaQuery => super.useInheritedMediaQuery;
   AnimationStyle? get _super$themeAnimationStyle => super.themeAnimationStyle;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -559,8 +562,8 @@ abstract final class MaterialAppBindings {
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$debugShowMaterialGrid#0', (args) => (args[0] as _$MaterialApp)._super$debugShowMaterialGrid);
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$useInheritedMediaQuery#0', (args) => (args[0] as _$MaterialApp)._super$useInheritedMediaQuery);
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$themeAnimationStyle#0', (args) => (args[0] as _$MaterialApp)._super$themeAnimationStyle);
-    ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$hashCode#0', (args) => (args[0] as _$MaterialApp)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$key#0', (args) => (args[0] as _$MaterialApp)._super$key);
+    ctx.registerBinding('package:flutter/src/material/app.dart::MaterialApp::\$super\$hashCode#0', (args) => (args[0] as _$MaterialApp)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

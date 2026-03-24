@@ -571,13 +571,6 @@ class _$RenderFittedBox extends RenderFittedBox implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -858,10 +851,20 @@ class _$RenderFittedBox extends RenderFittedBox implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -947,7 +950,6 @@ class _$RenderFittedBox extends RenderFittedBox implements DarticObjectHolder {
   AlignmentGeometry get _super$alignment => super.alignment;
   ui.TextDirection? get _super$textDirection => super.textDirection;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -988,6 +990,7 @@ class _$RenderFittedBox extends RenderFittedBox implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1089,7 +1092,6 @@ abstract final class RenderFittedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$alignment#0', (args) => (args[0] as _$RenderFittedBox)._super$alignment);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$textDirection#0', (args) => (args[0] as _$RenderFittedBox)._super$textDirection);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$clipBehavior#0', (args) => (args[0] as _$RenderFittedBox)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderFittedBox)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$hasSize#0', (args) => (args[0] as _$RenderFittedBox)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$size#0', (args) => (args[0] as _$RenderFittedBox)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderFittedBox)._super$semanticBounds);
@@ -1130,6 +1132,7 @@ abstract final class RenderFittedBoxBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderFittedBox)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$layer=#1', (args) { (args[0] as _$RenderFittedBox)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$child=#1', (args) { (args[0] as _$RenderFittedBox)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderFittedBox::\$super\$hashCode#0', (args) => (args[0] as _$RenderFittedBox)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -60,13 +60,6 @@ class _$CupertinoTabController extends CupertinoTabController implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -81,10 +74,20 @@ class _$CupertinoTabController extends CupertinoTabController implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -94,9 +97,9 @@ class _$CupertinoTabController extends CupertinoTabController implements DarticO
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$notifyListeners() { super.notifyListeners(); }
   int get _super$index => super.index;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$index(int value) { super.index = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -122,9 +125,9 @@ abstract final class CupertinoTabControllerBindings {
     ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$removeListener#1', (args) { (args[0] as _$CupertinoTabController)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$notifyListeners#0', (args) { (args[0] as _$CupertinoTabController)._super$notifyListeners(); return null; });
     ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$index#0', (args) => (args[0] as _$CupertinoTabController)._super$index);
-    ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$hasListeners#0', (args) => (args[0] as _$CupertinoTabController)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$index=#1', (args) { (args[0] as _$CupertinoTabController)._super$index = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/cupertino/tab_scaffold.dart::CupertinoTabController::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTabController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

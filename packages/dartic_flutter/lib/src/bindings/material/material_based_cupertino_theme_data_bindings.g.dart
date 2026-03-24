@@ -166,13 +166,6 @@ class _$MaterialBasedCupertinoThemeData extends MaterialBasedCupertinoThemeData 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   CupertinoTextThemeData get textTheme {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'textTheme');
     if (identical(r, notOverridden)) return super.textTheme;
@@ -201,10 +194,20 @@ class _$MaterialBasedCupertinoThemeData extends MaterialBasedCupertinoThemeData 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -219,11 +222,11 @@ class _$MaterialBasedCupertinoThemeData extends MaterialBasedCupertinoThemeData 
   Color get _super$primaryColor => super.primaryColor;
   Color get _super$primaryContrastingColor => super.primaryContrastingColor;
   Color get _super$scaffoldBackgroundColor => super.scaffoldBackgroundColor;
-  int get _super$hashCode => super.hashCode;
   CupertinoTextThemeData get _super$textTheme => super.textTheme;
   Color get _super$barBackgroundColor => super.barBackgroundColor;
   Color get _super$selectionHandleColor => super.selectionHandleColor;
   bool get _super$applyThemeToAll => super.applyThemeToAll;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -254,11 +257,11 @@ abstract final class MaterialBasedCupertinoThemeDataBindings {
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$primaryColor#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$primaryColor);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$primaryContrastingColor#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$primaryContrastingColor);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$scaffoldBackgroundColor#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$scaffoldBackgroundColor);
-    ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$hashCode#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$textTheme#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$textTheme);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$barBackgroundColor#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$barBackgroundColor);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$selectionHandleColor#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$selectionHandleColor);
     ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$applyThemeToAll#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$applyThemeToAll);
+    ctx.registerBinding('package:flutter/src/material/theme_data.dart::MaterialBasedCupertinoThemeData::\$super\$hashCode#0', (args) => (args[0] as _$MaterialBasedCupertinoThemeData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

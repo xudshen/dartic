@@ -93,13 +93,6 @@ class _$BuildOwner extends BuildOwner implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set onBuildScheduled(VoidCallback? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'onBuildScheduled', value)) {
       super.onBuildScheduled = value;
@@ -114,10 +107,20 @@ class _$BuildOwner extends BuildOwner implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -131,9 +134,9 @@ class _$BuildOwner extends BuildOwner implements DarticObjectHolder {
   FocusManager get _super$focusManager => super.focusManager;
   bool get _super$debugBuilding => super.debugBuilding;
   int get _super$globalKeyCount => super.globalKeyCount;
-  int get _super$hashCode => super.hashCode;
   set _super$onBuildScheduled(VoidCallback? value) { super.onBuildScheduled = value; }
   set _super$focusManager(FocusManager value) { super.focusManager = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -162,9 +165,9 @@ abstract final class BuildOwnerBindings {
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$focusManager#0', (args) => (args[0] as _$BuildOwner)._super$focusManager);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$debugBuilding#0', (args) => (args[0] as _$BuildOwner)._super$debugBuilding);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$globalKeyCount#0', (args) => (args[0] as _$BuildOwner)._super$globalKeyCount);
-    ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$hashCode#0', (args) => (args[0] as _$BuildOwner)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$onBuildScheduled=#1', (args) { (args[0] as _$BuildOwner)._super$onBuildScheduled = args[1] as VoidCallback?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$focusManager=#1', (args) { (args[0] as _$BuildOwner)._super$focusManager = args[1] as FocusManager; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/framework.dart::BuildOwner::\$super\$hashCode#0', (args) => (args[0] as _$BuildOwner)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

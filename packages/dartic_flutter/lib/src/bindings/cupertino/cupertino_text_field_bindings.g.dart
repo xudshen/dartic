@@ -624,13 +624,6 @@ class _$CupertinoTextField extends CupertinoTextField implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -638,10 +631,20 @@ class _$CupertinoTextField extends CupertinoTextField implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -726,8 +729,8 @@ class _$CupertinoTextField extends CupertinoTextField implements DarticObjectHol
   TextMagnifierConfiguration? get _super$magnifierConfiguration => super.magnifierConfiguration;
   SpellCheckConfiguration? get _super$spellCheckConfiguration => super.spellCheckConfiguration;
   UndoHistoryController? get _super$undoController => super.undoController;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -832,8 +835,8 @@ abstract final class CupertinoTextFieldBindings {
     ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$magnifierConfiguration#0', (args) => (args[0] as _$CupertinoTextField)._super$magnifierConfiguration);
     ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$spellCheckConfiguration#0', (args) => (args[0] as _$CupertinoTextField)._super$spellCheckConfiguration);
     ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$undoController#0', (args) => (args[0] as _$CupertinoTextField)._super$undoController);
-    ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextField)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$key#0', (args) => (args[0] as _$CupertinoTextField)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/text_field.dart::CupertinoTextField::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTextField)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

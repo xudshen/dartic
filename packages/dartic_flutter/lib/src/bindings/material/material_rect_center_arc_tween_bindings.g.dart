@@ -72,13 +72,6 @@ class _$MaterialRectCenterArcTween extends MaterialRectCenterArcTween implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Rect? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -107,10 +100,20 @@ class _$MaterialRectCenterArcTween extends MaterialRectCenterArcTween implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -121,11 +124,11 @@ class _$MaterialRectCenterArcTween extends MaterialRectCenterArcTween implements
   Animation<Rect?> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<Rect?> _super$chain(Animatable<double> parent) => super.chain(parent);
   MaterialPointArcTween? get _super$centerArc => super.centerArc;
-  int get _super$hashCode => super.hashCode;
   Rect? get _super$begin => super.begin;
   Rect? get _super$end => super.end;
   set _super$begin(Rect? value) { super.begin = value; }
   set _super$end(Rect? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -152,11 +155,11 @@ abstract final class MaterialRectCenterArcTweenBindings {
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$animate#1', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$chain#1', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$chain(args[1] as Animatable<double>));
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$centerArc#0', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$centerArc);
-    ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$hashCode#0', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$begin#0', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$begin);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$end#0', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$end);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$begin=#1', (args) { (args[0] as _$MaterialRectCenterArcTween)._super$begin = args[1] as Rect?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$end=#1', (args) { (args[0] as _$MaterialRectCenterArcTween)._super$end = args[1] as Rect?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialRectCenterArcTween::\$super\$hashCode#0', (args) => (args[0] as _$MaterialRectCenterArcTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

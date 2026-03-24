@@ -40,13 +40,6 @@ class _$MaterialGap extends MaterialGap implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   LocalKey get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -54,17 +47,27 @@ class _$MaterialGap extends MaterialGap implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   double get _super$size => super.size;
-  int get _super$hashCode => super.hashCode;
   LocalKey get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -86,8 +89,8 @@ abstract final class MaterialGapBindings {
     );
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialGap::\$super\$toString#0', (args) => (args[0] as _$MaterialGap)._super$toString());
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialGap::\$super\$size#0', (args) => (args[0] as _$MaterialGap)._super$size);
-    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialGap::\$super\$hashCode#0', (args) => (args[0] as _$MaterialGap)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialGap::\$super\$key#0', (args) => (args[0] as _$MaterialGap)._super$key);
+    ctx.registerBinding('package:flutter/src/material/mergeable_material.dart::MaterialGap::\$super\$hashCode#0', (args) => (args[0] as _$MaterialGap)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

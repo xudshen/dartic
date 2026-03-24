@@ -561,13 +561,6 @@ class _$RenderAnnotatedRegion extends RenderAnnotatedRegion<Object> implements D
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -827,10 +820,20 @@ class _$RenderAnnotatedRegion extends RenderAnnotatedRegion<Object> implements D
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -915,7 +918,6 @@ class _$RenderAnnotatedRegion extends RenderAnnotatedRegion<Object> implements D
   Object get _super$value => super.value;
   bool get _super$sized => super.sized;
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -953,6 +955,7 @@ class _$RenderAnnotatedRegion extends RenderAnnotatedRegion<Object> implements D
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1053,7 +1056,6 @@ abstract final class RenderAnnotatedRegionBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$value#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$value);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$sized#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$sized);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$alwaysNeedsCompositing);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$hasSize#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$size#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$semanticBounds);
@@ -1091,6 +1093,7 @@ abstract final class RenderAnnotatedRegionBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderAnnotatedRegion)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$layer=#1', (args) { (args[0] as _$RenderAnnotatedRegion)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$child=#1', (args) { (args[0] as _$RenderAnnotatedRegion)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderAnnotatedRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderAnnotatedRegion)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

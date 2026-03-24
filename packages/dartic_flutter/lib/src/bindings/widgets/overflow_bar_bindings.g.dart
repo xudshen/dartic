@@ -145,13 +145,6 @@ class _$OverflowBar extends OverflowBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -166,10 +159,20 @@ class _$OverflowBar extends OverflowBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -190,9 +193,9 @@ class _$OverflowBar extends OverflowBar implements DarticObjectHolder {
   OverflowBarAlignment get _super$overflowAlignment => super.overflowAlignment;
   VerticalDirection get _super$overflowDirection => super.overflowDirection;
   TextDirection? get _super$textDirection => super.textDirection;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -229,9 +232,9 @@ abstract final class OverflowBarBindings {
     ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$overflowAlignment#0', (args) => (args[0] as _$OverflowBar)._super$overflowAlignment);
     ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$overflowDirection#0', (args) => (args[0] as _$OverflowBar)._super$overflowDirection);
     ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$textDirection#0', (args) => (args[0] as _$OverflowBar)._super$textDirection);
-    ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$hashCode#0', (args) => (args[0] as _$OverflowBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$children#0', (args) => (args[0] as _$OverflowBar)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$key#0', (args) => (args[0] as _$OverflowBar)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/overflow_bar.dart::OverflowBar::\$super\$hashCode#0', (args) => (args[0] as _$OverflowBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -184,13 +184,6 @@ class _$NavigationDrawer extends NavigationDrawer implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -198,10 +191,20 @@ class _$NavigationDrawer extends NavigationDrawer implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -226,8 +229,8 @@ class _$NavigationDrawer extends NavigationDrawer implements DarticObjectHolder 
   int? get _super$selectedIndex => super.selectedIndex;
   ValueChanged<int>? get _super$onDestinationSelected => super.onDestinationSelected;
   EdgeInsetsGeometry get _super$tilePadding => super.tilePadding;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -268,8 +271,8 @@ abstract final class NavigationDrawerBindings {
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$selectedIndex#0', (args) => (args[0] as _$NavigationDrawer)._super$selectedIndex);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$onDestinationSelected#0', (args) => (args[0] as _$NavigationDrawer)._super$onDestinationSelected);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$tilePadding#0', (args) => (args[0] as _$NavigationDrawer)._super$tilePadding);
-    ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDrawer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$key#0', (args) => (args[0] as _$NavigationDrawer)._super$key);
+    ctx.registerBinding('package:flutter/src/material/navigation_drawer.dart::NavigationDrawer::\$super\$hashCode#0', (args) => (args[0] as _$NavigationDrawer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

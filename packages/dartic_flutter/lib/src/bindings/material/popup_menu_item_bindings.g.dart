@@ -180,13 +180,6 @@ class _$PopupMenuItem extends PopupMenuItem<dynamic> implements DarticObjectHold
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -194,10 +187,20 @@ class _$PopupMenuItem extends PopupMenuItem<dynamic> implements DarticObjectHold
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -220,8 +223,8 @@ class _$PopupMenuItem extends PopupMenuItem<dynamic> implements DarticObjectHold
   WidgetStateProperty<TextStyle?>? get _super$labelTextStyle => super.labelTextStyle;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -260,8 +263,8 @@ abstract final class PopupMenuItemBindings {
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$labelTextStyle#0', (args) => (args[0] as _$PopupMenuItem)._super$labelTextStyle);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$mouseCursor#0', (args) => (args[0] as _$PopupMenuItem)._super$mouseCursor);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$child#0', (args) => (args[0] as _$PopupMenuItem)._super$child);
-    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$PopupMenuItem)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$key#0', (args) => (args[0] as _$PopupMenuItem)._super$key);
+    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::PopupMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$PopupMenuItem)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

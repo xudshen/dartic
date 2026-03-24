@@ -110,13 +110,6 @@ class _$MaterialAccentColor extends MaterialAccentColor implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Iterable<int> get keys {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'keys');
     if (identical(r, notOverridden)) return super.keys;
@@ -201,17 +194,27 @@ class _$MaterialAccentColor extends MaterialAccentColor implements DarticObjectH
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   Color? operator [](int index) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
     if (identical(r, notOverridden)) return super[index];
     return r as Color?;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -228,7 +231,6 @@ class _$MaterialAccentColor extends MaterialAccentColor implements DarticObjectH
   Color get _super$shade200 => super.shade200;
   Color get _super$shade400 => super.shade400;
   Color get _super$shade700 => super.shade700;
-  int get _super$hashCode => super.hashCode;
   Iterable<int> get _super$keys => super.keys;
   double get _super$a => super.a;
   double get _super$r => super.r;
@@ -241,6 +243,7 @@ class _$MaterialAccentColor extends MaterialAccentColor implements DarticObjectH
   int get _super$red => super.red;
   int get _super$green => super.green;
   int get _super$blue => super.blue;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -273,7 +276,6 @@ abstract final class MaterialAccentColorBindings {
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$shade200#0', (args) => (args[0] as _$MaterialAccentColor)._super$shade200);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$shade400#0', (args) => (args[0] as _$MaterialAccentColor)._super$shade400);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$shade700#0', (args) => (args[0] as _$MaterialAccentColor)._super$shade700);
-    ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$hashCode#0', (args) => (args[0] as _$MaterialAccentColor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$keys#0', (args) => (args[0] as _$MaterialAccentColor)._super$keys);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$a#0', (args) => (args[0] as _$MaterialAccentColor)._super$a);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$r#0', (args) => (args[0] as _$MaterialAccentColor)._super$r);
@@ -286,6 +288,7 @@ abstract final class MaterialAccentColorBindings {
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$red#0', (args) => (args[0] as _$MaterialAccentColor)._super$red);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$green#0', (args) => (args[0] as _$MaterialAccentColor)._super$green);
     ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$blue#0', (args) => (args[0] as _$MaterialAccentColor)._super$blue);
+    ctx.registerBinding('package:flutter/src/material/colors.dart::MaterialAccentColor::\$super\$hashCode#0', (args) => (args[0] as _$MaterialAccentColor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

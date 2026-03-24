@@ -87,13 +87,6 @@ class _$InteractiveInkFeature extends InteractiveInkFeature implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   MaterialInkController get controller {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'controller');
     if (identical(r, notOverridden)) return super.controller;
@@ -129,10 +122,20 @@ class _$InteractiveInkFeature extends InteractiveInkFeature implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -143,12 +146,12 @@ class _$InteractiveInkFeature extends InteractiveInkFeature implements DarticObj
   void _super$dispose() { super.dispose(); }
   Color get _super$color => super.color;
   ShapeBorder? get _super$customBorder => super.customBorder;
-  int get _super$hashCode => super.hashCode;
   MaterialInkController get _super$controller => super.controller;
   RenderBox get _super$referenceBox => super.referenceBox;
   VoidCallback? get _super$onRemoved => super.onRemoved;
   set _super$color(Color value) { super.color = value; }
   set _super$customBorder(ShapeBorder? value) { super.customBorder = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -175,12 +178,12 @@ abstract final class InteractiveInkFeatureBindings {
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$dispose#0', (args) { (args[0] as _$InteractiveInkFeature)._super$dispose(); return null; });
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$color#0', (args) => (args[0] as _$InteractiveInkFeature)._super$color);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$customBorder#0', (args) => (args[0] as _$InteractiveInkFeature)._super$customBorder);
-    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$hashCode#0', (args) => (args[0] as _$InteractiveInkFeature)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$controller#0', (args) => (args[0] as _$InteractiveInkFeature)._super$controller);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$referenceBox#0', (args) => (args[0] as _$InteractiveInkFeature)._super$referenceBox);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$onRemoved#0', (args) => (args[0] as _$InteractiveInkFeature)._super$onRemoved);
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$color=#1', (args) { (args[0] as _$InteractiveInkFeature)._super$color = args[1] as Color; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$customBorder=#1', (args) { (args[0] as _$InteractiveInkFeature)._super$customBorder = args[1] as ShapeBorder?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/ink_well.dart::InteractiveInkFeature::\$super\$hashCode#0', (args) => (args[0] as _$InteractiveInkFeature)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

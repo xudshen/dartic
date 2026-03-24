@@ -105,13 +105,6 @@ class _$TwoDimensionalChildBuilderDelegate extends TwoDimensionalChildBuilderDel
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -133,10 +126,20 @@ class _$TwoDimensionalChildBuilderDelegate extends TwoDimensionalChildBuilderDel
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -152,10 +155,10 @@ class _$TwoDimensionalChildBuilderDelegate extends TwoDimensionalChildBuilderDel
   int? get _super$maxYIndex => super.maxYIndex;
   bool get _super$addRepaintBoundaries => super.addRepaintBoundaries;
   bool get _super$addAutomaticKeepAlives => super.addAutomaticKeepAlives;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$maxXIndex(int? value) { super.maxXIndex = value; }
   set _super$maxYIndex(int? value) { super.maxYIndex = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -187,10 +190,10 @@ abstract final class TwoDimensionalChildBuilderDelegateBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$maxYIndex#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$maxYIndex);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$addRepaintBoundaries#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$addRepaintBoundaries);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$addAutomaticKeepAlives#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$addAutomaticKeepAlives);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$hasListeners#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$maxXIndex=#1', (args) { (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$maxXIndex = args[1] as int?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$maxYIndex=#1', (args) { (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$maxYIndex = args[1] as int?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/scroll_delegate.dart::TwoDimensionalChildBuilderDelegate::\$super\$hashCode#0', (args) => (args[0] as _$TwoDimensionalChildBuilderDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

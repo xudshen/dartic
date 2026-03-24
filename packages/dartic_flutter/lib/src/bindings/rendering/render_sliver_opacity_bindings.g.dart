@@ -444,13 +444,6 @@ class _$RenderSliverOpacity extends RenderSliverOpacity implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ui.Rect get semanticBounds {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'semanticBounds');
     if (identical(r, notOverridden)) return super.semanticBounds;
@@ -717,10 +710,20 @@ class _$RenderSliverOpacity extends RenderSliverOpacity implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -788,7 +791,6 @@ class _$RenderSliverOpacity extends RenderSliverOpacity implements DarticObjectH
   bool get _super$alwaysNeedsCompositing => super.alwaysNeedsCompositing;
   double get _super$opacity => super.opacity;
   bool get _super$alwaysIncludeSemantics => super.alwaysIncludeSemantics;
-  int get _super$hashCode => super.hashCode;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
   bool get _super$ensureSemantics => super.ensureSemantics;
   SliverConstraints get _super$constraints => super.constraints;
@@ -827,6 +829,7 @@ class _$RenderSliverOpacity extends RenderSliverOpacity implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderSliver? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -910,7 +913,6 @@ abstract final class RenderSliverOpacityBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$alwaysNeedsCompositing#0', (args) => (args[0] as _$RenderSliverOpacity)._super$alwaysNeedsCompositing);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$opacity#0', (args) => (args[0] as _$RenderSliverOpacity)._super$opacity);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$alwaysIncludeSemantics#0', (args) => (args[0] as _$RenderSliverOpacity)._super$alwaysIncludeSemantics);
-    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverOpacity)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderSliverOpacity)._super$semanticBounds);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$ensureSemantics#0', (args) => (args[0] as _$RenderSliverOpacity)._super$ensureSemantics);
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$constraints#0', (args) => (args[0] as _$RenderSliverOpacity)._super$constraints);
@@ -949,6 +951,7 @@ abstract final class RenderSliverOpacityBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverOpacity)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverOpacity)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$child=#1', (args) { (args[0] as _$RenderSliverOpacity)._super$child = args[1] as RenderSliver?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_sliver.dart::RenderSliverOpacity::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverOpacity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

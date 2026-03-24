@@ -199,13 +199,6 @@ class _$ColorFilterLayer extends ColorFilterLayer implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Layer? get firstChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'firstChild');
     if (identical(r, notOverridden)) return super.firstChild;
@@ -339,10 +332,20 @@ class _$ColorFilterLayer extends ColorFilterLayer implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -373,7 +376,6 @@ class _$ColorFilterLayer extends ColorFilterLayer implements DarticObjectHolder 
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   ui.ColorFilter? get _super$colorFilter => super.colorFilter;
-  int get _super$hashCode => super.hashCode;
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
@@ -393,6 +395,7 @@ class _$ColorFilterLayer extends ColorFilterLayer implements DarticObjectHolder 
   set _super$colorFilter(ui.ColorFilter? value) { super.colorFilter = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -439,7 +442,6 @@ abstract final class ColorFilterLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$toStringDeep#4', (args) => (args[0] as _$ColorFilterLayer)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$ColorFilterLayer)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$colorFilter#0', (args) => (args[0] as _$ColorFilterLayer)._super$colorFilter);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$hashCode#0', (args) => (args[0] as _$ColorFilterLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$firstChild#0', (args) => (args[0] as _$ColorFilterLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$lastChild#0', (args) => (args[0] as _$ColorFilterLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$hasChildren#0', (args) => (args[0] as _$ColorFilterLayer)._super$hasChildren);
@@ -459,6 +461,7 @@ abstract final class ColorFilterLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$colorFilter=#1', (args) { (args[0] as _$ColorFilterLayer)._super$colorFilter = args[1] as ui.ColorFilter?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$ColorFilterLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$ColorFilterLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ColorFilterLayer::\$super\$hashCode#0', (args) => (args[0] as _$ColorFilterLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

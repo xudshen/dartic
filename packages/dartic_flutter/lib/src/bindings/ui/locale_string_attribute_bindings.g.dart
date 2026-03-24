@@ -48,13 +48,6 @@ base class _$LocaleStringAttribute extends LocaleStringAttribute implements Dart
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   TextRange get range {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'range');
     if (identical(r, notOverridden)) return super.range;
@@ -62,18 +55,28 @@ base class _$LocaleStringAttribute extends LocaleStringAttribute implements Dart
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   StringAttribute _super$copy({required TextRange range}) => super.copy(range: range);
   String _super$toString() => super.toString();
   Locale get _super$locale => super.locale;
-  int get _super$hashCode => super.hashCode;
   TextRange get _super$range => super.range;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -96,8 +99,8 @@ abstract final class LocaleStringAttributeBindings {
     ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$copy#1', (args) => (args[0] as _$LocaleStringAttribute)._super$copy(range: args[1] as TextRange));
     ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$toString#0', (args) => (args[0] as _$LocaleStringAttribute)._super$toString());
     ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$locale#0', (args) => (args[0] as _$LocaleStringAttribute)._super$locale);
-    ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$hashCode#0', (args) => (args[0] as _$LocaleStringAttribute)._super$hashCode);
     ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$range#0', (args) => (args[0] as _$LocaleStringAttribute)._super$range);
+    ctx.registerBinding('dart:ui::LocaleStringAttribute::\$super\$hashCode#0', (args) => (args[0] as _$LocaleStringAttribute)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

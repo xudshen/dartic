@@ -229,13 +229,6 @@ class _$TabBarTheme extends TabBarTheme implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -250,10 +243,20 @@ class _$TabBarTheme extends TabBarTheme implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -285,9 +288,9 @@ class _$TabBarTheme extends TabBarTheme implements DarticObjectHolder {
   TextScaler? get _super$textScaler => super.textScaler;
   TabIndicatorAnimation? get _super$indicatorAnimation => super.indicatorAnimation;
   TabBarThemeData get _super$data => super.data;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -337,9 +340,9 @@ abstract final class TabBarThemeBindings {
     ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$textScaler#0', (args) => (args[0] as _$TabBarTheme)._super$textScaler);
     ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$indicatorAnimation#0', (args) => (args[0] as _$TabBarTheme)._super$indicatorAnimation);
     ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$data#0', (args) => (args[0] as _$TabBarTheme)._super$data);
-    ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$hashCode#0', (args) => (args[0] as _$TabBarTheme)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$child#0', (args) => (args[0] as _$TabBarTheme)._super$child);
     ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$key#0', (args) => (args[0] as _$TabBarTheme)._super$key);
+    ctx.registerBinding('package:flutter/src/material/tab_bar_theme.dart::TabBarTheme::\$super\$hashCode#0', (args) => (args[0] as _$TabBarTheme)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

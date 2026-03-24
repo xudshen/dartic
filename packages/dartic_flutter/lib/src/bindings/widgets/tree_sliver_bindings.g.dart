@@ -188,13 +188,6 @@ class _$TreeSliver extends TreeSliver<dynamic> implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -202,10 +195,20 @@ class _$TreeSliver extends TreeSliver<dynamic> implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -231,8 +234,8 @@ class _$TreeSliver extends TreeSliver<dynamic> implements DarticObjectHolder {
   SemanticIndexCallback get _super$semanticIndexCallback => super.semanticIndexCallback;
   int get _super$semanticIndexOffset => super.semanticIndexOffset;
   int? Function(Key)? get _super$findChildIndexCallback => super.findChildIndexCallback;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -280,8 +283,8 @@ abstract final class TreeSliverBindings {
     ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$semanticIndexCallback#0', (args) => (args[0] as _$TreeSliver)._super$semanticIndexCallback);
     ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$semanticIndexOffset#0', (args) => (args[0] as _$TreeSliver)._super$semanticIndexOffset);
     ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$findChildIndexCallback#0', (args) => (args[0] as _$TreeSliver)._super$findChildIndexCallback);
-    ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$hashCode#0', (args) => (args[0] as _$TreeSliver)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$key#0', (args) => (args[0] as _$TreeSliver)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/sliver_tree.dart::TreeSliver::\$super\$hashCode#0', (args) => (args[0] as _$TreeSliver)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

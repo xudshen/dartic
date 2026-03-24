@@ -149,13 +149,6 @@ class _$SelectableRegion extends SelectableRegion implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -163,10 +156,20 @@ class _$SelectableRegion extends SelectableRegion implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -185,8 +188,8 @@ class _$SelectableRegion extends SelectableRegion implements DarticObjectHolder 
   SelectableRegionContextMenuBuilder? get _super$contextMenuBuilder => super.contextMenuBuilder;
   TextSelectionControls get _super$selectionControls => super.selectionControls;
   ValueChanged<SelectedContent?>? get _super$onSelectionChanged => super.onSelectionChanged;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -222,8 +225,8 @@ abstract final class SelectableRegionBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$contextMenuBuilder#0', (args) => (args[0] as _$SelectableRegion)._super$contextMenuBuilder);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$selectionControls#0', (args) => (args[0] as _$SelectableRegion)._super$selectionControls);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$onSelectionChanged#0', (args) => (args[0] as _$SelectableRegion)._super$onSelectionChanged);
-    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$hashCode#0', (args) => (args[0] as _$SelectableRegion)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$key#0', (args) => (args[0] as _$SelectableRegion)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegion::\$super\$hashCode#0', (args) => (args[0] as _$SelectableRegion)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

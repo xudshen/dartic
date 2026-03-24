@@ -447,13 +447,6 @@ class _$RenderSliverPadding extends RenderSliverPadding implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get beforePadding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'beforePadding');
     if (identical(r, notOverridden)) return super.beforePadding;
@@ -755,10 +748,20 @@ class _$RenderSliverPadding extends RenderSliverPadding implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -826,7 +829,6 @@ class _$RenderSliverPadding extends RenderSliverPadding implements DarticObjectH
   EdgeInsets? get _super$resolvedPadding => super.resolvedPadding;
   EdgeInsetsGeometry get _super$padding => super.padding;
   TextDirection? get _super$textDirection => super.textDirection;
-  int get _super$hashCode => super.hashCode;
   double get _super$beforePadding => super.beforePadding;
   double get _super$afterPadding => super.afterPadding;
   double get _super$mainAxisPadding => super.mainAxisPadding;
@@ -870,6 +872,7 @@ class _$RenderSliverPadding extends RenderSliverPadding implements DarticObjectH
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderSliver? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -953,7 +956,6 @@ abstract final class RenderSliverPaddingBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$resolvedPadding#0', (args) => (args[0] as _$RenderSliverPadding)._super$resolvedPadding);
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$padding#0', (args) => (args[0] as _$RenderSliverPadding)._super$padding);
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$textDirection#0', (args) => (args[0] as _$RenderSliverPadding)._super$textDirection);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverPadding)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$beforePadding#0', (args) => (args[0] as _$RenderSliverPadding)._super$beforePadding);
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$afterPadding#0', (args) => (args[0] as _$RenderSliverPadding)._super$afterPadding);
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$mainAxisPadding#0', (args) => (args[0] as _$RenderSliverPadding)._super$mainAxisPadding);
@@ -997,6 +999,7 @@ abstract final class RenderSliverPaddingBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverPadding)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverPadding)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$child=#1', (args) { (args[0] as _$RenderSliverPadding)._super$child = args[1] as RenderSliver?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_padding.dart::RenderSliverPadding::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverPadding)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

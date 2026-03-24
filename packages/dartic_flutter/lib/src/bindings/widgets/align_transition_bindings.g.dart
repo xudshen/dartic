@@ -128,13 +128,6 @@ class _$AlignTransition extends AlignTransition implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Listenable get listenable {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'listenable');
     if (identical(r, notOverridden)) return super.listenable;
@@ -149,10 +142,20 @@ class _$AlignTransition extends AlignTransition implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -170,9 +173,9 @@ class _$AlignTransition extends AlignTransition implements DarticObjectHolder {
   double? get _super$widthFactor => super.widthFactor;
   double? get _super$heightFactor => super.heightFactor;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Listenable get _super$listenable => super.listenable;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -206,9 +209,9 @@ abstract final class AlignTransitionBindings {
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$widthFactor#0', (args) => (args[0] as _$AlignTransition)._super$widthFactor);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$heightFactor#0', (args) => (args[0] as _$AlignTransition)._super$heightFactor);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$child#0', (args) => (args[0] as _$AlignTransition)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$hashCode#0', (args) => (args[0] as _$AlignTransition)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$listenable#0', (args) => (args[0] as _$AlignTransition)._super$listenable);
     ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$key#0', (args) => (args[0] as _$AlignTransition)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/transitions.dart::AlignTransition::\$super\$hashCode#0', (args) => (args[0] as _$AlignTransition)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

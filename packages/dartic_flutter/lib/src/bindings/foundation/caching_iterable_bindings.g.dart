@@ -164,13 +164,6 @@ class _$CachingIterable extends CachingIterable<dynamic> implements DarticObject
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isEmpty {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
     if (identical(r, notOverridden)) return super.isEmpty;
@@ -206,10 +199,20 @@ class _$CachingIterable extends CachingIterable<dynamic> implements DarticObject
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -240,12 +243,12 @@ class _$CachingIterable extends CachingIterable<dynamic> implements DarticObject
   }
   Iterator get _super$iterator => super.iterator;
   int get _super$length => super.length;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isEmpty => super.isEmpty;
   bool get _super$isNotEmpty => super.isNotEmpty;
   dynamic get _super$first => super.first;
   dynamic get _super$last => super.last;
   dynamic get _super$single => super.single;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -286,12 +289,12 @@ abstract final class CachingIterableBindings {
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$singleWhere#2', (args) => (args[0] as _$CachingIterable)._super$singleWhere((a) => (args[1] as Function)(a) as bool, orElse: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : () => (args[2] as Function?)!()));
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$iterator#0', (args) => (args[0] as _$CachingIterable)._super$iterator);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$length#0', (args) => (args[0] as _$CachingIterable)._super$length);
-    ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$hashCode#0', (args) => (args[0] as _$CachingIterable)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$isEmpty#0', (args) => (args[0] as _$CachingIterable)._super$isEmpty);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$isNotEmpty#0', (args) => (args[0] as _$CachingIterable)._super$isNotEmpty);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$first#0', (args) => (args[0] as _$CachingIterable)._super$first);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$last#0', (args) => (args[0] as _$CachingIterable)._super$last);
     ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$single#0', (args) => (args[0] as _$CachingIterable)._super$single);
+    ctx.registerBinding('package:flutter/src/foundation/basic_types.dart::CachingIterable::\$super\$hashCode#0', (args) => (args[0] as _$CachingIterable)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

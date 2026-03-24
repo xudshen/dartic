@@ -94,13 +94,6 @@ class _$HeroController extends HeroController implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   NavigatorState? get navigator {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'navigator');
     if (identical(r, notOverridden)) return super.navigator;
@@ -108,10 +101,20 @@ class _$HeroController extends HeroController implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -125,8 +128,8 @@ class _$HeroController extends HeroController implements DarticObjectHolder {
   void _super$didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) { super.didRemove(route, previousRoute); }
   void _super$didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) { super.didReplace(newRoute: newRoute, oldRoute: oldRoute); }
   CreateRectTween? get _super$createRectTween => super.createRectTween;
-  int get _super$hashCode => super.hashCode;
   NavigatorState? get _super$navigator => super.navigator;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -156,8 +159,8 @@ abstract final class HeroControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didRemove#2', (args) { (args[0] as _$HeroController)._super$didRemove(args[1] as Route<dynamic>, args[2] as Route<dynamic>?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$didReplace#2', (args) { (args[0] as _$HeroController)._super$didReplace(newRoute: identical(args[1], darticAbsent) ? null : args[1] as Route<dynamic>?, oldRoute: identical(args[2], darticAbsent) ? null : args[2] as Route<dynamic>?); return null; });
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$createRectTween#0', (args) => (args[0] as _$HeroController)._super$createRectTween);
-    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$hashCode#0', (args) => (args[0] as _$HeroController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$navigator#0', (args) => (args[0] as _$HeroController)._super$navigator);
+    ctx.registerBinding('package:flutter/src/widgets/heroes.dart::HeroController::\$super\$hashCode#0', (args) => (args[0] as _$HeroController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

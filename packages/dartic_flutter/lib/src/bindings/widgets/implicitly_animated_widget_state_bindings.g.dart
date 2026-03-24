@@ -154,13 +154,6 @@ class _$ImplicitlyAnimatedWidgetState extends ImplicitlyAnimatedWidgetState<Impl
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ImplicitlyAnimatedWidget get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -182,10 +175,20 @@ class _$ImplicitlyAnimatedWidgetState extends ImplicitlyAnimatedWidgetState<Impl
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -205,10 +208,10 @@ class _$ImplicitlyAnimatedWidgetState extends ImplicitlyAnimatedWidgetState<Impl
   Ticker _super$createTicker(TickerCallback onTick) => super.createTicker(onTick);
   AnimationController get _super$controller => super.controller;
   Animation<double> get _super$animation => super.animation;
-  int get _super$hashCode => super.hashCode;
   ImplicitlyAnimatedWidget get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -244,10 +247,10 @@ abstract final class ImplicitlyAnimatedWidgetStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$createTicker#1', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$createTicker((a) => (args[1] as Function)(a)));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$controller#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$controller);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$animation#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$animation);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$hashCode#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$widget#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$context#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$mounted#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$mounted);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::ImplicitlyAnimatedWidgetState::\$super\$hashCode#0', (args) => (args[0] as _$ImplicitlyAnimatedWidgetState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

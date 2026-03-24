@@ -110,13 +110,6 @@ class _$ImageCache extends ImageCache implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set maximumSize(int value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'maximumSize', value)) {
       super.maximumSize = value;
@@ -131,10 +124,20 @@ class _$ImageCache extends ImageCache implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -151,9 +154,9 @@ class _$ImageCache extends ImageCache implements DarticObjectHolder {
   int get _super$currentSizeBytes => super.currentSizeBytes;
   int get _super$liveImageCount => super.liveImageCount;
   int get _super$pendingImageCount => super.pendingImageCount;
-  int get _super$hashCode => super.hashCode;
   set _super$maximumSize(int value) { super.maximumSize = value; }
   set _super$maximumSizeBytes(int value) { super.maximumSizeBytes = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -185,9 +188,9 @@ abstract final class ImageCacheBindings {
     ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$currentSizeBytes#0', (args) => (args[0] as _$ImageCache)._super$currentSizeBytes);
     ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$liveImageCount#0', (args) => (args[0] as _$ImageCache)._super$liveImageCount);
     ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$pendingImageCount#0', (args) => (args[0] as _$ImageCache)._super$pendingImageCount);
-    ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$hashCode#0', (args) => (args[0] as _$ImageCache)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$maximumSize=#1', (args) { (args[0] as _$ImageCache)._super$maximumSize = args[1] as int; return args[1]; });
     ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$maximumSizeBytes=#1', (args) { (args[0] as _$ImageCache)._super$maximumSizeBytes = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/painting/image_cache.dart::ImageCache::\$super\$hashCode#0', (args) => (args[0] as _$ImageCache)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

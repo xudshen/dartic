@@ -73,13 +73,6 @@ class _$Matrix4Tween extends Matrix4Tween implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Matrix4? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -108,10 +101,20 @@ class _$Matrix4Tween extends Matrix4Tween implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -121,11 +124,11 @@ class _$Matrix4Tween extends Matrix4Tween implements DarticObjectHolder {
   Matrix4 _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<Matrix4> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<Matrix4> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   Matrix4? get _super$begin => super.begin;
   Matrix4? get _super$end => super.end;
   set _super$begin(Matrix4? value) { super.begin = value; }
   set _super$end(Matrix4? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -151,11 +154,11 @@ abstract final class Matrix4TweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$evaluate#1', (args) => (args[0] as _$Matrix4Tween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$animate#1', (args) => (args[0] as _$Matrix4Tween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$chain#1', (args) => (args[0] as _$Matrix4Tween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$hashCode#0', (args) => (args[0] as _$Matrix4Tween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$begin#0', (args) => (args[0] as _$Matrix4Tween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$end#0', (args) => (args[0] as _$Matrix4Tween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$begin=#1', (args) { (args[0] as _$Matrix4Tween)._super$begin = args[1] as Matrix4?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$end=#1', (args) { (args[0] as _$Matrix4Tween)._super$end = args[1] as Matrix4?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::Matrix4Tween::\$super\$hashCode#0', (args) => (args[0] as _$Matrix4Tween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

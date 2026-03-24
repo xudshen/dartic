@@ -143,13 +143,6 @@ class _$PositionedDirectional extends PositionedDirectional implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -157,10 +150,20 @@ class _$PositionedDirectional extends PositionedDirectional implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -180,8 +183,8 @@ class _$PositionedDirectional extends PositionedDirectional implements DarticObj
   double? get _super$width => super.width;
   double? get _super$height => super.height;
   Widget get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -217,8 +220,8 @@ abstract final class PositionedDirectionalBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$width#0', (args) => (args[0] as _$PositionedDirectional)._super$width);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$height#0', (args) => (args[0] as _$PositionedDirectional)._super$height);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$child#0', (args) => (args[0] as _$PositionedDirectional)._super$child);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$hashCode#0', (args) => (args[0] as _$PositionedDirectional)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$key#0', (args) => (args[0] as _$PositionedDirectional)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::PositionedDirectional::\$super\$hashCode#0', (args) => (args[0] as _$PositionedDirectional)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

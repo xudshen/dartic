@@ -42,13 +42,6 @@ class _$ExpansionPanelRadio extends ExpansionPanelRadio implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ExpansionPanelHeaderBuilder get headerBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'headerBuilder');
     if (identical(r, notOverridden)) return super.headerBuilder;
@@ -98,16 +91,25 @@ class _$ExpansionPanelRadio extends ExpansionPanelRadio implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   Object get _super$value => super.value;
-  int get _super$hashCode => super.hashCode;
   ExpansionPanelHeaderBuilder get _super$headerBuilder => super.headerBuilder;
   Widget get _super$body => super.body;
   bool get _super$isExpanded => super.isExpanded;
@@ -115,6 +117,7 @@ class _$ExpansionPanelRadio extends ExpansionPanelRadio implements DarticObjectH
   Color? get _super$highlightColor => super.highlightColor;
   bool get _super$canTapOnHeader => super.canTapOnHeader;
   Color? get _super$backgroundColor => super.backgroundColor;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -136,7 +139,6 @@ abstract final class ExpansionPanelRadioBindings {
     );
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$toString#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$toString());
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$value#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$value);
-    ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$hashCode#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$headerBuilder#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$headerBuilder);
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$body#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$body);
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$isExpanded#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$isExpanded);
@@ -144,6 +146,7 @@ abstract final class ExpansionPanelRadioBindings {
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$highlightColor#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$highlightColor);
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$canTapOnHeader#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$canTapOnHeader);
     ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$backgroundColor#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$backgroundColor);
+    ctx.registerBinding('package:flutter/src/material/expansion_panel.dart::ExpansionPanelRadio::\$super\$hashCode#0', (args) => (args[0] as _$ExpansionPanelRadio)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

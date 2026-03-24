@@ -304,13 +304,6 @@ class _$TextPainter extends TextPainter implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set text(InlineSpan? value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'text', value)) {
       super.text = value;
@@ -395,10 +388,20 @@ class _$TextPainter extends TextPainter implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -442,7 +445,6 @@ class _$TextPainter extends TextPainter implements DarticObjectHolder {
   bool get _super$debugPaintTextLayoutBoxes => super.debugPaintTextLayoutBoxes;
   WordBoundary get _super$wordBoundaries => super.wordBoundaries;
   bool get _super$debugDisposed => super.debugDisposed;
-  int get _super$hashCode => super.hashCode;
   set _super$text(InlineSpan? value) { super.text = value; }
   set _super$textAlign(ui.TextAlign value) { super.textAlign = value; }
   set _super$textDirection(ui.TextDirection? value) { super.textDirection = value; }
@@ -455,6 +457,7 @@ class _$TextPainter extends TextPainter implements DarticObjectHolder {
   set _super$textWidthBasis(TextWidthBasis value) { super.textWidthBasis = value; }
   set _super$textHeightBehavior(ui.TextHeightBehavior? value) { super.textHeightBehavior = value; }
   set _super$debugPaintTextLayoutBoxes(bool value) { super.debugPaintTextLayoutBoxes = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -517,7 +520,6 @@ abstract final class TextPainterBindings {
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$debugPaintTextLayoutBoxes#0', (args) => (args[0] as _$TextPainter)._super$debugPaintTextLayoutBoxes);
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$wordBoundaries#0', (args) => (args[0] as _$TextPainter)._super$wordBoundaries);
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$debugDisposed#0', (args) => (args[0] as _$TextPainter)._super$debugDisposed);
-    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$hashCode#0', (args) => (args[0] as _$TextPainter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$text=#1', (args) { (args[0] as _$TextPainter)._super$text = args[1] as InlineSpan?; return args[1]; });
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$textAlign=#1', (args) { (args[0] as _$TextPainter)._super$textAlign = args[1] as ui.TextAlign; return args[1]; });
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$textDirection=#1', (args) { (args[0] as _$TextPainter)._super$textDirection = args[1] as ui.TextDirection?; return args[1]; });
@@ -530,6 +532,7 @@ abstract final class TextPainterBindings {
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$textWidthBasis=#1', (args) { (args[0] as _$TextPainter)._super$textWidthBasis = args[1] as TextWidthBasis; return args[1]; });
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$textHeightBehavior=#1', (args) { (args[0] as _$TextPainter)._super$textHeightBehavior = args[1] as ui.TextHeightBehavior?; return args[1]; });
     ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$debugPaintTextLayoutBoxes=#1', (args) { (args[0] as _$TextPainter)._super$debugPaintTextLayoutBoxes = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/painting/text_painter.dart::TextPainter::\$super\$hashCode#0', (args) => (args[0] as _$TextPainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

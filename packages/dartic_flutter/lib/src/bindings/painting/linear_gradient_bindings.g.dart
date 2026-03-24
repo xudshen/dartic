@@ -87,13 +87,6 @@ class _$LinearGradient extends LinearGradient implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<ui.Color> get colors {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'colors');
     if (identical(r, notOverridden)) return super.colors;
@@ -115,10 +108,20 @@ class _$LinearGradient extends LinearGradient implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -131,10 +134,10 @@ class _$LinearGradient extends LinearGradient implements DarticObjectHolder {
   AlignmentGeometry get _super$begin => super.begin;
   AlignmentGeometry get _super$end => super.end;
   ui.TileMode get _super$tileMode => super.tileMode;
-  int get _super$hashCode => super.hashCode;
   List<ui.Color> get _super$colors => super.colors;
   List<double>? get _super$stops => super.stops;
   GradientTransform? get _super$transform => super.transform;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -164,10 +167,10 @@ abstract final class LinearGradientBindings {
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$begin#0', (args) => (args[0] as _$LinearGradient)._super$begin);
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$end#0', (args) => (args[0] as _$LinearGradient)._super$end);
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$tileMode#0', (args) => (args[0] as _$LinearGradient)._super$tileMode);
-    ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$hashCode#0', (args) => (args[0] as _$LinearGradient)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$colors#0', (args) => (args[0] as _$LinearGradient)._super$colors);
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$stops#0', (args) => (args[0] as _$LinearGradient)._super$stops);
     ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$transform#0', (args) => (args[0] as _$LinearGradient)._super$transform);
+    ctx.registerBinding('package:flutter/src/painting/gradient.dart::LinearGradient::\$super\$hashCode#0', (args) => (args[0] as _$LinearGradient)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

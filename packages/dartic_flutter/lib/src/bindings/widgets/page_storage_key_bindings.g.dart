@@ -26,13 +26,6 @@ class _$PageStorageKey extends PageStorageKey<dynamic> implements DarticObjectHo
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   dynamic get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -40,16 +33,26 @@ class _$PageStorageKey extends PageStorageKey<dynamic> implements DarticObjectHo
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   dynamic get _super$value => super.value;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -70,8 +73,8 @@ abstract final class PageStorageKeyBindings {
           _$PageStorageKey(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('package:flutter/src/widgets/page_storage.dart::PageStorageKey::\$super\$toString#0', (args) => (args[0] as _$PageStorageKey)._super$toString());
-    ctx.registerBinding('package:flutter/src/widgets/page_storage.dart::PageStorageKey::\$super\$hashCode#0', (args) => (args[0] as _$PageStorageKey)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/page_storage.dart::PageStorageKey::\$super\$value#0', (args) => (args[0] as _$PageStorageKey)._super$value);
+    ctx.registerBinding('package:flutter/src/widgets/page_storage.dart::PageStorageKey::\$super\$hashCode#0', (args) => (args[0] as _$PageStorageKey)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

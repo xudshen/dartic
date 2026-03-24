@@ -116,13 +116,6 @@ class _$ObjectFlagProperty extends ObjectFlagProperty<dynamic> implements Dartic
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get expandableValue {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'expandableValue');
     if (identical(r, notOverridden)) return super.expandableValue;
@@ -256,10 +249,20 @@ class _$ObjectFlagProperty extends ObjectFlagProperty<dynamic> implements Dartic
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -276,7 +279,6 @@ class _$ObjectFlagProperty extends ObjectFlagProperty<dynamic> implements Dartic
   String? get _super$ifPresent => super.ifPresent;
   bool get _super$showName => super.showName;
   DiagnosticLevel get _super$level => super.level;
-  int get _super$hashCode => super.hashCode;
   bool get _super$expandableValue => super.expandableValue;
   bool get _super$allowWrap => super.allowWrap;
   bool get _super$allowNameWrap => super.allowNameWrap;
@@ -296,6 +298,7 @@ class _$ObjectFlagProperty extends ObjectFlagProperty<dynamic> implements Dartic
   DiagnosticsTreeStyle? get _super$style => super.style;
   bool get _super$allowTruncate => super.allowTruncate;
   TextTreeConfiguration? get _super$textTreeConfiguration => super.textTreeConfiguration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -328,7 +331,6 @@ abstract final class ObjectFlagPropertyBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$ifPresent#0', (args) => (args[0] as _$ObjectFlagProperty)._super$ifPresent);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$showName#0', (args) => (args[0] as _$ObjectFlagProperty)._super$showName);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$level#0', (args) => (args[0] as _$ObjectFlagProperty)._super$level);
-    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$hashCode#0', (args) => (args[0] as _$ObjectFlagProperty)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$expandableValue#0', (args) => (args[0] as _$ObjectFlagProperty)._super$expandableValue);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$allowWrap#0', (args) => (args[0] as _$ObjectFlagProperty)._super$allowWrap);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$allowNameWrap#0', (args) => (args[0] as _$ObjectFlagProperty)._super$allowNameWrap);
@@ -348,6 +350,7 @@ abstract final class ObjectFlagPropertyBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$style#0', (args) => (args[0] as _$ObjectFlagProperty)._super$style);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$allowTruncate#0', (args) => (args[0] as _$ObjectFlagProperty)._super$allowTruncate);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$textTreeConfiguration#0', (args) => (args[0] as _$ObjectFlagProperty)._super$textTreeConfiguration);
+    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::ObjectFlagProperty::\$super\$hashCode#0', (args) => (args[0] as _$ObjectFlagProperty)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

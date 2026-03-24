@@ -77,13 +77,6 @@ class _$AlwaysStoppedAnimation extends AlwaysStoppedAnimation<dynamic> implement
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isDismissed {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isDismissed');
     if (identical(r, notOverridden)) return super.isDismissed;
@@ -112,10 +105,20 @@ class _$AlwaysStoppedAnimation extends AlwaysStoppedAnimation<dynamic> implement
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -127,11 +130,11 @@ class _$AlwaysStoppedAnimation extends AlwaysStoppedAnimation<dynamic> implement
   String _super$toString() => super.toString();
   dynamic get _super$value => super.value;
   AnimationStatus get _super$status => super.status;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isDismissed => super.isDismissed;
   bool get _super$isCompleted => super.isCompleted;
   bool get _super$isAnimating => super.isAnimating;
   bool get _super$isForwardOrCompleted => super.isForwardOrCompleted;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -159,11 +162,11 @@ abstract final class AlwaysStoppedAnimationBindings {
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$toString#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$toString());
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$value#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$value);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$status#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$status);
-    ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$hashCode#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$isDismissed#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$isDismissed);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$isCompleted#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$isCompleted);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$isAnimating#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$isForwardOrCompleted#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$isForwardOrCompleted);
+    ctx.registerBinding('package:flutter/src/animation/animations.dart::AlwaysStoppedAnimation::\$super\$hashCode#0', (args) => (args[0] as _$AlwaysStoppedAnimation)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -40,13 +40,6 @@ class _$LongPressSemanticsEvent extends LongPressSemanticsEvent implements Darti
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get type {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
     if (identical(r, notOverridden)) return super.type;
@@ -54,18 +47,28 @@ class _$LongPressSemanticsEvent extends LongPressSemanticsEvent implements Darti
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   Map<String, dynamic> _super$getDataMap() => super.getDataMap();
   String _super$toString() => super.toString();
   Map<String, dynamic> _super$toMap({int? nodeId}) => super.toMap(nodeId: nodeId);
-  int get _super$hashCode => super.hashCode;
   String get _super$type => super.type;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -88,8 +91,8 @@ abstract final class LongPressSemanticsEventBindings {
     ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$getDataMap#0', (args) => (args[0] as _$LongPressSemanticsEvent)._super$getDataMap());
     ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$toString#0', (args) => (args[0] as _$LongPressSemanticsEvent)._super$toString());
     ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$toMap#1', (args) => (args[0] as _$LongPressSemanticsEvent)._super$toMap(nodeId: identical(args[1], darticAbsent) ? null : args[1] as int?));
-    ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$hashCode#0', (args) => (args[0] as _$LongPressSemanticsEvent)._super$hashCode);
     ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$type#0', (args) => (args[0] as _$LongPressSemanticsEvent)._super$type);
+    ctx.registerBinding('package:flutter/src/semantics/semantics_event.dart::LongPressSemanticsEvent::\$super\$hashCode#0', (args) => (args[0] as _$LongPressSemanticsEvent)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -83,13 +83,6 @@ class _$Duration extends Duration implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get isNegative {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isNegative');
     if (identical(r, notOverridden)) return super.isNegative;
@@ -153,17 +146,27 @@ class _$Duration extends Duration implements DarticObjectHolder {
   }
 
   @override
-  bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
-  }
-
-  @override
   Duration operator -() {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unary-', const []);
     if (identical(r, notOverridden)) return -super;
     return r as Duration;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -176,8 +179,8 @@ class _$Duration extends Duration implements DarticObjectHolder {
   int get _super$inSeconds => super.inSeconds;
   int get _super$inMilliseconds => super.inMilliseconds;
   int get _super$inMicroseconds => super.inMicroseconds;
-  int get _super$hashCode => super.hashCode;
   bool get _super$isNegative => super.isNegative;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -222,8 +225,8 @@ abstract final class DurationBindings {
     ctx.registerBinding('dart:core::Duration::\$super\$inSeconds#0', (args) => (args[0] as _$Duration)._super$inSeconds);
     ctx.registerBinding('dart:core::Duration::\$super\$inMilliseconds#0', (args) => (args[0] as _$Duration)._super$inMilliseconds);
     ctx.registerBinding('dart:core::Duration::\$super\$inMicroseconds#0', (args) => (args[0] as _$Duration)._super$inMicroseconds);
-    ctx.registerBinding('dart:core::Duration::\$super\$hashCode#0', (args) => (args[0] as _$Duration)._super$hashCode);
     ctx.registerBinding('dart:core::Duration::\$super\$isNegative#0', (args) => (args[0] as _$Duration)._super$isNegative);
+    ctx.registerBinding('dart:core::Duration::\$super\$hashCode#0', (args) => (args[0] as _$Duration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

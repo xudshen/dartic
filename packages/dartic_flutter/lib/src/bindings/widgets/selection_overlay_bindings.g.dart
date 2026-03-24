@@ -340,13 +340,6 @@ class _$SelectionOverlay extends SelectionOverlay implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set startHandleType(TextSelectionHandleType value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'startHandleType', value)) {
       super.startHandleType = value;
@@ -389,10 +382,20 @@ class _$SelectionOverlay extends SelectionOverlay implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -439,13 +442,13 @@ class _$SelectionOverlay extends SelectionOverlay implements DarticObjectHolder 
   VoidCallback? get _super$onSelectionHandleTapped => super.onSelectionHandleTapped;
   ClipboardStatusNotifier? get _super$clipboardStatus => super.clipboardStatus;
   Offset? get _super$toolbarLocation => super.toolbarLocation;
-  int get _super$hashCode => super.hashCode;
   set _super$startHandleType(TextSelectionHandleType value) { super.startHandleType = value; }
   set _super$lineHeightAtStart(double value) { super.lineHeightAtStart = value; }
   set _super$endHandleType(TextSelectionHandleType value) { super.endHandleType = value; }
   set _super$lineHeightAtEnd(double value) { super.lineHeightAtEnd = value; }
   set _super$selectionEndpoints(List<TextSelectionPoint> value) { super.selectionEndpoints = value; }
   set _super$toolbarLocation(Offset? value) { super.toolbarLocation = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -508,13 +511,13 @@ abstract final class SelectionOverlayBindings {
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$onSelectionHandleTapped#0', (args) => (args[0] as _$SelectionOverlay)._super$onSelectionHandleTapped);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$clipboardStatus#0', (args) => (args[0] as _$SelectionOverlay)._super$clipboardStatus);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$toolbarLocation#0', (args) => (args[0] as _$SelectionOverlay)._super$toolbarLocation);
-    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$SelectionOverlay)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$startHandleType=#1', (args) { (args[0] as _$SelectionOverlay)._super$startHandleType = args[1] as TextSelectionHandleType; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$lineHeightAtStart=#1', (args) { (args[0] as _$SelectionOverlay)._super$lineHeightAtStart = args[1] as double; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$endHandleType=#1', (args) { (args[0] as _$SelectionOverlay)._super$endHandleType = args[1] as TextSelectionHandleType; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$lineHeightAtEnd=#1', (args) { (args[0] as _$SelectionOverlay)._super$lineHeightAtEnd = args[1] as double; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$selectionEndpoints=#1', (args) { (args[0] as _$SelectionOverlay)._super$selectionEndpoints = (args[1] as List).cast<TextSelectionPoint>(); return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$toolbarLocation=#1', (args) { (args[0] as _$SelectionOverlay)._super$toolbarLocation = args[1] as Offset?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::SelectionOverlay::\$super\$hashCode#0', (args) => (args[0] as _$SelectionOverlay)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

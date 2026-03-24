@@ -614,13 +614,6 @@ class _$RenderAnimatedSize extends RenderAnimatedSize implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Alignment get resolvedAlignment {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'resolvedAlignment');
     if (identical(r, notOverridden)) return super.resolvedAlignment;
@@ -950,10 +943,20 @@ class _$RenderAnimatedSize extends RenderAnimatedSize implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1045,7 +1048,6 @@ class _$RenderAnimatedSize extends RenderAnimatedSize implements DarticObjectHol
   bool get _super$isAnimating => super.isAnimating;
   TickerProvider get _super$vsync => super.vsync;
   VoidCallback? get _super$onEnd => super.onEnd;
-  int get _super$hashCode => super.hashCode;
   Alignment get _super$resolvedAlignment => super.resolvedAlignment;
   AlignmentGeometry get _super$alignment => super.alignment;
   TextDirection? get _super$textDirection => super.textDirection;
@@ -1093,6 +1095,7 @@ class _$RenderAnimatedSize extends RenderAnimatedSize implements DarticObjectHol
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1200,7 +1203,6 @@ abstract final class RenderAnimatedSizeBindings {
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$isAnimating#0', (args) => (args[0] as _$RenderAnimatedSize)._super$isAnimating);
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$vsync#0', (args) => (args[0] as _$RenderAnimatedSize)._super$vsync);
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$onEnd#0', (args) => (args[0] as _$RenderAnimatedSize)._super$onEnd);
-    ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$hashCode#0', (args) => (args[0] as _$RenderAnimatedSize)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$resolvedAlignment#0', (args) => (args[0] as _$RenderAnimatedSize)._super$resolvedAlignment);
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$alignment#0', (args) => (args[0] as _$RenderAnimatedSize)._super$alignment);
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$textDirection#0', (args) => (args[0] as _$RenderAnimatedSize)._super$textDirection);
@@ -1248,6 +1250,7 @@ abstract final class RenderAnimatedSizeBindings {
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderAnimatedSize)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$layer=#1', (args) { (args[0] as _$RenderAnimatedSize)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$child=#1', (args) { (args[0] as _$RenderAnimatedSize)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/animated_size.dart::RenderAnimatedSize::\$super\$hashCode#0', (args) => (args[0] as _$RenderAnimatedSize)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

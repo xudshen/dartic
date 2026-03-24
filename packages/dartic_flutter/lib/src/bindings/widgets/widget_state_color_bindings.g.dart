@@ -94,13 +94,6 @@ class _$WidgetStateColor extends WidgetStateColor implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get a {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'a');
     if (identical(r, notOverridden)) return super.a;
@@ -178,10 +171,20 @@ class _$WidgetStateColor extends WidgetStateColor implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -194,7 +197,6 @@ class _$WidgetStateColor extends WidgetStateColor implements DarticObjectHolder 
   Color _super$withGreen(int g) => super.withGreen(g);
   Color _super$withBlue(int b) => super.withBlue(b);
   double _super$computeLuminance() => super.computeLuminance();
-  int get _super$hashCode => super.hashCode;
   double get _super$a => super.a;
   double get _super$r => super.r;
   double get _super$g => super.g;
@@ -206,6 +208,7 @@ class _$WidgetStateColor extends WidgetStateColor implements DarticObjectHolder 
   int get _super$red => super.red;
   int get _super$green => super.green;
   int get _super$blue => super.blue;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -235,7 +238,6 @@ abstract final class WidgetStateColorBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$withGreen#1', (args) => (args[0] as _$WidgetStateColor)._super$withGreen(args[1] as int));
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$withBlue#1', (args) => (args[0] as _$WidgetStateColor)._super$withBlue(args[1] as int));
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$computeLuminance#0', (args) => (args[0] as _$WidgetStateColor)._super$computeLuminance());
-    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$hashCode#0', (args) => (args[0] as _$WidgetStateColor)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$a#0', (args) => (args[0] as _$WidgetStateColor)._super$a);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$r#0', (args) => (args[0] as _$WidgetStateColor)._super$r);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$g#0', (args) => (args[0] as _$WidgetStateColor)._super$g);
@@ -247,6 +249,7 @@ abstract final class WidgetStateColorBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$red#0', (args) => (args[0] as _$WidgetStateColor)._super$red);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$green#0', (args) => (args[0] as _$WidgetStateColor)._super$green);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$blue#0', (args) => (args[0] as _$WidgetStateColor)._super$blue);
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateColor::\$super\$hashCode#0', (args) => (args[0] as _$WidgetStateColor)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

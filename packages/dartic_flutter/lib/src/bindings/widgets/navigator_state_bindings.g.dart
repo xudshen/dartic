@@ -228,13 +228,6 @@ class _$NavigatorState extends NavigatorState implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Navigator get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -270,10 +263,20 @@ class _$NavigatorState extends NavigatorState implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -306,12 +309,12 @@ class _$NavigatorState extends NavigatorState implements DarticObjectHolder {
   OverlayState? get _super$overlay => super.overlay;
   bool get _super$userGestureInProgress => super.userGestureInProgress;
   ValueNotifier<bool> get _super$userGestureInProgressNotifier => super.userGestureInProgressNotifier;
-  int get _super$hashCode => super.hashCode;
   Navigator get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
   RestorationBucket? get _super$bucket => super.bucket;
   bool get _super$restorePending => super.restorePending;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -360,12 +363,12 @@ abstract final class NavigatorStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$overlay#0', (args) => (args[0] as _$NavigatorState)._super$overlay);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$userGestureInProgress#0', (args) => (args[0] as _$NavigatorState)._super$userGestureInProgress);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$userGestureInProgressNotifier#0', (args) => (args[0] as _$NavigatorState)._super$userGestureInProgressNotifier);
-    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$hashCode#0', (args) => (args[0] as _$NavigatorState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$widget#0', (args) => (args[0] as _$NavigatorState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$context#0', (args) => (args[0] as _$NavigatorState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$mounted#0', (args) => (args[0] as _$NavigatorState)._super$mounted);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$bucket#0', (args) => (args[0] as _$NavigatorState)._super$bucket);
     ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$restorePending#0', (args) => (args[0] as _$NavigatorState)._super$restorePending);
+    ctx.registerBinding('package:flutter/src/widgets/navigator.dart::NavigatorState::\$super\$hashCode#0', (args) => (args[0] as _$NavigatorState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

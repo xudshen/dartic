@@ -106,13 +106,6 @@ class _$DrawerButton extends DrawerButton implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   StandardComponentType? get standardComponent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'standardComponent');
     if (identical(r, notOverridden)) return super.standardComponent;
@@ -302,10 +295,20 @@ class _$DrawerButton extends DrawerButton implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -318,7 +321,6 @@ class _$DrawerButton extends DrawerButton implements DarticObjectHolder {
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
-  int get _super$hashCode => super.hashCode;
   StandardComponentType? get _super$standardComponent => super.standardComponent;
   double? get _super$iconSize => super.iconSize;
   VisualDensity? get _super$visualDensity => super.visualDensity;
@@ -346,6 +348,7 @@ class _$DrawerButton extends DrawerButton implements DarticObjectHolder {
   Widget? get _super$selectedIcon => super.selectedIcon;
   WidgetStatesController? get _super$statesController => super.statesController;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -374,7 +377,6 @@ abstract final class DrawerButtonBindings {
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$toStringDeep#4', (args) => (args[0] as _$DrawerButton)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$DrawerButton)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$DrawerButton)._super$debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$hashCode#0', (args) => (args[0] as _$DrawerButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$standardComponent#0', (args) => (args[0] as _$DrawerButton)._super$standardComponent);
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$iconSize#0', (args) => (args[0] as _$DrawerButton)._super$iconSize);
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$visualDensity#0', (args) => (args[0] as _$DrawerButton)._super$visualDensity);
@@ -402,6 +404,7 @@ abstract final class DrawerButtonBindings {
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$selectedIcon#0', (args) => (args[0] as _$DrawerButton)._super$selectedIcon);
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$statesController#0', (args) => (args[0] as _$DrawerButton)._super$statesController);
     ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$key#0', (args) => (args[0] as _$DrawerButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/action_buttons.dart::DrawerButton::\$super\$hashCode#0', (args) => (args[0] as _$DrawerButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -225,13 +225,6 @@ class _$PanGestureRecognizer extends PanGestureRecognizer implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   DragStartBehavior get dragStartBehavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragStartBehavior');
     if (identical(r, notOverridden)) return super.dragStartBehavior;
@@ -477,10 +470,20 @@ class _$PanGestureRecognizer extends PanGestureRecognizer implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -514,7 +517,6 @@ class _$PanGestureRecognizer extends PanGestureRecognizer implements DarticObjec
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   String get _super$debugDescription => super.debugDescription;
-  int get _super$hashCode => super.hashCode;
   DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
   MultitouchDragStrategy get _super$multitouchDragStrategy => super.multitouchDragStrategy;
   GestureDragDownCallback? get _super$onDown => super.onDown;
@@ -550,6 +552,7 @@ class _$PanGestureRecognizer extends PanGestureRecognizer implements DarticObjec
   set _super$team(GestureArenaTeam? value) { super.team = value; }
   set _super$gestureSettings(DeviceGestureSettings? value) { super.gestureSettings = value; }
   set _super$supportedDevices(Set<PointerDeviceKind>? value) { super.supportedDevices = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -599,7 +602,6 @@ abstract final class PanGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$PanGestureRecognizer)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$PanGestureRecognizer)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$debugDescription#0', (args) => (args[0] as _$PanGestureRecognizer)._super$debugDescription);
-    ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$PanGestureRecognizer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$dragStartBehavior#0', (args) => (args[0] as _$PanGestureRecognizer)._super$dragStartBehavior);
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$multitouchDragStrategy#0', (args) => (args[0] as _$PanGestureRecognizer)._super$multitouchDragStrategy);
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$onDown#0', (args) => (args[0] as _$PanGestureRecognizer)._super$onDown);
@@ -635,6 +637,7 @@ abstract final class PanGestureRecognizerBindings {
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$team=#1', (args) { (args[0] as _$PanGestureRecognizer)._super$team = args[1] as GestureArenaTeam?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$gestureSettings=#1', (args) { (args[0] as _$PanGestureRecognizer)._super$gestureSettings = args[1] as DeviceGestureSettings?; return args[1]; });
     ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$supportedDevices=#1', (args) { (args[0] as _$PanGestureRecognizer)._super$supportedDevices = args[1] == null ? null : (args[1] as Set).cast<PointerDeviceKind>(); return args[1]; });
+    ctx.registerBinding('package:flutter/src/gestures/monodrag.dart::PanGestureRecognizer::\$super\$hashCode#0', (args) => (args[0] as _$PanGestureRecognizer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

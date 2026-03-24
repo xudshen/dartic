@@ -67,13 +67,6 @@ class _$TransformationController extends TransformationController implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Matrix4 get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -95,10 +88,20 @@ class _$TransformationController extends TransformationController implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -108,10 +111,10 @@ class _$TransformationController extends TransformationController implements Dar
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$dispose() { super.dispose(); }
   void _super$notifyListeners() { super.notifyListeners(); }
-  int get _super$hashCode => super.hashCode;
   Matrix4 get _super$value => super.value;
   bool get _super$hasListeners => super.hasListeners;
   set _super$value(Matrix4 value) { super.value = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -137,10 +140,10 @@ abstract final class TransformationControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$removeListener#1', (args) { (args[0] as _$TransformationController)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$dispose#0', (args) { (args[0] as _$TransformationController)._super$dispose(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$notifyListeners#0', (args) { (args[0] as _$TransformationController)._super$notifyListeners(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$hashCode#0', (args) => (args[0] as _$TransformationController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$value#0', (args) => (args[0] as _$TransformationController)._super$value);
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$hasListeners#0', (args) => (args[0] as _$TransformationController)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$value=#1', (args) { (args[0] as _$TransformationController)._super$value = args[1] as Matrix4; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/interactive_viewer.dart::TransformationController::\$super\$hashCode#0', (args) => (args[0] as _$TransformationController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

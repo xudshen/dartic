@@ -131,13 +131,6 @@ class _$CheckedPopupMenuItem extends CheckedPopupMenuItem<dynamic> implements Da
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   dynamic get value {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'value');
     if (identical(r, notOverridden)) return super.value;
@@ -201,10 +194,20 @@ class _$CheckedPopupMenuItem extends CheckedPopupMenuItem<dynamic> implements Da
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -220,7 +223,6 @@ class _$CheckedPopupMenuItem extends CheckedPopupMenuItem<dynamic> implements Da
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
   bool get _super$checked => super.checked;
   Widget? get _super$child => super.child;
-  int get _super$hashCode => super.hashCode;
   dynamic get _super$value => super.value;
   VoidCallback? get _super$onTap => super.onTap;
   bool get _super$enabled => super.enabled;
@@ -230,6 +232,7 @@ class _$CheckedPopupMenuItem extends CheckedPopupMenuItem<dynamic> implements Da
   WidgetStateProperty<TextStyle?>? get _super$labelTextStyle => super.labelTextStyle;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -261,7 +264,6 @@ abstract final class CheckedPopupMenuItemBindings {
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$debugDescribeChildren());
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$checked#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$checked);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$child#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$child);
-    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$value#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$value);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$onTap#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$onTap);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$enabled#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$enabled);
@@ -271,6 +273,7 @@ abstract final class CheckedPopupMenuItemBindings {
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$labelTextStyle#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$labelTextStyle);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$mouseCursor#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$mouseCursor);
     ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$key#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$key);
+    ctx.registerBinding('package:flutter/src/material/popup_menu.dart::CheckedPopupMenuItem::\$super\$hashCode#0', (args) => (args[0] as _$CheckedPopupMenuItem)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

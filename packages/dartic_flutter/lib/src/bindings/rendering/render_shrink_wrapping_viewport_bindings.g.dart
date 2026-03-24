@@ -676,13 +676,6 @@ class _$RenderShrinkWrappingViewport extends RenderShrinkWrappingViewport implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AxisDirection get axisDirection {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'axisDirection');
     if (identical(r, notOverridden)) return super.axisDirection;
@@ -1061,10 +1054,20 @@ class _$RenderShrinkWrappingViewport extends RenderShrinkWrappingViewport implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1166,7 +1169,6 @@ class _$RenderShrinkWrappingViewport extends RenderShrinkWrappingViewport implem
   RenderSliver? _super$childAfter(RenderSliver child) => super.childAfter(child);
   bool get _super$hasVisualOverflow => super.hasVisualOverflow;
   int get _super$indexOfFirstChild => super.indexOfFirstChild;
-  int get _super$hashCode => super.hashCode;
   AxisDirection get _super$axisDirection => super.axisDirection;
   AxisDirection get _super$crossAxisDirection => super.crossAxisDirection;
   Axis get _super$axis => super.axis;
@@ -1221,6 +1223,7 @@ class _$RenderShrinkWrappingViewport extends RenderShrinkWrappingViewport implem
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1338,7 +1341,6 @@ abstract final class RenderShrinkWrappingViewportBindings {
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$childAfter#1', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$childAfter(args[1] as RenderSliver));
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$hasVisualOverflow#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$hasVisualOverflow);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$indexOfFirstChild#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$indexOfFirstChild);
-    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$axisDirection#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$axisDirection);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$crossAxisDirection#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$crossAxisDirection);
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$axis#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$axis);
@@ -1393,6 +1395,7 @@ abstract final class RenderShrinkWrappingViewportBindings {
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$parentData=#1', (args) { (args[0] as _$RenderShrinkWrappingViewport)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderShrinkWrappingViewport)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$layer=#1', (args) { (args[0] as _$RenderShrinkWrappingViewport)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/viewport.dart::RenderShrinkWrappingViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderShrinkWrappingViewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

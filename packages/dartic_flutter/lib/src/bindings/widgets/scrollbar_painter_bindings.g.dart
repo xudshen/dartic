@@ -262,13 +262,6 @@ class _$ScrollbarPainter extends ScrollbarPainter implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -381,10 +374,20 @@ class _$ScrollbarPainter extends ScrollbarPainter implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -420,7 +423,6 @@ class _$ScrollbarPainter extends ScrollbarPainter implements DarticObjectHolder 
   ScrollbarOrientation? get _super$scrollbarOrientation => super.scrollbarOrientation;
   bool get _super$ignorePointer => super.ignorePointer;
   SemanticsBuilderCallback? get _super$semanticsBuilder => super.semanticsBuilder;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
   set _super$color(Color value) { super.color = value; }
   set _super$trackColor(Color value) { super.trackColor = value; }
@@ -437,6 +439,7 @@ class _$ScrollbarPainter extends ScrollbarPainter implements DarticObjectHolder 
   set _super$minOverscrollLength(double value) { super.minOverscrollLength = value; }
   set _super$scrollbarOrientation(ScrollbarOrientation? value) { super.scrollbarOrientation = value; }
   set _super$ignorePointer(bool value) { super.ignorePointer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -488,7 +491,6 @@ abstract final class ScrollbarPainterBindings {
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$scrollbarOrientation#0', (args) => (args[0] as _$ScrollbarPainter)._super$scrollbarOrientation);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$ignorePointer#0', (args) => (args[0] as _$ScrollbarPainter)._super$ignorePointer);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$semanticsBuilder#0', (args) => (args[0] as _$ScrollbarPainter)._super$semanticsBuilder);
-    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$hashCode#0', (args) => (args[0] as _$ScrollbarPainter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$hasListeners#0', (args) => (args[0] as _$ScrollbarPainter)._super$hasListeners);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$color=#1', (args) { (args[0] as _$ScrollbarPainter)._super$color = args[1] as Color; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$trackColor=#1', (args) { (args[0] as _$ScrollbarPainter)._super$trackColor = args[1] as Color; return args[1]; });
@@ -505,6 +507,7 @@ abstract final class ScrollbarPainterBindings {
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$minOverscrollLength=#1', (args) { (args[0] as _$ScrollbarPainter)._super$minOverscrollLength = args[1] as double; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$scrollbarOrientation=#1', (args) { (args[0] as _$ScrollbarPainter)._super$scrollbarOrientation = args[1] as ScrollbarOrientation?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$ignorePointer=#1', (args) { (args[0] as _$ScrollbarPainter)._super$ignorePointer = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::ScrollbarPainter::\$super\$hashCode#0', (args) => (args[0] as _$ScrollbarPainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

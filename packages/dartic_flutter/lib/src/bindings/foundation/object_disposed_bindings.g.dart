@@ -35,13 +35,6 @@ class _$ObjectDisposed extends ObjectDisposed implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object get object {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'object');
     if (identical(r, notOverridden)) return super.object;
@@ -49,17 +42,27 @@ class _$ObjectDisposed extends ObjectDisposed implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   Map<Object, Map<String, Object>> _super$toMap() => super.toMap();
   String _super$toString() => super.toString();
-  int get _super$hashCode => super.hashCode;
   Object get _super$object => super.object;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -81,8 +84,8 @@ abstract final class ObjectDisposedBindings {
     );
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectDisposed::\$super\$toMap#0', (args) => (args[0] as _$ObjectDisposed)._super$toMap());
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectDisposed::\$super\$toString#0', (args) => (args[0] as _$ObjectDisposed)._super$toString());
-    ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectDisposed::\$super\$hashCode#0', (args) => (args[0] as _$ObjectDisposed)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectDisposed::\$super\$object#0', (args) => (args[0] as _$ObjectDisposed)._super$object);
+    ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectDisposed::\$super\$hashCode#0', (args) => (args[0] as _$ObjectDisposed)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

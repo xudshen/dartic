@@ -180,13 +180,6 @@ class _$Flex extends Flex implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -201,10 +194,20 @@ class _$Flex extends Flex implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -229,9 +232,9 @@ class _$Flex extends Flex implements DarticObjectHolder {
   ui.TextBaseline? get _super$textBaseline => super.textBaseline;
   ui.Clip get _super$clipBehavior => super.clipBehavior;
   double get _super$spacing => super.spacing;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -272,9 +275,9 @@ abstract final class FlexBindings {
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$textBaseline#0', (args) => (args[0] as _$Flex)._super$textBaseline);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$clipBehavior#0', (args) => (args[0] as _$Flex)._super$clipBehavior);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$spacing#0', (args) => (args[0] as _$Flex)._super$spacing);
-    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$hashCode#0', (args) => (args[0] as _$Flex)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$children#0', (args) => (args[0] as _$Flex)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$key#0', (args) => (args[0] as _$Flex)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/basic.dart::Flex::\$super\$hashCode#0', (args) => (args[0] as _$Flex)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

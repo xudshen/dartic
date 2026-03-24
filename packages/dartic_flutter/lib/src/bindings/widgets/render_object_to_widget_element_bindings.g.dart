@@ -333,13 +333,6 @@ class _$RenderObjectToWidgetElement extends RenderObjectToWidgetElement<RenderOb
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Element? get renderObjectAttachingChild {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'renderObjectAttachingChild');
     if (identical(r, notOverridden)) return super.renderObjectAttachingChild;
@@ -424,10 +417,20 @@ class _$RenderObjectToWidgetElement extends RenderObjectToWidgetElement<RenderOb
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -479,7 +482,6 @@ class _$RenderObjectToWidgetElement extends RenderObjectToWidgetElement<RenderOb
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   void _super$assignOwner(BuildOwner owner) { super.assignOwner(owner); }
   RenderObjectWithChildMixin<RenderObject> get _super$renderObject => super.renderObject;
-  int get _super$hashCode => super.hashCode;
   Element? get _super$renderObjectAttachingChild => super.renderObjectAttachingChild;
   bool get _super$debugDoingBuild => super.debugDoingBuild;
   Object? get _super$slot => super.slot;
@@ -492,6 +494,7 @@ class _$RenderObjectToWidgetElement extends RenderObjectToWidgetElement<RenderOb
   BuildScope get _super$buildScope => super.buildScope;
   Size? get _super$size => super.size;
   bool get _super$dirty => super.dirty;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -559,7 +562,6 @@ abstract final class RenderObjectToWidgetElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$toStringDeep#4', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$assignOwner#1', (args) { (args[0] as _$RenderObjectToWidgetElement)._super$assignOwner(args[1] as BuildOwner); return null; });
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$renderObject#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$renderObject);
-    ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$hashCode#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$renderObjectAttachingChild#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$renderObjectAttachingChild);
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$debugDoingBuild#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$debugDoingBuild);
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$slot#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$slot);
@@ -572,6 +574,7 @@ abstract final class RenderObjectToWidgetElementBindings {
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$buildScope#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$buildScope);
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$size#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$size);
     ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$dirty#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$dirty);
+    ctx.registerBinding('package:flutter/src/widgets/adapter.dart::RenderObjectToWidgetElement::\$super\$hashCode#0', (args) => (args[0] as _$RenderObjectToWidgetElement)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -118,13 +118,6 @@ class _$CupertinoExpansionTile extends CupertinoExpansionTile implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -132,10 +125,20 @@ class _$CupertinoExpansionTile extends CupertinoExpansionTile implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -152,8 +155,8 @@ class _$CupertinoExpansionTile extends CupertinoExpansionTile implements DarticO
   ExpansibleController? get _super$controller => super.controller;
   Widget get _super$child => super.child;
   ExpansionTileTransitionMode get _super$transitionMode => super.transitionMode;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -186,8 +189,8 @@ abstract final class CupertinoExpansionTileBindings {
     ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$controller#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$controller);
     ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$child#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$child);
     ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$transitionMode#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$transitionMode);
-    ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$key#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/expansion_tile.dart::CupertinoExpansionTile::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoExpansionTile)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

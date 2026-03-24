@@ -219,13 +219,6 @@ class _$RadioMenuButton extends RadioMenuButton<dynamic> implements DarticObject
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -233,10 +226,20 @@ class _$RadioMenuButton extends RadioMenuButton<dynamic> implements DarticObject
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -264,8 +267,8 @@ class _$RadioMenuButton extends RadioMenuButton<dynamic> implements DarticObject
   bool get _super$closeOnActivate => super.closeOnActivate;
   Widget? get _super$child => super.child;
   bool get _super$enabled => super.enabled;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -309,8 +312,8 @@ abstract final class RadioMenuButtonBindings {
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$closeOnActivate#0', (args) => (args[0] as _$RadioMenuButton)._super$closeOnActivate);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$child#0', (args) => (args[0] as _$RadioMenuButton)._super$child);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$enabled#0', (args) => (args[0] as _$RadioMenuButton)._super$enabled);
-    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$hashCode#0', (args) => (args[0] as _$RadioMenuButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$key#0', (args) => (args[0] as _$RadioMenuButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/menu_anchor.dart::RadioMenuButton::\$super\$hashCode#0', (args) => (args[0] as _$RadioMenuButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

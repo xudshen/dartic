@@ -79,13 +79,6 @@ class _$RenderEditablePainter extends RenderEditablePainter implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -93,10 +86,20 @@ class _$RenderEditablePainter extends RenderEditablePainter implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -105,8 +108,8 @@ class _$RenderEditablePainter extends RenderEditablePainter implements DarticObj
   void _super$removeListener(ui.VoidCallback listener) { super.removeListener(listener); }
   void _super$dispose() { super.dispose(); }
   void _super$notifyListeners() { super.notifyListeners(); }
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -131,8 +134,8 @@ abstract final class RenderEditablePainterBindings {
     ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$removeListener#1', (args) { (args[0] as _$RenderEditablePainter)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$dispose#0', (args) { (args[0] as _$RenderEditablePainter)._super$dispose(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$notifyListeners#0', (args) { (args[0] as _$RenderEditablePainter)._super$notifyListeners(); return null; });
-    ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$hashCode#0', (args) => (args[0] as _$RenderEditablePainter)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$hasListeners#0', (args) => (args[0] as _$RenderEditablePainter)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/rendering/editable.dart::RenderEditablePainter::\$super\$hashCode#0', (args) => (args[0] as _$RenderEditablePainter)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

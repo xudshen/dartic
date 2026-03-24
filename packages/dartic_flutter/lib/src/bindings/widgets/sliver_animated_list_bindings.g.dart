@@ -93,13 +93,6 @@ class _$SliverAnimatedList extends SliverAnimatedList implements DarticObjectHol
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   AnimatedItemBuilder get itemBuilder {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'itemBuilder');
     if (identical(r, notOverridden)) return super.itemBuilder;
@@ -128,10 +121,20 @@ class _$SliverAnimatedList extends SliverAnimatedList implements DarticObjectHol
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -144,11 +147,11 @@ class _$SliverAnimatedList extends SliverAnimatedList implements DarticObjectHol
   String _super$toStringDeep({String prefixLineOne = '', String? prefixOtherLines, DiagnosticLevel minLevel = DiagnosticLevel.debug, int wrapWidth = 65}) => super.toStringDeep(prefixLineOne: prefixLineOne, prefixOtherLines: prefixOtherLines, minLevel: minLevel, wrapWidth: wrapWidth);
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   List<DiagnosticsNode> _super$debugDescribeChildren() => super.debugDescribeChildren();
-  int get _super$hashCode => super.hashCode;
   AnimatedItemBuilder get _super$itemBuilder => super.itemBuilder;
   ChildIndexGetter? get _super$findChildIndexCallback => super.findChildIndexCallback;
   int get _super$initialItemCount => super.initialItemCount;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -179,11 +182,11 @@ abstract final class SliverAnimatedListBindings {
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$toStringDeep#4', (args) => (args[0] as _$SliverAnimatedList)._super$toStringDeep(prefixLineOne: identical(args[1], darticAbsent) ? '' : args[1] as String, prefixOtherLines: identical(args[2], darticAbsent) ? null : args[2] as String?, minLevel: identical(args[3], darticAbsent) ? DiagnosticLevel.debug : args[3] as DiagnosticLevel, wrapWidth: identical(args[4], darticAbsent) ? 65 : args[4] as int));
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$SliverAnimatedList)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$debugDescribeChildren#0', (args) => (args[0] as _$SliverAnimatedList)._super$debugDescribeChildren());
-    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedList)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$itemBuilder#0', (args) => (args[0] as _$SliverAnimatedList)._super$itemBuilder);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$findChildIndexCallback#0', (args) => (args[0] as _$SliverAnimatedList)._super$findChildIndexCallback);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$initialItemCount#0', (args) => (args[0] as _$SliverAnimatedList)._super$initialItemCount);
     ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$key#0', (args) => (args[0] as _$SliverAnimatedList)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/animated_scroll_view.dart::SliverAnimatedList::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedList)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

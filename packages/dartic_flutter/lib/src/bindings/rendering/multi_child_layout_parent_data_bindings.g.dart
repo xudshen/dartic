@@ -41,13 +41,6 @@ class _$MultiChildLayoutParentData extends MultiChildLayoutParentData implements
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -97,17 +90,26 @@ class _$MultiChildLayoutParentData extends MultiChildLayoutParentData implements
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
   Object? get _super$id => super.id;
-  int get _super$hashCode => super.hashCode;
   Offset get _super$offset => super.offset;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
@@ -115,6 +117,7 @@ class _$MultiChildLayoutParentData extends MultiChildLayoutParentData implements
   set _super$offset(Offset value) { super.offset = value; }
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -137,7 +140,6 @@ abstract final class MultiChildLayoutParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$toString#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$detach#0', (args) { (args[0] as _$MultiChildLayoutParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$id#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$id);
-    ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$hashCode#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$offset#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$previousSibling#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$nextSibling#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$nextSibling);
@@ -145,6 +147,7 @@ abstract final class MultiChildLayoutParentDataBindings {
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$offset=#1', (args) { (args[0] as _$MultiChildLayoutParentData)._super$offset = args[1] as Offset; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$MultiChildLayoutParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$MultiChildLayoutParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/custom_layout.dart::MultiChildLayoutParentData::\$super\$hashCode#0', (args) => (args[0] as _$MultiChildLayoutParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

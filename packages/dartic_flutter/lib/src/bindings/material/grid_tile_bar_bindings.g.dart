@@ -122,13 +122,6 @@ class _$GridTileBar extends GridTileBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -136,10 +129,20 @@ class _$GridTileBar extends GridTileBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -157,8 +160,8 @@ class _$GridTileBar extends GridTileBar implements DarticObjectHolder {
   Widget? get _super$title => super.title;
   Widget? get _super$subtitle => super.subtitle;
   Widget? get _super$trailing => super.trailing;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -192,8 +195,8 @@ abstract final class GridTileBarBindings {
     ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$title#0', (args) => (args[0] as _$GridTileBar)._super$title);
     ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$subtitle#0', (args) => (args[0] as _$GridTileBar)._super$subtitle);
     ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$trailing#0', (args) => (args[0] as _$GridTileBar)._super$trailing);
-    ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$hashCode#0', (args) => (args[0] as _$GridTileBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$key#0', (args) => (args[0] as _$GridTileBar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/grid_tile_bar.dart::GridTileBar::\$super\$hashCode#0', (args) => (args[0] as _$GridTileBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

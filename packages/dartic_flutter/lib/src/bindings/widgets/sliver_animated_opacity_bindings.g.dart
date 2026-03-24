@@ -115,13 +115,6 @@ class _$SliverAnimatedOpacity extends SliverAnimatedOpacity implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -150,10 +143,20 @@ class _$SliverAnimatedOpacity extends SliverAnimatedOpacity implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -169,11 +172,11 @@ class _$SliverAnimatedOpacity extends SliverAnimatedOpacity implements DarticObj
   Widget? get _super$sliver => super.sliver;
   double get _super$opacity => super.opacity;
   bool get _super$alwaysIncludeSemantics => super.alwaysIncludeSemantics;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -205,11 +208,11 @@ abstract final class SliverAnimatedOpacityBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$sliver#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$sliver);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$opacity#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$opacity);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$alwaysIncludeSemantics#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$alwaysIncludeSemantics);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$curve#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$duration#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$onEnd#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$key#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::SliverAnimatedOpacity::\$super\$hashCode#0', (args) => (args[0] as _$SliverAnimatedOpacity)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

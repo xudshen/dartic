@@ -144,13 +144,6 @@ class _$NavigationIndicator extends NavigationIndicator implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -158,10 +151,20 @@ class _$NavigationIndicator extends NavigationIndicator implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -180,8 +183,8 @@ class _$NavigationIndicator extends NavigationIndicator implements DarticObjectH
   double get _super$height => super.height;
   BorderRadius get _super$borderRadius => super.borderRadius;
   ShapeBorder? get _super$shape => super.shape;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -216,8 +219,8 @@ abstract final class NavigationIndicatorBindings {
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$height#0', (args) => (args[0] as _$NavigationIndicator)._super$height);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$borderRadius#0', (args) => (args[0] as _$NavigationIndicator)._super$borderRadius);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$shape#0', (args) => (args[0] as _$NavigationIndicator)._super$shape);
-    ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$hashCode#0', (args) => (args[0] as _$NavigationIndicator)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$key#0', (args) => (args[0] as _$NavigationIndicator)._super$key);
+    ctx.registerBinding('package:flutter/src/material/navigation_bar.dart::NavigationIndicator::\$super\$hashCode#0', (args) => (args[0] as _$NavigationIndicator)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -43,13 +43,6 @@ class _$PlaceholderSpanIndexSemanticsTag extends PlaceholderSpanIndexSemanticsTa
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String get name {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -57,17 +50,27 @@ class _$PlaceholderSpanIndexSemanticsTag extends PlaceholderSpanIndexSemanticsTa
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   int get _super$index => super.index;
-  int get _super$hashCode => super.hashCode;
   String get _super$name => super.name;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -89,8 +92,8 @@ abstract final class PlaceholderSpanIndexSemanticsTagBindings {
     );
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::PlaceholderSpanIndexSemanticsTag::\$super\$toString#0', (args) => (args[0] as _$PlaceholderSpanIndexSemanticsTag)._super$toString());
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::PlaceholderSpanIndexSemanticsTag::\$super\$index#0', (args) => (args[0] as _$PlaceholderSpanIndexSemanticsTag)._super$index);
-    ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::PlaceholderSpanIndexSemanticsTag::\$super\$hashCode#0', (args) => (args[0] as _$PlaceholderSpanIndexSemanticsTag)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::PlaceholderSpanIndexSemanticsTag::\$super\$name#0', (args) => (args[0] as _$PlaceholderSpanIndexSemanticsTag)._super$name);
+    ctx.registerBinding('package:flutter/src/rendering/paragraph.dart::PlaceholderSpanIndexSemanticsTag::\$super\$hashCode#0', (args) => (args[0] as _$PlaceholderSpanIndexSemanticsTag)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

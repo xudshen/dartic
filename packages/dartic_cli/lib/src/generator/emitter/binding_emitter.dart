@@ -1791,10 +1791,11 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
         isInterfaceBridge: info.isInterface);
   }
 
-  // Override getters with dispatch delegation
+  // Override getters with dispatch delegation.
+  // hashCode is always handled by the hardcoded identity block below.
   final overriddenGetters = <String>{};
   for (final getter in info.getters) {
-    if (info.isInterface && objectGetterNames.contains(getter.name)) continue;
+    if (objectGetterNames.contains(getter.name)) continue;
     overriddenGetters.add(getter.name);
     buf.writeln();
     _writeBridgeGetterOverride(buf, getter, isInterfaceBridge: info.isInterface);
@@ -1807,18 +1808,20 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
         isInterfaceBridge: info.isInterface);
   }
 
-  // Override operators with dispatch delegation
+  // Override operators with dispatch delegation.
+  // == is always handled by the hardcoded identity block below.
+  final overriddenOperators = info.operators.map((o) => o.name).toSet();
   for (final op in info.operators) {
+    if (op.name == '==') continue;
     buf.writeln();
     _writeBridgeOperatorOverride(buf, info.className, op,
         isInterfaceBridge: info.isInterface);
   }
 
-  // Generate Object method overrides for non-interface Bridge classes.
-  // Interface bridges already have inherited method overrides that handle
-  // dispatch (and may have different signatures, e.g. toString({minLevel})).
-  // For extends-based bridges, these ensure Dart-side calls (e.g. string
-  // interpolation) go through DarticDispatch.
+  // Generate toString override for extends-based bridges (ensures string
+  // interpolation goes through DarticDispatch). Interface bridges with
+  // custom toString signatures (e.g. Diagnosticable) are already handled
+  // above in the method loop.
   if (!info.isInterface) {
     if (!overriddenMethods.contains('toString')) {
       buf.writeln();
@@ -1831,37 +1834,58 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
       buf.writeln('    return r as String;');
       buf.writeln('  }');
     }
-    if (!overriddenGetters.contains('hashCode')) {
-      buf.writeln();
-      buf.writeln('  @override');
-      buf.writeln('  int get hashCode {');
-      buf.writeln(
-          "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
-      buf.writeln(
-          '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
-      buf.writeln('    return r as int;');
-      buf.writeln('  }');
-    }
-  }
-  // Generate == override for all bridge types (always needed for correct
-  // identity semantics and hash_and_equals lint).
-  final overriddenOperators = info.operators.map((o) => o.name).toSet();
-  if (!overriddenOperators.contains('==')) {
+  } else if (!overriddenMethods.contains('toString')) {
+    // Interface bridge with plain toString — dispatch to dartic code,
+    // fall back to darticObject.toString() (which also dispatches, but
+    // returns a descriptive default if no override exists).
     buf.writeln();
     buf.writeln('  @override');
-    buf.writeln('  bool operator ==(Object other) {');
+    buf.writeln('  String toString() {');
     buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '==', [other]);");
-    if (info.isInterface) {
-      buf.writeln(
-          '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : identical(this, other); }');
-    } else {
-      buf.writeln(
-          '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : super == other; }');
-    }
-    buf.writeln('    return r == true;');
+        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return \$darticObject.toString();');
+    buf.writeln('    return r as String;');
     buf.writeln('  }');
   }
+  // ── Identity overrides (hashCode + ==) ──
+  // Always generated for ALL bridge types.
+  //
+  // extends bridge: super.hashCode / super == preserve host value semantics
+  //   (e.g. Color value equality). DarticObject identity is a fast-path only.
+  // interface bridge: no host superclass, identity based on $darticObject.
+  buf.writeln();
+  buf.writeln('  @override');
+  buf.writeln('  int get hashCode {');
+  buf.writeln(
+      "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
+  if (info.isInterface) {
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
+  } else {
+    buf.writeln(
+        '    if (identical(r, notOverridden)) return super.hashCode;');
+  }
+  buf.writeln('    return r as int;');
+  buf.writeln('  }');
+
+  buf.writeln();
+  buf.writeln('  @override');
+  buf.writeln('  bool operator ==(Object other) {');
+  buf.writeln(
+      "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '==', [other]);");
+  if (info.isInterface) {
+    buf.writeln(
+        '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : identical(this, other); }');
+  } else {
+    buf.writeln('    if (identical(r, notOverridden)) {');
+    buf.writeln(
+        '      if (other is DarticObjectHolder && identical(\$darticObject, other.\$darticObject)) return true;');
+    buf.writeln('      return super == other;');
+    buf.writeln('    }');
+  }
+  buf.writeln('    return r == true;');
+  buf.writeln('  }');
 
   // Generate super trampolines for extends-based Bridges.
   // These allow $super$ bindings to bypass virtual dispatch.
@@ -1908,9 +1932,10 @@ void _writeSuperTrampolines(
     _writeSuperMethodTrampoline(buf, method);
   }
 
-  // Getters
+  // Getters (hashCode handled separately below with Object trampolines)
   for (final getter in info.getters) {
     if (getter.isAbstract) continue;
+    if (getter.name == 'hashCode') continue;
     buf.writeln(
         '  ${getter.returnType} get _super\$${getter.name} => super.${getter.name};');
   }
@@ -2507,9 +2532,10 @@ void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$$key', $indented);");
   }
 
-  // Getters — call _super$ trampoline getter.
+  // Getters — call _super$ trampoline getter (hashCode handled below).
   for (final getter in info.getters) {
     if (getter.isAbstract) continue;
+    if (getter.name == 'hashCode') continue;
     buf.writeln(
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$${getter.name}#0', (args) => (args[0] as $bridgeClassName)._super\$${getter.name});");
   }
@@ -2524,15 +2550,13 @@ void _writeSuperForwarderRegistrations(StringBuffer buf, TypeInfo info) {
 
   // Object method super forwarders (matching always-generated trampolines).
   final overriddenMethods = info.methods.map((m) => m.name).toSet();
-  final overriddenGetters = info.getters.map((g) => g.name).toSet();
   if (!overriddenMethods.contains('toString')) {
     buf.writeln(
         "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$toString#0', (args) => (args[0] as $bridgeClassName)._super\$toString());");
   }
-  if (!overriddenGetters.contains('hashCode')) {
-    buf.writeln(
-        "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$hashCode#0', (args) => (args[0] as $bridgeClassName)._super\$hashCode);");
-  }
+  // hashCode trampoline is always generated (identity is based on darticObject).
+  buf.writeln(
+      "    ctx.registerBinding('${info.qualifiedName}::\\\$super\\\$hashCode#0', (args) => (args[0] as $bridgeClassName)._super\$hashCode);");
 }
 
 /// Generates a binding closure that calls a `_super$` trampoline method.

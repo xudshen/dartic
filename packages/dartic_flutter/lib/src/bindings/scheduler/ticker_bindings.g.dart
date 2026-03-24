@@ -114,13 +114,6 @@ class _$Ticker extends Ticker implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   set muted(bool value) {
     if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'muted', value)) {
       super.muted = value;
@@ -128,10 +121,20 @@ class _$Ticker extends Ticker implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -149,8 +152,8 @@ class _$Ticker extends Ticker implements DarticObjectHolder {
   bool get _super$scheduled => super.scheduled;
   bool get _super$shouldScheduleTick => super.shouldScheduleTick;
   String? get _super$debugLabel => super.debugLabel;
-  int get _super$hashCode => super.hashCode;
   set _super$muted(bool value) { super.muted = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -183,8 +186,8 @@ abstract final class TickerBindings {
     ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$scheduled#0', (args) => (args[0] as _$Ticker)._super$scheduled);
     ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$shouldScheduleTick#0', (args) => (args[0] as _$Ticker)._super$shouldScheduleTick);
     ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$debugLabel#0', (args) => (args[0] as _$Ticker)._super$debugLabel);
-    ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$hashCode#0', (args) => (args[0] as _$Ticker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$muted=#1', (args) { (args[0] as _$Ticker)._super$muted = args[1] as bool; return args[1]; });
+    ctx.registerBinding('package:flutter/src/scheduler/ticker.dart::Ticker::\$super\$hashCode#0', (args) => (args[0] as _$Ticker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

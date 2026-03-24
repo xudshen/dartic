@@ -207,13 +207,6 @@ class _$PageView extends PageView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -221,10 +214,20 @@ class _$PageView extends PageView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -251,8 +254,8 @@ class _$PageView extends PageView implements DarticObjectHolder {
   HitTestBehavior get _super$hitTestBehavior => super.hitTestBehavior;
   ScrollBehavior? get _super$scrollBehavior => super.scrollBehavior;
   bool get _super$padEnds => super.padEnds;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -295,8 +298,8 @@ abstract final class PageViewBindings {
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$hitTestBehavior#0', (args) => (args[0] as _$PageView)._super$hitTestBehavior);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$scrollBehavior#0', (args) => (args[0] as _$PageView)._super$scrollBehavior);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$padEnds#0', (args) => (args[0] as _$PageView)._super$padEnds);
-    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$hashCode#0', (args) => (args[0] as _$PageView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$key#0', (args) => (args[0] as _$PageView)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/page_view.dart::PageView::\$super\$hashCode#0', (args) => (args[0] as _$PageView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

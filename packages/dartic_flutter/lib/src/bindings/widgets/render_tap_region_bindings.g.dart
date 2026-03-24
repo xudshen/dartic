@@ -606,13 +606,6 @@ class _$RenderTapRegion extends RenderTapRegion implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   HitTestBehavior get behavior {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'behavior');
     if (identical(r, notOverridden)) return super.behavior;
@@ -942,10 +935,20 @@ class _$RenderTapRegion extends RenderTapRegion implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1036,7 +1039,6 @@ class _$RenderTapRegion extends RenderTapRegion implements DarticObjectHolder {
   bool get _super$consumeOutsideTaps => super.consumeOutsideTaps;
   Object? get _super$groupId => super.groupId;
   TapRegionRegistry? get _super$registry => super.registry;
-  int get _super$hashCode => super.hashCode;
   HitTestBehavior get _super$behavior => super.behavior;
   bool get _super$hasSize => super.hasSize;
   Size get _super$size => super.size;
@@ -1084,6 +1086,7 @@ class _$RenderTapRegion extends RenderTapRegion implements DarticObjectHolder {
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1190,7 +1193,6 @@ abstract final class RenderTapRegionBindings {
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$consumeOutsideTaps#0', (args) => (args[0] as _$RenderTapRegion)._super$consumeOutsideTaps);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$groupId#0', (args) => (args[0] as _$RenderTapRegion)._super$groupId);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$registry#0', (args) => (args[0] as _$RenderTapRegion)._super$registry);
-    ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderTapRegion)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$behavior#0', (args) => (args[0] as _$RenderTapRegion)._super$behavior);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$hasSize#0', (args) => (args[0] as _$RenderTapRegion)._super$hasSize);
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$size#0', (args) => (args[0] as _$RenderTapRegion)._super$size);
@@ -1238,6 +1240,7 @@ abstract final class RenderTapRegionBindings {
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderTapRegion)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$layer=#1', (args) { (args[0] as _$RenderTapRegion)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$child=#1', (args) { (args[0] as _$RenderTapRegion)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/tap_region.dart::RenderTapRegion::\$super\$hashCode#0', (args) => (args[0] as _$RenderTapRegion)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

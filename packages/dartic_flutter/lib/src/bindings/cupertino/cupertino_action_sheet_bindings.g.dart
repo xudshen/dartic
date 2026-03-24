@@ -137,13 +137,6 @@ class _$CupertinoActionSheet extends CupertinoActionSheet implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -151,10 +144,20 @@ class _$CupertinoActionSheet extends CupertinoActionSheet implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -173,8 +176,8 @@ class _$CupertinoActionSheet extends CupertinoActionSheet implements DarticObjec
   ScrollController? get _super$messageScrollController => super.messageScrollController;
   ScrollController? get _super$actionScrollController => super.actionScrollController;
   Widget? get _super$cancelButton => super.cancelButton;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -209,8 +212,8 @@ abstract final class CupertinoActionSheetBindings {
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$messageScrollController#0', (args) => (args[0] as _$CupertinoActionSheet)._super$messageScrollController);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$actionScrollController#0', (args) => (args[0] as _$CupertinoActionSheet)._super$actionScrollController);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$cancelButton#0', (args) => (args[0] as _$CupertinoActionSheet)._super$cancelButton);
-    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActionSheet)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$key#0', (args) => (args[0] as _$CupertinoActionSheet)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/dialog.dart::CupertinoActionSheet::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoActionSheet)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

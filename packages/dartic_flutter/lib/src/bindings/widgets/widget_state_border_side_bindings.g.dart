@@ -82,13 +82,6 @@ class _$WidgetStateBorderSide extends WidgetStateBorderSide implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Color get color {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'color');
     if (identical(r, notOverridden)) return super.color;
@@ -138,10 +131,20 @@ class _$WidgetStateBorderSide extends WidgetStateBorderSide implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -152,7 +155,6 @@ class _$WidgetStateBorderSide extends WidgetStateBorderSide implements DarticObj
   String _super$toStringShort() => super.toStringShort();
   void _super$debugFillProperties(DiagnosticPropertiesBuilder properties) { super.debugFillProperties(properties); }
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
-  int get _super$hashCode => super.hashCode;
   Color get _super$color => super.color;
   double get _super$width => super.width;
   BorderStyle get _super$style => super.style;
@@ -160,6 +162,7 @@ class _$WidgetStateBorderSide extends WidgetStateBorderSide implements DarticObj
   double get _super$strokeInset => super.strokeInset;
   double get _super$strokeOutset => super.strokeOutset;
   double get _super$strokeOffset => super.strokeOffset;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -187,7 +190,6 @@ abstract final class WidgetStateBorderSideBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$toStringShort#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$toStringShort());
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$debugFillProperties#1', (args) { (args[0] as _$WidgetStateBorderSide)._super$debugFillProperties(args[1] as DiagnosticPropertiesBuilder); return null; });
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$WidgetStateBorderSide)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
-    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$hashCode#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$color#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$color);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$width#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$width);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$style#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$style);
@@ -195,6 +197,7 @@ abstract final class WidgetStateBorderSideBindings {
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$strokeInset#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$strokeInset);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$strokeOutset#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$strokeOutset);
     ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$strokeOffset#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$strokeOffset);
+    ctx.registerBinding('package:flutter/src/widgets/widget_state.dart::WidgetStateBorderSide::\$super\$hashCode#0', (args) => (args[0] as _$WidgetStateBorderSide)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

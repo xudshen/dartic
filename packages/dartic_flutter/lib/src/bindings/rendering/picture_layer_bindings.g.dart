@@ -176,13 +176,6 @@ class _$PictureLayer extends PictureLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get subtreeHasCompositionCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtreeHasCompositionCallbacks');
     if (identical(r, notOverridden)) return super.subtreeHasCompositionCallbacks;
@@ -309,10 +302,20 @@ class _$PictureLayer extends PictureLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -339,7 +342,6 @@ class _$PictureLayer extends PictureLayer implements DarticObjectHolder {
   ui.Picture? get _super$picture => super.picture;
   bool get _super$isComplexHint => super.isComplexHint;
   bool get _super$willChangeHint => super.willChangeHint;
-  int get _super$hashCode => super.hashCode;
   bool get _super$subtreeHasCompositionCallbacks => super.subtreeHasCompositionCallbacks;
   bool get _super$debugDisposed => super.debugDisposed;
   int get _super$debugHandleCount => super.debugHandleCount;
@@ -358,6 +360,7 @@ class _$PictureLayer extends PictureLayer implements DarticObjectHolder {
   set _super$willChangeHint(bool value) { super.willChangeHint = value; }
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -400,7 +403,6 @@ abstract final class PictureLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$picture#0', (args) => (args[0] as _$PictureLayer)._super$picture);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$isComplexHint#0', (args) => (args[0] as _$PictureLayer)._super$isComplexHint);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$willChangeHint#0', (args) => (args[0] as _$PictureLayer)._super$willChangeHint);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$hashCode#0', (args) => (args[0] as _$PictureLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$subtreeHasCompositionCallbacks#0', (args) => (args[0] as _$PictureLayer)._super$subtreeHasCompositionCallbacks);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$debugDisposed#0', (args) => (args[0] as _$PictureLayer)._super$debugDisposed);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$debugHandleCount#0', (args) => (args[0] as _$PictureLayer)._super$debugHandleCount);
@@ -419,6 +421,7 @@ abstract final class PictureLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$willChangeHint=#1', (args) { (args[0] as _$PictureLayer)._super$willChangeHint = args[1] as bool; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$PictureLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$PictureLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::PictureLayer::\$super\$hashCode#0', (args) => (args[0] as _$PictureLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

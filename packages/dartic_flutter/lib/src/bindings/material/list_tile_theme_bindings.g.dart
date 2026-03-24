@@ -207,13 +207,6 @@ class _$ListTileTheme extends ListTileTheme implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -228,10 +221,20 @@ class _$ListTileTheme extends ListTileTheme implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -260,9 +263,9 @@ class _$ListTileTheme extends ListTileTheme implements DarticObjectHolder {
   double? get _super$minLeadingWidth => super.minLeadingWidth;
   bool? get _super$enableFeedback => super.enableFeedback;
   ListTileControlAffinity? get _super$controlAffinity => super.controlAffinity;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -309,9 +312,9 @@ abstract final class ListTileThemeBindings {
     ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$minLeadingWidth#0', (args) => (args[0] as _$ListTileTheme)._super$minLeadingWidth);
     ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$enableFeedback#0', (args) => (args[0] as _$ListTileTheme)._super$enableFeedback);
     ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$controlAffinity#0', (args) => (args[0] as _$ListTileTheme)._super$controlAffinity);
-    ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$hashCode#0', (args) => (args[0] as _$ListTileTheme)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$child#0', (args) => (args[0] as _$ListTileTheme)._super$child);
     ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$key#0', (args) => (args[0] as _$ListTileTheme)._super$key);
+    ctx.registerBinding('package:flutter/src/material/list_tile_theme.dart::ListTileTheme::\$super\$hashCode#0', (args) => (args[0] as _$ListTileTheme)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

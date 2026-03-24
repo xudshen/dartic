@@ -244,13 +244,6 @@ class _$SnackBar extends SnackBar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -258,10 +251,20 @@ class _$SnackBar extends SnackBar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -294,8 +297,8 @@ class _$SnackBar extends SnackBar implements DarticObjectHolder {
   VoidCallback? get _super$onVisible => super.onVisible;
   DismissDirection? get _super$dismissDirection => super.dismissDirection;
   Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -345,8 +348,8 @@ abstract final class SnackBarBindings {
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$onVisible#0', (args) => (args[0] as _$SnackBar)._super$onVisible);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$dismissDirection#0', (args) => (args[0] as _$SnackBar)._super$dismissDirection);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$clipBehavior#0', (args) => (args[0] as _$SnackBar)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$hashCode#0', (args) => (args[0] as _$SnackBar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$key#0', (args) => (args[0] as _$SnackBar)._super$key);
+    ctx.registerBinding('package:flutter/src/material/snack_bar.dart::SnackBar::\$super\$hashCode#0', (args) => (args[0] as _$SnackBar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

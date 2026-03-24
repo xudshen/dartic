@@ -168,13 +168,6 @@ class _$Viewport extends Viewport implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Widget> get children {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'children');
     if (identical(r, notOverridden)) return super.children;
@@ -189,10 +182,20 @@ class _$Viewport extends Viewport implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -216,9 +219,9 @@ class _$Viewport extends Viewport implements DarticObjectHolder {
   CacheExtentStyle get _super$cacheExtentStyle => super.cacheExtentStyle;
   SliverPaintOrder get _super$paintOrder => super.paintOrder;
   Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   List<Widget> get _super$children => super.children;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -259,9 +262,9 @@ abstract final class ViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$cacheExtentStyle#0', (args) => (args[0] as _$Viewport)._super$cacheExtentStyle);
     ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$paintOrder#0', (args) => (args[0] as _$Viewport)._super$paintOrder);
     ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$clipBehavior#0', (args) => (args[0] as _$Viewport)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$hashCode#0', (args) => (args[0] as _$Viewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$children#0', (args) => (args[0] as _$Viewport)._super$children);
     ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$key#0', (args) => (args[0] as _$Viewport)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/viewport.dart::Viewport::\$super\$hashCode#0', (args) => (args[0] as _$Viewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

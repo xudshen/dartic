@@ -63,13 +63,6 @@ class _$Split extends Split implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get flipped {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'flipped');
     if (identical(r, notOverridden)) return super.flipped;
@@ -77,10 +70,20 @@ class _$Split extends Split implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -90,8 +93,8 @@ class _$Split extends Split implements DarticObjectHolder {
   double get _super$split => super.split;
   Curve get _super$beginCurve => super.beginCurve;
   Curve get _super$endCurve => super.endCurve;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$flipped => super.flipped;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -117,8 +120,8 @@ abstract final class SplitBindings {
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$split#0', (args) => (args[0] as _$Split)._super$split);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$beginCurve#0', (args) => (args[0] as _$Split)._super$beginCurve);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$endCurve#0', (args) => (args[0] as _$Split)._super$endCurve);
-    ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$hashCode#0', (args) => (args[0] as _$Split)._super$hashCode);
     ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$flipped#0', (args) => (args[0] as _$Split)._super$flipped);
+    ctx.registerBinding('package:flutter/src/animation/curves.dart::Split::\$super\$hashCode#0', (args) => (args[0] as _$Split)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -213,13 +213,6 @@ class _$ContainerLayer extends ContainerLayer implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get subtreeHasCompositionCallbacks {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'subtreeHasCompositionCallbacks');
     if (identical(r, notOverridden)) return super.subtreeHasCompositionCallbacks;
@@ -325,10 +318,20 @@ class _$ContainerLayer extends ContainerLayer implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -361,7 +364,6 @@ class _$ContainerLayer extends ContainerLayer implements DarticObjectHolder {
   Layer? get _super$firstChild => super.firstChild;
   Layer? get _super$lastChild => super.lastChild;
   bool get _super$hasChildren => super.hasChildren;
-  int get _super$hashCode => super.hashCode;
   bool get _super$subtreeHasCompositionCallbacks => super.subtreeHasCompositionCallbacks;
   bool get _super$debugDisposed => super.debugDisposed;
   int get _super$debugHandleCount => super.debugHandleCount;
@@ -377,6 +379,7 @@ class _$ContainerLayer extends ContainerLayer implements DarticObjectHolder {
   Object? get _super$debugCreator => super.debugCreator;
   set _super$engineLayer(ui.EngineLayer? value) { super.engineLayer = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -425,7 +428,6 @@ abstract final class ContainerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$firstChild#0', (args) => (args[0] as _$ContainerLayer)._super$firstChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$lastChild#0', (args) => (args[0] as _$ContainerLayer)._super$lastChild);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$hasChildren#0', (args) => (args[0] as _$ContainerLayer)._super$hasChildren);
-    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$hashCode#0', (args) => (args[0] as _$ContainerLayer)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$subtreeHasCompositionCallbacks#0', (args) => (args[0] as _$ContainerLayer)._super$subtreeHasCompositionCallbacks);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$debugDisposed#0', (args) => (args[0] as _$ContainerLayer)._super$debugDisposed);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$debugHandleCount#0', (args) => (args[0] as _$ContainerLayer)._super$debugHandleCount);
@@ -441,6 +443,7 @@ abstract final class ContainerLayerBindings {
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$debugCreator#0', (args) => (args[0] as _$ContainerLayer)._super$debugCreator);
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$engineLayer=#1', (args) { (args[0] as _$ContainerLayer)._super$engineLayer = args[1] as ui.EngineLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$debugCreator=#1', (args) { (args[0] as _$ContainerLayer)._super$debugCreator = args[1]; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/layer.dart::ContainerLayer::\$super\$hashCode#0', (args) => (args[0] as _$ContainerLayer)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

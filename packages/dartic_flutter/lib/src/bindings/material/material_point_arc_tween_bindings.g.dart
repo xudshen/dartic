@@ -93,13 +93,6 @@ class _$MaterialPointArcTween extends MaterialPointArcTween implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -128,10 +121,20 @@ class _$MaterialPointArcTween extends MaterialPointArcTween implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -145,11 +148,11 @@ class _$MaterialPointArcTween extends MaterialPointArcTween implements DarticObj
   double? get _super$radius => super.radius;
   double? get _super$beginAngle => super.beginAngle;
   double? get _super$endAngle => super.endAngle;
-  int get _super$hashCode => super.hashCode;
   Offset? get _super$begin => super.begin;
   Offset? get _super$end => super.end;
   set _super$begin(Offset? value) { super.begin = value; }
   set _super$end(Offset? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -179,11 +182,11 @@ abstract final class MaterialPointArcTweenBindings {
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$radius#0', (args) => (args[0] as _$MaterialPointArcTween)._super$radius);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$beginAngle#0', (args) => (args[0] as _$MaterialPointArcTween)._super$beginAngle);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$endAngle#0', (args) => (args[0] as _$MaterialPointArcTween)._super$endAngle);
-    ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPointArcTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$begin#0', (args) => (args[0] as _$MaterialPointArcTween)._super$begin);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$end#0', (args) => (args[0] as _$MaterialPointArcTween)._super$end);
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$begin=#1', (args) { (args[0] as _$MaterialPointArcTween)._super$begin = args[1] as Offset?; return args[1]; });
     ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$end=#1', (args) { (args[0] as _$MaterialPointArcTween)._super$end = args[1] as Offset?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/material/arc.dart::MaterialPointArcTween::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPointArcTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

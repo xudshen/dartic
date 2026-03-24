@@ -74,13 +74,6 @@ class _$BoxConstraintsTween extends BoxConstraintsTween implements DarticObjectH
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   BoxConstraints? get begin {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'begin');
     if (identical(r, notOverridden)) return super.begin;
@@ -109,10 +102,20 @@ class _$BoxConstraintsTween extends BoxConstraintsTween implements DarticObjectH
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -122,11 +125,11 @@ class _$BoxConstraintsTween extends BoxConstraintsTween implements DarticObjectH
   BoxConstraints _super$evaluate(Animation<double> animation) => super.evaluate(animation);
   Animation<BoxConstraints> _super$animate(Animation<double> parent) => super.animate(parent);
   Animatable<BoxConstraints> _super$chain(Animatable<double> parent) => super.chain(parent);
-  int get _super$hashCode => super.hashCode;
   BoxConstraints? get _super$begin => super.begin;
   BoxConstraints? get _super$end => super.end;
   set _super$begin(BoxConstraints? value) { super.begin = value; }
   set _super$end(BoxConstraints? value) { super.end = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -152,11 +155,11 @@ abstract final class BoxConstraintsTweenBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$evaluate#1', (args) => (args[0] as _$BoxConstraintsTween)._super$evaluate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$animate#1', (args) => (args[0] as _$BoxConstraintsTween)._super$animate(args[1] as Animation<double>));
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$chain#1', (args) => (args[0] as _$BoxConstraintsTween)._super$chain(args[1] as Animatable<double>));
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$hashCode#0', (args) => (args[0] as _$BoxConstraintsTween)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$begin#0', (args) => (args[0] as _$BoxConstraintsTween)._super$begin);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$end#0', (args) => (args[0] as _$BoxConstraintsTween)._super$end);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$begin=#1', (args) { (args[0] as _$BoxConstraintsTween)._super$begin = args[1] as BoxConstraints?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$end=#1', (args) { (args[0] as _$BoxConstraintsTween)._super$end = args[1] as BoxConstraints?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::BoxConstraintsTween::\$super\$hashCode#0', (args) => (args[0] as _$BoxConstraintsTween)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

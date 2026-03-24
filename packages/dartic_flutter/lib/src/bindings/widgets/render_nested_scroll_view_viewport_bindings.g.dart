@@ -684,13 +684,6 @@ class _$RenderNestedScrollViewViewport extends RenderNestedScrollViewViewport im
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get anchor {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'anchor');
     if (identical(r, notOverridden)) return super.anchor;
@@ -1118,10 +1111,20 @@ class _$RenderNestedScrollViewViewport extends RenderNestedScrollViewViewport im
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -1222,7 +1225,6 @@ class _$RenderNestedScrollViewViewport extends RenderNestedScrollViewViewport im
   RenderSliver? _super$childBefore(RenderSliver child) => super.childBefore(child);
   RenderSliver? _super$childAfter(RenderSliver child) => super.childAfter(child);
   SliverOverlapAbsorberHandle get _super$handle => super.handle;
-  int get _super$hashCode => super.hashCode;
   double get _super$anchor => super.anchor;
   RenderSliver? get _super$center => super.center;
   bool get _super$sizedByParent => super.sizedByParent;
@@ -1284,6 +1286,7 @@ class _$RenderNestedScrollViewViewport extends RenderNestedScrollViewViewport im
   set _super$parentData(ParentData? value) { super.parentData = value; }
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1400,7 +1403,6 @@ abstract final class RenderNestedScrollViewViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$childBefore#1', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$childBefore(args[1] as RenderSliver));
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$childAfter#1', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$childAfter(args[1] as RenderSliver));
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$handle#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$handle);
-    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$anchor#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$anchor);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$center#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$center);
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$sizedByParent#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$sizedByParent);
@@ -1462,6 +1464,7 @@ abstract final class RenderNestedScrollViewViewportBindings {
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$parentData=#1', (args) { (args[0] as _$RenderNestedScrollViewViewport)._super$parentData = args[1] as ParentData?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderNestedScrollViewViewport)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$layer=#1', (args) { (args[0] as _$RenderNestedScrollViewViewport)._super$layer = args[1] as ContainerLayer?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/nested_scroll_view.dart::RenderNestedScrollViewViewport::\$super\$hashCode#0', (args) => (args[0] as _$RenderNestedScrollViewViewport)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

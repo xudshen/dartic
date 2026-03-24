@@ -164,13 +164,6 @@ class _$AboutListTile extends AboutListTile implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -178,10 +171,20 @@ class _$AboutListTile extends AboutListTile implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -202,8 +205,8 @@ class _$AboutListTile extends AboutListTile implements DarticObjectHolder {
   String? get _super$applicationLegalese => super.applicationLegalese;
   List<Widget>? get _super$aboutBoxChildren => super.aboutBoxChildren;
   bool? get _super$dense => super.dense;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -240,8 +243,8 @@ abstract final class AboutListTileBindings {
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$applicationLegalese#0', (args) => (args[0] as _$AboutListTile)._super$applicationLegalese);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$aboutBoxChildren#0', (args) => (args[0] as _$AboutListTile)._super$aboutBoxChildren);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$dense#0', (args) => (args[0] as _$AboutListTile)._super$dense);
-    ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$hashCode#0', (args) => (args[0] as _$AboutListTile)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$key#0', (args) => (args[0] as _$AboutListTile)._super$key);
+    ctx.registerBinding('package:flutter/src/material/about.dart::AboutListTile::\$super\$hashCode#0', (args) => (args[0] as _$AboutListTile)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

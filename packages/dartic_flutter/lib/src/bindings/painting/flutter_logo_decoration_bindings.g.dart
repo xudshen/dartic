@@ -128,13 +128,6 @@ class _$FlutterLogoDecoration extends FlutterLogoDecoration implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   EdgeInsetsGeometry get padding {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'padding');
     if (identical(r, notOverridden)) return super.padding;
@@ -142,10 +135,20 @@ class _$FlutterLogoDecoration extends FlutterLogoDecoration implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -163,8 +166,8 @@ class _$FlutterLogoDecoration extends FlutterLogoDecoration implements DarticObj
   FlutterLogoStyle get _super$style => super.style;
   EdgeInsets get _super$margin => super.margin;
   bool get _super$isComplex => super.isComplex;
-  int get _super$hashCode => super.hashCode;
   EdgeInsetsGeometry get _super$padding => super.padding;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -199,8 +202,8 @@ abstract final class FlutterLogoDecorationBindings {
     ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$style#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$style);
     ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$margin#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$margin);
     ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$isComplex#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$isComplex);
-    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$hashCode#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$hashCode);
     ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$padding#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$padding);
+    ctx.registerBinding('package:flutter/src/painting/flutter_logo.dart::FlutterLogoDecoration::\$super\$hashCode#0', (args) => (args[0] as _$FlutterLogoDecoration)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

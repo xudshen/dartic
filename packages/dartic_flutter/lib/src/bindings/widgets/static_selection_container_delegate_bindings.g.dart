@@ -240,13 +240,6 @@ class _$StaticSelectionContainerDelegate extends StaticSelectionContainerDelegat
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   List<Selectable> get selectables {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'selectables');
     if (identical(r, notOverridden)) return super.selectables;
@@ -331,10 +324,20 @@ class _$StaticSelectionContainerDelegate extends StaticSelectionContainerDelegat
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -368,7 +371,6 @@ class _$StaticSelectionContainerDelegate extends StaticSelectionContainerDelegat
   void _super$addListener(VoidCallback listener) { super.addListener(listener); }
   void _super$removeListener(VoidCallback listener) { super.removeListener(listener); }
   void _super$notifyListeners() { super.notifyListeners(); }
-  int get _super$hashCode => super.hashCode;
   List<Selectable> get _super$selectables => super.selectables;
   int get _super$currentSelectionEndIndex => super.currentSelectionEndIndex;
   int get _super$currentSelectionStartIndex => super.currentSelectionStartIndex;
@@ -381,6 +383,7 @@ class _$StaticSelectionContainerDelegate extends StaticSelectionContainerDelegat
   set _super$selectables(List<Selectable> value) { super.selectables = value; }
   set _super$currentSelectionEndIndex(int value) { super.currentSelectionEndIndex = value; }
   set _super$currentSelectionStartIndex(int value) { super.currentSelectionStartIndex = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -430,7 +433,6 @@ abstract final class StaticSelectionContainerDelegateBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$addListener#1', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$addListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$removeListener#1', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$removeListener(() => (args[1] as Function)()); return null; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$notifyListeners#0', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$notifyListeners(); return null; });
-    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$hashCode#0', (args) => (args[0] as _$StaticSelectionContainerDelegate)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$selectables#0', (args) => (args[0] as _$StaticSelectionContainerDelegate)._super$selectables);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$currentSelectionEndIndex#0', (args) => (args[0] as _$StaticSelectionContainerDelegate)._super$currentSelectionEndIndex);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$currentSelectionStartIndex#0', (args) => (args[0] as _$StaticSelectionContainerDelegate)._super$currentSelectionStartIndex);
@@ -443,6 +445,7 @@ abstract final class StaticSelectionContainerDelegateBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$selectables=#1', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$selectables = (args[1] as List).cast<Selectable>(); return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$currentSelectionEndIndex=#1', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$currentSelectionEndIndex = args[1] as int; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$currentSelectionStartIndex=#1', (args) { (args[0] as _$StaticSelectionContainerDelegate)._super$currentSelectionStartIndex = args[1] as int; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::StaticSelectionContainerDelegate::\$super\$hashCode#0', (args) => (args[0] as _$StaticSelectionContainerDelegate)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -116,13 +116,6 @@ class _$DefaultSelectionStyle extends DefaultSelectionStyle implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Widget get child {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'child');
     if (identical(r, notOverridden)) return super.child;
@@ -137,10 +130,20 @@ class _$DefaultSelectionStyle extends DefaultSelectionStyle implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -157,9 +160,9 @@ class _$DefaultSelectionStyle extends DefaultSelectionStyle implements DarticObj
   Color? get _super$cursorColor => super.cursorColor;
   Color? get _super$selectionColor => super.selectionColor;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
-  int get _super$hashCode => super.hashCode;
   Widget get _super$child => super.child;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -195,9 +198,9 @@ abstract final class DefaultSelectionStyleBindings {
     ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$cursorColor#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$cursorColor);
     ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$selectionColor#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$selectionColor);
     ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$mouseCursor#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$mouseCursor);
-    ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$hashCode#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$child#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$child);
     ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$key#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/default_selection_style.dart::DefaultSelectionStyle::\$super\$hashCode#0', (args) => (args[0] as _$DefaultSelectionStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

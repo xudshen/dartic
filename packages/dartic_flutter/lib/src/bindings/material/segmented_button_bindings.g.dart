@@ -175,13 +175,6 @@ class _$SegmentedButton extends SegmentedButton<dynamic> implements DarticObject
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -189,10 +182,20 @@ class _$SegmentedButton extends SegmentedButton<dynamic> implements DarticObject
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -215,8 +218,8 @@ class _$SegmentedButton extends SegmentedButton<dynamic> implements DarticObject
   ButtonStyle? get _super$style => super.style;
   bool get _super$showSelectedIcon => super.showSelectedIcon;
   Widget? get _super$selectedIcon => super.selectedIcon;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -256,8 +259,8 @@ abstract final class SegmentedButtonBindings {
     ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$style#0', (args) => (args[0] as _$SegmentedButton)._super$style);
     ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$showSelectedIcon#0', (args) => (args[0] as _$SegmentedButton)._super$showSelectedIcon);
     ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$selectedIcon#0', (args) => (args[0] as _$SegmentedButton)._super$selectedIcon);
-    ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$hashCode#0', (args) => (args[0] as _$SegmentedButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$key#0', (args) => (args[0] as _$SegmentedButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/segmented_button.dart::SegmentedButton::\$super\$hashCode#0', (args) => (args[0] as _$SegmentedButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

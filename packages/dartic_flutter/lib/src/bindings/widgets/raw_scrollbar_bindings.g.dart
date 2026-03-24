@@ -259,13 +259,6 @@ class _$RawScrollbar extends RawScrollbar implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -273,10 +266,20 @@ class _$RawScrollbar extends RawScrollbar implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -311,8 +314,8 @@ class _$RawScrollbar extends RawScrollbar implements DarticObjectHolder {
   double get _super$mainAxisMargin => super.mainAxisMargin;
   double get _super$crossAxisMargin => super.crossAxisMargin;
   EdgeInsetsGeometry? get _super$padding => super.padding;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -363,8 +366,8 @@ abstract final class RawScrollbarBindings {
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$mainAxisMargin#0', (args) => (args[0] as _$RawScrollbar)._super$mainAxisMargin);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$crossAxisMargin#0', (args) => (args[0] as _$RawScrollbar)._super$crossAxisMargin);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$padding#0', (args) => (args[0] as _$RawScrollbar)._super$padding);
-    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$hashCode#0', (args) => (args[0] as _$RawScrollbar)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$key#0', (args) => (args[0] as _$RawScrollbar)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/scrollbar.dart::RawScrollbar::\$super\$hashCode#0', (args) => (args[0] as _$RawScrollbar)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -158,13 +158,6 @@ class _$ScrollController extends ScrollController implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasListeners {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasListeners');
     if (identical(r, notOverridden)) return super.hasListeners;
@@ -172,10 +165,20 @@ class _$ScrollController extends ScrollController implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -199,8 +202,8 @@ class _$ScrollController extends ScrollController implements DarticObjectHolder 
   bool get _super$hasClients => super.hasClients;
   ScrollPosition get _super$position => super.position;
   double get _super$offset => super.offset;
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasListeners => super.hasListeners;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -240,8 +243,8 @@ abstract final class ScrollControllerBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$hasClients#0', (args) => (args[0] as _$ScrollController)._super$hasClients);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$position#0', (args) => (args[0] as _$ScrollController)._super$position);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$offset#0', (args) => (args[0] as _$ScrollController)._super$offset);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$hashCode#0', (args) => (args[0] as _$ScrollController)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$hasListeners#0', (args) => (args[0] as _$ScrollController)._super$hasListeners);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_controller.dart::ScrollController::\$super\$hashCode#0', (args) => (args[0] as _$ScrollController)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

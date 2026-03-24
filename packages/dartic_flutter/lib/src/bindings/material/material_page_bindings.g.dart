@@ -75,13 +75,6 @@ class _$MaterialPage extends MaterialPage<dynamic> implements DarticObjectHolder
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   LocalKey? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -124,10 +117,20 @@ class _$MaterialPage extends MaterialPage<dynamic> implements DarticObjectHolder
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -138,13 +141,13 @@ class _$MaterialPage extends MaterialPage<dynamic> implements DarticObjectHolder
   bool get _super$maintainState => super.maintainState;
   bool get _super$fullscreenDialog => super.fullscreenDialog;
   bool get _super$allowSnapshotting => super.allowSnapshotting;
-  int get _super$hashCode => super.hashCode;
   LocalKey? get _super$key => super.key;
   String? get _super$restorationId => super.restorationId;
   void Function(bool, dynamic) get _super$onPopInvoked => super.onPopInvoked;
   bool get _super$canPop => super.canPop;
   String? get _super$name => super.name;
   Object? get _super$arguments => super.arguments;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -171,13 +174,13 @@ abstract final class MaterialPageBindings {
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$maintainState#0', (args) => (args[0] as _$MaterialPage)._super$maintainState);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$fullscreenDialog#0', (args) => (args[0] as _$MaterialPage)._super$fullscreenDialog);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$allowSnapshotting#0', (args) => (args[0] as _$MaterialPage)._super$allowSnapshotting);
-    ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPage)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$key#0', (args) => (args[0] as _$MaterialPage)._super$key);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$restorationId#0', (args) => (args[0] as _$MaterialPage)._super$restorationId);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$onPopInvoked#0', (args) => (args[0] as _$MaterialPage)._super$onPopInvoked);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$canPop#0', (args) => (args[0] as _$MaterialPage)._super$canPop);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$name#0', (args) => (args[0] as _$MaterialPage)._super$name);
     ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$arguments#0', (args) => (args[0] as _$MaterialPage)._super$arguments);
+    ctx.registerBinding('package:flutter/src/material/page.dart::MaterialPage::\$super\$hashCode#0', (args) => (args[0] as _$MaterialPage)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

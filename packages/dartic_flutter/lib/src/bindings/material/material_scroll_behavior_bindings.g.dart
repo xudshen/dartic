@@ -115,13 +115,6 @@ class _$MaterialScrollBehavior extends MaterialScrollBehavior implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Set<ui.PointerDeviceKind> get dragDevices {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'dragDevices');
     if (identical(r, notOverridden)) return super.dragDevices;
@@ -136,10 +129,20 @@ class _$MaterialScrollBehavior extends MaterialScrollBehavior implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -153,9 +156,9 @@ class _$MaterialScrollBehavior extends MaterialScrollBehavior implements DarticO
   ScrollPhysics _super$getScrollPhysics(BuildContext context) => super.getScrollPhysics(context);
   bool _super$shouldNotify(ScrollBehavior oldDelegate) => super.shouldNotify(oldDelegate);
   ScrollViewKeyboardDismissBehavior _super$getKeyboardDismissBehavior(BuildContext context) => super.getKeyboardDismissBehavior(context);
-  int get _super$hashCode => super.hashCode;
   Set<ui.PointerDeviceKind> get _super$dragDevices => super.dragDevices;
   Set<LogicalKeyboardKey> get _super$pointerAxisModifiers => super.pointerAxisModifiers;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -185,9 +188,9 @@ abstract final class MaterialScrollBehaviorBindings {
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$getScrollPhysics#1', (args) => (args[0] as _$MaterialScrollBehavior)._super$getScrollPhysics(args[1] as BuildContext));
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$shouldNotify#1', (args) => (args[0] as _$MaterialScrollBehavior)._super$shouldNotify(args[1] as ScrollBehavior));
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$getKeyboardDismissBehavior#1', (args) => (args[0] as _$MaterialScrollBehavior)._super$getKeyboardDismissBehavior(args[1] as BuildContext));
-    ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$hashCode#0', (args) => (args[0] as _$MaterialScrollBehavior)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$dragDevices#0', (args) => (args[0] as _$MaterialScrollBehavior)._super$dragDevices);
     ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$pointerAxisModifiers#0', (args) => (args[0] as _$MaterialScrollBehavior)._super$pointerAxisModifiers);
+    ctx.registerBinding('package:flutter/src/material/app.dart::MaterialScrollBehavior::\$super\$hashCode#0', (args) => (args[0] as _$MaterialScrollBehavior)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

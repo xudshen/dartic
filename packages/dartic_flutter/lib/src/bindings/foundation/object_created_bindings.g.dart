@@ -49,13 +49,6 @@ class _$ObjectCreated extends ObjectCreated implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Object get object {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'object');
     if (identical(r, notOverridden)) return super.object;
@@ -63,10 +56,20 @@ class _$ObjectCreated extends ObjectCreated implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -74,8 +77,8 @@ class _$ObjectCreated extends ObjectCreated implements DarticObjectHolder {
   String _super$toString() => super.toString();
   String get _super$library => super.library;
   String get _super$className => super.className;
-  int get _super$hashCode => super.hashCode;
   Object get _super$object => super.object;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -99,8 +102,8 @@ abstract final class ObjectCreatedBindings {
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$toString#0', (args) => (args[0] as _$ObjectCreated)._super$toString());
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$library#0', (args) => (args[0] as _$ObjectCreated)._super$library);
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$className#0', (args) => (args[0] as _$ObjectCreated)._super$className);
-    ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$hashCode#0', (args) => (args[0] as _$ObjectCreated)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$object#0', (args) => (args[0] as _$ObjectCreated)._super$object);
+    ctx.registerBinding('package:flutter/src/foundation/memory_allocations.dart::ObjectCreated::\$super\$hashCode#0', (args) => (args[0] as _$ObjectCreated)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

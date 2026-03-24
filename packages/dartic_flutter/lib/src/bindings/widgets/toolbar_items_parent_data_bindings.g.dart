@@ -63,13 +63,6 @@ class _$ToolbarItemsParentData extends ToolbarItemsParentData implements DarticO
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Offset get offset {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'offset');
     if (identical(r, notOverridden)) return super.offset;
@@ -119,17 +112,26 @@ class _$ToolbarItemsParentData extends ToolbarItemsParentData implements DarticO
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
   String _super$toString() => super.toString();
   void _super$detach() { super.detach(); }
   bool get _super$shouldPaint => super.shouldPaint;
-  int get _super$hashCode => super.hashCode;
   Offset get _super$offset => super.offset;
   RenderBox? get _super$previousSibling => super.previousSibling;
   RenderBox? get _super$nextSibling => super.nextSibling;
@@ -137,6 +139,7 @@ class _$ToolbarItemsParentData extends ToolbarItemsParentData implements DarticO
   set _super$offset(Offset value) { super.offset = value; }
   set _super$previousSibling(RenderBox? value) { super.previousSibling = value; }
   set _super$nextSibling(RenderBox? value) { super.nextSibling = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -159,7 +162,6 @@ abstract final class ToolbarItemsParentDataBindings {
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$toString#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$toString());
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$detach#0', (args) { (args[0] as _$ToolbarItemsParentData)._super$detach(); return null; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$shouldPaint#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$shouldPaint);
-    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$hashCode#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$offset#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$offset);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$previousSibling#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$previousSibling);
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$nextSibling#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$nextSibling);
@@ -167,6 +169,7 @@ abstract final class ToolbarItemsParentDataBindings {
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$offset=#1', (args) { (args[0] as _$ToolbarItemsParentData)._super$offset = args[1] as Offset; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$previousSibling=#1', (args) { (args[0] as _$ToolbarItemsParentData)._super$previousSibling = args[1] as RenderBox?; return args[1]; });
     ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$nextSibling=#1', (args) { (args[0] as _$ToolbarItemsParentData)._super$nextSibling = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/text_selection.dart::ToolbarItemsParentData::\$super\$hashCode#0', (args) => (args[0] as _$ToolbarItemsParentData)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

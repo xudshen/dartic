@@ -285,13 +285,6 @@ class _$FloatingActionButton extends FloatingActionButton implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -299,10 +292,20 @@ class _$FloatingActionButton extends FloatingActionButton implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -341,8 +344,8 @@ class _$FloatingActionButton extends FloatingActionButton implements DarticObjec
   double? get _super$extendedIconLabelSpacing => super.extendedIconLabelSpacing;
   EdgeInsetsGeometry? get _super$extendedPadding => super.extendedPadding;
   TextStyle? get _super$extendedTextStyle => super.extendedTextStyle;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -397,8 +400,8 @@ abstract final class FloatingActionButtonBindings {
     ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedIconLabelSpacing#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedIconLabelSpacing);
     ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedPadding#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedPadding);
     ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$extendedTextStyle#0', (args) => (args[0] as _$FloatingActionButton)._super$extendedTextStyle);
-    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$hashCode#0', (args) => (args[0] as _$FloatingActionButton)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$key#0', (args) => (args[0] as _$FloatingActionButton)._super$key);
+    ctx.registerBinding('package:flutter/src/material/floating_action_button.dart::FloatingActionButton::\$super\$hashCode#0', (args) => (args[0] as _$FloatingActionButton)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

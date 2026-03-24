@@ -165,13 +165,6 @@ class _$CupertinoTimerPicker extends CupertinoTimerPicker implements DarticObjec
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -179,10 +172,20 @@ class _$CupertinoTimerPicker extends CupertinoTimerPicker implements DarticObjec
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -205,8 +208,8 @@ class _$CupertinoTimerPicker extends CupertinoTimerPicker implements DarticObjec
   double get _super$itemExtent => super.itemExtent;
   SelectionOverlayBuilder? get _super$selectionOverlayBuilder => super.selectionOverlayBuilder;
   ChangeReportingBehavior get _super$changeReportingBehavior => super.changeReportingBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -245,8 +248,8 @@ abstract final class CupertinoTimerPickerBindings {
     ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$itemExtent#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$itemExtent);
     ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$selectionOverlayBuilder#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$selectionOverlayBuilder);
     ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$changeReportingBehavior#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$changeReportingBehavior);
-    ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$hashCode);
     ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$key#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$key);
+    ctx.registerBinding('package:flutter/src/cupertino/date_picker.dart::CupertinoTimerPicker::\$super\$hashCode#0', (args) => (args[0] as _$CupertinoTimerPicker)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

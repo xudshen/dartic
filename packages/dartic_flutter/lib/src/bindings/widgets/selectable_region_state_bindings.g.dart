@@ -252,13 +252,6 @@ class _$SelectableRegionState extends SelectableRegionState implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   SelectableRegion get widget {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'widget');
     if (identical(r, notOverridden)) return super.widget;
@@ -329,10 +322,20 @@ class _$SelectableRegionState extends SelectableRegionState implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -368,7 +371,6 @@ class _$SelectableRegionState extends SelectableRegionState implements DarticObj
   bool get _super$cutEnabled => super.cutEnabled;
   bool get _super$pasteEnabled => super.pasteEnabled;
   TextEditingValue get _super$textEditingValue => super.textEditingValue;
-  int get _super$hashCode => super.hashCode;
   SelectableRegion get _super$widget => super.widget;
   BuildContext get _super$context => super.context;
   bool get _super$mounted => super.mounted;
@@ -379,6 +381,7 @@ class _$SelectableRegionState extends SelectableRegionState implements DarticObj
   bool get _super$shareEnabled => super.shareEnabled;
   bool get _super$liveTextInputEnabled => super.liveTextInputEnabled;
   set _super$textEditingValue(TextEditingValue value) { super.textEditingValue = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -430,7 +433,6 @@ abstract final class SelectableRegionStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$cutEnabled#0', (args) => (args[0] as _$SelectableRegionState)._super$cutEnabled);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$pasteEnabled#0', (args) => (args[0] as _$SelectableRegionState)._super$pasteEnabled);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$textEditingValue#0', (args) => (args[0] as _$SelectableRegionState)._super$textEditingValue);
-    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$hashCode#0', (args) => (args[0] as _$SelectableRegionState)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$widget#0', (args) => (args[0] as _$SelectableRegionState)._super$widget);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$context#0', (args) => (args[0] as _$SelectableRegionState)._super$context);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$mounted#0', (args) => (args[0] as _$SelectableRegionState)._super$mounted);
@@ -441,6 +443,7 @@ abstract final class SelectableRegionStateBindings {
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$shareEnabled#0', (args) => (args[0] as _$SelectableRegionState)._super$shareEnabled);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$liveTextInputEnabled#0', (args) => (args[0] as _$SelectableRegionState)._super$liveTextInputEnabled);
     ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$textEditingValue=#1', (args) { (args[0] as _$SelectableRegionState)._super$textEditingValue = args[1] as TextEditingValue; return args[1]; });
+    ctx.registerBinding('package:flutter/src/widgets/selectable_region.dart::SelectableRegionState::\$super\$hashCode#0', (args) => (args[0] as _$SelectableRegionState)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

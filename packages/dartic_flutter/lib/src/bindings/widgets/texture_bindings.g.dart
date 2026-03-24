@@ -120,13 +120,6 @@ class _$Texture extends Texture implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -134,10 +127,20 @@ class _$Texture extends Texture implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -155,8 +158,8 @@ class _$Texture extends Texture implements DarticObjectHolder {
   int get _super$textureId => super.textureId;
   bool get _super$freeze => super.freeze;
   FilterQuality get _super$filterQuality => super.filterQuality;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -190,8 +193,8 @@ abstract final class TextureBindings {
     ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$textureId#0', (args) => (args[0] as _$Texture)._super$textureId);
     ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$freeze#0', (args) => (args[0] as _$Texture)._super$freeze);
     ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$filterQuality#0', (args) => (args[0] as _$Texture)._super$filterQuality);
-    ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$hashCode#0', (args) => (args[0] as _$Texture)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$key#0', (args) => (args[0] as _$Texture)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/texture.dart::Texture::\$super\$hashCode#0', (args) => (args[0] as _$Texture)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

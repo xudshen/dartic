@@ -153,13 +153,6 @@ class _$AnimatedDefaultTextStyle extends AnimatedDefaultTextStyle implements Dar
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Curve get curve {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'curve');
     if (identical(r, notOverridden)) return super.curve;
@@ -188,10 +181,20 @@ class _$AnimatedDefaultTextStyle extends AnimatedDefaultTextStyle implements Dar
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -212,11 +215,11 @@ class _$AnimatedDefaultTextStyle extends AnimatedDefaultTextStyle implements Dar
   int? get _super$maxLines => super.maxLines;
   TextWidthBasis get _super$textWidthBasis => super.textWidthBasis;
   ui.TextHeightBehavior? get _super$textHeightBehavior => super.textHeightBehavior;
-  int get _super$hashCode => super.hashCode;
   Curve get _super$curve => super.curve;
   Duration get _super$duration => super.duration;
   ui.VoidCallback? get _super$onEnd => super.onEnd;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -253,11 +256,11 @@ abstract final class AnimatedDefaultTextStyleBindings {
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$maxLines#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$maxLines);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$textWidthBasis#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$textWidthBasis);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$textHeightBehavior#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$textHeightBehavior);
-    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$curve#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$curve);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$duration#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$duration);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$onEnd#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$onEnd);
     ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$key#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$key);
+    ctx.registerBinding('package:flutter/src/widgets/implicit_animations.dart::AnimatedDefaultTextStyle::\$super\$hashCode#0', (args) => (args[0] as _$AnimatedDefaultTextStyle)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -540,13 +540,6 @@ class _$RenderIntrinsicHeight extends RenderIntrinsicHeight implements DarticObj
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   bool get hasSize {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hasSize');
     if (identical(r, notOverridden)) return super.hasSize;
@@ -799,10 +792,20 @@ class _$RenderIntrinsicHeight extends RenderIntrinsicHeight implements DarticObj
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -884,7 +887,6 @@ class _$RenderIntrinsicHeight extends RenderIntrinsicHeight implements DarticObj
   DiagnosticsNode _super$toDiagnosticsNode({String? name, DiagnosticsTreeStyle? style}) => super.toDiagnosticsNode(name: name, style: style);
   bool _super$debugValidateChild(RenderObject child) => super.debugValidateChild(child);
   ui.Size _super$computeSizeForNoChild(BoxConstraints constraints) => super.computeSizeForNoChild(constraints);
-  int get _super$hashCode => super.hashCode;
   bool get _super$hasSize => super.hasSize;
   ui.Size get _super$size => super.size;
   ui.Rect get _super$semanticBounds => super.semanticBounds;
@@ -921,6 +923,7 @@ class _$RenderIntrinsicHeight extends RenderIntrinsicHeight implements DarticObj
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1018,7 +1021,6 @@ abstract final class RenderIntrinsicHeightBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$toDiagnosticsNode#2', (args) => (args[0] as _$RenderIntrinsicHeight)._super$toDiagnosticsNode(name: identical(args[1], darticAbsent) ? null : args[1] as String?, style: identical(args[2], darticAbsent) ? null : args[2] as DiagnosticsTreeStyle?));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$debugValidateChild#1', (args) => (args[0] as _$RenderIntrinsicHeight)._super$debugValidateChild(args[1] as RenderObject));
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$computeSizeForNoChild#1', (args) => (args[0] as _$RenderIntrinsicHeight)._super$computeSizeForNoChild(args[1] as BoxConstraints));
-    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$hashCode#0', (args) => (args[0] as _$RenderIntrinsicHeight)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$hasSize#0', (args) => (args[0] as _$RenderIntrinsicHeight)._super$hasSize);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$size#0', (args) => (args[0] as _$RenderIntrinsicHeight)._super$size);
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$semanticBounds#0', (args) => (args[0] as _$RenderIntrinsicHeight)._super$semanticBounds);
@@ -1055,6 +1057,7 @@ abstract final class RenderIntrinsicHeightBindings {
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderIntrinsicHeight)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$layer=#1', (args) { (args[0] as _$RenderIntrinsicHeight)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$child=#1', (args) { (args[0] as _$RenderIntrinsicHeight)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/proxy_box.dart::RenderIntrinsicHeight::\$super\$hashCode#0', (args) => (args[0] as _$RenderIntrinsicHeight)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

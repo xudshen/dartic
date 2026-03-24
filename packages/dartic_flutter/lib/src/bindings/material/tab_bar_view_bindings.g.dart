@@ -145,13 +145,6 @@ class _$TabBarView extends TabBarView implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -159,10 +152,20 @@ class _$TabBarView extends TabBarView implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -181,8 +184,8 @@ class _$TabBarView extends TabBarView implements DarticObjectHolder {
   DragStartBehavior get _super$dragStartBehavior => super.dragStartBehavior;
   double get _super$viewportFraction => super.viewportFraction;
   Clip get _super$clipBehavior => super.clipBehavior;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -217,8 +220,8 @@ abstract final class TabBarViewBindings {
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$dragStartBehavior#0', (args) => (args[0] as _$TabBarView)._super$dragStartBehavior);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$viewportFraction#0', (args) => (args[0] as _$TabBarView)._super$viewportFraction);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$clipBehavior#0', (args) => (args[0] as _$TabBarView)._super$clipBehavior);
-    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$hashCode#0', (args) => (args[0] as _$TabBarView)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$key#0', (args) => (args[0] as _$TabBarView)._super$key);
+    ctx.registerBinding('package:flutter/src/material/tabs.dart::TabBarView::\$super\$hashCode#0', (args) => (args[0] as _$TabBarView)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -372,13 +372,6 @@ class _$InputChip extends InputChip implements DarticObjectHolder {
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   Key? get key {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'key');
     if (identical(r, notOverridden)) return super.key;
@@ -386,10 +379,20 @@ class _$InputChip extends InputChip implements DarticObjectHolder {
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -440,8 +443,8 @@ class _$InputChip extends InputChip implements DarticObjectHolder {
   BoxConstraints? get _super$deleteIconBoxConstraints => super.deleteIconBoxConstraints;
   ChipAnimationStyle? get _super$chipAnimationStyle => super.chipAnimationStyle;
   MouseCursor? get _super$mouseCursor => super.mouseCursor;
-  int get _super$hashCode => super.hashCode;
   Key? get _super$key => super.key;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -508,8 +511,8 @@ abstract final class InputChipBindings {
     ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$deleteIconBoxConstraints#0', (args) => (args[0] as _$InputChip)._super$deleteIconBoxConstraints);
     ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$chipAnimationStyle#0', (args) => (args[0] as _$InputChip)._super$chipAnimationStyle);
     ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$mouseCursor#0', (args) => (args[0] as _$InputChip)._super$mouseCursor);
-    ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$hashCode#0', (args) => (args[0] as _$InputChip)._super$hashCode);
     ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$key#0', (args) => (args[0] as _$InputChip)._super$key);
+    ctx.registerBinding('package:flutter/src/material/input_chip.dart::InputChip::\$super\$hashCode#0', (args) => (args[0] as _$InputChip)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

@@ -109,13 +109,6 @@ class _$DiagnosticsBlock extends DiagnosticsBlock implements DarticObjectHolder 
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   String? get name {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
@@ -179,10 +172,20 @@ class _$DiagnosticsBlock extends DiagnosticsBlock implements DarticObjectHolder 
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -198,7 +201,6 @@ class _$DiagnosticsBlock extends DiagnosticsBlock implements DarticObjectHolder 
   DiagnosticLevel get _super$level => super.level;
   Object? get _super$value => super.value;
   bool get _super$allowTruncate => super.allowTruncate;
-  int get _super$hashCode => super.hashCode;
   String? get _super$name => super.name;
   bool get _super$showSeparator => super.showSeparator;
   bool get _super$showName => super.showName;
@@ -208,6 +210,7 @@ class _$DiagnosticsBlock extends DiagnosticsBlock implements DarticObjectHolder 
   bool get _super$allowWrap => super.allowWrap;
   bool get _super$allowNameWrap => super.allowNameWrap;
   TextTreeConfiguration? get _super$textTreeConfiguration => super.textTreeConfiguration;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -239,7 +242,6 @@ abstract final class DiagnosticsBlockBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$level#0', (args) => (args[0] as _$DiagnosticsBlock)._super$level);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$value#0', (args) => (args[0] as _$DiagnosticsBlock)._super$value);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$allowTruncate#0', (args) => (args[0] as _$DiagnosticsBlock)._super$allowTruncate);
-    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticsBlock)._super$hashCode);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$name#0', (args) => (args[0] as _$DiagnosticsBlock)._super$name);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$showSeparator#0', (args) => (args[0] as _$DiagnosticsBlock)._super$showSeparator);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$showName#0', (args) => (args[0] as _$DiagnosticsBlock)._super$showName);
@@ -249,6 +251,7 @@ abstract final class DiagnosticsBlockBindings {
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$allowWrap#0', (args) => (args[0] as _$DiagnosticsBlock)._super$allowWrap);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$allowNameWrap#0', (args) => (args[0] as _$DiagnosticsBlock)._super$allowNameWrap);
     ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$textTreeConfiguration#0', (args) => (args[0] as _$DiagnosticsBlock)._super$textTreeConfiguration);
+    ctx.registerBinding('package:flutter/src/foundation/diagnostics.dart::DiagnosticsBlock::\$super\$hashCode#0', (args) => (args[0] as _$DiagnosticsBlock)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

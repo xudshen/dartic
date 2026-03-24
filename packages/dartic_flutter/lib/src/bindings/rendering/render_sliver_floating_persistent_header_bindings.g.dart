@@ -499,13 +499,6 @@ class _$RenderSliverFloatingPersistentHeader extends RenderSliverFloatingPersist
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   double get maxExtent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'maxExtent');
     if (identical(r, notOverridden)) {
@@ -839,10 +832,20 @@ class _$RenderSliverFloatingPersistentHeader extends RenderSliverFloatingPersist
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -918,7 +921,6 @@ class _$RenderSliverFloatingPersistentHeader extends RenderSliverFloatingPersist
   TickerProvider? get _super$vsync => super.vsync;
   FloatingHeaderSnapConfiguration? get _super$snapConfiguration => super.snapConfiguration;
   PersistentHeaderShowOnScreenConfiguration? get _super$showOnScreenConfiguration => super.showOnScreenConfiguration;
-  int get _super$hashCode => super.hashCode;
   double get _super$childExtent => super.childExtent;
   double get _super$lastShrinkOffset => super.lastShrinkOffset;
   bool get _super$lastOverlapsContent => super.lastOverlapsContent;
@@ -964,6 +966,7 @@ class _$RenderSliverFloatingPersistentHeader extends RenderSliverFloatingPersist
   set _super$debugCreator(Object? value) { super.debugCreator = value; }
   set _super$layer(ContainerLayer? value) { super.layer = value; }
   set _super$child(RenderBox? value) { super.child = value; }
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -1055,7 +1058,6 @@ abstract final class RenderSliverFloatingPersistentHeaderBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$vsync#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$vsync);
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$snapConfiguration#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$snapConfiguration);
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$showOnScreenConfiguration#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$showOnScreenConfiguration);
-    ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$hashCode);
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$childExtent#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$childExtent);
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$lastShrinkOffset#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$lastShrinkOffset);
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$lastOverlapsContent#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$lastOverlapsContent);
@@ -1101,6 +1103,7 @@ abstract final class RenderSliverFloatingPersistentHeaderBindings {
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$debugCreator=#1', (args) { (args[0] as _$RenderSliverFloatingPersistentHeader)._super$debugCreator = args[1]; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$layer=#1', (args) { (args[0] as _$RenderSliverFloatingPersistentHeader)._super$layer = args[1] as ContainerLayer?; return args[1]; });
     ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$child=#1', (args) { (args[0] as _$RenderSliverFloatingPersistentHeader)._super$child = args[1] as RenderBox?; return args[1]; });
+    ctx.registerBinding('package:flutter/src/rendering/sliver_persistent_header.dart::RenderSliverFloatingPersistentHeader::\$super\$hashCode#0', (args) => (args[0] as _$RenderSliverFloatingPersistentHeader)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {

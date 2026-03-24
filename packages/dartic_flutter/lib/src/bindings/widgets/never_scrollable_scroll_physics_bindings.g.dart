@@ -122,13 +122,6 @@ class _$NeverScrollableScrollPhysics extends NeverScrollableScrollPhysics implem
   }
 
   @override
-  int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
-    if (identical(r, notOverridden)) return super.hashCode;
-    return r as int;
-  }
-
-  @override
   ScrollPhysics? get parent {
     final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
@@ -178,10 +171,20 @@ class _$NeverScrollableScrollPhysics extends NeverScrollableScrollPhysics implem
   }
 
   @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return super.hashCode;
+    return r as int;
+  }
+
+  @override
   bool operator ==(Object other) {
     final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
-    if (identical(r, notOverridden)) return super == other;
-    return r as bool;
+    if (identical(r, notOverridden)) {
+      if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
+      return super == other;
+    }
+    return r == true;
   }
 
   // ── Super trampolines ──
@@ -198,7 +201,6 @@ class _$NeverScrollableScrollPhysics extends NeverScrollableScrollPhysics implem
   double _super$carriedMomentum(double existingVelocity) => super.carriedMomentum(existingVelocity);
   bool get _super$allowUserScrolling => super.allowUserScrolling;
   bool get _super$allowImplicitScrolling => super.allowImplicitScrolling;
-  int get _super$hashCode => super.hashCode;
   ScrollPhysics? get _super$parent => super.parent;
   SpringDescription get _super$spring => super.spring;
   Tolerance get _super$tolerance => super.tolerance;
@@ -206,6 +208,7 @@ class _$NeverScrollableScrollPhysics extends NeverScrollableScrollPhysics implem
   double get _super$minFlingVelocity => super.minFlingVelocity;
   double get _super$maxFlingVelocity => super.maxFlingVelocity;
   double? get _super$dragStartDistanceMotionThreshold => super.dragStartDistanceMotionThreshold;
+  int get _super$hashCode => super.hashCode;
 }
 
 /// Test-only factory to create Bridge instances without exposing the
@@ -238,7 +241,6 @@ abstract final class NeverScrollableScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$carriedMomentum#1', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$carriedMomentum(args[1] as double));
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$allowUserScrolling#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$allowUserScrolling);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$allowImplicitScrolling#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$allowImplicitScrolling);
-    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$hashCode);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$parent#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$parent);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$spring#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$spring);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$tolerance#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$tolerance);
@@ -246,6 +248,7 @@ abstract final class NeverScrollableScrollPhysicsBindings {
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$minFlingVelocity#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$minFlingVelocity);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$maxFlingVelocity#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$maxFlingVelocity);
     ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$dragStartDistanceMotionThreshold#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$dragStartDistanceMotionThreshold);
+    ctx.registerBinding('package:flutter/src/widgets/scroll_physics.dart::NeverScrollableScrollPhysics::\$super\$hashCode#0', (args) => (args[0] as _$NeverScrollableScrollPhysics)._super$hashCode);
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
