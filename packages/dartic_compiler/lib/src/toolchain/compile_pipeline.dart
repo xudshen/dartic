@@ -104,6 +104,12 @@ class CompilePipeline {
           await _compileDartDill(sourcePath, tempDill,
               sdkPath: sdkPath, onStderr: onStderr);
         case DarticTarget.flutter:
+          if (sdkPath == null) {
+            throw CompileError(
+              'Flutter SDK path required for target=flutter. '
+              'Pass --sdk-path or use fab compile for auto-detection.',
+            );
+          }
           await _compileFlutterDill(sourcePath, tempDill,
               sdkPath: sdkPath, onStderr: onStderr);
       }
@@ -178,7 +184,7 @@ class CompilePipeline {
   Future<void> _compileFlutterDill(
     String sourcePath,
     String outputDill, {
-    String? sdkPath,
+    required String sdkPath,
     void Function(String stderr)? onStderr,
   }) async {
     final flutterSdk = sdkResolver.resolveFlutterSdk(explicitPath: sdkPath);

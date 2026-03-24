@@ -95,31 +95,25 @@ List<int> _parseVersion(String version) {
   return [major, minor, patch];
 }
 
-/// Discovers and validates Dart and Flutter SDK paths.
+/// Discovers and validates Dart SDK paths.
 ///
-/// Discovery priority (for each SDK):
+/// Discovery priority:
 /// 1. Explicit `--sdk-path` flag (passed as [explicitPath])
-/// 2. FVM (`fvm dart`/`fvm flutter`)
-/// 3. Environment variable (`DART_SDK` / `FLUTTER_ROOT`)
+/// 2. FVM (`fvm dart`)
+/// 3. Environment variable (`DART_SDK`)
 /// 4. `which`/`where` command (result is resolved through symlinks)
 ///
-/// Results from auto-discovery are cached within the instance. Explicit paths
-/// are always validated but never cached.
+/// Flutter SDK is not auto-discovered — callers (e.g. fab CLI) must pass
+/// the Flutter SDK path explicitly via [resolveFlutterSdk].
 class SdkResolver {
   /// Caret constraint for the Dart SDK version (e.g. `^3.10.7`).
   final String _requiredDartSdk;
 
-  /// Caret constraint for the Flutter SDK version (e.g. `^3.38.7`).
-  final String _requiredFlutterSdk;
-
   String? _cachedDartSdk;
-  String? _cachedFlutterSdk;
 
   SdkResolver({
     String? requiredDartSdk,
-    String? requiredFlutterSdk,
-  })  : _requiredDartSdk = requiredDartSdk ?? v.requiredDartSdk,
-        _requiredFlutterSdk = requiredFlutterSdk ?? v.requiredFlutterSdk;
+  }) : _requiredDartSdk = requiredDartSdk ?? v.requiredDartSdk;
 
   /// Resolves the Dart SDK path.
   ///
@@ -149,28 +143,38 @@ class SdkResolver {
 
   /// Resolves the Flutter SDK path.
   ///
-  /// If [explicitPath] is provided, validates it directly (no caching).
-  /// Otherwise uses the discovery chain and caches the result.
-  String resolveFlutterSdk({String? explicitPath}) {
-    if (explicitPath != null) {
-      return _validateFlutterSdk(explicitPath);
-    }
-
-    if (_cachedFlutterSdk != null) return _cachedFlutterSdk!;
-
-    final discovered = _discoverFlutterSdk();
-    if (discovered == null) {
+  /// [explicitPath] is required — dartic does not auto-discover Flutter SDK.
+  /// Callers (fab CLI) are responsible for discovering and passing the path.
+  ///
+  /// Validates that the path exists and its embedded Dart SDK satisfies
+  /// the version constraint.
+  String resolveFlutterSdk({required String explicitPath}) {
+    final dir = Directory(explicitPath);
+    if (!dir.existsSync()) {
       throw SdkNotFoundError(
-        'Could not find Flutter SDK. '
-        'Tried: fvm, FLUTTER_ROOT environment variable, '
-        '${Platform.isWindows ? "where" : "which"} flutter. '
-        'Use --sdk-path to specify the SDK location.',
+        'Flutter SDK directory does not exist: $explicitPath',
       );
     }
 
-    final validated = _validateFlutterSdk(discovered);
-    _cachedFlutterSdk = validated;
-    return _cachedFlutterSdk!;
+    // Check embedded Dart SDK version.
+    final dartSdkPath = '$explicitPath/bin/cache/dart-sdk';
+    final dartVersion = readSdkVersion(dartSdkPath);
+    if (dartVersion == null) {
+      throw SdkNotFoundError(
+        'No Dart SDK found in Flutter SDK cache at $dartSdkPath. '
+        'Run "flutter doctor" to initialize the cache.',
+      );
+    }
+
+    if (!satisfiesConstraint(dartVersion, _requiredDartSdk)) {
+      throw SdkVersionMismatchError(
+        actual: dartVersion,
+        required: _requiredDartSdk,
+        sdkLabel: 'Dart (embedded in Flutter)',
+      );
+    }
+
+    return explicitPath;
   }
 
   /// Validates a Dart SDK path: checks existence and version constraint.
@@ -193,49 +197,6 @@ class SdkResolver {
         required: _requiredDartSdk,
         sdkLabel: 'Dart',
       );
-    }
-
-    return sdkPath;
-  }
-
-  /// Validates a Flutter SDK path: checks existence and embedded Dart SDK
-  /// version constraint.
-  String _validateFlutterSdk(String sdkPath) {
-    final dir = Directory(sdkPath);
-    if (!dir.existsSync()) {
-      throw SdkNotFoundError(
-        'Flutter SDK directory does not exist: $sdkPath',
-      );
-    }
-
-    // Check embedded Dart SDK version.
-    final dartSdkPath = '$sdkPath/bin/cache/dart-sdk';
-    final dartVersion = readSdkVersion(dartSdkPath);
-    if (dartVersion == null) {
-      throw SdkNotFoundError(
-        'No Dart SDK found in Flutter SDK cache at $dartSdkPath. '
-        'Run "flutter doctor" to initialize the cache.',
-      );
-    }
-
-    if (!satisfiesConstraint(dartVersion, _requiredDartSdk)) {
-      throw SdkVersionMismatchError(
-        actual: dartVersion,
-        required: _requiredDartSdk,
-        sdkLabel: 'Dart (embedded in Flutter)',
-      );
-    }
-
-    // Check Flutter SDK version if available.
-    final flutterVersion = readSdkVersion(sdkPath);
-    if (flutterVersion != null) {
-      if (!satisfiesConstraint(flutterVersion, _requiredFlutterSdk)) {
-        throw SdkVersionMismatchError(
-          actual: flutterVersion,
-          required: _requiredFlutterSdk,
-          sdkLabel: 'Flutter',
-        );
-      }
     }
 
     return sdkPath;
@@ -283,49 +244,4 @@ class SdkResolver {
 
     return null;
   }
-
-  /// Discovery chain for Flutter SDK: FVM → FLUTTER_ROOT env → which/where.
-  String? _discoverFlutterSdk() {
-    // 1. Try FVM.
-    try {
-      final result =
-          Process.runSync('fvm', ['flutter', '--version', '--machine']);
-      if (result.exitCode == 0) {
-        final which = Process.runSync('fvm', ['which', 'flutter']);
-        if (which.exitCode == 0) {
-          final path = (which.stdout as String).trim();
-          // path is like /path/to/flutter/bin/flutter
-          final sdkPath = File(path).parent.parent.path;
-          if (Directory(sdkPath).existsSync()) return sdkPath;
-        }
-      }
-    } on ProcessException catch (_) {
-      // fvm not available.
-    }
-
-    // 2. Try FLUTTER_ROOT environment variable.
-    final flutterRoot = Platform.environment['FLUTTER_ROOT'];
-    if (flutterRoot != null && Directory(flutterRoot).existsSync()) {
-      return flutterRoot;
-    }
-
-    // 3. Try which/where.
-    try {
-      final cmd = Platform.isWindows ? 'where' : 'which';
-      final result = Process.runSync(cmd, ['flutter']);
-      if (result.exitCode == 0) {
-        final path = (result.stdout as String).trim().split('\n').first.trim();
-        if (path.isNotEmpty) {
-          final resolved = File(path).resolveSymbolicLinksSync();
-          // resolved is like /path/to/flutter/bin/flutter
-          return File(resolved).parent.parent.path;
-        }
-      }
-    } on Object catch (_) {
-      // which/where not available, or broken symlink.
-    }
-
-    return null;
-  }
 }
-

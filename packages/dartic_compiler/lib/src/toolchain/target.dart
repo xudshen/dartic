@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
-
-/// The compilation target detected from a project's `pubspec.yaml`.
+/// The compilation target.
 enum DarticTarget {
   /// Pure Dart project.
   dart,
 
-  /// Flutter project (has `flutter` in dependencies).
+  /// Flutter project (requires frontend_server).
   flutter,
 }
 
@@ -27,31 +25,4 @@ File? findNearestPubspec(String sourcePath) {
     if (parent.path == dir.path) return null;
     dir = parent;
   }
-}
-
-/// Detects the [DarticTarget] for the project containing [sourcePath].
-///
-/// Walks up the directory tree to find the nearest `pubspec.yaml` and checks
-/// whether it declares a `flutter` dependency. Returns [DarticTarget.dart]
-/// if no `pubspec.yaml` is found, the YAML is malformed, or there is no
-/// `flutter` dependency.
-DarticTarget detectTarget(String sourcePath) {
-  final pubspecFile = findNearestPubspec(sourcePath);
-  if (pubspecFile == null) return DarticTarget.dart;
-
-  final Object? doc;
-  try {
-    doc = loadYaml(pubspecFile.readAsStringSync());
-  } on Object {
-    return DarticTarget.dart;
-  }
-
-  if (doc is! Map) return DarticTarget.dart;
-
-  final deps = doc['dependencies'];
-  if (deps is Map && deps.containsKey('flutter')) {
-    return DarticTarget.flutter;
-  }
-
-  return DarticTarget.dart;
 }

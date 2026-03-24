@@ -5,6 +5,7 @@ import 'package:dartic_compiler/dartic_compiler.dart'
     show
         CompileError,
         CompilePipeline,
+        DarticTarget,
         SdkNotFoundError,
         SdkResolver,
         SdkVersionMismatchError;
@@ -12,7 +13,6 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
 
 import '../cli_error.dart';
-import 'resolve_target.dart';
 
 /// Compiles Dart source to `.darb` bytecode.
 class CompileCommand extends Command<int> {
@@ -32,16 +32,16 @@ class CompileCommand extends Command<int> {
       ..addOption(
         'target',
         abbr: 't',
-        help: 'Compilation target.',
+        help: 'Compilation target (required).',
         allowed: ['dart', 'flutter'],
         allowedHelp: {
           'dart': 'Pure Dart project.',
-          'flutter': 'Flutter project.',
+          'flutter': 'Flutter project (requires --sdk-path).',
         },
       )
       ..addOption(
         'sdk-path',
-        help: 'Explicit SDK path override.',
+        help: 'SDK path (Dart SDK for target=dart, Flutter SDK for target=flutter).',
       );
   }
 
@@ -68,7 +68,14 @@ class CompileCommand extends Command<int> {
     final sourcePath = rest.first;
 
     final targetFlag = argResults!['target'] as String?;
-    final target = resolveTarget(targetFlag, sourcePath);
+    if (targetFlag == null) {
+      throw UsageException(
+        'Missing required option: --target (dart or flutter)',
+        usage,
+      );
+    }
+    final target =
+        targetFlag == 'flutter' ? DarticTarget.flutter : DarticTarget.dart;
 
     // Resolve output path.
     final outputFlag = argResults!['output'] as String?;
