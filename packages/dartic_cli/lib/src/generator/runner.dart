@@ -877,7 +877,6 @@ class Runner {
   /// Maps a package name to its plugin class name.
   ///
   /// `dartic_stdlib` -> `DarticStdlibPlugin`
-  /// `dartic_flutter` -> `DarticFlutterPlugin`
   String _detectPluginClassName(String packageName) {
     final pascal = _snakeToPascal(packageName);
     return '${pascal}Plugin';

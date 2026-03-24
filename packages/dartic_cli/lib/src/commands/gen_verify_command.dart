@@ -103,20 +103,6 @@ class _GenVerifyTestCommand extends Command<int> {
       if (result.exitCode != 0) exitCode = result.exitCode;
     }
 
-    // Run flutter tests (if dartic_flutter exists)
-    final flutterTestDir = Directory('packages/dartic_flutter/test');
-    if (flutterTestDir.existsSync()) {
-      _logger.info('Running dartic_flutter tests...');
-      final flutterResult = await Process.run(
-        'flutter',
-        ['test', 'test/conformance_test.dart', '--reporter', 'expanded'],
-        workingDirectory: 'packages/dartic_flutter',
-      );
-      stdout.write(flutterResult.stdout);
-      stderr.write(flutterResult.stderr);
-      if (flutterResult.exitCode != 0) exitCode = flutterResult.exitCode;
-    }
-
     return exitCode;
   }
 }

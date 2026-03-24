@@ -96,8 +96,9 @@ dartic version                             # 版本信息
 | `dartic` | `/` (主包) | 编译器、运行时、Bridge、Toolchain 核心层 |
 | `dartic_cli` | `packages/dartic_cli/` | CLI 壳子：命令解析、输出格式化 |
 | `dartic_generator` | `packages/dartic_generator/` | Bridge 绑定代码生成器 |
-| `dartic_flutter` | `packages/dartic_flutter/` | Flutter 绑定 (DarticFlutterPlugin) |
 | `dartic_annotation` | `packages/dartic_annotation/` | @DarticExport 注解 |
+
+> **Note:** Flutter 绑定已迁移至 [fab_playground](https://github.com/user/fab_playground) 仓库的 `fab_flutter` 包。
 
 ## 技术栈
 

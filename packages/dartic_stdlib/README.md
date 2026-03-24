@@ -23,7 +23,6 @@ final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
 ## Related packages
 
 - [dartic](https://github.com/xudshen/dartic) -- core runtime
-- [dartic_flutter](https://github.com/xudshen/dartic/tree/main/packages/dartic_flutter) -- Flutter widget bindings
 
 ## License
 

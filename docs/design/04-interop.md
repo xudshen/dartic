@@ -373,13 +373,7 @@ package:dartic_bridges_core/
         $stream.dart
     dartic_bridges_core.dart  // 统一导出 + 注册入口
 
-package:dartic_flutter/
-  lib/
-    src/
-      widgets/
-        $stateless_widget.dart
-        $stateful_widget.dart
-    dartic_flutter.dart
+// Flutter bindings now live in fab_playground repo as fab_flutter
 ```
 
 ## 工作流程

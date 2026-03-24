@@ -341,7 +341,6 @@ class DiscoverRunner {
 
     final searchDirs = [
       'packages/dartic_stdlib/configs',
-      'packages/dartic_flutter/configs',
     ];
 
     for (final dir in searchDirs) {

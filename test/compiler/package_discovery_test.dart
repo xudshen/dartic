@@ -54,14 +54,14 @@ void main() {
     });
 
     test('skips packages with role: plugin', () {
-      final pluginDir = Directory('${tempDir.path}/dartic_flutter')
+      final pluginDir = Directory('${tempDir.path}/test_plugin')
         ..createSync();
       _writePubspec(
-          pluginDir, 'name: dartic_flutter\ndartic:\n  role: plugin\n');
+          pluginDir, 'name: test_plugin\ndartic:\n  role: plugin\n');
 
       _writePackageConfig(tempDir, [
         {
-          'name': 'dartic_flutter',
+          'name': 'test_plugin',
           'rootUri': pluginDir.uri.toString(),
           'packageUri': 'lib/',
         },
@@ -84,9 +84,9 @@ void main() {
       _writePubspec(compilable2,
           'name: dartic_widgets\ndartic:\n  role: compilable\n');
 
-      final plugin = Directory('${tempDir.path}/dartic_flutter')..createSync();
+      final plugin = Directory('${tempDir.path}/test_plugin')..createSync();
       _writePubspec(
-          plugin, 'name: dartic_flutter\ndartic:\n  role: plugin\n');
+          plugin, 'name: test_plugin\ndartic:\n  role: plugin\n');
 
       final plainPackage = Directory('${tempDir.path}/collection')..createSync();
       _writePubspec(plainPackage, 'name: collection\n');
@@ -103,7 +103,7 @@ void main() {
           'packageUri': 'lib/',
         },
         {
-          'name': 'dartic_flutter',
+          'name': 'test_plugin',
           'rootUri': plugin.uri.toString(),
           'packageUri': 'lib/',
         },

@@ -176,8 +176,7 @@ class GenCommand extends Command<int> {
 
   /// Runs gen on all known configs directories.
   ///
-  /// Scans `packages/dartic_stdlib/configs/` and
-  /// `packages/dartic_flutter/configs/` relative to CWD.
+  /// Scans `packages/dartic_stdlib/configs/` relative to CWD.
   /// If a positional arg is given, treats it as the single configs directory.
   Future<int> _runAll({
     String? analysisRoot,
@@ -211,7 +210,6 @@ class GenCommand extends Command<int> {
     // directory (auto-detected from config path), so no merge step is needed.
     final configsDirs = <(String path, String? analysisRootOverride)>[
       ('packages/dartic_stdlib/configs', null),
-      ('packages/dartic_flutter/configs', 'packages/dartic_flutter'),
     ];
 
     // Clean output_bindings directories before generation if requested.

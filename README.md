@@ -41,11 +41,10 @@ void main() async {
 ```dart
 import 'package:dartic/dartic.dart';
 import 'package:dartic_stdlib/dartic_stdlib.dart';
-import 'package:dartic_flutter/dartic_flutter.dart';
 
 final engine = DarticEngine(plugins: [
   DarticStdlibPlugin(),
-  DarticFlutterPlugin(),
+  // Flutter bindings available via fab_flutter package
 ]);
 
 // Download updated bytecode from your server, then:
@@ -86,7 +85,6 @@ curl -fsSL https://github.com/xudshen/dartic/releases/latest/download/install.sh
 | [`dartic_annotation`](packages/dartic_annotation) | `@DarticExport` and `@DarticHide` annotations |
 | [`dartic_compiler`](packages/dartic_compiler) | Kernel AST to bytecode compiler |
 | [`dartic_stdlib`](packages/dartic_stdlib) | Standard library bindings (dart:core, dart:async, etc.) |
-| [`dartic_flutter`](packages/dartic_flutter) | Flutter widget bindings |
 | [`dartic_cli`](packages/dartic_cli) | Command-line tools (compile, run, dump, gen) |
 
 ## Documentation
