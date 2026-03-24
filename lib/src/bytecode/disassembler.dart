@@ -528,6 +528,16 @@ class DarticDisassembler {
       return ('r$a, r$baseReg$constTag, r$c', '');
     }
 
+    // Op.call with flag=1: C is CallNamedInfo index, not argCount.
+    if (op == Op.call && decodeFlag(instr) != 0) {
+      final cp = module.constantPool;
+      final info = c < cp.refCount ? cp.getRef(c) : null;
+      final annotation = info is CallNamedInfo
+          ? _formatCallNamedInfo(info)
+          : '<CallNamedInfo #$c out of bounds>';
+      return ('r$a, r$b, #$c', annotation);
+    }
+
     final operands = 'r$a, r$b, r$c';
     final annotation = _annotateABC(op, a, b, c, module);
     return (operands, annotation);
@@ -604,6 +614,15 @@ class DarticDisassembler {
           : '<classId $c out of bounds>',
       _ => '',
     };
+  }
+
+  static String _formatCallNamedInfo(CallNamedInfo info) {
+    final provided = <String>[];
+    for (var i = 0; i < info.allNamedNames.length; i++) {
+      final marker = ((info.providedBits & (1 << i)) != 0) ? '*' : '?';
+      provided.add('$marker${info.allNamedNames[i]}');
+    }
+    return 'pos=${info.positionalCount}, named=[${provided.join(', ')}]';
   }
 
   static String _formatDynCallDescriptor(Object? ref) {
