@@ -384,18 +384,25 @@ class DarticVerifier {
       // Check 7: Function/method/binding references.
       _verifyFunctionRefs(op, a, b, c, bx, func, module, prefix, pc);
 
-      // Check 13: Op.call with flag=1 — C must be a valid CallNamedInfo ref.
-      if (op == Op.call && decodeFlag(instr) != 0) {
-        if (c >= pool.refCount) {
+      // Check 13: Op.call flag byte validation.
+      if (op == Op.call) {
+        final flag = decodeFlag(instr);
+        if (flag != 0 && flag != 1) {
           errors.add(
-            '$prefix CALL flag=1 C=$c >= refCount '
-            '${pool.refCount} at pc=$pc',
+            '$prefix CALL unknown flag=$flag at pc=$pc',
           );
-        } else if (pool.getRef(c) is! CallNamedInfo) {
-          errors.add(
-            '$prefix CALL flag=1 C=$c is not CallNamedInfo '
-            '(got ${pool.getRef(c).runtimeType}) at pc=$pc',
-          );
+        } else if (flag == 1) {
+          if (c >= pool.refCount) {
+            errors.add(
+              '$prefix CALL flag=1 C=$c >= refCount '
+              '${pool.refCount} at pc=$pc',
+            );
+          } else if (pool.getRef(c) is! CallNamedInfo) {
+            errors.add(
+              '$prefix CALL flag=1 C=$c is not CallNamedInfo '
+              '(got ${pool.getRef(c).runtimeType}) at pc=$pc',
+            );
+          }
         }
       }
 

@@ -2360,41 +2360,25 @@ class DarticInterpreter {
             closure = _closureReverseCache[raw];
             if (closure == null) {
               // Native host Function — call via Function.apply.
+              final posCount = callNamedInfo?.positionalCount ?? argCount;
+              final posArgs = <Object?>[];
+              for (var i = 0; i < posCount; i++) {
+                posArgs.add(rs.read(rs.sp + 3 + i));
+              }
+              Map<Symbol, dynamic>? namedArgs;
               if (callNamedInfo != null) {
-                // Split args into positional and named using CallNamedInfo.
-                final posArgs = <Object?>[];
-                for (var i = 0; i < callNamedInfo.positionalCount; i++) {
-                  posArgs.add(rs.read(rs.sp + 3 + i));
-                }
-                final namedArgs = <Symbol, dynamic>{};
                 for (var i = 0; i < callNamedInfo.allNamedNames.length; i++) {
                   if ((callNamedInfo.providedBits & (1 << i)) != 0) {
-                    namedArgs[Symbol(callNamedInfo.allNamedNames[i])] =
-                        rs.read(rs.sp + 3 + callNamedInfo.positionalCount + i);
+                    (namedArgs ??= {})[Symbol(callNamedInfo.allNamedNames[i])] =
+                        rs.read(rs.sp + 3 + posCount + i);
                   }
                 }
-                try {
-                  final result = Function.apply(
-                    raw, posArgs, namedArgs.isEmpty ? null : namedArgs,
-                  );
-                  rs.write(rBase + a, result);
-                } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                  continue;
-                }
-              } else {
-                // No named params — all positional (existing fast path).
-                final args = <Object?>[];
-                for (var i = 0; i < argCount; i++) {
-                  args.add(rs.read(rs.sp + 3 + i));
-                }
-                try {
-                  final result = Function.apply(raw, args);
-                  rs.write(rBase + a, result);
-                } on Object catch (e, st) {
-                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                  continue;
-                }
+              }
+              try {
+                rs.write(rBase + a, Function.apply(raw, posArgs, namedArgs));
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
               }
               break;
             }
