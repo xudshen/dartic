@@ -72,7 +72,6 @@ class GenCommand extends Command<int> {
     final emitTests = argResults!['emit-tests'] as bool;
     final compilerMode = argResults!['compiler-mode'] as String;
     final flutterSdk = argResults!['flutter-sdk'] as String?;
-    final isFlutter = compilerMode == 'frontend-server';
     final clean = argResults!['clean'] as bool;
 
     try {
@@ -97,7 +96,7 @@ class GenCommand extends Command<int> {
           emitTests: emitTests,
           compilerMode: compilerMode,
           flutterSdkPath: flutterSdk,
-          isFlutter: isFlutter,
+
         );
         await runner.runGeneratorConfig(config);
         if (check) return _checkResults(runner);
@@ -124,7 +123,7 @@ class GenCommand extends Command<int> {
           emitTests: emitTests,
           compilerMode: compilerMode,
           flutterSdkPath: flutterSdk,
-          isFlutter: isFlutter,
+
         );
 
         final type = FileSystemEntity.typeSync(configPath);

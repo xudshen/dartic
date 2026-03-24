@@ -123,8 +123,8 @@ class Runner {
   /// Kernel compilation mode: `'dart'` or `'frontend-server'`.
   final String compilerMode;
 
-  /// Whether this is a Flutter project (controls test framework choice).
-  final bool isFlutter;
+  /// Derived from [compilerMode] — true when using frontend-server.
+  bool get isFlutter => compilerMode == 'frontend-server';
 
   /// Records all files that would be written during generation.
   /// Only populated when [checkMode] is true.
@@ -146,7 +146,6 @@ class Runner {
     this.testOutputDir,
     this.strict = false,
     this.compilerMode = 'dart',
-    this.isFlutter = false,
   });
 
   /// Runs the pipeline from a single YAML config file.
