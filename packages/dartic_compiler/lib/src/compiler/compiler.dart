@@ -704,6 +704,7 @@ class DarticCompiler {
     final futureCid = register(ct.futureClass, 'Future');
     final futureOrCid = register(ct.deprecatedFutureOrClass, 'FutureOr');
     final functionCid = register(ct.functionClass, 'Function');
+    tryRegister(ct.index.tryGetClass('dart:core', 'Exception'), 'Exception');
     tryRegister(ct.index.tryGetClass('dart:core', 'Error'), 'Error');
     final typeErrorCid = tryRegister(
         ct.index.tryGetClass('dart:core', 'TypeError'), 'TypeError') ?? -1;
