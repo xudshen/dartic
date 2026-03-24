@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:path/path.dart' as p;
+import '../generator/config/binding_config.dart';
+import '../generator/config/yaml_parser.dart';
 import '../generator/runner.dart';
 import '../generator/scanner.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -44,6 +47,11 @@ class GenCommand extends Command<int> {
       ..addOption(
         'flutter-sdk',
         help: 'Flutter SDK path (for compiler-mode=frontend-server).',
+      )
+      ..addFlag(
+        'clean',
+        help: 'Delete .g.dart files in output directories before generating.',
+        negatable: false,
       );
   }
 
@@ -65,6 +73,7 @@ class GenCommand extends Command<int> {
     final compilerMode = argResults!['compiler-mode'] as String;
     final flutterSdk = argResults!['flutter-sdk'] as String?;
     final isFlutter = compilerMode == 'frontend-server';
+    final clean = argResults!['clean'] as bool;
 
     try {
       if (scanPath != null) {
@@ -104,6 +113,11 @@ class GenCommand extends Command<int> {
         }
 
         final configPath = rest.first;
+
+        if (clean) {
+          _cleanOutputDirs(configPath);
+        }
+
         final runner = Runner(
           analysisRoot: analysisRoot,
           checkMode: check,
@@ -133,6 +147,41 @@ class GenCommand extends Command<int> {
       rethrow;
     } on Exception catch (e) {
       throw DarticCliError('Code generation failed: $e');
+    }
+  }
+
+  /// Deletes .g.dart files in output_bindings and output_plugins directories.
+  void _cleanOutputDirs(String configPath) {
+    final configs = <GeneratorConfig>[];
+    final type = FileSystemEntity.typeSync(configPath);
+    if (type == FileSystemEntityType.directory) {
+      final dir = Directory(configPath);
+      for (final f in dir.listSync().whereType<File>()) {
+        if (f.path.endsWith('.yaml')) configs.add(parseConfigFile(f.path));
+      }
+    } else if (type == FileSystemEntityType.file) {
+      configs.add(parseConfigFile(configPath));
+    }
+
+    final cleaned = <String>{};
+    for (final config in configs) {
+      for (final dirPath in [config.outputBindings, config.outputPlugins]) {
+        final absPath = p.normalize(p.absolute(dirPath));
+        if (!cleaned.add(absPath)) continue;
+        final dir = Directory(absPath);
+        if (!dir.existsSync()) continue;
+        final gFiles = dir
+            .listSync()
+            .whereType<File>()
+            .where((f) => f.path.endsWith('.g.dart'))
+            .toList();
+        if (gFiles.isNotEmpty) {
+          _logger.info('Cleaning ${gFiles.length} .g.dart files in $absPath');
+          for (final f in gFiles) {
+            f.deleteSync();
+          }
+        }
+      }
     }
   }
 
