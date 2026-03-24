@@ -4803,6 +4803,18 @@ class _ExprCompileVisitor
       );
 
   @override
+  (int, ResultLoc) visitInvalidExpression(ir.InvalidExpression node) {
+    final msg = node.message;
+    final location = node.location;
+    final loc = location != null
+        ? ' at ${location.file}:${location.line}:${location.column}'
+        : '';
+    throw StateError(
+      'Source code error$loc: ${msg ?? 'unknown error'}'
+    );
+  }
+
+  @override
   (int, ResultLoc) defaultBasicLiteral(ir.BasicLiteral node) =>
       throw UnsupportedError(
         'Literal not yet implemented: ${node.runtimeType}. '
