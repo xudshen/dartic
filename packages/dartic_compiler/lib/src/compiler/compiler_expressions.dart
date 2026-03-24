@@ -4507,8 +4507,11 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.setFieldRef, recvReg, initRefReg, layout.offset);
       _emitMove(resultReg, initRefReg, ResultLoc.ref);
 
-      // Restore reg 2 if we saved it.
+      // Restore reg 2 if we saved it.  Close any upvalues that captured
+      // the temporary `this` binding BEFORE overwriting the register, so
+      // closures created by the initializer retain the correct `this`.
       if (savedThisReg >= 0) {
+        _emitter.emitABC(Op.closeUpvalue, thisReg, 0, 0);
         _emitMove(thisReg, savedThisReg, ResultLoc.ref);
         _refAlloc.free(savedThisReg);
       }

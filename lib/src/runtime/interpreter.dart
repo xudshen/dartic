@@ -219,6 +219,11 @@ class DarticInterpreter {
   /// distinguish sync* context from other contexts.
   SyncStarIterator<Object?>? _activeSyncStarIterator;
 
+  /// Call stack depth at driveSyncStar entry. RETURN_NULL only signals
+  /// "generator done" when depth matches this value; deeper returns are
+  /// normal function returns (constructors, method calls within the body).
+  int _syncStarBaseDepth = 0;
+
   /// Result status from the last sync* drive step. Set by YIELD or
   /// RETURN_NULL when in sync* context, read by [driveSyncStar] after
   /// _executeLoop returns.
@@ -1668,7 +1673,9 @@ class DarticInterpreter {
 
     // Set sync* context so YIELD and RETURN_NULL know they're in a generator.
     final savedIterator = _activeSyncStarIterator;
+    final savedBaseDepth = _syncStarBaseDepth;
     _activeSyncStarIterator = iterator;
+    _syncStarBaseDepth = callStack.depth;
     _syncStarStatus = null;
     _syncStarSuspendedFrame = null;
 
@@ -1684,6 +1691,7 @@ class DarticInterpreter {
     } on Object {
       // Exception from the generator body propagates to moveNext() caller.
       _activeSyncStarIterator = savedIterator;
+      _syncStarBaseDepth = savedBaseDepth;
       _syncStarStatus = null;
       _syncStarSuspendedFrame = null;
       rethrow;
@@ -1697,6 +1705,7 @@ class DarticInterpreter {
     }
 
     _activeSyncStarIterator = savedIterator;
+    _syncStarBaseDepth = savedBaseDepth;
     final status = _syncStarStatus ?? SyncStarStatus.done;
     _syncStarStatus = null;
     return status;
@@ -2947,8 +2956,13 @@ class DarticInterpreter {
         case Op.returnRef: // RETURN_REF A — return refStack[A] to caller
         case Op.returnVal: // RETURN_VAL A — return valueStack[A] to caller
         case Op.returnNull: // RETURN_NULL — return null to caller
-          // sync* generator: RETURN_NULL signals generator done.
-          if (op == Op.returnNull && _activeSyncStarIterator != null) {
+          // sync* generator: RETURN_NULL signals generator done — but only
+          // at the sync* function's own call depth. Nested calls (constructors,
+          // method calls within the body) also use RETURN_NULL and must NOT
+          // be mistaken for generator completion.
+          if (op == Op.returnNull &&
+              _activeSyncStarIterator != null &&
+              callStack.depth == _syncStarBaseDepth) {
             _syncStarStatus = SyncStarStatus.done;
             // Clean up stacks and return from _executeLoop.
             rs.clearRange(rBase, rs.sp);

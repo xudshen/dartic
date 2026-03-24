@@ -117,7 +117,7 @@ void main() {
       expect(config.fuelBudget, 50000);
       expect(config.maxTotalFuel, isNull);
       expect(config.executionTimeout, isNull);
-      expect(config.maxCallDepth, 512);
+      expect(config.maxCallDepth, 2048);
       expect(config.onPrint, isNull);
       expect(config.onUnhandledException, isNull);
     });
