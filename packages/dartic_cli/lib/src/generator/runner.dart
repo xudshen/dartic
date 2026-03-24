@@ -618,6 +618,27 @@ class Runner {
             customSource: fnConfig.custom,
             sourceImports: needsImport ? ["import '$uri';"] : const [],
           ));
+        } else if (fnConfig.name.contains('|')) {
+          // Extension method — Kernel encodes as 'ExtName|method'.
+          // TypeAnalyzer can't resolve these; use Kernel-derived ParamInfo
+          // (same quality as analyzer: isNamed, isOptional, callbacks).
+          final uri = fnConfig.sourceLibraryUri ?? library.uri;
+          final params = fnConfig.kernelParams ?? [
+            for (var i = 0; i < (fnConfig.arity ?? 1); i++)
+              ParamInfo(name: i == 0 ? 'this_' : 'arg$i', type: 'dynamic'),
+          ];
+          final imports = <String>[
+            "import '$uri';",
+            for (final impUri in fnConfig.importUris ?? <String>[])
+              "import '$impUri';",
+          ];
+          functionInfos.add(FunctionInfo(
+            name: fnConfig.name,
+            libraryUri: uri,
+            paramTypes: params,
+            returnType: 'dynamic',
+            sourceImports: imports,
+          ));
         } else {
           // Analyze the function — use sourceLibraryUri when available
           // (discovered functions have their actual declaring library URI).
@@ -1093,6 +1114,9 @@ class Runner {
       mergedFunctions.add(FunctionConfig(
         name: fn.name,
         sourceLibraryUri: fn.libraryUri,
+        arity: fn.arity,
+        kernelParams: fn.params,
+        importUris: fn.importUris,
       ));
       addedFnCount++;
     }

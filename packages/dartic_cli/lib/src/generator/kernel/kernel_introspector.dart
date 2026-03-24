@@ -7,6 +7,7 @@ library;
 
 import 'package:kernel/ast.dart' as ir;
 
+import '../analyzer/type_info.dart' show ParamInfo, CallbackParamInfo;
 import 'discovery_result.dart';
 import 'kernel_class_info.dart';
 
@@ -129,25 +130,32 @@ class KernelIntrospector {
   /// Uses the same URI resolution as [listPublicClasses] (single library
   /// or directory prefix). Returns (name, libraryUri) pairs sorted by name.
   /// Filters out private functions (name starts with `_`).
-  List<({String name, String libraryUri})> listPublicTopLevelFunctions(
+  List<({String name, String libraryUri, int arity, List<ParamInfo> params, List<String> importUris})>
+      listPublicTopLevelFunctions(
       String libraryUri,
       {String discoverMode = 'all'}) {
     final seen = <String>{};
-    final result = <({String name, String libraryUri})>[];
+    final result = <({String name, String libraryUri, int arity, List<ParamInfo> params, List<String> importUris})>[];
 
     void addFromLibrary(ir.Library lib) {
       final libUri = lib.importUri.toString();
       for (final proc in lib.procedures) {
         final name = proc.name.text;
         if (name.startsWith('_')) continue;
-        // Skip extension methods (Kernel encodes as 'ExtName|method').
-        if (name.contains('|')) continue;
+        // Skip extension getter/setter tearoffs (get#/set# variants).
+        // Keep the actual extension method (e.g. 'ReadContext|read').
+        if (name.contains('|') &&
+            (name.contains('|get#') || name.contains('|set#'))) continue;
+        // Skip private extension methods (method name after '|' starts with '_').
+        final pipeIdx = name.indexOf('|');
+        if (pipeIdx > 0 && name.length > pipeIdx + 1 && name[pipeIdx + 1] == '_') continue;
         // Only discover callable functions (ProcedureKind.Method).
         // Top-level getters/setters need different binding mechanisms.
         if (proc.kind != ir.ProcedureKind.Method) continue;
         if (seen.contains(name)) continue;
         seen.add(name);
-        result.add((name: name, libraryUri: libUri));
+        final params = _buildParamInfoFromKernel(proc.function);
+        result.add((name: name, libraryUri: libUri, arity: params.length, params: params, importUris: _collectParamImportUris(proc)));
       }
     }
 
@@ -165,10 +173,36 @@ class KernelIntrospector {
               _belongsToPackage(
                   node.enclosingLibrary.importUri.toString(), packagePrefix)) {
             seen.add(node.name.text);
+            final params = _buildParamInfoFromKernel(node.function);
             result.add((
               name: node.name.text,
               libraryUri: node.enclosingLibrary.importUri.toString(),
+              arity: params.length,
+              params: params,
+              importUris: _collectParamImportUris(node),
             ));
+          }
+        }
+        // Kernel does not re-export extension methods via additionalExports.
+        // Scan all same-package libraries for extension methods (name has '|').
+        if (packagePrefix != null) {
+          for (final srcLib in _component.libraries) {
+            final srcUri = srcLib.importUri.toString();
+            if (!_belongsToPackage(srcUri, packagePrefix)) continue;
+            for (final proc in srcLib.procedures) {
+              final name = proc.name.text;
+              if (!name.contains('|')) continue;
+              if (name.startsWith('_')) continue;
+              if (name.contains('|get#') || name.contains('|set#')) continue;
+              // Skip private extension methods (method name after '|').
+              final extPipeIdx = name.indexOf('|');
+              if (extPipeIdx > 0 && name.length > extPipeIdx + 1 && name[extPipeIdx + 1] == '_') continue;
+              if (proc.kind != ir.ProcedureKind.Method) continue;
+              if (seen.contains(name)) continue;
+              seen.add(name);
+              final params = _buildParamInfoFromKernel(proc.function);
+              result.add((name: name, libraryUri: srcUri, arity: params.length, params: params, importUris: _collectParamImportUris(proc)));
+            }
           }
         }
         break;
@@ -872,5 +906,163 @@ class KernelIntrospector {
       '~': '~',
     };
     return map[op] ?? op;
+  }
+
+  /// Builds full [ParamInfo] list from a Kernel [ir.FunctionNode].
+  ///
+  /// Extracts isNamed, isOptional, isRequired, and callback info —
+  /// the same metadata that [TypeAnalyzer._toParamInfoList] produces
+  /// from the Dart Analyzer, enabling identical emitter behavior for
+  /// both extension methods and regular functions.
+  static List<ParamInfo> _buildParamInfoFromKernel(ir.FunctionNode funcNode) {
+    final params = <ParamInfo>[];
+
+    // Positional parameters
+    for (var i = 0; i < funcNode.positionalParameters.length; i++) {
+      final p = funcNode.positionalParameters[i];
+      params.add(_kernelParamToParamInfo(
+        p,
+        isNamed: false,
+        isOptional: i >= funcNode.requiredParameterCount,
+      ));
+    }
+
+    // Named parameters
+    for (final p in funcNode.namedParameters) {
+      params.add(_kernelParamToParamInfo(
+        p,
+        isNamed: true,
+        isOptional: true,
+        isRequired: p.isRequired,
+      ));
+    }
+
+    return params;
+  }
+
+  /// Converts a single Kernel [ir.VariableDeclaration] to [ParamInfo].
+  static ParamInfo _kernelParamToParamInfo(
+    ir.VariableDeclaration param, {
+    required bool isNamed,
+    required bool isOptional,
+    bool isRequired = false,
+  }) {
+    final type = param.type;
+    int? callbackArity;
+    String? callbackReturnType;
+    List<CallbackParamInfo>? callbackParams;
+
+    // Detect function-typed parameters (same logic as TypeAnalyzer).
+    // Skip generic function types (have their own type parameters).
+    if (type is ir.FunctionType && type.typeParameters.isEmpty) {
+      callbackArity = type.positionalParameters.length +
+          type.namedParameters.length;
+      callbackReturnType = _typeToName(type.returnType);
+
+      // Extract detailed callback params when there are named params
+      // or void params (matching TypeAnalyzer behavior).
+      final hasNamedCb = type.namedParameters.isNotEmpty;
+      final hasVoidCb = type.positionalParameters.any((t) => t is ir.VoidType) ||
+          type.namedParameters.any((n) => n.type is ir.VoidType);
+      if (hasNamedCb || hasVoidCb) {
+        callbackParams = [
+          for (var i = 0; i < type.positionalParameters.length; i++)
+            CallbackParamInfo(
+              name: _callbackParamName(i),
+              type: _typeToName(type.positionalParameters[i]),
+              isNamed: false,
+              isRequired: i < type.requiredParameterCount,
+            ),
+          for (final n in type.namedParameters)
+            CallbackParamInfo(
+              name: n.name,
+              type: _typeToName(n.type),
+              isNamed: true,
+              isRequired: n.isRequired,
+            ),
+        ];
+      }
+    }
+
+    // Sanitize param name: Kernel uses '#this' for extension receivers.
+    var name = param.name ?? '';
+    if (name.startsWith('#')) name = name.substring(1);
+
+    return ParamInfo(
+      name: name,
+      type: _typeToName(param.type),
+      isOptional: isOptional,
+      isNamed: isNamed,
+      isRequired: isRequired,
+      callbackArity: callbackArity,
+      callbackReturnType: callbackReturnType,
+      callbackParams: callbackParams,
+    );
+  }
+
+  /// Returns a parameter name for callback wrappers (a, b, c, ...).
+  static String _callbackParamName(int index) {
+    if (index < 26) return String.fromCharCode(97 + index); // a-z
+    return 'p$index';
+  }
+
+  /// Extracts a type name from a Kernel type for use in casts.
+  ///
+  /// Preserves nullability (e.g. `int?` instead of `int`) and type arguments
+  /// when they are concrete (e.g. `Iterable<Enum>` for `Iterable<T extends Enum>`).
+  /// Type parameters are erased to their bound (or `dynamic` if bound is Object).
+  /// Uses [depth] to prevent infinite recursion on F-bounded types.
+  static String _typeToName(ir.DartType type, {int depth = 0}) {
+    if (depth > 3) return 'dynamic';
+    if (type is ir.InterfaceType) {
+      final name = type.classNode.name;
+      final suffix = type.nullability == ir.Nullability.nullable ? '?' : '';
+      if (type.typeArguments.isNotEmpty) {
+        final args = type.typeArguments
+            .map((t) => _typeToName(t, depth: depth + 1))
+            .toList();
+        // Include type args if at least one is non-dynamic.
+        if (args.any((a) => a != 'dynamic')) {
+          return '$name<${args.join(', ')}>$suffix';
+        }
+      }
+      return '$name$suffix';
+    }
+    if (type is ir.TypeParameterType) {
+      // Erase type parameter to its bound.
+      final bound = type.parameter.bound;
+      if (bound is ir.InterfaceType && bound.classNode.name != 'Object') {
+        return _typeToName(bound, depth: depth + 1);
+      }
+      return 'dynamic';
+    }
+    if (type is ir.FunctionType) {
+      final suffix = type.nullability == ir.Nullability.nullable ? '?' : '';
+      return 'Function$suffix';
+    }
+    return 'dynamic';
+  }
+
+  /// Extracts import URIs needed for all parameter types of a procedure.
+  ///
+  /// Only includes URIs for InterfaceTypes (concrete classes like BuildContext).
+  /// Skips dart:core (always available) and type parameters.
+  static List<String> _collectParamImportUris(ir.Procedure proc) {
+    final uris = <String>{};
+    for (final p in [
+      ...proc.function.positionalParameters,
+      ...proc.function.namedParameters,
+    ]) {
+      _collectTypeImportUri(p.type, uris);
+    }
+    _collectTypeImportUri(proc.function.returnType, uris);
+    return uris.toList();
+  }
+
+  static void _collectTypeImportUri(ir.DartType type, Set<String> uris) {
+    if (type is ir.InterfaceType) {
+      final uri = type.classNode.enclosingLibrary.importUri.toString();
+      if (uri != 'dart:core') uris.add(uri);
+    }
   }
 }

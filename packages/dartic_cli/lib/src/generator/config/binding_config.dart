@@ -3,6 +3,8 @@
 /// 对应 configs/*.yaml 的结构，纯数据类，不含解析逻辑。
 library;
 
+import '../analyzer/type_info.dart' show ParamInfo;
+
 /// 顶层配置。
 class GeneratorConfig {
   final String outputBindings;
@@ -135,7 +137,15 @@ class FunctionConfig {
   /// discovered under `package:flutter/src/foundation`).
   final String? sourceLibraryUri;
 
-  FunctionConfig({required this.name, this.custom, this.arity, this.sourceLibraryUri});
+  /// Rich parameter info from Kernel IR (for extension methods and other
+  /// Kernel-discovered functions where TypeAnalyzer can't resolve).
+  /// When set, used directly as [ParamInfo] in the generated binding.
+  final List<ParamInfo>? kernelParams;
+
+  /// Import URIs needed for parameter types (from Kernel type resolution).
+  final List<String>? importUris;
+
+  FunctionConfig({required this.name, this.custom, this.arity, this.sourceLibraryUri, this.kernelParams, this.importUris});
 }
 
 /// Per-method configuration for Bridge class generation.

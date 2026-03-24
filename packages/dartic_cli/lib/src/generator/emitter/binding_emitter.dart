@@ -2580,10 +2580,19 @@ String _emitTopLevelFunctionWrapper(FunctionInfo fn) {
     return fn.customSource!;
   }
 
+  // Extension methods: Kernel encodes as 'ExtName|method'.
+  // Use explicit extension invocation: ExtName(args[0]).method(args[1], ...)
+  final pipeIdx = fn.name.indexOf('|');
+  if (pipeIdx > 0) {
+    return _emitExtensionMethodWrapper(fn, pipeIdx);
+  }
+
   final args = <String>[];
   for (var i = 0; i < fn.paramTypes.length; i++) {
     final param = fn.paramTypes[i];
-    final argExpr = _emitArgExpression(param, i);
+    final argExpr = param.isOptional
+        ? _emitAbsentAwareArgExpression(param, i)
+        : _emitArgExpression(param, i);
     if (param.isNamed) {
       args.add('${param.name}: $argExpr');
     } else {
@@ -2591,6 +2600,47 @@ String _emitTopLevelFunctionWrapper(FunctionInfo fn) {
     }
   }
   final call = '${fn.name}(${args.join(', ')})';
+
+  if (fn.returnType == 'void') {
+    return '(args) { $call; return null; }';
+  }
+  return '(args) => $call';
+}
+
+/// Emits a wrapper for an extension method using explicit invocation syntax.
+///
+/// Kernel lowers `context.read<T>()` to `ReadContext|read(context)`.
+/// Generated code calls `ReadContext(args[0] as BuildContext).read()`.
+///
+/// Uses the same [_emitAbsentAwareArgExpression] / [_emitArgExpression] as
+/// regular method bindings — identical emitter path for both.
+String _emitExtensionMethodWrapper(FunctionInfo fn, int pipeIdx) {
+  final extName = fn.name.substring(0, pipeIdx);
+  final methodName = fn.name.substring(pipeIdx + 1);
+
+  // First param is the extension receiver ('this').
+  if (fn.paramTypes.isEmpty) {
+    // Shouldn't happen for extension methods, but be safe.
+    return '(args) => $extName(args[0]).$methodName()';
+  }
+
+  final receiverParam = fn.paramTypes[0];
+  final receiverCast = _emitArgExpression(receiverParam, 0);
+
+  // Remaining params are the actual method arguments.
+  final methodArgs = <String>[];
+  for (var i = 1; i < fn.paramTypes.length; i++) {
+    final param = fn.paramTypes[i];
+    final argExpr = param.isOptional
+        ? _emitAbsentAwareArgExpression(param, i)
+        : _emitArgExpression(param, i);
+    if (param.isNamed) {
+      methodArgs.add('${param.name}: $argExpr');
+    } else {
+      methodArgs.add(argExpr);
+    }
+  }
+  final call = '$extName($receiverCast).$methodName(${methodArgs.join(', ')})';
 
   if (fn.returnType == 'void') {
     return '(args) { $call; return null; }';

@@ -54,5 +54,7 @@ abstract final class AsyncTopLevelBindings {
 }
 );
     ctx.registerBinding('dart:async::::_asyncStarMoveNextHelper#1', (args) => null);
+    ctx.registerBinding('dart:async::::FutureExtensions|ignore#1', (args) => FutureExtensions(args[0] as Future).ignore());
+    ctx.registerBinding('dart:async::::FutureExtensions|onError#3', (args) => FutureExtensions(args[0] as Future).onError((a, b) => (args[1] as Function)(a, b), test: identical(args[2], darticAbsent) ? null : (args[2] as Function?) == null ? null : (a) => (args[2] as Function?)!(a)));
   }
 }
