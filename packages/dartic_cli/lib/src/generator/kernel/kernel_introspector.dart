@@ -145,7 +145,7 @@ class KernelIntrospector {
         // Skip extension getter/setter tearoffs (get#/set# variants).
         // Keep the actual extension method (e.g. 'ReadContext|read').
         if (name.contains('|') &&
-            (name.contains('|get#') || name.contains('|set#'))) continue;
+            (name.contains('|get#') || name.contains('|set#') || name.contains('|constructor#'))) continue;
         // Skip private extension methods (method name after '|' starts with '_').
         final pipeIdx = name.indexOf('|');
         if (pipeIdx > 0 && name.length > pipeIdx + 1 && name[pipeIdx + 1] == '_') continue;
@@ -193,7 +193,7 @@ class KernelIntrospector {
               final name = proc.name.text;
               if (!name.contains('|')) continue;
               if (name.startsWith('_')) continue;
-              if (name.contains('|get#') || name.contains('|set#')) continue;
+              if (name.contains('|get#') || name.contains('|set#') || name.contains('|constructor#')) continue;
               // Skip private extension methods (method name after '|').
               final extPipeIdx = name.indexOf('|');
               if (extPipeIdx > 0 && name.length > extPipeIdx + 1 && name[extPipeIdx + 1] == '_') continue;
@@ -1036,6 +1036,19 @@ class KernelIntrospector {
       }
       return 'dynamic';
     }
+    if (type is ir.ExtensionType) {
+      final name = type.extensionTypeDeclaration.name;
+      final suffix = type.nullability == ir.Nullability.nullable ? '?' : '';
+      if (type.typeArguments.isNotEmpty) {
+        final args = type.typeArguments
+            .map((t) => _typeToName(t, depth: depth + 1))
+            .toList();
+        if (args.any((a) => a != 'dynamic')) {
+          return '$name<${args.join(', ')}>$suffix';
+        }
+      }
+      return '$name$suffix';
+    }
     if (type is ir.FunctionType) {
       final suffix = type.nullability == ir.Nullability.nullable ? '?' : '';
       return 'Function$suffix';
@@ -1045,7 +1058,7 @@ class KernelIntrospector {
 
   /// Extracts import URIs needed for all parameter types of a procedure.
   ///
-  /// Only includes URIs for InterfaceTypes (concrete classes like BuildContext).
+  /// Only includes URIs for InterfaceTypes and ExtensionTypes.
   /// Skips dart:core (always available) and type parameters.
   static List<String> _collectParamImportUris(ir.Procedure proc) {
     final uris = <String>{};
@@ -1062,6 +1075,10 @@ class KernelIntrospector {
   static void _collectTypeImportUri(ir.DartType type, Set<String> uris) {
     if (type is ir.InterfaceType) {
       final uri = type.classNode.enclosingLibrary.importUri.toString();
+      if (uri != 'dart:core') uris.add(uri);
+    } else if (type is ir.ExtensionType) {
+      final uri =
+          type.extensionTypeDeclaration.enclosingLibrary.importUri.toString();
       if (uri != 'dart:core') uris.add(uri);
     }
   }

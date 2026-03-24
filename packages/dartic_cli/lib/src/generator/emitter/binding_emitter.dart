@@ -2612,22 +2612,64 @@ String _emitTopLevelFunctionWrapper(FunctionInfo fn) {
 /// Kernel lowers `context.read<T>()` to `ReadContext|read(context)`.
 /// Generated code calls `ReadContext(args[0] as BuildContext).read()`.
 ///
-/// Uses the same [_emitAbsentAwareArgExpression] / [_emitArgExpression] as
-/// regular method bindings — identical emitter path for both.
+/// Handles three special cases:
+/// - **Static extension methods**: Kernel omits the `#this` receiver param,
+///   so first param name != 'this'. Emit `ExtName.method(args...)`.
+/// - **Operator methods**: Method names like `+`, `&`, `~` need operator
+///   syntax (`a + b`, `~a`) instead of `.+(b)` / `.~()`.
+/// - **Extension types**: Constructible with `ExtType(value)` — the receiver
+///   cast targets the representation type (already handled by ParamInfo).
 String _emitExtensionMethodWrapper(FunctionInfo fn, int pipeIdx) {
   final extName = fn.name.substring(0, pipeIdx);
   final methodName = fn.name.substring(pipeIdx + 1);
 
-  // First param is the extension receiver ('this').
-  if (fn.paramTypes.isEmpty) {
-    // Shouldn't happen for extension methods, but be safe.
-    return '(args) => $extName(args[0]).$methodName()';
+  // Static extension methods: Kernel uses '#this' (sanitized to 'this')
+  // for instance receivers. If the first param is not 'this', it's static.
+  final isStatic = fn.paramTypes.isEmpty || fn.paramTypes[0].name != 'this';
+
+  if (isStatic) {
+    // Static extension method: ExtName.methodName(args...)
+    final args = <String>[];
+    for (var i = 0; i < fn.paramTypes.length; i++) {
+      final param = fn.paramTypes[i];
+      final argExpr = param.isOptional
+          ? _emitAbsentAwareArgExpression(param, i)
+          : _emitArgExpression(param, i);
+      if (param.isNamed) {
+        args.add('${param.name}: $argExpr');
+      } else {
+        args.add(argExpr);
+      }
+    }
+    final call = '$extName.$methodName(${args.join(', ')})';
+    if (fn.returnType == 'void') {
+      return '(args) { $call; return null; }';
+    }
+    return '(args) => $call';
   }
 
+  // Instance method — first param is the receiver.
   final receiverParam = fn.paramTypes[0];
   final receiverCast = _emitArgExpression(receiverParam, 0);
 
-  // Remaining params are the actual method arguments.
+  // Extension types: Kernel reports the receiver type as the extension type
+  // itself (e.g. BaselineOffset for BaselineOffset|+), while regular
+  // extensions report the extended type (e.g. BuildContext for ReadContext|read).
+  // For extension types, cast directly — no ExtName(...) wrapper needed.
+  final receiverBaseType = receiverParam.type.endsWith('?')
+      ? receiverParam.type.substring(0, receiverParam.type.length - 1)
+      : receiverParam.type;
+  final isExtensionType = receiverBaseType == extName;
+
+  final receiver =
+      isExtensionType ? '($receiverCast)' : '$extName($receiverCast)';
+
+  // Check if this is an operator method.
+  if (_isOperatorName(methodName)) {
+    return _emitExtensionOperatorWrapper(fn, receiver, methodName);
+  }
+
+  // Regular instance method.
   final methodArgs = <String>[];
   for (var i = 1; i < fn.paramTypes.length; i++) {
     final param = fn.paramTypes[i];
@@ -2640,10 +2682,50 @@ String _emitExtensionMethodWrapper(FunctionInfo fn, int pipeIdx) {
       methodArgs.add(argExpr);
     }
   }
-  final call = '$extName($receiverCast).$methodName(${methodArgs.join(', ')})';
+  final call = '$receiver.$methodName(${methodArgs.join(', ')})';
 
   if (fn.returnType == 'void') {
     return '(args) { $call; return null; }';
   }
   return '(args) => $call';
+}
+
+/// Known Dart operator names (including Kernel's 'unary-' for unary minus).
+const _operatorNames = <String>{
+  '+', '-', '*', '/', '~/', '%',
+  '&', '|', '^', '~',
+  '<<', '>>', '>>>',
+  '<', '>', '<=', '>=', '==',
+  '[]', '[]=',
+  'unary-',
+};
+
+bool _isOperatorName(String name) => _operatorNames.contains(name);
+
+/// Emits a wrapper for an extension operator using proper operator syntax.
+String _emitExtensionOperatorWrapper(
+    FunctionInfo fn, String receiver, String op) {
+  if (op == '~') {
+    return '(args) => ~$receiver';
+  }
+  if (op == 'unary-') {
+    return '(args) => -$receiver';
+  }
+  if (op == '[]') {
+    final keyCast = _emitArgExpression(fn.paramTypes[1], 1);
+    return '(args) => $receiver[$keyCast]';
+  }
+  if (op == '[]=') {
+    final keyCast = _emitArgExpression(fn.paramTypes[1], 1);
+    final valueCast = fn.paramTypes.length > 2
+        ? _emitArgExpression(fn.paramTypes[2], 2)
+        : 'args[2]';
+    return '(args) { $receiver[$keyCast] = $valueCast; return args[2]; }';
+  }
+  // Binary operator: receiver op (arg)
+  final paramCast = _emitArgExpression(fn.paramTypes[1], 1);
+  if (fn.returnType == 'void') {
+    return '(args) { $receiver $op ($paramCast); return null; }';
+  }
+  return '(args) => $receiver $op ($paramCast)';
 }
