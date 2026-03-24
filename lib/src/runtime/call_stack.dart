@@ -18,7 +18,7 @@ class CallStack {
       : _maxFrames = maxFrames,
         _data = Uint32List(maxFrames * frameSize);
 
-  static const int defaultMaxFrames = 512;
+  static const int defaultMaxFrames = 2048;
 
   /// Number of uint32 fields per frame.
   static const int frameSize = 6;

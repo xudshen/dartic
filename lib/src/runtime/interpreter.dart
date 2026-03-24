@@ -3383,12 +3383,36 @@ class DarticInterpreter {
             }
           }
           final closure = DarticClosure(funcProto: proto, upvalues: upvalues);
-          // Resolve transient typeTemplate → runtimeType_ using ITA/FTA
-          // from the current frame (A-lite closure type extraction).
+          // Eagerly capture receiver for tearoff equality comparison.
+          // Instance/super tearoffs have upvalue[0] = receiver/this.
+          Object? tearoffReceiver;
+          if (upvalues.isNotEmpty) {
+            final name = proto.name;
+            if (name.startsWith('<instance-tearoff:') ||
+                name.startsWith('<super-tearoff:') ||
+                name.startsWith('<instance-instantiation:')) {
+              final uv = upvalues[0];
+              tearoffReceiver =
+                  uv.isOpen ? rs.read(uv.stackIndex) : uv.value;
+              closure.boundReceiver = tearoffReceiver;
+            }
+          }
+          // Resolve transient typeTemplate → runtimeType_ using ITA/FTA.
+          // For instance tearoffs, use the RECEIVER's runtime type args as
+          // ITA (not the enclosing frame's ITA), so the tearoff type reflects
+          // the actual receiver (e.g., C<int>.foo gets bound int, even when
+          // the static type is C<num>).
           final typeTemplate = proto.typeTemplate;
           if (typeTemplate != null && _activeTypeRegistry != null) {
             try {
-              final ita = rs.read(rBase + 0) as List<DarticType>?;
+              List<DarticType>? ita;
+              if (tearoffReceiver is DarticObject) {
+                final rt = tearoffReceiver.runtimeType_;
+                if (rt is DarticInterfaceType && rt.typeArgs.isNotEmpty) {
+                  ita = rt.typeArgs;
+                }
+              }
+              ita ??= rs.read(rBase + 0) as List<DarticType>?;
               final fta = rs.read(rBase + 1) as List<DarticType>?;
               closure.runtimeType_ =
                   resolveType(typeTemplate, ita, fta, _activeTypeRegistry!);
@@ -3396,18 +3420,6 @@ class DarticInterpreter {
               // Resolution may fail if ITA/FTA don't match the template
               // (e.g., generic function tearoffs). Leave runtimeType_ null;
               // extractType will fall back to Function type.
-            }
-          }
-          // Eagerly capture receiver for tearoff equality comparison.
-          // Instance/super tearoffs have upvalue[0] = receiver/this.
-          if (upvalues.isNotEmpty) {
-            final name = proto.name;
-            if (name.startsWith('<instance-tearoff:') ||
-                name.startsWith('<super-tearoff:') ||
-                name.startsWith('<instance-instantiation:')) {
-              final uv = upvalues[0];
-              closure.boundReceiver =
-                  uv.isOpen ? rs.read(uv.stackIndex) : uv.value;
             }
           }
           rs.write(rBase + a, closure);
@@ -3421,8 +3433,18 @@ class DarticInterpreter {
           // of the unresolved generic `T Function<T>(T)`).
           final bindTemplate = bindClosure.funcProto.typeTemplate;
           if (bindTemplate != null && _activeTypeRegistry != null) {
-            bindClosure.runtimeType_ =
-                resolveType(bindTemplate, null, bindFta, _activeTypeRegistry!);
+            // For instance tearoffs, extract ITA from the bound receiver so
+            // class type params in the template resolve correctly.
+            List<DarticType>? bindIta;
+            final bindReceiver = bindClosure.boundReceiver;
+            if (bindReceiver is DarticObject) {
+              final brt = bindReceiver.runtimeType_;
+              if (brt is DarticInterfaceType && brt.typeArgs.isNotEmpty) {
+                bindIta = brt.typeArgs;
+              }
+            }
+            bindClosure.runtimeType_ = resolveType(
+                bindTemplate, bindIta, bindFta, _activeTypeRegistry!);
           }
 
         case Op.closeUpvalue: // CLOSE_UPVALUE A — close all open upvalues at rBase+A and above
@@ -3933,7 +3955,10 @@ class DarticInterpreter {
                 }
               }
             }
-            if (!found && receiver.named.containsKey(name)) {
+            // Don't do get-then-call for "call" on records: records have no
+            // methods, so `(record as dynamic)(args)` should throw
+            // NoSuchMethodError even if the record has a `call` named field.
+            if (!found && name != 'call' && receiver.named.containsKey(name)) {
               fieldValue = receiver.getNamed(name);
               found = true;
             }
@@ -4152,6 +4177,29 @@ class DarticInterpreter {
                 dispatchNoSuchMethod(receiver, nsmInvocation, a);
             if (nsmPushed) continue;
             pc = nsmHandlerPC;
+            continue;
+          }
+
+          // ── Host Function "call" dispatch ──
+          // When a DarticClosure is stored in a host collection, it's adapted
+          // to a host Function. When retrieved and called via INVOKE_DYN "call",
+          // dispatch using Function.apply.
+          if (receiver is Function && name == 'call') {
+            try {
+              final result = Function.apply(
+                receiver,
+                callerPositional,
+                callerNamed.isEmpty
+                    ? null
+                    : {
+                        for (final e in callerNamed.entries)
+                          Symbol(e.key): e.value,
+                      },
+              );
+              rs.write(rBase + a, result);
+            } on Object catch (e, st) {
+              pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+            }
             continue;
           }
 

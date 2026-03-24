@@ -314,9 +314,9 @@ extension on DarticCompiler {
         paramCount: 0,
       ));
 
-      // Skip abstract methods — they have no body and must not shadow
-      // inherited concrete implementations in the method table.
-      if (proc.isAbstract) continue;
+      // Skip procedures with no body (truly abstract). Include noSuchMethod
+      // forwarders which have isAbstract=true but a real forwarding body.
+      if (proc.function.body == null) continue;
 
       // Register method in the class info method table.
       // Setters use "name=" convention to distinguish from getters/methods.

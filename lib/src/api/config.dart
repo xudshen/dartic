@@ -25,7 +25,7 @@ class DarticConfig {
     this.fuelBudget = 50000,
     this.maxTotalFuel,
     this.executionTimeout,
-    this.maxCallDepth = 512,
+    this.maxCallDepth = 2048,
     this.onPrint,
     this.onUnhandledException,
   });

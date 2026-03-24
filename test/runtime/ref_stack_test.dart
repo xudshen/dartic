@@ -94,8 +94,8 @@ void main() {
   });
 
   group('capacity', () {
-    test('default capacity is 5120 slots', () {
-      expect(stack.capacity, 5120);
+    test('default capacity is 20480 slots', () {
+      expect(stack.capacity, 20480);
     });
 
     test('custom capacity', () {

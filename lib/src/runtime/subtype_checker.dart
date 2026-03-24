@@ -289,6 +289,16 @@ class SubtypeChecker {
       if (subNamed.isRequired && !supNamed.isRequired) return false;
     }
 
+    // Check 10: sub's required named params must all exist in sup.
+    // A required param in sub that's absent from sup can never receive a value
+    // when called through the supertype interface.
+    for (final subNamed in sub.namedParams) {
+      if (subNamed.isRequired &&
+          _findNamedParam(sup.namedParams, subNamed.name) == null) {
+        return false;
+      }
+    }
+
     return true;
   }
 

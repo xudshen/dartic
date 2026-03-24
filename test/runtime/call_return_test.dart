@@ -420,7 +420,7 @@ void main() {
         bytecode: Uint64List.fromList([
           encodeABC(Op.returnVal, 0, 0, 0),
         ]),
-        valueRegCount: 100000, // exceeds default capacity of 10240
+        valueRegCount: 100000, // exceeds default capacity of 40960
         refRegCount: 0,
         paramCount: 0,
       );

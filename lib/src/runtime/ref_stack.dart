@@ -9,7 +9,7 @@ class RefStack {
       : _capacity = capacity,
         slots = List<Object?>.filled(capacity, null);
 
-  static const int defaultCapacity = 5120;
+  static const int defaultCapacity = 20480;
 
   final int _capacity;
 

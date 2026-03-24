@@ -124,8 +124,8 @@ void main() {
   });
 
   group('capacity', () {
-    test('default capacity is 512 frames (3072 uint32)', () {
-      expect(stack.maxFrames, 512);
+    test('default capacity is 2048 frames (12288 uint32)', () {
+      expect(stack.maxFrames, 2048);
     });
 
     test('custom capacity', () {

@@ -15,7 +15,7 @@ class ValueStack {
     doubleView = Float64List.view(_buffer.buffer);
   }
 
-  static const int defaultCapacity = 10240;
+  static const int defaultCapacity = 40960;
 
   final int _capacity;
   final Uint8List _buffer;

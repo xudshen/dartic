@@ -1291,13 +1291,16 @@ extension on DarticCompiler {
       ],
     );
 
-    // Set typeTemplate for the instance tearoff. Uses the enclosing
-    // class/method type params — correct when receiver is `this` or the
-    // method type doesn't depend on class type params.
+    // Build typeTemplate using the TARGET CLASS's type params so that
+    // TypeParameterTemplate references resolve from the receiver's ITA at
+    // runtime (not the enclosing frame's ITA). This ensures the tearoff's
+    // runtime type reflects the actual receiver type (e.g., C<int>.foo gets
+    // bound int, not C<num>.foo's static bound num).
     instTearoffProto.typeTemplate = dartTypeToTemplate(
       computeTearOffFunctionType(fn, _coreTypes),
       _typeClassIdLookup,
-      enclosingClassTypeParams: _currentClassTypeParams,
+      enclosingClassTypeParams:
+          target.enclosingClass?.typeParameters ?? _currentClassTypeParams,
       enclosingFunctionTypeParams: _currentFunctionTypeParams,
       coreTypes: _coreTypes,
     );
