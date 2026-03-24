@@ -66,6 +66,24 @@ class GenCommand extends Command<int> {
         'discover',
         help: 'Run auto-discovery for a library URI and compare against YAML.\n'
             'Example: dartic gen --discover dart:collection',
+      )
+      ..addOption(
+        'compiler-mode',
+        help: 'Kernel compilation mode.\n'
+            'dart: standard dart compile kernel (default)\n'
+            'frontend-server: Flutter frontend_server for dart:ui projects',
+        allowed: ['dart', 'frontend-server'],
+        defaultsTo: 'dart',
+      )
+      ..addOption(
+        'flutter-sdk',
+        help: 'Flutter SDK path (required when compiler-mode=frontend-server).',
+      )
+      ..addOption(
+        'test-framework',
+        help: 'Test framework for generated verification tests.',
+        allowed: ['test', 'flutter_test'],
+        defaultsTo: 'test',
       );
   }
 
@@ -89,6 +107,11 @@ class GenCommand extends Command<int> {
     final strict = argResults!['strict'] as bool;
     final clean = argResults!['clean'] as bool;
     final discoverUri = argResults!['discover'] as String?;
+    final compilerMode = argResults!['compiler-mode'] as String;
+    final flutterSdk = argResults!['flutter-sdk'] as String?;
+    final testFramework = argResults!['test-framework'] as String;
+    final isFlutter = compilerMode == 'frontend-server' ||
+        testFramework == 'flutter_test';
 
     try {
       if (discoverUri != null) {
@@ -103,6 +126,9 @@ class GenCommand extends Command<int> {
           testOutputDir: emitTests ? testOutputDir : null,
           strict: strict,
           clean: clean,
+          compilerMode: compilerMode,
+          flutterSdkPath: flutterSdk,
+          isFlutter: isFlutter,
         );
       }
 
@@ -127,6 +153,9 @@ class GenCommand extends Command<int> {
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
           strict: strict,
+          compilerMode: compilerMode,
+          flutterSdkPath: flutterSdk,
+          isFlutter: isFlutter,
         );
         await runner.runGeneratorConfig(config);
         if (check) return _checkResults(runner);
@@ -149,6 +178,9 @@ class GenCommand extends Command<int> {
           emitTests: emitTests,
           testOutputDir: emitTests ? testOutputDir : null,
           strict: strict,
+          compilerMode: compilerMode,
+          flutterSdkPath: flutterSdk,
+          isFlutter: isFlutter,
         );
 
         final type = FileSystemEntity.typeSync(configPath);
@@ -185,6 +217,9 @@ class GenCommand extends Command<int> {
     String? testOutputDir,
     bool strict = false,
     bool clean = false,
+    String compilerMode = 'dart',
+    String? flutterSdkPath,
+    bool isFlutter = false,
   }) async {
     final rest = argResults!.rest;
 
@@ -197,6 +232,9 @@ class GenCommand extends Command<int> {
         emitTests: emitTests,
         testOutputDir: testOutputDir,
         strict: strict,
+        compilerMode: compilerMode,
+        flutterSdkPath: flutterSdkPath,
+        isFlutter: isFlutter,
       );
       await runner.runConfigDirectory(configDir);
       if (runner.printAuditSummary()) return 2;
@@ -264,6 +302,9 @@ class GenCommand extends Command<int> {
         emitTests: emitTests,
         testOutputDir: testOutputDir,
         strict: strict,
+        compilerMode: compilerMode,
+        flutterSdkPath: flutterSdkPath,
+        isFlutter: isFlutter,
       );
       await runner.runConfigDirectory(dirPath);
 

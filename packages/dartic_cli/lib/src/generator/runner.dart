@@ -120,6 +120,12 @@ class Runner {
   /// When true, audit errors (missing/stale members) cause non-zero exit.
   final bool strict;
 
+  /// Kernel compilation mode: `'dart'` or `'frontend-server'`.
+  final String compilerMode;
+
+  /// Whether this is a Flutter project (controls test framework choice).
+  final bool isFlutter;
+
   /// Records all files that would be written during generation.
   /// Only populated when [checkMode] is true.
   /// Keys are absolute file paths, values are file contents.
@@ -139,6 +145,8 @@ class Runner {
     this.emitTests = false,
     this.testOutputDir,
     this.strict = false,
+    this.compilerMode = 'dart',
+    this.isFlutter = false,
   });
 
   /// Runs the pipeline from a single YAML config file.
@@ -220,8 +228,6 @@ class Runner {
     if (effectiveTestDir == null) return;
 
     final packageName = _detectPackageName(mergedForPath);
-    // Check Flutter across all configs (mergedForPath has empty libraries).
-    final isFlutter = configs.any((c) => _isFlutterPackage(c));
     final pluginClassName = _detectPluginClassName(packageName);
 
     await _initKernel(configs);
@@ -381,6 +387,7 @@ class Runner {
         dartBin: effectiveDartBin,
         analysisRoot: analysisRoot,
         flutterSdkPath: flutterSdkPath,
+        compilerMode: compilerMode,
       );
       _kernelIntrospector = KernelIntrospector(component);
       stderr.writeln(
@@ -688,7 +695,6 @@ class Runner {
 
     // Detect package info from config
     final packageName = _detectPackageName(config);
-    final isFlutter = _isFlutterPackage(config);
     final pluginClassName = _detectPluginClassName(packageName);
 
     // Analyze all bridge classes and collect TypeInfos.
@@ -865,13 +871,6 @@ class Runner {
       }
     }
     return 'dartic_stdlib'; // ultimate fallback
-  }
-
-  /// Determines whether this config is for a Flutter package by checking
-  /// Whether any library URI references Flutter packages.
-  bool _isFlutterPackage(GeneratorConfig config) {
-    return config.libraries.any((lib) =>
-        lib.uri.startsWith('package:flutter/') || lib.uri == 'dart:ui');
   }
 
   /// Maps a package name to its plugin class name.

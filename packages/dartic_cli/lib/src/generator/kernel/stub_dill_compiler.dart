@@ -23,12 +23,14 @@ class StubDillCompiler {
   /// [dartBin] — path to dart executable (e.g. from FVM).
   /// [analysisRoot] — Flutter project root for package resolution (optional).
   /// [flutterSdkPath] — Flutter SDK path (required for Flutter libs).
+  /// [compilerMode] — `'dart'` (default) or `'frontend-server'` for Flutter.
   /// [cachePath] — directory for cached .dill files (optional).
   static Future<ir.Component> compileAndLoad({
     required List<String> libraryUris,
     required String dartBin,
     String? analysisRoot,
     String? flutterSdkPath,
+    String compilerMode = 'dart',
     String? cachePath,
   }) async {
     final cacheDir = cachePath ?? _defaultCacheDir();
@@ -37,7 +39,10 @@ class StubDillCompiler {
     // Resolve directory URIs to actual barrel file imports.
     libraryUris = _resolveDirectoryUris(libraryUris, analysisRoot);
 
-    final isFlutter = _needsFlutterCompiler(libraryUris);
+    // Use explicit compiler mode; fall back to auto-detection for
+    // backwards compatibility (e.g. --discover which doesn't pass mode).
+    final isFlutter = compilerMode == 'frontend-server' ||
+        (compilerMode == 'dart' && _needsFlutterCompiler(libraryUris));
     final cacheKey = _computeCacheKey(
         libraryUris, dartBin, isFlutter ? 'flutter' : 'dart');
     final dillPath = '$cacheDir/$cacheKey.dill';
