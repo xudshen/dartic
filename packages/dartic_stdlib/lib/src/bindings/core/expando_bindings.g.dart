@@ -25,7 +25,6 @@ abstract final class ExpandoBindings {
         'toString#0': (args) => (args[0] as Expando).toString(),
         'name#0': (args) => (args[0] as Expando).name,
         'hashCode#0': (args) => (args[0] as Expando).hashCode,
-        '[]=#2': (args) { (args[0] as Expando)[args[1] as Object] = args[2]; return args[2]; },
         '==#1': (args) => (args[0] as Expando) == (args[1] as Object),
         '#1': (args) => Expando<Object>(identical(args[0], darticAbsent) ? null : args[0] as String?),
         '[]=#2': (args) { if (args[1] is DarticRecord) throw ArgumentError.value(args[1], 'object', 'Records do not have a well-defined identity'); (args[0] as Expando)[args[1] as Object] = args[2]; return args[2]; },

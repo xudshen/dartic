@@ -682,6 +682,24 @@ class DarticInterpreter {
   /// Resolves the correct ITA for a method dispatch on [darticObj].
   ///
   /// Handles both self-declared and inherited methods:
+  /// Returns true if [receiver] is a dartic object (or Bridge wrapper) whose
+  /// class defines an override for the method at [nameIdx] in the constant
+  /// pool. Used by runtimeType interception to avoid short-circuiting when
+  /// the user class has an overridden runtimeType getter.
+  bool _hasDarticMethodOverride(
+    Object? receiver,
+    DarticModule module,
+    int nameIdx,
+  ) {
+    final DarticObject? obj = receiver is DarticObject
+        ? receiver
+        : receiver is DarticObjectHolder
+            ? receiver.$darticObject
+            : null;
+    if (obj == null || obj.classId >= module.classes.length) return false;
+    return module.classes[obj.classId].methods[nameIdx] != null;
+  }
+
   /// - Self-declared: returns receiver's own type args (or null if non-generic)
   /// - Inherited from generic superclass: resolves super's type arg templates
   ///   using receiver's ITA via [DarticClassInfo.superTypeArgs]
@@ -2543,15 +2561,9 @@ class DarticInterpreter {
             final reg = _activeTypeRegistry;
             if (reg != null) {
               final receiver = rs.read(rBase + a + 1);
-              bool hasOverride = false;
-              if (receiver is DarticObject) {
-                final nameIdx = cp.lookupNameIndex('runtimeType');
-                if (nameIdx >= 0 && receiver.classId < module.classes.length) {
-                  hasOverride = module.classes[receiver.classId]
-                      .methods[nameIdx] != null;
-                }
-              }
-              if (!hasOverride) {
+              final nameIdx = cp.lookupNameIndex('runtimeType');
+              if (nameIdx < 0 ||
+                  !_hasDarticMethodOverride(receiver, module, nameIdx)) {
                 final darticType = extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
                 rs.write(rBase + a, darticType);
                 break;
@@ -2712,19 +2724,8 @@ class DarticInterpreter {
                   rs.write(rBase + a, reg.nullType);
                   break;
                 }
-                // Check if receiver has a dartic runtimeType override.
-                bool hasOverride = false;
-                final DarticObject? obj = receiver is DarticObject
-                    ? receiver
-                    : receiver is DarticObjectHolder
-                        ? receiver.$darticObject
-                        : null;
-                if (obj != null &&
-                    obj.classId < module.classes.length) {
-                  hasOverride = module.classes[obj.classId]
-                      .methods[ic.methodNameIndex] != null;
-                }
-                if (!hasOverride) {
+                if (!_hasDarticMethodOverride(
+                    receiver, module, ic.methodNameIndex)) {
                   rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
                   break;
                 }
@@ -3704,15 +3705,9 @@ class DarticInterpreter {
           if (name == 'runtimeType') {
             final reg = _activeTypeRegistry;
             if (reg != null) {
-              bool hasOverride = false;
-              if (receiver is DarticObject) {
-                final nameIdx = cp.lookupNameIndex('runtimeType');
-                if (nameIdx >= 0 && receiver.classId < module.classes.length) {
-                  hasOverride = module.classes[receiver.classId]
-                      .methods[nameIdx] != null;
-                }
-              }
-              if (!hasOverride) {
+              final nameIdx = cp.lookupNameIndex('runtimeType');
+              if (nameIdx < 0 ||
+                  !_hasDarticMethodOverride(receiver, module, nameIdx)) {
                 rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
                 break;
               }

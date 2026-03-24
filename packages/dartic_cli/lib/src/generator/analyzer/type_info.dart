@@ -247,7 +247,8 @@ class OperatorInfo {
   });
 
   bool get isUnary => paramType == null;
-  String get bindingKey => '$lookupName#${isUnary ? 0 : 1}';
+  String get bindingKey =>
+      '$lookupName#${isUnary ? 0 : (valueType != null ? 2 : 1)}';
 }
 
 /// Instance field information for `_#fromFields` auto-generation.

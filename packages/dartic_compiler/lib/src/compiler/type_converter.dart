@@ -148,8 +148,12 @@ TypeTemplate _convert(
       coreTypes,
       currentFnTypeParams,
     );
-    // NORM: T?? → T? (double nullable flattens to single nullable).
-    if (inner is NullableTemplate) return inner;
+    // NORM: T?? → T?, dynamic? → dynamic, void? → void.
+    if (inner is NullableTemplate ||
+        inner is DynamicTemplate ||
+        inner is VoidTemplate) {
+      return inner;
+    }
     return NullableTemplate(inner: inner);
   }
 

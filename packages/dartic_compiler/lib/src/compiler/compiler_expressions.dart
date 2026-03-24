@@ -3454,7 +3454,9 @@ extension on DarticCompiler {
           return _generateInstantiationThunk(
               funcId, fn, subst, expr.typeArguments);
         }
-        if (funcId == null && _isHostLibrary(target.enclosingLibrary)) {
+        if (funcId == null &&
+            _isHostLibrary(target.enclosingLibrary) &&
+            fn.typeParameters.isNotEmpty) {
           final thunkFuncId = _buildHostStaticTearOffThunk(target);
           final subst = type_algebra.Substitution.fromPairs(
               fn.typeParameters, expr.typeArguments);
@@ -3482,6 +3484,15 @@ extension on DarticCompiler {
               fn.typeParameters, expr.typeArguments);
           return _generateInstantiationThunk(
               funcId, fn, subst, expr.typeArguments);
+        }
+        if (funcId == null &&
+            _isHostLibrary(finalTarget.enclosingLibrary) &&
+            fn.typeParameters.isNotEmpty) {
+          final thunkFuncId = _buildHostStaticTearOffThunk(finalTarget);
+          final subst = type_algebra.Substitution.fromPairs(
+              fn.typeParameters, expr.typeArguments);
+          return _generateInstantiationThunk(
+              thunkFuncId, fn, subst, expr.typeArguments);
         }
       }
     }
