@@ -578,7 +578,9 @@ Language/Statements/For/Asynchronous_For_in/execution_A02_t02.dart  # native Dar
 # via shared gc_utils_lib.dart. dart:io bridge not implemented.
 LanguageFeatures/FinalizationRegistry/  # all 51 tests need dart:io + dart:ffi
 LibTest/ffi/  # dart:ffi not bridged (~159 tests)
-LibTest/io/  # dart:io not bridged (Stdout, Stdin, WebSocket, ZLib, etc.)
+# LibTest/io/  # dart:io now bridged (2026-03-24)
+LibTest/io/exit/  # exit() not bridged — kills host process
+LibTest/io/sleep/  # sleep() not bridged — blocks host event loop
 LibTest/html/  # dart:html — browser API, not applicable (~571 tests)
 LibTest/js_interop/  # dart:js_interop — JS interop, not applicable (~477 tests)
 LibTest/js_interop_unsafe/  # dart:js_interop_unsafe — JS interop, not applicable (~38 tests)

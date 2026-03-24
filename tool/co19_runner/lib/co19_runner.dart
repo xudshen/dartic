@@ -248,6 +248,7 @@ final _supportedDartLibraries = <String>{
   'collection',
   'convert',
   'math',
+  'io',
 };
 
 /// Regex that matches `import 'dart:<lib>'` or `import "dart:<lib>"`.
@@ -522,46 +523,72 @@ CompilerOptions _makeCompilerOptions({
 ///
 /// Receives `[Uint8List darbBytes, SendPort replyPort]`.
 /// Sends back `[int exitCode, String stdout, String stderr]`.
-void _executeIsolateEntry(List<dynamic> message) async {
+///
+/// Wrapped in [runZonedGuarded] to catch uncaught async errors from
+/// Streams, Timers, and microtasks that escape the try/catch block.
+void _executeIsolateEntry(List<dynamic> message) {
   final darbBytes = message[0] as Uint8List;
   final sendPort = message[1] as SendPort;
 
   final output = StringBuffer();
   Completer<void>? asyncCompleter;
 
-  try {
-    final engine = DarticEngine(
-      plugins: [DarticStdlibPlugin()],
-      config: DarticConfig(onPrint: (s) {
-        output.writeln(s);
-        // Detect co19 async test marker — defer result until success/failure.
-        final str = '$s';
-        if (str.contains('unittest-suite-wait-for-done')) {
-          asyncCompleter ??= Completer<void>();
-        }
-        if (str.contains('unittest-suite-success') && asyncCompleter != null) {
-          if (!asyncCompleter!.isCompleted) asyncCompleter!.complete();
-        }
-      }),
-    );
-    engine.loadBytecode(darbBytes);
-    // Dart spec: main() may accept 0, 1, or 2 params.
-    // If 1: List<String> args. If 2: (List<String>, dynamic sendPort).
-    final mainParams = engine.getExportParamCount('main') ?? 0;
-    final mainArgs = <Object?>[
-      if (mainParams >= 1) <String>[],
-      if (mainParams >= 2) null,
-    ];
-    final result = engine.call('main', mainArgs);
-    if (result is Future) await result;
-    // Wait for async tests: Timer callbacks haven't fired yet at this point.
-    if (asyncCompleter != null && !asyncCompleter!.isCompleted) {
-      await asyncCompleter!.future;
+  // Ensure we only send one reply — the first error or success wins.
+  bool replied = false;
+  void reply(int code, String out, String err) {
+    if (!replied) {
+      replied = true;
+      sendPort.send([code, out, err]);
     }
-    sendPort.send([0, output.toString(), '']);
-  } on Object catch (e, st) {
-    sendPort.send([1, output.toString(), '$e\n$st']);
   }
+
+  runZonedGuarded(
+    () async {
+      try {
+        final engine = DarticEngine(
+          plugins: [DarticStdlibPlugin()],
+          config: DarticConfig(onPrint: (s) {
+            output.writeln(s);
+            // Detect co19 async test marker — defer result until success/failure.
+            final str = '$s';
+            if (str.contains('unittest-suite-wait-for-done')) {
+              asyncCompleter ??= Completer<void>();
+            }
+            if (str.contains('unittest-suite-success') &&
+                asyncCompleter != null) {
+              if (!asyncCompleter!.isCompleted) asyncCompleter!.complete();
+            }
+          }),
+        );
+        engine.loadBytecode(darbBytes);
+        // Dart spec: main() may accept 0, 1, or 2 params.
+        // If 1: List<String> args. If 2: (List<String>, dynamic sendPort).
+        final mainParams = engine.getExportParamCount('main') ?? 0;
+        final mainArgs = <Object?>[
+          if (mainParams >= 1) <String>[],
+          if (mainParams >= 2) null,
+        ];
+        final result = engine.call('main', mainArgs);
+        if (result is Future) await result;
+        // Wait for async tests: Timer callbacks haven't fired yet at this point.
+        if (asyncCompleter != null && !asyncCompleter!.isCompleted) {
+          await asyncCompleter!.future;
+        }
+        reply(0, output.toString(), '');
+      } on Object catch (e, st) {
+        reply(1, output.toString(), '$e\n$st');
+      }
+    },
+    (error, stackTrace) {
+      // Catch uncaught async errors from Streams/Timers/Zones that escape
+      // the try/catch above. Send as failure if no reply has been sent yet.
+      reply(1, output.toString(), '$error\n$stackTrace');
+      // Unblock the async completer wait if it's still pending.
+      if (asyncCompleter != null && !asyncCompleter!.isCompleted) {
+        asyncCompleter!.completeError(error, stackTrace);
+      }
+    },
+  );
 }
 
 /// Executes darb bytes in a spawned [Isolate] with timeout.
@@ -863,7 +890,18 @@ Future<List<TestOutcome>> runTestsParallel(
   Future<void> runOne(int index) async {
     await pool.acquire();
     try {
-      results[index] = await runTest(entries[index], timeout: timeout);
+      // Overall timeout covers both CFE compilation and isolate execution.
+      // Slightly longer than the isolate timeout to avoid racing.
+      final overallTimeout = timeout + const Duration(seconds: 15);
+      results[index] = await runTest(entries[index], timeout: timeout)
+          .timeout(overallTimeout, onTimeout: () {
+        return TestOutcome(
+          entry: entries[index],
+          result: TestResult.error,
+          message: 'overall timeout after ${overallTimeout.inSeconds}s '
+              '(compilation or isolate hung)',
+        );
+      });
     } finally {
       pool.release();
       completed++;

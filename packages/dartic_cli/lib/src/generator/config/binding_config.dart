@@ -47,9 +47,11 @@ class LibraryConfig {
   /// whose URI starts with this prefix.
   final String? discover;
 
-  /// Classes to exclude from auto-discovery (only used when [discover] is set).
-  /// Format: qualified 'libraryUri::ClassName'
-  /// (e.g. 'package:flutter/src/painting/_network_image_io.dart::NetworkImage').
+  /// Classes and top-level functions to exclude from auto-discovery
+  /// (only used when [discover] is set).
+  /// Format: qualified 'libraryUri::Name'
+  /// (e.g. 'package:flutter/src/painting/_network_image_io.dart::NetworkImage',
+  ///  'dart:io::exit').
   final List<String> exclude;
 
   /// Extra imports needed by hand-written `extra_methods` code.

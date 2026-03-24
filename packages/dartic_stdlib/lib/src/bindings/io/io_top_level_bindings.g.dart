@@ -8,15 +8,13 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer' hide log;
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
 abstract final class IoTopLevelBindings {
   static void register(DarticPluginContext ctx) {
-    ctx.registerBinding('dart:io::::exit#1', (args) => exit(args[0] as int));
-    ctx.registerBinding('dart:io::::sleep#1', (args) { sleep(args[0] as Duration); return null; });
     ctx.registerBinding('dart:io::::stdioType#1', (args) => stdioType(args[0]));
   }
 }

@@ -1081,6 +1081,7 @@ class Runner {
     }
 
     // Auto-discover top-level functions not already in YAML.
+    // Exclude uses qualified format: 'libraryUri::functionName'.
     final explicitFunctions = library.functions.map((f) => f.name).toSet();
     final discoveredFunctions = _kernelIntrospector!
         .listPublicTopLevelFunctions(library.uri, discoverMode: mode);
@@ -1088,6 +1089,7 @@ class Runner {
     var addedFnCount = 0;
     for (final fn in discoveredFunctions) {
       if (explicitFunctions.contains(fn.name)) continue;
+      if (excludeSet.contains('${fn.libraryUri}::${fn.name}')) continue;
       mergedFunctions.add(FunctionConfig(
         name: fn.name,
         sourceLibraryUri: fn.libraryUri,

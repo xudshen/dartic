@@ -6,3 +6,12 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: dart:io
     discover: all
+    exclude:
+      # Top-level functions
+      - "dart:io::exit"       # kills host process
+      - "dart:io::sleep"      # blocks host event loop
+      # Classes with dangerous operations
+      - "dart:io::Process"    # arbitrary command execution, killPid
+      - "dart:io::Platform"   # leaks host paths, env vars, executable args
+      - "dart:io::IOOverrides"  # overrides global IO behavior
+      - "dart:io::Pipe"       # creates OS-level pipes
