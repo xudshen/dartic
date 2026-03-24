@@ -40,6 +40,7 @@ class FieldLayout {
     required this.kind,
     this.isLate = false,
     this.isFinal = false,
+    this.hasInitializer = false,
   });
 
   /// Offset within refFields or valueFields.
@@ -53,6 +54,11 @@ class FieldLayout {
 
   /// Whether this field is declared `final` (relevant for late final guards).
   final bool isFinal;
+
+  /// Whether this late field has an initializer expression.
+  /// When true, all writes are rejected (the initializer runs on first read).
+  /// When false, the first write is allowed (implicit setter semantics).
+  final bool hasInitializer;
 }
 
 /// Dart 3 class modifier flags stored as a bitfield.

@@ -2630,6 +2630,38 @@ class DarticInterpreter {
             }
           }
 
+          // List.length= guard: expanding a list with non-nullable element
+          // type must throw (padding with null is invalid per Dart spec).
+          // Host lists are created as List<dynamic> so they don't enforce
+          // this natively — we check the TAG_TYPE element nullability.
+          if (methodName == 'length=') {
+            final receiver = rs.read(rBase + a + 1);
+            if (receiver is List) {
+              final newLength = rs.read(rBase + a + 2);
+              if (newLength is int && newLength > receiver.length) {
+                final tag = _hostTypeTable.lookup(receiver);
+                if (tag is DarticInterfaceType &&
+                    tag.typeArgs.isNotEmpty) {
+                  final elemType = tag.typeArgs.first;
+                  // Null <: E holds when E is nullable, dynamic, or void.
+                  final isNullSubtype = elemType.nullability ==
+                          Nullability.nullable ||
+                      (elemType is DarticInterfaceType &&
+                          (elemType.classId == SpecialClassId.dynamic_ ||
+                              elemType.classId == SpecialClassId.void_));
+                  if (!isNullSubtype) {
+                    try {
+                      throw RangeError.range(newLength, 0, receiver.length);
+                    } catch (e, st) {
+                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                      continue;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           if (methodName != null && _activeDarticDispatch != null) {
             final receiver = rs.read(rBase + a + 1);
             DarticObject? darticObj;
@@ -3873,12 +3905,52 @@ class DarticInterpreter {
                       pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                     }
                   } else {
-                    // No setter → field has initializer → reject write.
-                    try {
-                      throw DarticLateError(
-                          "Cannot assign to late final field '$name'.");
-                    } catch (e, st) {
-                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    // No setter method. Determine if this is a writable
+                    // late final field (no initializer) or a read-only one.
+                    //
+                    // Walk the field and parent chain: if the current class's
+                    // field has an initializer, check whether a parent declares
+                    // the same field without initializer (inheritable setter).
+                    var targetLayout = fieldLayout;
+                    if (targetLayout.hasInitializer) {
+                      // Check parent class for a writable version.
+                      var sid = classInfo.superClassId;
+                      while (sid >= 0 && sid < module.classes.length) {
+                        final parentField =
+                            module.classes[sid].fields[nameIdx];
+                        if (parentField != null &&
+                            parentField.isLate &&
+                            parentField.isFinal &&
+                            !parentField.hasInitializer) {
+                          targetLayout = parentField;
+                          break;
+                        }
+                        sid = module.classes[sid].superClassId;
+                      }
+                    }
+                    if (targetLayout.hasInitializer) {
+                      // No writable parent field → reject write.
+                      try {
+                        throw DarticLateError(
+                            "Cannot assign to late final field '$name'.");
+                      } catch (e, st) {
+                        pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                      }
+                    } else {
+                      // Allow first write via sentinel check.
+                      final currentVal =
+                          receiver.refFields[targetLayout.offset];
+                      if (identical(currentVal, lateSentinel) ||
+                          currentVal == null) {
+                        receiver.refFields[targetLayout.offset] = value;
+                      } else {
+                        try {
+                          throw DarticLateError(
+                              "Cannot assign to late final field '$name'.");
+                        } catch (e, st) {
+                          pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                        }
+                      }
                     }
                   }
                   continue;

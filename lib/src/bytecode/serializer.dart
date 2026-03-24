@@ -210,8 +210,10 @@ class DarticSerializer {
       w.writeUint32(entry.key); // nameIndex
       w.writeUint32(entry.value.offset);
       w.addByte(entry.value.kind.index);
-      // v5: late/final flags packed into 1 byte (bit0=isLate, bit1=isFinal)
-      w.addByte((entry.value.isLate ? 1 : 0) | (entry.value.isFinal ? 2 : 0));
+      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer)
+      w.addByte((entry.value.isLate ? 1 : 0) |
+          (entry.value.isFinal ? 2 : 0) |
+          (entry.value.hasInitializer ? 4 : 0));
     }
 
     // supertypeIds: Set<int>

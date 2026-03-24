@@ -134,6 +134,7 @@ extension on DarticCompiler {
         kind: kind,
         isLate: field.isLate,
         isFinal: field.isFinal,
+        hasInitializer: field.isLate && field.initializer != null,
       );
       fieldLayouts[field.getterReference] = layout;
       final setterRef = field.setterReference;

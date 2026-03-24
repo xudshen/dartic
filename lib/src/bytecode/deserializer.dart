@@ -261,13 +261,14 @@ class DarticDeserializer {
       final nameIndex = r.readUint32();
       final offset = r.readUint32();
       final kindIndex = r.readByte();
-      // v5: late/final flags packed into 1 byte (bit0=isLate, bit1=isFinal)
+      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer)
       final flags = r.readByte();
       cls.fields[nameIndex] = FieldLayout(
         offset: offset,
         kind: StackKind.values[kindIndex],
         isLate: flags & 1 != 0,
         isFinal: flags & 2 != 0,
+        hasInitializer: flags & 4 != 0,
       );
     }
 
