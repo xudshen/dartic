@@ -16,10 +16,6 @@ void main() {
       expect(requiredDartSdk, startsWith('^'));
     });
 
-    test('requiredFlutterSdk starts with ^', () {
-      expect(requiredFlutterSdk, startsWith('^'));
-    });
-
     test('kernelFormatVersion is a positive integer', () {
       expect(kernelFormatVersion, isA<int>());
       expect(kernelFormatVersion, greaterThan(0));

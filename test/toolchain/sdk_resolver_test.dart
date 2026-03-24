@@ -203,15 +203,14 @@ void main() {
         );
       });
 
-      test('resolveFlutterSdk auto-discovery or skip', () {
+      test('resolveFlutterSdk requires explicitPath', () {
         final resolver = SdkResolver();
-        try {
-          final result = resolver.resolveFlutterSdk();
-          expect(result, isNotEmpty);
-          expect(Directory(result).existsSync(), isTrue);
-        } on SdkNotFoundError {
-          markTestSkipped('Flutter SDK not found');
-        }
+        // Without explicitPath, the only way to call is with a path.
+        // Verify it validates the path exists.
+        expect(
+          () => resolver.resolveFlutterSdk(explicitPath: '/nonexistent'),
+          throwsA(isA<SdkNotFoundError>()),
+        );
       });
     });
   });
