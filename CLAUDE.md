@@ -18,8 +18,8 @@ fvm dart run packages/dartic_cli/bin/dartic.dart doctor
 fvm dart run packages/dartic_cli/bin/dartic.dart version
 
 # Gen verification
-fvm dart run packages/dartic_cli/bin/dartic.dart gen --all --emit-tests --test-output test/gen_verify
-fvm dart run packages/dartic_cli/bin/dartic.dart gen --all --check
+fvm dart run packages/dartic_cli/bin/dartic.dart gen packages/dartic_stdlib/configs --emit-tests
+fvm dart run packages/dartic_cli/bin/dartic.dart gen packages/dartic_stdlib/configs --check
 fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify
 fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify compile
 fvm dart run packages/dartic_cli/bin/dartic.dart gen-verify test

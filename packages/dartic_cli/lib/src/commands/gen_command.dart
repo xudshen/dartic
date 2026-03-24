@@ -1,12 +1,6 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:path/path.dart' as p;
-import '../generator/audit/audit_reporter.dart';
-import '../generator/config/yaml_parser.dart';
-import '../generator/discover/discover_runner.dart';
-import '../generator/kernel/kernel_introspector.dart';
-import '../generator/kernel/stub_dill_compiler.dart';
 import '../generator/runner.dart';
 import '../generator/scanner.dart';
 import 'package:mason_logger/mason_logger.dart';
@@ -32,11 +26,6 @@ class GenCommand extends Command<int> {
         help: 'Analysis root directory for type resolution.',
       )
       ..addFlag(
-        'all',
-        help: 'Run gen on all YAML configs in the configs/ directory.',
-        negatable: false,
-      )
-      ..addFlag(
         'check',
         help: 'Check if generated files are up to date (exit 2 if stale).',
         negatable: false,
@@ -47,43 +36,14 @@ class GenCommand extends Command<int> {
         negatable: false,
       )
       ..addOption(
-        'test-output',
-        help: 'Override output directory for generated test files.\n'
-            'Default: auto-detected from config path '
-            '(e.g. packages/<pkg>/test/gen_verify/).',
-      )
-      ..addFlag(
-        'strict',
-        help: 'Audit strict mode: fail on missing or stale bindings.',
-        negatable: false,
-      )
-      ..addFlag(
-        'clean',
-        help: 'Delete output_bindings directories before generating.',
-        negatable: false,
-      )
-      ..addOption(
-        'discover',
-        help: 'Run auto-discovery for a library URI and compare against YAML.\n'
-            'Example: dartic gen --discover dart:collection',
-      )
-      ..addOption(
         'compiler-mode',
-        help: 'Kernel compilation mode.\n'
-            'dart: standard dart compile kernel (default)\n'
-            'frontend-server: Flutter frontend_server for dart:ui projects',
+        help: 'Kernel compilation mode (dart or frontend-server).',
         allowed: ['dart', 'frontend-server'],
         defaultsTo: 'dart',
       )
       ..addOption(
         'flutter-sdk',
-        help: 'Flutter SDK path (required when compiler-mode=frontend-server).',
-      )
-      ..addOption(
-        'test-framework',
-        help: 'Test framework for generated verification tests.',
-        allowed: ['test', 'flutter_test'],
-        defaultsTo: 'test',
+        help: 'Flutter SDK path (for compiler-mode=frontend-server).',
       );
   }
 
@@ -100,38 +60,13 @@ class GenCommand extends Command<int> {
     final scanPath = argResults!['scan'] as String?;
     final outputDir = argResults!['output'] as String?;
     final analysisRoot = argResults!['analysis-root'] as String?;
-    final all = argResults!['all'] as bool;
     final check = argResults!['check'] as bool;
     final emitTests = argResults!['emit-tests'] as bool;
-    final testOutputDir = argResults!['test-output'] as String?;
-    final strict = argResults!['strict'] as bool;
-    final clean = argResults!['clean'] as bool;
-    final discoverUri = argResults!['discover'] as String?;
     final compilerMode = argResults!['compiler-mode'] as String;
     final flutterSdk = argResults!['flutter-sdk'] as String?;
-    final testFramework = argResults!['test-framework'] as String;
-    final isFlutter = compilerMode == 'frontend-server' ||
-        testFramework == 'flutter_test';
+    final isFlutter = compilerMode == 'frontend-server';
 
     try {
-      if (discoverUri != null) {
-        return await _runDiscover(discoverUri, analysisRoot: analysisRoot);
-      }
-
-      if (all) {
-        return await _runAll(
-          analysisRoot: analysisRoot,
-          check: check,
-          emitTests: emitTests,
-          testOutputDir: emitTests ? testOutputDir : null,
-          strict: strict,
-          clean: clean,
-          compilerMode: compilerMode,
-          flutterSdkPath: flutterSdk,
-          isFlutter: isFlutter,
-        );
-      }
-
       if (scanPath != null) {
         // Scan mode: discover @DarticExport annotations
         final config = await scanForExports(
@@ -151,8 +86,6 @@ class GenCommand extends Command<int> {
           analysisRoot: analysisRoot,
           checkMode: check,
           emitTests: emitTests,
-          testOutputDir: emitTests ? testOutputDir : null,
-          strict: strict,
           compilerMode: compilerMode,
           flutterSdkPath: flutterSdk,
           isFlutter: isFlutter,
@@ -160,13 +93,12 @@ class GenCommand extends Command<int> {
         await runner.runGeneratorConfig(config);
         if (check) return _checkResults(runner);
       } else {
-        // Config mode: read YAML config
+        // Config mode: positional argument (file or directory)
         final rest = argResults!.rest;
         if (rest.isEmpty) {
           throw UsageException(
             'Missing required argument: <config> '
-            '(or use --scan to discover annotations, '
-            'or --all to process all configs)',
+            '(or use --scan to discover annotations)',
             usage,
           );
         }
@@ -176,8 +108,6 @@ class GenCommand extends Command<int> {
           analysisRoot: analysisRoot,
           checkMode: check,
           emitTests: emitTests,
-          testOutputDir: emitTests ? testOutputDir : null,
-          strict: strict,
           compilerMode: compilerMode,
           flutterSdkPath: flutterSdk,
           isFlutter: isFlutter,
@@ -206,179 +136,11 @@ class GenCommand extends Command<int> {
     }
   }
 
-  /// Runs gen on all known configs directories.
-  ///
-  /// Scans `packages/dartic_stdlib/configs/` relative to CWD.
-  /// If a positional arg is given, treats it as the single configs directory.
-  Future<int> _runAll({
-    String? analysisRoot,
-    required bool check,
-    bool emitTests = false,
-    String? testOutputDir,
-    bool strict = false,
-    bool clean = false,
-    String compilerMode = 'dart',
-    String? flutterSdkPath,
-    bool isFlutter = false,
-  }) async {
-    final rest = argResults!.rest;
-
-    if (rest.isNotEmpty) {
-      // Positional arg overrides: treat it as the configs directory
-      final configDir = rest.first;
-      final runner = Runner(
-        analysisRoot: analysisRoot,
-        checkMode: check,
-        emitTests: emitTests,
-        testOutputDir: testOutputDir,
-        strict: strict,
-        compilerMode: compilerMode,
-        flutterSdkPath: flutterSdkPath,
-        isFlutter: isFlutter,
-      );
-      await runner.runConfigDirectory(configDir);
-      if (runner.printAuditSummary()) return 2;
-      if (check) return _checkResults(runner);
-      _logger.success('Code generation complete.');
-      return 0;
-    }
-
-    // Default: process well-known configs directories.
-    // Each runner writes tests directly to its package's test/gen_verify/
-    // directory (auto-detected from config path), so no merge step is needed.
-    final configsDirs = <(String path, String? analysisRootOverride)>[
-      ('packages/dartic_stdlib/configs', null),
-    ];
-
-    // Clean output_bindings directories before generation if requested.
-    if (clean) {
-      final cleaned = <String>{};
-      for (final (dirPath, _) in configsDirs) {
-        final dir = Directory(dirPath);
-        if (!dir.existsSync()) continue;
-        final yamlFiles = dir
-            .listSync()
-            .whereType<File>()
-            .where((f) => f.path.endsWith('.yaml'));
-        for (final f in yamlFiles) {
-          final config = parseConfigFile(f.path);
-          final absPath = p.normalize(p.absolute(config.outputBindings));
-          if (cleaned.add(absPath)) {
-            final outDir = Directory(absPath);
-            if (outDir.existsSync()) {
-              // Only delete generated .g.dart files, preserve hand-written helpers.
-              final gFiles = outDir
-                  .listSync()
-                  .whereType<File>()
-                  .where((f) => f.path.endsWith('.g.dart'));
-              if (gFiles.isNotEmpty) {
-                _logger.info('Cleaning ${gFiles.length} .g.dart files in $absPath');
-                for (final gf in gFiles) {
-                  gf.deleteSync();
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Collect results across all runners.
-    final allWrittenFiles = <String, String>{};
-    bool hasStrictFailure = false;
-
-    for (final (dirPath, rootOverride) in configsDirs) {
-      final dir = Directory(dirPath);
-      if (!dir.existsSync()) {
-        _logger.detail('Skipping $dirPath (not found)');
-        continue;
-      }
-
-      final effectiveRoot = analysisRoot ?? rootOverride;
-      _logger.info('Processing $dirPath ...');
-      final runner = Runner(
-        analysisRoot: effectiveRoot,
-        checkMode: check,
-        emitTests: emitTests,
-        testOutputDir: testOutputDir,
-        strict: strict,
-        compilerMode: compilerMode,
-        flutterSdkPath: flutterSdkPath,
-        isFlutter: isFlutter,
-      );
-      await runner.runConfigDirectory(dirPath);
-
-      // Per-directory audit summary.
-      if (runner.auditResults.isNotEmpty) {
-        AuditReporter.printSummary(runner.auditResults, label: dirPath);
-      }
-      if (strict) {
-        final hasErrors = runner.auditResults.any(
-            (r) => r.missing.isNotEmpty || r.stale.isNotEmpty);
-        if (hasErrors) hasStrictFailure = true;
-      }
-
-      if (check) {
-        allWrittenFiles.addAll(runner.writtenFiles);
-      }
-    }
-
-    if (hasStrictFailure) {
-      _logger.err('STRICT: audit failures detected.');
-      return 2;
-    }
-
-    if (check) {
-      return _checkWrittenFiles(allWrittenFiles);
-    }
-
-    _logger.success('Code generation complete.');
-    return 0;
-  }
-
   /// Compares written files from a single runner against disk.
   int _checkResults(Runner runner) {
-    return _checkWrittenFiles(runner.writtenFiles);
-  }
-
-  /// Runs auto-discovery for a single library URI.
-  Future<int> _runDiscover(
-    String libraryUri, {
-    String? analysisRoot,
-  }) async {
-    _logger.info('Discovering: $libraryUri ...');
-
-    final dartBin = Platform.resolvedExecutable;
-
-    final component = await StubDillCompiler.compileAndLoad(
-      libraryUris: [libraryUri],
-      dartBin: dartBin,
-      analysisRoot: analysisRoot,
-    );
-    final introspector = KernelIntrospector(component);
-
-    final runner = DiscoverRunner(introspector);
-    final report = runner.discover(libraryUri);
-
-    final yamlConfig = DiscoverRunner.findYamlConfig(libraryUri);
-    if (yamlConfig != null) {
-      _logger.info('Found YAML config, comparing...');
-    } else {
-      _logger.info('No YAML config found, showing discovery only.');
-    }
-
-    final comparison = runner.compare(report, yamlConfig);
-    runner.printReport(comparison);
-
-    return 0;
-  }
-
-  /// Compares a map of {path: content} against actual files on disk.
-  /// Returns 0 if all match, 2 if any differ or are missing.
-  int _checkWrittenFiles(Map<String, String> writtenFiles) {
     var hasDrift = false;
 
-    for (final entry in writtenFiles.entries) {
+    for (final entry in runner.writtenFiles.entries) {
       final file = File(entry.key);
       if (!file.existsSync()) {
         _logger.err('Missing: ${entry.key}');
