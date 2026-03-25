@@ -33,7 +33,7 @@ DarticType resolveType(
     VoidTemplate() => registry.voidType,
     DynamicTemplate() => registry.dynamicType,
     NeverTemplate() => registry.neverType,
-    TypeParameterTemplate() => _resolveTypeParam(template, ita, fta),
+    TypeParameterTemplate() => _resolveTypeParam(template, ita, fta, registry),
     StructuralParamTemplate() => DarticTypeParameterType(template.index),
     NullableTemplate() => _resolveNullable(template, ita, fta, registry),
     InterfaceTypeTemplate() =>
@@ -46,15 +46,28 @@ DarticType resolveType(
 }
 
 /// Resolves a type parameter reference from ITA or FTA.
+///
+/// Falls back to `dynamic` when the type argument list is null or the
+/// index is out of range. This can happen when a closure's typeTemplate
+/// references a class-level type parameter but the closure is extracted
+/// without an ITA context (e.g., during INSTANCE_OF on a DarticClosure
+/// that was created inside a generic host-bridge method).
 DarticType _resolveTypeParam(
   TypeParameterTemplate template,
   List<DarticType>? ita,
   List<DarticType>? fta,
+  TypeRegistry registry,
 ) {
   if (template.isFunctionTypeParam) {
-    return fta![template.index];
+    if (fta == null || template.index >= fta.length) {
+      return registry.dynamicType;
+    }
+    return fta[template.index];
   } else {
-    return ita![template.index];
+    if (ita == null || template.index >= ita.length) {
+      return registry.dynamicType;
+    }
+    return ita[template.index];
   }
 }
 

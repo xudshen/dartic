@@ -2260,6 +2260,12 @@ class _CapturedVarVisitor extends ir.RecursiveVisitor {
     super.visitVariableSet(node);
   }
 
+  @override
+  void visitLocalFunctionInvocation(ir.LocalFunctionInvocation node) {
+    _checkCaptured(node.variable);
+    super.visitLocalFunctionInvocation(node);
+  }
+
   void _checkCaptured(ir.VariableDeclaration varDecl) {
     // Skip if it's a parameter of the inner function or a local declaration.
     if (_localParams.contains(varDecl)) return;

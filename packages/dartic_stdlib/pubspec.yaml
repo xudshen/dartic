@@ -11,6 +11,8 @@ environment:
 dependencies:
   dartic:
     path: ../../
+  dartic_annotation:
+    path: ../dartic_annotation
 
 dartic:
   role: plugin

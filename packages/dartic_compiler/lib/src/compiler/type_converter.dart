@@ -214,6 +214,10 @@ TypeTemplate _convert(
             ),
         ],
       ),
+    // TypedefType is unwrapped to its underlying type.
+    ir.TypedefType() => _convert(
+        type.unalias, classIdLookup, classParams, funcParams,
+        structuralParams, coreTypes, currentFnTypeParams),
     // ExtensionType is erased to its representation type.
     ir.ExtensionType() => _convert(
         type.extensionTypeErasure, classIdLookup, classParams, funcParams,

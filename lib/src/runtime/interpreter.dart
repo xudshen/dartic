@@ -4642,8 +4642,13 @@ class DarticInterpreter {
 
           // ── Host object dispatch ──
           if (_hostClassRegistry != null) {
+            // Include both positional AND named args: the binding's
+            // method key is name#totalArity, so all args must be present.
+            // Named args are stored after positional on the ref stack in
+            // DynCallDescriptor order (matching declaration order).
+            final totalArgs = posCount + desc.namedArgNames.length;
             final hostArgs = List<Object?>.generate(
-              posCount,
+              totalArgs,
               (i) => rs.read(rBase + a + 2 + i),
             );
 
