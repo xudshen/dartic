@@ -487,10 +487,36 @@ class DarticCompiler {
             }
             ancestor = ancestor.superclass;
           }
-          // NOTE: Interface field override check deliberately omitted.
-          // The nnbd case (D implements C with different field layout)
-          // is a known limitation that requires a more targeted fix to
-          // avoid false positives with mixin-inherited fields.
+          // Interface field override: only mark as polymorphic when the
+          // storage kind actually differs (e.g., C has `late final int i`
+          // → ref storage, D implements C with `final int i` → value storage).
+          // This avoids false positives from mixin-inherited fields where
+          // the name matches but storage is identical.
+          final thisLayout = _instanceFieldLayouts[cls]?[field.getterReference];
+          if (thisLayout != null &&
+              !_overriddenFieldNames.contains(mangledName)) {
+            for (final iface in cls.implementedTypes) {
+              final ifaceClass = iface.classNode;
+              for (final ifaceField in ifaceClass.fields) {
+                if (ifaceField.isStatic) continue;
+                if (ifaceField.name.text != name) continue;
+                if (isPrivate &&
+                    ifaceField.enclosingClass!.enclosingLibrary != fieldLib) {
+                  continue;
+                }
+                // Check if the interface's field has a different storage kind.
+                final ifaceLayout =
+                    _instanceFieldLayouts[ifaceClass]?[ifaceField.getterReference];
+                if (ifaceLayout != null &&
+                    ifaceLayout.kind != thisLayout.kind) {
+                  _overriddenFieldNames.add(mangledName);
+                  // Also add the interface field's mangled name if different.
+                  final ifaceMangledName = _mangleName(ifaceField.name);
+                  _overriddenFieldNames.add(ifaceMangledName);
+                }
+              }
+            }
+          }
         }
       }
     }

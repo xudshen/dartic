@@ -1110,60 +1110,6 @@ class DarticInterpreter {
     }
   }
 
-  /// Reads a field from [obj] when `GET_FIELD_REF` offset is out of bounds.
-  ///
-  /// This handles field layout mismatches where the static type stores a field
-  /// as ref (e.g., `late final int i`) but the actual type stores it as value
-  /// (e.g., `final int i`). Searches supertypes to find the field name from
-  /// the ref offset, then reads from the actual object's correct storage.
-  Object? _readFieldByRefOffset(
-      DarticObject obj, int refOffset, DarticModule module) {
-    final actualClass = module.classes[obj.classId];
-    // Find the field name by searching supertypes for one with a ref field
-    // at the given offset.
-    int? fieldNameIdx;
-    for (final superClassId in actualClass.supertypeIds) {
-      if (superClassId >= module.classes.length) continue;
-      final superClass = module.classes[superClassId];
-      for (final entry in superClass.fields.entries) {
-        if (entry.value.kind == StackKind.ref &&
-            entry.value.offset == refOffset) {
-          fieldNameIdx = entry.key;
-          break;
-        }
-      }
-      if (fieldNameIdx != null) break;
-    }
-    if (fieldNameIdx == null) {
-      throw DarticError(
-        'GET_FIELD_REF: ref offset $refOffset OOB on '
-        '${actualClass.name} and no matching field in supertypes',
-      );
-    }
-    // Look up the field in the actual class.
-    final layout = actualClass.fields[fieldNameIdx];
-    if (layout == null) {
-      throw DarticError(
-        'GET_FIELD_REF: field nameIdx=$fieldNameIdx not found in '
-        '${actualClass.name}',
-      );
-    }
-    if (layout.kind == StackKind.ref) {
-      return _unwrapClosureProxy(obj.refFields[layout.offset]);
-    }
-    // Value field — box and return.
-    final raw = obj.valueFields[layout.offset];
-    return switch (layout.kind) {
-      StackKind.intVal => raw, // Dart int
-      StackKind.doubleVal =>
-        ByteData(8)
-          ..setInt64(0, raw, Endian.little)
-          ..getFloat64(0, Endian.little),
-      StackKind.boolVal => raw != 0,
-      _ => throw DarticError('Unexpected field kind ${layout.kind}'),
-    };
-  }
-
   /// Routes [args] to the correct stack positions based on [proto.paramKinds].
   ///
   /// Convention: ref[0]=ITA, ref[1]=FTA, ref[2]=this (reserved).
@@ -3475,15 +3421,7 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + b)!);
-          if (c < obj.refFields.length) {
-            rs.write(rBase + a, _unwrapClosureProxy(obj.refFields[c]));
-          } else {
-            // Field layout mismatch: static type stores field as ref but
-            // actual type uses value storage (e.g., C has `late final int i`
-            // but D implements C with plain `final int i`).
-            rs.write(rBase + a,
-                _readFieldByRefOffset(obj, c, module));
-          }
+          rs.write(rBase + a, _unwrapClosureProxy(obj.refFields[c]));
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
           final a = decodeA(instr);
