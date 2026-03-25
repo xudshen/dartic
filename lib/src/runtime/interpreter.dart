@@ -15,6 +15,7 @@ import '../bytecode/deserializer.dart';
 import '../bytecode/encoding.dart';
 import '../bytecode/module.dart';
 import '../bytecode/opcodes.dart';
+import 'class_info.dart';
 import '../sandbox/load_error.dart';
 import '../sandbox/verifier.dart';
 import '../types/type_template.dart';
@@ -1017,38 +1018,59 @@ class DarticInterpreter {
   /// Returns normally if all args pass. Throws [TypeError] on mismatch.
   void _checkDynClosureArgs(
     DarticClosure closure,
-    List<Object?> positionalArgs,
-  ) {
+    List<Object?> positionalArgs, [
+    Map<String, Object?> namedArgs = const {},
+  ]) {
     final funcType = closure.runtimeType_;
     if (funcType is! DarticFunctionType) return;
     final checker = _subtypeChecker;
     final reg = _activeTypeRegistry;
     if (checker == null || reg == null) return;
 
+    // Check positional args.
     final paramTypes = funcType.positionalParams;
     for (var i = 0; i < positionalArgs.length && i < paramTypes.length; i++) {
-      final paramType = paramTypes[i];
-      // Skip dynamic/Object?/unresolved type params — always succeeds.
-      if (paramType is DarticTypeParameterType) continue;
-      if (paramType is DarticInterfaceType &&
-          (paramType.classId == SpecialClassId.dynamic_ ||
-              (paramType.classId == SpecialClassId.void_))) {
-        continue;
-      }
-      final arg = _unwrapClosureProxy(positionalArgs[i]);
-      // null is allowed for nullable types, disallowed for non-nullable.
-      if (arg == null) {
-        if (paramType is DarticInterfaceType &&
-            paramType.nullability != Nullability.nullable) {
-          throw TypeError();
+      _checkArgType(positionalArgs[i], paramTypes[i], checker, reg);
+    }
+
+    // Check named args.
+    if (namedArgs.isNotEmpty && funcType.namedParams.isNotEmpty) {
+      for (final named in funcType.namedParams) {
+        if (namedArgs.containsKey(named.name)) {
+          _checkArgType(namedArgs[named.name], named.type, checker, reg);
         }
-        continue;
       }
-      final argType = extractType(
-          arg, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
-      if (!checker.isSubtypeOf(argType, paramType)) {
+    }
+  }
+
+  /// Checks a single argument against its expected parameter type.
+  /// Throws [TypeError] on mismatch. Skips dynamic/void/unresolved type params.
+  void _checkArgType(
+    Object? arg,
+    DarticType paramType,
+    SubtypeChecker checker,
+    TypeRegistry reg,
+  ) {
+    // Skip dynamic/Object?/unresolved type params — always succeeds.
+    if (paramType is DarticTypeParameterType) return;
+    if (paramType is DarticInterfaceType &&
+        (paramType.classId == SpecialClassId.dynamic_ ||
+            paramType.classId == SpecialClassId.void_)) {
+      return;
+    }
+    final unwrapped = _unwrapClosureProxy(arg);
+    // null is allowed for nullable types, disallowed for non-nullable.
+    if (unwrapped == null) {
+      if (paramType is DarticInterfaceType &&
+          paramType.nullability != Nullability.nullable) {
         throw TypeError();
       }
+      return;
+    }
+    final argType = extractType(
+        unwrapped, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+    if (!checker.isSubtypeOf(argType, paramType)) {
+      throw TypeError();
     }
   }
 
@@ -1068,47 +1090,22 @@ class DarticInterpreter {
     return checker.isSubtypeOf(valueType, targetType);
   }
 
-  /// Checks generic collection element types for mutation methods.
+  /// Checks a value against a field's [FieldLayout.typeTemplate].
   ///
-  /// Dartic creates collections as `<Object?>` and tags them with TAG_TYPE
-  /// for dartic-level type checks. When mutation methods (add, []=, etc.)
-  /// are called through dynamic dispatch, the host VM doesn't enforce element
-  /// types. This method throws [TypeError] if the argument violates the
-  /// collection's generic type constraint.
-  void _checkCollectionMutationTypes(
-    Object receiver,
-    String methodName,
-    List<Object?> args,
-    DarticInterfaceType tag,
-  ) {
-    // List<E>: add(E), insert(int, E), []=(int, E)
-    if (receiver is List && tag.typeArgs.length == 1) {
-      final elementType = tag.typeArgs[0];
-      switch (methodName) {
-        case 'add' when args.length >= 1:
-          if (!_isValueSubtypeOf(args[0], elementType)) throw TypeError();
-        case 'insert' when args.length >= 2:
-          if (!_isValueSubtypeOf(args[1], elementType)) throw TypeError();
-        case '[]=' when args.length >= 2:
-          if (!_isValueSubtypeOf(args[1], elementType)) throw TypeError();
-      }
+  /// Returns true if the value passes the type check (or if no template is
+  /// set). Returns false if the value violates the field's resolved type.
+  bool _checkFieldTypeTemplate(
+      FieldLayout layout, DarticObject receiver, Object? value) {
+    final template = layout.typeTemplate;
+    if (template == null || _activeTypeRegistry == null) return true;
+    List<DarticType>? ita;
+    final rt = receiver.runtimeType_;
+    if (rt is DarticInterfaceType && rt.typeArgs.isNotEmpty) {
+      ita = rt.typeArgs;
     }
-    // Set<E>: add(E)
-    if (receiver is Set && tag.typeArgs.length == 1) {
-      final elementType = tag.typeArgs[0];
-      if (methodName == 'add' && args.length >= 1) {
-        if (!_isValueSubtypeOf(args[0], elementType)) throw TypeError();
-      }
-    }
-    // Map<K,V>: []=(K, V)
-    if (receiver is Map && tag.typeArgs.length == 2) {
-      final keyType = tag.typeArgs[0];
-      final valueType = tag.typeArgs[1];
-      if (methodName == '[]=' && args.length >= 2) {
-        if (!_isValueSubtypeOf(args[0], keyType)) throw TypeError();
-        if (!_isValueSubtypeOf(args[1], valueType)) throw TypeError();
-      }
-    }
+    final concreteType =
+        resolveType(template, ita, null, _activeTypeRegistry!);
+    return _isValueSubtypeOf(value, concreteType);
   }
 
   /// Routes [args] to the correct stack positions based on [proto.paramKinds].
@@ -2655,9 +2652,13 @@ class DarticInterpreter {
                 (i) => rs.read(rBase + namedStart + i),
               );
               // Place each value at the callee's expected position.
+              final callNameIndex = {
+                for (var i = 0; i < callNames.length; i++)
+                  callNames[i]: i,
+              };
               for (var ci = 0; ci < calleeNames.length; ci++) {
-                final callIdx = callNames.indexOf(calleeNames[ci]);
-                if (callIdx >= 0 && callIdx < snapshot.length) {
+                final callIdx = callNameIndex[calleeNames[ci]];
+                if (callIdx != null && callIdx < snapshot.length) {
                   rs.write(rBase + namedStart + ci, snapshot[callIdx]);
                 }
               }
@@ -4209,29 +4210,16 @@ class DarticInterpreter {
                           receiver.refFields[targetLayout.offset];
                       if (identical(currentVal, lateSentinel) ||
                           currentVal == null) {
-                        // Type check for late final fields with generic types.
-                        final lateFieldTemplate = targetLayout.typeTemplate;
-                        if (lateFieldTemplate != null &&
-                            _activeTypeRegistry != null) {
-                          List<DarticType>? lateFieldIta;
-                          final rt = receiver.runtimeType_;
-                          if (rt is DarticInterfaceType &&
-                              rt.typeArgs.isNotEmpty) {
-                            lateFieldIta = rt.typeArgs;
-                          }
-                          final concreteType = resolveType(lateFieldTemplate,
-                              lateFieldIta, null, _activeTypeRegistry!);
-                          if (!_isValueSubtypeOf(value, concreteType)) {
-                            try {
-                              throw TypeError();
-                            } on Object catch (e, st) {
-                              pc = unwindToHandler(
-                                  pc - 1,
-                                  e,
-                                  DarticStackTrace.captureWithHost(callStack,
-                                      module, pc - 1, _hostNameStack, st));
-                              continue;
-                            }
+                        if (!_checkFieldTypeTemplate(targetLayout, receiver, value)) {
+                          try {
+                            throw TypeError();
+                          } on Object catch (e, st) {
+                            pc = unwindToHandler(
+                                pc - 1,
+                                e,
+                                DarticStackTrace.captureWithHost(callStack,
+                                    module, pc - 1, _hostNameStack, st));
+                            continue;
                           }
                         }
                         receiver.refFields[targetLayout.offset] = value;
@@ -4248,22 +4236,12 @@ class DarticInterpreter {
                   continue;
                 }
                 // Type check for fields with generic types (e.g., T x in C<T>).
-                final fieldTemplate = fieldLayout.typeTemplate;
-                if (fieldTemplate != null && _activeTypeRegistry != null) {
-                  List<DarticType>? fieldIta;
-                  final rt = receiver.runtimeType_;
-                  if (rt is DarticInterfaceType && rt.typeArgs.isNotEmpty) {
-                    fieldIta = rt.typeArgs;
-                  }
-                  final concreteType = resolveType(
-                      fieldTemplate, fieldIta, null, _activeTypeRegistry!);
-                  if (!_isValueSubtypeOf(value, concreteType)) {
-                    try {
-                      throw TypeError();
-                    } on Object catch (e, st) {
-                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                      continue;
-                    }
+                if (!_checkFieldTypeTemplate(fieldLayout, receiver, value)) {
+                  try {
+                    throw TypeError();
+                  } on Object catch (e, st) {
+                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                    continue;
                   }
                 }
                 switch (fieldLayout.kind) {
@@ -4404,7 +4382,7 @@ class DarticInterpreter {
                 );
                 if (closureArgs != null) {
                   try {
-                    _checkDynClosureArgs(fieldValue, callerPositional);
+                    _checkDynClosureArgs(fieldValue, callerPositional, callerNamed);
                     final result = _runNestedDispatch(
                       module: module,
                       proto: fieldValue.funcProto,
@@ -4461,7 +4439,7 @@ class DarticInterpreter {
             );
             if (closureArgs != null) {
               try {
-                _checkDynClosureArgs(receiver, callerPositional);
+                _checkDynClosureArgs(receiver, callerPositional, callerNamed);
                 final result = _runNestedDispatch(
                   module: module,
                   proto: receiver.funcProto,
@@ -4539,7 +4517,7 @@ class DarticInterpreter {
                   );
                   if (closureArgs != null) {
                     try {
-                      _checkDynClosureArgs(fieldValue, callerPositional);
+                      _checkDynClosureArgs(fieldValue, callerPositional, callerNamed);
                       final result = _runNestedDispatch(
                         module: module,
                         proto: fieldValue.funcProto,
@@ -4651,21 +4629,6 @@ class DarticInterpreter {
               totalArgs,
               (i) => rs.read(rBase + a + 2 + i),
             );
-
-            // Enforce generic collection element types for mutation methods.
-            // Dartic creates collections as <Object?> and tags them via
-            // TAG_TYPE. The host VM doesn't enforce element types on
-            // <Object?> collections, so we check here before dispatching.
-            final tag = _hostTypeTable.lookup(receiver);
-            if (tag is DarticInterfaceType && tag.typeArgs.isNotEmpty) {
-              try {
-                _checkCollectionMutationTypes(
-                    receiver, name, hostArgs, tag);
-              } on Object catch (e, st) {
-                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                continue;
-              }
-            }
 
             _wrapClosureArgs(hostArgs);
             try {

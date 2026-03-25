@@ -702,3 +702,6 @@ LibTest/async/StreamIterator/current_A01_t03.dart  # catchError handler returns 
 LibTest/async/Zone/registerCallback_A01_t01.dart         # callback is ZoneCallback<int> fails
 LibTest/async/Zone/registerUnaryCallback_A01_t01.dart    # same
 LibTest/async/Zone/registerBinaryCallback_A01_t01.dart   # same
+# Collection mutation type enforcement: collections created as <Object?> with TAG_TYPE,
+# host VM doesn't enforce element types on dynamic dispatch. Needs TypeCheckedList/Set/Map wrapper.
+LanguageFeatures/Records/type_inference_A01_t04.dart  # (List<int> as dynamic).add("") should throw TypeError

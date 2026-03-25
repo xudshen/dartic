@@ -188,8 +188,17 @@ class DarticDisassembler {
         final nameStr = nameIdx < cp.nameCount
             ? 'names[$nameIdx] "${cp.getName(nameIdx)}"'
             : 'names[$nameIdx]';
+        final flags = [
+          if (layout.isLate) 'late',
+          if (layout.isFinal) 'final',
+          if (layout.hasInitializer) 'hasInit',
+        ];
+        final flagStr = flags.isEmpty ? '' : ' [${flags.join(', ')}]';
+        final templateStr = layout.typeTemplate != null
+            ? ', typeTemplate: ${layout.typeTemplate}'
+            : '';
         buf.writeln(
-          '      $nameStr: $kindLabel, offset=${layout.offset}',
+          '      $nameStr: $kindLabel, offset=${layout.offset}$flagStr$templateStr',
         );
       }
     }
