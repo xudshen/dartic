@@ -3651,94 +3651,30 @@ extension on DarticCompiler {
       );
     }
 
-    // Check if all type args are static (no TypeParameterType).
-    // If so, we can use the compile-time thunk approach.
-    final hasRuntimeTypeArgs = typeArgs.any(_containsTypeParameter);
-    if (!hasRuntimeTypeArgs) {
-      final fn = tearOff.target.function;
-      final typeParams = fn.typeParameters;
-      if (typeParams.isEmpty || typeArgs.isEmpty) {
-        return _compileStaticTearOffConstant(tearOff);
-      }
-      final subst =
-          type_algebra.Substitution.fromPairs(typeParams, typeArgs);
-      return _generateInstantiationThunk(funcId, fn, subst, typeArgs);
+    final fn = tearOff.target.function;
+    final typeParams = fn.typeParameters;
+    if (typeParams.isEmpty || typeArgs.isEmpty) {
+      return _compileStaticTearOffConstant(tearOff);
     }
 
-    // Runtime type args: resolve at the call site and bind to the closure.
-    // 1. Create closure for the target function.
-    final closureReg = _allocRefReg();
-    _emitter.emitABx(Op.closure, closureReg, funcId);
-
-    // 2. Resolve each type argument to a DarticType via INSTANTIATE_TYPE.
-    final firstTypeReg = _refAlloc.allocConsecutive(typeArgs.length);
-    for (var i = 0; i < typeArgs.length; i++) {
-      final template = dartTypeToTemplate(
-        typeArgs[i],
-        _typeClassIdLookup,
-        enclosingClassTypeParams: _currentClassTypeParams,
-        enclosingFunctionTypeParams: _currentFunctionTypeParams,
-        coreTypes: _coreTypes,
-      );
-      final templateIdx = _constantPool.addRef(template);
-      _emitter.emitABx(
-          Op.instantiateType, firstTypeReg + i, templateIdx);
-    }
-
-    // 3. Bundle into a List<DarticType> via CREATE_TYPE_ARGS.
-    final ftaReg = _allocRefReg();
-    _emitter.emitABC(
-        Op.createTypeArgs, typeArgs.length, firstTypeReg, ftaReg);
-
-    // 4. Bind FTA to the closure.
-    _emitter.emitABC(Op.bindClosureFta, closureReg, ftaReg, 0);
-
-    return (closureReg, ResultLoc.ref);
+    // Always generate an instantiation thunk — even when type args contain
+    // runtime TypeParameterTypes.  The thunk's name (<instantiation-thunk:N>)
+    // is required for closure equality to work: plain tearoffs with boundFTA
+    // have a different name and fail the equality check against thunks produced
+    // by the static path (e.g., `C.foo<String>` vs `.foo<T>` where T=String).
+    //
+    // For runtime type args: _emitBindClosureFTA (emitted *after* the thunk in
+    // the enclosing function) resolves TypeParameterType via the enclosing
+    // function's FTA.  Inside the thunk, _emitFTAForCall emits INSTANTIATE_TYPE
+    // which resolves the same TypeParameterType template using the thunk's own
+    // FTA slot (set from boundFTA at call time).  So the inner function
+    // receives the correct concrete type args.
+    final subst =
+        type_algebra.Substitution.fromPairs(typeParams, typeArgs);
+    return _generateInstantiationThunk(funcId, fn, subst, typeArgs);
   }
 
-  /// Returns true if [type] contains any [ir.TypeParameterType] or
-  /// [ir.StructuralParameterType] that requires runtime resolution.
-  bool _containsTypeParameter(ir.DartType type) {
-    if (type is ir.TypeParameterType) return true;
-    if (type is ir.StructuralParameterType) return true;
-    if (type is ir.InterfaceType) {
-      return type.typeArguments.any(_containsTypeParameter);
-    }
-    if (type is ir.FunctionType) {
-      for (final tp in type.typeParameters) {
-        if (_containsTypeParameter(tp.bound)) return true;
-      }
-      if (_containsTypeParameter(type.returnType)) return true;
-      for (final p in type.positionalParameters) {
-        if (_containsTypeParameter(p)) return true;
-      }
-      for (final p in type.namedParameters) {
-        if (_containsTypeParameter(p.type)) return true;
-      }
-      return false;
-    }
-    if (type is ir.FutureOrType) {
-      return _containsTypeParameter(type.typeArgument);
-    }
-    // IntersectionType.left is always a TypeParameterType.
-    if (type is ir.IntersectionType) return true;
-    if (type is ir.RecordType) {
-      for (final p in type.positional) {
-        if (_containsTypeParameter(p)) return true;
-      }
-      for (final n in type.named) {
-        if (_containsTypeParameter(n.type)) return true;
-      }
-      return false;
-    }
-    if (type is ir.ExtensionType) {
-      return type.typeArguments.any(_containsTypeParameter);
-    }
-    if (type is ir.TypedefType) {
-      return type.typeArguments.any(_containsTypeParameter);
-    }
-    return false;
-  }
+
 
   /// Generates a bridge thunk for a generic function instantiation that has
   /// value/ref stack mismatches.

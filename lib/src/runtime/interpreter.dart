@@ -3731,7 +3731,10 @@ class DarticInterpreter {
           final isConst = (rawB & 0x8000) != 0;
           final b = rawB & 0x7FFF;
           final c = decodeC(instr);
-          final list = List<Object?>.generate(c, (i) => rs.read(rBase + b + i));
+          final list = List<Object?>.generate(c, (i) {
+            final v = rs.read(rBase + b + i);
+            return v is DarticClosure ? _wrapClosure(v) : v;
+          });
           rs.write(
               rBase + a, isConst ? List<Object?>.unmodifiable(list) : list);
 
@@ -3744,8 +3747,10 @@ class DarticInterpreter {
           final c = decodeC(instr);
           final map = <Object?, Object?>{};
           for (var i = 0; i < c; i++) {
-            final key = rs.read(rBase + b + i * 2);
-            final value = rs.read(rBase + b + i * 2 + 1);
+            final rawKey = rs.read(rBase + b + i * 2);
+            final rawVal = rs.read(rBase + b + i * 2 + 1);
+            final key = rawKey is DarticClosure ? _wrapClosure(rawKey) : rawKey;
+            final value = rawVal is DarticClosure ? _wrapClosure(rawVal) : rawVal;
             map[key] = value;
           }
           rs.write(rBase + a,
@@ -3760,7 +3765,8 @@ class DarticInterpreter {
           final c = decodeC(instr);
           final set = <Object?>{};
           for (var i = 0; i < c; i++) {
-            set.add(rs.read(rBase + b + i));
+            final v = rs.read(rBase + b + i);
+            set.add(v is DarticClosure ? _wrapClosure(v) : v);
           }
           rs.write(
               rBase + a, isConst ? Set<Object?>.unmodifiable(set) : set);

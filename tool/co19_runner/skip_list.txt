@@ -640,10 +640,12 @@ LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBa
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t05.dart
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t06.dart
 
-# ── Closure tearoff toString format (1) ───────────────────────────
+# ── Closure/type toString format (2) ──────────────────────────────
 # DarticClosure.toString() format differs from host VM closure format.
+# DarticFunctionType.toString() uses "int Function(int)" but Dart 3.x uses "(int) => int".
 # Low priority — cosmetic difference.
 LanguageFeatures/Constructor-tear-offs/ambiguities_A08_t02.dart
+LanguageFeatures/Constructor-tear-offs/summary_A03_t04.dart
 
 # ── Deferred import semantics (1) ─────────────────────────────────
 # Accessing deferred import members before loadLibrary() should throw.
