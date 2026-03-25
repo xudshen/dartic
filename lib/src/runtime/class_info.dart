@@ -41,6 +41,7 @@ class FieldLayout {
     this.isLate = false,
     this.isFinal = false,
     this.hasInitializer = false,
+    this.typeTemplate,
   });
 
   /// Offset within refFields or valueFields.
@@ -59,6 +60,14 @@ class FieldLayout {
   /// When true, all writes are rejected (the initializer runs on first read).
   /// When false, the first write is allowed (implicit setter semantics).
   final bool hasInitializer;
+
+  /// Type template for this field's declared type.
+  ///
+  /// Used by SET_FIELD_DYN to validate values written through dynamic dispatch.
+  /// For generic fields (e.g., `T x` in `C<T>`), the template contains a
+  /// [TypeParameterTemplate] that resolves to the concrete type via ITA.
+  /// Null for fields with no type checking needed (e.g., `dynamic`, `Object?`).
+  final TypeTemplate? typeTemplate;
 }
 
 /// Dart 3 class modifier flags stored as a bitfield.

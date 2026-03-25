@@ -1,5 +1,31 @@
 part of 'compiler.dart';
 
+/// Returns true if [type] contains any class-level [ir.TypeParameterType].
+///
+/// Used to decide whether a field needs a typeTemplate for runtime type
+/// checking in SET_FIELD_DYN.
+bool _containsClassTypeParameter(ir.DartType type) {
+  if (type is ir.TypeParameterType) return true;
+  if (type is ir.InterfaceType) {
+    return type.typeArguments.any(_containsClassTypeParameter);
+  }
+  if (type is ir.FutureOrType) {
+    return _containsClassTypeParameter(type.typeArgument);
+  }
+  if (type is ir.FunctionType) {
+    if (_containsClassTypeParameter(type.returnType)) return true;
+    for (final p in type.positionalParameters) {
+      if (_containsClassTypeParameter(p)) return true;
+    }
+    for (final n in type.namedParameters) {
+      if (_containsClassTypeParameter(n.type)) return true;
+    }
+    return false;
+  }
+  if (type is ir.IntersectionType) return true;
+  return false;
+}
+
 /// Class registration and constructor compilation for [DarticCompiler].
 extension on DarticCompiler {
   // ── Class registration (Pass 1c) ──
@@ -129,12 +155,26 @@ extension on DarticCompiler {
       // because they use null or lateSentinel as the "uninitialized" marker.
       final kind = field.isLate ? StackKind.ref : _classifyStackKind(field.type);
       final offset = kind.isValue ? valOffset++ : refOffset++;
+
+      // Build type template for SET_FIELD_DYN type checking.
+      // Skip for dynamic/Object? (always passes) and non-generic value types.
+      TypeTemplate? fieldTypeTemplate;
+      if (_containsClassTypeParameter(field.type)) {
+        fieldTypeTemplate = dartTypeToTemplate(
+          field.type,
+          _typeClassIdLookup,
+          enclosingClassTypeParams: cls.typeParameters,
+          coreTypes: _coreTypes,
+        );
+      }
+
       final layout = FieldLayout(
         offset: offset,
         kind: kind,
         isLate: field.isLate,
         isFinal: field.isFinal,
         hasInitializer: field.isLate && field.initializer != null,
+        typeTemplate: fieldTypeTemplate,
       );
       fieldLayouts[field.getterReference] = layout;
       final setterRef = field.setterReference;

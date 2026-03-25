@@ -272,14 +272,23 @@ class DarticDeserializer {
       final nameIndex = r.readUint32();
       final offset = r.readUint32();
       final kindIndex = r.readByte();
-      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer)
+      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer,
+      //                        bit3=hasTypeTemplate)
       final flags = r.readByte();
+      TypeTemplate? fieldTypeTemplate;
+      if (flags & 8 != 0) {
+        final ttLen = r.readUint32();
+        final ttInts = List<int>.generate(ttLen, (_) => r.readInt32());
+        final (tmpl, _) = TypeTemplate.deserialize(ttInts, 0);
+        fieldTypeTemplate = tmpl;
+      }
       cls.fields[nameIndex] = FieldLayout(
         offset: offset,
         kind: StackKind.values[kindIndex],
         isLate: flags & 1 != 0,
         isFinal: flags & 2 != 0,
         hasInitializer: flags & 4 != 0,
+        typeTemplate: fieldTypeTemplate,
       );
     }
 

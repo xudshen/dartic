@@ -218,10 +218,19 @@ class DarticSerializer {
       w.writeUint32(entry.key); // nameIndex
       w.writeUint32(entry.value.offset);
       w.addByte(entry.value.kind.index);
-      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer)
+      // v5+: field flags byte (bit0=isLate, bit1=isFinal, bit2=hasInitializer,
+      //                        bit3=hasTypeTemplate)
       w.addByte((entry.value.isLate ? 1 : 0) |
           (entry.value.isFinal ? 2 : 0) |
-          (entry.value.hasInitializer ? 4 : 0));
+          (entry.value.hasInitializer ? 4 : 0) |
+          (entry.value.typeTemplate != null ? 8 : 0));
+      if (entry.value.typeTemplate != null) {
+        final ttInts = entry.value.typeTemplate!.serialize();
+        w.writeUint32(ttInts.length);
+        for (final v in ttInts) {
+          w.writeInt32(v);
+        }
+      }
     }
 
     // supertypeIds: Set<int>

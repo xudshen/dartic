@@ -1005,6 +1005,165 @@ class DarticInterpreter {
     return value;
   }
 
+  /// Validates positional arguments against a [DarticClosure]'s runtime type.
+  ///
+  /// Called before dynamic closure dispatch (INVOKE_DYN) to enforce parameter
+  /// types at the dartic→closure boundary. When a generic function like
+  /// `foo<int>` is called through dynamic with the wrong argument type (e.g.,
+  /// String), Dart semantics require a TypeError.
+  ///
+  /// Returns normally if all args pass. Throws [TypeError] on mismatch.
+  void _checkDynClosureArgs(
+    DarticClosure closure,
+    List<Object?> positionalArgs,
+  ) {
+    final funcType = closure.runtimeType_;
+    if (funcType is! DarticFunctionType) return;
+    final checker = _subtypeChecker;
+    final reg = _activeTypeRegistry;
+    if (checker == null || reg == null) return;
+
+    final paramTypes = funcType.positionalParams;
+    for (var i = 0; i < positionalArgs.length && i < paramTypes.length; i++) {
+      final paramType = paramTypes[i];
+      // Skip dynamic/Object?/unresolved type params — always succeeds.
+      if (paramType is DarticTypeParameterType) continue;
+      if (paramType is DarticInterfaceType &&
+          (paramType.classId == SpecialClassId.dynamic_ ||
+              (paramType.classId == SpecialClassId.void_))) {
+        continue;
+      }
+      final arg = positionalArgs[i];
+      // null is allowed for nullable types, disallowed for non-nullable.
+      if (arg == null) {
+        if (paramType is DarticInterfaceType &&
+            paramType.nullability != Nullability.nullable) {
+          throw TypeError();
+        }
+        continue;
+      }
+      final argType = extractType(
+          arg, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+      if (!checker.isSubtypeOf(argType, paramType)) {
+        throw TypeError();
+      }
+    }
+  }
+
+  /// Validates a value against a DarticType from a TAG_TYPE tagged collection.
+  ///
+  /// Used by INVOKE_DYN host dispatch to enforce generic collection element
+  /// types when mutation methods (add, []=, etc.) are called through dynamic.
+  bool _isValueSubtypeOf(Object? value, DarticType targetType) {
+    final checker = _subtypeChecker;
+    final reg = _activeTypeRegistry;
+    if (checker == null || reg == null) return true;
+    if (value == null) {
+      return targetType is DarticInterfaceType &&
+          targetType.nullability == Nullability.nullable;
+    }
+    final valueType = extractType(
+        value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+    return checker.isSubtypeOf(valueType, targetType);
+  }
+
+  /// Checks generic collection element types for mutation methods.
+  ///
+  /// Dartic creates collections as `<Object?>` and tags them with TAG_TYPE
+  /// for dartic-level type checks. When mutation methods (add, []=, etc.)
+  /// are called through dynamic dispatch, the host VM doesn't enforce element
+  /// types. This method throws [TypeError] if the argument violates the
+  /// collection's generic type constraint.
+  void _checkCollectionMutationTypes(
+    Object receiver,
+    String methodName,
+    List<Object?> args,
+    DarticInterfaceType tag,
+  ) {
+    // List<E>: add(E), insert(int, E), []=(int, E)
+    if (receiver is List && tag.typeArgs.length == 1) {
+      final elementType = tag.typeArgs[0];
+      switch (methodName) {
+        case 'add' when args.length >= 1:
+          if (!_isValueSubtypeOf(args[0], elementType)) throw TypeError();
+        case 'insert' when args.length >= 2:
+          if (!_isValueSubtypeOf(args[1], elementType)) throw TypeError();
+        case '[]=' when args.length >= 2:
+          if (!_isValueSubtypeOf(args[1], elementType)) throw TypeError();
+      }
+    }
+    // Set<E>: add(E)
+    if (receiver is Set && tag.typeArgs.length == 1) {
+      final elementType = tag.typeArgs[0];
+      if (methodName == 'add' && args.length >= 1) {
+        if (!_isValueSubtypeOf(args[0], elementType)) throw TypeError();
+      }
+    }
+    // Map<K,V>: []=(K, V)
+    if (receiver is Map && tag.typeArgs.length == 2) {
+      final keyType = tag.typeArgs[0];
+      final valueType = tag.typeArgs[1];
+      if (methodName == '[]=' && args.length >= 2) {
+        if (!_isValueSubtypeOf(args[0], keyType)) throw TypeError();
+        if (!_isValueSubtypeOf(args[1], valueType)) throw TypeError();
+      }
+    }
+  }
+
+  /// Reads a field from [obj] when `GET_FIELD_REF` offset is out of bounds.
+  ///
+  /// This handles field layout mismatches where the static type stores a field
+  /// as ref (e.g., `late final int i`) but the actual type stores it as value
+  /// (e.g., `final int i`). Searches supertypes to find the field name from
+  /// the ref offset, then reads from the actual object's correct storage.
+  Object? _readFieldByRefOffset(
+      DarticObject obj, int refOffset, DarticModule module) {
+    final actualClass = module.classes[obj.classId];
+    // Find the field name by searching supertypes for one with a ref field
+    // at the given offset.
+    int? fieldNameIdx;
+    for (final superClassId in actualClass.supertypeIds) {
+      if (superClassId >= module.classes.length) continue;
+      final superClass = module.classes[superClassId];
+      for (final entry in superClass.fields.entries) {
+        if (entry.value.kind == StackKind.ref &&
+            entry.value.offset == refOffset) {
+          fieldNameIdx = entry.key;
+          break;
+        }
+      }
+      if (fieldNameIdx != null) break;
+    }
+    if (fieldNameIdx == null) {
+      throw DarticError(
+        'GET_FIELD_REF: ref offset $refOffset OOB on '
+        '${actualClass.name} and no matching field in supertypes',
+      );
+    }
+    // Look up the field in the actual class.
+    final layout = actualClass.fields[fieldNameIdx];
+    if (layout == null) {
+      throw DarticError(
+        'GET_FIELD_REF: field nameIdx=$fieldNameIdx not found in '
+        '${actualClass.name}',
+      );
+    }
+    if (layout.kind == StackKind.ref) {
+      return _unwrapClosureProxy(obj.refFields[layout.offset]);
+    }
+    // Value field — box and return.
+    final raw = obj.valueFields[layout.offset];
+    return switch (layout.kind) {
+      StackKind.intVal => raw, // Dart int
+      StackKind.doubleVal =>
+        ByteData(8)
+          ..setInt64(0, raw, Endian.little)
+          ..getFloat64(0, Endian.little),
+      StackKind.boolVal => raw != 0,
+      _ => throw DarticError('Unexpected field kind ${layout.kind}'),
+    };
+  }
+
   /// Routes [args] to the correct stack positions based on [proto.paramKinds].
   ///
   /// Convention: ref[0]=ITA, ref[1]=FTA, ref[2]=this (reserved).
@@ -3316,7 +3475,15 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + b)!);
-          rs.write(rBase + a, _unwrapClosureProxy(obj.refFields[c]));
+          if (c < obj.refFields.length) {
+            rs.write(rBase + a, _unwrapClosureProxy(obj.refFields[c]));
+          } else {
+            // Field layout mismatch: static type stores field as ref but
+            // actual type uses value storage (e.g., C has `late final int i`
+            // but D implements C with plain `final int i`).
+            rs.write(rBase + a,
+                _readFieldByRefOffset(obj, c, module));
+          }
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
           final a = decodeA(instr);
@@ -4067,6 +4234,25 @@ class DarticInterpreter {
                   }
                   continue;
                 }
+                // Type check for fields with generic types (e.g., T x in C<T>).
+                final fieldTemplate = fieldLayout.typeTemplate;
+                if (fieldTemplate != null && _activeTypeRegistry != null) {
+                  List<DarticType>? fieldIta;
+                  final rt = receiver.runtimeType_;
+                  if (rt is DarticInterfaceType && rt.typeArgs.isNotEmpty) {
+                    fieldIta = rt.typeArgs;
+                  }
+                  final concreteType = resolveType(
+                      fieldTemplate, fieldIta, null, _activeTypeRegistry!);
+                  if (!_isValueSubtypeOf(value, concreteType)) {
+                    try {
+                      throw TypeError();
+                    } on Object catch (e, st) {
+                      pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                      continue;
+                    }
+                  }
+                }
                 switch (fieldLayout.kind) {
                   case StackKind.ref:
                     receiver.refFields[fieldLayout.offset] = value;
@@ -4205,6 +4391,7 @@ class DarticInterpreter {
                 );
                 if (closureArgs != null) {
                   try {
+                    _checkDynClosureArgs(fieldValue, callerPositional);
                     final result = _runNestedDispatch(
                       module: module,
                       proto: fieldValue.funcProto,
@@ -4261,12 +4448,7 @@ class DarticInterpreter {
             );
             if (closureArgs != null) {
               try {
-                // Use _runNestedDispatch directly instead of invokeClosure
-                // to avoid wrapping DarticClosure returns in ClosureAdapter.
-                // invokeClosure wraps DarticClosure results for host→dartic
-                // boundary exits, but here we're within the dispatch loop —
-                // the result stays on the ref stack and must remain a raw
-                // DarticClosure for later Op.call / INVOKE_DYN dispatch.
+                _checkDynClosureArgs(receiver, callerPositional);
                 final result = _runNestedDispatch(
                   module: module,
                   proto: receiver.funcProto,
@@ -4344,6 +4526,7 @@ class DarticInterpreter {
                   );
                   if (closureArgs != null) {
                     try {
+                      _checkDynClosureArgs(fieldValue, callerPositional);
                       final result = _runNestedDispatch(
                         module: module,
                         proto: fieldValue.funcProto,
@@ -4445,12 +4628,27 @@ class DarticInterpreter {
           }
 
           // ── Host object dispatch ──
-          // Phase 1: only pass positional args (named args to host = Phase 2).
-          final hostArgs = List<Object?>.generate(
-            posCount,
-            (i) => rs.read(rBase + a + 2 + i),
-          );
           if (_hostClassRegistry != null) {
+            final hostArgs = List<Object?>.generate(
+              posCount,
+              (i) => rs.read(rBase + a + 2 + i),
+            );
+
+            // Enforce generic collection element types for mutation methods.
+            // Dartic creates collections as <Object?> and tags them via
+            // TAG_TYPE. The host VM doesn't enforce element types on
+            // <Object?> collections, so we check here before dispatching.
+            final tag = _hostTypeTable.lookup(receiver);
+            if (tag is DarticInterfaceType && tag.typeArgs.isNotEmpty) {
+              try {
+                _checkCollectionMutationTypes(
+                    receiver, name, hostArgs, tag);
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
+              }
+            }
+
             _wrapClosureArgs(hostArgs);
             try {
               final hostResult =
