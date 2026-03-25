@@ -56,5 +56,21 @@ void main() {
     test('darticHide is DarticHide', () {
       expect(darticHide, isA<DarticHide>());
     });
+
+    test('darticHost is DarticHost', () {
+      expect(darticHost, isA<DarticHost>());
+    });
+  });
+
+  group('DarticHost', () {
+    test('can be instantiated', () {
+      const annotation = DarticHost();
+      expect(annotation, isA<DarticHost>());
+    });
+
+    test('is const-constructible', () {
+      const list = [DarticHost(), DarticHost()];
+      expect(list, hasLength(2));
+    });
   });
 }
