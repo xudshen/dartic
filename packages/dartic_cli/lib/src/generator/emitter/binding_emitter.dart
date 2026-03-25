@@ -294,11 +294,22 @@ void _writeImports(
   };
 
   // 1. Source file imports — preserves `as` prefixes and show/hide.
+  //    Dedup by (uri, prefix) so that `import 'dart:ui'` and
+  //    `import 'dart:ui' as ui` are both emitted when both exist.
   for (final imp in sourceImports) {
-    buf.writeln(imp);
-    // Extract URI from import line for dedup (used by step 2 & 3).
     final uriMatch = RegExp(r"import '([^']+)'").firstMatch(imp);
-    if (uriMatch != null) importedUris.add(uriMatch.group(1)!);
+    final uri = uriMatch?.group(1);
+    if (uri == null) continue;
+
+    // Extract the `as` prefix (if any) to build a dedup key.
+    final prefixMatch = RegExp(r" as (\w+)").firstMatch(imp);
+    final dedupKey =
+        prefixMatch != null ? '$uri:${prefixMatch.group(1)}' : uri;
+    if (importedUris.contains(dedupKey)) continue;
+    buf.writeln(imp);
+    importedUris.add(dedupKey);
+    // Also track bare URI so step 2 (referenced URIs) doesn't re-add it.
+    importedUris.add(uri);
   }
 
   // 2. Referenced URIs — fill gaps from inherited member types.

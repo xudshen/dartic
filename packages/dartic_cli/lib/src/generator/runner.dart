@@ -91,8 +91,53 @@ String? detectBridgeIssue(TypeInfo info) {
     return '${info.className} has generic methods'
         ' that the interface bridge cannot implement';
   }
+  // Skip bridge if any public method/getter/setter/operator signature
+  // references a private type — generated code is in a separate library
+  // and cannot access library-private names (e.g. _FooState).
+  for (final m in info.methods) {
+    if (_hasPrivateType(m.returnType)) {
+      return '${info.className}.${m.name}() references private type '
+          '${m.returnType} — bridge unusable';
+    }
+    for (final p in m.paramTypes) {
+      if (_hasPrivateType(p.type)) {
+        return '${info.className}.${m.name}() parameter ${p.name} '
+            'references private type ${p.type} — bridge unusable';
+      }
+    }
+  }
+  for (final g in info.getters) {
+    if (_hasPrivateType(g.returnType)) {
+      return '${info.className}.${g.name} getter references private type '
+          '${g.returnType} — bridge unusable';
+    }
+  }
+  for (final s in info.setters) {
+    if (_hasPrivateType(s.paramType)) {
+      return '${info.className}.${s.name} setter references private type '
+          '${s.paramType} — bridge unusable';
+    }
+  }
+  for (final op in info.operators) {
+    if (_hasPrivateType(op.returnType)) {
+      return '${info.className}.operator ${op.name} references private type '
+          '${op.returnType} — bridge unusable';
+    }
+    if (op.paramType != null && _hasPrivateType(op.paramType!)) {
+      return '${info.className}.operator ${op.name} parameter references '
+          'private type ${op.paramType} — bridge unusable';
+    }
+  }
   return null;
 }
+
+/// Returns true if a sanitized type string references a private type name.
+///
+/// Private types start with `_` and can appear as the top-level type,
+/// a type argument, or a callback parameter type.
+/// Examples: `_FooState`, `State<_FooState>`, `void Function(_Bar)`.
+bool _hasPrivateType(String type) =>
+    RegExp(r'(?:^|[<,(]\s*)_[A-Za-z]').hasMatch(type);
 
 /// Orchestrates the code generation pipeline.
 class Runner {
@@ -1057,9 +1102,14 @@ class Runner {
     final mode = library.discover;
     if (mode != 'all' && mode != 'current') return library;
     if (_kernelIntrospector == null) {
-      stderr.writeln(
-          'WARNING: discover: $mode on ${library.uri} but Kernel not loaded');
-      return library;
+      // discover: all/current requires Kernel introspection — fail loudly
+      // so the user knows why no bindings were generated.
+      throw StateError(
+        'discover: $mode on ${library.uri} requires Kernel introspection, '
+        'but Kernel failed to load. Check earlier warnings for details. '
+        'If this is a Flutter package, ensure --compiler-mode frontend-server '
+        'and --flutter-sdk are passed.',
+      );
     }
 
     final discovered = _kernelIntrospector!
@@ -1095,7 +1145,8 @@ class Runner {
     var addedCount = 0;
     for (final cls in discovered) {
       if (explicitNames.contains(cls.name)) continue;
-      if (excludeSet.contains('${cls.libraryUri}::${cls.name}')) continue;
+      if (excludeSet.contains(cls.name) ||
+          excludeSet.contains('${cls.libraryUri}::${cls.name}')) continue;
 
       final (:mode, :skipReason) = inferBridgeModeWithReason(cls);
       if (skipReason != null) {

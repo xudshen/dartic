@@ -2,8 +2,12 @@
 //
 // Dart SDK: 3.10.7
 
+@darticHost
+library;
+
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
+import 'package:dartic_annotation/dartic_annotation.dart';
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:async';
@@ -38,9 +42,6 @@ abstract final class ZoneBindings {
         'runGuarded#1': (args) { (args[0] as Zone).runGuarded(() => (args[1] as Function)()); return null; },
         'runUnaryGuarded#2': (args) { (args[0] as Zone).runUnaryGuarded((a) => (args[1] as Function)(a), args[2]); return null; },
         'runBinaryGuarded#3': (args) { (args[0] as Zone).runBinaryGuarded((a, b) => (args[1] as Function)(a, b), args[2], args[3]); return null; },
-        'registerCallback#1': (args) => (args[0] as Zone).registerCallback(() => (args[1] as Function)()),
-        'registerUnaryCallback#1': (args) => (args[0] as Zone).registerUnaryCallback((a) => (args[1] as Function)(a)),
-        'registerBinaryCallback#1': (args) => (args[0] as Zone).registerBinaryCallback((a, b) => (args[1] as Function)(a, b)),
         'bindCallback#1': (args) => (args[0] as Zone).bindCallback(() => (args[1] as Function)()),
         'bindUnaryCallback#1': (args) => (args[0] as Zone).bindUnaryCallback((a) => (args[1] as Function)(a)),
         'bindBinaryCallback#1': (args) => (args[0] as Zone).bindBinaryCallback((a, b) => (args[1] as Function)(a, b)),
@@ -58,6 +59,18 @@ abstract final class ZoneBindings {
         'hashCode#0': (args) => (args[0] as Zone).hashCode,
         '[]#1': (args) => (args[0] as Zone)[(args[1])],
         '==#1': (args) => (args[0] as Zone) == (args[1] as Object),
+        'registerCallback#1': (args) => Function.apply(
+            (args[0] as Zone).registerCallback,
+            [args[1]],
+        ),
+        'registerUnaryCallback#1': (args) => Function.apply(
+            (args[0] as Zone).registerUnaryCallback,
+            [args[1]],
+        ),
+        'registerBinaryCallback#1': (args) => Function.apply(
+            (args[0] as Zone).registerBinaryCallback,
+            [args[1]],
+        ),
       };
 
   static Map<String, Object? Function(List<Object?>)> rootZoneMethodMap() => {

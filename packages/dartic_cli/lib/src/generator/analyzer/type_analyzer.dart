@@ -1193,6 +1193,12 @@ class TypeAnalyzer {
       return type.getDisplayString();
     }
 
+    // Private types (e.g. _MoveType) are inaccessible from generated code.
+    // Erase to dynamic so the binding compiles.
+    if (type is InterfaceType && (type.element.name?.startsWith('_') ?? false)) {
+      return 'dynamic';
+    }
+
     // Interface type with type arguments -> recursively sanitize type args.
     // Always recurse to ensure prefix qualification (e.g. Future<ui.Codec>)
     // and erasable type param handling.
@@ -1374,19 +1380,39 @@ class TypeAnalyzer {
       LibraryElement library, String classLibraryUri,
       {Map<String, Set<String>>? referencedTypes}) {
     final imports = <String>[];
-    final seen = <String>{};
+    final seen = <String>{}; // Dedup key: "uri" or "uri:prefix"
+    final seenUris = <String>{}; // Bare URIs for referencedTypes cleanup
 
     // Add the class's own declaring file (skip private dart: libs).
     if (classLibraryUri != 'dart:core' && !classLibraryUri.startsWith('dart:_')) {
       final line = "import '$classLibraryUri';";
       imports.add(line);
       seen.add(classLibraryUri);
+      seenUris.add(classLibraryUri);
     }
 
     // Collect the class's own library's exported elements (name → declaring URI)
     // to detect genuine collisions with other imports. Only names whose
     // declaring library DIFFERS are real ambiguities (not mere re-exports).
     final ownExports = library.exportNamespace.definedNames2;
+
+    // Pre-collect URIs that have at least one unprefixed import.
+    // When a URI has both prefixed and unprefixed imports in the source file,
+    // we must emit the unprefixed version to stay consistent with
+    // _extractImportPrefixes (which considers unprefixed to "win").
+    // Otherwise _sanitizeType produces unqualified names but the generated
+    // file only has the prefixed import → types become unresolvable.
+    final unprefixedUris = <String>{};
+    for (final fragment in library.fragments) {
+      for (final imp in fragment.libraryImports) {
+        final importedLib = imp.importedLibrary;
+        if (importedLib == null) continue;
+        if (imp.prefix == null) {
+          unprefixedUris.add(importedLib.uri.toString());
+        }
+      }
+      break;
+    }
 
     // Extract all imports from the source file.
     for (final fragment in library.fragments) {
@@ -1398,15 +1424,26 @@ class TypeAnalyzer {
         // Skip dart:core (implicit), private dart: libs, and duplicates.
         if (uri == 'dart:core') continue;
         if (uri.startsWith('dart:_')) continue;
-        if (seen.contains(uri)) continue;
-        seen.add(uri);
+
+        // Dedup by (uri, prefix) — a prefixed and unprefixed import of the
+        // same URI are distinct and both must be emitted when the generated
+        // code uses both qualified (`ui.Canvas`) and unqualified (`Canvas`)
+        // references.
+        final prefix = imp.prefix?.element.name;
+        final seenKey = prefix != null ? '$uri:$prefix' : uri;
+        if (seen.contains(seenKey)) continue;
+        seen.add(seenKey);
+        seenUris.add(uri);
 
         // Build import line.
         final buf = StringBuffer("import '$uri'");
 
-        // Add `as` prefix.
-        final prefix = imp.prefix?.element.name;
-        if (prefix != null) {
+        // Add `as` prefix — but drop it if the URI also has an unprefixed
+        // import, matching the _extractImportPrefixes convention.
+        // When both prefixed and unprefixed imports exist for the same URI,
+        // the unprefixed variant is emitted here (prefix dropped), and the
+        // prefixed variant is emitted separately below via the dedup key.
+        if (prefix != null && !unprefixedUris.contains(uri)) {
           buf.write(' as $prefix');
         }
 
@@ -1456,6 +1493,52 @@ class TypeAnalyzer {
         imports.add(buf.toString());
       }
       break; // Only the defining fragment.
+    }
+
+    // Remove referenced type URIs whose type names are already accessible
+    // through unprefixed source imports. Without this, the emitter adds
+    // redundant imports for the declaring URI, causing ambiguous_import
+    // errors when a source import re-exports the same type.
+    if (referencedTypes != null) {
+      final accessibleNames = <String>{};
+
+      // The generated file imports the class's own library (classLibraryUri),
+      // so all names in its export namespace are accessible in the generated
+      // file. This handles re-exported types (e.g., SvgTheme re-exported
+      // through loaders.dart) that would otherwise cause ambiguous_import.
+      accessibleNames.addAll(ownExports.keys);
+
+      for (final fragment in library.fragments) {
+        for (final imp in fragment.libraryImports) {
+          final importedLib = imp.importedLibrary;
+          if (importedLib == null) continue;
+          // Only unprefixed imports make names directly accessible.
+          if (imp.prefix != null) continue;
+
+          // Respect show/hide combinators — an import with `show clampDouble`
+          // only makes `clampDouble` accessible, not the entire library.
+          final allNames = importedLib.exportNamespace.definedNames2.keys;
+          Set<String>? showFilter;
+          Set<String>? hideFilter;
+          for (final combinator in imp.combinators) {
+            if (combinator is ShowElementCombinator) {
+              showFilter = {...combinator.shownNames};
+            } else if (combinator is HideElementCombinator) {
+              hideFilter = {...combinator.hiddenNames};
+            }
+          }
+          for (final name in allNames) {
+            if (showFilter != null && !showFilter.contains(name)) continue;
+            if (hideFilter != null && hideFilter.contains(name)) continue;
+            accessibleNames.add(name);
+          }
+        }
+        break;
+      }
+      referencedTypes.removeWhere((uri, names) {
+        if (seenUris.contains(uri)) return true; // Already a source import.
+        return names.every((n) => accessibleNames.contains(n));
+      });
     }
 
     return imports;

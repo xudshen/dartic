@@ -364,6 +364,30 @@ libraries:
 
 
 
+      # ── Zone ────────────────────────────────────────────────────────────
+      # registerCallback/Unary/Binary: pass the closure proxy directly via
+      # Function.apply to bypass the generic type parameter check (the proxy
+      # is Object? Function() which fails the R Function() check). The
+      # default zone returns the callback unchanged, so the proxy round-trips
+      # and _unwrapClosureProxy recovers the DarticClosure for `is` checks.
+      Zone:
+        extra_methods:
+          "registerCallback#1": |
+            (args) => Function.apply(
+              (args[0] as Zone).registerCallback,
+              [args[1]],
+            )
+          "registerUnaryCallback#1": |
+            (args) => Function.apply(
+              (args[0] as Zone).registerUnaryCallback,
+              [args[1]],
+            )
+          "registerBinaryCallback#1": |
+            (args) => Function.apply(
+              (args[0] as Zone).registerBinaryCallback,
+              [args[1]],
+            )
+
       # ── ZoneSpecification ───────────────────────────────────────────────
       # Methods are registered under both dart:async::ZoneSpecification:: and
       # dart:async::_ZoneSpecification:: namespaces (see _ZoneSpecification
