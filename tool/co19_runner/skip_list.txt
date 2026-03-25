@@ -690,3 +690,35 @@ LibTest/core/Runes/toList_A02_t02.dart  # List<Object?> not subtype of Iterable<
 # StackTrace.current binding returns host VM stack (interpreter internals),
 # not dartic bytecode frames. Needs DarticStackTrace.capture() integration.
 LibTest/core/StackTrace/current_A01_t01.dart  # StackTrace.current missing "main"
+
+# ── LibTest/async systemic failures (12) ──────────────────────────
+
+# Stream<dynamic> type cast: generic type params lost in factory bindings
+# Binding gen-tool hardcodes Stream<dynamic> for factory constructors.
+# Needs gen-tool fix to preserve type args from calling context.
+LibTest/async/Stream/Stream.fromIterable_all_t01.dart  # Stream<dynamic> not subtype of Stream<int>
+LibTest/async/Stream/Stream.multi_all_t01.dart          # same
+
+# Stream.fromFuture error propagation: Error escapes instead of routing to onError
+LibTest/async/Stream/listen_A05_t02.dart  # Error escapes zone
+
+# Self-referential local function upvalue capture (compiler limitation)
+LibTest/async/StreamIterator/moveNext_A01_t01.dart  # Cannot resolve upvalue: f
+
+# Future.catchError handler return type validation
+LibTest/async/StreamIterator/current_A01_t03.dart  # catchError must return future type
+
+# StreamSink.addStream error handling: map callback throw escapes
+LibTest/async/StreamSink/addStream_A01_t02.dart  # throw in map callback escapes
+LibTest/async/StreamSink/addStream_A01_t03.dart  # same
+LibTest/async/StreamSink/addStream_A01_t05.dart  # same
+
+# StreamTransformer: Null ITA during type parameter resolution
+LibTest/async/StreamTransformer/StreamTransformer_A01_t01.dart  # Null check on ITA
+
+# Zone registerCallback: typedef function type `is` check fails
+# ZoneCallback<int> is a typedef for `int Function()`. The `is` check
+# on function typedefs doesn't resolve them to their underlying type.
+LibTest/async/Zone/registerCallback_A01_t01.dart
+LibTest/async/Zone/registerUnaryCallback_A01_t01.dart
+LibTest/async/Zone/registerBinaryCallback_A01_t01.dart

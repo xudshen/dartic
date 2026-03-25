@@ -2629,6 +2629,42 @@ class DarticInterpreter {
             }
           }
 
+          // Remap named args from call-site order to callee declaration
+          // order. Kernel FunctionType sorts NamedType alphabetically, but
+          // FunctionNode keeps VariableDeclarations in source order. The
+          // compiler emits CALL args using the FunctionType ordering, while
+          // the callee bytecode reads params in FunctionNode order. If
+          // these differ, swap the named arg values in-place.
+          if (callNamedInfo != null && callee.namedParamNames.isNotEmpty) {
+            final callNames = callNamedInfo.allNamedNames;
+            final calleeNames = callee.namedParamNames;
+            final posCount = callNamedInfo.positionalCount;
+            // Only remap if the orderings actually differ.
+            bool needsRemap = false;
+            for (var i = 0; i < callNames.length && i < calleeNames.length; i++) {
+              if (callNames[i] != calleeNames[i]) {
+                needsRemap = true;
+                break;
+              }
+            }
+            if (needsRemap) {
+              // Build mapping: calleeIdx → callIdx
+              final namedStart = 3 + posCount;
+              // Snapshot the call-site ordered values.
+              final snapshot = List<Object?>.generate(
+                callNames.length,
+                (i) => rs.read(rBase + namedStart + i),
+              );
+              // Place each value at the callee's expected position.
+              for (var ci = 0; ci < calleeNames.length; ci++) {
+                final callIdx = callNames.indexOf(calleeNames[ci]);
+                if (callIdx >= 0 && callIdx < snapshot.length) {
+                  rs.write(rBase + namedStart + ci, snapshot[callIdx]);
+                }
+              }
+            }
+          }
+
           // Reroute args from all-ref layout to callee's expected layout.
           // The compiler boxes ALL args to the ref stack for CALL opcodes
           // (since the callee's actual paramKinds may differ from the
@@ -2667,6 +2703,16 @@ class DarticInterpreter {
                   }
                   writeRefIdx++;
               }
+            }
+
+            // Shrink rs.sp back to refRegCount: the all-ref arg area
+            // (rBase+3..rBase+3+paramCount) was only needed to receive
+            // the caller's boxed args. After rerouting them to the value
+            // stack (or compacting ref params), the callee's bytecode
+            // expects the next frame (CALL_STATIC) to start at
+            // rBase + refRegCount, not rBase + neededRefSlots.
+            if (neededRefSlots != callee.refRegCount) {
+              rs.sp = rBase + callee.refRegCount;
             }
           }
 
