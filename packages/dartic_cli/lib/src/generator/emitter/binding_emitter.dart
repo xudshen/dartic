@@ -259,6 +259,9 @@ void _writeHeader(StringBuffer buf, {String? configPath}) {
     buf.writeln('// Config: $configPath');
   }
   buf.writeln();
+  buf.writeln('@darticHost');
+  buf.writeln('library;');
+  buf.writeln();
 }
 
 /// Writes import lines for a binding file.
@@ -278,11 +281,13 @@ void _writeImports(
   List<String>? extraImports,
 }) {
   // Base dartic imports — always needed.
+  buf.writeln("import 'package:dartic_annotation/dartic_annotation.dart';");
   buf.writeln("import 'package:dartic/dartic.dart';");
   buf.writeln("import 'package:dartic/dartic_internal.dart';");
 
   // Track imported URIs to avoid duplicates.
   final importedUris = <String>{
+    'package:dartic_annotation/dartic_annotation.dart',
     'package:dartic/dartic.dart',
     'package:dartic/dartic_internal.dart',
     'dart:core',
@@ -302,14 +307,6 @@ void _writeImports(
     if (uri.startsWith('dart:_')) continue;
     buf.writeln("import '$uri';");
     importedUris.add(uri);
-    // For src/ paths, also add resolved barrel.
-    if (uri.contains('/src/')) {
-      final resolved = _resolveToPublicImport(uri);
-      if (resolved != null && !importedUris.contains(resolved)) {
-        buf.writeln("import '$resolved';");
-        importedUris.add(resolved);
-      }
-    }
   }
 
   // 3. Extra imports from YAML.
@@ -321,22 +318,6 @@ void _writeImports(
       }
     }
   }
-}
-
-/// Resolves a `package:*/src/category/file.dart` URI to its public barrel import.
-///
-/// E.g. `package:flutter/src/widgets/framework.dart` → `package:flutter/widgets.dart`
-/// Returns null if the URI doesn't match the convention.
-String? _resolveToPublicImport(String srcUri) {
-  // Pattern: package:<pkg>/src/<category>/...
-  final match =
-      RegExp(r'^(package:[^/]+)/src/([^/]+)/').firstMatch(srcUri);
-  if (match != null) {
-    final packagePrefix = match.group(1)!; // e.g. "package:flutter"
-    final category = match.group(2)!; // e.g. "widgets"
-    return '$packagePrefix/$category.dart';
-  }
-  return null;
 }
 
 // ── Class name conversion ───────────────────────────────────────────────

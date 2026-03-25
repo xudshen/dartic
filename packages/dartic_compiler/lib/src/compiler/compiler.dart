@@ -2042,16 +2042,22 @@ class DarticCompiler {
     return true; // Unknown scheme, conservatively skip
   }
 
-  /// Returns `true` if [lib] has a `@DarticHost` or `@darticHost` annotation.
+  /// Returns `true` if [lib] has a `@DarticHost` or `@darticHost` annotation
+  /// from `package:dartic_annotation`.
   ///
   /// In Kernel IR, library annotations are `ConstantExpression` wrapping
   /// an `InstanceConstant` whose classNode identifies the annotation type.
+  /// We match both class name AND source package to avoid false positives
+  /// from user-defined classes with the same name.
   bool _hasDarticHost(ir.Library lib) {
     for (final annotation in lib.annotations) {
       if (annotation is ir.ConstantExpression) {
         final constant = annotation.constant;
         if (constant is ir.InstanceConstant &&
-            constant.classNode.name == 'DarticHost') {
+            constant.classNode.name == 'DarticHost' &&
+            constant.classNode.enclosingLibrary.importUri
+                .toString()
+                .startsWith('package:dartic_annotation/')) {
           return true;
         }
       }

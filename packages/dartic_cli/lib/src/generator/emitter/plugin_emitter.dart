@@ -46,11 +46,17 @@ String emitPluginFile({
   buf.writeln('// Generator: dartic_generator');
   buf.writeln();
 
+  // ── Library directive (host-only for compiler) ────────────────────────
+  buf.writeln('@darticHost');
+  buf.writeln('library;');
+  buf.writeln();
+
   // ── Lint suppressions for generated code ────────────────────────────
   buf.writeln('// ignore_for_file: unused_import, unnecessary_import, implementation_imports');
   buf.writeln();
 
   // ── Imports ─────────────────────────────────────────────────────────
+  buf.writeln("import 'package:dartic_annotation/dartic_annotation.dart';");
   buf.writeln("import 'package:dartic/dartic.dart';");
 
   for (final fileName in bindingFileNames) {
