@@ -295,13 +295,10 @@ void _writeImports(
 
   // 1. Source file imports — preserves `as` prefixes and show/hide.
   for (final imp in sourceImports) {
-    // Extract URI from import line for dedup.
-    final uriMatch = RegExp(r"import '([^']+)'").firstMatch(imp);
-    final uri = uriMatch?.group(1);
-    // Skip if already emitted as a base import (e.g. dartic_annotation).
-    if (uri != null && importedUris.contains(uri)) continue;
     buf.writeln(imp);
-    if (uri != null) importedUris.add(uri);
+    // Extract URI from import line for dedup (used by step 2 & 3).
+    final uriMatch = RegExp(r"import '([^']+)'").firstMatch(imp);
+    if (uriMatch != null) importedUris.add(uriMatch.group(1)!);
   }
 
   // 2. Referenced URIs — fill gaps from inherited member types.
