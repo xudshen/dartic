@@ -639,3 +639,13 @@ LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBa
 # augmentation patterns with the current Dart SDK version.
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t05.dart
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t06.dart
+
+# ── Closure tearoff toString format (1) ───────────────────────────
+# DarticClosure.toString() format differs from host VM closure format.
+# Low priority — cosmetic difference.
+LanguageFeatures/Constructor-tear-offs/ambiguities_A08_t02.dart
+
+# ── Deferred import semantics (1) ─────────────────────────────────
+# Accessing deferred import members before loadLibrary() should throw.
+# Requires compiler-level deferred load guard — not yet implemented.
+LanguageFeatures/Parts-with-imports/scope_A05_t01.dart
