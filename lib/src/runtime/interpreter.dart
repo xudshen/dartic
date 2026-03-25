@@ -743,7 +743,9 @@ class DarticInterpreter {
                   resolveType(t, concreteParentArgs, null, _activeTypeRegistry!),
               ];
             }
-            break;
+            // classToParent missing — continue walking up the chain;
+            // a grandparent may have the classInfo→ancestor mapping.
+            continue;
           }
           parentId = parentInfo.superClassId;
         }
@@ -1033,7 +1035,7 @@ class DarticInterpreter {
               (paramType.classId == SpecialClassId.void_))) {
         continue;
       }
-      final arg = positionalArgs[i];
+      final arg = _unwrapClosureProxy(positionalArgs[i]);
       // null is allowed for nullable types, disallowed for non-nullable.
       if (arg == null) {
         if (paramType is DarticInterfaceType &&
@@ -2879,7 +2881,7 @@ class DarticInterpreter {
                   receiver!, darticObj, methodName, remaining,
                 );
                 if (!identical(result, notOverridden)) {
-                  rs.write(rBase + a, result);
+                  rs.write(rBase + a, _unwrapClosureProxy(result));
                   break;
                 }
               } on Object catch (e, st) {
@@ -3885,6 +3887,10 @@ class DarticInterpreter {
           final namedNames = <String>[
             for (var i = 1; i < shape.length; i++) shape[i] as String,
           ];
+          // Unlike CREATE_LIST/MAP/SET, records are dartic-internal objects
+          // (DarticRecord), not host collections. Closures stay as raw
+          // DarticClosure so INVOKE_DYN record-field-call dispatches through
+          // _runNestedDispatch (with _checkDynClosureArgs type validation).
           final positional = List<Object?>.generate(
             positionalCount,
             (i) => rs.read(rBase + b + i),
@@ -4159,6 +4165,31 @@ class DarticInterpreter {
                           receiver.refFields[targetLayout.offset];
                       if (identical(currentVal, lateSentinel) ||
                           currentVal == null) {
+                        // Type check for late final fields with generic types.
+                        final lateFieldTemplate = targetLayout.typeTemplate;
+                        if (lateFieldTemplate != null &&
+                            _activeTypeRegistry != null) {
+                          List<DarticType>? lateFieldIta;
+                          final rt = receiver.runtimeType_;
+                          if (rt is DarticInterfaceType &&
+                              rt.typeArgs.isNotEmpty) {
+                            lateFieldIta = rt.typeArgs;
+                          }
+                          final concreteType = resolveType(lateFieldTemplate,
+                              lateFieldIta, null, _activeTypeRegistry!);
+                          if (!_isValueSubtypeOf(value, concreteType)) {
+                            try {
+                              throw TypeError();
+                            } on Object catch (e, st) {
+                              pc = unwindToHandler(
+                                  pc - 1,
+                                  e,
+                                  DarticStackTrace.captureWithHost(callStack,
+                                      module, pc - 1, _hostNameStack, st));
+                              continue;
+                            }
+                          }
+                        }
                         receiver.refFields[targetLayout.offset] = value;
                       } else {
                         try {

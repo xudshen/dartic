@@ -640,6 +640,18 @@ LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBa
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t05.dart
 LanguageFeatures/Augmentations/augmenting_variables_getters_setters_A03_t06.dart
 
+# ── Dynamic param type check for noSuchMethod forwarder (1) ───────
+# The test expects TypeError when calling a noSuchMethod forwarder with a
+# wrong argument type. Requires FuncProto param types + INVOKE_DYN validation
+# at the dynamic dispatch boundary — not yet implemented.
+Language/Classes/Instance_Methods/Method_noSuchMethod/forwarder_A01_t09.dart
+
+# ── Virtual tearoff arity mismatch (1) ────────────────────────────
+# Static tearoff thunk has fixed param count from the declaration, but the
+# runtime override may have a different number of params. Needs runtime
+# thunk regeneration or dynamic arity adaptation — not yet implemented.
+Language/Expressions/Property_Extraction/Generic_Method_Instantiation/generic_method_A01_t03.dart
+
 # ── INVOKE_DYN named param validation (1) ─────────────────────────
 # Host dispatch via invokeMethod only passes positional args; named args
 # are silently dropped.  Extension-defined named params (not present on

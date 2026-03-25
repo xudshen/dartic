@@ -23,6 +23,21 @@ bool _containsClassTypeParameter(ir.DartType type) {
     return false;
   }
   if (type is ir.IntersectionType) return true;
+  if (type is ir.RecordType) {
+    for (final p in type.positional) {
+      if (_containsClassTypeParameter(p)) return true;
+    }
+    for (final n in type.named) {
+      if (_containsClassTypeParameter(n.type)) return true;
+    }
+    return false;
+  }
+  if (type is ir.ExtensionType) {
+    return type.typeArguments.any(_containsClassTypeParameter);
+  }
+  if (type is ir.TypedefType) {
+    return type.typeArguments.any(_containsClassTypeParameter);
+  }
   return false;
 }
 
