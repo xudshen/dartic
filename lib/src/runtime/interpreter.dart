@@ -1061,8 +1061,7 @@ class DarticInterpreter {
     final reg = _activeTypeRegistry;
     if (checker == null || reg == null) return true;
     if (value == null) {
-      return targetType is DarticInterfaceType &&
-          targetType.nullability == Nullability.nullable;
+      return checker.isSubtypeOf(reg.nullType, targetType);
     }
     final valueType = extractType(
         value, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
@@ -3647,7 +3646,7 @@ class DarticInterpreter {
           final b = decodeB(instr);
           if (vs.readInt(vBase + a) == 0) {
             final message = b != 0xFF ? rs.read(rBase + b) : null;
-            final exception = AssertionError(message?.toString());
+            final exception = AssertionError(message);
             pc = unwindToHandler(
                 pc - 1, exception, DarticStackTrace.capture(callStack, module, pc - 1, _hostNameStack));
           }

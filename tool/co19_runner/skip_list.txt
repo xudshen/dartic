@@ -671,3 +671,22 @@ LanguageFeatures/Constructor-tear-offs/summary_A03_t04.dart
 # Accessing deferred import members before loadLibrary() should throw.
 # Requires compiler-level deferred load guard — not yet implemented.
 LanguageFeatures/Parts-with-imports/scope_A05_t01.dart
+
+# ── Function.apply + named params (1) ─────────────────────────────
+# ClosureAdapter flex proxy only has positional optional params — can't
+# accept named args. Function.apply is the only Dart API for dynamic
+# named arg dispatch. Needs either: (a) callable class with noSuchMethod,
+# (b) binding-layer interception with interpreter access, or (c) proxy
+# generation with matching named params.
+LibTest/core/Function/apply_A01_t01.dart  # flex proxy can't accept named args
+
+# ── Systemic: dartic List<Object?> reified generics (1) ───────────
+# Dartic creates all lists as List<Object?> at host level. When passed
+# to host methods expecting typed Iterable<E> (e.g. List<int>.addAll),
+# the host's reified generics reject them. Needs gen-tool or interpreter fix.
+LibTest/core/Runes/toList_A02_t02.dart  # List<Object?> not subtype of Iterable<int>
+
+# ── StackTrace.current needs DarticStackTrace (1) ─────────────────
+# StackTrace.current binding returns host VM stack (interpreter internals),
+# not dartic bytecode frames. Needs DarticStackTrace.capture() integration.
+LibTest/core/StackTrace/current_A01_t01.dart  # StackTrace.current missing "main"

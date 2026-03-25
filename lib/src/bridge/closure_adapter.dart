@@ -50,37 +50,105 @@ class ClosureAdapter {
         4 => proxy4(),
         5 => proxy5(),
         6 => proxy6(),
+        7 => proxy7(),
+        8 => proxy8(),
+        9 => proxy9(),
+        10 => proxy10(),
+        11 => proxy11(),
+        12 => proxy12(),
+        13 => proxy13(),
+        14 => proxy14(),
+        15 => proxy15(),
+        16 => proxy16(),
+        17 => proxy17(),
+        18 => proxy18(),
+        19 => proxy19(),
+        20 => proxy20(),
         _ => throw ArgumentError('ClosureAdapter: unsupported arity $arity'),
       };
 
-  /// Returns a zero-argument Dart closure.
   Object? Function() proxy0() =>
       () => _invoke(const []);
-
-  /// Returns a one-argument Dart closure.
   Object? Function(Object?) proxy1() =>
       (a) => _invoke([a]);
-
-  /// Returns a two-argument Dart closure.
   Object? Function(Object?, Object?) proxy2() =>
       (a, b) => _invoke([a, b]);
-
-  /// Returns a three-argument Dart closure.
   Object? Function(Object?, Object?, Object?) proxy3() =>
       (a, b, c) => _invoke([a, b, c]);
-
-  /// Returns a four-argument Dart closure.
   Object? Function(Object?, Object?, Object?, Object?) proxy4() =>
       (a, b, c, d) => _invoke([a, b, c, d]);
-
-  /// Returns a five-argument Dart closure.
   Object? Function(Object?, Object?, Object?, Object?, Object?) proxy5() =>
       (a, b, c, d, e) => _invoke([a, b, c, d, e]);
-
-  /// Returns a six-argument Dart closure.
   Object? Function(Object?, Object?, Object?, Object?, Object?, Object?)
       proxy6() =>
           (a, b, c, d, e, f) => _invoke([a, b, c, d, e, f]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?) proxy7() =>
+          (a, b, c, d, e, f, g) => _invoke([a, b, c, d, e, f, g]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?) proxy8() =>
+          (a, b, c, d, e, f, g, h) => _invoke([a, b, c, d, e, f, g, h]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?) proxy9() =>
+          (a, b, c, d, e, f, g, h, i) => _invoke([a, b, c, d, e, f, g, h, i]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?) proxy10() =>
+          (a, b, c, d, e, f, g, h, i, j) =>
+              _invoke([a, b, c, d, e, f, g, h, i, j]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?) proxy11() =>
+          (a, b, c, d, e, f, g, h, i, j, k) =>
+              _invoke([a, b, c, d, e, f, g, h, i, j, k]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?) proxy12() =>
+          (a, b, c, d, e, f, g, h, i, j, k, l) =>
+              _invoke([a, b, c, d, e, f, g, h, i, j, k, l]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?)
+      proxy13() => (a, b, c, d, e, f, g, h, i, j, k, l, m) =>
+          _invoke([a, b, c, d, e, f, g, h, i, j, k, l, m]);
+  Object? Function(Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?)
+      proxy14() => (a, b, c, d, e, f, g, h, i, j, k, l, m, n) =>
+          _invoke([a, b, c, d, e, f, g, h, i, j, k, l, m, n]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?)
+      proxy15() => (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) =>
+          _invoke([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?)
+      proxy16() => (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =>
+          _invoke([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?) proxy17() =>
+          (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) =>
+              _invoke([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?) proxy18() =>
+          (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) => _invoke(
+              [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?) proxy19() =>
+          (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) =>
+              _invoke([
+                a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s
+              ]);
+  Object? Function(
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?, Object?, Object?, Object?, Object?,
+      Object?, Object?, Object?, Object?) proxy20() =>
+          (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) =>
+              _invoke([
+                a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t
+              ]);
 
   // ── Flex proxies (all-optional params) ────────────────────────────────
   //
@@ -89,6 +157,7 @@ class ClosureAdapter {
   // Flex proxies use all-optional params + sentinel so the same Function
   // works for any arg count up to the max.
 
+  // ignore_for_file: lines_longer_than_80_chars
   Function _flexProxy(int maxArity) => switch (maxArity) {
         0 => proxy0(),
         1 => ([Object? a = _noArg]) => _invoke(_buildArgs([a])),
@@ -97,6 +166,129 @@ class ClosureAdapter {
         3 => ([Object? a = _noArg, Object? b = _noArg,
                 Object? c = _noArg]) =>
             _invoke(_buildArgs([a, b, c])),
+        4 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d])),
+        5 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e])),
+        6 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f])),
+        7 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g])),
+        8 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h])),
+        9 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i])),
+        10 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j])),
+        11 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k])),
+        12 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l])),
+        13 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m])),
+        14 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n])),
+        15 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o])),
+        16 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg, Object? p = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p])),
+        17 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg, Object? p = _noArg,
+                Object? q = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q])),
+        18 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg, Object? p = _noArg,
+                Object? q = _noArg, Object? r = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r])),
+        19 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg, Object? p = _noArg,
+                Object? q = _noArg, Object? r = _noArg,
+                Object? s = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s])),
+        20 => ([Object? a = _noArg, Object? b = _noArg,
+                Object? c = _noArg, Object? d = _noArg,
+                Object? e = _noArg, Object? f = _noArg,
+                Object? g = _noArg, Object? h = _noArg,
+                Object? i = _noArg, Object? j = _noArg,
+                Object? k = _noArg, Object? l = _noArg,
+                Object? m = _noArg, Object? n = _noArg,
+                Object? o = _noArg, Object? p = _noArg,
+                Object? q = _noArg, Object? r = _noArg,
+                Object? s = _noArg, Object? t = _noArg]) =>
+            _invoke(_buildArgs([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t])),
         _ => throw ArgumentError(
                 'ClosureAdapter: unsupported flex arity $maxArity'),
       };
