@@ -248,8 +248,10 @@ class CallNamedInfo {
   /// Number of positional arguments at the call site.
   final int positionalCount;
 
-  /// All named parameter names in **declaration order** (matching the
-  /// frame layout after the positional args).
+  /// All named parameter names in **FunctionType order** (alphabetically
+  /// sorted per Kernel spec). Note: this may differ from the callee's
+  /// declaration order (FunctionNode source order). The interpreter
+  /// remaps named args from this order to the callee's order at dispatch.
   final List<String> allNamedNames;
 
   /// Bitmask: bit *i* is set when [allNamedNames]\[i\] was explicitly

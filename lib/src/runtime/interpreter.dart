@@ -2648,7 +2648,6 @@ class DarticInterpreter {
               }
             }
             if (needsRemap) {
-              // Build mapping: calleeIdx → callIdx
               final namedStart = 3 + posCount;
               // Snapshot the call-site ordered values.
               final snapshot = List<Object?>.generate(
