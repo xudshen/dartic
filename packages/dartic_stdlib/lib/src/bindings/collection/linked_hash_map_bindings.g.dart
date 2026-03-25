@@ -2,8 +2,12 @@
 //
 // Dart SDK: 3.10.7
 
+@darticHost
+library;
+
 // ignore_for_file: implementation_imports, unused_import, unnecessary_import, unnecessary_cast, invalid_use_of_protected_member, deprecated_member_use, sort_child_properties_last
 
+import 'package:dartic_annotation/dartic_annotation.dart';
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';

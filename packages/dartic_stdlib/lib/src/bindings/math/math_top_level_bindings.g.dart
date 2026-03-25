@@ -2,6 +2,10 @@
 //
 // Dart SDK: 3.10.7
 
+@darticHost
+library;
+
+import 'package:dartic_annotation/dartic_annotation.dart';
 import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:math';
