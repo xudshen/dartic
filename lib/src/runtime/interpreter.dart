@@ -2423,7 +2423,7 @@ class DarticInterpreter {
                 }
               }
               try {
-                rs.write(rBase + a, Function.apply(raw, posArgs, namedArgs));
+                rs.write(rBase + a, _unwrapClosureProxy(Function.apply(raw, posArgs, namedArgs)));
               } on Object catch (e, st) {
                 pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 continue;
@@ -2812,9 +2812,11 @@ class DarticInterpreter {
               bindingInfo.methodName ?? _extractFuncName(bindingInfo.name);
 
           // Invoke the host function and write result to refStack[A].
+          // Unwrap closure proxies: host collections store wrapped
+          // DarticClosure→Function proxies; restore original identity.
           try {
             final result = hostBindingRegistry!.invoke(runtimeId, hostArgs);
-            rs.write(rBase + a, result);
+            rs.write(rBase + a, _unwrapClosureProxy(result));
           } on Object catch (e, st) {
             // Error.throwWithStackTrace: the user provided a custom stack
             // trace that Dart associates with the catch clause's `st`.
@@ -2863,13 +2865,22 @@ class DarticInterpreter {
             if (methodName == 'call') {
               // CALL_VIRTUAL arg layout: receiver at r[B], args at
               // r[B+3], r[B+4], ... (skipping ITA/FTA/this slots).
+              // Use _runNestedDispatch directly (not invokeClosure) to
+              // avoid wrapping DarticClosure returns — result stays on
+              // the ref stack within the dispatch loop.
               final argCount = ic.argCount;
               final closureArgs = List<Object?>.generate(
                 argCount,
                 (i) => rs.read(rBase + b + 3 + i),
               );
               try {
-                final result = invokeClosure(receiver, closureArgs);
+                final result = _runNestedDispatch(
+                  module: module,
+                  proto: receiver.funcProto,
+                  args: closureArgs,
+                  upvalues: receiver.upvalues,
+                  fta: receiver.boundFTA,
+                );
                 rs.write(rBase + a, result);
               } on Object catch (e, st) {
                 pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
@@ -2999,7 +3010,7 @@ class DarticInterpreter {
                   final hostResult =
                       _hostClassRegistry!.getProperty(receiver, methodName);
                   if (!identical(hostResult, HostClassRegistry.notFound)) {
-                    rs.write(rBase + a, hostResult);
+                    rs.write(rBase + a, _unwrapClosureProxy(hostResult));
                     continue;
                   }
                 } on Object catch (e, st) {
@@ -3017,7 +3028,7 @@ class DarticInterpreter {
                   final hostResult = _hostClassRegistry!
                       .invokeMethod(receiver, methodName, hostArgs);
                   if (!identical(hostResult, HostClassRegistry.notFound)) {
-                    rs.write(rBase + a, hostResult);
+                    rs.write(rBase + a, _unwrapClosureProxy(hostResult));
                     continue;
                   }
                 } on Object catch (e, st) {
@@ -3305,7 +3316,7 @@ class DarticInterpreter {
           final b = decodeB(instr);
           final c = decodeC(instr);
           final obj = _extractDarticObject(rs.read(rBase + b)!);
-          rs.write(rBase + a, obj.refFields[c]);
+          rs.write(rBase + a, _unwrapClosureProxy(obj.refFields[c]));
 
         case Op.setFieldRef: // SET_FIELD_REF A, B, C — refStack[A].refFields[C] = refStack[B]
           final a = decodeA(instr);
@@ -3874,7 +3885,7 @@ class DarticInterpreter {
                     continue;
                   }
                 }
-                rs.write(rBase + a, fieldVal);
+                rs.write(rBase + a, _unwrapClosureProxy(fieldVal));
                 continue;
               }
               // Try getter method — call via _callDarticMethod for boxing.
@@ -3909,7 +3920,7 @@ class DarticInterpreter {
               if (idx != null) {
                 final index = idx - 1;
                 if (index >= 0 && index < receiver.positional.length) {
-                  rs.write(rBase + a, receiver.getPositional(index));
+                  rs.write(rBase + a, _unwrapClosureProxy(receiver.getPositional(index)));
                   continue;
                 }
               }
@@ -3918,7 +3929,7 @@ class DarticInterpreter {
               // (e.g., `($101: "value")`).
             }
             if (receiver.named.containsKey(name)) {
-              rs.write(rBase + a, receiver.getNamed(name));
+              rs.write(rBase + a, _unwrapClosureProxy(receiver.getNamed(name)));
               continue;
             }
             // Missing field → throw NoSuchMethodError via unwindToHandler.
@@ -3939,7 +3950,7 @@ class DarticInterpreter {
               final hostResult =
                   _hostClassRegistry!.getProperty(receiver, name);
               if (!identical(hostResult, HostClassRegistry.notFound)) {
-                rs.write(rBase + a, hostResult);
+                rs.write(rBase + a, _unwrapClosureProxy(hostResult));
                 continue;
               }
             } on Object catch (e, st) {
@@ -4179,13 +4190,22 @@ class DarticInterpreter {
             }
             if (found) {
               // Invoke the field value as a function.
+              // Use _runNestedDispatch directly (not invokeClosure) to
+              // avoid wrapping DarticClosure returns — result stays on
+              // the ref stack within the dispatch loop.
               if (fieldValue is DarticClosure) {
                 final closureArgs = _buildDynArgs(
                   fieldValue.funcProto, callerPositional, callerNamed,
                 );
                 if (closureArgs != null) {
                   try {
-                    final result = invokeClosure(fieldValue, closureArgs);
+                    final result = _runNestedDispatch(
+                      module: module,
+                      proto: fieldValue.funcProto,
+                      args: closureArgs,
+                      upvalues: fieldValue.upvalues,
+                      fta: fieldValue.boundFTA,
+                    );
                     rs.write(rBase + a, result);
                   } on Object catch (e, st) {
                     pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
@@ -4204,7 +4224,7 @@ class DarticInterpreter {
                               Symbol(e.key): e.value,
                           },
                   );
-                  rs.write(rBase + a, result);
+                  rs.write(rBase + a, _unwrapClosureProxy(result));
                 } on Object catch (e, st) {
                   pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 }
@@ -4343,7 +4363,7 @@ class DarticInterpreter {
                                 Symbol(e.key): e.value,
                             },
                     );
-                    rs.write(rBase + a, result);
+                    rs.write(rBase + a, _unwrapClosureProxy(result));
                   } on Object catch (e, st) {
                     pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   }
@@ -4411,7 +4431,7 @@ class DarticInterpreter {
                           Symbol(e.key): e.value,
                       },
               );
-              rs.write(rBase + a, result);
+              rs.write(rBase + a, _unwrapClosureProxy(result));
             } on Object catch (e, st) {
               pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             }
@@ -4430,7 +4450,7 @@ class DarticInterpreter {
               final hostResult =
                   _hostClassRegistry!.invokeMethod(receiver, name, hostArgs);
               if (!identical(hostResult, HostClassRegistry.notFound)) {
-                rs.write(rBase + a, hostResult);
+                rs.write(rBase + a, _unwrapClosureProxy(hostResult));
                 continue;
               }
             } on Object catch (e, st) {
