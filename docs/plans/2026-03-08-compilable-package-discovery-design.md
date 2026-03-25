@@ -5,6 +5,18 @@
 **前置文档：** `docs/plans/2026-03-07-host-library-manifest-design.md`
 **替代：** 本方案替代原 host-library-manifest 设计中的判定模型
 
+> **实施偏差说明（2026-03-25 补注）**
+>
+> 本设计原方案提议在每个包根目录放置一个独立的 `dartic.manifest` 文件来声明角色。实际实现（`packages/dartic_compiler/lib/src/compiler/package_discovery.dart`）改为从各包的 **`pubspec.yaml` 中的 `dartic:` section** 读取 `role` 字段，例如：
+>
+> ```yaml
+> # pubspec.yaml
+> dartic:
+>   role: compilable
+> ```
+>
+> 这一变更消除了每个包额外维护一个 `dartic.manifest` 文件的需要，同时核心判定逻辑（反转模型、4 层规则）保持不变。下文中提到的 `dartic.manifest` 在实际代码中对应 `pubspec.yaml` 的 `dartic:` section。
+
 ## 目标
 
 将编译器对"host vs 编译为字节码"的判定从**正向声明 host 包**反转为**正向声明可编译包**。解决 Flutter 场景中 `.dill` 包含大量传递依赖需要逐一列举或使用 `*` 通配符的问题，同时为未来可编译的 dartic 第三方包预留空间。

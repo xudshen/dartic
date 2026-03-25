@@ -181,11 +181,128 @@ dartic gen --scan lib/src/            # 扫描 @DarticExport 注解
 
 | 参数 | 缩写 | 默认值 | 说明 |
 |------|------|--------|------|
-| `<config>` | — | 必填（`--config` 模式） | YAML 配置文件路径 |
+| `<config>` | — | 必填（`--scan` 未指定时） | YAML 配置文件路径（文件或目录，目录时扫描其中所有 .yaml） |
 | `--output` | `-o` | 配置文件中指定 | 输出目录 |
-| `--scan` | — | — | 扫描目录中的 @DarticExport 注解 |
+| `--scan` | — | — | 扫描目录中的 @DarticExport 注解（替代 config 模式） |
+| `--analysis-root` | — | — | 类型解析的 analysis root 目录 |
+| `--check` | — | false | 检查生成文件是否最新，过期则 exit 2（CI 用） |
+| `--emit-tests` | — | false | 为 Bridge 绑定生成验证测试 |
+| `--compiler-mode` | — | `dart` | Kernel 编译模式：`dart` 或 `frontend-server` |
+| `--flutter-sdk` | — | — | Flutter SDK 路径（`compiler-mode=frontend-server` 时使用） |
+| `--clean` | — | false | 生成前删除输出目录中的 .g.dart 文件 |
 
 **说明**：直接调用 `dartic_generator` 的 `Runner` API（`runConfig` / `runGeneratorConfig`），不重写逻辑。`dartic_generator` 包保留 lib/ 导出，但其独立 bin/ 入口标记为 deprecated。
+
+### 2.3.1 `dartic_export.yaml` 配置格式
+
+`dartic gen` 的 YAML 配置文件定义了需要生成绑定的库、类型和函数。
+
+**顶层字段：**
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `plugin_name` | 否 | 组合插件类名前缀（如 `'fab_shimmer'` -> `FabShimmerPlugin`）。省略则为每个 library 生成独立 plugin |
+| `output_bindings` | 是 | 绑定 .g.dart 文件的输出目录 |
+| `output_plugins` | 是 | Plugin .g.dart 文件的输出目录 |
+| `libraries` | 是 | 库配置列表 |
+
+**`libraries[]` 条目：**
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `uri` | 是 | 库 URI（`package:xxx/yyy.dart` 或 `dart:xxx`）。不带 `.dart` 后缀时作为目录前缀扫描所有文件 |
+| `discover` | 否 | `'all'` = 自动发现所有公共类型 + 子目录；`'current'` = 仅当前目录 |
+| `exclude` | 否 | 从自动发现中排除的类型/函数。格式：`'libraryUri::Name'` |
+| `classes` | 否 | 显式类列表。字符串或对象形式 |
+| `functions` | 否 | 顶层函数列表。字符串或对象形式 |
+| `overrides` | 否 | 按类名的额外配置（`extra_methods`、`extra_bindings`、`preamble`、`custom_bridge`、`ignore_for_file`、`method_overrides`） |
+| `extra_imports` | 否 | 手写代码需要的额外 import URI 列表 |
+| `top_level_overrides` | 否 | 自动发现的顶层符号的自定义 override（`name` -> 闭包源码） |
+
+**`classes[]` 对象形式：**
+
+| 字段 | 默认值 | 说明 |
+|------|--------|------|
+| `name` | 必填 | 类名 |
+| `bridge` | false | true = 生成 Bridge 类（支持 dartic 子类化）；false = facade wrapper |
+| `source_name` | = name | 实际源码类名（当公开名与源码名不同时使用） |
+| `internal_types` | [] | VM 内部实现类列表（字符串或 `{name, source}` 对象） |
+
+**`functions[]` 对象形式：**
+
+| 字段 | 默认值 | 说明 |
+|------|--------|------|
+| `name` | 必填 | 函数名 |
+| `custom` | null | 手写 override 闭包源码（跳过 analyzer 自动生成） |
+| `arity` | null | 显式参数个数（custom 函数 analyzer 无法推导时使用） |
+
+**`overrides.<ClassName>` 字段：**
+
+| 字段 | 说明 |
+|------|------|
+| `extra_methods` | `Map<String, String>` — 补充 analyzer 发现不了的方法（key: `name#arity`，value: 闭包源码） |
+| `extra_bindings` | `List<String>` — 跨命名空间注册的额外 binding 名 |
+| `preamble` | `String` — 插入到生成文件的类定义之前的额外代码 |
+| `custom_bridge` | `bool` — true 时 preamble 提供手写 Bridge 类，跳过自动生成 |
+| `ignore_for_file` | `List<String>` — 添加到生成文件头部的 lint 忽略规则 |
+| `method_overrides` | `Map<String, {super_order, default_return}>` — Bridge 类的方法级 override 配置 |
+
+#### 最小示例
+
+```yaml
+# fab_shimmer/dartic_export.yaml
+plugin_name: fab_shimmer
+output_bindings: "lib/generated/bindings"
+output_plugins: "lib/generated/plugins"
+
+libraries:
+  - uri: package:shimmer/shimmer.dart
+    classes:
+      - Shimmer
+```
+
+#### 完整示例（自动发现 + override + bridge + internal_types）
+
+```yaml
+# dart:core 绑定配置（节选）
+output_bindings: "../lib/src/bindings/core"
+output_plugins: "../lib/src/plugins"
+
+libraries:
+  - uri: dart:core
+    discover: all
+    exclude:
+      - "dart:core::pragma"
+
+    classes:
+      - int
+      - String
+      - name: Duration
+        bridge: true
+      - name: Iterable
+        bridge: true
+        internal_types:
+          - name: WhereIterable
+            source: "dart:_internal"
+          - name: MappedIterable
+            source: "dart:_internal"
+
+    functions:
+      - name: print
+        custom: "(args) => print(args[0])"
+        arity: 1
+
+    overrides:
+      Object:
+        extra_methods:
+          "toString#0": "(args) => args[0].toString()"
+          "hashCode#0": "(args) => args[0].hashCode"
+      Symbol:
+        preamble: |
+          final Map<String, Symbol> _symbolCache = {};
+        extra_methods:
+          "#1": "(args) => _symbolCache.putIfAbsent(args[0] as String, () => Symbol(args[0] as String))"
+```
 
 ### 2.4 `dartic doctor`
 
