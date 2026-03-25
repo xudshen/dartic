@@ -706,8 +706,9 @@ class DarticInterpreter {
   List<DarticType>? _resolveMethodITA(
     DarticClassInfo classInfo,
     int nameIdx,
-    DarticObject darticObj,
-  ) {
+    DarticObject darticObj, {
+    DarticModule? module,
+  }) {
     final rtType = darticObj.runtimeType_;
     final receiverITA =
         rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty
@@ -716,7 +717,38 @@ class DarticInterpreter {
     final declaringId = classInfo.methodDeclarer[nameIdx];
     if (declaringId != null && declaringId != darticObj.classId) {
       // Inherited from a superclass — resolve super's type args.
-      final templates = classInfo.superTypeArgs[declaringId];
+      var templates = classInfo.superTypeArgs[declaringId];
+
+      // If the direct mapping is missing (compiler propagation gap),
+      // walk up the superclass chain to compose the mapping transitively.
+      if (templates == null && module != null && _activeTypeRegistry != null) {
+        var parentId = classInfo.superClassId;
+        while (parentId >= 0 && parentId < module.classes.length) {
+          final parentInfo = module.classes[parentId];
+          final parentTemplates = parentInfo.superTypeArgs[declaringId];
+          if (parentTemplates != null) {
+            // Found the mapping in the parent. Compose:
+            // 1. Resolve classInfo→parent mapping with receiverITA
+            //    to get the concrete parent type args.
+            final classToParent = classInfo.superTypeArgs[parentId];
+            if (classToParent != null) {
+              final concreteParentArgs = <DarticType>[
+                for (final t in classToParent)
+                  resolveType(t, receiverITA, null, _activeTypeRegistry!),
+              ];
+              // 2. Resolve parent→declaringClass mapping with the
+              //    concrete parent args.
+              return <DarticType>[
+                for (final t in parentTemplates)
+                  resolveType(t, concreteParentArgs, null, _activeTypeRegistry!),
+              ];
+            }
+            break;
+          }
+          parentId = parentInfo.superClassId;
+        }
+      }
+
       if (templates != null &&
           templates.isNotEmpty &&
           _activeTypeRegistry != null) {
@@ -746,7 +778,8 @@ class DarticInterpreter {
     // Find the nameIdx that maps to this funcId.
     for (final entry in classInfo.methods.entries) {
       if (entry.value.funcId == funcId) {
-        return _resolveMethodITA(classInfo, entry.key, darticObj);
+        return _resolveMethodITA(classInfo, entry.key, darticObj,
+            module: module);
       }
     }
     return null;
@@ -991,6 +1024,12 @@ class DarticInterpreter {
       for (var i = 0; i < args.length; i++) {
         refStack.write(rBase + refArgStart + i, args[i]);
       }
+      // Null-fill remaining parameter slots so tearoff thunks'
+      // JUMP_IF_NNULL correctly detects missing optional args
+      // (otherwise stale stack data looks like a provided arg).
+      for (var i = args.length; i < proto.paramCount; i++) {
+        refStack.write(rBase + refArgStart + i, null);
+      }
       return;
     }
 
@@ -1015,6 +1054,15 @@ class DarticInterpreter {
           valueStack.writeDouble(
               vBase + valArgIdx, (args[i] as num).toDouble());
           valArgIdx++;
+      }
+    }
+    // Null-fill remaining ref parameter slots for the paramKinds path too.
+    for (var i = args.length; i < proto.paramCount; i++) {
+      final kind =
+          i < paramKinds.length ? paramKinds[i] : StackKind.refDefault;
+      if (kind == StackKind.refDefault) {
+        refStack.write(rBase + refArgIdx, null);
+        refArgIdx++;
       }
     }
   }
@@ -2410,8 +2458,14 @@ class DarticInterpreter {
           }
 
           // Overflow and call depth checks.
+          // Op.CALL's all-ref calling convention may use up to
+          // 3 + paramCount ref slots (args start at rBase+3), which
+          // can exceed refRegCount when value-stack params exist.
+          final neededRefSlots = callee.refRegCount < 3 + callee.paramCount
+              ? 3 + callee.paramCount
+              : callee.refRegCount;
           if (vs.sp + callee.valueRegCount > vs.capacity ||
-              rs.sp + callee.refRegCount > rs.capacity) {
+              rs.sp + neededRefSlots > rs.capacity) {
             throw DarticError('Stack overflow');
           }
           if (callStack.depth >= callStack.maxFrames) {
@@ -2433,11 +2487,21 @@ class DarticInterpreter {
           _upvalueStack.add(currentUpvalues);
           currentUpvalues = closure.upvalues;
 
-          // Advance to callee frame.
+          // Advance to callee frame — use neededRefSlots to cover the
+          // all-ref arg region that may extend beyond refRegCount.
           vBase = vs.sp;
           rBase = rs.sp;
           vs.sp += callee.valueRegCount;
-          rs.sp += callee.refRegCount;
+          rs.sp += neededRefSlots;
+
+          // Null-fill parameter slots beyond provided args so tearoff
+          // thunks' JUMP_IF_NNULL correctly detects missing optional
+          // params (otherwise stale stack data looks like a provided arg).
+          if (argCount < callee.paramCount) {
+            for (var i = 3 + argCount; i < 3 + callee.paramCount; i++) {
+              rs.write(rBase + i, null);
+            }
+          }
 
           // Auto-load bound FTA for generic function instantiations.
           // When a generic function is instantiated with runtime type args
@@ -3007,12 +3071,11 @@ class DarticInterpreter {
           vs.sp += callee.valueRegCount;
           rs.sp += callee.refRegCount;
 
-          // Auto-load ITA from callee's `this` (rsp+2) runtimeType_ for
-          // generic classes. This works for both constructor calls (where
-          // `this` is the newly allocated object with type args) and super
-          // calls (where `this` is passed through from the caller).
-          // Bridge instances implement DarticObjectHolder, so unwrap to get
-          // the underlying DarticObject for ITA extraction.
+          // Auto-load ITA for CALL_SUPER. When the target method is inherited
+          // from a generic superclass, the receiver's raw typeArgs may have a
+          // different mapping than what the callee expects (e.g., MA<X,Y>.b()
+          // calls B<Y>.b, needing ITA=[Y] not [X,Y]). Try superTypeArgs
+          // resolution first, then fall back to the receiver's raw typeArgs.
           final thisObj = rs.read(rBase + 2);
           final darticObj = (thisObj is DarticObject)
               ? thisObj
@@ -3020,17 +3083,17 @@ class DarticInterpreter {
                   ? thisObj.$darticObject
                   : null;
           if (darticObj != null) {
-            final rtType = darticObj.runtimeType_;
-            if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
-              rs.write(rBase + 0, rtType.typeArgs);
+            final resolvedITA =
+                _resolveSuperCallITA(darticObj, bx, module);
+            if (resolvedITA != null) {
+              rs.write(rBase + 0, resolvedITA);
             } else {
-              // Non-generic receiver inheriting from generic superclass:
-              // resolve ITA via superTypeArgs (e.g., MA → B<D>.bar needs
-              // ITA=[D]).
-              final resolvedITA =
-                  _resolveSuperCallITA(darticObj, bx, module);
-              if (resolvedITA != null) {
-                rs.write(rBase + 0, resolvedITA);
+              // Fallback: use receiver's own runtimeType_ typeArgs
+              // (works for self-declared methods and constructors).
+              final rtType = darticObj.runtimeType_;
+              if (rtType is DarticInterfaceType &&
+                  rtType.typeArgs.isNotEmpty) {
+                rs.write(rBase + 0, rtType.typeArgs);
               }
             }
           }

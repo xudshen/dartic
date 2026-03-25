@@ -328,6 +328,11 @@ extension on DarticCompiler {
     final receiverNullable =
         receiverType != null && _isNullableType(receiverType);
 
+    // Null guard for nullable argument: `x == null` returns false when x is
+    // non-null (Dart spec: if exactly one operand is null, return false).
+    final argType = _inferExprType(expr.right);
+    final argNullable = argType != null && _isNullableType(argType);
+
     int? nullPathEndJumpPC;
     if (receiverNullable) {
       final nullGuardJumpPC = _emitter.emitJumpPlaceholder();
@@ -337,6 +342,20 @@ extension on DarticCompiler {
       // Patch: receiver is non-null → jump here for CALL_VIRTUAL.
       _emitter.patchJumpAsBx(
           nullGuardJumpPC, Op.jumpIfNnull, receiverReg, _emitter.currentPC);
+    }
+
+    int? argNullPathEndJumpPC;
+    if (argNullable) {
+      // Arg may be null → if arg is null, return false (non-null receiver).
+      // When receiverNullable, the receiver null path already jumped via
+      // EQ_REF above, so any code reaching here has a non-null receiver.
+      final argNullGuardJumpPC = _emitter.emitJumpPlaceholder();
+      // Arg is null → false (non-null receiver != null).
+      _emitter.emitABC(Op.loadFalse, resultReg, 0, 0);
+      argNullPathEndJumpPC = _emitter.emitJumpPlaceholder();
+      // Patch: arg is non-null → jump to actual == call.
+      _emitter.patchJumpAsBx(
+          argNullGuardJumpPC, Op.jumpIfNnull, argReg, _emitter.currentPC);
     }
 
     // Prefer CALL_STATIC when funcId is known: places args on the correct
@@ -387,6 +406,11 @@ extension on DarticCompiler {
       // Converge null and non-null paths.
       _emitter.patchJumpAsBx(
           nullPathEndJumpPC!, Op.jump, 0, _emitter.currentPC);
+    }
+    if (argNullPathEndJumpPC != null) {
+      // Converge arg-null and arg-non-null paths.
+      _emitter.patchJumpAsBx(
+          argNullPathEndJumpPC, Op.jump, 0, _emitter.currentPC);
     }
 
     return (resultReg, ResultLoc.value);
@@ -2609,8 +2633,37 @@ extension on DarticCompiler {
         target.function.namedParameters,
       );
 
+      // Dart spec null guard for operator==: if the argument is null and
+      // the receiver (super/this) is non-null, return false without calling
+      // the custom operator==. The CFE emits SuperMethodInvocation (not
+      // EqualsCall) for `super == x`, so the null check must be here.
+      int? argNullEndJumpPC;
+      if (target.name.text == '==' &&
+          expr.arguments.positional.length == 1) {
+        final argType = _inferExprType(expr.arguments.positional.first);
+        if (argType != null && _isNullableType(argType)) {
+          // argTemps[0] is the first (and only) positional arg.
+          final argReg = argTemps.first.$1;
+          final argLoc = argTemps.first.$2;
+          final refArgReg =
+              argLoc == ResultLoc.ref ? argReg : _boxToRefIfValue(argReg, argLoc, argType);
+          final nullGuardPC = _emitter.emitJumpPlaceholder();
+          // Arg is null → result = false.
+          _emitter.emitABC(Op.loadFalse, resultReg, 0, 0);
+          argNullEndJumpPC = _emitter.emitJumpPlaceholder();
+          // Arg is non-null → proceed to CALL_SUPER.
+          _emitter.patchJumpAsBx(
+              nullGuardPC, Op.jumpIfNnull, refArgReg, _emitter.currentPC);
+        }
+      }
+
       _emitThisPassthrough();
       _emitArgMovesAndCall(argTemps, Op.callSuper, resultReg, funcId);
+
+      if (argNullEndJumpPC != null) {
+        _emitter.patchJumpAsBx(
+            argNullEndJumpPC, Op.jump, 0, _emitter.currentPC);
+      }
 
       return (resultReg, retLoc);
     }

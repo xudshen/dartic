@@ -487,6 +487,10 @@ class DarticCompiler {
             }
             ancestor = ancestor.superclass;
           }
+          // NOTE: Interface field override check deliberately omitted.
+          // The nnbd case (D implements C with different field layout)
+          // is a known limitation that requires a more targeted fix to
+          // avoid false positives with mixin-inherited fields.
         }
       }
     }

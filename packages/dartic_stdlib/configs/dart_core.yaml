@@ -188,7 +188,9 @@ libraries:
 
       # ── RegExp / Match / RegExpMatch ─────────────────────────────────
 
-      - RegExp
+      - name: RegExp
+        extra_bindings:
+          - "dart:core::RegExp::#5"
       - Match
       - RegExpMatch
 
