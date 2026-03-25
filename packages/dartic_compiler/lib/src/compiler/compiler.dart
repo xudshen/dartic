@@ -2036,9 +2036,27 @@ class DarticCompiler {
     if (uri.isScheme('dart')) return true;
     if (uri.isScheme('file')) return false;
     if (uri.isScheme('package')) {
-      return !_compilablePackages.contains(uri.pathSegments.first);
+      if (!_compilablePackages.contains(uri.pathSegments.first)) return true;
+      return _hasDarticHost(lib);
     }
     return true; // Unknown scheme, conservatively skip
+  }
+
+  /// Returns `true` if [lib] has a `@DarticHost` or `@darticHost` annotation.
+  ///
+  /// In Kernel IR, library annotations are `ConstantExpression` wrapping
+  /// an `InstanceConstant` whose classNode identifies the annotation type.
+  bool _hasDarticHost(ir.Library lib) {
+    for (final annotation in lib.annotations) {
+      if (annotation is ir.ConstantExpression) {
+        final constant = annotation.constant;
+        if (constant is ir.InstanceConstant &&
+            constant.classNode.name == 'DarticHost') {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   /// Builds the fully-qualified name for a platform class.
