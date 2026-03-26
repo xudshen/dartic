@@ -24,3 +24,6 @@ vendor/
 # IDEs
 .idea/
 .vscode/
+# Melos / IntelliJ IDE files
+*.iml
+.idea/
