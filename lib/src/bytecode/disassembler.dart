@@ -639,7 +639,8 @@ class DarticDisassembler {
       final named = ref.namedArgNames.isEmpty
           ? ''
           : ', named=[${ref.namedArgNames.join(', ')}]';
-      return '.${ref.methodName}(pos=${ref.positionalArgCount}$named)';
+      final implicit = ref.isImplicitCall ? ', implicit' : '';
+      return '.${ref.methodName}(pos=${ref.positionalArgCount}$named$implicit)';
     }
     // Backward compat: old format used names partition.
     return '.$ref';

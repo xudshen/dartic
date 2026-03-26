@@ -192,6 +192,7 @@ class DynCallDescriptor {
     required this.methodName,
     required this.positionalArgCount,
     this.namedArgNames = const [],
+    this.isImplicitCall = false,
   });
 
   /// Method name being called (mangled).
@@ -203,18 +204,28 @@ class DynCallDescriptor {
   /// Named argument names in **source order** (matches arg layout on stack).
   final List<String> namedArgNames;
 
+  /// Whether this is an implicit function invocation (`d(42)`) rather than
+  /// an explicit method call (`d.call(42)`).
+  ///
+  /// Per Dart spec, implicit call only invokes a `call` **method** — a `call`
+  /// getter does NOT make an object callable via `(obj)(args)` syntax. Explicit
+  /// `.call()` uses standard dynamic dispatch with get-then-call semantics.
+  final bool isImplicitCall;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is DynCallDescriptor &&
           methodName == other.methodName &&
           positionalArgCount == other.positionalArgCount &&
+          isImplicitCall == other.isImplicitCall &&
           _listEquals(namedArgNames, other.namedArgNames);
 
   @override
   int get hashCode => Object.hash(
         methodName,
         positionalArgCount,
+        isImplicitCall,
         Object.hashAll(namedArgNames),
       );
 
@@ -229,7 +240,7 @@ class DynCallDescriptor {
   @override
   String toString() =>
       'DynCallDescriptor($methodName, pos=$positionalArgCount, '
-      'named=$namedArgNames)';
+      'named=$namedArgNames${isImplicitCall ? ', implicit' : ''})';
 }
 
 /// Descriptor for a closure call whose FunctionType has named parameters.

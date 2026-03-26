@@ -1227,8 +1227,11 @@ extension on DarticCompiler {
     // 4. Apply default values for optional/named params.
     _applyTearoffDefaults(fn, argTemps);
 
-    // Unbox promoted params back to value-stack for correct forwarding.
-    _unboxPromotedParams(fn, argTemps, promotedIndices);
+    // Box ALL args to ref for CALL_VIRTUAL convention: the runtime
+    // rerouting reads all args from the ref stack and unboxes value-typed
+    // params as needed. Promoted params are already ref; non-promoted
+    // value params need boxing.
+    _boxAllArgsToRef(fn, argTemps);
 
     // 5. Load receiver from upvalue[0] into a ref register.
     final receiverReg = _allocRefReg();
@@ -1464,6 +1467,9 @@ extension on DarticCompiler {
           info.instType));
     }
 
+    // Box all args to ref for CALL_VIRTUAL convention.
+    _boxAllArgsToRef(fn, callArgTemps);
+
     // 8. Load receiver from upvalue[0].
     final receiverReg = _allocRefReg();
     _emitter.emitABC(Op.loadUpvalue, receiverReg, 0, 0);
@@ -1680,6 +1686,28 @@ extension on DarticCompiler {
       }
 
       argTemps[idx] = (valueReg, ResultLoc.value);
+    }
+  }
+
+  /// Boxes all value-stack args to ref for CALL_VIRTUAL forwarding.
+  ///
+  /// CALL_VIRTUAL places all args on the ref stack; the runtime's arg
+  /// rerouting handles unboxing to value-typed params. Promoted params
+  /// (from [_allocTearoffParams]) are already on the ref stack. This method
+  /// boxes any remaining value-stack params.
+  void _boxAllArgsToRef(
+    ir.FunctionNode fn,
+    List<(int, ResultLoc)> argTemps,
+  ) {
+    for (var i = 0; i < argTemps.length; i++) {
+      final (reg, loc) = argTemps[i];
+      if (loc == ResultLoc.value) {
+        final param = i < fn.positionalParameters.length
+            ? fn.positionalParameters[i]
+            : fn.namedParameters[i - fn.positionalParameters.length];
+        final refReg = _emitBoxToRef(reg, param.type);
+        argTemps[i] = (refReg, ResultLoc.ref);
+      }
     }
   }
 

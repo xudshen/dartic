@@ -164,10 +164,12 @@ class DarticDeserializer {
           final posArgCount = r.readUint32();
           final namedCount = r.readUint32();
           final namedNames = List.generate(namedCount, (_) => r.readString());
+          final isImplicitCall = r.readByte() != 0;
           refs.add(DynCallDescriptor(
             methodName: methodName,
             positionalArgCount: posArgCount,
             namedArgNames: namedNames,
+            isImplicitCall: isImplicitCall,
           ));
         case 5:
           // CallNamedInfo

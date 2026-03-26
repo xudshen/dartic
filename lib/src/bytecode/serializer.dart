@@ -114,6 +114,7 @@ class DarticSerializer {
         for (final name in ref.namedArgNames) {
           w.writeString(name);
         }
+        w.addByte(ref.isImplicitCall ? 1 : 0);
       } else if (ref is CallNamedInfo) {
         w.addByte(5);
         w.writeUint32(ref.positionalCount);

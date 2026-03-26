@@ -2045,16 +2045,20 @@ class DarticInterpreter {
           }
         }
       }
-      // No user override or host object: throw NoSuchMethodError.
+      // No user override or host object: delegate to the receiver's
+      // noSuchMethod (which may be DarticObject's override routing
+      // through DarticDispatch, or Object's default which throws).
       try {
         // ignore: unnecessary_cast
-        (receiver as dynamic).noSuchMethod(invocation);
+        final nsmResult = (receiver as dynamic).noSuchMethod(invocation);
+        // noSuchMethod returned normally — per Dart spec, the return
+        // value is the result of the original invocation.
+        rs.write(rBase + resultReg, nsmResult);
+        return (false, pc);
       } on Object catch (e, st) {
         final handlerPC = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
         return (false, handlerPC);
       }
-      // Should not reach here, but if it does, rethrow.
-      throw NoSuchMethodError.withInvocation(receiver, invocation);
     }
 
     // Whether resource limits are active. When true, fuel exhaustion refills
@@ -4575,11 +4579,14 @@ class DarticInterpreter {
             }
 
             // ── Get-then-call fallback ──
-            // Dart spec: if method not found, try getter/field access, then
-            // call .call() on the result. If no .call(), noSuchMethod with
-            // memberName == #call. If no field/getter either, noSuchMethod
-            // with memberName == #<name>.
-            if (nameIdx >= 0) {
+            // Dart spec: if method not found (or arg mismatch), try
+            // getter/field access, then call .call() on the result.
+            //
+            // IMPORTANT: For implicit call invocations (d(42) vs d.call(42)),
+            // skip get-then-call entirely — a `call` getter does NOT make
+            // an object callable via function expression syntax.
+            if (nameIdx >= 0 && !desc.isImplicitCall) {
+              // 1. Try field access first.
               final fieldLayout = classInfo.fields[nameIdx];
               if (fieldLayout != null) {
                 final fieldValue = switch (fieldLayout.kind) {
@@ -4662,15 +4669,56 @@ class DarticInterpreter {
                   continue;
                 }
               }
-              // Also try getter method for get-then-call.
-              // (If method lookup found a method but args didn't match, the
-              //  getter is the same funcProto — skip to noSuchMethod.)
-              // Getter methods are separate entries in classInfo.methods,
-              // but here the nameIdx matches the property name. The method
-              // we already found above IS the getter/method for that name.
-              // If it exists but args don't match, that means it's a method
-              // (not a field), so we should fall through to noSuchMethod
-              // with #<name> (method call with wrong args).
+
+              // 2. Try getter method (paramCount==0) for get-then-call.
+              // The method lookup above found a method but args didn't
+              // match. If it's a getter (paramCount==0), call it to get
+              // the value, then invoke the value as a function.
+              final method = classInfo.methods[nameIdx];
+              if (method != null && method.paramCount == 0) {
+                try {
+                  final dynITA =
+                      _resolveMethodITA(classInfo, nameIdx, receiver);
+                  final getterValue = _callDarticMethod(
+                      module, method, receiver, const [],
+                      ita: dynITA);
+                  // Call the getter result as a function.
+                  if (getterValue is DarticClosure) {
+                    final closureArgs = _buildDynArgs(
+                      getterValue.funcProto, callerPositional, callerNamed,
+                    );
+                    if (closureArgs != null) {
+                      _checkDynClosureArgs(getterValue, callerPositional, callerNamed);
+                      final result = _runNestedDispatch(
+                        module: module,
+                        proto: getterValue.funcProto,
+                        args: closureArgs,
+                        upvalues: getterValue.upvalues,
+                        fta: getterValue.boundFTA,
+                      );
+                      rs.write(rBase + a, result);
+                      continue;
+                    }
+                  } else if (getterValue is Function) {
+                    final result = Function.apply(
+                      getterValue,
+                      callerPositional,
+                      callerNamed.isEmpty
+                          ? null
+                          : {
+                              for (final e in callerNamed.entries)
+                                Symbol(e.key): e.value,
+                            },
+                    );
+                    rs.write(rBase + a, _unwrapClosureProxy(result));
+                    continue;
+                  }
+                  // Getter returned non-callable value → noSuchMethod.
+                } on Object catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
+                }
+              }
             }
 
             // noSuchMethod for DarticObject.

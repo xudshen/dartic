@@ -92,7 +92,16 @@ class DarticDispatch {
     for (var cid = darticObject.classId; cid >= 0;
         cid = classes[cid].superClassId) {
       final proto = classes[cid].methods[nameIdx];
-      if (proto != null) return _callMethod(_module, proto, receiver, args);
+      if (proto != null) {
+        // Guard against calling a getter (paramCount=0) with method
+        // arguments. This prevents the noSuchMethod → DarticDispatch
+        // loop from accidentally invoking a `call` getter when the
+        // caller provided positional args for a method call.
+        if (proto.paramCount == 0 && args.isNotEmpty) {
+          return notOverridden;
+        }
+        return _callMethod(_module, proto, receiver, args);
+      }
     }
     return notOverridden;
   }

@@ -2543,6 +2543,7 @@ extension on DarticCompiler {
       methodName: _mangleName(expr.name),
       positionalArgCount: expr.arguments.positional.length,
       namedArgNames: namedNames,
+      isImplicitCall: expr.isImplicitCall,
     );
     final descIdx = _constantPool.addRef(descriptor);
 
