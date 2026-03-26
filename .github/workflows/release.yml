@@ -17,12 +17,15 @@ jobs:
             target: dartic-cli-linux-x64
     steps:
       - uses: actions/checkout@v4
+      - name: Read Dart SDK version
+        id: sdk
+        run: echo "version=$(cat .dart-sdk-version)" >> $GITHUB_OUTPUT
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: "3.10.7"
+          sdk: ${{ steps.sdk.outputs.version }}
       - name: Clone vendor/dart-sdk
         run: |
-          git clone --depth 1 --filter=blob:none --branch 3.10.7 \
+          git clone --depth 1 --filter=blob:none --branch ${{ steps.sdk.outputs.version }} \
             https://github.com/dart-lang/sdk.git vendor/dart-sdk
       - name: Install dependencies
         run: dart pub get
