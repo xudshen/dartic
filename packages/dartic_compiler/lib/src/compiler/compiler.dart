@@ -2282,12 +2282,17 @@ class _ConstantScanner extends ir.RecursiveVisitor {
   final Set<ir.Constant> _seen = Set.identity();
 
   // ── Skip annotations (metadata) — they're not runtime code. ──
-  // RecursiveVisitor.visitX() calls node.visitChildren() which includes
-  // annotations. We override annotatable node types to visit only the
-  // executable children (function body, field initializer, etc.), skipping
-  // annotation lists. This prevents annotation-only constants like
-  // @override (_Override) and @pragma from getting global slots and
-  // generating unresolvable _#fromFields bindings.
+  // Kernel AST has 11 Annotatable types whose visitChildren() visits
+  // annotations. We override each *reachable* type to visit only
+  // executable children, skipping annotation lists. This prevents
+  // annotation-only constants (e.g., @override, @pragma, @Default)
+  // from getting global slots and generating unresolvable bindings.
+  //
+  // Covered:  Library, Class, Field, Constructor, Procedure,
+  //           VariableDeclaration, TypeParameter
+  // Unreachable (our visitLibrary skips them):
+  //           LibraryDependency, LibraryPart, Extension,
+  //           ExtensionTypeDeclaration
 
   @override
   void visitProcedure(ir.Procedure node) => node.function.accept(this);
@@ -2327,6 +2332,22 @@ class _ConstantScanner extends ir.RecursiveVisitor {
     for (final f in node.fields) {
       f.accept(this);
     }
+  }
+
+  // VariableDeclaration is Annotatable — its visitChildren() visits
+  // annotations before the initializer. Skip annotations, visit only
+  // the initializer (default parameter value / local variable init).
+  @override
+  void visitVariableDeclaration(ir.VariableDeclaration node) {
+    node.initializer?.accept(this);
+  }
+
+  // TypeParameter is Annotatable — reachable via FunctionNode.visitChildren()
+  // which iterates typeParameters. Skip annotations, visit only bound/default.
+  @override
+  void visitTypeParameter(ir.TypeParameter node) {
+    node.bound.accept(this);
+    node.defaultType.accept(this);
   }
 
   @override
