@@ -1,10 +1,12 @@
 name: dartic_cli
 description: Command-line interface for dartic bytecode compiler and runner.
-version: 1.0.0
+version: 0.1.0
 publish_to: none
 
 environment:
   sdk: ^3.10.7
+
+resolution: workspace
 
 dependencies:
   dartic:

@@ -1,5 +1,5 @@
 /// Dartic version, kept in sync with `pubspec.yaml`.
-const String darticVersion = '1.0.0';
+const String darticVersion = '0.1.0';
 
 /// Minimum Dart SDK version required by dartic (caret constraint).
 const String requiredDartSdk = '^3.10.7';

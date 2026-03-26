@@ -8,11 +8,11 @@ repository: https://github.com/xudshen/dartic/tree/main/packages/dartic_stdlib
 environment:
   sdk: ^3.10.7
 
+resolution: workspace
+
 dependencies:
-  dartic:
-    path: ../../
-  dartic_annotation:
-    path: ../dartic_annotation
+  dartic: ^0.1.0
+  dartic_annotation: ^0.1.0
 
 dartic:
   role: plugin

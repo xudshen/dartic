@@ -6,5 +6,7 @@ repository: https://github.com/xudshen/dartic/tree/main/packages/dartic_annotati
 environment:
   sdk: '>=3.0.0 <4.0.0'
 
+resolution: workspace
+
 dev_dependencies:
   test: ^1.24.0

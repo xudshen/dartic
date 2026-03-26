@@ -2,7 +2,7 @@ name: dartic
 description: >-
   A lightweight Dart bytecode interpreter for embedding.
   Load and execute precompiled .darb bytecode in any Dart or Flutter app.
-version: 1.0.0
+version: 0.1.0
 repository: https://github.com/xudshen/dartic
 homepage: https://github.com/xudshen/dartic
 topics:
@@ -13,6 +13,12 @@ topics:
 
 environment:
   sdk: ^3.10.7
+
+workspace:
+  - packages/dartic_annotation
+  - packages/dartic_stdlib
+  - packages/dartic_compiler
+  - packages/dartic_cli
 
 dependencies:
   meta: ^1.11.0
@@ -25,6 +31,7 @@ dev_dependencies:
   dartic_stdlib:
     path: packages/dartic_stdlib
   lints: ^6.0.0
+  melos: ^7.0.0
   test: ^1.25.6
   front_end:
     path: vendor/dart-sdk/pkg/front_end
@@ -46,3 +53,25 @@ dependency_overrides:
     path: vendor/dart-sdk/pkg/_fe_analyzer_shared
   analyzer:
     path: vendor/dart-sdk/pkg/analyzer
+
+melos:
+  command:
+    version:
+      message: "chore: bump version to %v"
+      hooks:
+        post: |
+          DARTIC_V=$(grep '^version:' pubspec.yaml | cut -d' ' -f2)
+          sed -i '' "s/darticVersion = '.*'/darticVersion = '$DARTIC_V'/" packages/dartic_compiler/lib/src/toolchain/version.dart
+          echo "Updated version.dart: darticVersion = $DARTIC_V"
+    publish:
+      hooks:
+        pre: melos run analyze && melos run test
+  scripts:
+    analyze:
+      run: dart analyze .
+      exec:
+        concurrency: 1
+    test:
+      run: dart test
+      exec:
+        concurrency: 1
