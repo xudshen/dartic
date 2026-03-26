@@ -1234,6 +1234,22 @@ class KernelIntrospector {
       _collectTypeImportUri(p.type, uris);
     }
     _collectTypeImportUri(proc.function.returnType, uris);
+
+    // Extension methods: collect onType + type parameter bound imports.
+    if (proc.name.text.contains('|')) {
+      final enclosingLib = proc.enclosingLibrary;
+      final extName = proc.name.text.substring(0, proc.name.text.indexOf('|'));
+      for (final ext in enclosingLib.extensions) {
+        if (ext.name == extName) {
+          _collectTypeImportUri(ext.onType, uris);
+          for (final tp in ext.typeParameters) {
+            _collectTypeImportUri(tp.bound, uris);
+          }
+          break;
+        }
+      }
+    }
+
     return uris.toList();
   }
 

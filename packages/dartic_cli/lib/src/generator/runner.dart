@@ -1167,26 +1167,36 @@ class Runner {
     }
 
     // Auto-discover top-level functions not already in YAML.
-    // Exclude uses qualified format: 'libraryUri::functionName'.
+    // Exclude uses qualified format: 'libraryUri::functionName',
+    // or bare 'libraryUri' to exclude all symbols from that library.
     final explicitFunctions = library.functions.map((f) => f.name).toSet();
     final discoveredFunctions = _kernelIntrospector!
         .listPublicTopLevelFunctions(library.uri, discoverMode: mode);
     final mergedFunctions = [...library.functions];
     var addedFnCount = 0;
     final topOverrides = library.topLevelOverrides;
+    final suppressImports = library.suppressPrivateImports.toSet();
     for (final fn in discoveredFunctions) {
       if (explicitFunctions.contains(fn.name)) continue;
-      if (excludeSet.contains('${fn.libraryUri}::${fn.name}')) continue;
-      final override = topOverrides[fn.name];
+      if (excludeSet.contains(fn.libraryUri) ||
+          excludeSet.contains('${fn.libraryUri}::${fn.name}')) continue;
+      // Match by qualified key (name#arity) first, then bare name for compat.
+      final qualifiedKey = '${fn.name}#${fn.arity}';
+      final override = topOverrides[qualifiedKey] ?? topOverrides[fn.name];
       if (override != null) {
-        // Use custom source from override; empty importUris to avoid
-        // importing the declaring library (may be a private _*.dart file).
+        // Use custom source from override; preserve importUris so the
+        // override code can reference the same types as the original.
+        // Also include the declaring library URI for extension methods
+        // (the override code uses explicit extension invocation syntax).
+        // Trim to strip trailing newlines from YAML literal blocks (|).
+        final uris = [...fn.importUris];
+        if (!uris.contains(fn.libraryUri)) uris.add(fn.libraryUri);
         mergedFunctions.add(FunctionConfig(
           name: fn.name,
           sourceLibraryUri: fn.libraryUri,
           arity: fn.arity,
-          custom: override,
-          importUris: const [],
+          custom: override.trim(),
+          importUris: uris,
         ));
       } else {
         mergedFunctions.add(FunctionConfig(
@@ -1194,7 +1204,11 @@ class Runner {
           sourceLibraryUri: fn.libraryUri,
           arity: fn.arity,
           kernelParams: fn.params,
-          importUris: fn.importUris,
+          // Clear importUris for symbols in suppressPrivateImports to avoid
+          // importing private _*_io.dart files that cause ambiguous_import.
+          importUris: suppressImports.contains(fn.name)
+              ? const []
+              : fn.importUris,
         ));
       }
       addedFnCount++;
@@ -1211,7 +1225,8 @@ class Runner {
     var addedFieldCount = 0;
     for (final field in discoveredFields) {
       if (allFunctionNames.contains(field.name)) continue;
-      if (excludeSet.contains('${field.libraryUri}::${field.name}')) continue;
+      if (excludeSet.contains(field.libraryUri) ||
+          excludeSet.contains('${field.libraryUri}::${field.name}')) continue;
 
       // For extension static fields (Kernel encodes as 'ExtName|field'),
       // generate Dart access syntax: ExtName.field
@@ -1223,6 +1238,7 @@ class Runner {
 
       final getterOverride = topOverrides[field.name];
       final setterName = '${field.name}=';
+      final suppressField = suppressImports.contains(field.name);
 
       // Getter binding: (args) => fieldName
       mergedFunctions.add(FunctionConfig(
@@ -1230,8 +1246,11 @@ class Runner {
         sourceLibraryUri: field.libraryUri,
         arity: 0,
         custom: getterOverride ?? '(args) => $dartAccessName',
-        // Empty importUris for overrides to avoid private file imports.
-        importUris: getterOverride != null ? const [] : importUris,
+        // Empty importUris for overrides or suppressPrivateImports to avoid
+        // importing private _*_io.dart files that cause ambiguous_import.
+        importUris: (getterOverride != null || suppressField)
+            ? const []
+            : importUris,
       ));
       allFunctionNames.add(field.name);
       addedFieldCount++;
@@ -1245,7 +1264,9 @@ class Runner {
           arity: 1,
           custom: setterOverride ??
               '(args) { final dynamic v = args[0]; $dartAccessName = v; return args[0]; }',
-          importUris: setterOverride != null ? const [] : importUris,
+          importUris: (setterOverride != null || suppressField)
+              ? const []
+              : importUris,
         ));
         allFunctionNames.add(setterName);
         addedFieldCount++;
@@ -1265,6 +1286,7 @@ class Runner {
       exclude: library.exclude,
       extraImports: library.extraImports,
       topLevelOverrides: library.topLevelOverrides,
+      suppressPrivateImports: library.suppressPrivateImports,
     );
   }
 

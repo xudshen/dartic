@@ -109,6 +109,11 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
     }
   }
 
+  final suppressPrivateImports = (yaml['suppress_private_imports'] as YamlList?)
+          ?.map((e) => e as String)
+          .toList() ??
+      [];
+
   return LibraryConfig(
     uri: uri,
     classes: classes,
@@ -121,6 +126,7 @@ LibraryConfig _parseLibrary(YamlMap yaml) {
             .toList() ??
         [],
     topLevelOverrides: topLevelOverrides,
+    suppressPrivateImports: suppressPrivateImports,
   );
 }
 

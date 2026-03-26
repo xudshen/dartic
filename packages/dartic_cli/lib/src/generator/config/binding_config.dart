@@ -66,6 +66,14 @@ class LibraryConfig {
   /// Use 'name=' keys for setter overrides.
   final Map<String, String> topLevelOverrides;
 
+  /// Symbol names whose private-file imports should be suppressed.
+  ///
+  /// Some symbols live in private `_*_io.dart` files that are re-exported by
+  /// public counterparts. Importing the private file directly causes
+  /// `ambiguous_import` errors. Listing a symbol here clears its `importUris`
+  /// so the generated code relies on the public re-export instead.
+  final List<String> suppressPrivateImports;
+
   LibraryConfig({
     required this.uri,
     required this.classes,
@@ -75,6 +83,7 @@ class LibraryConfig {
     this.exclude = const [],
     this.extraImports = const [],
     this.topLevelOverrides = const {},
+    this.suppressPrivateImports = const [],
   });
 }
 
