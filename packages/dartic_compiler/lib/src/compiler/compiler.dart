@@ -1065,6 +1065,69 @@ class DarticCompiler {
     return kind;
   }
 
+  /// Emits callee-side default-value guards for instance methods.
+  ///
+  /// For each optional named parameter on the ref stack with a non-trivial
+  /// default (i.e., not implicit null), emits:
+  ///   LOAD_ABSENT tmpReg
+  ///   EQ_REF checkReg, paramReg, tmpReg   // identical(param, darticAbsent)?
+  ///   JUMP_IF_FALSE checkReg, skip         // skip if param was provided
+  ///   <compile default expression>
+  ///   MOVE_REF paramReg, defaultReg
+  ///   skip:
+  ///
+  /// This enables CALL_VIRTUAL callers to pass darticAbsent for missing
+  /// args, letting the callee apply its own defaults (which the caller
+  /// doesn't know at compile time).
+  void _emitMethodDefaultGuards(ir.FunctionNode fn) {
+    // Optional positional params.
+    for (var i = fn.requiredParameterCount;
+        i < fn.positionalParameters.length;
+        i++) {
+      final param = fn.positionalParameters[i];
+      _emitAbsentDefaultGuard(param);
+    }
+    // Named params — all optional unless marked required.
+    for (final param in fn.namedParameters) {
+      if (param.isRequired) continue;
+      _emitAbsentDefaultGuard(param);
+    }
+  }
+
+  /// Emits a single absent-sentinel default guard for [param].
+  void _emitAbsentDefaultGuard(ir.VariableDeclaration param) {
+    final binding = _scope.lookup(param);
+    if (binding == null) return;
+    if (binding.kind.isValue) return; // value-stack params have no sentinel
+    final paramReg = binding.reg;
+
+    final init = param.initializer;
+
+    // Emit: if identical(param, darticAbsent) → load default.
+    final absentReg = _allocRefReg();
+    _emitter.emitABC(Op.loadAbsent, absentReg, 0, 0);
+    final checkReg = _allocValueReg();
+    _emitter.emitABC(Op.eqRef, checkReg, paramReg, absentReg);
+    final skipPC = _emitter.emitJumpPlaceholder();
+
+    if (init == null) {
+      // Default is implicit null.
+      _emitter.emitABC(Op.loadNull, paramReg, 0, 0);
+    } else {
+      // Compile default expression.
+      final (defaultReg, defaultLoc) = _compileExpression(init);
+      final boxedReg =
+          _boxToRefIfValue(defaultReg, defaultLoc, _inferExprType(init));
+      if (boxedReg != paramReg) {
+        _emitter.emitABC(Op.moveRef, paramReg, boxedReg, 0);
+      }
+    }
+
+    // Patch skip jump: JUMP_IF_FALSE checkReg → here.
+    _emitter.patchJumpAsBx(
+        skipPC, Op.jumpIfFalse, checkReg, _emitter.currentPC);
+  }
+
   /// Builds a [Uint8List] encoding each parameter's [StackKind] for
   /// [DarticFuncProto.paramKinds]. Used by invokeClosure to route
   /// host-side arguments to the correct stack.
@@ -1388,6 +1451,16 @@ class DarticCompiler {
       positionalParams: fn.positionalParameters,
       namedParams: fn.namedParameters,
     );
+
+    // Emit callee-side default guards for optional params.
+    // When called via CALL_VIRTUAL, the caller passes darticAbsent for
+    // missing args (since it can't know the callee's default values).
+    // Each guard checks: if param is darticAbsent → load the default.
+    // For CALL_STATIC callers (who fill in actual defaults), the guard
+    // is a no-op since the value is never darticAbsent.
+    if (!proc.isStatic) {
+      _emitMethodDefaultGuards(fn);
+    }
 
     // External functions without a body should throw NoSuchMethodError.
     if (proc.isExternal && fn.body == null) {

@@ -3073,9 +3073,19 @@ class DarticInterpreter {
             }
 
             if (callee != null) {
+              // The compiler boxes ALL CALL_VIRTUAL args to the ref
+              // stack (since the callee's actual param types may differ
+              // from the interface at the call site). Account for the
+              // all-ref arg area which may exceed refRegCount.
+              final neededRefSlots = callee.needsArgRerouting
+                  ? (callee.refRegCount > 3 + callee.paramCount
+                      ? callee.refRegCount
+                      : 3 + callee.paramCount)
+                  : callee.refRegCount;
+
               // Overflow and call depth checks.
               if (vs.sp + callee.valueRegCount > vs.capacity ||
-                  rs.sp + callee.refRegCount > rs.capacity) {
+                  rs.sp + neededRefSlots > rs.capacity) {
                 throw DarticError('Stack overflow');
               }
               if (callStack.depth >= callStack.maxFrames) {
@@ -3101,7 +3111,7 @@ class DarticInterpreter {
               vBase = vs.sp;
               rBase = rs.sp;
               vs.sp += callee.valueRegCount;
-              rs.sp += callee.refRegCount;
+              rs.sp += neededRefSlots;
 
               // Place receiver at callee's rsp+2 (the `this` slot).
               // For Bridge: write the Bridge itself (not darticObj) so that
@@ -3116,6 +3126,87 @@ class DarticInterpreter {
                   classInfo, ic.methodNameIndex, darticObj);
               if (methodITA != null) {
                 rs.write(rBase + 0, methodITA);
+              }
+
+              // Reroute args from all-ref layout to callee's expected
+              // layout (same logic as Op.call rerouting). The compiler
+              // boxes ALL args to the ref stack; if the callee has
+              // value-stack params, unbox them now.
+              if (callee.needsArgRerouting) {
+                final paramKinds = callee.paramKinds!;
+                final defaults = callee.paramDefaults;
+                final reqPosCount = callee.requiredPositionalCount;
+                final posParamCount = callee.positionalParamCount;
+                final optPosCount = posParamCount - reqPosCount;
+                var readRefIdx = 3;
+                var writeRefIdx = 3;
+                var writeValIdx = 0;
+                for (var i = 0; i < paramKinds.length; i++) {
+                  final value = rs.read(rBase + readRefIdx);
+                  readRefIdx++;
+                  // Skip absent sentinel — callee's default guard handles
+                  // ref-stack params; for value-stack params, fill from
+                  // paramDefaults here since bytecode guards can't reach
+                  // the value stack.
+                  final isPresent = value != null &&
+                      !identical(value, darticAbsent);
+                  switch (paramKinds[i]) {
+                    case StackKind.intDefault:
+                      if (isPresent) {
+                        vs.writeInt(vBase + writeValIdx, value as int);
+                      } else {
+                        // Fill value-type default from paramDefaults.
+                        final defaultIdx = i < posParamCount
+                            ? i - reqPosCount
+                            : optPosCount + (i - posParamCount);
+                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+                          final d = defaults[defaultIdx];
+                          if (d is int) vs.writeInt(vBase + writeValIdx, d);
+                        }
+                      }
+                      writeValIdx++;
+                    case StackKind.boolDefault:
+                      if (isPresent) {
+                        final v = value;
+                        vs.writeInt(vBase + writeValIdx,
+                            v is bool ? (v ? 1 : 0) : v as int);
+                      } else {
+                        final defaultIdx = i < posParamCount
+                            ? i - reqPosCount
+                            : optPosCount + (i - posParamCount);
+                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+                          final d = defaults[defaultIdx];
+                          if (d is bool) {
+                            vs.writeInt(vBase + writeValIdx, d ? 1 : 0);
+                          }
+                        }
+                      }
+                      writeValIdx++;
+                    case StackKind.doubleDefault:
+                      if (isPresent) {
+                        vs.writeDouble(
+                            vBase + writeValIdx, (value as num).toDouble());
+                      } else {
+                        final defaultIdx = i < posParamCount
+                            ? i - reqPosCount
+                            : optPosCount + (i - posParamCount);
+                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+                          final d = defaults[defaultIdx];
+                          if (d is num) {
+                            vs.writeDouble(vBase + writeValIdx, d.toDouble());
+                          }
+                        }
+                      }
+                      writeValIdx++;
+                    default: // ref — compact ref positions
+                      if (writeRefIdx != readRefIdx - 1) {
+                        rs.write(rBase + writeRefIdx, value);
+                      }
+                      writeRefIdx++;
+                  }
+                }
+                // Shrink rs.sp back to refRegCount.
+                rs.sp = rBase + callee.refRegCount;
               }
 
               // Switch to callee bytecode.

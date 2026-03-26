@@ -1220,6 +1220,62 @@ extension on DarticCompiler {
     return argTemps;
   }
 
+  /// Compiles arguments for CALL_VIRTUAL with all args boxed to ref stack.
+  ///
+  /// Unlike [_compileCallArgs], this does NOT coerce args to the interface's
+  /// param types. The runtime callee may have different param types (e.g.,
+  /// `Object?` where the interface declares `int`), so all args are placed
+  /// on the ref stack. The runtime's arg rerouting handles unboxing to value
+  /// types based on the actual callee's paramKinds.
+  List<(int, ResultLoc)> _compileVirtualCallArgs(
+    ir.Arguments arguments,
+    List<ir.VariableDeclaration> positionalParams,
+    List<ir.VariableDeclaration> namedParams,
+  ) {
+    final argTemps = <(int, ResultLoc)>[];
+
+    // 1. Compile provided positional arguments — box to ref.
+    for (var i = 0; i < arguments.positional.length; i++) {
+      var (argReg, argLoc) = _compileExpression(arguments.positional[i]);
+      argReg = _boxToRefIfValue(
+          argReg, argLoc, _inferExprType(arguments.positional[i]));
+      argTemps.add((argReg, ResultLoc.ref));
+    }
+
+    // 2. Fill in missing optional positional arguments with absent sentinel.
+    for (var i = arguments.positional.length;
+        i < positionalParams.length;
+        i++) {
+      argTemps.add(_loadAbsent());
+    }
+
+    // 3. Handle named arguments — all boxed to ref.
+    if (namedParams.isNotEmpty) {
+      // Phase 1: Evaluate provided named args in SOURCE order.
+      final compiled = <String, (int, ResultLoc)>{};
+      for (final namedArg in arguments.named) {
+        var (argReg, argLoc) = _compileExpression(namedArg.value);
+        argReg = _boxToRefIfValue(
+            argReg, argLoc, _inferExprType(namedArg.value));
+        compiled[namedArg.name] = (argReg, ResultLoc.ref);
+      }
+
+      // Phase 2: Emit argTemps in PARAMETER declaration order.
+      // Use absent sentinel for missing params so the callee can
+      // distinguish "not provided" from "explicitly null".
+      for (final param in namedParams) {
+        final result = compiled[param.name!];
+        if (result != null) {
+          argTemps.add(result);
+        } else {
+          argTemps.add(_loadAbsent());
+        }
+      }
+    }
+
+    return argTemps;
+  }
+
   /// Compiles named arguments from [ir.VariableDeclaration] parameters
   /// (used by [_compileStaticInvocation] where params come from the target
   /// procedure's FunctionNode).
@@ -1717,8 +1773,13 @@ extension on DarticCompiler {
     final retType = target.function.returnType;
     final (resultReg, retLoc) = _allocResultReg(retType);
 
-    // 3. Compile arguments.
-    final argTemps = _compileCallArgs(
+    // 3. Compile arguments — all boxed to ref for virtual dispatch.
+    // The call-site interface may declare value-typed params (e.g., `int`)
+    // but the runtime target may use wider types (e.g., `Object?`) that live
+    // on the ref stack. Since we don't know the callee's param layout at
+    // compile time, always place args on the ref stack for CALL_VIRTUAL.
+    // The runtime reroutes to value stack based on callee's paramKinds.
+    final argTemps = _compileVirtualCallArgs(
       expr.arguments,
       target.function.positionalParameters,
       target.function.namedParameters,
@@ -2318,14 +2379,12 @@ extension on DarticCompiler {
     final savedValReg = valReg;
     final savedValLoc = valLoc;
 
-    // 3. The setter's parameter determines where the arg goes (includes
-    // covariant promotion via _effectiveParamKind to match _registerParams).
-    final setterParam = setter.function.positionalParameters.first;
-    final paramKind = _effectiveParamKind(setterParam);
-    if (paramKind == StackKind.ref && valLoc == ResultLoc.value) {
-      valReg = _emitBoxToRef(valReg, _inferExprType(expr.value));
-      valLoc = ResultLoc.ref;
-    }
+    // 3. Box value to ref for CALL_VIRTUAL — the callee's actual setter
+    // param type may differ from the interface declaration (e.g., `int`
+    // in the interface but `Object?` or `num` in the override). The
+    // runtime rerouting will unbox to value stack if needed.
+    valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(expr.value));
+    valLoc = ResultLoc.ref;
 
     // 4. Emit arg MOVE + CALL_VIRTUAL via shared helper.
     final argTemps = <(int, ResultLoc)>[(valReg, valLoc)];

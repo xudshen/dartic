@@ -383,88 +383,85 @@ extension on DarticCompiler {
       classInfo.methods[nameIdx] = _functions.last;
     }
 
-    // Generate synthetic getter/setter for fields that shadow inherited
-    // methods. When a subclass declares `var v` that overrides a superclass
-    // getter/setter, the Kernel IR doesn't emit Procedure nodes for the
-    // implicit accessors. We must generate them so CALL_VIRTUAL dispatches
-    // to the subclass field rather than the inherited method.
-    if (superClassId >= 0) {
-      final superInfo = _classInfos[superClassId];
-      for (final field in cls.fields) {
-        if (field.isStatic) continue;
-        final getterName = _mangleName(field.name);
-        final setterName = '${getterName}=';
-        final getterIdx = _constantPool.addName(getterName);
-        final setterIdx = _constantPool.addName(setterName);
+    // Generate synthetic getter/setter for fields that lack explicit
+    // accessor Procedures. Kernel IR doesn't emit Procedure nodes for
+    // implicit accessors of plain field declarations, but CALL_VIRTUAL
+    // dispatch (used when the static type is an interface/abstract class)
+    // needs a method-table entry. Covers:
+    //  • Fields shadowing inherited methods (original case)
+    //  • Fields in classes with implements-only hierarchy (no user super)
+    //  • Any field accessed via interface type dispatch
+    for (final field in cls.fields) {
+      if (field.isStatic) continue;
+      final getterName = _mangleName(field.name);
+      final setterName = '${getterName}=';
+      final getterIdx = _constantPool.addName(getterName);
+      final setterIdx = _constantPool.addName(setterName);
 
-        // Check if a getter/setter is inherited but not already overridden
-        // by an explicit procedure.
-        final needsGetter = superInfo.methods.containsKey(getterIdx) &&
-            !classInfo.methods.containsKey(getterIdx);
-        var needsSetter = superInfo.methods.containsKey(setterIdx) &&
-            !classInfo.methods.containsKey(setterIdx);
+      final needsGetter = !classInfo.methods.containsKey(getterIdx);
+      var needsSetter = !field.isFinal &&
+          !classInfo.methods.containsKey(setterIdx);
 
-        // Late final fields with initializer have no implicit setter —
-        // the spec says all writes are runtime errors. Don't generate a
-        // synthetic setter; let the class inherit the parent's setter
-        // (if any) via putIfAbsent, which has the proper write guard.
-        if (needsSetter && field.isLate && field.isFinal &&
-            field.initializer != null) {
-          needsSetter = false;
-        }
+      // Late final fields with initializer have no implicit setter —
+      // the spec says all writes are runtime errors. Don't generate a
+      // synthetic setter; let the class inherit the parent's setter
+      // (if any) via putIfAbsent, which has the proper write guard.
+      if (needsSetter && field.isLate && field.isFinal &&
+          field.initializer != null) {
+        needsSetter = false;
+      }
 
-        if (!needsGetter && !needsSetter) continue;
+      if (!needsGetter && !needsSetter) continue;
 
-        final layout = fieldLayouts[field.getterReference];
-        if (layout == null) continue;
+      final layout = fieldLayouts[field.getterReference];
+      if (layout == null) continue;
 
-        // Register layout for synthetic accessors:
-        //   r0=ITA, r1=FTA, r2=this, r3=ref result/param
-        //   v0=value result/param (when field is int/double/bool)
-        if (needsGetter) {
-          final funcId = _functions.length;
-          final isVal = layout.kind.isValue;
-          // Ref: GET_FIELD_REF r3, r2, offset → RETURN_REF r3
-          // Val: GET_FIELD_VAL v0, r2, offset → RETURN_VAL v0
-          final bytecode = Uint64List.fromList([
-            encodeABC(isVal ? Op.getFieldVal : Op.getFieldRef,
-                isVal ? 0 : 3, 2, layout.offset),
-            encodeABC(isVal ? Op.returnVal : Op.returnRef,
-                isVal ? 0 : 3, 0, 0),
-          ]);
-          _functions.add(DarticFuncProto(
-            funcId: funcId,
-            name: '${cls.name}.$getterName',
-            bytecode: bytecode,
-            valueRegCount: isVal ? 1 : 0,
-            refRegCount: isVal ? 3 : 4,
-            paramCount: 0,
-            returnKind: layout.kind.index,
-          ));
-          classInfo.methods[getterIdx] = _functions.last;
-        }
+      // Register layout for synthetic accessors:
+      //   r0=ITA, r1=FTA, r2=this, r3=ref result/param
+      //   v0=value result/param (when field is int/double/bool)
+      if (needsGetter) {
+        final funcId = _functions.length;
+        final isVal = layout.kind.isValue;
+        // Ref: GET_FIELD_REF r3, r2, offset → RETURN_REF r3
+        // Val: GET_FIELD_VAL v0, r2, offset → RETURN_VAL v0
+        final bytecode = Uint64List.fromList([
+          encodeABC(isVal ? Op.getFieldVal : Op.getFieldRef,
+              isVal ? 0 : 3, 2, layout.offset),
+          encodeABC(isVal ? Op.returnVal : Op.returnRef,
+              isVal ? 0 : 3, 0, 0),
+        ]);
+        _functions.add(DarticFuncProto(
+          funcId: funcId,
+          name: '${cls.name}.$getterName',
+          bytecode: bytecode,
+          valueRegCount: isVal ? 1 : 0,
+          refRegCount: isVal ? 3 : 4,
+          paramCount: 0,
+          returnKind: layout.kind.index,
+        ));
+        classInfo.methods[getterIdx] = _functions.last;
+      }
 
-        if (needsSetter) {
-          final funcId = _functions.length;
-          final isVal = layout.kind.isValue;
-          // Ref: SET_FIELD_REF r2, r3, offset → RETURN_NULL
-          // Val: SET_FIELD_VAL r2, v0, offset → RETURN_NULL
-          final bytecode = Uint64List.fromList([
-            encodeABC(isVal ? Op.setFieldVal : Op.setFieldRef,
-                2, isVal ? 0 : 3, layout.offset),
-            encodeABC(Op.returnNull, 0, 0, 0),
-          ]);
-          _functions.add(DarticFuncProto(
-            funcId: funcId,
-            name: '${cls.name}.$setterName',
-            bytecode: bytecode,
-            valueRegCount: isVal ? 1 : 0,
-            refRegCount: isVal ? 3 : 4,
-            paramCount: 1,
-            paramKinds: Uint8List.fromList([layout.kind.index]),
-          ));
-          classInfo.methods[setterIdx] = _functions.last;
-        }
+      if (needsSetter) {
+        final funcId = _functions.length;
+        final isVal = layout.kind.isValue;
+        // Ref: SET_FIELD_REF r2, r3, offset → RETURN_NULL
+        // Val: SET_FIELD_VAL r2, v0, offset → RETURN_NULL
+        final bytecode = Uint64List.fromList([
+          encodeABC(isVal ? Op.setFieldVal : Op.setFieldRef,
+              2, isVal ? 0 : 3, layout.offset),
+          encodeABC(Op.returnNull, 0, 0, 0),
+        ]);
+        _functions.add(DarticFuncProto(
+          funcId: funcId,
+          name: '${cls.name}.$setterName',
+          bytecode: bytecode,
+          valueRegCount: isVal ? 1 : 0,
+          refRegCount: isVal ? 3 : 4,
+          paramCount: 1,
+          paramKinds: Uint8List.fromList([layout.kind.index]),
+        ));
+        classInfo.methods[setterIdx] = _functions.last;
       }
     }
 
