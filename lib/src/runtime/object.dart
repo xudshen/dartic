@@ -90,6 +90,40 @@ class DarticObject {
     return identityHashCode(this);
   }
 
+  /// Catch-all for duck-typed calls from host code (e.g., `toJson()`,
+  /// `compareTo()`, or any other method/getter/setter not defined on
+  /// [DarticObject] itself).
+  ///
+  /// When host code calls a method on a `dynamic`-typed DarticObject,
+  /// Dart routes through [noSuchMethod]. We forward to [DarticDispatch]
+  /// which looks up the dartic-compiled override. If none exists, we
+  /// fall through to the standard [NoSuchMethodError].
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    final d = dispatch;
+    if (d != null) {
+      final name = _symbolToName(invocation.memberName);
+      if (invocation.isGetter) {
+        final result = d.get(this, this, name);
+        if (!identical(result, notOverridden)) return result;
+      } else if (invocation.isSetter) {
+        // Setter symbol includes trailing '=', DarticDispatch.set strips it.
+        final propName = name.endsWith('=')
+            ? name.substring(0, name.length - 1)
+            : name;
+        if (d.set(this, this, propName, invocation.positionalArguments.first)) {
+          return null;
+        }
+      } else {
+        // Method call.
+        final result = d.invoke(
+            this, this, name, invocation.positionalArguments);
+        if (!identical(result, notOverridden)) return result;
+      }
+    }
+    return super.noSuchMethod(invocation);
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -104,6 +138,16 @@ class DarticObject {
       if (!identical(result, notOverridden)) return result as bool;
     }
     return false;
+  }
+
+  /// Extracts the name from a [Symbol].
+  ///
+  /// `Symbol("foo")` → `"foo"`, `Symbol("foo=")` → `"foo="`.
+  /// Public symbols always use the format `Symbol("name")`.
+  static String _symbolToName(Symbol s) {
+    final str = s.toString();
+    // Symbol("name") → extract "name"
+    return str.substring(8, str.length - 2);
   }
 
   /// Global empty singletons — shared by all instances with zero fields.

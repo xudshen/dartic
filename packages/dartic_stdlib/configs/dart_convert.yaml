@@ -107,11 +107,12 @@ libraries:
       # ── Converter: convert/bind/startChunkedConversion need type casts ──
       Converter:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "convert#1": |
             (args) {
               final converter = args[0] as Converter;
               var input = args[1];
-              if (input is List && input is! List<int> && input is! List<String>) {
+              if (input is List && input is! List<int> && converter is Converter<List<int>, dynamic>) {
                 input = input.cast<int>();
               }
               return converter.convert(input);
@@ -124,7 +125,7 @@ libraries:
                 if (converter is Converter<String, dynamic>) {
                   stream = stream.cast<String>();
                 } else {
-                  stream = stream.cast<List<int>>();
+                  stream = stream.map<List<int>>((e) => (e as List).cast<int>());
                 }
               }
               return converter.bind(stream);
@@ -144,7 +145,7 @@ libraries:
       # ── Encoding: decodeStream/decode need type casts ──
       Encoding:
         extra_methods:
-          "decodeStream#1": "(args) => (args[0] as Encoding).decodeStream((args[1] as Stream).cast<List<int>>())"
+          "decodeStream#1": "(args) => (args[0] as Encoding).decodeStream((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
           "decode#1": "(args) => (args[0] as Encoding).decode((args[1] as List).cast<int>())"
 
       # ── JsonCodec: callback wrapping for reviver/toEncodable ──
@@ -183,6 +184,7 @@ libraries:
       # ── JsonEncoder: callback wrapping + Sink/Stream cast ──
       JsonEncoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "#1": |
             (args) {
               final toEncodable = identical(args[0], darticAbsent) ? null : args[0] as Function?;
@@ -201,7 +203,7 @@ libraries:
               return JsonEncoder.withIndent(indent);
             }
           "startChunkedConversion#1": "(args) => (args[0] as JsonEncoder).startChunkedConversion(castToStringSink(args[1]))"
-          "bind#1": "(args) => (args[0] as JsonEncoder).bind((args[1] as Stream).cast<Object>())"
+          "bind#1": "(args) => (args[0] as JsonEncoder).bind((args[1] as Stream).cast<Object?>())"
 
       # ── JsonDecoder: callback wrapping + Sink/Stream cast ──
       JsonDecoder:
@@ -220,21 +222,23 @@ libraries:
       # ── JsonUtf8Encoder: callback wrapping ──
       JsonUtf8Encoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "#3": |
             (args) {
               final indent = identical(args[0], darticAbsent) ? null : args[0] as String?;
               final toEncodable = identical(args[1], darticAbsent) ? null : args[1] as Function?;
-              final bufferSize = identical(args[2], darticAbsent) ? 256 : args[2] as int;
+              final hasBufferSize = !identical(args[2], darticAbsent);
               if (toEncodable != null) {
-                return JsonUtf8Encoder(indent, (v) => toEncodable(v), bufferSize);
+                return hasBufferSize
+                    ? JsonUtf8Encoder(indent, (v) => toEncodable(v), args[2] as int)
+                    : JsonUtf8Encoder(indent, (v) => toEncodable(v));
               }
-              if (indent != null) {
-                return JsonUtf8Encoder(indent, null, bufferSize);
-              }
+              if (hasBufferSize) return JsonUtf8Encoder(indent, null, args[2] as int);
+              if (indent != null) return JsonUtf8Encoder(indent);
               return JsonUtf8Encoder();
             }
           "startChunkedConversion#1": "(args) => (args[0] as JsonUtf8Encoder).startChunkedConversion(castToBytesSink(args[1]))"
-          "bind#1": "(args) => (args[0] as JsonUtf8Encoder).bind((args[1] as Stream).cast<Object>())"
+          "bind#1": "(args) => (args[0] as JsonUtf8Encoder).bind((args[1] as Stream).cast<Object?>())"
 
       # ── Utf8Codec: decode needs List<int> cast ──
       Utf8Codec:
@@ -253,14 +257,16 @@ libraries:
       # ── Utf8Encoder: Sink/Stream cast ──
       Utf8Encoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as Utf8Encoder).startChunkedConversion(castToBytesSink(args[1]))"
           "bind#1": "(args) => (args[0] as Utf8Encoder).bind((args[1] as Stream).cast<String>())"
 
       # ── Utf8Decoder: List<int> cast + Sink/Stream cast ──
       Utf8Decoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as Utf8Decoder).startChunkedConversion(castToStringSink(args[1]))"
-          "bind#1": "(args) => (args[0] as Utf8Decoder).bind((args[1] as Stream).cast<List<int>>())"
+          "bind#1": "(args) => (args[0] as Utf8Decoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
           "convert#3": |
             (args) {
               final self = args[0] as Utf8Decoder;
@@ -279,14 +285,16 @@ libraries:
       # ── Base64Encoder: List<int> cast + Sink/Stream cast ──
       Base64Encoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "convert#1": "(args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>())"
           "startChunkedConversion#1": "(args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1]))"
-          "bind#1": "(args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>())"
+          "bind#1": "(args) => (args[0] as Base64Encoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
           "_#fromFields#1": "(args) => (args[0] as bool) ? Base64Encoder.urlSafe() : Base64Encoder()"
 
       # ── Base64Decoder: Sink/Stream cast ──
       Base64Decoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as Base64Decoder).startChunkedConversion(castToBytesSink(args[1]))"
           "bind#1": "(args) => (args[0] as Base64Decoder).bind((args[1] as Stream).cast<String>())"
 
@@ -307,6 +315,7 @@ libraries:
       # ── AsciiEncoder: Sink/Stream cast ──
       AsciiEncoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as AsciiEncoder).startChunkedConversion(castToBytesSink(args[1]))"
           "bind#1": "(args) => (args[0] as AsciiEncoder).bind((args[1] as Stream).cast<String>())"
 
@@ -327,8 +336,9 @@ libraries:
       # ── AsciiDecoder: List<int> cast + Sink/Stream cast ──
       AsciiDecoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as AsciiDecoder).startChunkedConversion(castToStringSink(args[1]))"
-          "bind#1": "(args) => (args[0] as AsciiDecoder).bind((args[1] as Stream).cast<List<int>>())"
+          "bind#1": "(args) => (args[0] as AsciiDecoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
           "convert#3": |
             (args) {
               final self = args[0] as AsciiDecoder;
@@ -349,7 +359,7 @@ libraries:
               final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
               return (self as dynamic).convert(bytes, start, end);
             }
-          "bind#1": "(args) => (args[0] as dynamic).bind((args[1] as Stream).cast<List<int>>())"
+          "bind#1": "(args) => (args[0] as dynamic).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
 
       # ── Latin1Codec: decode needs List<int> cast ──
       Latin1Codec:
@@ -368,14 +378,16 @@ libraries:
       # ── Latin1Encoder: Sink/Stream cast ──
       Latin1Encoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as Latin1Encoder).startChunkedConversion(castToBytesSink(args[1]))"
           "bind#1": "(args) => (args[0] as Latin1Encoder).bind((args[1] as Stream).cast<String>())"
 
       # ── Latin1Decoder: List<int> cast + Sink/Stream cast ──
       Latin1Decoder:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as Latin1Decoder).startChunkedConversion(castToStringSink(args[1]))"
-          "bind#1": "(args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).cast<List<int>>())"
+          "bind#1": "(args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>()))"
           "convert#3": |
             (args) {
               final self = args[0] as Latin1Decoder;
@@ -385,15 +397,36 @@ libraries:
               return self.convert(bytes, start, end);
             }
 
+      # ── HtmlEscapeMode: const canonicalization for _#fromFields ──
+      # Compiler constinit may produce incorrect name field (known bug),
+      # so match by boolean field values which are always correct.
+      HtmlEscapeMode:
+        extra_methods:
+          "_#fromFields#5": |
+            (args) {
+              final escapeLtGt = args[2] as bool;
+              final escapeQuot = args[3] as bool;
+              final escapeApos = args[1] as bool;
+              final escapeSlash = args[4] as bool;
+              for (final mode in [HtmlEscapeMode.unknown, HtmlEscapeMode.attribute, HtmlEscapeMode.sqAttribute, HtmlEscapeMode.element]) {
+                if (mode.escapeLtGt == escapeLtGt && mode.escapeQuot == escapeQuot && mode.escapeApos == escapeApos && mode.escapeSlash == escapeSlash) {
+                  return mode;
+                }
+              }
+              return HtmlEscapeMode(name: args[0] as String, escapeLtGt: escapeLtGt, escapeQuot: escapeQuot, escapeApos: escapeApos, escapeSlash: escapeSlash);
+            }
+
       # ── HtmlEscape: Sink/Stream cast ──
       HtmlEscape:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as HtmlEscape).startChunkedConversion(castToStringSink(args[1]))"
           "bind#1": "(args) => (args[0] as HtmlEscape).bind((args[1] as Stream).cast<String>())"
 
       # ── LineSplitter: Sink/Stream cast ──
       LineSplitter:
         extra_methods:
+          "fuse#1": "(args) => fuseConverters(args[0] as Converter, args[1] as Converter)"
           "startChunkedConversion#1": "(args) => (args[0] as LineSplitter).startChunkedConversion(castToStringSink(args[1]))"
           "bind#1": "(args) => (args[0] as LineSplitter).bind((args[1] as Stream).cast<String>())"
 
@@ -421,9 +454,10 @@ libraries:
               return ChunkedConversionSink.withCallback((chunks) => callback(chunks));
             }
 
-      # ── StringConversionSink: asUtf8Sink needs optional param handling ──
+      # ── StringConversionSink: Sink cast + asUtf8Sink optional param ──
       StringConversionSink:
         extra_methods:
+          "from#1": "(args) => StringConversionSink.from(castToStringSink(args[0]))"
           "asUtf8Sink#1": |
             (args) {
               final allowMalformed = identical(args[1], darticAbsent) ? false : args[1] as bool;
@@ -449,9 +483,10 @@ libraries:
         extra_methods:
           "#1": "(args) => StringConversionSink.fromStringSink(args[0] as StringSink)"
 
-      # ── ByteConversionSink: List<int> cast ──
+      # ── ByteConversionSink: List<int> cast + Sink cast ──
       ByteConversionSink:
         extra_methods:
+          "from#1": "(args) => ByteConversionSink.from(castToBytesSink(args[0]))"
           "add#1": |
             (args) {
               (args[0] as ByteConversionSink).add((args[1] as List).cast<int>());

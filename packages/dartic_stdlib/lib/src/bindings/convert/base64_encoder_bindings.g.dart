@@ -28,15 +28,15 @@ abstract final class Base64EncoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as Base64Encoder).toString(),
-        'fuse#1': (args) => (args[0] as Base64Encoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Base64Encoder).cast(),
         'hashCode#0': (args) => (args[0] as Base64Encoder).hashCode,
         '==#1': (args) => (args[0] as Base64Encoder) == (args[1] as Object),
         '#0': (args) => Base64Encoder(),
         'urlSafe#0': (args) => Base64Encoder.urlSafe(),
+        'fuse#1': (args) => fuseConverters(args[0] as Converter, args[1] as Converter),
         'convert#1': (args) => (args[0] as Base64Encoder).convert((args[1] as List).cast<int>()),
         'startChunkedConversion#1': (args) => (args[0] as Base64Encoder).startChunkedConversion(castToStringSink(args[1])),
-        'bind#1': (args) => (args[0] as Base64Encoder).bind((args[1] as Stream).cast<List<int>>()),
+        'bind#1': (args) => (args[0] as Base64Encoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>())),
         '_#fromFields#1': (args) => (args[0] as bool) ? Base64Encoder.urlSafe() : Base64Encoder(),
       };
 }

@@ -35,12 +35,12 @@ abstract final class AsciiEncoderBindings {
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as AsciiEncoder).toString(),
         'convert#3': (args) => (args[0] as AsciiEncoder).convert(args[1] as String, identical(args[2], darticAbsent) ? 0 : args[2] as int, identical(args[3], darticAbsent) ? null : args[3] as int?),
-        'fuse#1': (args) => (args[0] as AsciiEncoder).fuse(args[1] as Converter<List<int>, dynamic>),
         'cast#0': (args) => (args[0] as AsciiEncoder).cast(),
         'hashCode#0': (args) => (args[0] as AsciiEncoder).hashCode,
         '==#1': (args) => (args[0] as AsciiEncoder) == (args[1] as Object),
         '#0': (args) => AsciiEncoder(),
         '_#fromFields#1': (args) => AsciiEncoder(),
+        'fuse#1': (args) => fuseConverters(args[0] as Converter, args[1] as Converter),
         'startChunkedConversion#1': (args) => (args[0] as AsciiEncoder).startChunkedConversion(castToBytesSink(args[1])),
         'bind#1': (args) => (args[0] as AsciiEncoder).bind((args[1] as Stream).cast<String>()),
       };

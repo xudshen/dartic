@@ -34,14 +34,14 @@ abstract final class Latin1DecoderBindings {
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
         'toString#0': (args) => (args[0] as Latin1Decoder).toString(),
-        'fuse#1': (args) => (args[0] as Latin1Decoder).fuse(args[1] as Converter<String, dynamic>),
         'cast#0': (args) => (args[0] as Latin1Decoder).cast(),
         'hashCode#0': (args) => (args[0] as Latin1Decoder).hashCode,
         '==#1': (args) => (args[0] as Latin1Decoder) == (args[1] as Object),
         '#1': (args) => Latin1Decoder(allowInvalid: identical(args[0], darticAbsent) ? false : args[0] as bool),
         '_#fromFields#2': (args) => Latin1Decoder(allowInvalid: args[0] as bool),
+        'fuse#1': (args) => fuseConverters(args[0] as Converter, args[1] as Converter),
         'startChunkedConversion#1': (args) => (args[0] as Latin1Decoder).startChunkedConversion(castToStringSink(args[1])),
-        'bind#1': (args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).cast<List<int>>()),
+        'bind#1': (args) => (args[0] as Latin1Decoder).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>())),
         'convert#3': (args) {
             final self = args[0] as Latin1Decoder;
             final bytes = (args[1] as List).cast<int>();
@@ -59,6 +59,6 @@ abstract final class Latin1DecoderBindings {
             final end = identical(args[3], darticAbsent) ? null : args[3] as int?;
             return (self as dynamic).convert(bytes, start, end);
         },
-        'bind#1': (args) => (args[0] as dynamic).bind((args[1] as Stream).cast<List<int>>()),
+        'bind#1': (args) => (args[0] as dynamic).bind((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>())),
       };
 }

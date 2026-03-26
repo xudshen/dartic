@@ -53,8 +53,8 @@ abstract final class StringConversionSinkBindings {
         'hashCode#0': (args) => (args[0] as StringConversionSink).hashCode,
         '==#1': (args) => (args[0] as StringConversionSink) == (args[1] as Object),
         'withCallback#1': (args) => StringConversionSink.withCallback((a) => (args[0] as Function)(a)),
-        'from#1': (args) => StringConversionSink.from(args[0] as Sink<String>),
         'fromStringSink#1': (args) => StringConversionSink.fromStringSink(args[0] as StringSink),
+        'from#1': (args) => StringConversionSink.from(castToStringSink(args[0])),
         'asUtf8Sink#1': (args) {
             final allowMalformed = identical(args[1], darticAbsent) ? false : args[1] as bool;
             return (args[0] as StringConversionSink).asUtf8Sink(allowMalformed);

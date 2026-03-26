@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // Manual helper classes for dart:convert bindings.
 //
 // These solve the contravariant Sink<T> type parameter problem:
@@ -31,4 +33,28 @@ Sink<String> castToStringSink(Object? sink) {
 Sink<List<int>> castToBytesSink(Object? sink) {
   if (sink is Sink<List<int>>) return sink;
   return CastSink<List<int>>(sink as Sink<Object?>);
+}
+
+/// Manual fused converter — bypasses host `Converter.fuse` type check.
+///
+/// Bridge classes like `_$Converter` extend `Converter<dynamic, dynamic>`,
+/// which fails the host's runtime parameter type check in `Converter.fuse`.
+/// This class chains two converters without the generic constraint.
+class FusedConverter extends Converter<dynamic, dynamic> {
+  final Converter _first;
+  final Converter _second;
+  FusedConverter(this._first, this._second);
+
+  @override
+  dynamic convert(dynamic input) => _second.convert(_first.convert(input));
+}
+
+/// Calls `converter.fuse(other)`, falling back to [FusedConverter] when
+/// the host rejects [other] due to bridge type erasure.
+Converter fuseConverters(Converter converter, Converter other) {
+  try {
+    return converter.fuse(other);
+  } on TypeError {
+    return FusedConverter(converter, other);
+  }
 }

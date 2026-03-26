@@ -38,6 +38,17 @@ abstract final class HtmlEscapeModeBindings {
         'hashCode#0': (args) => (args[0] as HtmlEscapeMode).hashCode,
         '==#1': (args) => (args[0] as HtmlEscapeMode) == (args[1] as Object),
         '#5': (args) => HtmlEscapeMode(name: identical(args[0], darticAbsent) ? "custom" : args[0] as String, escapeLtGt: identical(args[1], darticAbsent) ? false : args[1] as bool, escapeQuot: identical(args[2], darticAbsent) ? false : args[2] as bool, escapeApos: identical(args[3], darticAbsent) ? false : args[3] as bool, escapeSlash: identical(args[4], darticAbsent) ? false : args[4] as bool),
-        '_#fromFields#5': (args) => HtmlEscapeMode(name: args[0] as String, escapeLtGt: args[2] as bool, escapeQuot: args[3] as bool, escapeApos: args[1] as bool, escapeSlash: args[4] as bool),
+        '_#fromFields#5': (args) {
+            final escapeLtGt = args[2] as bool;
+            final escapeQuot = args[3] as bool;
+            final escapeApos = args[1] as bool;
+            final escapeSlash = args[4] as bool;
+            for (final mode in [HtmlEscapeMode.unknown, HtmlEscapeMode.attribute, HtmlEscapeMode.sqAttribute, HtmlEscapeMode.element]) {
+              if (mode.escapeLtGt == escapeLtGt && mode.escapeQuot == escapeQuot && mode.escapeApos == escapeApos && mode.escapeSlash == escapeSlash) {
+                return mode;
+              }
+            }
+            return HtmlEscapeMode(name: args[0] as String, escapeLtGt: escapeLtGt, escapeQuot: escapeQuot, escapeApos: escapeApos, escapeSlash: escapeSlash);
+        },
       };
 }

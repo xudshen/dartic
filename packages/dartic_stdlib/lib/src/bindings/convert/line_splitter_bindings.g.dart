@@ -35,6 +35,7 @@ abstract final class LineSplitterBindings {
         '==#1': (args) => (args[0] as LineSplitter) == (args[1] as Object),
         '#0': (args) => LineSplitter(),
         '_#fromFields#0': (args) => LineSplitter(),
+        'fuse#1': (args) => fuseConverters(args[0] as Converter, args[1] as Converter),
         'startChunkedConversion#1': (args) => (args[0] as LineSplitter).startChunkedConversion(castToStringSink(args[1])),
         'bind#1': (args) => (args[0] as LineSplitter).bind((args[1] as Stream).cast<String>()),
       };

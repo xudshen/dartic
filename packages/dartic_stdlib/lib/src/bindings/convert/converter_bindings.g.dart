@@ -102,15 +102,15 @@ abstract final class ConverterBindings {
   }
 
   static Map<String, Object? Function(List<Object?>)> methodMap() => {
-        'fuse#1': (args) => (args[0] as Converter).fuse(args[1] as Converter),
         'cast#0': (args) => (args[0] as Converter).cast(),
         'toString#0': (args) => (args[0] as Converter).toString(),
         'hashCode#0': (args) => (args[0] as Converter).hashCode,
         '==#1': (args) => (args[0] as Converter) == (args[1] as Object),
+        'fuse#1': (args) => fuseConverters(args[0] as Converter, args[1] as Converter),
         'convert#1': (args) {
             final converter = args[0] as Converter;
             var input = args[1];
-            if (input is List && input is! List<int> && input is! List<String>) {
+            if (input is List && input is! List<int> && converter is Converter<List<int>, dynamic>) {
               input = input.cast<int>();
             }
             return converter.convert(input);
@@ -122,7 +122,7 @@ abstract final class ConverterBindings {
               if (converter is Converter<String, dynamic>) {
                 stream = stream.cast<String>();
               } else {
-                stream = stream.cast<List<int>>();
+                stream = stream.map<List<int>>((e) => (e as List).cast<int>());
               }
             }
             return converter.bind(stream);

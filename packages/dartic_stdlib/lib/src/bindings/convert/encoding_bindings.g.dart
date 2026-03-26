@@ -147,7 +147,7 @@ abstract final class EncodingBindings {
         'hashCode#0': (args) => (args[0] as Encoding).hashCode,
         'inverted#0': (args) => (args[0] as Encoding).inverted,
         '==#1': (args) => (args[0] as Encoding) == (args[1] as Object),
-        'decodeStream#1': (args) => (args[0] as Encoding).decodeStream((args[1] as Stream).cast<List<int>>()),
+        'decodeStream#1': (args) => (args[0] as Encoding).decodeStream((args[1] as Stream).map<List<int>>((e) => (e as List).cast<int>())),
         'decode#1': (args) => (args[0] as Encoding).decode((args[1] as List).cast<int>()),
       };
 }

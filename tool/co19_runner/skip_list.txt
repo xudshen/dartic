@@ -702,6 +702,23 @@ LibTest/async/StreamIterator/current_A01_t03.dart  # catchError handler returns 
 LibTest/async/Zone/registerCallback_A01_t01.dart         # callback is ZoneCallback<int> fails
 LibTest/async/Zone/registerUnaryCallback_A01_t01.dart    # same
 LibTest/async/Zone/registerBinaryCallback_A01_t01.dart   # same
+# Generic host constructor type erasure: gen-tool erases Point<T extends num> → Point<num>,
+# so Point<int>(1,2)*1.1 doesn't throw TypeError. Needs ITA-aware constructor dispatch.
+LibTest/math/Point/operator_mult_A02_t01.dart  # Point<int>*double should throw TypeError, host is Point<num>
+# ── LibTest/convert systemic failures ─────────────────────────────
+# CAST + StreamController type erasure: compiler emits CAST dynamic→Sink<T> before binding,
+# host StreamSink<dynamic> (from erased StreamController) fails dartic CAST to Sink<List<int>>/Sink<String>
+# Task: docs/tasks/tag-type-propagation/overview.md
+LibTest/convert/ByteConversionSink/ByteConversionSink.from_A01_t01.dart  # StreamSink not Sink<List<int>>
+LibTest/convert/StringConversionSink/StringConversionSink.from_A01_t01.dart  # StreamSink not Sink<String>
+# Host superTypeArgs identity mapping bug: non-generic ByteConversionSink extends generic
+# ChunkedConversionSink<List<int>>, but resolveClassIds creates wrong TypeParameterTemplate mapping
+# Task: docs/tasks/host-supertype-args/overview.md
+LibTest/convert/ByteConversionSink/ByteConversionSink_class_A01_t01.dart  # ByteConversionSink not ChunkedConversionSink<List<int>>
+# Host VM also fails (@issue 29353): SDK docs say asStringSink/asUtf8Sink invalidate the
+# original sink, but SDK doesn't implement invalidation. Not a dartic bug.
+LibTest/convert/StringConversionSink/asStringSink_A02_t01.dart   # host VM also fails
+LibTest/convert/StringConversionSink/asUtf8Sink_A02_t01.dart     # same
 # Collection mutation type enforcement: collections created as <Object?> with TAG_TYPE,
 # host VM doesn't enforce element types on dynamic dispatch. Needs TypeCheckedList/Set/Map wrapper.
 LanguageFeatures/Records/type_inference_A01_t04.dart  # (List<int> as dynamic).add("") should throw TypeError
