@@ -31,4 +31,4 @@ Then run `dartic gen your_config.yaml` to generate the `.g.dart` binding files.
 
 ## License
 
-MIT -- see [LICENSE](../../LICENSE).
+GPLv3 -- see [LICENSE](../../LICENSE).

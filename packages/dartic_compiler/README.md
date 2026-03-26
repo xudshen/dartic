@@ -23,4 +23,4 @@ than importing this package directly.
 
 ## License
 
-MIT -- see [LICENSE](../../LICENSE).
+GPLv3 -- see [LICENSE](../../LICENSE).

@@ -95,4 +95,4 @@ curl -fsSL https://github.com/xudshen/dartic/releases/latest/download/install.sh
 
 ## License
 
-MIT -- see [LICENSE](LICENSE).
+GPLv3 -- see [LICENSE](LICENSE).

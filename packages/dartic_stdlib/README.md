@@ -26,4 +26,4 @@ final engine = DarticEngine(plugins: [DarticStdlibPlugin()]);
 
 ## License
 
-MIT -- see [LICENSE](../../LICENSE).
+GPLv3 -- see [LICENSE](../../LICENSE).
