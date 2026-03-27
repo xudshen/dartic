@@ -115,6 +115,11 @@ class SdkResolver {
     String? requiredDartSdk,
   }) : _requiredDartSdk = requiredDartSdk ?? v.requiredDartSdk;
 
+  /// Path to the `dart` executable, derived from the resolved SDK.
+  ///
+  /// Replaces all `Platform.resolvedExecutable` usage for dart invocation.
+  String get dartBin => '${resolveDartSdk()}/bin/dart';
+
   /// Resolves the Dart SDK path.
   ///
   /// If [explicitPath] is provided, validates it directly (no caching).
