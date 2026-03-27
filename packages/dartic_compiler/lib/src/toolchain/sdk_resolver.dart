@@ -209,17 +209,12 @@ class SdkResolver {
 
   /// Discovery chain for Dart SDK: FVM → DART_SDK env → which/where.
   String? _discoverDartSdk() {
-    // 1. Try FVM.
+    // 1. Try FVM: resolve symlink from `fvm dart` shim to real Dart SDK.
     try {
       final result = Process.runSync('fvm', ['dart', '--version']);
       if (result.exitCode == 0) {
-        final which = Process.runSync('fvm', ['which', 'dart']);
-        if (which.exitCode == 0) {
-          final path = (which.stdout as String).trim();
-          // path is like /path/to/sdk/bin/dart
-          final sdkPath = File(path).parent.parent.path;
-          if (Directory(sdkPath).existsSync()) return sdkPath;
-        }
+        final sdkPath = _dartSdkFromWhich('dart');
+        if (sdkPath != null) return sdkPath;
       }
     } on ProcessException catch (_) {
       // fvm not available.
@@ -232,21 +227,40 @@ class SdkResolver {
     }
 
     // 3. Try which/where.
+    final sdkPath = _dartSdkFromWhich('dart');
+    if (sdkPath != null) return sdkPath;
+
+    return null;
+  }
+
+  /// Resolve `which <cmd>` → symlink → Dart SDK path.
+  ///
+  /// Handles two cases:
+  /// - Standard Dart SDK: `<dart-sdk>/bin/dart` → parent.parent = `<dart-sdk>`
+  /// - Flutter-embedded: `<flutter>/bin/dart` → derive `<flutter>/bin/cache/dart-sdk`
+  String? _dartSdkFromWhich(String cmd) {
     try {
-      final cmd = Platform.isWindows ? 'where' : 'which';
-      final result = Process.runSync(cmd, ['dart']);
-      if (result.exitCode == 0) {
-        final path = (result.stdout as String).trim().split('\n').first.trim();
-        if (path.isNotEmpty) {
-          final resolved = File(path).resolveSymbolicLinksSync();
-          // resolved is like /path/to/sdk/bin/dart
-          return File(resolved).parent.parent.path;
-        }
+      final whichCmd = Platform.isWindows ? 'where' : 'which';
+      final result = Process.runSync(whichCmd, [cmd]);
+      if (result.exitCode != 0) return null;
+      final path = (result.stdout as String).trim().split('\n').first.trim();
+      if (path.isEmpty) return null;
+
+      final resolved = File(path).resolveSymbolicLinksSync();
+      // resolved is like /path/to/sdk/bin/dart
+      final sdkPath = File(resolved).parent.parent.path;
+
+      // Check if this is a real Dart SDK (has lib/_internal).
+      if (Directory('$sdkPath/lib/_internal').existsSync()) return sdkPath;
+
+      // Might be Flutter SDK root (<flutter>/bin/dart). Try embedded Dart SDK.
+      final embeddedDartSdk = '$sdkPath/bin/cache/dart-sdk';
+      if (Directory('$embeddedDartSdk/lib/_internal').existsSync()) {
+        return embeddedDartSdk;
       }
     } on Object catch (_) {
       // which/where not available, or broken symlink.
     }
-
     return null;
   }
 }
