@@ -207,18 +207,11 @@ class SdkResolver {
     return sdkPath;
   }
 
-  /// Discovery chain for Dart SDK: FVM → DART_SDK env → which/where.
+  /// Discovery chain for Dart SDK: FVM config → DART_SDK env → which/where.
   String? _discoverDartSdk() {
-    // 1. Try FVM: resolve symlink from `fvm dart` shim to real Dart SDK.
-    try {
-      final result = Process.runSync('fvm', ['dart', '--version']);
-      if (result.exitCode == 0) {
-        final sdkPath = _dartSdkFromWhich('dart');
-        if (sdkPath != null) return sdkPath;
-      }
-    } on ProcessException catch (_) {
-      // fvm not available.
-    }
+    // 1. Try FVM config: read Flutter version → derive embedded Dart SDK.
+    final fvmDartSdk = _dartSdkFromFvm();
+    if (fvmDartSdk != null) return fvmDartSdk;
 
     // 2. Try DART_SDK environment variable.
     final dartSdk = Platform.environment['DART_SDK'];
@@ -226,10 +219,57 @@ class SdkResolver {
       return dartSdk;
     }
 
-    // 3. Try which/where.
+    // 3. Try which/where dart on PATH.
     final sdkPath = _dartSdkFromWhich('dart');
     if (sdkPath != null) return sdkPath;
 
+    return null;
+  }
+
+  /// Discover Dart SDK from FVM config (.fvmrc or .fvm/fvm_config.json).
+  ///
+  /// FVM manages Flutter SDKs; the Dart SDK is embedded at
+  /// `<flutter-sdk>/bin/cache/dart-sdk`.
+  String? _dartSdkFromFvm() {
+    // Walk up from CWD looking for FVM config files.
+    var dir = Directory.current;
+    while (true) {
+      // FVM 3.x: .fvmrc (JSON with {"flutter": "3.38.7"})
+      final fvmrc = File('${dir.path}/.fvmrc');
+      if (fvmrc.existsSync()) {
+        final match = RegExp(r'"flutter"\s*:\s*"([^"]+)"')
+            .firstMatch(fvmrc.readAsStringSync());
+        if (match != null) {
+          final dartSdk = _fvmCacheDartSdk(match.group(1)!);
+          if (dartSdk != null) return dartSdk;
+        }
+      }
+
+      // FVM 2.x: .fvm/fvm_config.json
+      final config = File('${dir.path}/.fvm/fvm_config.json');
+      if (config.existsSync()) {
+        final match = RegExp(r'"flutterSdkVersion"\s*:\s*"([^"]+)"')
+            .firstMatch(config.readAsStringSync());
+        if (match != null) {
+          final dartSdk = _fvmCacheDartSdk(match.group(1)!);
+          if (dartSdk != null) return dartSdk;
+        }
+      }
+
+      final parent = dir.parent;
+      if (parent.path == dir.path) break;
+      dir = parent;
+    }
+    return null;
+  }
+
+  /// Derive Dart SDK path from FVM cache for a given Flutter version.
+  String? _fvmCacheDartSdk(String flutterVersion) {
+    final home = Platform.environment['HOME'] ?? '';
+    for (final cacheRoot in ['$home/.fvm_cache/versions', '$home/fvm/versions']) {
+      final dartSdk = '$cacheRoot/$flutterVersion/bin/cache/dart-sdk';
+      if (Directory(dartSdk).existsSync()) return dartSdk;
+    }
     return null;
   }
 
