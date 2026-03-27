@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dartic_compiler/dartic_compiler.dart'
-    show SdkResolver, SdkNotFoundError, readSdkVersion;
+    show SdkResolver, SdkNotFoundError, SdkVersionMismatchError, readSdkVersion;
 import 'package:mason_logger/mason_logger.dart';
 
 /// Checks environment and SDK configuration.
@@ -28,6 +28,9 @@ class DoctorCommand extends Command<int> {
       _logger.info('[\u2713] Dart SDK $version ($dartSdk)');
     } on SdkNotFoundError catch (e) {
       _logger.err('[\u2717] ${e.message}');
+      issues++;
+    } on SdkVersionMismatchError catch (e) {
+      _logger.err('[\u2717] $e');
       issues++;
     }
 
