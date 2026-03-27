@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:dartic_compiler/dartic_compiler.dart'
+    show SdkResolver, SdkNotFoundError, readSdkVersion;
 import 'package:mason_logger/mason_logger.dart';
 
 /// Checks environment and SDK configuration.
@@ -19,15 +21,13 @@ class DoctorCommand extends Command<int> {
   int run() {
     var issues = 0;
 
-    // 1. Dart SDK (from current process)
-    final dartBin = Platform.resolvedExecutable;
-    final dartSdk = File(dartBin).parent.parent.path;
-    final versionFile = File('$dartSdk/version');
-    if (versionFile.existsSync()) {
-      final version = versionFile.readAsStringSync().trim();
+    // 1. Dart SDK (via SdkResolver discovery chain)
+    try {
+      final dartSdk = SdkResolver().resolveDartSdk();
+      final version = readSdkVersion(dartSdk) ?? 'unknown';
       _logger.info('[\u2713] Dart SDK $version ($dartSdk)');
-    } else {
-      _logger.err('[\u2717] Dart SDK version not found at $dartSdk');
+    } on SdkNotFoundError catch (e) {
+      _logger.err('[\u2717] ${e.message}');
       issues++;
     }
 
