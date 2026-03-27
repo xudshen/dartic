@@ -16,6 +16,7 @@ import 'package:dartic/dartic_internal.dart';
 
 import '../compiler/compiler.dart';
 import '../compiler/package_discovery.dart';
+import 'sdk_resolver.dart';
 import 'target.dart';
 
 /// Error thrown when compilation fails at any stage.
@@ -36,7 +37,9 @@ class CompileError implements Exception {
 /// 2. `.dill → DarticModule` via [DarticCompiler]
 /// 3. `DarticModule → .darb` via [DarticSerializer]
 class CompilePipeline {
-  CompilePipeline();
+  final String? _dartBin;
+
+  CompilePipeline({String? dartBin}) : _dartBin = dartBin;
 
   /// Full pipeline: `.dart → .darb`.
   ///
@@ -150,7 +153,7 @@ class CompilePipeline {
     String outputDill, {
     void Function(String stderr)? onStderr,
   }) async {
-    final dartBin = Platform.resolvedExecutable;
+    final dartBin = _dartBin ?? SdkResolver().dartBin;
 
     final result = await Process.run(dartBin, [
       'compile',
