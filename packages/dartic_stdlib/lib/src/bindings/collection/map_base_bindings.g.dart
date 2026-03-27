@@ -12,6 +12,7 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$MapBase extends MapBase<dynamic, dynamic> implements DarticObjectHolder {
   _$MapBase(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -268,6 +269,6 @@ abstract final class MapBaseBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> mapBaseValueIterableMethodMap() => {
-        '#1': (args) => (args[0] as Map).values,
+        '#1': (args) => MapBaseValueIterableProxy(args[0] as Map),
       };
 }

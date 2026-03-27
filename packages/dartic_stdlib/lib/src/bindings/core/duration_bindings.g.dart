@@ -14,6 +14,7 @@ import 'dart:collection';
 import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$Duration extends Duration implements DarticObjectHolder {
   _$Duration(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(days: superArgs[0] as int, hours: superArgs[1] as int, minutes: superArgs[2] as int, seconds: superArgs[3] as int, milliseconds: superArgs[4] as int, microseconds: superArgs[5] as int);

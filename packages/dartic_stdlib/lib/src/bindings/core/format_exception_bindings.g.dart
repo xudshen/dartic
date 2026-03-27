@@ -14,6 +14,7 @@ import 'dart:collection';
 import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$FormatException extends FormatException implements DarticObjectHolder {
   _$FormatException(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as String, superArgs[1], identical(superArgs[2], darticAbsent) ? null : superArgs[2] as int?);

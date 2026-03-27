@@ -25,6 +25,8 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: dart:collection
     discover: all
+    extra_imports:
+      - "package:dartic_stdlib/src/bindings/core/iterable_helpers.dart"
     classes:
       - name: ListBase
         bridge: true
@@ -224,7 +226,7 @@ libraries:
       # ── _MapBaseValueIterable: private class returned by MapBase.values ──
       _MapBaseValueIterable:
         extra_methods:
-          "#1": "(args) => (args[0] as Map).values"
+          "#1": "(args) => MapBaseValueIterableProxy(args[0] as Map)"
 
       # ── UnmodifiableMapBase: cross-namespace for dart:_internal ──
       UnmodifiableMapBase:

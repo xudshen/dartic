@@ -14,6 +14,7 @@ import 'dart:collection';
 import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$UnimplementedError extends UnimplementedError implements DarticObjectHolder {
   _$UnimplementedError(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(identical(superArgs[0], darticAbsent) ? null : superArgs[0] as String?);

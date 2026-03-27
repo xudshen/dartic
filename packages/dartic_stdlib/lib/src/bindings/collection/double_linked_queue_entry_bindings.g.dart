@@ -15,6 +15,7 @@ import 'dart:async' show Future, Stream, StreamSubscription, StreamTransformer, 
 import 'dart:convert' show Converter;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 abstract final class DoubleLinkedQueueEntryBindings {
   static void register(DarticPluginContext ctx) {

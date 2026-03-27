@@ -12,6 +12,7 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$UnmodifiableListView extends UnmodifiableListView<dynamic> implements DarticObjectHolder {
   _$UnmodifiableListView(this._dispatch, this.$darticObject, List<Object?> superArgs) : super(superArgs[0] as Iterable);

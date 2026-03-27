@@ -12,7 +12,6 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:core';
 
 abstract final class CoreTopLevelBindings {
   static void register(DarticPluginContext ctx) {

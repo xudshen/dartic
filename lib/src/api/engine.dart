@@ -288,11 +288,20 @@ class DarticEngine {
             final ifaceFactory = _pendingBridgeFactories[ifaceName];
             if (ifaceFactory != null) {
               factory ??= ifaceFactory;
-              // Register under the interface classId for EXTRACT_FACE.
+              // Register under the interface classId AND all its
+              // supertypeIds for EXTRACT_FACE.  The compiler may emit
+              // EXTRACT_FACE for any transitive supertype (e.g. Iterable
+              // when the matched interface is ListBase).
               final ifaceClassId =
                   _hostTypeResolver.hostClassNameToId[ifaceName];
               if (ifaceClassId != null) {
                 _bridgeFactoryRegistry.register(ifaceClassId, ifaceFactory);
+                if (ifaceClassId < module.classes.length) {
+                  for (final supId
+                      in module.classes[ifaceClassId].supertypeIds) {
+                    _bridgeFactoryRegistry.register(supId, ifaceFactory);
+                  }
+                }
               }
             }
           }

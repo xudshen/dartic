@@ -20,6 +20,8 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: dart:core
     discover: all
+    extra_imports:
+      - "package:dartic_stdlib/src/bindings/core/iterable_helpers.dart"
     classes:
       # ── Non-generic types (type-only dispatcher, no test needed) ──────
 
@@ -339,53 +341,53 @@ libraries:
       # bindings redirect to the equivalent host Iterable/List method.
       WhereIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).where(args[1] as bool Function(dynamic))"
+          "#2": "(args) => WhereIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
       MappedIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
       ExpandIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).expand(args[1] as Iterable Function(dynamic))"
+          "#2": "(args) => ExpandIterableProxy(args[0] as Iterable, args[1] as Iterable Function(dynamic))"
       TakeIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).take(args[1] as int)"
+          "#2": "(args) => TakeIterableProxy(args[0] as Iterable, args[1] as int)"
       TakeWhileIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).takeWhile(args[1] as bool Function(dynamic))"
+          "#2": "(args) => TakeWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
       SkipIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).skip(args[1] as int)"
+          "#2": "(args) => SkipIterableProxy(args[0] as Iterable, args[1] as int)"
       SkipWhileIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).skipWhile(args[1] as bool Function(dynamic))"
+          "#2": "(args) => SkipWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
       CastIterable:
         extra_methods:
-          "#1": "(args) => (args[0] as Iterable).cast()"
+          "#1": "(args) => CastIterableProxy(args[0] as Iterable)"
       WhereTypeIterable:
         extra_methods:
           "#1": "(args) => args[0] as Iterable"
       FollowedByIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).followedBy(args[1] as Iterable)"
-          "firstEfficient#2": "(args) => (args[0] as Iterable).followedBy(args[1] as Iterable)"
+          "#2": "(args) => FollowedByIterableProxy(args[0] as Iterable, args[1] as Iterable)"
+          "firstEfficient#2": "(args) => FollowedByIterableProxy(args[0] as Iterable, args[1] as Iterable)"
       SubListIterable:
         extra_methods:
-          "#3": "(args) => (args[0] as List).getRange(args[1] as int, (args[2] as int?) ?? (args[0] as List).length)"
+          "#3": "(args) => SubListIterableProxy(args[0] as Iterable, args[1] as int, args[2] as int?)"
       ReversedListIterable:
         extra_methods:
-          "#1": "(args) => (args[0] as List).reversed"
+          "#1": "(args) => ReversedListIterableProxy(args[0] as Iterable)"
       MappedListIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
       ListMapView:
         extra_methods:
-          "#1": "(args) => (args[0] as List).asMap()"
+          "#1": "(args) => ListMapViewProxy(args[0] as List)"
       ListIterator:
         extra_methods:
-          "#1": "(args) => (args[0] as List).iterator"
+          "#1": "(args) => ListIteratorProxy(args[0] as Iterable)"
       EfficientLengthMappedIterable:
         extra_methods:
-          "#2": "(args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
       Sort:
         extra_methods:
           "sort#2": |

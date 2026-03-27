@@ -12,6 +12,7 @@ import 'package:dartic/dartic.dart';
 import 'package:dartic/dartic_internal.dart';
 import 'dart:collection';
 import 'dart:math' show Random;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 abstract final class LinkedHashMapBindings {
   static void register(DarticPluginContext ctx) {

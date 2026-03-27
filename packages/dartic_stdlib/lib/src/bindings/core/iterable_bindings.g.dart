@@ -14,6 +14,7 @@ import 'dart:collection';
 import 'dart:convert' show Base64Codec, Encoding, StringConversionSink, ascii, base64, latin1, utf8;
 import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
+import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
 class _$Iterable extends Iterable<dynamic> implements DarticObjectHolder {
   _$Iterable(this._dispatch, this.$darticObject, List<Object?> superArgs);
@@ -492,35 +493,35 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> whereIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).where(args[1] as bool Function(dynamic)),
+        '#2': (args) => WhereIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> mappedIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> expandIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).expand(args[1] as Iterable Function(dynamic)),
+        '#2': (args) => ExpandIterableProxy(args[0] as Iterable, args[1] as Iterable Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> takeIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).take(args[1] as int),
+        '#2': (args) => TakeIterableProxy(args[0] as Iterable, args[1] as int),
       };
 
   static Map<String, Object? Function(List<Object?>)> takeWhileIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).takeWhile(args[1] as bool Function(dynamic)),
+        '#2': (args) => TakeWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> skipIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).skip(args[1] as int),
+        '#2': (args) => SkipIterableProxy(args[0] as Iterable, args[1] as int),
       };
 
   static Map<String, Object? Function(List<Object?>)> skipWhileIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).skipWhile(args[1] as bool Function(dynamic)),
+        '#2': (args) => SkipWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> castIterableMethodMap() => {
-        '#1': (args) => (args[0] as Iterable).cast(),
+        '#1': (args) => CastIterableProxy(args[0] as Iterable),
       };
 
   static Map<String, Object? Function(List<Object?>)> whereTypeIterableMethodMap() => {
@@ -528,32 +529,32 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> followedByIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).followedBy(args[1] as Iterable),
-        'firstEfficient#2': (args) => (args[0] as Iterable).followedBy(args[1] as Iterable),
+        '#2': (args) => FollowedByIterableProxy(args[0] as Iterable, args[1] as Iterable),
+        'firstEfficient#2': (args) => FollowedByIterableProxy(args[0] as Iterable, args[1] as Iterable),
       };
 
   static Map<String, Object? Function(List<Object?>)> subListIterableMethodMap() => {
-        '#3': (args) => (args[0] as List).getRange(args[1] as int, (args[2] as int?) ?? (args[0] as List).length),
+        '#3': (args) => SubListIterableProxy(args[0] as Iterable, args[1] as int, args[2] as int?),
       };
 
   static Map<String, Object? Function(List<Object?>)> reversedListIterableMethodMap() => {
-        '#1': (args) => (args[0] as List).reversed,
+        '#1': (args) => ReversedListIterableProxy(args[0] as Iterable),
       };
 
   static Map<String, Object? Function(List<Object?>)> mappedListIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> listMapViewMethodMap() => {
-        '#1': (args) => (args[0] as List).asMap(),
+        '#1': (args) => ListMapViewProxy(args[0] as List),
       };
 
   static Map<String, Object? Function(List<Object?>)> listIteratorMethodMap() => {
-        '#1': (args) => (args[0] as List).iterator,
+        '#1': (args) => ListIteratorProxy(args[0] as Iterable),
       };
 
   static Map<String, Object? Function(List<Object?>)> efficientLengthMappedIterableMethodMap() => {
-        '#2': (args) => (args[0] as Iterable).map(args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
       };
 
   static Map<String, Object? Function(List<Object?>)> sortMethodMap() => {
