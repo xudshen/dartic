@@ -147,7 +147,7 @@ class CompilePipeline {
 
   /// Compiles `.dart → .dill` using `dart compile kernel`.
   ///
-  /// Uses [Platform.resolvedExecutable] as the dart binary.
+  /// Uses the injected [_dartBin] or falls back to [SdkResolver.dartBin].
   Future<void> _compileDartDill(
     String sourcePath,
     String outputDill, {
