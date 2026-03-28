@@ -614,25 +614,27 @@ LibTest/collection/SplayTreeMap/SplayTreeMap_class_A04_t03.dart  # DarticObject 
 LibTest/collection/SplayTreeSet/SplayTreeSet.from_A02_t04.dart   # DarticObject → Comparable
 LibTest/collection/SplayTreeSet/SplayTreeSet_A03_t03.dart        # DarticObject → Comparable
 
-# ── Mixin chain host type detection gap (40) ─────────────────────
-# TEMPORARY SKIP — tracked in docs/tasks/overview.md
-# Root cause: compiler hostSuperClassName only checks direct superclass,
-# does not walk mixin application chain. `class X extends Object with
-# IterableMixin` creates anonymous mixin application that hides the host type.
-# Research: docs/research/bridge-multi-host-type.md (Phase 2)
-# Affects: IterableMixin (30), ListMixin (5), ListBase (5)
-# TODO: fix compiler_classes.dart to detect host types in mixin chain
-LibTest/collection/IterableMixin/  # mixin chain gap: with IterableMixin → no bridge (~30 tests)
-LibTest/collection/ListMixin/ListMixin_class_A01_t02.dart  # mixin chain: with ListMixin → stack overflow
-LibTest/collection/ListMixin/ListMixin_class_A01_t03.dart  # mixin chain: with ListMixin → stack overflow
-LibTest/collection/ListMixin/ListMixin_class_A01_t04.dart  # mixin chain: with ListMixin → stack overflow
-LibTest/collection/ListMixin/ListMixin_class_A01_t05.dart  # mixin chain: with ListMixin → stack overflow
-LibTest/collection/ListMixin/ListMixin_class_A01_t06.dart  # mixin chain: with ListMixin → stack overflow
-LibTest/collection/ListBase/ListBase_class_A01_t02.dart    # mixin chain: ListBase = ListMixin → stack overflow
-LibTest/collection/ListBase/ListBase_class_A01_t03.dart    # mixin chain: ListBase = ListMixin → stack overflow
-LibTest/collection/ListBase/ListBase_class_A01_t04.dart    # mixin chain: ListBase = ListMixin → stack overflow
-LibTest/collection/ListBase/ListBase_class_A01_t05.dart    # mixin chain: ListBase = ListMixin → stack overflow
-LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # mixin chain: ListBase = ListMixin → stack overflow
+# ── CALL_HOST re-route darticAbsent crash (3) ─────────────────────
+# CALL_HOST re-route converts darticAbsent → null, but dartic toList's bool
+# param (growable) is StackKind.boolDefault → _routeArgs does `null as int` → crash.
+# Root cause: re-route bypasses bridge face which already handles defaults + dispatch.
+# Fix: docs/tasks/dartic-callhost-face-dispatch.md
+LibTest/collection/IterableMixin/IterableMixin_inherited_t01.dart  # toList({bool growable=true}) darticAbsent → null → _routeArgs crash
+LibTest/collection/IterableMixin/toList_A01_t01.dart     # same
+LibTest/collection/IterableMixin/toList_A02_t01.dart     # same
+# ── Compiler register allocation overflow (10) ───────────────────
+# sort_A01_t04.test.dart: ~130 check() calls × 2 list literals → val=54166 > 40960.
+# Fix: docs/tasks/dartic-register-allocation.md
+LibTest/collection/ListMixin/ListMixin_class_A01_t02.dart  # stack overflow: val=54166 > 40960
+LibTest/collection/ListMixin/ListMixin_class_A01_t03.dart  # same
+LibTest/collection/ListMixin/ListMixin_class_A01_t04.dart  # same
+LibTest/collection/ListMixin/ListMixin_class_A01_t05.dart  # same
+LibTest/collection/ListMixin/ListMixin_class_A01_t06.dart  # same
+LibTest/collection/ListBase/ListBase_class_A01_t02.dart    # same
+LibTest/collection/ListBase/ListBase_class_A01_t03.dart    # same
+LibTest/collection/ListBase/ListBase_class_A01_t04.dart    # same
+LibTest/collection/ListBase/ListBase_class_A01_t05.dart    # same
+LibTest/collection/ListBase/ListBase_class_A01_t06.dart    # same
 
 # ── Augmentations: CFE compilation failure (2) ──────────────────────
 # "Bad state: Generating kernel failed\!" — CFE doesn't support these
@@ -722,3 +724,27 @@ LibTest/convert/StringConversionSink/asUtf8Sink_A02_t01.dart     # same
 # Collection mutation type enforcement: collections created as <Object?> with TAG_TYPE,
 # host VM doesn't enforce element types on dynamic dispatch. Needs TypeCheckedList/Set/Map wrapper.
 LanguageFeatures/Records/type_inference_A01_t04.dart  # (List<int> as dynamic).add("") should throw TypeError
+
+# ── Bridge generic erasure: isValidKey + .from() (8) ─────────────
+# Gen tool erases type args → HashMap<dynamic,dynamic>. SDK default isValidKey
+# checks k is dynamic (always true); .from() accepts wrong-type elements.
+# Fix: docs/tasks/dartic-bridge-generic-erasure.md
+LibTest/collection/HashMap/HashMap_A06_t01.dart          # isValidKey: containsKey(null) calls hashCode
+LibTest/collection/HashSet/HashSet_A04_t01.dart          # isValidKey: contains(null) calls hashCode
+LibTest/collection/LinkedHashSet/LinkedHashSet_A06_t01.dart  # isValidKey: contains("abcd") calls hashCode
+LibTest/collection/SplayTreeMap/SplayTreeMap_class_A06_t01.dart  # isValidKey: map["12345"] calls compare
+LibTest/collection/SplayTreeSet/SplayTreeSet.from_A02_t09.dart   # isValidKey: contains(3) calls compare
+LibTest/collection/SplayTreeSet/SplayTreeSet_A07_t01.dart        # isValidKey: contains(3) calls compare
+LibTest/collection/HashSet/HashSet.from_A02_t01.dart             # .from(): no TypeError for String in HashSet<int>
+LibTest/collection/ListQueue/ListQueue.from_A02_t01.dart         # .from(): no TypeError for String in ListQueue<int>
+
+# ── HostTypeResolver Never-bottom type args (1) ──────────────────
+# Iterator<Never> is subtype of Iterator<T> for all T → is-check too permissive.
+# Fix: docs/tasks/dartic-host-type-args.md
+LibTest/collection/DoubleLinkedQueue/iterator_A01_t01.dart       # is Iterator<bool> = true (should be false)
+
+# CALL_HOST re-route darticAbsent crash (1) — same root cause as IterableMixin group
+# t01 runs allListTests; sub-test toList triggers darticAbsent → null → _routeArgs crash.
+# Fix: docs/tasks/dartic-callhost-face-dispatch.md
+LibTest/collection/ListMixin/ListMixin_class_A01_t01.dart        # toList darticAbsent crash (same as IterableMixin group)
+

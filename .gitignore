@@ -16,7 +16,7 @@ pubspec.lock
 build/
 
 # Vendored dependencies
-vendor/
+# vendor/
 
 # Git worktrees
 .worktrees/

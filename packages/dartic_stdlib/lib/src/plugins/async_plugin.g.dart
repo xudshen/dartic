@@ -23,7 +23,6 @@ import '../bindings/async/async_error_bindings.g.dart';
 import '../bindings/async/completer_bindings.g.dart';
 import '../bindings/async/deferred_load_exception_bindings.g.dart';
 import '../bindings/async/future_bindings.g.dart';
-import '../bindings/async/future_or_bindings.g.dart';
 import '../bindings/async/multi_stream_controller_bindings.g.dart';
 import '../bindings/async/parallel_wait_error_bindings.g.dart';
 import '../bindings/async/stream_controller_bindings.g.dart';
@@ -54,7 +53,6 @@ class AsyncPlugin extends DarticPlugin {
     CompleterBindings.register(ctx);
     DeferredLoadExceptionBindings.register(ctx);
     FutureBindings.register(ctx);
-    FutureOrBindings.register(ctx);
     MultiStreamControllerBindings.register(ctx);
     ParallelWaitErrorBindings.register(ctx);
     StreamControllerBindings.register(ctx);

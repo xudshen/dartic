@@ -341,25 +341,25 @@ libraries:
       # bindings redirect to the equivalent host Iterable/List method.
       WhereIterable:
         extra_methods:
-          "#2": "(args) => WhereIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
+          "#2": "(args) => WhereIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool)"
       MappedIterable:
         extra_methods:
-          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a))"
       ExpandIterable:
         extra_methods:
-          "#2": "(args) => ExpandIterableProxy(args[0] as Iterable, args[1] as Iterable Function(dynamic))"
+          "#2": "(args) => ExpandIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as Iterable)"
       TakeIterable:
         extra_methods:
           "#2": "(args) => TakeIterableProxy(args[0] as Iterable, args[1] as int)"
       TakeWhileIterable:
         extra_methods:
-          "#2": "(args) => TakeWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
+          "#2": "(args) => TakeWhileIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool)"
       SkipIterable:
         extra_methods:
           "#2": "(args) => SkipIterableProxy(args[0] as Iterable, args[1] as int)"
       SkipWhileIterable:
         extra_methods:
-          "#2": "(args) => SkipWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic))"
+          "#2": "(args) => SkipWhileIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool)"
       CastIterable:
         extra_methods:
           "#1": "(args) => CastIterableProxy(args[0] as Iterable)"
@@ -378,7 +378,7 @@ libraries:
           "#1": "(args) => ReversedListIterableProxy(args[0] as Iterable)"
       MappedListIterable:
         extra_methods:
-          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a))"
       ListMapView:
         extra_methods:
           "#1": "(args) => ListMapViewProxy(args[0] as List)"
@@ -387,26 +387,24 @@ libraries:
           "#1": "(args) => ListIteratorProxy(args[0] as Iterable)"
       EfficientLengthMappedIterable:
         extra_methods:
-          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic))"
+          "#2": "(args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a))"
       Sort:
         extra_methods:
           "sort#2": |
             (args) {
-              final list = args[0] as List;
-              final compare = args[1] as int Function(dynamic, dynamic)?;
-              if (compare != null) { list.sort(compare); } else { list.sort(); }
+              final fn = args[1] as Function?;
+              sortList(args[0] as List, fn != null ? (a, b) => fn(a, b) as int : null);
               return null;
             }
           "sort#3": |
             (args) {
-              (args[0] as List).sort();
+              sortList(args[0] as List, null);
               return null;
             }
           "sort#4": |
             (args) {
-              final list = args[0] as List;
-              final compare = args[3] as int Function(dynamic, dynamic)?;
-              if (compare != null) { list.sort(compare); } else { list.sort(); }
+              final fn = args[3] as Function?;
+              sortList(args[0] as List, fn != null ? (a, b) => fn(a, b) as int : null);
               return null;
             }
       checkNotNullable:

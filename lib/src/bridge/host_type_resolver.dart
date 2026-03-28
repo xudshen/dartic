@@ -269,11 +269,19 @@ class HostTypeResolver {
     // This prevents registration order from affecting which type wins when
     // a base-class predicate (e.g. `is Exception`) also matches a more-
     // specific type (e.g. FormatException).
+    //
+    // Tiebreaker when supertypeCount is equal: prefer the entry whose
+    // registered Type exactly matches value.runtimeType. This prevents
+    // overly-broad predicates (e.g. `o is FutureOr` which matches everything)
+    // from shadowing a legitimate entry with the same supertypeCount.
     _ResolvedEntry? bestMatch;
     for (final entry in _resolved) {
       if (entry.test != null && entry.test!(value)) {
         if (bestMatch == null ||
-            entry.supertypeCount > bestMatch.supertypeCount) {
+            entry.supertypeCount > bestMatch.supertypeCount ||
+            (entry.supertypeCount == bestMatch.supertypeCount &&
+                type == entry.type &&
+                type != bestMatch.type)) {
           bestMatch = entry;
         }
       }

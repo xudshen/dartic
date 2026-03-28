@@ -25,6 +25,13 @@ output_plugins: "../lib/src/plugins"
 libraries:
   - uri: dart:async
     discover: all
+    exclude:
+      # FutureOr is a union type (T | Future<T>), not a real class.
+      # Its test predicate `o is FutureOr` matches ALL non-null objects,
+      # poisoning HostTypeResolver's predicate scan and causing unrelated
+      # host objects (e.g. Iterator) to be misidentified as FutureOr<Never>.
+      # FutureOr subtyping is handled algorithmically by SubtypeChecker.
+      - "dart:async::FutureOr"
     classes:
       - name: Stream
         bridge: true

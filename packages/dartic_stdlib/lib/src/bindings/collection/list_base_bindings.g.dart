@@ -627,7 +627,7 @@ abstract final class ListBaseBindings {
         '_closeGap#2': (args) => null,
         '_compareAny#2': (args) => Comparable.compare(args[0] as Comparable, args[1] as Comparable),
         '_filter#2': (args) {
-            (args[0] as List).removeWhere(args[1] as bool Function(dynamic));
+            (args[0] as List).removeWhere((e) => (args[1] as Function)(e) as bool);
             return null;
         },
       };

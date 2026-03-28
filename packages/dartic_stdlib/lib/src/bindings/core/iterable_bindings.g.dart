@@ -493,15 +493,15 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> whereIterableMethodMap() => {
-        '#2': (args) => WhereIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
+        '#2': (args) => WhereIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool),
       };
 
   static Map<String, Object? Function(List<Object?>)> mappedIterableMethodMap() => {
-        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a)),
       };
 
   static Map<String, Object? Function(List<Object?>)> expandIterableMethodMap() => {
-        '#2': (args) => ExpandIterableProxy(args[0] as Iterable, args[1] as Iterable Function(dynamic)),
+        '#2': (args) => ExpandIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as Iterable),
       };
 
   static Map<String, Object? Function(List<Object?>)> takeIterableMethodMap() => {
@@ -509,7 +509,7 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> takeWhileIterableMethodMap() => {
-        '#2': (args) => TakeWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
+        '#2': (args) => TakeWhileIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool),
       };
 
   static Map<String, Object? Function(List<Object?>)> skipIterableMethodMap() => {
@@ -517,7 +517,7 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> skipWhileIterableMethodMap() => {
-        '#2': (args) => SkipWhileIterableProxy(args[0] as Iterable, args[1] as bool Function(dynamic)),
+        '#2': (args) => SkipWhileIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a) as bool),
       };
 
   static Map<String, Object? Function(List<Object?>)> castIterableMethodMap() => {
@@ -542,7 +542,7 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> mappedListIterableMethodMap() => {
-        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a)),
       };
 
   static Map<String, Object? Function(List<Object?>)> listMapViewMethodMap() => {
@@ -554,24 +554,22 @@ abstract final class IterableBindings {
       };
 
   static Map<String, Object? Function(List<Object?>)> efficientLengthMappedIterableMethodMap() => {
-        '#2': (args) => MappedIterableProxy(args[0] as Iterable, args[1] as dynamic Function(dynamic)),
+        '#2': (args) => MappedIterableProxy(args[0] as Iterable, (a) => (args[1] as Function)(a)),
       };
 
   static Map<String, Object? Function(List<Object?>)> sortMethodMap() => {
         'sort#2': (args) {
-            final list = args[0] as List;
-            final compare = args[1] as int Function(dynamic, dynamic)?;
-            if (compare != null) { list.sort(compare); } else { list.sort(); }
+            final fn = args[1] as Function?;
+            sortList(args[0] as List, fn != null ? (a, b) => fn(a, b) as int : null);
             return null;
         },
         'sort#3': (args) {
-            (args[0] as List).sort();
+            sortList(args[0] as List, null);
             return null;
         },
         'sort#4': (args) {
-            final list = args[0] as List;
-            final compare = args[3] as int Function(dynamic, dynamic)?;
-            if (compare != null) { list.sort(compare); } else { list.sort(); }
+            final fn = args[3] as Function?;
+            sortList(args[0] as List, fn != null ? (a, b) => fn(a, b) as int : null);
             return null;
         },
       };
