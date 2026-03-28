@@ -65,7 +65,31 @@ For each entry:
 - **Investigation Direction**: State a concrete, falsifiable hypothesis ("I believe X causes Y because Z") and the verification step (dump bytecode / add debugPrint / read specific file:line)
 - **Compiler or Interpreter**: Initial judgment on which side is likely wrong — but always plan to check both
 
+**Classification rules — do NOT over-generalize:**
+- `type 'X' is not a subtype of type 'Y' in type cast` → **功能问题**，追踪具体调用链找谁传了错误参数，不要一刀切归为"泛型擦除"
+- 多个 fail 错误消息相似不代表同一根因——必须各自验证
+- "Systemic" 只用于确认需要架构改动的情况，不能用于偷懒跳过调查
+
 **STOP here and present the table to the user.** Wait for user confirmation/feedback on investigation directions before proceeding to fixes. This prevents wasted effort on wrong hypotheses.
+
+### Phase 3.6: Runtime Verification of Hypotheses
+
+**推断的调用链必须用运行日志验证，不能只靠读代码。**
+
+For each hypothesis in the diagnostic table:
+1. **Add print at key points** — 在假设涉及的关键路径加 `print`（解释器用 `print`，不是 `debugPrint`）
+2. **Run single test** — 用 `dartic_run.dart` 跑单个 .dill，不要跑全量
+3. **Verify each step** — 逐步确认：参数内容 → 函数是否被调用 → 返回值 → 错误位置
+4. **Create repro scripts** — vendor 测试不能改。在 `$TMPDIR` 写最小复现脚本加 print，编译后用 `dartic_run.dart` 跑
+5. **Test fix hypothesis** — 在复现脚本中手动补上缺失的部分（如显式传 isValidKey），确认"补上后能通过"再决定修复方案
+
+```bash
+# 单测验证流程
+fvm dart compile kernel $TMPDIR/repro.dart -o $TMPDIR/repro.dill
+fvm dart run tool/dartic_run.dart $TMPDIR/repro.dill
+```
+
+**只有 print 验证确认的假设才能进入修复阶段。** 读代码推断的假设标记为 [未验证]，不能直接用于修复决策。
 
 ### Phase 4: Severity Triage
 
@@ -154,6 +178,9 @@ Run regression tests on related categories before committing:
 | Diagnostic table before fixing | Present error + hypothesis + direction to user — prevents wasted effort on wrong assumptions |
 | Delegate to existing algorithms | Don't hand-roll logic that SubtypeChecker/TypeRegistry already handles |
 | Workaround litmus test before commit | Hardcoded string match = workaround. Revert or rework, don't ship. |
+| Print 验证推断的调用链 | 读代码推断 ≠ 事实。必须加 print 跑单测确认每一步 |
+| 复现脚本验证修复假设 | 在 $TMPDIR 写最小脚本，手动补缺失部分，确认"补上后通过"再定修复方案 |
+| Cast 错误 ≠ 泛型擦除 | `type 'X' is not a subtype of type 'Y' in type cast` 要追踪调用链，不要一刀切归为 systemic |
 
 ## Common Mistakes
 
@@ -170,3 +197,7 @@ Run regression tests on related categories before committing:
 | Reimplementing logic that exists in a checker/resolver | Delegate to existing infrastructure (SubtypeChecker, TypeRegistry, etc.) |
 | Intercepting specific binding names in interpreter | This is always a workaround — fix the binding/bridge layer or skip |
 | Trusting code-reviewer agent's GLOBAL classification | Self-verify with the litmus test — agents can miss architectural concerns |
+| 把 cast 错误笼统归为"泛型擦除系统性问题" | 每个 cast 错误都要追踪具体调用链。错误消息相似 ≠ 同一根因 |
+| 只读代码推断调用链，不跑验证 | 推断后必须加 print 跑单测。标记 [未验证] 的假设不能用于修复决策 |
+| 在 vendor 测试文件上加调试代码 | vendor 不能改。写 $TMPDIR 复现脚本，加 print 后编译运行 |
+| 归类为 systemic 时偷懒跳过调查 | "Systemic" 要有充分证据（验证过调用链 + 确认需要架构改动），不能用于跳过调查 |

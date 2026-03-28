@@ -407,21 +407,44 @@
 
 ---
 
-## 已知系统性问题（临时 skip，待修复）
+## 已知问题 TODO
 
-### Mixin chain host type 检测 gap — 临时 skip ~40 tests
+> 所有待修复问题的追踪表。问题文档在 `docs/tasks/dartic-*.md`，skip list 中对应条目指向文档。
 
-**状态：** 临时 skip（skip_list.txt 标注 TEMPORARY SKIP）
+| # | 问题 | 来源 | 文档 | 优先级 |
+|---|------|------|------|--------|
+| 1 | [CALL_HOST re-route darticAbsent crash](#1-callhost-re-route-darticabsent-crash) | co19 skip ×4 | [task](dartic-callhost-face-dispatch.md) | 高 — 方案明确，改动小 |
+| 2 | [编译器寄存器分配溢出](#2-编译器寄存器分配溢出) | co19 skip ×10 | [task](dartic-register-allocation.md) | 中 — 可先用增大栈容量 |
+| 3 | [Bridge 泛型擦除](#3-bridge-泛型擦除) | co19 skip ×8 | [task](dartic-bridge-generic-erasure.md) | 低 — 架构级改动 |
+| 4 | [HostTypeResolver Never-bottom](#4-hosttyperesolver-never-bottom) | co19 skip ×1 | [task](dartic-host-type-args.md) | 低 — 单测，影响面小 |
+| 5 | [异常处理性能](#5-异常处理性能) | Flutter 实测 | [task](dartic-exception-perf.md) | 高 — 影响 UI 流畅度 |
 
-**影响：** LibTest/collection IterableMixin (30)、ListMixin (5)、ListBase (5)
+### 1. CALL_HOST re-route darticAbsent crash
 
-**根因：** 编译器 `compiler_classes.dart` 中 `hostSuperClassName` 只检查直接 superclass，不穿透 mixin application。当 dartic 类使用 `extends Object with IterableMixin` 时，Kernel AST 产生匿名 mixin application 类（如 `_MyIterable&Object&Iterable`），编译器看到的直接 superclass 是这个匿名类（位于用户库），不是 host library 中的 `Iterable`，导致 `hostSuperClassName` 不被设置，bridge factory 不会应用。
+**根因：** CALL_HOST re-route 把 darticAbsent 转 null，但 dartic 方法的 value 类型可选参数（如 `bool growable = true`）无法处理 null — `_routeArgs` 做 `null as int` 崩溃。
 
-**下游表现：**
-- `DarticObject → Iterable<dynamic>` cast 失败（无 bridge → 传给宿主时 as Iterable 报错）
-- Stack overflow（mixin dispatch 递归：dartic 方法分发回到 mixin 默认实现而非 dartic 覆盖）
-- field-as-getter dispatch 失败（bridge `_dispatch.get()` 查 method table，field 不在里面）
+**方案：** 删除 re-route，CALL_HOST 时将 raw DarticObject 替换为 bridge face 后走正常 host binding。Bridge face 已完整处理：Dart 默认值 + dartic override 检测（`_dispatch.invoke`）+ 宿主 fallback（`super`）。
 
-**修复方向：** 编译器在确定 `hostSuperClassName` 时，当直接 superclass 是 anonymous mixin application 时，遍历 mixin chain 中的 `mixedInClass`，检测是否为 host type。
+### 2. 编译器寄存器分配溢出
 
-**调研文档：** `docs/research/bridge-multi-host-type.md` (Phase 2: Mixin Chain Detection)
+**根因：** 巨型函数（如 sort_A01_t04.test.dart 113K token）编译后需 val=54166 / ref=75228，超过默认栈容量 40960 / 20480。编译器寄存器单调递增不复用。
+
+**方案：** 长期做 liveness analysis + 寄存器复用。短期可增大默认栈容量。
+
+### 3. Bridge 泛型擦除
+
+**根因：** Gen tool `_buildErasedTypeArgs` 擦除类型参数 → `HashMap<dynamic,dynamic>`。SDK 默认 isValidKey 检查 `k is dynamic`（永真）；`.from()` 不做元素类型检查。
+
+**方案：** 让 host binding 能访问运行时类型参数（ITA），gen tool 生成基于 ITA 的 isValidKey wrapper。
+
+### 4. HostTypeResolver Never-bottom
+
+**根因：** HostTypeResolver 对宿主对象类型参数用 Never（bottom）→ `Iterator<Never>` 是所有 `Iterator<T>` 的子类型 → `is` 检查过宽。
+
+**方案：** 在 TAG_TYPE / bridge 创建时记录真实类型参数到 HostTypeResolver。
+
+### 5. 异常处理性能
+
+**根因：** 一次异常传播中多次 `Error.throwWithStackTrace`（host VM unwind）+ 每帧 `DarticStackTrace` 字符串拼接，导致 UI 卡顿。
+
+**方案：** 消除不必要的 throwWithStackTrace，延迟 stack trace 格式化到实际需要时。
