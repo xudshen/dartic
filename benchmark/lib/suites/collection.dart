@@ -3,6 +3,13 @@ import 'package:dartic_benchmark/src/types.dart';
 
 List<BenchmarkCase> collectionSuites() => [
       BenchmarkCase(
+        name: 'richards',
+        category: 'collection',
+        hostFn: hostRichards,
+        dartEvalSupported: false,
+        dartSourceFile: 'lib/suites/sources/richards.dart',
+      ),
+      BenchmarkCase(
         name: 'list_ops',
         category: 'collection',
         hostFn: hostListOps,

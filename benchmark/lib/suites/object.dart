@@ -3,6 +3,13 @@ import 'package:dartic_benchmark/src/types.dart';
 
 List<BenchmarkCase> objectSuites() => [
       BenchmarkCase(
+        name: 'deltablue',
+        category: 'object',
+        hostFn: hostDeltaBlue,
+        dartEvalSupported: false,
+        dartSourceFile: 'lib/suites/sources/deltablue.dart',
+      ),
+      BenchmarkCase(
         name: 'storage',
         category: 'object',
         hostFn: hostStorage,

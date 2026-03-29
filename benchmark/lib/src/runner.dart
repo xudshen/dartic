@@ -29,13 +29,13 @@ class BenchmarkRunner {
 
       try {
         // --- Pre-compile dartic module ---
-        final darbBytes = await _compileDartic(bc.dartSource);
+        final darbBytes = await _compileDartic(bc.resolvedSource);
 
         // --- Pre-compile dart_eval program (if enabled + supported) ---
         de.Program? dartEvalProgram;
         if (config.enableDartEval && bc.dartEvalSupported) {
           try {
-            dartEvalProgram = _compileDartEval(bc.dartSource);
+            dartEvalProgram = _compileDartEval(bc.resolvedSource);
           } catch (e) {
             print('    dart_eval compile FAILED: $e');
           }

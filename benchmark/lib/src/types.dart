@@ -1,18 +1,28 @@
+import 'dart:io';
+
 /// A single benchmark case definition.
 class BenchmarkCase {
   const BenchmarkCase({
     required this.name,
     required this.category,
-    required this.dartSource,
+    this.dartSource,
+    this.dartSourceFile,
     required this.hostFn,
     this.dartEvalSupported = true,
   });
 
   final String name;
   final String category;
-  final String dartSource;
+  final String? dartSource;
+  final String? dartSourceFile;
   final Object? Function() hostFn;
   final bool dartEvalSupported;
+
+  /// Returns the Dart source code, reading from file if needed.
+  String get resolvedSource {
+    if (dartSource != null) return dartSource!;
+    return File(dartSourceFile!).readAsStringSync();
+  }
 }
 
 /// Timing result for a single channel on a single benchmark.
