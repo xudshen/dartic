@@ -37,5 +37,14 @@ abstract final class RawSocketEventBindings {
         'toString#0': (args) => (args[0] as RawSocketEvent).toString(),
         'hashCode#0': (args) => (args[0] as RawSocketEvent).hashCode,
         '==#1': (args) => (args[0] as RawSocketEvent) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 0: return RawSocketEvent.read;
+              case 1: return RawSocketEvent.write;
+              case 2: return RawSocketEvent.readClosed;
+              case 3: return RawSocketEvent.closed;
+              default: throw ArgumentError('Unknown RawSocketEvent: ${args[0]}');
+            }
+        },
       };
 }

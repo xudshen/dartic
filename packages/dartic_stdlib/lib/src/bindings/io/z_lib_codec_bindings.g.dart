@@ -48,5 +48,6 @@ abstract final class ZLibCodecBindings {
         'inverted#0': (args) => (args[0] as ZLibCodec).inverted,
         '==#1': (args) => (args[0] as ZLibCodec) == (args[1] as Object),
         '#7': (args) => ZLibCodec(level: identical(args[0], darticAbsent) ? ZLibOption.defaultLevel : args[0] as int, windowBits: identical(args[1], darticAbsent) ? ZLibOption.defaultWindowBits : args[1] as int, memLevel: identical(args[2], darticAbsent) ? ZLibOption.defaultMemLevel : args[2] as int, strategy: identical(args[3], darticAbsent) ? ZLibOption.strategyDefault : args[3] as int, dictionary: identical(args[4], darticAbsent) ? null : args[4] == null ? null : (args[4] as List).cast<int>(), raw: identical(args[5], darticAbsent) ? false : args[5] as bool, gzip: identical(args[6], darticAbsent) ? false : args[6] as bool),
+        '_#fromFields#7': (args) => ZLibCodec(dictionary: args[0] == null ? null : (args[0] as List).cast<int>(), gzip: args[1] as bool, level: args[2] as int, memLevel: args[3] as int, raw: args[4] as bool, strategy: args[5] as int, windowBits: args[6] as int),
       };
 }

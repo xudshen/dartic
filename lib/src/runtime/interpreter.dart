@@ -1020,7 +1020,7 @@ class DarticInterpreter {
   ///
   /// Does NOT create faces for implements-only classes. Face creation
   /// is handled at specific boundary points (EXTRACT_FACE for CALL_HOST
-  /// params, [_toHostException] for exception HOST_BOUNDARY crossing).
+  /// params, [unwindToHandler] for exception HOST_BOUNDARY crossing).
   @pragma('vm:prefer-inline')
   Object? _toHost(Object? value) {
     if (value is DarticObject && value.bridge != null) {
@@ -1030,30 +1030,6 @@ class DarticInterpreter {
       return _wrapClosure(value);
     }
     return value;
-  }
-
-  /// Converts a VM exception to host representation for HOST_BOUNDARY crossing.
-  ///
-  /// Extends [_toHost] with implements-only face creation: if the DarticObject
-  /// has no bridge but a face factory exists, creates a face on demand so
-  /// host `on Exception catch` / `on Error catch` can match.
-  ///
-  /// Falls back to [_toHost] for non-DarticObject exceptions (e.g., host
-  /// Error/String thrown from dartic code, DarticClosure used as exception).
-  Object _toHostException(Object? exception) {
-    if (exception is DarticObject) {
-      if (exception.bridge != null) return exception.bridge!;
-      // Only create face for Exception/Error types — these must be
-      // host-catchable (on Exception catch, on Error catch).
-      final factory = bridgeFactoryRegistry?.lookupByClassId(exception.classId);
-      if (factory != null && _activeDarticDispatch != null) {
-        final face = exception.getOrCreateFace(exception.classId, () {
-          return factory(_activeDarticDispatch!, exception, const []);
-        });
-        if (face is Exception || face is Error) return face;
-      }
-    }
-    return _toHost(exception) ?? exception!;
   }
 
   /// Batch version of [_toHost], mutates [args] in place.
@@ -2089,45 +2065,54 @@ class DarticInterpreter {
     // Push upvalue entry for the initial frame (entry or callback closure).
     _upvalueStack.add(currentUpvalues);
 
+    // Helper: propagate exception to the host VM.  Never returns.
+    // [hostException] must already be resolved via _toHost / face creation.
+    Never throwToHost(Object hostException, Object? stackTrace) {
+      Error.throwWithStackTrace(
+          hostException,
+          stackTrace is StackTrace
+              ? stackTrace
+              : DarticStackTrace.capture(
+                  callStack, module, pc, _hostNameStack));
+    }
+
     // Helper: unwind frames searching for an exception handler starting at
     // [startPC]. If found, restores stacks, writes exception/stackTrace into
     // the handler's registers, and returns the handler PC. If no handler
-    // exists, rethrows [exception] to the host VM.
+    // exists, rethrows [exception] to the host VM via [throwToHost].
     //
     // Side effects: mutates vBase, rBase, code, currentUpvalues via closure.
     int unwindToHandler(int startPC, Object? exception, Object? stackTrace) {
-      // Dart spec: Error.stackTrace is set when the error is first thrown.
-      // We use Error.throwWithStackTrace in a try-catch to set the
-      // VM-internal _stackTrace field on the host Error object.
-      if (exception is Error &&
-          exception.stackTrace == null &&
-          stackTrace is StackTrace) {
+      // Resolve host representation once — needed for Error.stackTrace
+      // and host boundary crossing.  WRAP_BRIDGE guarantees bridges exist
+      // for both extends and implements-only classes at construction time.
+      final hostException = _toHost(exception) ?? exception!;
+
+      // Dart spec §16.9: set Error.stackTrace on first throw.
+      if (stackTrace is StackTrace &&
+          hostException is Error &&
+          hostException.stackTrace == null) {
         try {
-          Error.throwWithStackTrace(exception, stackTrace);
+          Error.throwWithStackTrace(hostException, stackTrace);
         } catch (_) {}
       }
+
       var searchPC = startPC;
       while (true) {
-        // Guard: if we've unwound to a HOST_BOUNDARY sentinel frame,
-        // propagate the exception to the host VM immediately. This
-        // occurs when nested _runNestedDispatch calls rethrow exceptions
-        // that land back in an outer _executeLoop's unwindToHandler.
+        // HOST_BOUNDARY: nested _runNestedDispatch exception escaping to
+        // an outer _executeLoop — propagate to host immediately.
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
-          Error.throwWithStackTrace(
-              _toHostException(exception), // VM→Host: bridge for host catch
-              stackTrace is StackTrace
-                  ? stackTrace
-                  : DarticStackTrace.capture(
-                      callStack, module, pc, _hostNameStack));
+          throwToHost(hostException, stackTrace);
         }
+
         final funcProto = module.functions[callStack.funcId];
         final handler = _findHandler(
             funcProto, searchPC, exception, module, rBase, rs);
+
         if (handler != null) {
-          // NOTE: Do NOT clearRange ref registers — variables declared
-          // at function scope may have BOX_INT/BOX_DOUBLE inside the
-          // try body but be read in the catch body.
+          // Restore stack pointers to frame limits.  Do NOT clearRange ref
+          // registers — BOX_INT/BOX_DOUBLE from try body may be read in catch.
           vs.sp = vBase + funcProto.valueRegCount;
           rs.sp = rBase + funcProto.refRegCount;
           rs.write(rBase + handler.exceptionReg, exception);
@@ -2136,30 +2121,34 @@ class DarticInterpreter {
           }
           return handler.handlerPC;
         }
-        if (callStack.depth <= 1) {
-          Error.throwWithStackTrace(_toHostException(exception), // VM→Host
-              stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
-        }
+
+        // Bottom of call stack — no handler anywhere.
+        if (callStack.depth <= 1) throwToHost(hostException, stackTrace);
+
+        // ── Unwind current frame ──────────────────────────────────
         rs.clearRange(rBase, rs.sp);
         vs.sp = vBase;
         rs.sp = rBase;
         final callerVSP = callStack.savedVSP;
         final callerRSP = callStack.savedRSP;
         searchPC = callStack.returnPC - 1;
-        // Restore _currentAsyncFrame when unwinding past an async function
-        // boundary.  Without this, ASYNC_RETURN in a catching caller would
-        // complete the callee's Completer instead of its own.
+
+        // Restore _currentAsyncFrame when unwinding past an async boundary.
+        // Without this, ASYNC_RETURN in a catching caller would complete the
+        // callee's Completer instead of its own.
         if (_currentAsyncFrame != null &&
             _currentAsyncFrame!.funcProto.funcId == callStack.funcId) {
           _currentAsyncFrame = _currentAsyncFrame!.callerAsyncFrame;
         }
+
         callStack.popFrame();
-        // HOST_BOUNDARY: exception propagates to VM caller.
+
+        // HOST_BOUNDARY revealed after pop — propagate to host VM.
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
-          Error.throwWithStackTrace(_toHostException(exception), // VM→Host
-              stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
+          throwToHost(hostException, stackTrace);
         }
+
         vBase = callerVSP;
         rBase = callerRSP;
         code = module.functions[callStack.funcId].bytecode;

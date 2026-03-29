@@ -38,5 +38,14 @@ abstract final class InternetAddressTypeBindings {
         'name#0': (args) => (args[0] as InternetAddressType).name,
         'hashCode#0': (args) => (args[0] as InternetAddressType).hashCode,
         '==#1': (args) => (args[0] as InternetAddressType) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 0: return InternetAddressType.IPv4;
+              case 1: return InternetAddressType.IPv6;
+              case 2: return InternetAddressType.unix;
+              case -1: return InternetAddressType.any;
+              default: throw ArgumentError('Unknown InternetAddressType: ${args[0]}');
+            }
+        },
       };
 }

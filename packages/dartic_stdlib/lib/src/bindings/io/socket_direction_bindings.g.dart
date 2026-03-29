@@ -36,5 +36,13 @@ abstract final class SocketDirectionBindings {
         'toString#0': (args) => (args[0] as SocketDirection).toString(),
         'hashCode#0': (args) => (args[0] as SocketDirection).hashCode,
         '==#1': (args) => (args[0] as SocketDirection) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 0: return SocketDirection.receive;
+              case 1: return SocketDirection.send;
+              case 2: return SocketDirection.both;
+              default: throw ArgumentError('Unknown SocketDirection: ${args[0]}');
+            }
+        },
       };
 }
