@@ -746,7 +746,7 @@ extension on DarticCompiler {
       paramCountOverride: 1,
     );
     final bindingIndex = _allocBinding(symbolName, 1);
-    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _emitCallHost(compiledArgs, bindingIndex);
 
     return (savedReg, valLoc);
   }
@@ -2337,7 +2337,7 @@ extension on DarticCompiler {
     final bindingIndex = _allocBinding(symbolName, 2,
         methodName: '${expr.name.text}=');
 
-    final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
+    _emitCallHost(compiledArgs, bindingIndex);
 
     // InstanceSet evaluates to the assigned value.
     return (savedReg, valLoc);
@@ -2896,7 +2896,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -3110,7 +3110,7 @@ extension on DarticCompiler {
     _emitCoercedReturn(
         innerResultReg, actualRetLoc, instRetKind, fn.returnType);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Build paramKinds.
     final paramKinds =
@@ -3245,7 +3245,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superHostTearoffProto = DarticFuncProto(
@@ -3833,7 +3833,7 @@ extension on DarticCompiler {
     _emitCoercedReturn(
         innerResultReg, actualRetLoc, instRetKind, fn.returnType);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));

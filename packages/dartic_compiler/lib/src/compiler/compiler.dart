@@ -7,6 +7,9 @@ import 'package:kernel/type_algebra.dart' as type_algebra;
 import 'package:dartic/dartic_internal.dart';
 
 import 'bytecode_emitter.dart';
+import 'lsra/bytecode_rewriter.dart' as lsra;
+import 'lsra/linear_scan.dart' as lsra;
+import 'lsra/live_range.dart' as lsra;
 import 'register_allocator.dart';
 import 'scope.dart';
 import 'type_converter.dart';
@@ -216,6 +219,12 @@ class DarticCompiler {
   late RegisterAllocator _refAlloc;
   late Scope _scope;
   bool _isEntryFunction = false;
+
+  /// Boundary between parameter registers and local/temp registers.
+  /// Set at end of [_initFunction]. Used by LSRA to compute pinned register set
+  /// (params must keep their virtual indices for calling convention compatibility).
+  int _paramValRegEnd = 0;
+  int _paramRefRegEnd = 0;
   ir.DartType _currentReturnType = const ir.VoidType();
 
   /// The async marker of the current function being compiled.
@@ -1015,6 +1024,10 @@ class DarticCompiler {
     // for release -- they live for the entire function).
     _registerParams(positionalParams);
     _registerParams(namedParams);
+
+    // Record param boundary for LSRA pinned register computation.
+    _paramValRegEnd = _valueAlloc.maxUsed;
+    _paramRefRegEnd = _refAlloc.maxUsed;
   }
 
   /// Records a source position mapping at the current bytecode PC.
@@ -1465,10 +1478,7 @@ class DarticCompiler {
       _compileFunctionBodyWithMarker(fn, proc.name.text);
     }
 
-    _patchPendingArgMoves();
-
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Sort line table by PC for binary search at runtime.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -1535,7 +1545,7 @@ class DarticCompiler {
     // HALT (end of initializer).
     _emitter.emitAx(Op.halt, 0);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Capture funcId AFTER compiling the expression, because compilation
     // may add inner functions (closures) to _functions, shifting indices.
@@ -1883,13 +1893,88 @@ class DarticCompiler {
     }
   }
 
-  /// Patches pending outgoing arg MOVE placeholders.
+  /// Runs LSRA on the current function's bytecode, then patches pending
+  /// arg MOVEs with physical register counts.
   ///
-  /// Value args go to `valueRegCount + argIdx`, ref args to
-  /// `refRegCount + argIdx`.
-  void _patchPendingArgMoves() {
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
+  /// Returns (physValRegCount, physRefRegCount) for DarticFuncProto.
+  /// Skips LSRA for small functions (< 64 virtual registers).
+  (int, int) _runLSRAAndPatch() {
+    final virtualValCount = _valueAlloc.maxUsed;
+    final virtualRefCount = _refAlloc.maxUsed;
+
+    // Skip LSRA for small functions — no material benefit.
+    if (virtualValCount < 64 && virtualRefCount < 64) {
+      _patchPendingArgMovesRaw(virtualValCount, virtualRefCount);
+      return (virtualValCount, virtualRefCount);
+    }
+
+    // Compute pinned register sets.
+    final pinnedValRegs = <int>{
+      for (var i = 0; i < _paramValRegEnd; i++) i,
+    };
+    final pinnedRefRegs = <int>{
+      for (var i = 0; i < _paramRefRegEnd; i++) i, // ABI + ref params
+      ..._capturedVarRefRegs.values,
+    };
+
+    // Compute live ranges.
+    final liveRanges = lsra.computeLiveRanges(
+      bytecode: _emitter.buffer,
+      exceptionHandlers: _exceptionHandlers,
+      bindingNames: _bindingNames,
+      constantPool: _constantPool,
+    );
+
+    // Run linear scan for each stack.
+    final valResult = lsra.linearScan(
+      intervals: liveRanges.val.intervals,
+      consecutiveGroups: liveRanges.val.consecutiveGroups,
+      pinnedRegs: pinnedValRegs,
+      initialOffset: 0,
+    );
+    final refResult = lsra.linearScan(
+      intervals: liveRanges.ref.intervals,
+      consecutiveGroups: liveRanges.ref.consecutiveGroups,
+      pinnedRegs: pinnedRefRegs,
+      initialOffset: 3, // ITA/FTA/this reserved
+    );
+
+    // Rewrite bytecode.
+    lsra.rewriteBytecode(
+      _emitter.buffer,
+      valMap: valResult.mapping,
+      refMap: refResult.mapping,
+    );
+
+    // Rewrite exception handlers.
+    final rewrittenHandlers = lsra.rewriteExceptionHandlers(
+      _exceptionHandlers,
+      refResult.mapping,
+    );
+    _exceptionHandlers.clear();
+    _exceptionHandlers.addAll(rewrittenHandlers);
+
+    // Rewrite pending arg moves' srcReg.
+    for (var i = 0; i < _pendingArgMoves.length; i++) {
+      final move = _pendingArgMoves[i];
+      final map = move.loc == ResultLoc.value
+          ? valResult.mapping
+          : refResult.mapping;
+      _pendingArgMoves[i] = (
+        pc: move.pc,
+        srcReg: map[move.srcReg] ?? move.srcReg,
+        argIdx: move.argIdx,
+        loc: move.loc,
+      );
+    }
+
+    // Patch pending arg moves with physical reg counts.
+    _patchPendingArgMovesRaw(valResult.physRegCount, refResult.physRegCount);
+    return (valResult.physRegCount, refResult.physRegCount);
+  }
+
+  /// Patches pending outgoing arg MOVE placeholders with given reg counts.
+  void _patchPendingArgMovesRaw(int valRegCount, int refRegCount) {
     for (final move in _pendingArgMoves) {
       final isValue = move.loc == ResultLoc.value;
       final destReg =
@@ -2303,7 +2388,7 @@ class DarticCompiler {
     }
 
     _emitter.emitAx(Op.halt, 0);
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     final funcId = _functions.length;
     final valRegCount = _valueAlloc.maxUsed;

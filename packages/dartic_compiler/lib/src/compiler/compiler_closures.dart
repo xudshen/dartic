@@ -36,6 +36,8 @@ extension on DarticCompiler {
       finalizerDepthAtLabel: Map.of(_finalizerDepthAtLabel),
       currentLineTable: _currentLineTable,
       currentFileIndex: _currentFileIndex,
+      paramValRegEnd: _paramValRegEnd,
+      paramRefRegEnd: _paramRefRegEnd,
     ));
 
     _emitter = BytecodeEmitter();
@@ -61,6 +63,8 @@ extension on DarticCompiler {
     _itaUpvalueIdx = -1;
     _ftaUpvalueIdx = -1;
     _thisCapturedByInner = false;
+    _paramValRegEnd = 0;
+    _paramRefRegEnd = 0;
   }
 
   /// Restores the previous compilation context from [_contextStack].
@@ -90,6 +94,8 @@ extension on DarticCompiler {
     _restoreMap(_finalizerDepthAtLabel, ctx.finalizerDepthAtLabel);
     _currentLineTable = ctx.currentLineTable;
     _currentFileIndex = ctx.currentFileIndex;
+    _paramValRegEnd = ctx.paramValRegEnd;
+    _paramRefRegEnd = ctx.paramRefRegEnd;
   }
 
   /// Restores a mutable list's contents from a saved snapshot.
@@ -291,10 +297,7 @@ extension on DarticCompiler {
 
     _compileFunctionBodyWithMarker(fn, name ?? '<anonymous>');
 
-    _patchPendingArgMoves();
-
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
     final upvalueDescs = List<UpvalueDescriptor>.of(_upvalueDescriptors);
 
     // Sort line table by PC for binary search at runtime.
@@ -558,7 +561,7 @@ extension on DarticCompiler {
     // RETURN_REF.
     _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -750,7 +753,7 @@ extension on DarticCompiler {
     // 4. RETURN_REF objReg.
     _emitter.emitABC(Op.returnRef, objReg, 0, 0);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto.
     final ctorThunkProto = DarticFuncProto(
@@ -1026,7 +1029,7 @@ extension on DarticCompiler {
     // 4. RETURN_REF objReg.
     _emitter.emitABC(Op.returnRef, objReg, 0, 0);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto with INSTANTIATED paramKinds.
     final genCtorThunkProto = DarticFuncProto(
@@ -1267,7 +1270,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
     final instTearoffProto = DarticFuncProto(
@@ -1493,7 +1496,7 @@ extension on DarticCompiler {
     _emitCoercedReturn(
         innerResultReg, actualRetLoc, instRetKind, fn.returnType);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Build paramKinds reflecting promotions.
     final paramKinds =
@@ -2200,6 +2203,8 @@ class _CompilationContext {
     required this.finalizerDepthAtLabel,
     required this.currentLineTable,
     required this.currentFileIndex,
+    this.paramValRegEnd = 0,
+    this.paramRefRegEnd = 0,
   });
 
   final BytecodeEmitter emitter;
@@ -2226,6 +2231,8 @@ class _CompilationContext {
   final Map<ir.LabeledStatement, int> finalizerDepthAtLabel;
   final List<LineTableEntry> currentLineTable;
   final int currentFileIndex;
+  final int paramValRegEnd;
+  final int paramRefRegEnd;
 }
 
 /// AST visitor that collects references to outer-scope variables.

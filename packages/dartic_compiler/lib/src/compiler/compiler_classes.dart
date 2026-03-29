@@ -612,7 +612,7 @@ extension on DarticCompiler {
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
 
-      _patchPendingArgMoves();
+      _runLSRAAndPatch();
       final valRegCount = _valueAlloc.maxUsed;
       final refRegCount = _refAlloc.maxUsed;
       _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -712,7 +712,7 @@ extension on DarticCompiler {
     _emitCloseUpvaluesIfNeeded();
     _emitter.emitABC(Op.returnNull, 0, 0, 0);
 
-    _patchPendingArgMoves();
+    _runLSRAAndPatch();
 
     // Sort line table by PC for binary search at runtime.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
