@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'delta.dart';
 import 'types.dart';
 
 /// Formats benchmark results as a terminal table.
@@ -82,5 +83,124 @@ class ConsoleReporter {
     if (us >= 1000000) return '${(us / 1000000).toStringAsFixed(1)}s';
     if (us >= 1000) return '${(us / 1000).toStringAsFixed(1)}ms';
     return us.toStringAsFixed(1);
+  }
+}
+
+/// Formats delta regression report as a terminal table.
+class DeltaReporter {
+  void report(
+    List<DeltaEntry> deltas, {
+    required String currentSha,
+    required String currentDate,
+    required String baselineSha,
+    required String baselineDate,
+    required String executionMode,
+    bool modeMismatch = false,
+  }) {
+    final width = 85;
+    final rule = '=' * width;
+
+    stdout.writeln();
+    stdout.writeln(rule);
+    stdout.writeln(
+        '  dartic Benchmark Regression Report  [${executionMode.toUpperCase()}]');
+    stdout.writeln(
+        '  Current: $currentSha ($currentDate) vs Baseline: $baselineSha ($baselineDate)');
+    if (modeMismatch) {
+      stdout.writeln(
+          '  ⚠ WARNING: execution mode mismatch — delta values are unreliable');
+    }
+    stdout.writeln(rule);
+
+    // Group by category, preserve order
+    final categories = deltas.map((d) => d.category).toSet().toList();
+    for (final cat in categories) {
+      final group = deltas.where((d) => d.category == cat).toList();
+      stdout.writeln();
+      stdout.writeln('${cat.toUpperCase()} BENCHMARKS');
+      final header =
+          '${"Benchmark".padRight(22)}│ ${"dartic (µs)".padLeft(12)} │ '
+          '${"d/h".padLeft(7)} │ ${"Δ dartic".padLeft(9)} │ '
+          '${"Δ d/h".padLeft(8)} │ Status';
+      stdout.writeln(header);
+      stdout.writeln(
+          '${"─" * 22}┼${"─" * 14}┼${"─" * 9}┼${"─" * 11}┼${"─" * 10}┼${"─" * 14}');
+
+      for (final d in group) {
+        final name = d.name.padRight(22);
+        final us = _fmtUs(d.darticUs).padLeft(12);
+        final ratio = '${d.darticRatio.toStringAsFixed(1)}x'.padLeft(7);
+        final deltaDartic = d.deltaDarticPct != null
+            ? _fmtDelta(d.deltaDarticPct!).padLeft(9)
+            : 'NEW'.padLeft(9);
+        final deltaRatio = d.deltaRatioPct != null
+            ? _fmtDelta(d.deltaRatioPct!).padLeft(8)
+            : 'NEW'.padLeft(8);
+        final status = _fmtStatus(d.status);
+        stdout.writeln(
+            '$name│ $us │ $ratio │ $deltaDartic │ $deltaRatio │ $status');
+      }
+    }
+
+    // Summary
+    final improved =
+        deltas.where((d) => d.status == DeltaStatus.improved).length;
+    final regressed =
+        deltas.where((d) => d.status == DeltaStatus.regressed).length;
+    final noise = deltas.where((d) => d.status == DeltaStatus.noise).length;
+    final newCases =
+        deltas.where((d) => d.status == DeltaStatus.newCase).length;
+
+    stdout.writeln();
+    stdout.writeln('SUMMARY');
+    stdout.writeln('  Total cases: ${deltas.length}');
+    stdout.writeln('  Improved (>3%): $improved');
+    if (regressed > 0) {
+      stdout.writeln('  Regressed (>3%): $regressed  ← ⚠ ATTENTION');
+    } else {
+      stdout.writeln('  Regressed (>3%): $regressed');
+    }
+    stdout.writeln('  Noise (±3%): $noise');
+    if (newCases > 0) stdout.writeln('  New cases: $newCases');
+
+    final gmDartic = geometricMeanDelta(deltas);
+    final gmRatio = geometricMeanDeltaRatio(deltas);
+    stdout.writeln();
+    stdout.writeln('  Geometric mean Δ dartic: ${_fmtGm(gmDartic)}');
+    stdout.writeln('  Geometric mean Δ d/h:    ${_fmtGm(gmRatio)}');
+    stdout.writeln(rule);
+  }
+
+  String _fmtUs(double us) {
+    if (us >= 1000000) return '${(us / 1000000).toStringAsFixed(1)}s';
+    if (us >= 1000) return '${(us / 1000).toStringAsFixed(1)}ms';
+    return us.toStringAsFixed(1);
+  }
+
+  String _fmtDelta(double pct) {
+    final sign = pct >= 0 ? '+' : '';
+    return '$sign${pct.toStringAsFixed(1)}%';
+  }
+
+  String _fmtGm(double pct) {
+    final sign = pct >= 0 ? '+' : '';
+    final label =
+        pct < -0.1 ? '(improvement)' : pct > 0.1 ? '(regression)' : '';
+    return '$sign${pct.toStringAsFixed(1)}% $label';
+  }
+
+  String _fmtStatus(DeltaStatus status) {
+    switch (status) {
+      case DeltaStatus.improved:
+        return '✓ IMPROVED';
+      case DeltaStatus.regressed:
+        return '✗ REGRESSED';
+      case DeltaStatus.noise:
+        return '· noise';
+      case DeltaStatus.newCase:
+        return '★ new case';
+      case DeltaStatus.removed:
+        return '- removed';
+    }
   }
 }
