@@ -60,7 +60,7 @@ extension on DarticCompiler {
   /// 将 [darticAbsent] 哨兵压入 ref 栈。
   (int, ResultLoc) _loadAbsent() {
     final reg = _allocRefReg();
-    _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+    _emitter.emitABC(Op.loadAbsent, reg, 0, 0);
     return (reg, ResultLoc.ref);
   }
 

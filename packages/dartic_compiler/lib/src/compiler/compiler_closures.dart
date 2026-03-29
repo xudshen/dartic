@@ -531,7 +531,7 @@ extension on DarticCompiler {
       if (isOptional) {
         // JUMP_IF_NNULL reg → skip; LOAD_ABSENT reg; skip:
         final skipPC = _emitter.emitJumpPlaceholder();
-        _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+        _emitter.emitABC(Op.loadAbsent, reg, 0, 0);
         _emitter.patchJumpAsBx(
             skipPC, Op.jumpIfNnull, reg, _emitter.currentPC);
       }
@@ -546,7 +546,7 @@ extension on DarticCompiler {
       if (!param.isRequired) {
         // JUMP_IF_NNULL reg → skip; LOAD_ABSENT reg; skip:
         final skipPC = _emitter.emitJumpPlaceholder();
-        _emitter.emit(encodeABC(Op.loadAbsent, reg, 0, 0));
+        _emitter.emitABC(Op.loadAbsent, reg, 0, 0);
         _emitter.patchJumpAsBx(
             skipPC, Op.jumpIfNnull, reg, _emitter.currentPC);
       }
