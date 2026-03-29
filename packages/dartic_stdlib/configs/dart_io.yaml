@@ -100,3 +100,10 @@ libraries:
       GZipCodec:
         extra_methods:
           "_#fromFields#7": "(args) => GZipCodec(dictionary: args[0] == null ? null : (args[0] as List).cast<int>(), gzip: args[1] as bool, level: args[2] as int, memLevel: args[3] as int, raw: args[4] as bool, strategy: args[5] as int, windowBits: args[6] as int)"
+
+  - uri: dart:_http
+    discover: all
+    exclude:
+      - "dart:_http"                     # exclude all top-level functions (Testing$ internals)
+      - "dart:_http::HttpProfiler"       # not re-exported via dart:io
+      - "dart:_http::ServerSocketBase"   # not re-exported via dart:io
