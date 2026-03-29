@@ -12,10 +12,31 @@ dependencies:
     path: ../packages/dartic_compiler
   dartic_stdlib:
     path: ../packages/dartic_stdlib
-  dart_eval: ^0.8.4
   kernel:
     path: ../vendor/dart-sdk/pkg/kernel
 
 dev_dependencies:
   test: ^1.25.6
   lints: ^6.0.0
+
+dependency_overrides:
+  dartic:
+    path: ..
+  dartic_annotation:
+    path: ../packages/dartic_annotation
+  dartic_compiler:
+    path: ../packages/dartic_compiler
+  dartic_stdlib:
+    path: ../packages/dartic_stdlib
+  kernel:
+    path: ../vendor/dart-sdk/pkg/kernel
+  front_end:
+    path: ../vendor/dart-sdk/pkg/front_end
+  vm:
+    path: ../vendor/dart-sdk/pkg/vm
+  build_integration:
+    path: ../vendor/dart-sdk/pkg/build_integration
+  _fe_analyzer_shared:
+    path: ../vendor/dart-sdk/pkg/_fe_analyzer_shared
+  analyzer:
+    path: ../vendor/dart-sdk/pkg/analyzer

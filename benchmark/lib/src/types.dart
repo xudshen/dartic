@@ -8,7 +8,6 @@ class BenchmarkCase {
     this.dartSource,
     this.dartSourceFile,
     required this.hostFn,
-    this.dartEvalSupported = true,
   });
 
   final String name;
@@ -16,7 +15,6 @@ class BenchmarkCase {
   final String? dartSource;
   final String? dartSourceFile;
   final Object? Function() hostFn;
-  final bool dartEvalSupported;
 
   /// Returns the Dart source code, reading from file if needed.
   String get resolvedSource {
@@ -49,18 +47,14 @@ class BenchmarkResult {
     required this.category,
     required this.host,
     required this.dartic,
-    this.dartEval,
   });
 
   final String name;
   final String category;
   final ChannelResult host;
   final ChannelResult dartic;
-  final ChannelResult? dartEval;
 
   double get darticRatio => dartic.medianUs / host.medianUs;
-  double? get dartEvalRatio =>
-      dartEval != null ? dartEval!.medianUs / host.medianUs : null;
 }
 
 /// Metadata for a benchmark snapshot.
@@ -75,7 +69,6 @@ class SnapshotMeta {
     required this.warmupIterations,
     required this.sampleCount,
     required this.minSampleDurationMs,
-    required this.enableDartEval,
   });
 
   final String gitSha;
@@ -87,7 +80,6 @@ class SnapshotMeta {
   final int warmupIterations;
   final int sampleCount;
   final int minSampleDurationMs;
-  final bool enableDartEval;
 }
 
 /// Per-case snapshot data.
@@ -97,20 +89,14 @@ class CaseSnapshot {
     required this.hostCvPct,
     required this.darticMedianUs,
     required this.darticCvPct,
-    this.dartEvalMedianUs,
-    this.dartEvalCvPct,
     required this.darticRatio,
-    this.dartEvalRatio,
   });
 
   final double hostMedianUs;
   final double hostCvPct;
   final double darticMedianUs;
   final double darticCvPct;
-  final double? dartEvalMedianUs;
-  final double? dartEvalCvPct;
   final double darticRatio;
-  final double? dartEvalRatio;
 }
 
 /// Complete benchmark snapshot.

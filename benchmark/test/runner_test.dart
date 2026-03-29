@@ -28,14 +28,12 @@ int main() {
     category: 'micro',
     dartSource: source,
     hostFn: _hostAdd,
-    dartEvalSupported: false,
   );
 
   const config = BenchmarkConfig(
     warmupIterations: 50,
     sampleCount: 5,
     minSampleDurationMs: 50,
-    enableDartEval: false,
   );
 
   test('BenchmarkRunner produces valid results for host + dartic', () async {
@@ -48,7 +46,6 @@ int main() {
     expect(r.host.medianUs, greaterThan(0));
     expect(r.dartic.medianUs, greaterThan(0));
     expect(r.darticRatio, greaterThan(1.0));
-    expect(r.dartEval, isNull);
 
     print('Host: ${r.host.medianUs.toStringAsFixed(2)} µs/iter');
     print('Dartic: ${r.dartic.medianUs.toStringAsFixed(2)} µs/iter');

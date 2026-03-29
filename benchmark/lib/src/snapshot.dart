@@ -16,7 +16,6 @@ String snapshotToJson(Snapshot snapshot) {
         'warmupIterations': snapshot.meta.warmupIterations,
         'sampleCount': snapshot.meta.sampleCount,
         'minSampleDurationMs': snapshot.meta.minSampleDurationMs,
-        'enableDartEval': snapshot.meta.enableDartEval,
       },
     },
     'results': {
@@ -30,14 +29,7 @@ String snapshotToJson(Snapshot snapshot) {
             'medianUs': e.value.darticMedianUs,
             'cvPct': e.value.darticCvPct,
           },
-          if (e.value.dartEvalMedianUs != null)
-            'dartEval': {
-              'medianUs': e.value.dartEvalMedianUs,
-              'cvPct': e.value.dartEvalCvPct,
-            },
           'darticRatio': e.value.darticRatio,
-          if (e.value.dartEvalRatio != null)
-            'dartEvalRatio': e.value.dartEvalRatio,
         },
     },
   };
@@ -58,7 +50,6 @@ Snapshot snapshotFromJson(String jsonStr) {
     warmupIterations: c['warmupIterations'] as int,
     sampleCount: c['sampleCount'] as int,
     minSampleDurationMs: c['minSampleDurationMs'] as int,
-    enableDartEval: c['enableDartEval'] as bool,
   );
 
   final results = <String, CaseSnapshot>{};
@@ -67,20 +58,12 @@ Snapshot snapshotFromJson(String jsonStr) {
     final v = e.value as Map<String, dynamic>;
     final host = v['host'] as Map<String, dynamic>;
     final dartic = v['dartic'] as Map<String, dynamic>;
-    final dartEval = v['dartEval'] as Map<String, dynamic>?;
     results[e.key] = CaseSnapshot(
       hostMedianUs: (host['medianUs'] as num).toDouble(),
       hostCvPct: (host['cvPct'] as num).toDouble(),
       darticMedianUs: (dartic['medianUs'] as num).toDouble(),
       darticCvPct: (dartic['cvPct'] as num).toDouble(),
-      dartEvalMedianUs:
-          dartEval != null ? (dartEval['medianUs'] as num).toDouble() : null,
-      dartEvalCvPct:
-          dartEval != null ? (dartEval['cvPct'] as num).toDouble() : null,
       darticRatio: (v['darticRatio'] as num).toDouble(),
-      dartEvalRatio: v['dartEvalRatio'] != null
-          ? (v['dartEvalRatio'] as num).toDouble()
-          : null,
     );
   }
 

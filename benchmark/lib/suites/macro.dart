@@ -37,7 +37,7 @@ int main() {
     name: 'quicksort_1k',
     category: 'macro',
     hostFn: hostQuicksort,
-    dartEvalSupported: false,
+
     dartSource: '''
 void qsort(List<int> a, int lo, int hi) {
   if (lo >= hi) return;
@@ -74,7 +74,7 @@ int main() {
     name: 'binary_tree_15',
     category: 'macro',
     hostFn: hostBinaryTree,
-    dartEvalSupported: false,
+
     dartSource: '''
 class Node {
   Node? left;
@@ -104,7 +104,7 @@ int main() {
     name: 'nbody',
     category: 'macro',
     hostFn: hostNbody,
-    dartEvalSupported: false,
+
     dartSource: '''
 class Body {
   double x, y, z, vx, vy, vz, mass;

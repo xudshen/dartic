@@ -73,15 +73,13 @@ Future<void> main(List<String> args) async {
   }
 
   // --- Config ---
-  final enableDartEval = !parsed.noDartEval;
   final config = parsed.quick
-      ? BenchmarkConfig(
+      ? const BenchmarkConfig(
           warmupIterations: 100,
           sampleCount: 5,
           minSampleDurationMs: 100,
-          enableDartEval: enableDartEval,
         )
-      : BenchmarkConfig(enableDartEval: enableDartEval);
+      : const BenchmarkConfig();
 
   // --- Run benchmarks ---
   print('Running ${cases.length} benchmarks [$executionMode mode]...');
@@ -91,7 +89,7 @@ Future<void> main(List<String> args) async {
   final results = await runner.runAll(cases);
 
   // --- Standard report ---
-  ConsoleReporter().report(results, showDartEval: enableDartEval);
+  ConsoleReporter().report(results);
 
   // --- Build snapshot ---
   final meta = await _buildMeta(config, executionMode);
@@ -102,10 +100,7 @@ Future<void> main(List<String> args) async {
       hostCvPct: r.host.cvPct,
       darticMedianUs: r.dartic.medianUs,
       darticCvPct: r.dartic.cvPct,
-      dartEvalMedianUs: r.dartEval?.medianUs,
-      dartEvalCvPct: r.dartEval?.cvPct,
       darticRatio: r.darticRatio,
-      dartEvalRatio: r.dartEvalRatio,
     );
   }
   final snapshot = Snapshot(meta: meta, results: snapshotResults);
@@ -204,7 +199,6 @@ Future<SnapshotMeta> _buildMeta(
     warmupIterations: config.warmupIterations,
     sampleCount: config.sampleCount,
     minSampleDurationMs: config.minSampleDurationMs,
-    enableDartEval: config.enableDartEval,
   );
 }
 
@@ -238,7 +232,6 @@ Snapshot? _findLatestSnapshot(String mode) {
 
 class _ParsedArgs {
   bool quick = false;
-  bool noDartEval = false;
   bool compare = false;
   bool noSave = false;
   bool saveOnly = false;
@@ -257,8 +250,6 @@ _ParsedArgs _parseArgs(List<String> args) {
     switch (args[i]) {
       case '--quick':
         p.quick = true;
-      case '--no-dart-eval':
-        p.noDartEval = true;
       case '--compare':
         p.compare = true;
       case '--no-save':

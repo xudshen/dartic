@@ -14,7 +14,6 @@ void main() {
     warmupIterations: 500,
     sampleCount: 20,
     minSampleDurationMs: 200,
-    enableDartEval: true,
   );
 
   final snapshot = Snapshot(
@@ -25,10 +24,7 @@ void main() {
         hostCvPct: 1.2,
         darticMedianUs: 45.6,
         darticCvPct: 2.1,
-        dartEvalMedianUs: 234.5,
-        dartEvalCvPct: 3.4,
         darticRatio: 3.7,
-        dartEvalRatio: 19.1,
       ),
       'fibonacci_30': CaseSnapshot(
         hostMedianUs: 100.0,
@@ -52,12 +48,7 @@ void main() {
     final ia = decoded.results['int_arithmetic']!;
     expect(ia.hostMedianUs, 12.3);
     expect(ia.darticMedianUs, 45.6);
-    expect(ia.dartEvalMedianUs, 234.5);
     expect(ia.darticRatio, 3.7);
-
-    final fib = decoded.results['fibonacci_30']!;
-    expect(fib.dartEvalMedianUs, isNull);
-    expect(fib.dartEvalRatio, isNull);
   });
 
   test('Snapshot JSON is valid JSON string', () {

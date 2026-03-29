@@ -6,14 +6,14 @@ List<BenchmarkCase> collectionSuites() => [
         name: 'richards',
         category: 'collection',
         hostFn: hostRichards,
-        dartEvalSupported: false,
+
         dartSourceFile: 'lib/suites/sources/richards.dart',
       ),
       BenchmarkCase(
         name: 'list_ops',
         category: 'collection',
         hostFn: hostListOps,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   List<int> list = [];
@@ -36,7 +36,7 @@ int main() {
         name: 'map_lookup',
         category: 'collection',
         hostFn: hostMapLookup,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   Map<int, int> map = {};
@@ -55,7 +55,7 @@ int main() {
         name: 'string_concat',
         category: 'collection',
         hostFn: hostStringConcat,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   StringBuffer sb = StringBuffer();
@@ -71,7 +71,7 @@ int main() {
         name: 'type_check_intensive',
         category: 'collection',
         hostFn: hostTypeCheckIntensive,
-        dartEvalSupported: false,
+
         dartSource: '''
 abstract class Shape {}
 class Circle extends Shape { int r; Circle(this.r); }

@@ -6,7 +6,7 @@ List<BenchmarkCase> bridgeSuites() => [
         name: 'bridge_method_call',
         category: 'bridge',
         hostFn: hostBridgeMethodCall,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   String s = 'hello world benchmark test string';
@@ -22,7 +22,7 @@ int main() {
         name: 'bridge_object_create',
         category: 'bridge',
         hostFn: hostBridgeObjectCreate,
-        dartEvalSupported: false,
+
         dartSource: r"""
 int main() {
   int sum = 0;
@@ -38,7 +38,7 @@ int main() {
         name: 'bridge_collection_iter',
         category: 'bridge',
         hostFn: hostBridgeCollectionIter,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   List<int> list = List.generate(1000, (i) => i);
@@ -56,7 +56,7 @@ int main() {
         name: 'bridge_callback',
         category: 'bridge',
         hostFn: hostBridgeCallback,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   List<int> list = List.generate(1000, (i) => i);

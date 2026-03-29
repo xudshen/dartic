@@ -6,14 +6,14 @@ List<BenchmarkCase> objectSuites() => [
         name: 'deltablue',
         category: 'object',
         hostFn: hostDeltaBlue,
-        dartEvalSupported: false,
+
         dartSourceFile: 'lib/suites/sources/deltablue.dart',
       ),
       BenchmarkCase(
         name: 'storage',
         category: 'object',
         hostFn: hostStorage,
-        dartEvalSupported: false,
+
         dartSource: '''
 class Node {
   List<Object?> data;
@@ -49,7 +49,7 @@ int main() {
         name: 'towers',
         category: 'object',
         hostFn: hostTowers,
-        dartEvalSupported: false,
+
         dartSource: '''
 class Disc {
   int size;
@@ -93,7 +93,7 @@ int main() {
         name: 'closure_capture',
         category: 'object',
         hostFn: hostClosureCapture,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   int sum = 0;
@@ -112,7 +112,7 @@ int main() {
         name: 'closure_alloc',
         category: 'object',
         hostFn: hostClosureAlloc,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   List<int> list = List.generate(1000, (i) => i);

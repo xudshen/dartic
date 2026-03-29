@@ -29,7 +29,7 @@ int main() {
   return sum.floor();
 }
 ''',
-        dartEvalSupported: false,
+
       ),
       BenchmarkCase(
         name: 'loop_sum_100k',
@@ -85,13 +85,13 @@ int main() {
   return sum;
 }
 ''',
-        dartEvalSupported: false,
+
       ),
       BenchmarkCase(
         name: 'sieve_10k',
         category: 'micro',
         hostFn: hostSieve,
-        dartEvalSupported: false,
+
         dartSource: '''
 int main() {
   int size = 10000;
@@ -113,7 +113,7 @@ int main() {
         name: 'queens_12',
         category: 'micro',
         hostFn: hostQueens,
-        dartEvalSupported: false,
+
         dartSource: '''
 int queens(int n) {
   List<int> cols = List.filled(n, 0);
@@ -142,7 +142,7 @@ int main() => queens(12);
         name: 'permute',
         category: 'micro',
         hostFn: hostPermute,
-        dartEvalSupported: false,
+
         dartSource: '''
 int count = 0;
 void permute(List<int> arr, int n) {
