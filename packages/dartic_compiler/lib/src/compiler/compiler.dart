@@ -1545,13 +1545,11 @@ class DarticCompiler {
     // HALT (end of initializer).
     _emitter.emitAx(Op.halt, 0);
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Capture funcId AFTER compiling the expression, because compilation
     // may add inner functions (closures) to _functions, shifting indices.
     final funcId = _functions.length;
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
     _functions.add(DarticFuncProto(
       funcId: funcId,
       name: '__init_${field.name.text}',
@@ -2376,11 +2374,9 @@ class DarticCompiler {
     }
 
     _emitter.emitAx(Op.halt, 0);
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     final funcId = _functions.length;
-    final valRegCount = _valueAlloc.maxUsed;
-    final refRegCount = _refAlloc.maxUsed;
     _functions.add(DarticFuncProto(
       funcId: funcId,
       name: '__constinit_$globalIndex',

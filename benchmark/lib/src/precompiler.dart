@@ -149,7 +149,14 @@ class Precompiler {
   /// Simple content hash for change detection.
   /// Not cryptographic -- just needs to detect source edits reliably.
   String _contentHash(String input) {
-    return input.hashCode.toRadixString(16);
+    // Use a deterministic hash — String.hashCode is randomized per VM session.
+    final bytes = utf8.encode(input);
+    var hash = 0xcbf29ce484222325; // FNV-1a 64-bit offset basis
+    for (final b in bytes) {
+      hash ^= b;
+      hash = (hash * 0x100000001b3) & 0xFFFFFFFFFFFFFFFF;
+    }
+    return hash.toRadixString(16);
   }
 
   Map<String, dynamic> _loadManifest() {

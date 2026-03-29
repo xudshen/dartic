@@ -612,9 +612,7 @@ extension on DarticCompiler {
       _emitCloseUpvaluesIfNeeded();
       _emitter.emitABC(Op.returnNull, 0, 0, 0);
 
-      _runLSRAAndPatch();
-      final valRegCount = _valueAlloc.maxUsed;
-      final refRegCount = _refAlloc.maxUsed;
+      final (valRegCount, refRegCount) = _runLSRAAndPatch();
       _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
       final proto = DarticFuncProto(
         funcId: funcId,
@@ -712,7 +710,7 @@ extension on DarticCompiler {
     _emitCloseUpvaluesIfNeeded();
     _emitter.emitABC(Op.returnNull, 0, 0, 0);
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Sort line table by PC for binary search at runtime.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -726,8 +724,8 @@ extension on DarticCompiler {
       funcId: funcId,
       name: displayName,
       bytecode: _emitter.toUint64List(),
-      valueRegCount: _valueAlloc.maxUsed,
-      refRegCount: _refAlloc.maxUsed,
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
       paramCount: fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: _buildParamKinds(
           fn.positionalParameters, fn.namedParameters),

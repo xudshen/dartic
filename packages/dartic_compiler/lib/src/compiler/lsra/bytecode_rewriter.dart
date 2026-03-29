@@ -70,14 +70,9 @@ void rewriteBytecode(
       continue;
     }
 
-    // CREATE_TYPE_ARGS: non-standard layout A=imm, B=refR, C=refW.
-    if (op == Op.createTypeArgs) {
-      final a = hasRaw ? rawA[pc] : decodeA(instr); // count (imm, unchanged)
-      final b = _remap(hasRaw ? rawB[pc] : decodeB(instr), RegOp.refR, valMap, refMap);
-      final c = _remap(hasRaw ? rawC[pc] : decodeC(instr), RegOp.refW, valMap, refMap);
-      buffer[pc] = encodeABC(op, a, b, c) | (instr & 0xFF00);
-      continue;
-    }
+    // CREATE_TYPE_ARGS: non-standard layout A=count(imm), B=rangeBase(refR), C=dest(refW).
+    // Now has RangeInfo, so range base remapping is handled by the standard ABC
+    // path below. No special case needed.
 
     // ── Standard rewrite by format ────────────────────────────────────────
 
@@ -98,7 +93,7 @@ void rewriteBytecode(
         // Standard operand remapping (skip range-base operands already handled).
         a = _remapIfNotRange(a, meta.a, meta.range, 0, valMap, refMap);
         b = _remapIfNotRange(b, meta.b, meta.range, 1, valMap, refMap);
-        c = _remap(c, meta.c, valMap, refMap);
+        c = _remapIfNotRange(c, meta.c, meta.range, 2, valMap, refMap);
 
         // Preserve flag byte (bits [8:16]) for Op.call.
         buffer[pc] = encodeABC(op, a, b, c) | (instr & 0xFF00);

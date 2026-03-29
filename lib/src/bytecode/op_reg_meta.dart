@@ -243,7 +243,7 @@ const Map<int, OpRegMeta> opRegTable = {
   Op.setFieldDyn: _rrRrIm, // A=refR(value), B=refR(obj), C=nameIdx
   Op.storeSuperArgs: OpRegMeta(RegOp.imm, RegOp.refR, RegOp.none, // A=count(imm), B=refR(base)
       RangeInfo(isRef: true, baseFromOperand: 1, countSource: RangeCountSource.fromA)),
-  Op.wrapBridge: _rwImm_, // ABx: A=refW, Bx=classId
+  Op.wrapBridge: _rrImm_, // ABx: A=refR(in-place mutation), Bx=classId
   Op.extractFace: _rwRrIm, // A=refW(dest), B=refR(src), C=classId(imm)
 
   // ── Closure ─────────────────────────────────────────────────────────────
@@ -256,8 +256,10 @@ const Map<int, OpRegMeta> opRegTable = {
   Op.pushFta: _rw____, // A=refW(FTA copy)
   Op.loadTypeArg: _rwRrIm, // A=refW, B=refR(typeArgs), C=index(imm)
   Op.instantiateType: _rwImm_, // ABx: A=refW, Bx=typeTemplateId
-  // CREATE_TYPE_ARGS: non-standard! A=count(imm), B=startReg(refR range base), C=dest(refW)
-  Op.createTypeArgs: OpRegMeta(RegOp.imm, RegOp.refR, RegOp.refW),
+  // CREATE_TYPE_ARGS: non-standard! A=count(imm), B=startReg(refR range base), C=dest(refW).
+  // Reads B..B+A-1 consecutive ref registers. RangeInfo ensures ConsecutiveGroup creation.
+  Op.createTypeArgs: OpRegMeta(RegOp.imm, RegOp.imm, RegOp.refW,
+      RangeInfo(isRef: true, baseFromOperand: 1, countSource: RangeCountSource.fromA)),
   Op.allocGeneric: _rwRr__, // A=refW(obj), B=refR(typeArgs)
   Op.checkCovariant: _nnn___, // Reserved / not implemented
 

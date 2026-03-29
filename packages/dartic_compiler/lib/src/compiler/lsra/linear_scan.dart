@@ -48,11 +48,14 @@ LinearScanResult linearScan({
   }
 
   // ── Phase 0: Pin registers ──────────────────────────────────────────────
-  final occupiedSlots = <int>{};
+  // All pinned registers occupy their physical slots unconditionally, even if
+  // they have no live interval (e.g., ABI slots ITA/FTA/this in functions that
+  // never read them). This prevents other vregs from being assigned to those
+  // physical slots.
+  final occupiedSlots = <int>{...pinnedRegs};
   for (final vreg in pinnedRegs) {
     if (intervals.containsKey(vreg)) {
       mapping[vreg] = vreg; // identity
-      occupiedSlots.add(vreg);
     }
   }
 
@@ -214,6 +217,8 @@ LinearScanResult linearScan({
       if (entry.physReg! + 1 > maxReg) maxReg = entry.physReg! + 1;
     }
   }
+
+  assert(maxReg <= 65535, 'LSRA physRegCount $maxReg exceeds 16-bit operand limit');
 
   return LinearScanResult(mapping: mapping, physRegCount: maxReg);
 }

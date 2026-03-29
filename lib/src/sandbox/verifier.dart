@@ -426,6 +426,16 @@ class DarticVerifier {
         }
       }
 
+      // CREATE_RECORD: C operand indexes into refs partition (shape descriptor).
+      if (op == Op.createRecord) {
+        if (c >= pool.refCount) {
+          errors.add(
+            '$prefix CREATE_RECORD C=$c >= refCount '
+            '${pool.refCount} at pc=$pc',
+          );
+        }
+      }
+
       // INVOKE_DYN: C operand indexes into refs partition (DynCallDescriptor).
       if (op == Op.invokeDyn) {
         if (c >= pool.refCount) {
@@ -926,6 +936,13 @@ class DarticVerifier {
             '${pool.doubleCount} at pc=$pc',
           );
         }
+      case Op.instantiateType:
+        if (bx >= pool.refCount) {
+          errors.add(
+            '$prefix INSTANTIATE_TYPE Bx=$bx >= refCount '
+            '${pool.refCount} at pc=$pc',
+          );
+        }
     }
   }
 
@@ -975,6 +992,13 @@ class DarticVerifier {
         if (bx >= module.classes.length) {
           errors.add(
             '$prefix NEW_INSTANCE Bx=$bx >= classes.length '
+            '${module.classes.length} at pc=$pc',
+          );
+        }
+      case Op.wrapBridge:
+        if (bx >= module.classes.length) {
+          errors.add(
+            '$prefix WRAP_BRIDGE Bx=$bx >= classes.length '
             '${module.classes.length} at pc=$pc',
           );
         }

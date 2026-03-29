@@ -116,7 +116,13 @@ class ConstantPool {
   // ── raw accessors (for interpreter hot path — no copy/wrap) ──
 
   List<Object?> get rawRefs => _refs;
+
+  /// Raw backing array. Valid indices are [0, intCount). Indices beyond
+  /// intCount may contain uninitialized data due to over-allocation.
   Int64List get rawInts => _ints;
+
+  /// Raw backing array. Valid indices are [0, doubleCount). Indices beyond
+  /// doubleCount may contain uninitialized data due to over-allocation.
   Float64List get rawDoubles => _doubles;
   List<String> get rawNames => _names;
 

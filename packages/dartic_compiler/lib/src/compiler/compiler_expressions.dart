@@ -2887,7 +2887,7 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Create the thunk FuncProto with 1 upvalue descriptor.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -2895,8 +2895,8 @@ extension on DarticCompiler {
       funcId: thunkFuncId,
       name: '<super-tearoff:$methodName>',
       bytecode: _emitter.toUint64List(),
-      valueRegCount: _valueAlloc.maxUsed,
-      refRegCount: _refAlloc.maxUsed,
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: promotedIndices.isEmpty
@@ -3101,7 +3101,7 @@ extension on DarticCompiler {
     _emitCoercedReturn(
         innerResultReg, actualRetLoc, instRetKind, fn.returnType);
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Build paramKinds.
     final paramKinds =
@@ -3117,8 +3117,8 @@ extension on DarticCompiler {
       funcId: thunkFuncId,
       name: '<super-instantiation:$methodName>',
       bytecode: _emitter.toUint64List(),
-      valueRegCount: _valueAlloc.maxUsed,
-      refRegCount: _refAlloc.maxUsed,
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: paramKinds,
@@ -3236,15 +3236,15 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.returnRef, resultReg, 0, 0);
     }
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
     final superHostTearoffProto = DarticFuncProto(
       funcId: thunkFuncId,
       name: '<super-host-tearoff:$methodName>',
       bytecode: _emitter.toUint64List(),
-      valueRegCount: _valueAlloc.maxUsed,
-      refRegCount: _refAlloc.maxUsed,
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: promotedIndices.isEmpty
@@ -3824,7 +3824,7 @@ extension on DarticCompiler {
     _emitCoercedReturn(
         innerResultReg, actualRetLoc, instRetKind, fn.returnType);
 
-    _runLSRAAndPatch();
+    final (valRegCount, refRegCount) = _runLSRAAndPatch();
 
     // Create the thunk FuncProto.
     _currentLineTable.sort((a, b) => a.pc.compareTo(b.pc));
@@ -3832,8 +3832,8 @@ extension on DarticCompiler {
       funcId: thunkFuncId,
       name: '<instantiation-thunk:$innerFuncId>',
       bytecode: _emitter.toUint64List(),
-      valueRegCount: _valueAlloc.maxUsed,
-      refRegCount: _refAlloc.maxUsed,
+      valueRegCount: valRegCount,
+      refRegCount: refRegCount,
       paramCount:
           fn.positionalParameters.length + fn.namedParameters.length,
       paramKinds: Uint8List.fromList([

@@ -86,7 +86,7 @@ Future<void> main(List<String> args) async {
   if (parsed.quick) print('(quick mode)');
 
   final runner = BenchmarkRunner(config: config);
-  final results = await runner.runAll(cases);
+  final results = runner.runAll(cases, compiledDir: 'compiled');
 
   // --- Standard report ---
   ConsoleReporter().report(results);
@@ -109,8 +109,11 @@ Future<void> main(List<String> args) async {
   if (!parsed.noSave) {
     final savePath =
         parsed.saveBaselinePath ?? _defaultSnapshotPath(meta, executionMode);
-    final dir = Directory(savePath.substring(0, savePath.lastIndexOf('/')));
-    if (!dir.existsSync()) dir.createSync(recursive: true);
+    final slashIdx = savePath.lastIndexOf('/');
+    if (slashIdx > 0) {
+      final dir = Directory(savePath.substring(0, slashIdx));
+      if (!dir.existsSync()) dir.createSync(recursive: true);
+    }
     saveSnapshotToFile(snapshot, savePath);
     print('\nSnapshot saved to $savePath');
     if (parsed.saveOnly) return;

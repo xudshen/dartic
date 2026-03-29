@@ -141,6 +141,22 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, bool isValue});
         ? (hasRaw ? rawC[pc] : decodeC(instr))
         : 0;
 
+    // HALT special case: A is valR or refR depending on B (StackKind).
+    // op_reg_meta classifies HALT as all-imm because it's context-dependent.
+    // We handle it here to ensure the return-value register's live range
+    // extends to the HALT instruction.
+    if (op == ops.Op.halt) {
+      if (b >= 2) {
+        // StackKind.boolVal/intVal/doubleVal → value stack
+        _processOperand(RegOp.valR, a, pc, valIntervals, refIntervals);
+      } else if (b == 1) {
+        // StackKind.ref → ref stack
+        _processOperand(RegOp.refR, a, pc, valIntervals, refIntervals);
+      }
+      // b == 0: void return, A is not a register
+      continue;
+    }
+
     // Process explicit operands.
     _processOperand(meta.a, a, pc, valIntervals, refIntervals);
     if (format == InstrFormat.abc) {
@@ -192,7 +208,12 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, bool isValue});
     final instr = bytecode[pc];
     final op = decodeOp(instr);
     final format = opTable[op]?.format;
-    if (format == InstrFormat.asBx) {
+    if (format == InstrFormat.asBx &&
+        (op == ops.Op.jump ||
+            op == ops.Op.jumpIfTrue ||
+            op == ops.Op.jumpIfFalse ||
+            op == ops.Op.jumpIfNull ||
+            op == ops.Op.jumpIfNnull)) {
       final offset = decodesBx(instr);
       final target = pc + 1 + offset;
       if (target <= pc) {

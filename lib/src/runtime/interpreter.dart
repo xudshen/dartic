@@ -95,11 +95,12 @@ class DarticInterpreter {
   final CallStack callStack;
   final int fuelBudget;
 
-  /// Maximum cumulative instruction count across all rounds.
+  /// Maximum cumulative fuel across all rounds.
   ///
-  /// When the total number of executed instructions exceeds this limit,
-  /// the interpreter throws [FuelExhaustedError]. Null means unlimited
-  /// (default).
+  /// Fuel units are consumed at CALL instructions and backward jumps,
+  /// not on every instruction. When the cumulative fuel consumed exceeds
+  /// this limit, the interpreter throws [FuelExhaustedError]. Null means
+  /// unlimited (default).
   final int? maxTotalFuel;
 
   /// Maximum wall-clock execution time.
@@ -4431,6 +4432,7 @@ class DarticInterpreter {
           continue;
 
         case Op.invokeDyn: // INVOKE_DYN A, B, C — dynamic method dispatch with named args
+          if (!_checkFuel()) return;
           final a = decodeA(instr);
           final rawB = decodeB(instr);
           final c = decodeC(instr);

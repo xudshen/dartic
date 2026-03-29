@@ -188,6 +188,86 @@ void main() {
     });
   });
 
+  group('rewriteBytecode — INVOKE_DYN range with baseOffset', () {
+    test('INVOKE_DYN: A remapped via range base with baseOffset=1', () {
+      // INVOKE_DYN: A=result/base(refW), B=flags|argCount, C=descriptorIdx
+      // RangeInfo: baseFromOperand=0, baseOffset=1, no bit15
+      // Range starts at A+1, so virtualBase = A + 1.
+      // If A=10, virtualBase=11. Remap 11→5, then physA = 5 - 1 = 4.
+      final buf = [encodeABC(Op.invokeDyn, 10, 0x03, 42)];
+      rewriteBytecode(buf, valMap: {}, refMap: {11: 5});
+      expect(decodeOp(buf[0]), Op.invokeDyn);
+      expect(decodeA(buf[0]), 4); // physBase(5) - baseOffset(1) = 4
+      expect(decodeB(buf[0]), 0x03); // flags|argCount preserved
+      expect(decodeC(buf[0]), 42); // descriptorIdx preserved
+    });
+
+    test('INVOKE_DYN: unmapped range base keeps original A', () {
+      // A=20, virtualBase=21. No mapping for 21 → stays 21, physA = 21 - 1 = 20.
+      final buf = [encodeABC(Op.invokeDyn, 20, 0x05, 7)];
+      rewriteBytecode(buf, valMap: {}, refMap: {});
+      expect(decodeA(buf[0]), 20); // unchanged
+      expect(decodeB(buf[0]), 0x05);
+      expect(decodeC(buf[0]), 7);
+    });
+  });
+
+  group('rewriteBytecode — raw operand arrays', () {
+    test('MOVE_REF with raw arrays for large virtual register indices', () {
+      // Virtual registers > 65535 cannot be encoded in 16-bit ABC fields.
+      // The rewriter should read from rawA/rawB/rawC instead of bytecode.
+      //
+      // MOVE_REF: A=refW, B=refR, C=none
+      // Use vreg 70000 (A) and vreg 80000 (B) — both exceed 16-bit range.
+      // Encode placeholder values in bytecode (they will be ignored).
+      final buf = [encodeABC(Op.moveRef, 0, 0, 0)];
+      final rawA = [70000];
+      final rawB = [80000];
+      final rawC = [0];
+      final refMap = {70000: 3, 80000: 4};
+
+      rewriteBytecode(buf, valMap: {}, refMap: refMap,
+          rawA: rawA, rawB: rawB, rawC: rawC);
+
+      expect(decodeOp(buf[0]), Op.moveRef);
+      expect(decodeA(buf[0]), 3); // remapped from raw 70000
+      expect(decodeB(buf[0]), 4); // remapped from raw 80000
+    });
+
+    test('ADD_INT with raw arrays reads virtual indices from arrays', () {
+      // ADD_INT: A=valW, B=valR, C=valR
+      // Use large virtual indices that only fit in raw arrays.
+      final buf = [encodeABC(Op.addInt, 0, 0, 0)];
+      final rawA = [100000];
+      final rawB = [200000];
+      final rawC = [300000];
+      final valMap = {100000: 0, 200000: 1, 300000: 2};
+
+      rewriteBytecode(buf, valMap: valMap, refMap: {},
+          rawA: rawA, rawB: rawB, rawC: rawC);
+
+      expect(decodeOp(buf[0]), Op.addInt);
+      expect(decodeA(buf[0]), 0);
+      expect(decodeB(buf[0]), 1);
+      expect(decodeC(buf[0]), 2);
+    });
+
+    test('HALT with raw arrays reads A from raw array', () {
+      // HALT special case also needs to read from raw arrays.
+      final buf = [encodeABC(Op.halt, 0, 1, 0)]; // B=1 means ref
+      final rawA = [90000];
+      final rawB = [1];
+      final rawC = [0];
+      final refMap = {90000: 7};
+
+      rewriteBytecode(buf, valMap: {}, refMap: refMap,
+          rawA: rawA, rawB: rawB, rawC: rawC);
+
+      expect(decodeA(buf[0]), 7); // remapped from raw 90000
+      expect(decodeB(buf[0]), 1); // kind preserved
+    });
+  });
+
   group('rewriteExceptionHandlers', () {
     test('exceptionReg and stackTraceReg remapped via refMap', () {
       final handlers = [

@@ -1,3 +1,4 @@
+import 'package:dartic/dartic_internal.dart' show decodeA, decodeB, decodeOp;
 import 'package:dartic/src/bytecode/opcodes.dart';
 import 'package:test/test.dart';
 
@@ -176,6 +177,127 @@ void main() {}
       // But we need at least: 2 params + sum + a few temporaries.
       expect(f.valueRegCount, greaterThanOrEqualTo(3),
           reason: 'At least params (a, b) + sum local needed');
+    });
+
+    test('loop back-edge — live range extended across back edge', () async {
+      // Variable `sum` is defined before the loop and used inside.
+      // The LSRA must extend its live range across the loop back-edge
+      // (via _extendAcrossBackEdges) so it remains available in the loop body.
+      // Variable `n` is also live across the loop as the loop bound.
+      final module = await compileDart('''
+int loopSum(int n) {
+  int sum = 0;
+  for (int i = 0; i < n; i++) {
+    sum = sum + i;
+  }
+  return sum;
+}
+void main() {}
+''');
+      final f = findFunc(module, 'loopSum');
+
+      // The function should compile successfully with LSRA.
+      expect(f.bytecode, isNotEmpty,
+          reason: 'Function should compile to non-empty bytecode');
+
+      // Must have value registers for: n (param), sum, i, and temporaries.
+      expect(f.valueRegCount, greaterThanOrEqualTo(3),
+          reason: 'At least n, sum, i need value registers');
+
+      // Verify the function has a backward jump (the loop back-edge).
+      // A backward jump is an AsBx JUMP with negative offset.
+      bool hasBackwardJump = false;
+      for (var pc = 0; pc < f.bytecode.length; pc++) {
+        final op = decodeOp(f.bytecode[pc]);
+        if (op == Op.jump) {
+          final offset = decodeJumpSBx(f.bytecode, pc);
+          if (offset < 0) {
+            hasBackwardJump = true;
+            break;
+          }
+        }
+      }
+      expect(hasBackwardJump, isTrue,
+          reason: 'Loop should produce a backward jump (back-edge)');
+
+      // Verify it has a RETURN_VAL instruction (non-entry function returning int).
+      final returnIdx = findOp(f.bytecode, Op.returnVal);
+      expect(returnIdx, isNot(-1),
+          reason: 'Function should have a RETURN_VAL instruction');
+    });
+
+    test('HALT — return register live range covers HALT in entry function',
+        () async {
+      // The entry function (main) uses HALT to return its result.
+      // LSRA must extend the return register's live range to include the
+      // HALT instruction so the physical register holds the correct value.
+      // Non-entry functions use RETURN_VAL/RETURN_REF instead.
+      final module = await compileDart('''
+int main() {
+  int x = 42;
+  return x;
+}
+''');
+      final main = findFunc(module, 'main');
+
+      // Should compile to non-trivial bytecode.
+      expect(main.bytecode, isNotEmpty);
+
+      // Find the HALT instruction (only in entry functions).
+      final haltIdx = findOp(main.bytecode, Op.halt);
+      expect(haltIdx, isNot(-1),
+          reason: 'Entry function should have a HALT instruction');
+
+      // HALT B field indicates the stack kind:
+      // B=0 -> void, B=1 -> ref, B>=2 -> val (intVal=3, etc.)
+      final haltB = decodeB(main.bytecode[haltIdx]);
+      expect(haltB, greaterThan(0),
+          reason: 'HALT should return a value (not void) for int main()');
+
+      // The A operand of HALT should be a valid physical register index.
+      final haltA = decodeA(main.bytecode[haltIdx]);
+      if (haltB == 1) {
+        // ref return
+        expect(haltA, lessThan(main.refRegCount),
+            reason: 'HALT ref register should be within physical ref count');
+      } else {
+        // val return (int)
+        expect(haltA, lessThan(main.valueRegCount),
+            reason: 'HALT value register should be within physical value count');
+      }
+
+      // Register counts should be compact after LSRA.
+      expect(main.valueRegCount, lessThanOrEqualTo(5),
+          reason: 'Simple main returning int should not need many value registers');
+    });
+
+    test('RETURN_VAL — return register live range covers return point',
+        () async {
+      // For non-entry functions, RETURN_VAL carries the result.
+      // LSRA must keep the return register live until the RETURN_VAL instruction.
+      final module = await compileDart('''
+int identity(int x) { return x; }
+void main() {}
+''');
+      final f = findFunc(module, 'identity');
+
+      expect(f.bytecode, isNotEmpty);
+
+      // Find the RETURN_VAL instruction.
+      final retIdx = findOp(f.bytecode, Op.returnVal);
+      expect(retIdx, isNot(-1),
+          reason: 'Function returning int should have RETURN_VAL');
+
+      // The A operand of RETURN_VAL is valR — must be a valid physical register.
+      final retA = decodeA(f.bytecode[retIdx]);
+      expect(retA, lessThan(f.valueRegCount),
+          reason:
+              'RETURN_VAL register should be within physical value count '
+              '(was $retA, valueRegCount=${f.valueRegCount})');
+
+      // identity(int x) only needs the parameter register.
+      expect(f.valueRegCount, lessThanOrEqualTo(5),
+          reason: 'Simple identity function should not need many value registers');
     });
   });
 }
