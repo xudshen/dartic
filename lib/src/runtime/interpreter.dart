@@ -349,10 +349,16 @@ class DarticInterpreter {
             : null);
 
     // Create bridge dispatch if factories are registered.
+    // The callMethod wrapper applies _toHost on the result so that
+    // DarticDispatch callers (bridge overrides, DarticObject methods)
+    // receive host-compatible values.
     if (bridgeFactoryRegistry != null) {
       _activeDarticDispatch = DarticDispatch(
         module: module,
-        callMethod: _callDarticMethod,
+        callMethod: (module, proto, receiver, args) {
+          final result = _callDarticMethod(module, proto, receiver, args);
+          return _toHost(result);
+        },
         lateSentinel: lateSentinel,
       );
     }
@@ -619,20 +625,21 @@ class DarticInterpreter {
     final wasExecuting = _isExecuting;
     _isExecuting = true;
     try {
+      // Args come from host → convert to VM representation.
+      // _runNestedDispatch also does _toVM on args internally, but
+      // invokeClosure receives a fresh list that may be reused by the caller,
+      // so convert here before passing.
+      final vmArgs = [for (final a in args) _toVM(a)];
       final result = _runNestedDispatch(
         module: module,
         proto: proto,
-        args: args,
+        args: vmArgs,
         upvalues: closure.upvalues,
         fta: closure.boundFTA,
       );
-      // Auto-wrap DarticClosure returns so host code can call them as Functions.
-      // This is the host→dartic bridge exit point; DarticClosure is not a Dart
-      // Function and must be wrapped in a ClosureAdapter proxy of matching arity.
-      if (result is DarticClosure) {
-        return _wrapClosure(result);
-      }
-      return result;
+      // Result goes back to host → convert to host representation.
+      // _toHost handles DarticObject→bridge + DarticClosure→proxy.
+      return _toHost(result);
     } finally {
       _isExecuting = wasExecuting;
     }
@@ -692,11 +699,10 @@ class DarticInterpreter {
     DarticModule module,
     int nameIdx,
   ) {
+    // VM stack always holds DarticObject (DarticObjectHolder kept as safety net).
     final DarticObject? obj = receiver is DarticObject
         ? receiver
-        : receiver is DarticObjectHolder
-            ? receiver.$darticObject
-            : null;
+        : null;
     if (obj == null || obj.classId >= module.classes.length) return false;
     return module.classes[obj.classId].methods[nameIdx] != null;
   }
@@ -874,9 +880,17 @@ class DarticInterpreter {
     vs.sp += proto.valueRegCount;
     rs.sp += proto.refRegCount;
 
+    // Convert args from host to VM representation (bridge→DarticObject,
+    // proxy→DarticClosure) before placing on VM stacks.
+    for (var i = 0; i < args.length; i++) {
+      args[i] = _toVM(args[i]);
+    }
+
     // Place receiver at rBase+2 (this) if provided.
     if (receiver != null) {
-      rs.write(rBase + 2, receiver);
+      // Unwrap bridge/face receiver to DarticObject for VM-internal use.
+      final vmReceiver = _toVM(receiver);
+      rs.write(rBase + 2, vmReceiver);
 
       // Auto-load ITA for the callee method.
       if (ita != null) {
@@ -886,11 +900,7 @@ class DarticInterpreter {
       } else {
         // Fallback: load from receiver's runtimeType_ (works for
         // self-declared methods and invokeClosure).
-        final darticObj = receiver is DarticObject
-            ? receiver
-            : (receiver is DarticObjectHolder
-                ? receiver.$darticObject
-                : null);
+        final darticObj = vmReceiver is DarticObject ? vmReceiver : null;
         if (darticObj != null) {
           final rtType = darticObj.runtimeType_;
           if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
@@ -1002,6 +1012,83 @@ class DarticInterpreter {
   /// DarticClosure for type extraction. Returns [value] unchanged if
   /// it's not a proxy or not in the reverse cache.
   Object? _unwrapClosureProxy(Object? value) {
+    if (value is Function && value is! DarticClosure) {
+      return _closureReverseCache[value] ?? value;
+    }
+    return value;
+  }
+
+  // ── Boundary conversion ────────────────────────────────────────────
+  //
+  // VM internal representation: DarticObject (+ host primitives).
+  // Host representation: Bridge (extends host class) / Face (implements
+  // host interface) / ClosureAdapter proxy.
+  //
+  // _toHost converts VM→Host at outgoing boundaries (CALL_HOST args,
+  // CREATE_LIST/MAP/SET elements, DarticDispatch results, etc.).
+  // _toVM converts Host→VM at incoming boundaries (_runNestedDispatch
+  // receiver/args, CALL_HOST return values, invokeClosure args, etc.).
+
+  /// Converts a VM-internal value to its host-visible representation.
+  ///
+  /// - [DarticObject] with bridge → bridge (extends-based wrapper)
+  /// - [DarticClosure] → ClosureAdapter proxy [Function]
+  /// - Everything else → unchanged
+  ///
+  /// Does NOT create faces for implements-only classes. Face creation
+  /// is handled at specific boundary points (EXTRACT_FACE for CALL_HOST
+  /// params, [_toHostException] for exception HOST_BOUNDARY crossing).
+  Object? _toHost(Object? value) {
+    if (value is DarticObject && value.bridge != null) {
+      return value.bridge!;
+    }
+    if (value is DarticClosure) {
+      return _wrapClosure(value);
+    }
+    return value;
+  }
+
+  /// Converts a VM exception to host representation for HOST_BOUNDARY crossing.
+  ///
+  /// Extends [_toHost] with implements-only face creation: if the DarticObject
+  /// has no bridge but a face factory exists, creates a face on demand so
+  /// host `on Exception catch` / `on Error catch` can match.
+  ///
+  /// Falls back to [_toHost] for non-DarticObject exceptions (e.g., host
+  /// Error/String thrown from dartic code, DarticClosure used as exception).
+  Object _toHostException(Object? exception) {
+    if (exception is DarticObject) {
+      if (exception.bridge != null) return exception.bridge!;
+      // Only create face for Exception/Error types — these must be
+      // host-catchable (on Exception catch, on Error catch).
+      final factory = bridgeFactoryRegistry?.lookupByClassId(exception.classId);
+      if (factory != null && _activeDarticDispatch != null) {
+        final face = exception.getOrCreateFace(exception.classId, () {
+          return factory(_activeDarticDispatch!, exception, const []);
+        });
+        if (face is Exception || face is Error) return face;
+      }
+    }
+    return _toHost(exception) ?? exception!;
+  }
+
+  /// Batch version of [_toHost], mutates [args] in place.
+  /// Replaces [_wrapClosureArgs] (which only handled closures).
+  void _toHostArgs(List<Object?> args) {
+    for (var i = 0; i < args.length; i++) {
+      args[i] = _toHost(args[i]);
+    }
+  }
+
+  /// Converts a host-world value to VM-internal representation.
+  ///
+  /// - [DarticObjectHolder] (bridge/face) → embedded [DarticObject]
+  /// - ClosureAdapter proxy [Function] → original [DarticClosure]
+  /// - Everything else → unchanged
+  Object? _toVM(Object? value) {
+    if (value is DarticObjectHolder) {
+      return value.$darticObject;
+    }
     if (value is Function && value is! DarticClosure) {
       return _closureReverseCache[value] ?? value;
     }
@@ -1398,7 +1485,7 @@ class DarticInterpreter {
           if (!frame.awaitedTypeArgIsFuture && unwrapped is Future) {
             // T is not Future → re-flatten by awaiting the inner Future.
             unwrapped.then((inner) {
-              frame.resumeValue = inner;
+              frame.resumeValue = _toVM(inner); // Host→VM boundary
               if (_isExecuting) {
                 zone.scheduleMicrotask(resume);
               } else {
@@ -1409,7 +1496,7 @@ class DarticInterpreter {
           }
           result = unwrapped;
         }
-        frame.resumeValue = result;
+        frame.resumeValue = _toVM(result); // Host→VM boundary
         if (_isExecuting) {
           zone.scheduleMicrotask(resume);
         } else {
@@ -1431,7 +1518,7 @@ class DarticInterpreter {
       );
     } else {
       // Non-Future value: schedule immediate resume via microtask.
-      frame.resumeValue = value;
+      frame.resumeValue = _toVM(value); // Host→VM boundary
       zone.scheduleMicrotask(resume);
     }
   }
@@ -1925,7 +2012,7 @@ class DarticInterpreter {
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
           Error.throwWithStackTrace(
-              exception!,
+              _toHostException(exception), // VM→Host: bridge for host catch
               stackTrace is StackTrace
                   ? stackTrace
                   : DarticStackTrace.capture(
@@ -1947,7 +2034,7 @@ class DarticInterpreter {
           return handler.handlerPC;
         }
         if (callStack.depth <= 1) {
-          Error.throwWithStackTrace(exception!,
+          Error.throwWithStackTrace(_toHostException(exception), // VM→Host
               stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
         }
         rs.clearRange(rBase, rs.sp);
@@ -1967,7 +2054,7 @@ class DarticInterpreter {
         // HOST_BOUNDARY: exception propagates to VM caller.
         if (callStack.isHostBoundary) {
           _upvalueStack.removeLast();
-          Error.throwWithStackTrace(exception!,
+          Error.throwWithStackTrace(_toHostException(exception), // VM→Host
               stackTrace is StackTrace ? stackTrace : DarticStackTrace.capture(callStack, module, pc, _hostNameStack));
         }
         vBase = callerVSP;
@@ -2530,7 +2617,7 @@ class DarticInterpreter {
                 }
               }
               try {
-                rs.write(rBase + a, _unwrapClosureProxy(Function.apply(raw, posArgs, namedArgs)));
+                rs.write(rBase + a, _toVM(Function.apply(raw, posArgs, namedArgs)));
               } on Object catch (e, st) {
                 pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 continue;
@@ -2764,12 +2851,9 @@ class DarticInterpreter {
           // before CALL_STATIC, so rBase+2 is the newly allocated object
           // with runtimeType_ containing the class type args.
           if (callee.isConstructor) {
-            final thisObj = rs.read(rBase + 2);
-            final darticObj = (thisObj is DarticObject)
-                ? thisObj
-                : (thisObj is DarticObjectHolder)
-                    ? thisObj.$darticObject
-                    : null;
+            // VM stack always holds DarticObject.
+            final darticObj =
+                rs.read(rBase + 2) as DarticObject?;
             if (darticObj != null) {
               final rtType = darticObj.runtimeType_;
               if (rtType is DarticInterfaceType &&
@@ -2788,7 +2872,7 @@ class DarticInterpreter {
           final bx = decodeBx(instr);
 
           // Bridge interception: if the binding is an instance method and the
-          // receiver is a DarticObjectHolder or DarticObject, try dispatching
+          // receiver is a DarticObject (VM stack), try dispatching
           // through DarticDispatch first. This handles dartic-compiled classes
           // that override host methods (e.g., toString, operator==).
           final bindingInfo = module.bindingNames[bx];
@@ -2833,7 +2917,7 @@ class DarticInterpreter {
                 final hostArgs = List<Object?>.generate(
                   argCount, (i) => rs.read(rBase + a + 1 + i),
                 );
-                _wrapClosureArgs(hostArgs);
+                _toHostArgs(hostArgs);
 
                 final onValue = hostArgs[1] as Function;
                 final onError =
@@ -2904,33 +2988,27 @@ class DarticInterpreter {
             }
           }
 
+          // Bridge interception: receiver is now always DarticObject on the
+          // VM stack (WRAP_BRIDGE no longer replaces it). Check if dartic code
+          // overrides this host method via DarticDispatch.
           if (methodName != null && _activeDarticDispatch != null) {
             final receiver = rs.read(rBase + a + 1);
-            DarticObject? darticObj;
-            if (receiver is DarticObjectHolder) {
-              darticObj = receiver.$darticObject;
-            } else if (receiver is DarticObject) {
-              darticObj = receiver;
-            }
-            if (darticObj != null) {
+            if (receiver is DarticObject) {
               final argCount = bindingInfo.argCount;
               final remaining = List<Object?>.generate(
                 argCount - 1, (i) {
                   final v = rs.read(rBase + a + 2 + i);
-                  // Convert darticAbsent sentinel to null: the compiler emits
-                  // LOAD_ABSENT for unprovided optional parameters. When
-                  // re-routing through DarticDispatch to a dartic-compiled
-                  // method, the sentinel must become null — dartic methods
-                  // don't check for darticAbsent.
                   return identical(v, darticAbsent) ? null : v;
                 },
               );
               try {
                 final result = _activeDarticDispatch!.invoke(
-                  receiver!, darticObj, methodName, remaining,
+                  receiver, receiver, methodName, remaining,
                 );
                 if (!identical(result, notOverridden)) {
-                  rs.write(rBase + a, _unwrapClosureProxy(result));
+                  // DarticDispatch returns HOST value (_callMethod wrapper
+                  // applies _toHost). Convert back to VM representation.
+                  rs.write(rBase + a, _toVM(result));
                   break;
                 }
               } on Object catch (e, st) {
@@ -2961,18 +3039,17 @@ class DarticInterpreter {
             (i) => rs.read(rBase + a + 1 + i),
           );
 
-          _wrapClosureArgs(hostArgs);
+          _toHostArgs(hostArgs);
 
           // Record host name for HOST_BOUNDARY labelling in stack traces.
           _lastHostCallName =
               bindingInfo.methodName ?? _extractFuncName(bindingInfo.name);
 
           // Invoke the host function and write result to refStack[A].
-          // Unwrap closure proxies: host collections store wrapped
-          // DarticClosure→Function proxies; restore original identity.
+          // _toVM converts bridge→DarticObject + proxy→DarticClosure.
           try {
             final result = hostBindingRegistry!.invoke(runtimeId, hostArgs);
-            rs.write(rBase + a, _unwrapClosureProxy(result));
+            rs.write(rBase + a, _toVM(result));
           } on Object catch (e, st) {
             // Error.throwWithStackTrace: the user provided a custom stack
             // trace that Dart associates with the catch clause's `st`.
@@ -3046,17 +3123,9 @@ class DarticInterpreter {
             // Non-call methods on closures — fall through to noSuchMethod.
           }
 
-          // Try dartic dispatch: works for DarticObject and Bridge.
-          // Bridge instances implement DarticObjectHolder, wrapping a
-          // DarticObject whose classId drives IC method lookup.
-          final DarticObject? darticObj;
-          if (receiver is DarticObject) {
-            darticObj = receiver;
-          } else if (receiver is DarticObjectHolder) {
-            darticObj = receiver.$darticObject;
-          } else {
-            darticObj = null;
-          }
+          // Try dartic dispatch: VM stack always holds DarticObject
+          // (WRAP_BRIDGE no longer replaces it with bridge).
+          final darticObj = receiver is DarticObject ? receiver : null;
 
           if (darticObj != null) {
             // IC dispatch using darticObj's classId.
@@ -3257,7 +3326,7 @@ class DarticInterpreter {
                   final hostResult =
                       _hostClassRegistry!.getProperty(receiver, methodName);
                   if (!identical(hostResult, HostClassRegistry.notFound)) {
-                    rs.write(rBase + a, _unwrapClosureProxy(hostResult));
+                    rs.write(rBase + a, _toVM(hostResult));
                     continue;
                   }
                 } on Object catch (e, st) {
@@ -3270,12 +3339,12 @@ class DarticInterpreter {
                   ic.argCount,
                   (i) => rs.read(rBase + b + 3 + i),
                 );
-                _wrapClosureArgs(hostArgs);
+                _toHostArgs(hostArgs);
                 try {
                   final hostResult = _hostClassRegistry!
                       .invokeMethod(receiver, methodName, hostArgs);
                   if (!identical(hostResult, HostClassRegistry.notFound)) {
-                    rs.write(rBase + a, _unwrapClosureProxy(hostResult));
+                    rs.write(rBase + a, _toVM(hostResult));
                     continue;
                   }
                 } on Object catch (e, st) {
@@ -3334,13 +3403,9 @@ class DarticInterpreter {
           // different mapping than what the callee expects (e.g., MA<X,Y>.b()
           // calls B<Y>.b, needing ITA=[Y] not [X,Y]). Try superTypeArgs
           // resolution first, then fall back to the receiver's raw typeArgs.
-          final thisObj = rs.read(rBase + 2);
-          final darticObj = (thisObj is DarticObject)
-              ? thisObj
-              : (thisObj is DarticObjectHolder)
-                  ? thisObj.$darticObject
-                  : null;
-          if (darticObj != null) {
+          // VM stack always holds DarticObject (no bridge).
+          final darticObj = rs.read(rBase + 2);
+          if (darticObj is DarticObject) {
             final resolvedITA =
                 _resolveSuperCallITA(darticObj, bx, module);
             if (resolvedITA != null) {
@@ -3619,7 +3684,8 @@ class DarticInterpreter {
             obj.pendingSuperArgs = null;
             final bridgeObj = factory(_activeDarticDispatch!, obj, superArgs);
             obj.bridge = bridgeObj;
-            rs.write(rBase + a, bridgeObj);
+            // DarticObject stays on stack — bridge is stored in obj.bridge
+            // and used at VM→Host boundaries via _toHost().
           }
 
         // ── Type Operations (0x65-0x66) ──
@@ -3979,8 +4045,7 @@ class DarticInterpreter {
           final b = rawB & 0x7FFF;
           final c = decodeC(instr);
           final list = List<Object?>.generate(c, (i) {
-            final v = rs.read(rBase + b + i);
-            return v is DarticClosure ? _wrapClosure(v) : v;
+            return _toHost(rs.read(rBase + b + i));
           });
           rs.write(
               rBase + a, isConst ? List<Object?>.unmodifiable(list) : list);
@@ -3996,8 +4061,8 @@ class DarticInterpreter {
           for (var i = 0; i < c; i++) {
             final rawKey = rs.read(rBase + b + i * 2);
             final rawVal = rs.read(rBase + b + i * 2 + 1);
-            final key = rawKey is DarticClosure ? _wrapClosure(rawKey) : rawKey;
-            final value = rawVal is DarticClosure ? _wrapClosure(rawVal) : rawVal;
+            final key = _toHost(rawKey);
+            final value = _toHost(rawVal);
             map[key] = value;
           }
           rs.write(rBase + a,
@@ -4013,7 +4078,7 @@ class DarticInterpreter {
           final set = <Object?>{};
           for (var i = 0; i < c; i++) {
             final v = rs.read(rBase + b + i);
-            set.add(v is DarticClosure ? _wrapClosure(v) : v);
+            set.add(_toHost(v));
           }
           rs.write(
               rBase + a, isConst ? Set<Object?>.unmodifiable(set) : set);
@@ -4161,6 +4226,22 @@ class DarticInterpreter {
                 continue;
               }
             }
+            // Bridge fallback: dartic field/getter not found but receiver
+            // has bridge → try host property via bridge.
+            if (receiver.bridge != null && _hostClassRegistry != null) {
+              try {
+                final hostResult = _hostClassRegistry!
+                    .getProperty(receiver.bridge!, name);
+                if (!identical(hostResult, HostClassRegistry.notFound)) {
+                  rs.write(rBase + a, _toVM(hostResult));
+                  continue;
+                }
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
+              }
+            }
+
             // noSuchMethod fallback.
             final nsmInvocation = DarticInvocation.getter(Symbol(name));
             final (nsmPushed, nsmHandlerPC) =
@@ -4207,7 +4288,7 @@ class DarticInterpreter {
               final hostResult =
                   _hostClassRegistry!.getProperty(receiver, name);
               if (!identical(hostResult, HostClassRegistry.notFound)) {
-                rs.write(rBase + a, _unwrapClosureProxy(hostResult));
+                rs.write(rBase + a, _toVM(hostResult));
                 continue;
               }
             } on Object catch (e, st) {
@@ -4371,9 +4452,23 @@ class DarticInterpreter {
                 }
               }
             }
+            // Bridge fallback: dartic field/setter not found but receiver
+            // has bridge → try host setter via bridge.
+            if (receiver.bridge != null && _hostClassRegistry != null) {
+              try {
+                final hostResult = _hostClassRegistry!
+                    .invokeMethod(receiver.bridge!, '$name=', [_toHost(value)]);
+                if (!identical(hostResult, HostClassRegistry.notFound)) {
+                  continue;
+                }
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
+              }
+            }
+
             // noSuchMethod fallback. Use register 0 (ITA scratch) as dummy
             // result — both a (receiver) and b (RHS value) may still be live.
-            // The assignment expression must evaluate to o2 per Dart spec.
             final nsmInvocation =
                 DarticInvocation.setter(Symbol('$name='), value);
             final (nsmPushed, nsmHandlerPC) =
@@ -4503,7 +4598,7 @@ class DarticInterpreter {
                               Symbol(e.key): e.value,
                           },
                   );
-                  rs.write(rBase + a, _unwrapClosureProxy(result));
+                  rs.write(rBase + a, _toVM(result));
                 } on Object catch (e, st) {
                   pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                 }
@@ -4641,7 +4736,7 @@ class DarticInterpreter {
                                 Symbol(e.key): e.value,
                             },
                     );
-                    rs.write(rBase + a, _unwrapClosureProxy(result));
+                    rs.write(rBase + a, _toVM(result));
                   } on Object catch (e, st) {
                     pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   }
@@ -4710,7 +4805,7 @@ class DarticInterpreter {
                                 Symbol(e.key): e.value,
                             },
                     );
-                    rs.write(rBase + a, _unwrapClosureProxy(result));
+                    rs.write(rBase + a, _toVM(result));
                     continue;
                   }
                   // Getter returned non-callable value → noSuchMethod.
@@ -4718,6 +4813,28 @@ class DarticInterpreter {
                   pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
                   continue;
                 }
+              }
+            }
+
+            // Bridge fallback: dartic method table miss but receiver has
+            // bridge (extends host class) → try host methods via bridge.
+            if (receiver.bridge != null && _hostClassRegistry != null) {
+              final bridgeReceiver = receiver.bridge!;
+              final totalArgs = posCount + desc.namedArgNames.length;
+              final hostArgs = List<Object?>.generate(
+                totalArgs,
+                (i) => _toHost(rs.read(rBase + a + 2 + i)),
+              );
+              try {
+                final hostResult = _hostClassRegistry!
+                    .invokeMethod(bridgeReceiver, name, hostArgs);
+                if (!identical(hostResult, HostClassRegistry.notFound)) {
+                  rs.write(rBase + a, _toVM(hostResult));
+                  continue;
+                }
+              } on Object catch (e, st) {
+                pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                continue;
               }
             }
 
@@ -4750,7 +4867,7 @@ class DarticInterpreter {
                           Symbol(e.key): e.value,
                       },
               );
-              rs.write(rBase + a, _unwrapClosureProxy(result));
+              rs.write(rBase + a, _toVM(result));
             } on Object catch (e, st) {
               pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
             }
@@ -4759,22 +4876,18 @@ class DarticInterpreter {
 
           // ── Host object dispatch ──
           if (_hostClassRegistry != null) {
-            // Include both positional AND named args: the binding's
-            // method key is name#totalArity, so all args must be present.
-            // Named args are stored after positional on the ref stack in
-            // DynCallDescriptor order (matching declaration order).
             final totalArgs = posCount + desc.namedArgNames.length;
             final hostArgs = List<Object?>.generate(
               totalArgs,
               (i) => rs.read(rBase + a + 2 + i),
             );
 
-            _wrapClosureArgs(hostArgs);
+            _toHostArgs(hostArgs);
             try {
               final hostResult =
                   _hostClassRegistry!.invokeMethod(receiver, name, hostArgs);
               if (!identical(hostResult, HostClassRegistry.notFound)) {
-                rs.write(rBase + a, _unwrapClosureProxy(hostResult));
+                rs.write(rBase + a, _toVM(hostResult));
                 continue;
               }
             } on Object catch (e, st) {
@@ -4909,7 +5022,7 @@ class DarticInterpreter {
           {
             final a = decodeA(instr);
             final frame = _currentAsyncFrame!;
-            var result = rs.read(rBase + a);
+            var result = _toHost(rs.read(rBase + a)); // VM→Host: bridge for host consumers
             // Wrap in FutureBox if the async function's emittedValueType is
             // a Future type (e.g., async Future<Future<int>> foo()), preventing
             // Completer<Object?>.complete() from flattening the nested Future.
@@ -5178,7 +5291,7 @@ class DarticInterpreter {
             final asyncStarFrame = _currentAsyncStarFrame;
             if (asyncStarFrame != null &&
                 asyncStarFrame.streamController != null) {
-              final value = rs.read(rBase + a);
+              final value = _toHost(rs.read(rBase + a)); // VM→Host boundary
               final controller = asyncStarFrame.streamController!;
 
               // Add value to the stream.
@@ -5373,7 +5486,7 @@ class DarticInterpreter {
           } else {
             switch (b - 1) {
               case StackKind.refDefault:
-                _lastEntryResult = rs.read(rBase + a);
+                _lastEntryResult = _toHost(rs.read(rBase + a)); // VM→Host
               case StackKind.boolDefault:
                 _lastEntryResult = vs.readInt(vBase + a) != 0;
               case StackKind.intDefault:

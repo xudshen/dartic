@@ -407,6 +407,23 @@
 
 ---
 
+## Bridge/Face 边界转换重构 — 进行中
+
+**目标：** VM 内部统一 DarticObject 表示，Bridge/Face 退化为纯边界投影
+
+**设计文档：** [`docs/plans/2026-03-29-bridge-boundary-refactoring.md`](../plans/2026-03-29-bridge-boundary-refactoring.md)
+
+**Task 目录：** [`docs/tasks/bridge-boundary/`](bridge-boundary/)
+
+| Batch | 描述 | Task 数 | 状态 |
+|-------|------|---------|------|
+| [1](bridge-boundary/batch-1-foundation.md) | 基础设施（_toHost/_toVM） | 1 | ⬜ |
+| [2](bridge-boundary/batch-2-core-switch.md) | 核心边界切换（原子） | 7 | ⬜ |
+| [3](bridge-boundary/batch-3-handler-refactoring.md) | 分发指令 helper 提取 | 4 | ⬜ |
+| [4](bridge-boundary/batch-4-phase2-api.md) | Phase 2: DarticDispatch API + Gen Tool | 3 | ⬜ |
+
+---
+
 ## 已知问题 TODO
 
 > 所有待修复问题的追踪表。问题文档在 `docs/tasks/dartic-*.md`，skip list 中对应条目指向文档。
@@ -418,6 +435,7 @@
 | 3 | [Bridge 泛型擦除](#3-bridge-泛型擦除) | co19 skip ×8 | [task](dartic-bridge-generic-erasure.md) | 低 — 架构级改动 |
 | 4 | [HostTypeResolver Never-bottom](#4-hosttyperesolver-never-bottom) | co19 skip ×1 | [task](dartic-host-type-args.md) | 低 — 单测，影响面小 |
 | 5 | [异常处理性能](#5-异常处理性能) | Flutter 实测 | [task](dartic-exception-perf.md) | 高 — 影响 UI 流畅度 |
+| 6 | [List.length= CALL_HOST 守卫](#6-listlength-callhost-守卫) | 架构分析 | [task](dartic-list-length-guard.md) | 低 — 功能正确，待泛型集合方案 |
 
 ### 1. CALL_HOST re-route darticAbsent crash
 
@@ -448,3 +466,9 @@
 **根因：** 一次异常传播中多次 `Error.throwWithStackTrace`（host VM unwind）+ 每帧 `DarticStackTrace` 字符串拼接，导致 UI 卡顿。
 
 **方案：** 消除不必要的 throwWithStackTrace，延迟 stack trace 格式化到实际需要时。
+
+### 6. List.length= CALL_HOST 守卫
+
+**根因：** dartic 创建的 List 是 `List<dynamic>`，宿主 VM 不检查泛型约束。`list.length = n` 扩展时用 null 填充，对 `List<int>` 等非 nullable 元素类型违反类型安全。CALL_HOST 中有手动守卫补偿。
+
+**方案：** 长期需要真正的泛型集合（从 DarticType 映射到 Dart 具化类型）。当前守卫功能正确、代码量小，保留。

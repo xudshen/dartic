@@ -2051,8 +2051,9 @@ extension on DarticCompiler {
 
     // 7. If class extends a host class, emit WRAP_BRIDGE to create Bridge.
     final classInfo = _classInfos[classId];
-    if (classInfo.hostSuperClassName != null ||
-        classInfo.hostInterfaceNames != null) {
+    // Only emit WRAP_BRIDGE for extends-based bridges (IS-A host class).
+    // implements-only classes use EXTRACT_FACE on demand at CALL_HOST sites.
+    if (classInfo.hostSuperClassName != null) {
       _emitter.emitABx(Op.wrapBridge, objReg, classId);
     }
 
