@@ -52,3 +52,61 @@ class BenchmarkResult {
   double? get dartEvalRatio =>
       dartEval != null ? dartEval!.medianUs / host.medianUs : null;
 }
+
+/// Metadata for a benchmark snapshot.
+class SnapshotMeta {
+  const SnapshotMeta({
+    required this.gitSha,
+    required this.gitBranch,
+    required this.timestamp,
+    required this.dartVersion,
+    required this.platform,
+    required this.executionMode,
+    required this.warmupIterations,
+    required this.sampleCount,
+    required this.minSampleDurationMs,
+    required this.enableDartEval,
+  });
+
+  final String gitSha;
+  final String gitBranch;
+  final String timestamp;
+  final String dartVersion;
+  final String platform;
+  final String executionMode;
+  final int warmupIterations;
+  final int sampleCount;
+  final int minSampleDurationMs;
+  final bool enableDartEval;
+}
+
+/// Per-case snapshot data.
+class CaseSnapshot {
+  const CaseSnapshot({
+    required this.hostMedianUs,
+    required this.hostCvPct,
+    required this.darticMedianUs,
+    required this.darticCvPct,
+    this.dartEvalMedianUs,
+    this.dartEvalCvPct,
+    required this.darticRatio,
+    this.dartEvalRatio,
+  });
+
+  final double hostMedianUs;
+  final double hostCvPct;
+  final double darticMedianUs;
+  final double darticCvPct;
+  final double? dartEvalMedianUs;
+  final double? dartEvalCvPct;
+  final double darticRatio;
+  final double? dartEvalRatio;
+}
+
+/// Complete benchmark snapshot.
+class Snapshot {
+  const Snapshot({required this.meta, required this.results});
+
+  final SnapshotMeta meta;
+  final Map<String, CaseSnapshot> results;
+}
