@@ -99,4 +99,54 @@ int main() {
 }
 ''',
   ),
+
+  BenchmarkCase(
+    name: 'nbody',
+    category: 'macro',
+    hostFn: hostNbody,
+    dartEvalSupported: false,
+    dartSource: '''
+class Body {
+  double x, y, z, vx, vy, vz, mass;
+  Body(this.x, this.y, this.z, this.vx, this.vy, this.vz, this.mass);
+}
+
+void advance(List<Body> bodies, double dt) {
+  for (int i = 0; i < bodies.length; i++) {
+    Body bi = bodies[i];
+    for (int j = i + 1; j < bodies.length; j++) {
+      Body bj = bodies[j];
+      double dx = bi.x - bj.x;
+      double dy = bi.y - bj.y;
+      double dz = bi.z - bj.z;
+      double dist2 = dx * dx + dy * dy + dz * dz;
+      double mag = dt / (dist2 * dist2);
+      bi.vx -= dx * bj.mass * mag;
+      bi.vy -= dy * bj.mass * mag;
+      bi.vz -= dz * bj.mass * mag;
+      bj.vx += dx * bi.mass * mag;
+      bj.vy += dy * bi.mass * mag;
+      bj.vz += dz * bi.mass * mag;
+    }
+  }
+  for (int i = 0; i < bodies.length; i++) {
+    bodies[i].x += dt * bodies[i].vx;
+    bodies[i].y += dt * bodies[i].vy;
+    bodies[i].z += dt * bodies[i].vz;
+  }
+}
+
+int main() {
+  List<Body> bodies = [
+    Body(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 39.478),
+    Body(4.841, -1.160, -0.104, 0.606, 2.811, -0.025, 0.038),
+    Body(8.343, 4.124, -0.403, -1.010, 1.826, 0.008, 0.011),
+  ];
+  for (int i = 0; i < 1000; i++) {
+    advance(bodies, 0.01);
+  }
+  return (bodies[0].x * 1000000).floor();
+}
+''',
+  ),
 ];

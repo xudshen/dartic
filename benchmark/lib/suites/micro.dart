@@ -87,4 +87,81 @@ int main() {
 ''',
         dartEvalSupported: false,
       ),
+      BenchmarkCase(
+        name: 'sieve_10k',
+        category: 'micro',
+        hostFn: hostSieve,
+        dartEvalSupported: false,
+        dartSource: '''
+int main() {
+  int size = 10000;
+  List<bool> flags = List.filled(size + 1, true);
+  int count = 0;
+  for (int i = 2; i <= size; i++) {
+    if (flags[i]) {
+      count++;
+      for (int j = i * 2; j <= size; j += i) {
+        flags[j] = false;
+      }
+    }
+  }
+  return count;
+}
+''',
+      ),
+      BenchmarkCase(
+        name: 'queens_12',
+        category: 'micro',
+        hostFn: hostQueens,
+        dartEvalSupported: false,
+        dartSource: '''
+int queens(int n) {
+  List<int> cols = List.filled(n, 0);
+  int count = 0;
+  bool ok(int row) {
+    for (int i = 0; i < row; i++) {
+      int diff = cols[row] - cols[i];
+      if (diff == 0 || diff == row - i || diff == i - row) return false;
+    }
+    return true;
+  }
+  void solve(int row) {
+    if (row == n) { count++; return; }
+    for (int col = 0; col < n; col++) {
+      cols[row] = col;
+      if (ok(row)) solve(row + 1);
+    }
+  }
+  solve(0);
+  return count;
+}
+int main() => queens(12);
+''',
+      ),
+      BenchmarkCase(
+        name: 'permute',
+        category: 'micro',
+        hostFn: hostPermute,
+        dartEvalSupported: false,
+        dartSource: '''
+int count = 0;
+void permute(List<int> arr, int n) {
+  if (n == 1) { count++; return; }
+  for (int i = 0; i < n; i++) {
+    permute(arr, n - 1);
+    if (n % 2 == 0) {
+      int tmp = arr[i]; arr[i] = arr[n - 1]; arr[n - 1] = tmp;
+    } else {
+      int tmp = arr[0]; arr[0] = arr[n - 1]; arr[n - 1] = tmp;
+    }
+  }
+}
+int main() {
+  count = 0;
+  List<int> arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  permute(arr, arr.length);
+  return count;
+}
+''',
+      ),
     ];
