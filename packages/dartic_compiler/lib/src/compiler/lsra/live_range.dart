@@ -109,7 +109,14 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
   required List<BindingEntry> bindingNames,
   List<PendingArgMove> pendingArgMoves = const [],
   ConstantPool? constantPool,
+  List<int>? rawA,
+  List<int>? rawB,
+  List<int>? rawC,
 }) {
+  // Use raw operand arrays when provided (avoids 16-bit truncation for
+  // virtual register indices > 65535). Falls back to decoding from bytecode.
+  final hasRaw = rawA != null && rawB != null && rawC != null;
+
   final valIntervals = <int, Interval>{};
   final refIntervals = <int, Interval>{};
   final refGroups = <ConsecutiveGroup>[];
@@ -125,10 +132,14 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
     final format = opTable[op]?.format;
     if (format == null) continue;
 
-    // Decode operands based on format.
-    final a = decodeA(instr);
-    final b = (format == InstrFormat.abc) ? decodeB(instr) : 0;
-    final c = (format == InstrFormat.abc) ? decodeC(instr) : 0;
+    // Decode operands: prefer raw (untruncated) arrays over bytecode decoding.
+    final a = hasRaw ? rawA[pc] : decodeA(instr);
+    final b = (format == InstrFormat.abc)
+        ? (hasRaw ? rawB[pc] : decodeB(instr))
+        : 0;
+    final c = (format == InstrFormat.abc)
+        ? (hasRaw ? rawC[pc] : decodeC(instr))
+        : 0;
 
     // Process explicit operands.
     _processOperand(meta.a, a, pc, valIntervals, refIntervals);
@@ -144,6 +155,7 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
         bytecode: bytecode,
         bindingNames: bindingNames,
         constantPool: constantPool,
+        rawOperands: hasRaw,
       );
     }
   }
@@ -251,7 +263,6 @@ void _processOperand(
       if (iv != null) {
         if (pc > iv.lastUse) iv.lastUse = pc;
       } else {
-        // Read before write — must be a parameter (def = -1).
         valIntervals[operand] = Interval(operand, def: -1, lastUse: pc);
       }
     case RegOp.refW:
@@ -281,10 +292,19 @@ void _processRange(
   required List<int> bytecode,
   required List<BindingEntry> bindingNames,
   ConstantPool? constantPool,
+  bool rawOperands = false,
 }) {
   // Determine base register.
+  // When rawOperands is true, the compiler has already stored the PURE base
+  // register (without the bit15 isConst flag) in the raw operand array.
+  // No masking needed — the value IS the base register.
+  //
+  // When rawOperands is false (decoding from bytecode), baseMaskBit15 clears
+  // the const flag at bit 15 of the B operand.
   final rawBase = range.baseFromOperand == 0 ? a : b;
-  final base = (range.baseMaskBit15 ? (rawBase & 0x7FFF) : rawBase) +
+  final base = (!rawOperands && range.baseMaskBit15
+          ? (rawBase & ~0x8000)
+          : rawBase) +
       range.baseOffset;
 
   // Determine count.

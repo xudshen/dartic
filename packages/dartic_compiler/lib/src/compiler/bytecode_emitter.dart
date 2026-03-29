@@ -11,21 +11,46 @@ import 'package:dartic/dartic_internal.dart';
 /// - `currentPC` — number of instructions emitted so far
 /// - `toUint64List()` — finalize to immutable bytecode
 ///
-/// All instructions are single 64-bit words. No WIDE prefix needed —
-/// operands have 16/32/48-bit ranges that never overflow.
+/// All instructions are single 64-bit words. Register operands in ABC format
+/// have 16-bit fields (max 65535). Virtual register indices may exceed this
+/// limit during compilation; the LSRA pass uses [rawA]/[rawB]/[rawC] for the
+/// untruncated values and maps them to physical indices that fit in 16 bits.
 ///
 /// See: docs/design/05-compiler.md "字节码发射"
 class BytecodeEmitter {
   final List<int> _buffer = [];
 
+  // ── Raw operand arrays (untruncated) for LSRA ──────────────────────────
+  // Parallel to _buffer: rawA[pc], rawB[pc], rawC[pc] hold the original
+  // (possibly >16-bit) operand values for the instruction at _buffer[pc].
+  // Only populated during compilation; consumed by LSRA live range analysis
+  // and bytecode rewriting, then discarded.
+  final List<int> _rawA = [];
+  final List<int> _rawB = [];
+  final List<int> _rawC = [];
+
   /// Mutable access to the instruction buffer for post-codegen LSRA rewriting.
   List<int> get buffer => _buffer;
+
+  /// Untruncated A operands, parallel to [buffer]. Used by LSRA.
+  List<int> get rawA => _rawA;
+
+  /// Untruncated B operands, parallel to [buffer]. Used by LSRA.
+  List<int> get rawB => _rawB;
+
+  /// Untruncated C operands, parallel to [buffer]. Used by LSRA.
+  List<int> get rawC => _rawC;
 
   /// Current program counter (number of instructions emitted).
   int get currentPC => _buffer.length;
 
   /// Appends a 64-bit instruction word.
-  void emit(int instruction) => _buffer.add(instruction);
+  void emit(int instruction) {
+    _buffer.add(instruction);
+    _rawA.add(0);
+    _rawB.add(0);
+    _rawC.add(0);
+  }
 
   /// Emits a placeholder (zero) and returns its offset for later patching.
   ///
@@ -33,12 +58,17 @@ class BytecodeEmitter {
   int emitPlaceholder() {
     final offset = _buffer.length;
     _buffer.add(0);
+    _rawA.add(0);
+    _rawB.add(0);
+    _rawC.add(0);
     return offset;
   }
 
   /// Overwrites the instruction at [offset] with [instruction].
   ///
   /// Typically used to patch jump targets after the destination is known.
+  /// Does NOT update raw operand arrays (called post-LSRA for arg moves,
+  /// or with encoded values where raw arrays aren't needed).
   void patchJump(int offset, int instruction) {
     assert(offset >= 0 && offset < _buffer.length,
         'patchJump offset $offset out of range [0, ${_buffer.length})');
@@ -46,11 +76,15 @@ class BytecodeEmitter {
   }
 
   /// Emits an ABC-format instruction.
+  ///
+  /// During compilation, [a], [b], [c] may exceed 16 bits (virtual register
+  /// indices). The encoded bytecode truncates to 16 bits, but the full values
+  /// are stored in [rawA]/[rawB]/[rawC] for LSRA.
   void emitABC(int op, int a, int b, int c) {
-    assert(a >= 0 && a <= 0xFFFF, 'ABC operand A out of range: $a');
-    assert(b >= 0 && b <= 0xFFFF, 'ABC operand B out of range: $b');
-    assert(c >= 0 && c <= 0xFFFF, 'ABC operand C out of range: $c');
-    _buffer.add(encodeABC(op, a, b, c));
+    _buffer.add(encodeABC(op, a & 0xFFFF, b & 0xFFFF, c & 0xFFFF));
+    _rawA.add(a);
+    _rawB.add(b);
+    _rawC.add(c);
   }
 
   /// Emits an ABC-format instruction with a flag byte in bits [8:16].
@@ -59,31 +93,43 @@ class BytecodeEmitter {
   /// pool index (flag=1) rather than a plain arg count (flag=0).
   void emitABCF(int op, int flag, int a, int b, int c) {
     assert(flag >= 0 && flag <= 0xFF, 'Flag byte out of range: $flag');
-    assert(a >= 0 && a <= 0xFFFF, 'ABCF operand A out of range: $a');
-    assert(b >= 0 && b <= 0xFFFF, 'ABCF operand B out of range: $b');
-    assert(c >= 0 && c <= 0xFFFF, 'ABCF operand C out of range: $c');
-    _buffer.add(encodeABCF(op, flag, a, b, c));
+    _buffer.add(encodeABCF(op, flag, a & 0xFFFF, b & 0xFFFF, c & 0xFFFF));
+    _rawA.add(a);
+    _rawB.add(b);
+    _rawC.add(c);
   }
 
   /// Emits an ABx-format instruction.
   void emitABx(int op, int a, int bx) {
-    _buffer.add(encodeABx(op, a, bx));
+    _buffer.add(encodeABx(op, a & 0xFFFF, bx));
+    _rawA.add(a);
+    _rawB.add(0);
+    _rawC.add(0);
   }
 
   /// Emits an AsBx-format instruction.
   void emitAsBx(int op, int a, int sbx) {
-    _buffer.add(encodeAsBx(op, a, sbx));
+    _buffer.add(encodeAsBx(op, a & 0xFFFF, sbx));
+    _rawA.add(a);
+    _rawB.add(0);
+    _rawC.add(0);
   }
 
   /// Emits an Ax-format instruction.
   void emitAx(int op, int ax) {
     _buffer.add(encodeAx(op, ax));
+    _rawA.add(0);
+    _rawB.add(0);
+    _rawC.add(0);
   }
 
   /// Reserves 1 word for a forward jump placeholder.
   int emitJumpPlaceholder() {
     final offset = _buffer.length;
     _buffer.add(0);
+    _rawA.add(0);
+    _rawB.add(0);
+    _rawC.add(0);
     return offset;
   }
 
@@ -94,7 +140,8 @@ class BytecodeEmitter {
   /// Offset is computed internally: `targetPC - placeholderPC - 1`.
   void patchJumpAsBx(int placeholderPC, int op, int a, int targetPC) {
     final offset = targetPC - placeholderPC - 1;
-    _buffer[placeholderPC] = encodeAsBx(op, a, offset);
+    _buffer[placeholderPC] = encodeAsBx(op, a & 0xFFFF, offset);
+    _rawA[placeholderPC] = a;
   }
 
   /// Emits a 1-word jump to [targetPC] (for backward jumps).
@@ -103,7 +150,10 @@ class BytecodeEmitter {
   void emitJumpAsBx(int op, int a, int targetPC) {
     final jumpPC = currentPC;
     final offset = targetPC - jumpPC - 1;
-    _buffer.add(encodeAsBx(op, a, offset));
+    _buffer.add(encodeAsBx(op, a & 0xFFFF, offset));
+    _rawA.add(a);
+    _rawB.add(0);
+    _rawC.add(0);
   }
 
   /// Emits an ABx instruction where Bx = the PC after this instruction.
@@ -114,7 +164,10 @@ class BytecodeEmitter {
   int emitWithResumePCInBx(int op, int a) {
     final instrPC = currentPC;
     final resumePC = instrPC + 1;
-    _buffer.add(encodeABx(op, a, resumePC));
+    _buffer.add(encodeABx(op, a & 0xFFFF, resumePC));
+    _rawA.add(a);
+    _rawB.add(0);
+    _rawC.add(0);
     return instrPC;
   }
 

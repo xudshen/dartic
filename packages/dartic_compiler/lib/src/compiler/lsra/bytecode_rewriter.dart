@@ -34,11 +34,21 @@ import 'package:dartic/dartic_internal.dart'
 /// Modifies [buffer] in place. Uses [valMap] for value-stack registers and
 /// [refMap] for ref-stack registers. Operands classified as `imm` or `none`
 /// in [opRegTable] are left unchanged.
+///
+/// When [rawA]/[rawB]/[rawC] are provided, uses them for reading virtual
+/// register indices instead of decoding from the (potentially truncated)
+/// bytecode. This is necessary when virtual register counts exceed the 16-bit
+/// ABC operand limit (65535).
 void rewriteBytecode(
   List<int> buffer, {
   required Map<int, int> valMap,
   required Map<int, int> refMap,
+  List<int>? rawA,
+  List<int>? rawB,
+  List<int>? rawC,
 }) {
+  final hasRaw = rawA != null && rawB != null && rawC != null;
+
   for (var pc = 0; pc < buffer.length; pc++) {
     final instr = buffer[pc];
     final op = decodeOp(instr);
@@ -52,15 +62,18 @@ void rewriteBytecode(
 
     // HALT: A is valR or refR depending on B (StackKind).
     if (op == Op.halt) {
-      _rewriteHalt(buffer, pc, instr, valMap, refMap);
+      final haltA = hasRaw ? rawA[pc] : decodeA(instr);
+      final haltB = hasRaw ? rawB[pc] : decodeB(instr);
+      final haltC = hasRaw ? rawC[pc] : decodeC(instr);
+      _rewriteHalt(buffer, pc, haltA, haltB, haltC, valMap, refMap);
       continue;
     }
 
     // CREATE_TYPE_ARGS: non-standard layout A=imm, B=refR, C=refW.
     if (op == Op.createTypeArgs) {
-      final a = decodeA(instr); // count (imm, unchanged)
-      final b = _remap(decodeB(instr), RegOp.refR, valMap, refMap);
-      final c = _remap(decodeC(instr), RegOp.refW, valMap, refMap);
+      final a = hasRaw ? rawA[pc] : decodeA(instr); // count (imm, unchanged)
+      final b = _remap(hasRaw ? rawB[pc] : decodeB(instr), RegOp.refR, valMap, refMap);
+      final c = _remap(hasRaw ? rawC[pc] : decodeC(instr), RegOp.refW, valMap, refMap);
       buffer[pc] = encodeABC(op, a, b, c) | (instr & 0xFF00);
       continue;
     }
@@ -69,13 +82,13 @@ void rewriteBytecode(
 
     switch (fmt) {
       case InstrFormat.abc:
-        var a = decodeA(instr);
-        var b = decodeB(instr);
-        var c = decodeC(instr);
+        var a = hasRaw ? rawA[pc] : decodeA(instr);
+        var b = hasRaw ? rawB[pc] : decodeB(instr);
+        var c = hasRaw ? rawC[pc] : decodeC(instr);
 
         // Range base operand: remap base register within B (or A for CALL_HOST).
         if (meta.range != null) {
-          _rewriteRangeBase(meta.range!, a, b, refMap, (newA, newB) {
+          _rewriteRangeBase(meta.range!, a, b, instr, refMap, hasRaw, (newA, newB) {
             a = newA;
             b = newB;
           });
@@ -90,20 +103,22 @@ void rewriteBytecode(
         buffer[pc] = encodeABC(op, a, b, c) | (instr & 0xFF00);
 
       case InstrFormat.aBx:
-        var a = decodeA(instr);
+        var a = hasRaw ? rawA[pc] : decodeA(instr);
         // Range base remap for ABx opcodes (e.g., CALL_HOST where A is range base).
         if (meta.range != null && meta.range!.baseFromOperand == 0) {
-          final mask = meta.range!.baseMaskBit15 ? 0x7FFF : 0xFFFF;
-          final flags = a & ~mask;
-          final virtualBase = (a & mask) + meta.range!.baseOffset;
-          a = ((refMap[virtualBase] ?? virtualBase) - meta.range!.baseOffset) | flags;
+          final hasBit15 = meta.range!.baseMaskBit15;
+          final virtualBase = (hasBit15 && !hasRaw ? (a & ~0x8000) : a) +
+              meta.range!.baseOffset;
+          int constFlag = 0;
+          if (hasBit15) constFlag = decodeA(instr) & 0x8000;
+          a = ((refMap[virtualBase] ?? virtualBase) - meta.range!.baseOffset) | constFlag;
         } else {
           a = _remap(a, meta.a, valMap, refMap);
         }
         buffer[pc] = encodeABx(op, a, decodeBx(instr));
 
       case InstrFormat.asBx:
-        final a = _remap(decodeA(instr), meta.a, valMap, refMap);
+        final a = _remap(hasRaw ? rawA[pc] : decodeA(instr), meta.a, valMap, refMap);
         buffer[pc] = encodeAsBx(op, a, decodesBx(instr));
 
       case InstrFormat.ax:
@@ -165,20 +180,42 @@ int _remapIfNotRange(
 }
 
 /// Rewrites the range-base operand in place, preserving bit15 flags.
+///
+/// [a], [b] are the operand values (from raw arrays or bytecode decoding).
+/// [encodedInstr] is the original encoded instruction (for reading the const
+/// flag from the bytecode even when raw operands provide the register value).
+/// [rawOps] indicates whether raw operand arrays are in use.
 void _rewriteRangeBase(
   dynamic range, // RangeInfo
   int a,
   int b,
+  int encodedInstr,
   Map<int, int> refMap,
+  bool rawOps,
   void Function(int newA, int newB) apply,
 ) {
   final baseOpIdx = range.baseFromOperand as int;
   final rawBase = baseOpIdx == 0 ? a : b;
-  final mask = (range.baseMaskBit15 as bool) ? 0x7FFF : 0xFFFF;
-  final flags = rawBase & ~mask;
-  final virtualBase = (rawBase & mask) + (range.baseOffset as int);
+  final hasBit15 = range.baseMaskBit15 as bool;
+
+  // Extract virtual base register:
+  // - rawOps: raw value IS the pure base (compiler strips const flag before storing)
+  // - !rawOps: clear bit 15 (const flag) from the decoded bytecode value
+  final virtualBase = (hasBit15 && !rawOps
+          ? (rawBase & ~0x8000)
+          : rawBase) +
+      (range.baseOffset as int);
+
   final physBase = refMap[virtualBase] ?? virtualBase;
-  final newRaw = (physBase - (range.baseOffset as int)) | flags;
+
+  // Restore the const flag from the ENCODED instruction for the interpreter.
+  // After LSRA, physical base fits in 15 bits, so bit 15 is safe for the flag.
+  int constFlag = 0;
+  if (hasBit15) {
+    final encodedB = baseOpIdx == 0 ? decodeA(encodedInstr) : decodeB(encodedInstr);
+    constFlag = encodedB & 0x8000;
+  }
+  final newRaw = (physBase - (range.baseOffset as int)) | constFlag;
 
   if (baseOpIdx == 0) {
     apply(newRaw, b);
@@ -192,14 +229,12 @@ void _rewriteRangeBase(
 void _rewriteHalt(
   List<int> buffer,
   int pc,
-  int instr,
+  int a,
+  int b,
+  int c,
   Map<int, int> valMap,
   Map<int, int> refMap,
 ) {
-  final a = decodeA(instr);
-  final b = decodeB(instr);
-  final c = decodeC(instr);
-
   int newA;
   if (b == 0) {
     newA = a; // void return, A is not a register
@@ -209,5 +244,5 @@ void _rewriteHalt(
     newA = valMap[a] ?? a; // StackKind.boolVal/intVal/doubleVal
   }
 
-  buffer[pc] = encodeABC(Op.halt, newA, b, c) | (instr & 0xFF00);
+  buffer[pc] = encodeABC(Op.halt, newA, b, c);
 }

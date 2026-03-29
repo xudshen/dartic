@@ -173,6 +173,17 @@ LinearScanResult linearScan({
         }
       }
 
+      // If no individual free register, try splitting a free block.
+      if (phys == null && freeBlocks.isNotEmpty) {
+        final block = freeBlocks.first;
+        phys = block.base;
+        if (block.size > 1) {
+          freeBlocks[0] = (base: block.base + 1, size: block.size - 1);
+        } else {
+          freeBlocks.removeAt(0);
+        }
+      }
+
       if (phys == null) {
         // Allocate fresh, skipping occupied.
         phys = _allocSingle(physCounter, occupiedSlots);

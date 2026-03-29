@@ -1924,13 +1924,18 @@ class DarticCompiler {
       ..._capturedVarRefRegs.values,
     };
 
-    // Compute live ranges.
+    // Compute live ranges using raw (untruncated) operand arrays.
+    // Virtual register indices may exceed the 16-bit ABC operand limit;
+    // raw arrays provide the full values for correct liveness analysis.
     final liveRanges = lsra.computeLiveRanges(
       bytecode: _emitter.buffer,
       exceptionHandlers: _exceptionHandlers,
       bindingNames: _bindingNames,
       pendingArgMoves: _pendingArgMoves,
       constantPool: _constantPool,
+      rawA: _emitter.rawA,
+      rawB: _emitter.rawB,
+      rawC: _emitter.rawC,
     );
 
     // Run linear scan for each stack.
@@ -1947,41 +1952,18 @@ class DarticCompiler {
       initialOffset: 3, // ITA/FTA/this reserved
     );
 
-    // Rewrite bytecode.
+    // Rewrite bytecode using raw operands for correct virtual register reading.
     lsra.rewriteBytecode(
       _emitter.buffer,
       valMap: valResult.mapping,
       refMap: refResult.mapping,
+      rawA: _emitter.rawA,
+      rawB: _emitter.rawB,
+      rawC: _emitter.rawC,
     );
 
     if (_lsraDebug) {
-      print('[LSRA] live ranges: val=${liveRanges.val.intervals.length} intervals, '
-          'ref=${liveRanges.ref.intervals.length} intervals, '
-          '${liveRanges.ref.consecutiveGroups.length} ref groups');
-      // Show a few ref groups
-      final groups = liveRanges.ref.consecutiveGroups;
-      if (groups.length > 3) {
-        print('[LSRA] first 3 groups: ${groups.take(3).map((g) => '(base=${g.baseVreg}, count=${g.count}, def=${g.def}, last=${g.lastUse})')}');
-        print('[LSRA] last group: (base=${groups.last.baseVreg}, count=${groups.last.count}, def=${groups.last.def}, last=${groups.last.lastUse})');
-      }
-      print('[LSRA] pinned: val=${pinnedValRegs.length} ref=${pinnedRefRegs.length}');
-      // Distribution of ref interval lengths
-      final refLengths = liveRanges.ref.intervals.values.map((iv) => iv.lastUse - iv.def).toList()..sort();
-      final long = refLengths.where((l) => l > 1000).length;
-      final medium = refLengths.where((l) => l > 100 && l <= 1000).length;
-      final short = refLengths.where((l) => l <= 100).length;
-      print('[LSRA] ref interval lengths: short(<=100)=$short medium(101-1000)=$medium long(>1000)=$long');
-      if (refLengths.isNotEmpty) {
-        print('[LSRA] ref max length=${refLengths.last} median=${refLengths[refLengths.length ~/ 2]}');
-      }
-      // Count group member vregs
-      final gmv = <int>{};
-      for (final g in liveRanges.ref.consecutiveGroups) {
-        for (var i = 0; i < g.count; i++) gmv.add(g.baseVreg + i);
-      }
-      print('[LSRA] group member vregs: ${gmv.length}, individual: ${liveRanges.ref.intervals.length - gmv.where((v) => liveRanges.ref.intervals.containsKey(v)).length}');
-      print('[LSRA] → physical val=${valResult.physRegCount} ref=${refResult.physRegCount} '
-          '(${valResult.mapping.length} val mappings, ${refResult.mapping.length} ref mappings)');
+      print('[LSRA] → physical val=${valResult.physRegCount} ref=${refResult.physRegCount}');
     }
 
     // Rewrite exception handlers.
@@ -2086,6 +2068,10 @@ class DarticCompiler {
     }
     final bOperand = isConst ? (baseReg | 0x8000) : baseReg;
     _emitter.emitABC(op, destReg, bOperand, count);
+    // Override rawB with the pure base register (without const flag at bit 15).
+    // The encoded instruction carries the flag for the interpreter, but LSRA
+    // needs the unmasked base register for correct range computation.
+    _emitter.rawB[_emitter.currentPC - 1] = baseReg;
   }
 
   // ── Host binding helpers ──

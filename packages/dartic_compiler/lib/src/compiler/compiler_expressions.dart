@@ -94,29 +94,20 @@ extension on DarticCompiler {
       return _loadString((parts[0] as ir.StringLiteral).value);
     }
 
-    // Phase 1: Compile each part, ensuring all results are on the ref stack.
-    final partRegs = <int>[];
-    for (final part in parts) {
-      var (reg, loc) = _compileExpression(part);
-      reg = _boxToRefIfValue(reg, loc, _inferExprType(part));
-      partRegs.add(reg);
-    }
-
-    // Phase 2: Allocate consecutive ref registers for STRING_INTERP operands.
-    // The dest register is separate; the base + part slots must be
-    // truly consecutive (allocConsecutive bypasses the free pool which
-    // may return fragmented indices).
+    // Interleaved compilation: allocate consecutive block first, then
+    // compile each part and immediately move into position. Reduces peak
+    // register pressure from 2N to N + O(1).
     final destReg = _allocRefReg();
     final baseReg = _refAlloc.allocConsecutive(parts.length);
 
-    // Phase 3: Move each part result into its consecutive slot.
-    for (var i = 0; i < partRegs.length; i++) {
-      if (partRegs[i] != baseReg + i) {
-        _emitter.emitABC(Op.moveRef, baseReg + i, partRegs[i], 0);
+    for (var i = 0; i < parts.length; i++) {
+      var (reg, loc) = _compileExpression(parts[i]);
+      reg = _boxToRefIfValue(reg, loc, _inferExprType(parts[i]));
+      if (reg != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, reg, 0);
       }
     }
 
-    // Phase 4: Emit STRING_INTERP A=destReg, B=baseReg, C=partCount.
     _emitter.emitABC(Op.stringInterp, destReg, baseReg, parts.length);
     return (destReg, ResultLoc.ref);
   }
@@ -3976,20 +3967,27 @@ extension on DarticCompiler {
     if (entries.isEmpty) {
       _emitter.emitABC(Op.createMap, destReg, 0, 0);
     } else {
-      // Compile each key/value, box to ref if needed.
-      final kvRegs = <int>[];
-      for (final entry in entries) {
-        var (keyReg, keyLoc) = _compileExpression(entry.key);
-        keyReg = _boxToRefIfValue(keyReg, keyLoc, _inferExprType(entry.key));
-        kvRegs.add(keyReg);
+      // Interleaved compilation: allocate consecutive block first, then
+      // compile each key/value pair and immediately move into position.
+      final slotCount = entries.length * 2;
+      final baseReg = _refAlloc.allocConsecutive(slotCount);
 
-        var (valReg, valLoc) = _compileExpression(entry.value);
-        valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(entry.value));
-        kvRegs.add(valReg);
+      for (var i = 0; i < entries.length; i++) {
+        var (keyReg, keyLoc) = _compileExpression(entries[i].key);
+        keyReg = _boxToRefIfValue(keyReg, keyLoc, _inferExprType(entries[i].key));
+        if (keyReg != baseReg + i * 2) {
+          _emitter.emitABC(Op.moveRef, baseReg + i * 2, keyReg, 0);
+        }
+
+        var (valReg, valLoc) = _compileExpression(entries[i].value);
+        valReg = _boxToRefIfValue(valReg, valLoc, _inferExprType(entries[i].value));
+        if (valReg != baseReg + i * 2 + 1) {
+          _emitter.emitABC(Op.moveRef, baseReg + i * 2 + 1, valReg, 0);
+        }
       }
 
-      // Move k/v pairs into consecutive slots and emit CREATE_MAP.
-      _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length);
+      _emitter.emitABC(Op.createMap, destReg, baseReg, entries.length);
+      _emitter.rawB[_emitter.currentPC - 1] = baseReg;
     }
 
     // Always tag with Map<K, V> type for precise generic type checks.
@@ -4108,6 +4106,12 @@ extension on DarticCompiler {
 
   /// Shared helper for list/set literal compilation: compiles each element
   /// expression, boxes to ref if needed, and emits the collection creation op.
+  ///
+  /// Uses **interleaved compilation**: allocates the consecutive block FIRST,
+  /// then compiles each element and immediately moves it into position.
+  /// This reduces peak register pressure from 2N to N + O(1), where N is
+  /// the number of elements — only one element's temporaries are live at a
+  /// time, instead of all N simultaneously.
   (int, ResultLoc) _compileElementCollection(
     int op,
     List<ir.Expression> elements,
@@ -4119,14 +4123,22 @@ extension on DarticCompiler {
       return (destReg, ResultLoc.ref);
     }
 
-    final elementRegs = <int>[];
-    for (final elem in elements) {
-      var (reg, loc) = _compileExpression(elem);
-      reg = _boxToRefIfValue(reg, loc, _inferExprType(elem));
-      elementRegs.add(reg);
+    // Allocate consecutive block FIRST. The watermark advances past it,
+    // so all subsequent allocations (element temps) are above the block.
+    final baseReg = _refAlloc.allocConsecutive(elements.length);
+
+    // Compile each element and immediately move into its consecutive slot.
+    for (var i = 0; i < elements.length; i++) {
+      var (reg, loc) = _compileExpression(elements[i]);
+      reg = _boxToRefIfValue(reg, loc, _inferExprType(elements[i]));
+      if (reg != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, reg, 0);
+      }
     }
 
-    _emitCreateCollection(op, destReg, elementRegs, elements.length);
+    _emitter.emitABC(op, destReg, baseReg, elements.length);
+    // Store pure base register in rawB for LSRA (no const flag here).
+    _emitter.rawB[_emitter.currentPC - 1] = baseReg;
     return (destReg, ResultLoc.ref);
   }
 
