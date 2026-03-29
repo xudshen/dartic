@@ -349,17 +349,15 @@ class DarticInterpreter {
             : null);
 
     // Create bridge dispatch if factories are registered.
-    // The callMethod wrapper applies _toHost on the result so that
-    // DarticDispatch callers (bridge overrides, DarticObject methods)
-    // receive host-compatible values.
+    // DarticDispatch handles _toHost internally for host callers (invoke/get/set)
+    // while invokeFromVM/getFromVM return raw VM values for CALL_HOST.
     if (bridgeFactoryRegistry != null) {
       _activeDarticDispatch = DarticDispatch(
         module: module,
-        callMethod: (module, proto, receiver, args) {
-          final result = _callDarticMethod(module, proto, receiver, args);
-          return _toHost(result);
-        },
+        callMethod: _callDarticMethod,
         lateSentinel: lateSentinel,
+        toHost: _toHost,
+        toVM: _toVM,
       );
     }
 
@@ -880,27 +878,18 @@ class DarticInterpreter {
     vs.sp += proto.valueRegCount;
     rs.sp += proto.refRegCount;
 
-    // Convert args from host to VM representation (bridge→DarticObject,
-    // proxy→DarticClosure) before placing on VM stacks.
-    for (var i = 0; i < args.length; i++) {
-      args[i] = _toVM(args[i]);
-    }
-
     // Place receiver at rBase+2 (this) if provided.
+    // Callers are responsible for _toVM conversion before calling
+    // _runNestedDispatch (DarticDispatch.invoke for host callers,
+    // invokeClosure for closure callbacks, VM callers pass VM values).
     if (receiver != null) {
-      // Unwrap bridge/face receiver to DarticObject for VM-internal use.
-      final vmReceiver = _toVM(receiver);
-      rs.write(rBase + 2, vmReceiver);
+      rs.write(rBase + 2, receiver);
 
       // Auto-load ITA for the callee method.
       if (ita != null) {
-        // Caller resolved the correct ITA (e.g., for inherited methods
-        // from generic superclasses via _resolveMethodITA).
         rs.write(rBase + 0, ita);
       } else {
-        // Fallback: load from receiver's runtimeType_ (works for
-        // self-declared methods and invokeClosure).
-        final darticObj = vmReceiver is DarticObject ? vmReceiver : null;
+        final darticObj = receiver is DarticObject ? receiver : null;
         if (darticObj != null) {
           final rtType = darticObj.runtimeType_;
           if (rtType is DarticInterfaceType && rtType.typeArgs.isNotEmpty) {
@@ -3069,13 +3058,13 @@ class DarticInterpreter {
                 },
               );
               try {
-                final result = _activeDarticDispatch!.invoke(
+                // Use invokeFromVM: returns raw VM value, no _toHost→_toVM
+                // round trip. CALL_HOST is a VM caller, not a host caller.
+                final result = _activeDarticDispatch!.invokeFromVM(
                   receiver, receiver, methodName, remaining,
                 );
                 if (!identical(result, notOverridden)) {
-                  // DarticDispatch returns HOST value (_callMethod wrapper
-                  // applies _toHost). Convert back to VM representation.
-                  rs.write(rBase + a, _toVM(result));
+                  rs.write(rBase + a, result);
                   break;
                 }
               } on Object catch (e, st) {

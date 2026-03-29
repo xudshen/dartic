@@ -136,6 +136,8 @@ void main() {
             return null;
           },
           lateSentinel: _testLateSentinel,
+          toHost: (v) => v, // identity — tests don't need conversion
+          toVM: (v) => v,
         );
       });
 
@@ -325,6 +327,8 @@ void main() {
             return 'called:${method.name}';
           },
           lateSentinel: _testLateSentinel,
+          toHost: (v) => v, // identity — tests don't need conversion
+          toVM: (v) => v,
         );
       });
 
