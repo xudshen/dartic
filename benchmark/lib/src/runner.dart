@@ -2,49 +2,58 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartic/dartic.dart';
-import 'package:dartic/dartic_internal.dart' show DarticSerializer;
-import 'package:dartic_compiler/dartic_compiler.dart' show DarticCompiler;
 import 'package:dartic_stdlib/dartic_stdlib.dart';
-import 'package:kernel/ast.dart' as ir;
-import 'package:kernel/binary/ast_from_binary.dart';
 
 import 'config.dart';
 import 'stats.dart';
 import 'types.dart';
 
 /// Two-channel benchmark runner: host / dartic.
+///
+/// Requires precompiled .darb files in [compiledDir].
+/// Use [Precompiler] to compile cases first.
 class BenchmarkRunner {
   BenchmarkRunner({this.config = const BenchmarkConfig()});
 
   final BenchmarkConfig config;
 
   /// Runs all benchmark cases and returns results.
-  Future<List<BenchmarkResult>> runAll(List<BenchmarkCase> cases) async {
+  ///
+  /// Each case must have a corresponding `.darb` file in [compiledDir].
+  /// Cases without precompiled files are skipped with a warning.
+  List<BenchmarkResult> runAll(
+    List<BenchmarkCase> cases, {
+    required String compiledDir,
+  }) {
     final results = <BenchmarkResult>[];
 
     for (final bc in cases) {
       print('  ${bc.name} ...');
 
       try {
-        // --- Pre-compile dartic module ---
-        final darbBytes = await _compileDartic(bc.resolvedSource);
+        final darbPath = '$compiledDir/${bc.name}.darb';
+        final darbFile = File(darbPath);
+        if (!darbFile.existsSync()) {
+          print('    SKIP: not precompiled (run precompile.dart first)');
+          continue;
+        }
+        final darbBytes = darbFile.readAsBytesSync();
+
+        // Create engine once — engine.call() is repeatable per API contract.
+        final engine = _createEngine(darbBytes);
+        Object? darticFn() => engine.call('main');
 
         // --- Calibrate iteration count ---
         final hostIters = _calibrate(bc.hostFn);
-        final darticIters = _calibrate(
-          () => _executeDartic(darbBytes),
-        );
+        final darticIters = _calibrate(darticFn);
 
         // --- Warmup ---
         _warmup(bc.hostFn, hostIters);
-        _warmup(() => _executeDartic(darbBytes), darticIters);
+        _warmup(darticFn, darticIters);
 
         // --- Measure ---
         final hostResult = _measure(bc.hostFn, hostIters);
-        final darticResult = _measure(
-          () => _executeDartic(darbBytes),
-          darticIters,
-        );
+        final darticResult = _measure(darticFn, darticIters);
 
         results.add(BenchmarkResult(
           name: bc.name,
@@ -61,48 +70,16 @@ class BenchmarkRunner {
   }
 
   // ---------------------------------------------------------------------------
-  // Compilation
-  // ---------------------------------------------------------------------------
-
-  Future<Uint8List> _compileDartic(String source) async {
-    final dir = await Directory.systemTemp.createTemp('dartic_bench_');
-    try {
-      final dartFile = File('${dir.path}/input.dart');
-      await dartFile.writeAsString(source);
-
-      final dillPath = '${dir.path}/input.dill';
-      final result = await Process.run(
-        'fvm',
-        ['dart', 'compile', 'kernel', dartFile.path, '-o', dillPath],
-      );
-      if (result.exitCode != 0) {
-        throw StateError(
-          'Failed to compile .dill:\n'
-          'stdout: ${result.stdout}\nstderr: ${result.stderr}',
-        );
-      }
-
-      final bytes = File(dillPath).readAsBytesSync();
-      final component = ir.Component();
-      BinaryBuilder(bytes).readComponent(component);
-      final module = DarticCompiler(component).compile();
-      return DarticSerializer().serialize(module);
-    } finally {
-      await dir.delete(recursive: true);
-    }
-  }
-
-  // ---------------------------------------------------------------------------
   // Execution
   // ---------------------------------------------------------------------------
 
-  Object? _executeDartic(Uint8List darbBytes) {
+  DarticEngine _createEngine(Uint8List darbBytes) {
     final engine = DarticEngine(
       config: DarticConfig(fuelBudget: 1 << 30),
       plugins: [DarticStdlibPlugin()],
     );
     engine.loadBytecode(darbBytes);
-    return engine.call('main');
+    return engine;
   }
 
   // ---------------------------------------------------------------------------
@@ -110,20 +87,30 @@ class BenchmarkRunner {
   // ---------------------------------------------------------------------------
 
   int _calibrate(Object? Function() fn) {
+    // Single-execution check first: if one run already exceeds the target
+    // duration, use iters=1 to avoid doubling into very long calibration.
+    final sw = Stopwatch()..start();
+    fn();
+    sw.stop();
+    if (sw.elapsedMilliseconds >= config.minSampleDurationMs) return 1;
+
+    // Doubling loop
     var iters = 1;
     while (true) {
-      final sw = Stopwatch()..start();
+      final sw2 = Stopwatch()..start();
       for (var i = 0; i < iters; i++) {
         fn();
       }
-      sw.stop();
-      if (sw.elapsedMilliseconds >= config.minSampleDurationMs) return iters;
+      sw2.stop();
+      if (sw2.elapsedMilliseconds >= config.minSampleDurationMs) return iters;
       iters *= 2;
     }
   }
 
   void _warmup(Object? Function() fn, int itersPerSample) {
-    for (var i = 0; i < config.warmupIterations; i++) {
+    // Slow cases (iters=1): only 3 warmup rounds to avoid excessive overhead.
+    final count = itersPerSample == 1 ? 3 : config.warmupIterations;
+    for (var i = 0; i < count; i++) {
       fn();
     }
   }
