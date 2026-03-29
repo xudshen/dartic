@@ -595,24 +595,19 @@ LibTest/mirrors/  # dart:mirrors — reflection not implemented (~29 tests)
 # LinkedList<E extends LinkedListEntry<E>> is F-bounded generic.
 # DarticObject cannot be cast to LinkedListEntry<LinkedListEntry<dynamic>>.
 # Fix requires F-bounded generic bridge — extremely high cost, extremely low usage.
-# Status: permanent skip.
+# Status: permanent skip. Re-validated 2026-03-28: 79+24=103 all FAIL, same root cause.
 LibTest/collection/LinkedList/  # F-bounded: DarticObject → LinkedListEntry<LinkedListEntry<dynamic>> (~79 tests)
 LibTest/collection/LinkedListEntry/  # F-bounded: same root cause (~24 tests)
 
 # ── dart:_internal types not bridged: UnmodifiableMapBase (16) ───
 # UnmodifiableMapBase lives in dart:_internal (not user-accessible).
 # dartic classes extending it produce DarticObject → MapBase cast failures.
-# Status: permanent skip until dart:_internal bridge support added.
+# Status: permanent skip. Re-validated 2026-03-28: 16/16 FAIL, same root cause.
 LibTest/collection/UnmodifiableMapBase/  # dart:_internal::UnmodifiableMapBase not bridged (~16 tests)
 
-# ── Comparable bridge missing: SplayTree (4) ────────────────────
-# SplayTreeMap/SplayTreeSet tests create dartic Comparable subclasses.
-# DarticObject → Comparable<dynamic> cast fails. Needs Comparable bridge.
-# Status: permanent skip (low priority — Comparable bridge trivial but niche).
-LibTest/collection/SplayTreeMap/SplayTreeMap_class_A04_t01.dart  # DarticObject → Comparable
-LibTest/collection/SplayTreeMap/SplayTreeMap_class_A04_t03.dart  # DarticObject → Comparable
-LibTest/collection/SplayTreeSet/SplayTreeSet.from_A02_t04.dart   # DarticObject → Comparable
-LibTest/collection/SplayTreeSet/SplayTreeSet_A03_t03.dart        # DarticObject → Comparable
+# ── Comparable bridge: FIXED 2026-03-28 ─────────────────────────
+# Root cause was Comparable missing bridge:true in dart_core.yaml.
+# Added bridge:true → gen produces _$Comparable face → all 4 tests pass.
 
 # ── CALL_HOST re-route darticAbsent crash (3) ─────────────────────
 # CALL_HOST re-route converts darticAbsent → null, but dartic toList's bool

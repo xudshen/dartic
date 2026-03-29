@@ -14,6 +14,60 @@ import 'dart:async';
 import 'dart:collection' show HashMap;
 import 'dart:developer' show Timeline;
 
+class _$StreamTransformer implements StreamTransformer<dynamic, dynamic>, DarticObjectHolder {
+  _$StreamTransformer(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  Stream bind(Stream stream) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
+    if (identical(_$r, notOverridden)) {
+      throw UnsupportedError('Abstract method bind must be overridden in dartic code');
+    }
+    return _$r as Stream;
+  }
+
+  @override
+  StreamTransformer<RS, RT> cast<RS, RT>() {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
+    if (identical(_$r, notOverridden)) {
+      throw UnsupportedError('Abstract method cast must be overridden in dartic code');
+    }
+    return _$r as StreamTransformer<RS, RT>;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return $darticObject.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return identityHashCode($darticObject);
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
+    return r == true;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createStreamTransformerBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$StreamTransformer(dispatch, obj, superArgs);
+
 abstract final class StreamTransformerBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -21,6 +75,8 @@ abstract final class StreamTransformerBindings {
       type: StreamTransformer,
       test: (o) => o is StreamTransformer,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$StreamTransformer(dispatch, darticObject, superArgs),
     );
     ctx.registerBinding('dart:async::StreamTransformer::castFrom#1', (args) => StreamTransformer.castFrom(args[0] as StreamTransformer));
 

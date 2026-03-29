@@ -16,6 +16,112 @@ import 'dart:math' show Random;
 import 'dart:typed_data' show Uint8List;
 import 'package:dartic_stdlib/src/bindings/core/iterable_helpers.dart';
 
+class _$Match implements Match, DarticObjectHolder {
+  _$Match(this._dispatch, this.$darticObject, List<Object?> superArgs);
+
+  final DarticDispatch _dispatch;
+
+  @override
+  final DarticObject $darticObject;
+
+  @override
+  String? group(int group) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'group', [group]);
+    if (identical(_$r, notOverridden)) {
+      throw UnsupportedError('Abstract method group must be overridden in dartic code');
+    }
+    return _$r as String?;
+  }
+
+  @override
+  List<String?> groups(List<int> groupIndices) {
+    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'groups', [groupIndices]);
+    if (identical(_$r, notOverridden)) {
+      throw UnsupportedError('Abstract method groups must be overridden in dartic code');
+    }
+    return _$r as List<String?>;
+  }
+
+  @override
+  int get start {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'start');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter start must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int get end {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'end');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter end must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  int get groupCount {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'groupCount');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter groupCount must be overridden in dartic code');
+    }
+    return r as int;
+  }
+
+  @override
+  String get input {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'input');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter input must be overridden in dartic code');
+    }
+    return r as String;
+  }
+
+  @override
+  Pattern get pattern {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'pattern');
+    if (identical(r, notOverridden)) {
+      throw UnsupportedError('Abstract getter pattern must be overridden in dartic code');
+    }
+    return r as Pattern;
+  }
+
+  @override
+  String? operator [](int index) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '[]', [index]);
+    if (identical(r, notOverridden)) { throw UnsupportedError('Abstract operator [] must be overridden in dartic code'); }
+    return r as String?;
+  }
+
+  @override
+  String toString() {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    if (identical(r, notOverridden)) return $darticObject.toString();
+    return r as String;
+  }
+
+  @override
+  int get hashCode {
+    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    if (identical(r, notOverridden)) return identityHashCode($darticObject);
+    return r as int;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
+    return r == true;
+  }
+}
+
+/// Test-only factory to create Bridge instances without exposing the
+/// private class.
+Object createMatchBridge(
+        DarticDispatch dispatch, DarticObject obj, List<Object?> superArgs) =>
+    _$Match(dispatch, obj, superArgs);
+
 abstract final class MatchBindings {
   static void register(DarticPluginContext ctx) {
     ctx.registerClass(
@@ -23,6 +129,8 @@ abstract final class MatchBindings {
       type: Match,
       test: (o) => o is Match,
       methods: methodMap(),
+      bridgeFactory: (dispatch, darticObject, superArgs) =>
+          _$Match(dispatch, darticObject, superArgs),
     );
   }
 
