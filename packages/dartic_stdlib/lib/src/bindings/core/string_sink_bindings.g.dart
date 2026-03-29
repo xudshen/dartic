@@ -26,7 +26,7 @@ class _$StringSink implements StringSink, DarticObjectHolder {
 
   @override
   void write(Object? object) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'write', [object]);
+    final _$r = _dispatch.invoke($darticObject, 'write', [object]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method write must be overridden in dartic code');
     }
@@ -34,7 +34,7 @@ class _$StringSink implements StringSink, DarticObjectHolder {
 
   @override
   void writeAll(Iterable<dynamic> objects, [String separator = ""]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeAll', [objects, separator]);
+    final _$r = _dispatch.invoke($darticObject, 'writeAll', [objects, separator]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeAll must be overridden in dartic code');
     }
@@ -42,7 +42,7 @@ class _$StringSink implements StringSink, DarticObjectHolder {
 
   @override
   void writeln([Object? object = ""]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeln', [object]);
+    final _$r = _dispatch.invoke($darticObject, 'writeln', [object]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeln must be overridden in dartic code');
     }
@@ -50,7 +50,7 @@ class _$StringSink implements StringSink, DarticObjectHolder {
 
   @override
   void writeCharCode(int charCode) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeCharCode', [charCode]);
+    final _$r = _dispatch.invoke($darticObject, 'writeCharCode', [charCode]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeCharCode must be overridden in dartic code');
     }
@@ -58,21 +58,21 @@ class _$StringSink implements StringSink, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

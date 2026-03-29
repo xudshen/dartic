@@ -29,7 +29,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<File> create({bool recursive = false, bool exclusive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'create', [recursive, exclusive]);
+    final _$r = _dispatch.invoke($darticObject, 'create', [recursive, exclusive]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method create must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void createSync({bool recursive = false, bool exclusive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'createSync', [recursive, exclusive]);
+    final _$r = _dispatch.invoke($darticObject, 'createSync', [recursive, exclusive]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method createSync must be overridden in dartic code');
     }
@@ -46,7 +46,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<File> rename(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rename', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'rename', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method rename must be overridden in dartic code');
     }
@@ -55,7 +55,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   File renameSync(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'renameSync', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'renameSync', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method renameSync must be overridden in dartic code');
     }
@@ -64,7 +64,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<FileSystemEntity> delete({bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'delete', [recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'delete', [recursive]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method delete must be overridden in dartic code');
     }
@@ -73,7 +73,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void deleteSync({bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deleteSync', [recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'deleteSync', [recursive]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method deleteSync must be overridden in dartic code');
     }
@@ -81,7 +81,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<File> copy(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copy', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'copy', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method copy must be overridden in dartic code');
     }
@@ -90,7 +90,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   File copySync(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'copySync', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'copySync', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method copySync must be overridden in dartic code');
     }
@@ -99,7 +99,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<int> length() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'length', const []);
+    final _$r = _dispatch.invoke($darticObject, 'length', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method length must be overridden in dartic code');
     }
@@ -108,7 +108,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   int lengthSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lengthSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'lengthSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lengthSync must be overridden in dartic code');
     }
@@ -117,7 +117,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<DateTime> lastAccessed() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastAccessed', const []);
+    final _$r = _dispatch.invoke($darticObject, 'lastAccessed', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastAccessed must be overridden in dartic code');
     }
@@ -126,7 +126,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   DateTime lastAccessedSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastAccessedSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'lastAccessedSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastAccessedSync must be overridden in dartic code');
     }
@@ -135,7 +135,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<dynamic> setLastAccessed(DateTime time) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLastAccessed', [time]);
+    final _$r = _dispatch.invoke($darticObject, 'setLastAccessed', [time]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setLastAccessed must be overridden in dartic code');
     }
@@ -144,7 +144,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void setLastAccessedSync(DateTime time) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLastAccessedSync', [time]);
+    final _$r = _dispatch.invoke($darticObject, 'setLastAccessedSync', [time]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setLastAccessedSync must be overridden in dartic code');
     }
@@ -152,7 +152,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<DateTime> lastModified() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastModified', const []);
+    final _$r = _dispatch.invoke($darticObject, 'lastModified', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastModified must be overridden in dartic code');
     }
@@ -161,7 +161,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   DateTime lastModifiedSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastModifiedSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'lastModifiedSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastModifiedSync must be overridden in dartic code');
     }
@@ -170,7 +170,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<dynamic> setLastModified(DateTime time) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLastModified', [time]);
+    final _$r = _dispatch.invoke($darticObject, 'setLastModified', [time]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setLastModified must be overridden in dartic code');
     }
@@ -179,7 +179,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void setLastModifiedSync(DateTime time) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'setLastModifiedSync', [time]);
+    final _$r = _dispatch.invoke($darticObject, 'setLastModifiedSync', [time]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method setLastModifiedSync must be overridden in dartic code');
     }
@@ -187,7 +187,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<RandomAccessFile> open({FileMode mode = FileMode.read}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'open', [mode]);
+    final _$r = _dispatch.invoke($darticObject, 'open', [mode]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method open must be overridden in dartic code');
     }
@@ -196,7 +196,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   RandomAccessFile openSync({FileMode mode = FileMode.read}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'openSync', [mode]);
+    final _$r = _dispatch.invoke($darticObject, 'openSync', [mode]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method openSync must be overridden in dartic code');
     }
@@ -205,7 +205,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Stream<List<int>> openRead([int? start, int? end]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'openRead', [start, end]);
+    final _$r = _dispatch.invoke($darticObject, 'openRead', [start, end]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method openRead must be overridden in dartic code');
     }
@@ -214,7 +214,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   IOSink openWrite({FileMode mode = FileMode.write, Encoding encoding = utf8}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'openWrite', [mode, encoding]);
+    final _$r = _dispatch.invoke($darticObject, 'openWrite', [mode, encoding]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method openWrite must be overridden in dartic code');
     }
@@ -223,7 +223,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<Uint8List> readAsBytes() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsBytes', const []);
+    final _$r = _dispatch.invoke($darticObject, 'readAsBytes', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsBytes must be overridden in dartic code');
     }
@@ -232,7 +232,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Uint8List readAsBytesSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsBytesSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'readAsBytesSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsBytesSync must be overridden in dartic code');
     }
@@ -241,7 +241,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<String> readAsString({Encoding encoding = utf8}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsString', [encoding]);
+    final _$r = _dispatch.invoke($darticObject, 'readAsString', [encoding]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsString must be overridden in dartic code');
     }
@@ -250,7 +250,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   String readAsStringSync({Encoding encoding = utf8}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsStringSync', [encoding]);
+    final _$r = _dispatch.invoke($darticObject, 'readAsStringSync', [encoding]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsStringSync must be overridden in dartic code');
     }
@@ -259,7 +259,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<List<String>> readAsLines({Encoding encoding = utf8}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsLines', [encoding]);
+    final _$r = _dispatch.invoke($darticObject, 'readAsLines', [encoding]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsLines must be overridden in dartic code');
     }
@@ -268,7 +268,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   List<String> readAsLinesSync({Encoding encoding = utf8}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readAsLinesSync', [encoding]);
+    final _$r = _dispatch.invoke($darticObject, 'readAsLinesSync', [encoding]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readAsLinesSync must be overridden in dartic code');
     }
@@ -277,7 +277,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<File> writeAsBytes(List<int> bytes, {FileMode mode = FileMode.write, bool flush = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeAsBytes', [bytes, mode, flush]);
+    final _$r = _dispatch.invoke($darticObject, 'writeAsBytes', [bytes, mode, flush]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeAsBytes must be overridden in dartic code');
     }
@@ -286,7 +286,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void writeAsBytesSync(List<int> bytes, {FileMode mode = FileMode.write, bool flush = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeAsBytesSync', [bytes, mode, flush]);
+    final _$r = _dispatch.invoke($darticObject, 'writeAsBytesSync', [bytes, mode, flush]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeAsBytesSync must be overridden in dartic code');
     }
@@ -294,7 +294,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<File> writeAsString(String contents, {FileMode mode = FileMode.write, Encoding encoding = utf8, bool flush = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeAsString', [contents, mode, encoding, flush]);
+    final _$r = _dispatch.invoke($darticObject, 'writeAsString', [contents, mode, encoding, flush]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeAsString must be overridden in dartic code');
     }
@@ -303,7 +303,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   void writeAsStringSync(String contents, {FileMode mode = FileMode.write, Encoding encoding = utf8, bool flush = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeAsStringSync', [contents, mode, encoding, flush]);
+    final _$r = _dispatch.invoke($darticObject, 'writeAsStringSync', [contents, mode, encoding, flush]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeAsStringSync must be overridden in dartic code');
     }
@@ -311,7 +311,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<bool> exists() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'exists', const []);
+    final _$r = _dispatch.invoke($darticObject, 'exists', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method exists must be overridden in dartic code');
     }
@@ -320,7 +320,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   bool existsSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'existsSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'existsSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method existsSync must be overridden in dartic code');
     }
@@ -329,7 +329,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<String> resolveSymbolicLinks() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveSymbolicLinks', const []);
+    final _$r = _dispatch.invoke($darticObject, 'resolveSymbolicLinks', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolveSymbolicLinks must be overridden in dartic code');
     }
@@ -338,7 +338,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   String resolveSymbolicLinksSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveSymbolicLinksSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'resolveSymbolicLinksSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method resolveSymbolicLinksSync must be overridden in dartic code');
     }
@@ -347,7 +347,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Future<FileStat> stat() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stat', const []);
+    final _$r = _dispatch.invoke($darticObject, 'stat', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method stat must be overridden in dartic code');
     }
@@ -356,7 +356,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   FileStat statSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'statSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'statSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method statSync must be overridden in dartic code');
     }
@@ -365,7 +365,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Stream<FileSystemEvent> watch({int events = FileSystemEvent.all, bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'watch', [events, recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'watch', [events, recursive]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method watch must be overridden in dartic code');
     }
@@ -374,7 +374,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   File get absolute {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'absolute');
+    final r = _dispatch.get($darticObject, 'absolute');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter absolute must be overridden in dartic code');
     }
@@ -383,7 +383,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   String get path {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
+    final r = _dispatch.get($darticObject, 'path');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter path must be overridden in dartic code');
     }
@@ -392,7 +392,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Uri get uri {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'uri');
+    final r = _dispatch.get($darticObject, 'uri');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter uri must be overridden in dartic code');
     }
@@ -401,7 +401,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   bool get isAbsolute {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isAbsolute');
+    final r = _dispatch.get($darticObject, 'isAbsolute');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isAbsolute must be overridden in dartic code');
     }
@@ -410,7 +410,7 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   Directory get parent {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
+    final r = _dispatch.get($darticObject, 'parent');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter parent must be overridden in dartic code');
     }
@@ -419,21 +419,21 @@ class _$File implements File, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

@@ -92,14 +92,12 @@ class DarticDispatch {
 
   /// Dispatches a virtual method/operator call.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
-  /// Returns [notOverridden] if the dartic has not overridden [method].
+  /// Dispatches a virtual method/operator call from host context.
   ///
-  /// Result is converted via [_toHost] for host consumption.
-  /// Args are converted via [_toVM] (host→VM boundary).
-  Object? invoke(Object receiver, DarticObject darticObject, String method,
+  /// [darticObject] is the embedded DarticObject (classId + method table).
+  /// Returns [notOverridden] if the dartic has not overridden [method].
+  /// Args are converted via [_toVM], result via [_toHost].
+  Object? invoke(DarticObject darticObject, String method,
       List<Object?> args) {
     final vmArgs = [for (final a in args) _toVM(a)];
     final result = invokeFromVM(darticObject, darticObject, method, vmArgs);
@@ -107,21 +105,21 @@ class DarticDispatch {
     return _toHost(result);
   }
 
-  /// Dispatches a property getter.
+  /// Dispatches a property getter from host context.
   ///
   /// Result is converted via [_toHost] for host consumption.
   /// Lookup order: getter method → field.
-  Object? get(Object receiver, DarticObject darticObject, String property) {
+  Object? get(DarticObject darticObject, String property) {
     final result = getFromVM(darticObject, darticObject, property);
     if (identical(result, notOverridden)) return result;
     return _toHost(result);
   }
 
-  /// Dispatches a property setter.
+  /// Dispatches a property setter from host context.
   ///
   /// Args are converted via [_toVM] (host→VM boundary).
   /// Returns `true` if the dartic has overridden [property], `false` otherwise.
-  bool set(Object receiver, DarticObject darticObject, String property,
+  bool set(DarticObject darticObject, String property,
       Object? value) {
     return setFromVM(darticObject, darticObject, property, _toVM(value));
   }

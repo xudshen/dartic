@@ -26,7 +26,7 @@ class _$Pattern implements Pattern, DarticObjectHolder {
 
   @override
   Iterable<Match> allMatches(String string, [int start = 0]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'allMatches', [string, start]);
+    final _$r = _dispatch.invoke($darticObject, 'allMatches', [string, start]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method allMatches must be overridden in dartic code');
     }
@@ -35,7 +35,7 @@ class _$Pattern implements Pattern, DarticObjectHolder {
 
   @override
   Match? matchAsPrefix(String string, [int start = 0]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'matchAsPrefix', [string, start]);
+    final _$r = _dispatch.invoke($darticObject, 'matchAsPrefix', [string, start]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method matchAsPrefix must be overridden in dartic code');
     }
@@ -44,21 +44,21 @@ class _$Pattern implements Pattern, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

@@ -26,147 +26,147 @@ class _$Duration extends Duration implements DarticObjectHolder {
 
   @override
   int compareTo(Duration other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'compareTo', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'compareTo', [other]);
     if (identical(_$r, notOverridden)) return super.compareTo(other);
     return _$r as int;
   }
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Duration abs() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'abs', const []);
+    final _$r = _dispatch.invoke($darticObject, 'abs', const []);
     if (identical(_$r, notOverridden)) return super.abs();
     return _$r as Duration;
   }
 
   @override
   int get inDays {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inDays');
+    final r = _dispatch.get($darticObject, 'inDays');
     if (identical(r, notOverridden)) return super.inDays;
     return r as int;
   }
 
   @override
   int get inHours {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inHours');
+    final r = _dispatch.get($darticObject, 'inHours');
     if (identical(r, notOverridden)) return super.inHours;
     return r as int;
   }
 
   @override
   int get inMinutes {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inMinutes');
+    final r = _dispatch.get($darticObject, 'inMinutes');
     if (identical(r, notOverridden)) return super.inMinutes;
     return r as int;
   }
 
   @override
   int get inSeconds {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inSeconds');
+    final r = _dispatch.get($darticObject, 'inSeconds');
     if (identical(r, notOverridden)) return super.inSeconds;
     return r as int;
   }
 
   @override
   int get inMilliseconds {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inMilliseconds');
+    final r = _dispatch.get($darticObject, 'inMilliseconds');
     if (identical(r, notOverridden)) return super.inMilliseconds;
     return r as int;
   }
 
   @override
   int get inMicroseconds {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inMicroseconds');
+    final r = _dispatch.get($darticObject, 'inMicroseconds');
     if (identical(r, notOverridden)) return super.inMicroseconds;
     return r as int;
   }
 
   @override
   bool get isNegative {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isNegative');
+    final r = _dispatch.get($darticObject, 'isNegative');
     if (identical(r, notOverridden)) return super.isNegative;
     return r as bool;
   }
 
   @override
   Duration operator +(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
+    final r = _dispatch.invoke($darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as Duration;
   }
 
   @override
   Duration operator -(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '-', [other]);
+    final r = _dispatch.invoke($darticObject, '-', [other]);
     if (identical(r, notOverridden)) return super - other;
     return r as Duration;
   }
 
   @override
   Duration operator *(num other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '*', [other]);
+    final r = _dispatch.invoke($darticObject, '*', [other]);
     if (identical(r, notOverridden)) return super * other;
     return r as Duration;
   }
 
   @override
   Duration operator ~/(int other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '~/', [other]);
+    final r = _dispatch.invoke($darticObject, '~/', [other]);
     if (identical(r, notOverridden)) return super ~/ other;
     return r as Duration;
   }
 
   @override
   bool operator <(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<', [other]);
+    final r = _dispatch.invoke($darticObject, '<', [other]);
     if (identical(r, notOverridden)) return super < other;
     return r as bool;
   }
 
   @override
   bool operator >(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '>', [other]);
+    final r = _dispatch.invoke($darticObject, '>', [other]);
     if (identical(r, notOverridden)) return super > other;
     return r as bool;
   }
 
   @override
   bool operator <=(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '<=', [other]);
+    final r = _dispatch.invoke($darticObject, '<=', [other]);
     if (identical(r, notOverridden)) return super <= other;
     return r as bool;
   }
 
   @override
   bool operator >=(Duration other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '>=', [other]);
+    final r = _dispatch.invoke($darticObject, '>=', [other]);
     if (identical(r, notOverridden)) return super >= other;
     return r as bool;
   }
 
   @override
   Duration operator -() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'unary-', const []);
+    final r = _dispatch.invoke($darticObject, 'unary-', const []);
     if (identical(r, notOverridden)) return -super;
     return r as Duration;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

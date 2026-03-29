@@ -25,49 +25,49 @@ class _$JsonUnsupportedObjectError extends JsonUnsupportedObjectError implements
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Object? get unsupportedObject {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'unsupportedObject');
+    final r = _dispatch.get($darticObject, 'unsupportedObject');
     if (identical(r, notOverridden)) return super.unsupportedObject;
     return r as Object?;
   }
 
   @override
   Object? get cause {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'cause');
+    final r = _dispatch.get($darticObject, 'cause');
     if (identical(r, notOverridden)) return super.cause;
     return r as Object?;
   }
 
   @override
   String? get partialResult {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'partialResult');
+    final r = _dispatch.get($darticObject, 'partialResult');
     if (identical(r, notOverridden)) return super.partialResult;
     return r as String?;
   }
 
   @override
   StackTrace? get stackTrace {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stackTrace');
+    final r = _dispatch.get($darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

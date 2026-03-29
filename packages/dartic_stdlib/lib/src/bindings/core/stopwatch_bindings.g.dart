@@ -26,81 +26,81 @@ class _$Stopwatch extends Stopwatch implements DarticObjectHolder {
 
   @override
   void start() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'start', const []);
+    final _$r = _dispatch.invoke($darticObject, 'start', const []);
     if (identical(_$r, notOverridden)) { super.start(); return; }
   }
 
   @override
   void stop() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stop', const []);
+    final _$r = _dispatch.invoke($darticObject, 'stop', const []);
     if (identical(_$r, notOverridden)) { super.stop(); return; }
   }
 
   @override
   void reset() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reset', const []);
+    final _$r = _dispatch.invoke($darticObject, 'reset', const []);
     if (identical(_$r, notOverridden)) { super.reset(); return; }
   }
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   int get frequency {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'frequency');
+    final r = _dispatch.get($darticObject, 'frequency');
     if (identical(r, notOverridden)) return super.frequency;
     return r as int;
   }
 
   @override
   int get elapsedTicks {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elapsedTicks');
+    final r = _dispatch.get($darticObject, 'elapsedTicks');
     if (identical(r, notOverridden)) return super.elapsedTicks;
     return r as int;
   }
 
   @override
   Duration get elapsed {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elapsed');
+    final r = _dispatch.get($darticObject, 'elapsed');
     if (identical(r, notOverridden)) return super.elapsed;
     return r as Duration;
   }
 
   @override
   int get elapsedMicroseconds {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elapsedMicroseconds');
+    final r = _dispatch.get($darticObject, 'elapsedMicroseconds');
     if (identical(r, notOverridden)) return super.elapsedMicroseconds;
     return r as int;
   }
 
   @override
   int get elapsedMilliseconds {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'elapsedMilliseconds');
+    final r = _dispatch.get($darticObject, 'elapsedMilliseconds');
     if (identical(r, notOverridden)) return super.elapsedMilliseconds;
     return r as int;
   }
 
   @override
   bool get isRunning {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isRunning');
+    final r = _dispatch.get($darticObject, 'isRunning');
     if (identical(r, notOverridden)) return super.isRunning;
     return r as bool;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

@@ -29,7 +29,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   int available() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'available', const []);
+    final _$r = _dispatch.invoke($darticObject, 'available', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method available must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   void closeSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'closeSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'closeSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method closeSync must be overridden in dartic code');
     }
@@ -46,7 +46,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   int readIntoSync(List<int> buffer, [int start = 0, int? end]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readIntoSync', [buffer, start, end]);
+    final _$r = _dispatch.invoke($darticObject, 'readIntoSync', [buffer, start, end]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readIntoSync must be overridden in dartic code');
     }
@@ -55,7 +55,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   List<int>? readSync(int bytes) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'readSync', [bytes]);
+    final _$r = _dispatch.invoke($darticObject, 'readSync', [bytes]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method readSync must be overridden in dartic code');
     }
@@ -64,7 +64,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   void shutdown(SocketDirection direction) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'shutdown', [direction]);
+    final _$r = _dispatch.invoke($darticObject, 'shutdown', [direction]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method shutdown must be overridden in dartic code');
     }
@@ -72,7 +72,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   void writeFromSync(List<int> buffer, [int start = 0, int? end]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'writeFromSync', [buffer, start, end]);
+    final _$r = _dispatch.invoke($darticObject, 'writeFromSync', [buffer, start, end]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method writeFromSync must be overridden in dartic code');
     }
@@ -80,7 +80,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   int get port {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'port');
+    final r = _dispatch.get($darticObject, 'port');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter port must be overridden in dartic code');
     }
@@ -89,7 +89,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   int get remotePort {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'remotePort');
+    final r = _dispatch.get($darticObject, 'remotePort');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter remotePort must be overridden in dartic code');
     }
@@ -98,7 +98,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   InternetAddress get address {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'address');
+    final r = _dispatch.get($darticObject, 'address');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter address must be overridden in dartic code');
     }
@@ -107,7 +107,7 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   InternetAddress get remoteAddress {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'remoteAddress');
+    final r = _dispatch.get($darticObject, 'remoteAddress');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter remoteAddress must be overridden in dartic code');
     }
@@ -116,21 +116,21 @@ class _$RawSynchronousSocket implements RawSynchronousSocket, DarticObjectHolder
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

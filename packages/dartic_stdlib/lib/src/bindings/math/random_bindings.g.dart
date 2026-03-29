@@ -22,7 +22,7 @@ class _$Random implements Random, DarticObjectHolder {
 
   @override
   int nextInt(int max) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextInt', [max]);
+    final _$r = _dispatch.invoke($darticObject, 'nextInt', [max]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextInt must be overridden in dartic code');
     }
@@ -31,7 +31,7 @@ class _$Random implements Random, DarticObjectHolder {
 
   @override
   double nextDouble() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextDouble', const []);
+    final _$r = _dispatch.invoke($darticObject, 'nextDouble', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextDouble must be overridden in dartic code');
     }
@@ -40,7 +40,7 @@ class _$Random implements Random, DarticObjectHolder {
 
   @override
   bool nextBool() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'nextBool', const []);
+    final _$r = _dispatch.invoke($darticObject, 'nextBool', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method nextBool must be overridden in dartic code');
     }
@@ -49,21 +49,21 @@ class _$Random implements Random, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

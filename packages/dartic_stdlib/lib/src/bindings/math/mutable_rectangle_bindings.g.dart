@@ -22,154 +22,154 @@ class _$MutableRectangle extends MutableRectangle<num> implements DarticObjectHo
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Rectangle<num>? intersection(Rectangle<num> other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersection', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'intersection', [other]);
     if (identical(_$r, notOverridden)) return super.intersection(other);
     return _$r as Rectangle<num>?;
   }
 
   @override
   bool intersects(Rectangle<num> other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'intersects', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'intersects', [other]);
     if (identical(_$r, notOverridden)) return super.intersects(other);
     return _$r as bool;
   }
 
   @override
   Rectangle<num> boundingBox(Rectangle<num> other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'boundingBox', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'boundingBox', [other]);
     if (identical(_$r, notOverridden)) return super.boundingBox(other);
     return _$r as Rectangle<num>;
   }
 
   @override
   bool containsRectangle(Rectangle<num> another) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsRectangle', [another]);
+    final _$r = _dispatch.invoke($darticObject, 'containsRectangle', [another]);
     if (identical(_$r, notOverridden)) return super.containsRectangle(another);
     return _$r as bool;
   }
 
   @override
   bool containsPoint(Point<num> another) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'containsPoint', [another]);
+    final _$r = _dispatch.invoke($darticObject, 'containsPoint', [another]);
     if (identical(_$r, notOverridden)) return super.containsPoint(another);
     return _$r as bool;
   }
 
   @override
   num get left {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'left');
+    final r = _dispatch.get($darticObject, 'left');
     if (identical(r, notOverridden)) return super.left;
     return r as num;
   }
 
   @override
   num get top {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'top');
+    final r = _dispatch.get($darticObject, 'top');
     if (identical(r, notOverridden)) return super.top;
     return r as num;
   }
 
   @override
   num get width {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'width');
+    final r = _dispatch.get($darticObject, 'width');
     if (identical(r, notOverridden)) return super.width;
     return r as num;
   }
 
   @override
   num get height {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'height');
+    final r = _dispatch.get($darticObject, 'height');
     if (identical(r, notOverridden)) return super.height;
     return r as num;
   }
 
   @override
   num get right {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'right');
+    final r = _dispatch.get($darticObject, 'right');
     if (identical(r, notOverridden)) return super.right;
     return r as num;
   }
 
   @override
   num get bottom {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bottom');
+    final r = _dispatch.get($darticObject, 'bottom');
     if (identical(r, notOverridden)) return super.bottom;
     return r as num;
   }
 
   @override
   Point<num> get topLeft {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'topLeft');
+    final r = _dispatch.get($darticObject, 'topLeft');
     if (identical(r, notOverridden)) return super.topLeft;
     return r as Point<num>;
   }
 
   @override
   Point<num> get topRight {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'topRight');
+    final r = _dispatch.get($darticObject, 'topRight');
     if (identical(r, notOverridden)) return super.topRight;
     return r as Point<num>;
   }
 
   @override
   Point<num> get bottomRight {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bottomRight');
+    final r = _dispatch.get($darticObject, 'bottomRight');
     if (identical(r, notOverridden)) return super.bottomRight;
     return r as Point<num>;
   }
 
   @override
   Point<num> get bottomLeft {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'bottomLeft');
+    final r = _dispatch.get($darticObject, 'bottomLeft');
     if (identical(r, notOverridden)) return super.bottomLeft;
     return r as Point<num>;
   }
 
   @override
   set left(num value) {
-    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'left', value)) {
+    if (!_dispatch.set($darticObject, 'left', value)) {
       super.left = value;
     }
   }
 
   @override
   set top(num value) {
-    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'top', value)) {
+    if (!_dispatch.set($darticObject, 'top', value)) {
       super.top = value;
     }
   }
 
   @override
   set width(num value) {
-    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'width', value)) {
+    if (!_dispatch.set($darticObject, 'width', value)) {
       super.width = value;
     }
   }
 
   @override
   set height(num value) {
-    if (!_dispatch.set($darticObject.bridge ?? $darticObject, $darticObject, 'height', value)) {
+    if (!_dispatch.set($darticObject, 'height', value)) {
       super.height = value;
     }
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

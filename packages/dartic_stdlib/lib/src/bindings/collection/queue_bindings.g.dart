@@ -24,7 +24,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Queue<R> cast<R>() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
+    final _$r = _dispatch.invoke($darticObject, 'cast', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cast must be overridden in dartic code');
     }
@@ -33,7 +33,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic removeFirst() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeFirst', const []);
+    final _$r = _dispatch.invoke($darticObject, 'removeFirst', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeFirst must be overridden in dartic code');
     }
@@ -42,7 +42,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic removeLast() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeLast', const []);
+    final _$r = _dispatch.invoke($darticObject, 'removeLast', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeLast must be overridden in dartic code');
     }
@@ -51,7 +51,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void addFirst(dynamic value) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addFirst', [value]);
+    final _$r = _dispatch.invoke($darticObject, 'addFirst', [value]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addFirst must be overridden in dartic code');
     }
@@ -59,7 +59,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void addLast(dynamic value) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addLast', [value]);
+    final _$r = _dispatch.invoke($darticObject, 'addLast', [value]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addLast must be overridden in dartic code');
     }
@@ -67,7 +67,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void add(dynamic value) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [value]);
+    final _$r = _dispatch.invoke($darticObject, 'add', [value]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
@@ -75,7 +75,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool remove(Object? value) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'remove', [value]);
+    final _$r = _dispatch.invoke($darticObject, 'remove', [value]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method remove must be overridden in dartic code');
     }
@@ -84,7 +84,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void addAll(Iterable iterable) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addAll', [iterable]);
+    final _$r = _dispatch.invoke($darticObject, 'addAll', [iterable]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addAll must be overridden in dartic code');
     }
@@ -92,7 +92,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void removeWhere(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'removeWhere', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'removeWhere', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method removeWhere must be overridden in dartic code');
     }
@@ -100,7 +100,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void retainWhere(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'retainWhere', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'retainWhere', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method retainWhere must be overridden in dartic code');
     }
@@ -108,7 +108,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void clear() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'clear', const []);
+    final _$r = _dispatch.invoke($darticObject, 'clear', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method clear must be overridden in dartic code');
     }
@@ -116,7 +116,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable followedBy(Iterable other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'followedBy', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'followedBy', [other]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method followedBy must be overridden in dartic code');
     }
@@ -125,7 +125,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable<T> map<T>(T Function(dynamic) toElement) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'map', [toElement]);
+    final _$r = _dispatch.invoke($darticObject, 'map', [toElement]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method map must be overridden in dartic code');
     }
@@ -134,7 +134,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable where(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'where', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'where', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method where must be overridden in dartic code');
     }
@@ -143,7 +143,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable<T> whereType<T>() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'whereType', const []);
+    final _$r = _dispatch.invoke($darticObject, 'whereType', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method whereType must be overridden in dartic code');
     }
@@ -152,7 +152,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable<T> expand<T>(Iterable<T> Function(dynamic) toElements) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expand', [toElements]);
+    final _$r = _dispatch.invoke($darticObject, 'expand', [toElements]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method expand must be overridden in dartic code');
     }
@@ -161,7 +161,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool contains(Object? element) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [element]);
+    final _$r = _dispatch.invoke($darticObject, 'contains', [element]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method contains must be overridden in dartic code');
     }
@@ -170,7 +170,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   void forEach(void Function(dynamic) action) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
+    final _$r = _dispatch.invoke($darticObject, 'forEach', [action]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method forEach must be overridden in dartic code');
     }
@@ -178,7 +178,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic reduce(dynamic Function(dynamic, dynamic) combine) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reduce', [combine]);
+    final _$r = _dispatch.invoke($darticObject, 'reduce', [combine]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reduce must be overridden in dartic code');
     }
@@ -187,7 +187,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   T fold<T>(T initialValue, T Function(T, dynamic) combine) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fold', [initialValue, combine]);
+    final _$r = _dispatch.invoke($darticObject, 'fold', [initialValue, combine]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method fold must be overridden in dartic code');
     }
@@ -196,7 +196,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool every(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'every', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'every', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method every must be overridden in dartic code');
     }
@@ -205,7 +205,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   String join([String separator = ""]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'join', [separator]);
+    final _$r = _dispatch.invoke($darticObject, 'join', [separator]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method join must be overridden in dartic code');
     }
@@ -214,7 +214,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool any(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'any', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'any', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method any must be overridden in dartic code');
     }
@@ -223,7 +223,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   List toList({bool growable = true}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toList', [growable]);
+    final _$r = _dispatch.invoke($darticObject, 'toList', [growable]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toList must be overridden in dartic code');
     }
@@ -232,7 +232,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Set toSet() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSet', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toSet', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toSet must be overridden in dartic code');
     }
@@ -241,7 +241,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable take(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'take', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'take', [count]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method take must be overridden in dartic code');
     }
@@ -250,7 +250,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable takeWhile(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takeWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'takeWhile', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method takeWhile must be overridden in dartic code');
     }
@@ -259,7 +259,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable skip(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skip', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'skip', [count]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skip must be overridden in dartic code');
     }
@@ -268,7 +268,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterable skipWhile(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skipWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'skipWhile', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skipWhile must be overridden in dartic code');
     }
@@ -277,7 +277,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'firstWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method firstWhere must be overridden in dartic code');
     }
@@ -286,7 +286,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'lastWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastWhere must be overridden in dartic code');
     }
@@ -295,7 +295,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'singleWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'singleWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method singleWhere must be overridden in dartic code');
     }
@@ -304,7 +304,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic elementAt(int index) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'elementAt', [index]);
+    final _$r = _dispatch.invoke($darticObject, 'elementAt', [index]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method elementAt must be overridden in dartic code');
     }
@@ -313,7 +313,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   Iterator get iterator {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'iterator');
+    final r = _dispatch.get($darticObject, 'iterator');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter iterator must be overridden in dartic code');
     }
@@ -322,7 +322,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   int get length {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
+    final r = _dispatch.get($darticObject, 'length');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter length must be overridden in dartic code');
     }
@@ -331,7 +331,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool get isEmpty {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
+    final r = _dispatch.get($darticObject, 'isEmpty');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isEmpty must be overridden in dartic code');
     }
@@ -340,7 +340,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   bool get isNotEmpty {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isNotEmpty');
+    final r = _dispatch.get($darticObject, 'isNotEmpty');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isNotEmpty must be overridden in dartic code');
     }
@@ -349,7 +349,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic get first {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'first');
+    final r = _dispatch.get($darticObject, 'first');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter first must be overridden in dartic code');
     }
@@ -358,7 +358,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic get last {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'last');
+    final r = _dispatch.get($darticObject, 'last');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter last must be overridden in dartic code');
     }
@@ -367,7 +367,7 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   dynamic get single {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'single');
+    final r = _dispatch.get($darticObject, 'single');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter single must be overridden in dartic code');
     }
@@ -376,21 +376,21 @@ class _$Queue implements Queue<dynamic>, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

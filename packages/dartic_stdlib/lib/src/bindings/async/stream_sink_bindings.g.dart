@@ -24,7 +24,7 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   Future<dynamic> close() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
+    final _$r = _dispatch.invoke($darticObject, 'close', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method close must be overridden in dartic code');
     }
@@ -33,7 +33,7 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   void add(dynamic event) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'add', [event]);
+    final _$r = _dispatch.invoke($darticObject, 'add', [event]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method add must be overridden in dartic code');
     }
@@ -41,7 +41,7 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addError', [error, stackTrace]);
+    final _$r = _dispatch.invoke($darticObject, 'addError', [error, stackTrace]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addError must be overridden in dartic code');
     }
@@ -49,7 +49,7 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   Future<dynamic> addStream(Stream stream) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'addStream', [stream]);
+    final _$r = _dispatch.invoke($darticObject, 'addStream', [stream]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method addStream must be overridden in dartic code');
     }
@@ -58,7 +58,7 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   Future<dynamic> get done {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'done');
+    final r = _dispatch.get($darticObject, 'done');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter done must be overridden in dartic code');
     }
@@ -67,21 +67,21 @@ class _$StreamSink implements StreamSink<dynamic>, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

@@ -24,7 +24,7 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   void complete([FutureOr? value]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'complete', [value]);
+    final _$r = _dispatch.invoke($darticObject, 'complete', [value]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method complete must be overridden in dartic code');
     }
@@ -32,7 +32,7 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   void completeError(Object error, [StackTrace? stackTrace]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'completeError', [error, stackTrace]);
+    final _$r = _dispatch.invoke($darticObject, 'completeError', [error, stackTrace]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method completeError must be overridden in dartic code');
     }
@@ -40,7 +40,7 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   Future get future {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'future');
+    final r = _dispatch.get($darticObject, 'future');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter future must be overridden in dartic code');
     }
@@ -49,7 +49,7 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   bool get isCompleted {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isCompleted');
+    final r = _dispatch.get($darticObject, 'isCompleted');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isCompleted must be overridden in dartic code');
     }
@@ -58,21 +58,21 @@ class _$Completer implements Completer<dynamic>, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

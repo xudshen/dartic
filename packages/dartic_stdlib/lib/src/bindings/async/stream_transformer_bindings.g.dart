@@ -24,7 +24,7 @@ class _$StreamTransformer implements StreamTransformer<dynamic, dynamic>, Dartic
 
   @override
   Stream bind(Stream stream) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'bind', [stream]);
+    final _$r = _dispatch.invoke($darticObject, 'bind', [stream]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method bind must be overridden in dartic code');
     }
@@ -33,7 +33,7 @@ class _$StreamTransformer implements StreamTransformer<dynamic, dynamic>, Dartic
 
   @override
   StreamTransformer<RS, RT> cast<RS, RT>() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
+    final _$r = _dispatch.invoke($darticObject, 'cast', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cast must be overridden in dartic code');
     }
@@ -42,21 +42,21 @@ class _$StreamTransformer implements StreamTransformer<dynamic, dynamic>, Dartic
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

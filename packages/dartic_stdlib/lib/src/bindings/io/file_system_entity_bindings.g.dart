@@ -29,7 +29,7 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   Future<bool> exists() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'exists', const []);
+    final _$r = _dispatch.invoke($darticObject, 'exists', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method exists must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   bool existsSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'existsSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'existsSync', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method existsSync must be overridden in dartic code');
     }
@@ -47,7 +47,7 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   Future<FileSystemEntity> rename(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'rename', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'rename', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method rename must be overridden in dartic code');
     }
@@ -56,7 +56,7 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   FileSystemEntity renameSync(String newPath) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'renameSync', [newPath]);
+    final _$r = _dispatch.invoke($darticObject, 'renameSync', [newPath]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method renameSync must be overridden in dartic code');
     }
@@ -65,62 +65,62 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   Future<String> resolveSymbolicLinks() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveSymbolicLinks', const []);
+    final _$r = _dispatch.invoke($darticObject, 'resolveSymbolicLinks', const []);
     if (identical(_$r, notOverridden)) return super.resolveSymbolicLinks();
     return _$r as Future<String>;
   }
 
   @override
   String resolveSymbolicLinksSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'resolveSymbolicLinksSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'resolveSymbolicLinksSync', const []);
     if (identical(_$r, notOverridden)) return super.resolveSymbolicLinksSync();
     return _$r as String;
   }
 
   @override
   Future<FileStat> stat() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'stat', const []);
+    final _$r = _dispatch.invoke($darticObject, 'stat', const []);
     if (identical(_$r, notOverridden)) return super.stat();
     return _$r as Future<FileStat>;
   }
 
   @override
   FileStat statSync() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'statSync', const []);
+    final _$r = _dispatch.invoke($darticObject, 'statSync', const []);
     if (identical(_$r, notOverridden)) return super.statSync();
     return _$r as FileStat;
   }
 
   @override
   Future<FileSystemEntity> delete({bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'delete', [recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'delete', [recursive]);
     if (identical(_$r, notOverridden)) return super.delete(recursive: recursive);
     return _$r as Future<FileSystemEntity>;
   }
 
   @override
   void deleteSync({bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'deleteSync', [recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'deleteSync', [recursive]);
     if (identical(_$r, notOverridden)) { super.deleteSync(recursive: recursive); return; }
   }
 
   @override
   Stream<FileSystemEvent> watch({int events = FileSystemEvent.all, bool recursive = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'watch', [events, recursive]);
+    final _$r = _dispatch.invoke($darticObject, 'watch', [events, recursive]);
     if (identical(_$r, notOverridden)) return super.watch(events: events, recursive: recursive);
     return _$r as Stream<FileSystemEvent>;
   }
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   String get path {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
+    final r = _dispatch.get($darticObject, 'path');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter path must be overridden in dartic code');
     }
@@ -129,21 +129,21 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   Uri get uri {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'uri');
+    final r = _dispatch.get($darticObject, 'uri');
     if (identical(r, notOverridden)) return super.uri;
     return r as Uri;
   }
 
   @override
   bool get isAbsolute {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isAbsolute');
+    final r = _dispatch.get($darticObject, 'isAbsolute');
     if (identical(r, notOverridden)) return super.isAbsolute;
     return r as bool;
   }
 
   @override
   FileSystemEntity get absolute {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'absolute');
+    final r = _dispatch.get($darticObject, 'absolute');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter absolute must be overridden in dartic code');
     }
@@ -152,21 +152,21 @@ class _$FileSystemEntity extends FileSystemEntity implements DarticObjectHolder 
 
   @override
   Directory get parent {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'parent');
+    final r = _dispatch.get($darticObject, 'parent');
     if (identical(r, notOverridden)) return super.parent;
     return r as Directory;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

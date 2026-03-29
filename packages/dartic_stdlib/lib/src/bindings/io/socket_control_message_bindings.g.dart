@@ -29,7 +29,7 @@ class _$SocketControlMessage implements SocketControlMessage, DarticObjectHolder
 
   @override
   List<ResourceHandle> extractHandles() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'extractHandles', const []);
+    final _$r = _dispatch.invoke($darticObject, 'extractHandles', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method extractHandles must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$SocketControlMessage implements SocketControlMessage, DarticObjectHolder
 
   @override
   int get level {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'level');
+    final r = _dispatch.get($darticObject, 'level');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter level must be overridden in dartic code');
     }
@@ -47,7 +47,7 @@ class _$SocketControlMessage implements SocketControlMessage, DarticObjectHolder
 
   @override
   int get type {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
+    final r = _dispatch.get($darticObject, 'type');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter type must be overridden in dartic code');
     }
@@ -56,7 +56,7 @@ class _$SocketControlMessage implements SocketControlMessage, DarticObjectHolder
 
   @override
   Uint8List get data {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'data');
+    final r = _dispatch.get($darticObject, 'data');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter data must be overridden in dartic code');
     }
@@ -65,21 +65,21 @@ class _$SocketControlMessage implements SocketControlMessage, DarticObjectHolder
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }
