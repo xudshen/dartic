@@ -802,7 +802,6 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.loadNull, sentinelReg, 0, 0);
     }
     _emitter.emitABC(Op.setFieldRef, thisReg, sentinelReg, layout.offset);
-    _refAlloc.free(sentinelReg);
   }
 
   /// Compiles a [SuperInitializer] within a constructor.

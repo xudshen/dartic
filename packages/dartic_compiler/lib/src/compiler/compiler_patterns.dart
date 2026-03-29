@@ -127,7 +127,6 @@ extension on DarticCompiler {
     final boolReg = _allocValueReg();
     _emitter.emitABC(Op.instanceOf, boolReg, scrutineeReg, typeReg);
     final fj = _emitFailJumpIfFalse(boolReg);
-    _refAlloc.free(typeReg);
     return [fj];
   }
 
@@ -157,7 +156,6 @@ extension on DarticCompiler {
       );
       final boolReg = _emitUnbox(resultReg, StackKind.boolVal);
       fails.add(_emitFailJumpIfFalse(boolReg));
-      _refAlloc.free(resultReg);
     } else {
       // Primitive equality: EQ_REF.
       final boolReg = _allocValueReg();
@@ -165,7 +163,6 @@ extension on DarticCompiler {
       fails.add(_emitFailJumpIfFalse(boolReg));
     }
 
-    _refAlloc.free(constReg);
     return fails;
   }
 
@@ -249,7 +246,6 @@ extension on DarticCompiler {
       );
       final boolReg = _emitUnbox(checkReg, StackKind.boolVal);
       fails.add(_emitFailJumpIfFalse(boolReg));
-      _refAlloc.free(checkReg);
     } else {
       // Fallback: unbox length and compare directly.
       final lengthValReg = _emitUnbox(lengthReg, StackKind.intVal);
@@ -261,7 +257,6 @@ extension on DarticCompiler {
       }
       fails.add(_emitFailJumpIfFalse(boolReg));
     }
-    _refAlloc.free(expectedRefReg);
 
     // Step 4: Match each element.
     var headIndex = 0;
@@ -289,7 +284,6 @@ extension on DarticCompiler {
               [tailCountRefReg],
               null,
             );
-            _refAlloc.free(tailCountRefReg);
           } else {
             final lengthValReg2 = _emitUnbox(lengthReg, StackKind.intVal);
             final endValReg = _allocValueReg();
@@ -307,11 +301,8 @@ extension on DarticCompiler {
             [startRefReg, endRefReg],
             pattern.matchedValueType,
           );
-          _refAlloc.free(startRefReg);
-          _refAlloc.free(endRefReg);
 
           fails.addAll(_compilePattern(subPattern.subPattern!, subListReg));
-          _refAlloc.free(subListReg);
         }
         // After rest, remaining elements are counted from the tail.
         headIndex = -(pattern.patterns.length - i - 1);
@@ -335,7 +326,6 @@ extension on DarticCompiler {
               [negIdxRefReg],
               null,
             );
-            _refAlloc.free(negIdxRefReg);
           } else {
             final lengthValReg3 = _emitUnbox(lengthReg, StackKind.intVal);
             final offsetValReg = _allocValueReg();
@@ -355,17 +345,14 @@ extension on DarticCompiler {
           [indexRefReg],
           pattern.matchedValueType,
         );
-        _refAlloc.free(indexRefReg);
 
         fails.addAll(_compilePattern(subPattern, elemReg));
         // Always free — VariablePattern binds via declare() + MOVE.
-        _refAlloc.free(elemReg);
 
         headIndex++;
       }
     }
 
-    _refAlloc.free(lengthReg);
     return fails;
   }
 
@@ -399,7 +386,6 @@ extension on DarticCompiler {
       );
       final boolReg = _emitUnbox(hasKeyReg, StackKind.boolVal);
       fails.add(_emitFailJumpIfFalse(boolReg));
-      _refAlloc.free(hasKeyReg);
 
       // Get value: map[key]
       final valueReg = _emitPatternCall(
@@ -409,11 +395,9 @@ extension on DarticCompiler {
         [keyReg],
         pattern.matchedValueType,
       );
-      _refAlloc.free(keyReg);
 
       // Recurse on value pattern.
       fails.addAll(_compilePattern(entry.value, valueReg));
-      _refAlloc.free(valueReg);
     }
 
     return fails;
@@ -434,7 +418,6 @@ extension on DarticCompiler {
         fails.addAll(_compilePattern(subPattern.pattern, fieldReg));
         // Always free the extracted field register — VariablePattern binds
         // via declare() + MOVE to its own scope-managed register.
-        _refAlloc.free(fieldReg);
       } else {
         // Defensive: direct recurse on scrutinee.
         fails.addAll(_compilePattern(subPattern, scrutineeReg));
@@ -461,12 +444,10 @@ extension on DarticCompiler {
       if (namedPat.checkReturn) {
         final castTypeReg = _emitInstantiateType(namedPat.resultType!);
         _emitter.emitABC(Op.cast, fieldReg, fieldReg, castTypeReg);
-        _refAlloc.free(castTypeReg);
       }
 
       fails.addAll(_compilePattern(namedPat.pattern, fieldReg));
       // Always free — VariablePattern binds via declare() + MOVE.
-      _refAlloc.free(fieldReg);
     }
 
     return fails;
@@ -660,10 +641,8 @@ extension on DarticCompiler {
     final typeReg = _emitInstantiateType(pattern.type);
     final castedReg = _allocRefReg();
     _emitter.emitABC(Op.cast, castedReg, scrutineeReg, typeReg);
-    _refAlloc.free(typeReg);
 
     final fails = _compilePattern(pattern.pattern, castedReg);
-    _refAlloc.free(castedReg);
     return fails;
   }
 
@@ -746,9 +725,7 @@ extension on DarticCompiler {
         resultReg = _allocRefReg();
     }
 
-    _refAlloc.free(rhsReg);
     final boolReg = _emitUnbox(resultReg, StackKind.boolVal);
-    _refAlloc.free(resultReg);
     if (pattern.kind == ir.RelationalPatternKind.notEquals) {
       final notReg = _allocValueReg();
       _emitter.emitABC(Op.notBool, notReg, boolReg, 0);
@@ -771,7 +748,6 @@ extension on DarticCompiler {
       final typeReg = _emitInstantiateType(pattern.variable.type);
       castedReg = _allocRefReg();
       _emitter.emitABC(Op.cast, castedReg, scrutineeReg, typeReg);
-      _refAlloc.free(typeReg);
       sourceReg = castedReg;
     }
 
@@ -782,7 +758,6 @@ extension on DarticCompiler {
       _emitter.emitABC(Op.moveRef, binding.reg, sourceReg, 0);
     }
 
-    if (castedReg != null) _refAlloc.free(castedReg);
     return const [];
   }
 
@@ -1217,6 +1192,5 @@ extension on DarticCompiler {
         'Expected at least one case to match in exhaustive switch');
     _emitter.emitABx(Op.loadConst, msgReg, msgIdx);
     _emitter.emitABC(Op.throw_, msgReg, 0, 0);
-    _refAlloc.free(msgReg);
   }
 }

@@ -45,17 +45,17 @@ void main() {
       expect(scope.lookup(decl), isNull);
     });
 
-    test('release returns registers to allocator', () {
+    test('release is a no-op (LSRA manages register lifecycle)', () {
       final scope = Scope(valueAlloc: valAlloc, refAlloc: refAlloc);
       final decl1 = makeDummyVarDecl('x');
       final decl2 = makeDummyVarDecl('y');
-      final b1 = scope.declare(decl1, StackKind.intVal);
-      final b2 = scope.declare(decl2, StackKind.intVal);
-      scope.release();
+      scope.declare(decl1, StackKind.intVal); // r0
+      scope.declare(decl2, StackKind.intVal); // r1
+      scope.release(); // no-op
 
-      // After release, the next alloc should reuse a freed register.
+      // After release, alloc returns the next fresh register (no reuse).
       final next = valAlloc.alloc();
-      expect({b1.reg, b2.reg}, contains(next));
+      expect(next, 2); // r2, not r0 or r1
     });
 
     test('ref variable allocates from ref allocator', () {

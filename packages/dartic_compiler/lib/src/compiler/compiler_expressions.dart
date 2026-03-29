@@ -467,7 +467,6 @@ extension on DarticCompiler {
     // The result register may be a scope-tracked variable (e.g. CFE-desugared
     // switch expressions use `block { int #t; ... } => #t` where #t is
     // declared in this scope). Untrack it so it survives scope release.
-    _scope.untrackReg(resultReg, isValue: resultLoc == ResultLoc.value);
 
     _scope.release();
     _scope = outerScope;
@@ -563,7 +562,6 @@ extension on DarticCompiler {
           tmpReg, expr.variable,
           isNullable: _isNullableType(expr.variable.type),
         );
-        _refAlloc.free(tmpReg);
       }
 
       final uvIdx = _resolveUpvalue(expr.variable);
@@ -749,7 +747,6 @@ extension on DarticCompiler {
     );
     final bindingIndex = _allocBinding(symbolName, 1);
     final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
-    _refAlloc.free(unusedResultReg);
 
     return (savedReg, valLoc);
   }
@@ -1502,38 +1499,27 @@ extension on DarticCompiler {
     int bindingIndex,
   ) {
     // Phase 1: ensure all args are on the ref stack.
-    // Track newly allocated boxing registers for Phase 5 recycling.
-    final boxedRegs = <int>[];
     final refArgRegs = <int>[];
     for (final (srcReg, srcLoc, srcType) in compiledArgs) {
-      final refReg = _boxToRefIfValue(srcReg, srcLoc, srcType);
-      refArgRegs.add(refReg);
-      if (refReg != srcReg) boxedRegs.add(refReg);
+      refArgRegs.add(_boxToRefIfValue(srcReg, srcLoc, srcType));
     }
 
     // Phase 2: allocate consecutive ref registers — result + arg slots.
-    // Uses allocConsecutive to guarantee contiguity (free pool may be
-    // fragmented after previous recycling rounds).
     final argCount = refArgRegs.length;
     final resultReg = _refAlloc.allocConsecutive(1 + argCount);
-    final targetArgRegs = List.generate(argCount, (i) => resultReg + 1 + i);
 
     // Phase 3: MOVE each arg into its consecutive target slot.
     for (var i = 0; i < refArgRegs.length; i++) {
-      if (refArgRegs[i] != targetArgRegs[i]) {
-        _emitter.emitABC(Op.moveRef, targetArgRegs[i], refArgRegs[i], 0);
+      final targetReg = resultReg + 1 + i;
+      if (refArgRegs[i] != targetReg) {
+        _emitter.emitABC(Op.moveRef, targetReg, refArgRegs[i], 0);
       }
     }
 
     // Phase 4: emit CALL_HOST A=resultReg, Bx=bindingIndex.
     _emitter.emitABx(Op.callHost, resultReg, bindingIndex);
 
-    // Phase 5: recycle dead registers.
-    // After CALL_HOST, targetArgRegs and boxedRegs are dead — only
-    // resultReg survives (returned to caller).
-    _refAlloc.freeAll(targetArgRegs);
-    _refAlloc.freeAll(boxedRegs);
-
+    // Register lifecycle managed by post-codegen LSRA pass.
     return (resultReg, ResultLoc.ref);
   }
 
@@ -2352,7 +2338,6 @@ extension on DarticCompiler {
         methodName: '${expr.name.text}=');
 
     final (unusedResultReg, _) = _emitCallHost(compiledArgs, bindingIndex);
-    _refAlloc.free(unusedResultReg);
 
     // InstanceSet evaluates to the assigned value.
     return (savedReg, valLoc);
@@ -4549,7 +4534,6 @@ extension on DarticCompiler {
     _emitter.emitABC(Op.loadLateSentinel, tmpSentinel, 0, 0);
     final cmpVal = _allocValueReg();
     _emitter.emitABC(Op.eqRef, cmpVal, refReg, tmpSentinel);
-    _refAlloc.free(tmpSentinel);
     final jumpPC = _emitter.emitJumpPlaceholder();
     return (jumpPC, cmpVal);
   }
@@ -4600,7 +4584,6 @@ extension on DarticCompiler {
     if (isNullable) {
       // condVal=1 means IS sentinel → JUMP_IF_FALSE skips throw when NOT sentinel
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfFalse, condValReg, _emitter.currentPC);
-      _valueAlloc.free(condValReg);
     } else {
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNnull, refReg, _emitter.currentPC);
     }
@@ -4629,7 +4612,6 @@ extension on DarticCompiler {
     // Patch ok jump.
     if (isNullable) {
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
-      _valueAlloc.free(condValReg);
     } else {
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNull, refReg, _emitter.currentPC);
     }
@@ -4658,7 +4640,6 @@ extension on DarticCompiler {
     if (isNullable) {
       // condVal=1 means IS sentinel → ok (still sentinel, safe to write)
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
-      _valueAlloc.free(condValReg);
     } else {
       _emitter.patchJumpAsBx(jumpToOkPC, Op.jumpIfNull, refReg, _emitter.currentPC);
     }
@@ -4725,7 +4706,6 @@ extension on DarticCompiler {
       if (savedThisReg >= 0) {
         _emitter.emitABC(Op.closeUpvalue, thisReg, 0, 0);
         _emitMove(thisReg, savedThisReg, ResultLoc.ref);
-        _refAlloc.free(savedThisReg);
       }
     } else {
       // No initializer → throw LateError.fieldNI.
@@ -4736,7 +4716,6 @@ extension on DarticCompiler {
     if (isNullable) {
       _emitter.patchJumpAsBx(
           jumpToOkPC, Op.jumpIfFalse, condValReg, _emitter.currentPC);
-      _valueAlloc.free(condValReg);
     } else {
       _emitter.patchJumpAsBx(
           jumpToOkPC, Op.jumpIfNnull, resultReg, _emitter.currentPC);
@@ -4776,12 +4755,10 @@ extension on DarticCompiler {
     if (isNullable) {
       _emitter.patchJumpAsBx(
           jumpToOkPC, Op.jumpIfTrue, condValReg, _emitter.currentPC);
-      _valueAlloc.free(condValReg);
     } else {
       _emitter.patchJumpAsBx(
           jumpToOkPC, Op.jumpIfNull, currentReg, _emitter.currentPC);
     }
-    _refAlloc.free(currentReg);
   }
 
   /// Emits a CAST check for a covariant field write.
@@ -4805,11 +4782,9 @@ extension on DarticCompiler {
       // Value-stack: box to a temp ref reg for the CAST check.
       final tempRef = _emitBoxToRef(valReg, valType);
       _emitter.emitABC(Op.cast, tempRef, tempRef, typeReg);
-      _refAlloc.free(tempRef);
     } else {
       _emitter.emitABC(Op.cast, valReg, valReg, typeReg);
     }
-    _refAlloc.free(typeReg);
   }
 
   /// Emits CALL_HOST `LateError.<constructor>(name)` + THROW.
@@ -4829,11 +4804,9 @@ extension on DarticCompiler {
       [(nameReg, ResultLoc.ref, null as ir.DartType?)],
       bindingIndex,
     );
-    _refAlloc.free(nameReg);
 
     // THROW
     _emitter.emitABC(Op.throw_, errorReg, 0, 0);
-    _refAlloc.free(errorReg);
   }
 }
 

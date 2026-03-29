@@ -18,6 +18,9 @@ import 'package:dartic/dartic_internal.dart';
 class BytecodeEmitter {
   final List<int> _buffer = [];
 
+  /// Mutable access to the instruction buffer for post-codegen LSRA rewriting.
+  List<int> get buffer => _buffer;
+
   /// Current program counter (number of instructions emitted).
   int get currentPC => _buffer.length;
 

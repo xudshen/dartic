@@ -33,11 +33,11 @@ class VarBinding {
   final ir.Expression? deferredInitializer;
 }
 
-/// Lexical scope for variable bindings and register lifecycle management.
+/// Lexical scope for variable bindings.
 ///
-/// Scopes form a stack (not a tree) during compilation. Each scope tracks
-/// the registers it allocated so they can be batch-released when the scope
-/// exits.
+/// Scopes form a stack (not a tree) during compilation. The compiler
+/// allocates virtual registers via [RegisterAllocator]; the post-codegen
+/// LSRA pass handles register lifecycle optimization.
 ///
 /// See: docs/design/05-compiler.md "作用域分析"
 class Scope {
@@ -54,10 +54,6 @@ class Scope {
   /// Variables declared in this scope. Maps Kernel VariableDeclaration
   /// to its binding (register + stack kind).
   final Map<ir.VariableDeclaration, VarBinding> _bindings = {};
-
-  /// Registers allocated in this scope, tracked for batch release on exit.
-  final List<int> _valueRegs = [];
-  final List<int> _refRegs = [];
 
   /// Declares a variable in this scope and allocates a register for it.
   VarBinding declare(
@@ -78,11 +74,6 @@ class Scope {
       deferredInitializer: deferredInitializer,
     );
     _bindings[decl] = binding;
-    if (kind.isValue) {
-      _valueRegs.add(reg);
-    } else {
-      _refRegs.add(reg);
-    }
     return binding;
   }
 
@@ -104,8 +95,6 @@ class Scope {
       deferredInitializer: deferredInitializer,
     );
     _bindings[decl] = binding;
-    // Don't track in _valueRegs/_refRegs — the register is owned externally
-    // (e.g., parameter registers are part of the frame layout, not scope-managed).
     return binding;
   }
 
@@ -141,24 +130,8 @@ class Scope {
     }
   }
 
-  /// Removes a register from scope tracking so it won't be freed on release.
-  ///
-  /// Used by [BlockExpression] compilation to keep the result register alive
-  /// after the block scope is released. The register was allocated by
-  /// [declare] in this scope but needs to survive beyond the scope's lifetime.
-  ///
-  /// [isValue] is `true` for value-stack registers, `false` for ref-stack.
-  void untrackReg(int reg, {required bool isValue}) {
-    if (isValue) {
-      _valueRegs.remove(reg);
-    } else {
-      _refRegs.remove(reg);
-    }
-  }
-
-  /// Releases all registers allocated in this scope back to their pools.
-  void release() {
-    valueAlloc.freeAll(_valueRegs);
-    refAlloc.freeAll(_refRegs);
-  }
+  /// No-op. Retained for API compatibility with call sites that invoke
+  /// `_scope.release()` at block exit. Register lifecycle is now managed
+  /// by the post-codegen LSRA pass, not by scope-level batch freeing.
+  void release() {}
 }
