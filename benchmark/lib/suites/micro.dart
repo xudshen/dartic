@@ -110,7 +110,7 @@ int main() {
 ''',
       ),
       BenchmarkCase(
-        name: 'queens_12',
+        name: 'queens_10',
         category: 'micro',
         hostFn: hostQueens,
 
@@ -135,7 +135,7 @@ int queens(int n) {
   solve(0);
   return count;
 }
-int main() => queens(12);
+int main() => queens(10);
 ''',
       ),
       BenchmarkCase(

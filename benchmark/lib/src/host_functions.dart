@@ -164,7 +164,7 @@ Object? hostSieve() {
 
 @pragma('vm:never-inline')
 Object? hostQueens() {
-  return _queens(12);
+  return _queens(10);
 }
 
 int _queens(int n) {
@@ -246,7 +246,7 @@ Object? hostNbody() {
 @pragma('vm:never-inline')
 Object? hostStorage() {
   int total = 0;
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 20; i++) {
     total += _countStorageNodes(_buildStorageTree(7));
   }
   return total;
@@ -462,7 +462,7 @@ Object? hostDeltaBlue() {
 int _deltablueMain() {
   _dbPlanner = _DBPlanner();
   int result = 0;
-  for (int i = 0; i < 40; i++) {
+  for (int i = 0; i < 10; i++) {
     result += _dbChainTest(100);
     result += _dbProjectionTest(100);
   }

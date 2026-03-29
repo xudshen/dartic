@@ -38,7 +38,7 @@ int countNodes(Node node) {
 
 int main() {
   int total = 0;
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 20; i++) {
     total += countNodes(buildTree(7));
   }
   return total;
