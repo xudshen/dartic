@@ -458,13 +458,6 @@ DarticType extractType(
     // Non-generic object: create a simple type from classId.
     return registry.intern(value.classId, const []);
   }
-  if (value is DarticObjectHolder) {
-    // Bridge instances: extract the embedded DarticObject for type checking.
-    final obj = value.$darticObject;
-    final rt = obj.runtimeType_;
-    if (rt != null) return rt;
-    return registry.intern(obj.classId, const []);
-  }
   // DarticType objects (runtime type reified as `Type`).
   if (value is DarticType) {
     return registry.intern(registry.typeClassId, const []);

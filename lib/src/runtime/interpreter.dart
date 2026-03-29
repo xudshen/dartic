@@ -83,11 +83,7 @@ class DarticInterpreter {
   /// Otherwise throws (field access opcodes should never hit this case).
   @pragma('vm:prefer-inline')
   static DarticObject _extractDarticObject(Object receiver) {
-    if (receiver is DarticObject) return receiver;
-    if (receiver is DarticObjectHolder) return receiver.$darticObject;
-    throw DarticError(
-      'Field access on non-dartic object: ${receiver.runtimeType}',
-    );
+    return receiver as DarticObject;
   }
 
   final ValueStack valueStack;
@@ -1025,6 +1021,7 @@ class DarticInterpreter {
   /// Does NOT create faces for implements-only classes. Face creation
   /// is handled at specific boundary points (EXTRACT_FACE for CALL_HOST
   /// params, [_toHostException] for exception HOST_BOUNDARY crossing).
+  @pragma('vm:prefer-inline')
   Object? _toHost(Object? value) {
     if (value is DarticObject && value.bridge != null) {
       return value.bridge!;
@@ -1072,6 +1069,7 @@ class DarticInterpreter {
   /// - [DarticObjectHolder] (bridge/face) → embedded [DarticObject]
   /// - ClosureAdapter proxy [Function] → original [DarticClosure]
   /// - Everything else → unchanged
+  @pragma('vm:prefer-inline')
   Object? _toVM(Object? value) {
     if (value is DarticObjectHolder) {
       return value.$darticObject;
