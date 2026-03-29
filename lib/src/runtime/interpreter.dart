@@ -1095,6 +1095,124 @@ class DarticInterpreter {
     return value;
   }
 
+  // ── Shared dispatch helpers ──────────────────────────────────────
+
+  /// Reroutes args from all-ref layout to the callee's expected mixed layout.
+  ///
+  /// The compiler boxes ALL args to the ref stack for CALL/CALL_VIRTUAL
+  /// (since the callee's paramKinds may differ from the declared FunctionType).
+  /// This helper unboxes int/double/bool params to the value stack and
+  /// compacts ref params, then shrinks rs.sp to refRegCount.
+  static void _rerouteArgs(
+    DarticFuncProto callee,
+    int vBase,
+    int rBase,
+    int neededRefSlots,
+    RefStack rs,
+    ValueStack vs,
+  ) {
+    final paramKinds = callee.paramKinds!;
+    final defaults = callee.paramDefaults;
+    final reqPosCount = callee.requiredPositionalCount;
+    final posParamCount = callee.positionalParamCount;
+    final optPosCount = posParamCount - reqPosCount;
+    var readRefIdx = 3; // args start at rBase+3
+    var writeRefIdx = 3;
+    var writeValIdx = 0;
+    for (var i = 0; i < paramKinds.length; i++) {
+      final value = rs.read(rBase + readRefIdx);
+      readRefIdx++;
+      final isPresent =
+          value != null && !identical(value, darticAbsent);
+      switch (paramKinds[i]) {
+        case StackKind.intDefault:
+          if (isPresent) {
+            vs.writeInt(vBase + writeValIdx, value as int);
+          } else if (defaults.isNotEmpty) {
+            final defaultIdx = i < posParamCount
+                ? i - reqPosCount
+                : optPosCount + (i - posParamCount);
+            if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+              final d = defaults[defaultIdx];
+              if (d is int) vs.writeInt(vBase + writeValIdx, d);
+            }
+          }
+          writeValIdx++;
+        case StackKind.boolDefault:
+          if (isPresent) {
+            final v = value;
+            vs.writeInt(
+                vBase + writeValIdx, v is bool ? (v ? 1 : 0) : v as int);
+          } else if (defaults.isNotEmpty) {
+            final defaultIdx = i < posParamCount
+                ? i - reqPosCount
+                : optPosCount + (i - posParamCount);
+            if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+              final d = defaults[defaultIdx];
+              if (d is bool) {
+                vs.writeInt(vBase + writeValIdx, d ? 1 : 0);
+              }
+            }
+          }
+          writeValIdx++;
+        case StackKind.doubleDefault:
+          if (isPresent) {
+            vs.writeDouble(
+                vBase + writeValIdx, (value as num).toDouble());
+          } else if (defaults.isNotEmpty) {
+            final defaultIdx = i < posParamCount
+                ? i - reqPosCount
+                : optPosCount + (i - posParamCount);
+            if (defaultIdx >= 0 && defaultIdx < defaults.length) {
+              final d = defaults[defaultIdx];
+              if (d is num) {
+                vs.writeDouble(vBase + writeValIdx, d.toDouble());
+              }
+            }
+          }
+          writeValIdx++;
+        default: // ref — compact ref positions
+          if (writeRefIdx != readRefIdx - 1) {
+            rs.write(rBase + writeRefIdx, value);
+          }
+          writeRefIdx++;
+      }
+    }
+    if (neededRefSlots != callee.refRegCount) {
+      rs.sp = rBase + callee.refRegCount;
+    }
+  }
+
+  /// Checks if a field value is an uninitialized late field and throws
+  /// [DarticLateError] if so.
+  ///
+  /// Returns the field value unchanged if it's initialized. Throws on
+  /// uninitialized late fields (value is null or lateSentinel).
+  Object? _checkLateSentinelOrReturn(
+      Object? fieldVal, FieldLayout layout, String name) {
+    if (layout.isLate &&
+        (identical(fieldVal, lateSentinel) || fieldVal == null)) {
+      throw DarticLateError("Field '$name' has not been initialized.");
+    }
+    return fieldVal;
+  }
+
+  /// Intercepts `runtimeType` access on any receiver, returning the
+  /// DarticType from [extractType] instead of the host VM's runtimeType.
+  ///
+  /// Returns the DarticType if intercepted, or null if the receiver has
+  /// a dartic runtimeType override (should dispatch normally).
+  DarticType? _interceptRuntimeType(Object? receiver, int nameIdx) {
+    final reg = _activeTypeRegistry;
+    if (reg == null) return null;
+    if (receiver == null) return reg.nullType;
+    if (nameIdx >= 0 && _hasDarticMethodOverride(receiver, _activeModule!, nameIdx)) {
+      return null; // Has dartic override — dispatch normally
+    }
+    return extractType(
+        receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
+  }
+
   /// Validates positional arguments against a [DarticClosure]'s runtime type.
   ///
   /// Called before dynamic closure dispatch (INVOKE_DYN) to enforce parameter
@@ -2756,55 +2874,8 @@ class DarticInterpreter {
             }
           }
 
-          // Reroute args from all-ref layout to callee's expected layout.
-          // The compiler boxes ALL args to the ref stack for CALL opcodes
-          // (since the callee's actual paramKinds may differ from the
-          // declared FunctionType at the call site). If the callee has
-          // value-stack params, unbox them from the ref stack now.
           if (callee.needsArgRerouting) {
-            final paramKinds = callee.paramKinds!;
-            var readRefIdx = 3; // args start at rBase+3
-            var writeRefIdx = 3;
-            var writeValIdx = 0;
-            for (var i = 0; i < paramKinds.length; i++) {
-              final value = rs.read(rBase + readRefIdx);
-              readRefIdx++;
-              switch (paramKinds[i]) {
-                case StackKind.intDefault:
-                  if (value != null) {
-                    vs.writeInt(vBase + writeValIdx, value as int);
-                  }
-                  writeValIdx++;
-                case StackKind.boolDefault:
-                  if (value != null) {
-                    final v = value;
-                    vs.writeInt(
-                        vBase + writeValIdx, v is bool ? (v ? 1 : 0) : v as int);
-                  }
-                  writeValIdx++;
-                case StackKind.doubleDefault:
-                  if (value != null) {
-                    vs.writeDouble(
-                        vBase + writeValIdx, (value as num).toDouble());
-                  }
-                  writeValIdx++;
-                default: // ref — compact ref positions
-                  if (writeRefIdx != readRefIdx - 1) {
-                    rs.write(rBase + writeRefIdx, value);
-                  }
-                  writeRefIdx++;
-              }
-            }
-
-            // Shrink rs.sp back to refRegCount: the all-ref arg area
-            // (rBase+3..rBase+3+paramCount) was only needed to receive
-            // the caller's boxed args. After rerouting them to the value
-            // stack (or compacting ref params), the callee's bytecode
-            // expects the next frame (CALL_STATIC) to start at
-            // rBase + refRegCount, not rBase + neededRefSlots.
-            if (neededRefSlots != callee.refRegCount) {
-              rs.sp = rBase + callee.refRegCount;
-            }
+            _rerouteArgs(callee, vBase, rBase, neededRefSlots, rs, vs);
           }
 
           // Switch to callee bytecode.
@@ -2884,16 +2955,12 @@ class DarticInterpreter {
           // BUT skip if the receiver has a dartic runtimeType override,
           // so the bridge interception below can dispatch to it.
           if (methodName == 'runtimeType') {
-            final reg = _activeTypeRegistry;
-            if (reg != null) {
-              final receiver = rs.read(rBase + a + 1);
-              final nameIdx = cp.lookupNameIndex('runtimeType');
-              if (nameIdx < 0 ||
-                  !_hasDarticMethodOverride(receiver, module, nameIdx)) {
-                final darticType = extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable);
-                rs.write(rBase + a, darticType);
-                break;
-              }
+            final receiver = rs.read(rBase + a + 1);
+            final nameIdx = cp.lookupNameIndex('runtimeType');
+            final rt = _interceptRuntimeType(receiver, nameIdx);
+            if (rt != null) {
+              rs.write(rBase + a, rt);
+              break;
             }
           }
 
@@ -3069,24 +3136,13 @@ class DarticInterpreter {
           final receiver = rs.read(rBase + b);
           final ic = module.functions[callStack.funcId].icTable[c];
 
-          // runtimeType interception (Path C): when CALL_VIRTUAL targets
-          // the `runtimeType` getter, short-circuit with extractType —
-          // BUT only if the receiver's dartic class does NOT override
-          // runtimeType (user-defined getters must dispatch normally).
           {
             final methodName = cp.getName(ic.methodNameIndex);
             if (methodName == 'runtimeType') {
-              final reg = _activeTypeRegistry;
-              if (reg != null) {
-                if (receiver == null) {
-                  rs.write(rBase + a, reg.nullType);
-                  break;
-                }
-                if (!_hasDarticMethodOverride(
-                    receiver, module, ic.methodNameIndex)) {
-                  rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
-                  break;
-                }
+              final rt = _interceptRuntimeType(receiver, ic.methodNameIndex);
+              if (rt != null) {
+                rs.write(rBase + a, rt);
+                break;
               }
             }
           }
@@ -3201,85 +3257,8 @@ class DarticInterpreter {
                 rs.write(rBase + 0, methodITA);
               }
 
-              // Reroute args from all-ref layout to callee's expected
-              // layout (same logic as Op.call rerouting). The compiler
-              // boxes ALL args to the ref stack; if the callee has
-              // value-stack params, unbox them now.
               if (callee.needsArgRerouting) {
-                final paramKinds = callee.paramKinds!;
-                final defaults = callee.paramDefaults;
-                final reqPosCount = callee.requiredPositionalCount;
-                final posParamCount = callee.positionalParamCount;
-                final optPosCount = posParamCount - reqPosCount;
-                var readRefIdx = 3;
-                var writeRefIdx = 3;
-                var writeValIdx = 0;
-                for (var i = 0; i < paramKinds.length; i++) {
-                  final value = rs.read(rBase + readRefIdx);
-                  readRefIdx++;
-                  // Skip absent sentinel — callee's default guard handles
-                  // ref-stack params; for value-stack params, fill from
-                  // paramDefaults here since bytecode guards can't reach
-                  // the value stack.
-                  final isPresent = value != null &&
-                      !identical(value, darticAbsent);
-                  switch (paramKinds[i]) {
-                    case StackKind.intDefault:
-                      if (isPresent) {
-                        vs.writeInt(vBase + writeValIdx, value as int);
-                      } else {
-                        // Fill value-type default from paramDefaults.
-                        final defaultIdx = i < posParamCount
-                            ? i - reqPosCount
-                            : optPosCount + (i - posParamCount);
-                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
-                          final d = defaults[defaultIdx];
-                          if (d is int) vs.writeInt(vBase + writeValIdx, d);
-                        }
-                      }
-                      writeValIdx++;
-                    case StackKind.boolDefault:
-                      if (isPresent) {
-                        final v = value;
-                        vs.writeInt(vBase + writeValIdx,
-                            v is bool ? (v ? 1 : 0) : v as int);
-                      } else {
-                        final defaultIdx = i < posParamCount
-                            ? i - reqPosCount
-                            : optPosCount + (i - posParamCount);
-                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
-                          final d = defaults[defaultIdx];
-                          if (d is bool) {
-                            vs.writeInt(vBase + writeValIdx, d ? 1 : 0);
-                          }
-                        }
-                      }
-                      writeValIdx++;
-                    case StackKind.doubleDefault:
-                      if (isPresent) {
-                        vs.writeDouble(
-                            vBase + writeValIdx, (value as num).toDouble());
-                      } else {
-                        final defaultIdx = i < posParamCount
-                            ? i - reqPosCount
-                            : optPosCount + (i - posParamCount);
-                        if (defaultIdx >= 0 && defaultIdx < defaults.length) {
-                          final d = defaults[defaultIdx];
-                          if (d is num) {
-                            vs.writeDouble(vBase + writeValIdx, d.toDouble());
-                          }
-                        }
-                      }
-                      writeValIdx++;
-                    default: // ref — compact ref positions
-                      if (writeRefIdx != readRefIdx - 1) {
-                        rs.write(rBase + writeRefIdx, value);
-                      }
-                      writeRefIdx++;
-                  }
-                }
-                // Shrink rs.sp back to refRegCount.
-                rs.sp = rBase + callee.refRegCount;
+                _rerouteArgs(callee, vBase, rBase, neededRefSlots, rs, vs);
               }
 
               // Switch to callee bytecode.
@@ -4159,18 +4138,12 @@ class DarticInterpreter {
             continue;
           }
 
-          // runtimeType interception (Path B): return DarticType for any
-          // receiver, using the same extractType logic as INSTANCEOF —
-          // BUT skip if receiver has a dartic runtimeType override.
           if (name == 'runtimeType') {
-            final reg = _activeTypeRegistry;
-            if (reg != null) {
-              final nameIdx = cp.lookupNameIndex('runtimeType');
-              if (nameIdx < 0 ||
-                  !_hasDarticMethodOverride(receiver, module, nameIdx)) {
-                rs.write(rBase + a, extractType(receiver, reg, hostTypeResolver, hostTypeTable: _hostTypeTable));
-                break;
-              }
+            final nameIdx = cp.lookupNameIndex('runtimeType');
+            final rt = _interceptRuntimeType(receiver, nameIdx);
+            if (rt != null) {
+              rs.write(rBase + a, rt);
+              break;
             }
           }
 
@@ -4194,18 +4167,11 @@ class DarticInterpreter {
                 // Late field sentinel check: if the field is late and the
                 // stored value is the sentinel (null for non-nullable, or
                 // lateSentinel for nullable), throw LateInitializationError.
-                // Note: late fields are always StackKind.ref per compiler
-                // convention (compiler_classes.dart), so the value-stack
-                // branches above are unreachable for late fields.
-                if (fieldLayout.isLate &&
-                    (fieldVal == null || fieldVal == lateSentinel)) {
-                  try {
-                    throw DarticLateError(
-                        "Field '$name' has not been initialized.");
-                  } catch (e, st) {
-                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                    continue;
-                  }
+                try {
+                  _checkLateSentinelOrReturn(fieldVal, fieldLayout, name);
+                } catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
                 }
                 rs.write(rBase + a, _unwrapClosureProxy(fieldVal));
                 continue;
@@ -4693,16 +4659,11 @@ class DarticInterpreter {
                   StackKind.intVal =>
                     receiver.valueFields[fieldLayout.offset],
                 };
-                // Late sentinel check (same as GET_FIELD_DYN).
-                if (fieldLayout.isLate &&
-                    (fieldValue == null || fieldValue == lateSentinel)) {
-                  try {
-                    throw DarticLateError(
-                        "Field '$name' has not been initialized.");
-                  } catch (e, st) {
-                    pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
-                    continue;
-                  }
+                try {
+                  _checkLateSentinelOrReturn(fieldValue, fieldLayout, name);
+                } catch (e, st) {
+                  pc = unwindToHandler(pc - 1, e, DarticStackTrace.captureWithHost(callStack, module, pc - 1, _hostNameStack, st));
+                  continue;
                 }
                 if (fieldValue is DarticClosure) {
                   final closureArgs = _buildDynArgs(
