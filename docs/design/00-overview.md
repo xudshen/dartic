@@ -65,28 +65,36 @@
 
 ## 性能目标
 
-目标为 AOT 原生代码的 **1/10+** 执行性能。达成路径：
+目标为 AOT 原生代码的 **1/60~1/200** 执行性能（场景依赖）。技术路径：
 
 - 寄存器式字节码（相比栈式减少约 46% 指令执行数）
 - `Uint64List` 紧凑指令存储 + 稠密 opcode 跳转表分发
 - 共享 Buffer 双视图值栈（Int64List / Float64List 无装箱数值运算）
+- `@pragma('vm:unsafe:no-bounds-checks')` 消除热路径 bounds check
+- Fuel 仅在回边 + CALL 检查，减少逐条指令开销
 
-### 场景化性能预期
+### 场景化性能实测（AOT, 2026-03-29）
 
-| 场景 | 预估性能 | 关键瓶颈 |
-|------|---------|---------|
-| 纯算术/控制流 | 原生 1/3~1/5 | switch 分发（无 computed goto） |
-| 混合业务逻辑 | 原生 1/10~1/20 | 方法分发 + 对象操作 |
-| Flutter Widget build | 原生 1/10~1/30 | Bridge 调用 + 对象创建 |
-| 框架交互密集 | 原生 1/20~1/50 | Bridge 调用 + Proxy 包装 |
+| 场景 | 实测性能 | 关键瓶颈 | 优化路径 |
+|------|---------|---------|---------|
+| 递归/调用密集 | 原生 **1/63** | 函数调用帧管理 | 已通过 fuel 优化达到 |
+| 纯算术/控制流 | 原生 **1/194** | switch 分发固有开销 | 超指令合并（P2） |
+| Bridge 密集（对象创建） | 原生 **1/41** | 跨边界包装 | 热对象缓存 |
+| Bridge 密集（集合操作） | 原生 **1/2~1/82** | 工作量在 host 侧 | — |
+| 虚方法分发 | 原生 **1/145** | 类表查找 + 分派 | Inline caching（P3） |
+
+**对比 dart_eval（AOT）**：dartic 在 int_arithmetic 上快 **2.7 倍**（199x vs 532x）。
 
 ### 性能天花板
 
 | 限制 | 来源 | 可否突破 |
 |------|------|---------|
-| 无 computed goto | Dart 语言不支持 | 不可突破，约损失 20-30% |
-| typed_data bounds check | Dart AOT 可能无法消除 | 部分缓解 |
+| 无 computed goto | Dart 语言不支持 | 不可突破（switch dispatch ~10-20 cycles/指令） |
+| ~~typed_data bounds check~~ | ~~Dart AOT 默认开启~~ | ✅ 已消除（`vm:unsafe:no-bounds-checks`） |
 | Proxy 包装/解包开销 | 每次跨边界传递需 Expando 查找 + 对象分配 | 部分缓解（热对象缓存命中率高） |
+| 解释器理论下限 | switch dispatch + decode + stack access | ~15-30x（需超指令突破 194x） |
+
+详见调研报告 [`docs/research/interpreter-performance-optimization.md`](../research/interpreter-performance-optimization.md)
 
 ## Dart 语言特性支持范围
 

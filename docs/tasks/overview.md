@@ -255,36 +255,70 @@
 
 ---
 
-## 基础设施：Performance Benchmark Suite — ✅ 已完成
+## 基础设施：Performance Benchmark Suite v2 — ✅ 已完成
 
-**目标：** 三通道性能基准测试（host / dartic / dart_eval），量化 dartic 在性能谱系中的位置
+**目标：** 27-case 性能回归基线套件（host native vs dartic），支持预编译、增量编译、快照对比、AOT/JIT 双模式
 
-**设计参考：** [`docs/plans/2026-02-21-benchmark-suite.md`](../plans/2026-02-21-benchmark-suite.md)
+**设计参考：** [`docs/plans/2026-03-29-benchmark-regression-suite.md`](../plans/2026-03-29-benchmark-regression-suite.md)、[`docs/plans/2026-03-29-benchmark-precompile.md`](../plans/2026-03-29-benchmark-precompile.md)
 
-**目录：** `benchmark/`（独立 Dart package，依赖 dartic + dart_eval）
+**调研报告：** [`docs/research/interpreter-performance-optimization.md`](../research/interpreter-performance-optimization.md)
+
+**目录：** `benchmark/`（独立 Dart package）
 
 | 组件 | 文件 | 状态 |
 |------|------|------|
-| Runner 框架 | `benchmark/lib/src/runner.dart` | ✅ |
-| 统计模块 | `benchmark/lib/src/stats.dart` | ✅ |
-| Console 报告 | `benchmark/lib/src/reporter.dart` | ✅ |
-| Micro 套件 (5) | `benchmark/lib/suites/micro.dart` | ✅ |
-| Macro 套件 (4) | `benchmark/lib/suites/macro.dart` | ✅ |
+| 预编译器 | `benchmark/lib/src/precompiler.dart` + `bin/precompile.dart` | ✅ |
+| Runner（纯执行） | `benchmark/lib/src/runner.dart` | ✅ |
+| 回归 CLI | `benchmark/bin/regression.dart` | ✅ |
+| 快照/Delta | `benchmark/lib/src/snapshot.dart` + `delta.dart` | ✅ |
+| Delta 报告 | `benchmark/lib/src/reporter.dart` | ✅ |
+| Host 计时工具 | `benchmark/bin/host_timing.dart` | ✅ |
+| Micro 套件 (8) | `benchmark/lib/suites/micro.dart` | ✅ |
+| Macro 套件 (5) | `benchmark/lib/suites/macro.dart` | ✅ |
+| Object 套件 (5) | `benchmark/lib/suites/object.dart` | ✅ |
+| Bridge 套件 (4) | `benchmark/lib/suites/bridge.dart` | ✅ |
+| Collection 套件 (5) | `benchmark/lib/suites/collection.dart` | ✅ |
 
-**运行：** `cd benchmark && fvm dart run bin/run.dart [--quick] [--no-dart-eval]`
+**运行：**
+```bash
+cd benchmark && fvm dart run bin/precompile.dart          # 预编译（首次/source变更后）
+cd benchmark && fvm dart run bin/precompile.dart --recompile-darb  # 改了编译器后快速重编
+cd benchmark && fvm dart compile exe bin/regression.dart -o build/regression  # AOT编译
+cd benchmark && ./build/regression --quick --no-save      # AOT基线测量
+```
 
-**基线数据（2026-02-21, quick mode）：**
+**关键优化（2026-03-29, feature/lsra 分支）：**
+- `@pragma('vm:unsafe:no-bounds-checks')` — 消除 _executeLoop 内所有 typed_data bounds check
+- Fuel 仅在回边 + CALL 检查 — 消除每条指令的 fuel 扣减开销
+- ConstantPool raw accessors — 消除方法调用间接层
 
-| Benchmark | d/h ratio | de/h ratio | 说明 |
-|-----------|-----------|------------|------|
-| function_call (fib20) | 55x | 105x | dartic 比 dart_eval 快 ~2x |
-| fibonacci_30 | 56x | 102x | 递归调用密集 |
-| binary_tree_15 | 67x | N/A | OOP + 递归 |
-| method_dispatch | 83x | N/A | 虚调用 |
-| double_arithmetic | 148x | N/A | 混合 int/double 运算 |
-| int_arithmetic | 159x | 366x | 纯算术循环 |
-| loop_sum_100k | 191x | 157x | dart_eval 略快 |
-| quicksort_1k | 236x | N/A | List 操作密集 |
+**AOT 基线数据（2026-03-29, quick mode, P0 优化后）：**
+
+| Benchmark | d/h ratio | 类别 | 说明 |
+|-----------|-----------|------|------|
+| function_call (fib20) | **63x** | micro | 递归调用密集，P0 效果最大 |
+| fibonacci_30 | **63x** | macro | 递归调用密集 |
+| method_dispatch | **145x** | micro | 虚分发 |
+| sieve_10k | **183x** | micro | 循环 + 数组 + 条件 |
+| int_arithmetic | **194x** | micro | 纯算术循环（switch dispatch 固有极限） |
+| list_ops | **2.4x** | collection | 工作量在 host 侧（bridge 调度开销） |
+| bridge_object_create | **41x** | bridge | 跨边界对象创建 |
+| map_lookup | **73x** | collection | Map 操作（bridge 密集） |
+| string_concat | **82x** | collection | StringBuffer（bridge 密集） |
+
+**性能分析结论：**
+- 递归/调用密集型：**~63x**，已在设计目标范围内
+- 纯算术循环：**~194x**，受 switch dispatch 固有开销限制，需超指令（P2）突破
+- Bridge 密集型：**2-82x**，工作量在 host 侧时 ratio 极低
+- dart_eval AOT 对比：dartic 在 int_arithmetic 上比 dart_eval 快 **2.7 倍**（199x vs 532x）
+
+**v1 → v2 变更：**
+- 删除 dart_eval 通道，简化为 host + dartic 两通道
+- 预编译分离：`precompile.dart`（编译，一次性）+ `regression.dart`（执行，反复跑）
+- 三级增量编译：source 未变→skip（0s）/ .dill 缓存→darb-only（0.3s/27case）/ 全量（5.6s/27case）
+- 回归基线系统：JSON 快照 + delta 报告 + `--compare` / `--baseline` / `--diff`
+- 问题规模调优：queens 12→10, deltablue 40→10 轮, storage 50→20 轮
+- 校准优化：慢 case (iters=1) 只预热 3 次
 
 ---
 
