@@ -45,9 +45,24 @@ bae4c1e3 feat(compiler): LSRA live range computation with back-edge extension
 | Ref | 75,866 | **241** | **315:1** |
 | Value | 54,166 | **9** | 6018:1 |
 
+### Phase 1.5 对比（Flutter 嵌套 Widget 场景）
+
+模拟 `Scaffold → AppBar + Container → Column → [Text, Padding → Row, ...]` 典型 build() 方法：
+
+| 方案 | val regs | ref regs | 说明 |
+|------|------:|------:|------|
+| 无优化（纯递增） | 34 | 181 | 虚拟寄存器计数 |
+| Phase 1.5 | 34 | 132 | CALL_HOST 后回收 arg regs，ref -27% |
+| **LSRA** | **6** | **40** | 指令级活跃区间回收 |
+
+LSRA 相比 Phase 1.5 额外压缩：val 5.7x, ref 3.3x。Phase 1.5 的局限：
+- CALL_HOST 之间的临时寄存器（BOX_INT、TAG_TYPE 等）不回收
+- 嵌套调用的 arg 预分配在内层执行期间持续占用
+- val 栈完全没有回收机制
+
 ### 验证结果
 
-- `dart test`: 3385 pass / 3 known fail（与 baseline 完全一致）
+- `dart test`: 3390 pass / 3 known fail（含 5 个新 integration test）
 - co19: 零回归（验证基准为 pre-LSRA 父提交 fd3aa518）
 
 ## Bug Fixes During Implementation

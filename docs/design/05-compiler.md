@@ -212,7 +212,7 @@ bool _isHostLibrary(ir.Library lib) {
 
 - **交错编译（interleaved element compilation）**：CALL_HOST / CREATE_LIST 等场景下，元素逐个编译并立即放入连续段，而非先全部编译再复制。这将峰值寄存器压力从 2N 降至 N+O(1)。
 - **跳过阈值**：虚拟寄存器数 < 64 的函数跳过 LSRA，直接使用虚拟编号作为物理编号（小函数优化收益不大，省去遍历开销）。
-- **实测效果**：co19 sort_A01_t04 的 `_dualPivotQuicksort` 从 315 虚拟寄存器压缩至 1 物理寄存器（315:1 压缩率）。详见 `docs/plans/2026-03-28-lsra-register-allocation.md`。
+- **实测效果**：co19 sort_A01_t04 test() 函数 ref 75,866 → 241（315:1 压缩率）。Flutter 嵌套 Widget 场景（模拟 Scaffold→Column→Row 多层构造函数）ref 181 → 40，相比旧 Phase 1.5 方案（181 → 132）额外压缩 3.3x。详见 `docs/tasks/lsra/progress.md`。
 
 ### 常量池类型映射
 
