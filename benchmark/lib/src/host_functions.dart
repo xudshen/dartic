@@ -950,7 +950,7 @@ class _RTCB {
     _rTaskList = this;
   }
 
-  bool isHeldOrSuspended() => (state & 0x4) != 0 || state == 3;
+  bool isHeldOrSuspended() => (state & 0x4) != 0 || state == 2;
 
   _RTCB? run(_RPacket? pkt) => task.run(pkt);
 

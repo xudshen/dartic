@@ -39,7 +39,7 @@ class TaskControlBlock {
     taskList = this;
   }
 
-  bool isHeldOrSuspended() => (state & 0x4) != 0 || state == 3;
+  bool isHeldOrSuspended() => (state & 0x4) != 0 || state == 2;
 
   TaskControlBlock? run(Packet? pkt) {
     return task.run(pkt);
