@@ -414,7 +414,7 @@
 | # | 问题 | 来源 | 文档 | 优先级 |
 |---|------|------|------|--------|
 | 1 | [CALL_HOST re-route darticAbsent crash](#1-callhost-re-route-darticabsent-crash) | co19 skip ×4 | [task](dartic-callhost-face-dispatch.md) | 高 — 方案明确，改动小 |
-| 2 | [编译器寄存器分配溢出](#2-编译器寄存器分配溢出) | co19 skip ×10 | [task](dartic-register-allocation.md) | 中 — 可先用增大栈容量 |
+| 2 | [编译器寄存器分配溢出](#2-编译器寄存器分配溢出) — LSRA 已解决：75,866 virtual ref → 241 physical ref，Stack Overflow 消除 | co19 skip ×10 | [task](lsra/progress.md) | 已解决 |
 | 3 | [Bridge 泛型擦除](#3-bridge-泛型擦除) | co19 skip ×8 | [task](dartic-bridge-generic-erasure.md) | 低 — 架构级改动 |
 | 4 | [HostTypeResolver Never-bottom](#4-hosttyperesolver-never-bottom) | co19 skip ×1 | [task](dartic-host-type-args.md) | 低 — 单测，影响面小 |
 | 5 | [异常处理性能](#5-异常处理性能) | Flutter 实测 | [task](dartic-exception-perf.md) | 高 — 影响 UI 流畅度 |
@@ -429,7 +429,7 @@
 
 **根因：** 巨型函数（如 sort_A01_t04.test.dart 113K token）编译后需 val=54166 / ref=75228，超过默认栈容量 40960 / 20480。编译器寄存器单调递增不复用。
 
-**方案：** 长期做 liveness analysis + 寄存器复用。短期可增大默认栈容量。
+**方案：** LSRA（线性扫描寄存器分配）已在 feature/lsra 分支实现。75,866 virtual ref → 241 physical ref（315:1 压缩比），Stack Overflow 完全消除。详见 `docs/plans/2026-03-28-lsra-register-allocation.md` 和 `docs/tasks/lsra/progress.md`。
 
 ### 3. Bridge 泛型擦除
 

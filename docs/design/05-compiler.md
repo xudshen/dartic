@@ -23,7 +23,7 @@ dartic 编译器是一个**离线 CLI 工具**，运行在开发机或 CI 环境
 |--------|------|-------------------|------|
 | 编译器形态 | 独立 CLI 工具（独立 package） | 嵌入运行时 package：引入 `package:kernel` 的 SDK 级依赖，设备端不需要 | 编译器与运行时解耦，设备端零编译依赖 |
 | Kernel 加载 | `package:kernel` BinaryBuilder | 自写解析器：Kernel 二进制格式随 SDK 版本变化 | 正确性有保障，跟随 SDK 升级 |
-| 寄存器分配 | 作用域级回收（Phase 1）+ CALL_HOST 回收（Phase 1.5） | LSRA：需先构建 CFG + 活跃区间，Phase 1 复杂度不值得 | 作用域回收覆盖主要场景；CALL_HOST 回收将 Flutter 嵌套场景 refReg 从 343 降至 219；16 位寄存器编号原生支持大范围 |
+| 寄存器分配 | 编译期纯递增计数器 + 后端 LSRA 线性扫描 | 编译期作用域回收：codegen 复杂度高且与 consecutive group 冲突；全量 CFG+SSA：过重 | 编译期零回收逻辑（纯递增），后端 LSRA 基于活跃区间做最优寄存器复用，实测 315:1 压缩率（sort_A01_t04）；16 位寄存器编号原生支持大范围 |
 | Bridge 生成 | 预生成库（独立 package） | 运行时反射生成：Dart 无法运行时创建类 | 常用框架类通过 build_runner 预生成，作为 package 发布 |
 | 优化遍 | Phase 2 实施 | Phase 1 全量开启：无 profiling 数据指导 | 各优化遍根据 profiling 数据确定优先级 |
 | AST 派发机制 | Kernel Visitor 独立类放 part file | DarticCompiler 自身 mixin Visitor：compiler.dart 膨胀 ~130 行 visitXxx；if-is 链：无穷举检查 | visitor 类与 `_compileXxx` 实现同文件，compiler.dart 仅加字段；IDE 可列出未 override 的 visitXxx → 未处理节点类型 |
@@ -45,14 +45,15 @@ dartic_compiler CLI
   │   └── 依赖分析（Bridge 绑定集合收集）
   │
   ├── 代码生成阶段
-  │   ├── 作用域级寄存器分配
+  │   ├── 纯递增寄存器分配（虚拟寄存器）
   │   ├── 字节码发射
   │   └── 常量池构建
   │
-  ├── 优化阶段（Phase 2）
-  │   ├── 常量折叠
-  │   ├── 窥孔优化
-  │   └── 死代码消除
+  ├── 后端优化阶段
+  │   ├── LSRA 线性扫描寄存器分配（虚拟→物理映射）
+  │   ├── 常量折叠（Phase 2）
+  │   ├── 窥孔优化（Phase 2）
+  │   └── 死代码消除（Phase 2）
   │
   └── 序列化输出 → .darb 文件
 ```
@@ -199,13 +200,19 @@ bool _isHostLibrary(ir.Library lib) {
 
 ### 寄存器分配
 
-**Phase 1：作用域级回收**。编译器为值栈和引用栈各维护独立的寄存器池。分配采用递增计数 + 空闲池回收：请求寄存器时优先从空闲池取，否则递增分配新编号；变量离开作用域时批量归还。
+**编译期：纯递增寄存器计数器**。RegisterAllocator 是无状态的纯递增计数器（无空闲池、无回收）。每次 `alloc()` 返回下一个虚拟寄存器编号，`allocConsecutive(n)` 分配连续段。编译器不做任何寄存器回收，生成的虚拟寄存器编号可能很大（几百甚至上千），但语义正确性由递增保证。
 
-**Phase 1.5：CALL_HOST 寄存器回收**。`_emitCallHost` 在 CALL_HOST 指令 emit 后立即回收死亡寄存器（targetArgRegs + boxedRegs）。Phase 2 使用 `allocConsecutive(n)` 跳过 free pool 直接分配连续段，保证 CALL_HOST ISA 要求的参数连续性。实测 Flutter widget 嵌套场景（Scaffold/AppBar/Column/Text/ElevatedButton）的 `build()` 方法 refRegCount 从 343 降至 219。详见 `docs/plans/2026-03-09-register-recycling-design.md`。
+**后端 LSRA 优化遍**。代码生成完成后，`LsraPass` 对字节码执行线性扫描寄存器分配：
 
-**设计取舍**：作用域回收 + CALL_HOST 回收无需 CFG 或活跃区间分析，以极低复杂度覆盖主要复用场景（if/else 分支、for 循环体、块级临时变量、宿主函数调用临时寄存器）。16 位寄存器编号原生支持大范围，即使极端嵌套场景也不会溢出。
+1. **computeLiveRanges**：顺序扫描字节码，为每个虚拟寄存器计算活跃区间 `[firstUse, lastUse]`。通过 OpMetadata 获取每条指令的操作数读写信息。连续组（CALL_HOST、CREATE_LIST、STRING_INTERP 等）的参数通过 raw operand 数组传递，绕过 16 位 ABC 编码限制。
+2. **linearScan**：按活跃区间起始位置排序，线性扫描分配物理寄存器。当活跃区间结束时释放物理寄存器供后续复用。连续组的所有成员寄存器保持连续约束。
+3. **rewriteBytecode**：用虚拟→物理映射表重写所有指令的操作数（包括 raw operand 数组和跳转目标不变量）。
 
-> **Phase 2**：LSRA 线性扫描寄存器分配。需先将 Kernel AST 转换为线性 IR 并构建 CFG，从基本块边界（`IfStatement`、循环、`TryCatch`、`SwitchStatement`）划分，计算活跃区间 [start, end)，按起始位置排序后线性扫描分配。溢出时选活跃区间最长的变量溢出到栈帧溢出区。触发条件：async 帧快照大小成为瓶颈，或 profiling 显示帧尺寸影响缓存局部性。
+**关键设计点**：
+
+- **交错编译（interleaved element compilation）**：CALL_HOST / CREATE_LIST 等场景下，元素逐个编译并立即放入连续段，而非先全部编译再复制。这将峰值寄存器压力从 2N 降至 N+O(1)。
+- **跳过阈值**：虚拟寄存器数 < 64 的函数跳过 LSRA，直接使用虚拟编号作为物理编号（小函数优化收益不大，省去遍历开销）。
+- **实测效果**：co19 sort_A01_t04 的 `_dualPivotQuicksort` 从 315 虚拟寄存器压缩至 1 物理寄存器（315:1 压缩率）。详见 `docs/plans/2026-03-28-lsra-register-allocation.md`。
 
 ### 常量池类型映射
 
@@ -600,7 +607,7 @@ DarticB 文件格式
 
 | 局限 | 影响 | Phase 2 计划 |
 |------|------|-------------|
-| 作用域级寄存器分配 | 寄存器利用率低于最优，async 帧快照偏大。CALL_HOST 回收（Phase 1.5）已将 Flutter 嵌套场景 343→219，但 srcReg/padding null reg 尚未回收 | LSRA 线性扫描。近期可选优化：回收 `_compileHostArgsWithPadding` 的 padding null reg。触发条件：profiling 显示帧尺寸影响缓存局部性 |
+| 后端 LSRA 寄存器分配 | LSRA 已实现近最优寄存器复用（实测 315:1 压缩率）。虚拟寄存器 < 64 的小函数跳过 LSRA 直接使用虚拟编号 | 可调整跳过阈值；极端嵌套场景可引入溢出到栈帧溢出区的策略 |
 | 无优化遍 | 生成代码存在冗余（不可达代码、常量重复计算） | 常量折叠、窥孔优化、死代码消除、Superinstruction。触发条件：profiling 数据确定优先级 |
 | 单一编译单元 | 无增量编译，每次全量编译 | 按库增量编译 + 链接。触发条件：编译时间成为开发体验瓶颈 |
 | switch 优化有限 | 稀疏 case 使用二分查找而非哈希表 | 哈希表跳转。触发条件：profiling 显示 switch 分发是热点 |
@@ -610,21 +617,19 @@ DarticB 文件格式
 ## 附录：参考实现
 
 <details>
-<summary>作用域级寄存器分配器</summary>
+<summary>纯递增寄存器分配器</summary>
 
 ```dart
 class RegisterAllocator {
   int _next = 0, _max = 0;
-  final List<int> _freePool = [];
 
   int alloc() {
-    if (_freePool.isNotEmpty) return _freePool.removeLast();
     final r = _next++;
     if (_next > _max) _max = _next;
     return r;
   }
 
-  /// 分配 n 个连续寄存器（跳过 free pool，保证连续性）。
+  /// 分配 n 个连续寄存器（保证连续性）。
   int allocConsecutive(int n) {
     final start = _next;
     _next += n;
@@ -632,8 +637,6 @@ class RegisterAllocator {
     return start;
   }
 
-  void free(int reg) => _freePool.add(reg);
-  void freeAll(List<int> regs) => _freePool.addAll(regs);
   int get maxUsed => _max;
 }
 ```

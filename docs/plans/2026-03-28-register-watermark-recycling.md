@@ -1,5 +1,10 @@
 # 寄存器水位线回收重构 Implementation Plan
 
+> **状态：已被 LSRA 取代。** 本方案提出的 statement-level watermarking 未实施。
+> 实际采用了更彻底的 LSRA（线性扫描寄存器分配）方案，见 `docs/plans/2026-03-28-lsra-register-allocation.md`
+> 和 `docs/tasks/lsra/progress.md`。LSRA 在 sort_A01_t04 上实现 315:1 压缩比，
+> 完全消除了栈溢出问题。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 消除编译器寄存器累积问题，让重复 ExpressionStatement 的函数（如 130 次 `check()` 调用）的寄存器需求从 ~54K/75K 降到 ~300/300。
