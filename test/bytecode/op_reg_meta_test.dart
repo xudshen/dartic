@@ -132,14 +132,14 @@ void main() {
       expect(m.range, isNull);
     });
 
-    test('CALL_HOST: A=refW(result) + range read [A+1..A+argCount]', () {
+    test('CALL_HOST: full consecutive block [A..A+argCount] (result+args)', () {
       final m = opRegTable[Op.callHost]!;
-      expect(m.a, RegOp.refW);
+      expect(m.a, RegOp.none); // covered by range, not separate refW
       expect(m.range, isNotNull);
       expect(m.range!.isRef, isTrue);
       expect(m.range!.baseFromOperand, 0); // base from A
-      expect(m.range!.baseOffset, 1); // A+1
-      expect(m.range!.countSource, RangeCountSource.fromBindingTable);
+      expect(m.range!.baseOffset, 0); // starts at A (includes result)
+      expect(m.range!.countSource, RangeCountSource.fromBindingTablePlus1);
     });
 
     test('RETURN_REF: A=refR, RETURN_VAL: A=valR', () {

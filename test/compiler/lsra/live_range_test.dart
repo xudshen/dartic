@@ -216,13 +216,12 @@ void main() {
       expect(group.lastUse, 3); // used at CREATE_LIST PC
     });
 
-    test('CALL_HOST identifies consecutive group from binding table', () {
-      // PC 0: LOAD_NULL r3  (result + args area: r3=result, r4,r5=args)
-      // PC 1: LOAD_NULL r4
-      // PC 2: LOAD_NULL r5
-      // PC 3: CALL_HOST r3, bindingIdx=0  → reads [r4, r5] (argCount=2)
+    test('CALL_HOST identifies consecutive group including result register', () {
+      // PC 0: LOAD_NULL r4  (arg 1)
+      // PC 1: LOAD_NULL r5  (arg 2)
+      // PC 2: CALL_HOST r3, bindingIdx=0  → result at r3, reads [r4, r5]
+      // The full consecutive block is [r3, r4, r5] (result + args).
       final bytecode = [
-        encodeABC(Op.loadNull, 3, 0, 0),
         encodeABC(Op.loadNull, 4, 0, 0),
         encodeABC(Op.loadNull, 5, 0, 0),
         encodeABx(Op.callHost, 3, 0),
@@ -235,11 +234,11 @@ void main() {
         exceptionHandlers: [],
         bindingNames: bindings,
       );
-      // CALL_HOST range: base=A+1=4, count=2 → [r4, r5]
+      // CALL_HOST range: base=A=3, count=argCount+1=3 → [r3, r4, r5]
       expect(result.ref.consecutiveGroups, hasLength(1));
       final group = result.ref.consecutiveGroups[0];
-      expect(group.baseVreg, 4); // A(3) + offset(1) = 4
-      expect(group.count, 2);
+      expect(group.baseVreg, 3); // A(3) + offset(0) = 3
+      expect(group.count, 3); // argCount(2) + 1 (result)
     });
 
     test('CREATE_LIST with bit15 const flag masks correctly', () {

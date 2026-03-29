@@ -108,9 +108,9 @@ void main() {
       expect(decodeC(buf[0]), 3);
     });
 
-    test('CALL_HOST (ABx): A remapped', () {
+    test('CALL_HOST (ABx): A remapped via range base (includes result)', () {
       // CALL_HOST result=10, bindingIdx=0
-      // A is both result and range base — remapped via refMap.
+      // A is range base (baseOffset=0), remapped via refMap as range base.
       final buf = [encodeABx(Op.callHost, 10, 0)];
       rewriteBytecode(buf, valMap: {}, refMap: {10: 2});
       expect(decodeA(buf[0]), 2);

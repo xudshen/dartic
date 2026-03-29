@@ -98,10 +98,16 @@ class LiveRangeResult {
 ///    examining opcode operand metadata.
 /// 2. **Pass 2 (back-edge extension)**: Extend intervals that cross loop
 ///    back-edges (explicit jumps) or exception handler implicit edges.
+/// Pending arg move record from the compiler (placeholder MOVE instructions
+/// that will be patched after LSRA). The srcReg is alive until the placeholder
+/// PC, but the LSRA can't see this from the bytecode (it's a NOP).
+typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
+
 ({LiveRangeResult val, LiveRangeResult ref}) computeLiveRanges({
   required List<int> bytecode,
   required List<ExceptionHandler> exceptionHandlers,
   required List<BindingEntry> bindingNames,
+  List<PendingArgMove> pendingArgMoves = const [],
   ConstantPool? constantPool,
 }) {
   final valIntervals = <int, Interval>{};
@@ -139,6 +145,30 @@ class LiveRangeResult {
         bindingNames: bindingNames,
         constantPool: constantPool,
       );
+    }
+  }
+
+  // ── Pass 1.5: Extend live ranges for pending arg move sources ─────────
+  // Pending arg moves are placeholder instructions (NOPs) in the bytecode.
+  // The LSRA can't see them as register reads during forward scan.
+  // Extend srcReg's lastUse to the placeholder's PC to keep it alive.
+  for (final move in pendingArgMoves) {
+    // ResultLoc is from the compiler — check .name to determine which stack.
+    final isValue = move.loc.toString().contains('value');
+    final intervals = isValue ? valIntervals : refIntervals;
+    final iv = intervals[move.srcReg];
+    if (iv != null && move.pc > iv.lastUse) {
+      iv.lastUse = move.pc;
+    }
+    // Also extend consecutive groups containing this srcReg.
+    if (!isValue) {
+      for (final g in refGroups) {
+        if (move.srcReg >= g.baseVreg &&
+            move.srcReg < g.baseVreg + g.count &&
+            move.pc > g.lastUse) {
+          g.lastUse = move.pc;
+        }
+      }
     }
   }
 
@@ -267,9 +297,13 @@ void _processRange(
     case RangeCountSource.fromA:
       count = a;
     case RangeCountSource.fromBindingTable:
-      // CALL_HOST: argCount from binding table.
+      // CALL_HOST args only (without result register).
       final bx = decodeBx(bytecode[pc]);
       count = (bx < bindingNames.length) ? bindingNames[bx].argCount : 0;
+    case RangeCountSource.fromBindingTablePlus1:
+      // CALL_HOST: result register + args = argCount + 1.
+      final bx2 = decodeBx(bytecode[pc]);
+      count = (bx2 < bindingNames.length) ? bindingNames[bx2].argCount + 1 : 0;
     case RangeCountSource.fromConstPool:
       // CREATE_RECORD: count from shape descriptor in constant pool.
       // Shape = [positionalCount, ...namedNames]. Total fields = shape.length - 1 + positionalCount.
@@ -295,17 +329,26 @@ void _processRange(
 
   if (count <= 0) return;
 
+  // For CALL_HOST (fromBindingTablePlus1): the first element (base+0) is the
+  // result register — it's a WRITE (def) at this PC. The remaining elements
+  // (base+1..base+count-1) are arg registers (reads).
+  final firstIsWrite =
+      range.countSource == RangeCountSource.fromBindingTablePlus1;
+
   // Update intervals for each register in the range.
   for (var i = 0; i < count; i++) {
     final vreg = base + i;
-    final iv = refIntervals[vreg];
-    if (iv != null) {
-      if (pc > iv.lastUse) iv.lastUse = pc;
+    if (firstIsWrite && i == 0) {
+      // Result register: define (write) at this PC.
+      refIntervals.putIfAbsent(
+          vreg, () => Interval(vreg, def: pc, lastUse: pc));
     } else {
-      // Range-read register not previously seen — its def is before this PC.
-      // This shouldn't happen in well-formed bytecode (elements are defined
-      // before the CREATE/CALL instruction), but handle gracefully.
-      refIntervals[vreg] = Interval(vreg, def: -1, lastUse: pc);
+      final iv = refIntervals[vreg];
+      if (iv != null) {
+        if (pc > iv.lastUse) iv.lastUse = pc;
+      } else {
+        refIntervals[vreg] = Interval(vreg, def: -1, lastUse: pc);
+      }
     }
   }
 

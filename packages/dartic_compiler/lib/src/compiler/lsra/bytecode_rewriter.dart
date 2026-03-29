@@ -90,7 +90,16 @@ void rewriteBytecode(
         buffer[pc] = encodeABC(op, a, b, c) | (instr & 0xFF00);
 
       case InstrFormat.aBx:
-        final a = _remap(decodeA(instr), meta.a, valMap, refMap);
+        var a = decodeA(instr);
+        // Range base remap for ABx opcodes (e.g., CALL_HOST where A is range base).
+        if (meta.range != null && meta.range!.baseFromOperand == 0) {
+          final mask = meta.range!.baseMaskBit15 ? 0x7FFF : 0xFFFF;
+          final flags = a & ~mask;
+          final virtualBase = (a & mask) + meta.range!.baseOffset;
+          a = ((refMap[virtualBase] ?? virtualBase) - meta.range!.baseOffset) | flags;
+        } else {
+          a = _remap(a, meta.a, valMap, refMap);
+        }
         buffer[pc] = encodeABx(op, a, decodeBx(instr));
 
       case InstrFormat.asBx:

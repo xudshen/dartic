@@ -1908,6 +1908,13 @@ class DarticCompiler {
       return (virtualValCount, virtualRefCount);
     }
 
+    // DEBUG: temporary logging for LSRA development
+    final _lsraDebug = virtualValCount > 1000 || virtualRefCount > 1000;
+    if (_lsraDebug) {
+      print('[LSRA] Function with virtual val=$virtualValCount ref=$virtualRefCount '
+          'bytecode=${_emitter.buffer.length} instructions');
+    }
+
     // Compute pinned register sets.
     final pinnedValRegs = <int>{
       for (var i = 0; i < _paramValRegEnd; i++) i,
@@ -1922,6 +1929,7 @@ class DarticCompiler {
       bytecode: _emitter.buffer,
       exceptionHandlers: _exceptionHandlers,
       bindingNames: _bindingNames,
+      pendingArgMoves: _pendingArgMoves,
       constantPool: _constantPool,
     );
 
@@ -1945,6 +1953,36 @@ class DarticCompiler {
       valMap: valResult.mapping,
       refMap: refResult.mapping,
     );
+
+    if (_lsraDebug) {
+      print('[LSRA] live ranges: val=${liveRanges.val.intervals.length} intervals, '
+          'ref=${liveRanges.ref.intervals.length} intervals, '
+          '${liveRanges.ref.consecutiveGroups.length} ref groups');
+      // Show a few ref groups
+      final groups = liveRanges.ref.consecutiveGroups;
+      if (groups.length > 3) {
+        print('[LSRA] first 3 groups: ${groups.take(3).map((g) => '(base=${g.baseVreg}, count=${g.count}, def=${g.def}, last=${g.lastUse})')}');
+        print('[LSRA] last group: (base=${groups.last.baseVreg}, count=${groups.last.count}, def=${groups.last.def}, last=${groups.last.lastUse})');
+      }
+      print('[LSRA] pinned: val=${pinnedValRegs.length} ref=${pinnedRefRegs.length}');
+      // Distribution of ref interval lengths
+      final refLengths = liveRanges.ref.intervals.values.map((iv) => iv.lastUse - iv.def).toList()..sort();
+      final long = refLengths.where((l) => l > 1000).length;
+      final medium = refLengths.where((l) => l > 100 && l <= 1000).length;
+      final short = refLengths.where((l) => l <= 100).length;
+      print('[LSRA] ref interval lengths: short(<=100)=$short medium(101-1000)=$medium long(>1000)=$long');
+      if (refLengths.isNotEmpty) {
+        print('[LSRA] ref max length=${refLengths.last} median=${refLengths[refLengths.length ~/ 2]}');
+      }
+      // Count group member vregs
+      final gmv = <int>{};
+      for (final g in liveRanges.ref.consecutiveGroups) {
+        for (var i = 0; i < g.count; i++) gmv.add(g.baseVreg + i);
+      }
+      print('[LSRA] group member vregs: ${gmv.length}, individual: ${liveRanges.ref.intervals.length - gmv.where((v) => liveRanges.ref.intervals.containsKey(v)).length}');
+      print('[LSRA] → physical val=${valResult.physRegCount} ref=${refResult.physRegCount} '
+          '(${valResult.mapping.length} val mappings, ${refResult.mapping.length} ref mappings)');
+    }
 
     // Rewrite exception handlers.
     final rewrittenHandlers = lsra.rewriteExceptionHandlers(

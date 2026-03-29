@@ -79,6 +79,9 @@ enum RangeCountSource {
   /// Count = A operand (STORE_SUPER_ARGS).
   fromA,
 
+  /// Count = bindingTable argCount + 1 (CALL_HOST: includes result register).
+  fromBindingTablePlus1,
+
   /// Count from module.bindingNames[Bx].argCount (CALL_HOST).
   fromBindingTable,
 
@@ -217,8 +220,11 @@ const Map<int, OpRegMeta> opRegTable = {
   // ── Call & Return ───────────────────────────────────────────────────────
   Op.call: OpRegMeta(RegOp.refW, RegOp.refR, RegOp.imm), // A=result, B=callable, C=argCount/info
   Op.callStatic: _rwImm_, // ABx: A=refW(result), Bx=funcId
-  Op.callHost: OpRegMeta(RegOp.refW, RegOp.none, RegOp.none, // ABx: A=refW(result), Bx=bindingIdx
-      RangeInfo(isRef: true, baseFromOperand: 0, baseOffset: 1, countSource: RangeCountSource.fromBindingTable)),
+  // CALL_HOST: result register AND args form one contiguous block [A, A+1, ..., A+argCount].
+  // The compiler allocates them via allocConsecutive(1+argCount). The A operand is covered
+  // by the range (not a separate refW), so the LSRA treats the entire block as atomic.
+  Op.callHost: OpRegMeta(RegOp.none, RegOp.none, RegOp.none, // ABx: A=range member (handled by RangeInfo)
+      RangeInfo(isRef: true, baseFromOperand: 0, countSource: RangeCountSource.fromBindingTablePlus1)),
   Op.callVirtual: OpRegMeta(RegOp.refW, RegOp.refR, RegOp.imm), // A=result, B=receiver, C=IC index
   Op.callSuper: _rwImm_, // ABx: A=refW(result), Bx=funcId
   Op.returnRef: OpRegMeta(RegOp.refR, RegOp.none, RegOp.none),
