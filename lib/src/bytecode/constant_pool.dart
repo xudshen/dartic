@@ -113,6 +113,13 @@ class ConstantPool {
   /// Returns -1 if the name has not been added.
   int lookupNameIndex(String name) => _nameDedup[name] ?? -1;
 
+  // ── raw accessors (for interpreter hot path — no copy/wrap) ──
+
+  List<Object?> get rawRefs => _refs;
+  Int64List get rawInts => _ints;
+  Float64List get rawDoubles => _doubles;
+  List<String> get rawNames => _names;
+
   // ── read-only accessors (for serialization) ──
 
   /// Returns an unmodifiable view of the refs partition.

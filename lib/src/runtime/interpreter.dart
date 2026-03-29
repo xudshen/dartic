@@ -1884,6 +1884,10 @@ class DarticInterpreter {
   ///
   /// Runs bytecode until HALT, HOST_BOUNDARY RETURN, or fuel exhaustion.
   /// Parameters are copied to hot-path locals for performance.
+  ///
+  /// Safety: bounds checks are disabled for performance. All register indices
+  /// and PC values are validated by [DarticVerifier] at load time.
+  @pragma('vm:unsafe:no-bounds-checks')
   void _executeLoop(
     DarticModule module,
     int vBase,
@@ -1895,6 +1899,9 @@ class DarticInterpreter {
     final cp = module.constantPool;
     final vs = valueStack;
     final rs = refStack;
+
+    // Raw array accessors available via cp.rawRefs/rawInts/rawDoubles/rawNames
+    // for future inline optimization (P0 phase 2).
 
     // Push upvalue entry for the initial frame (entry or callback closure).
     _upvalueStack.add(currentUpvalues);
@@ -2061,20 +2068,17 @@ class DarticInterpreter {
       }
     }
 
-    // Whether resource limits are active. When true, fuel exhaustion refills
-    // fuel and continues the dispatch loop (checking limits at each boundary)
-    // instead of silently returning.
-    final bool hasResourceLimits =
-        maxTotalFuel != null || executionTimeout != null;
-
     for (;;) {
-    // Inner fuel-bounded dispatch loop.
-    while (_fuel-- > 0) {
+    // Dispatch loop. Fuel is checked only at backward jumps and CALL
+    // instructions — not on every iteration — to minimize per-instruction
+    // overhead. Backward jumps and calls are the only points where
+    // unbounded execution can occur.
+    for (;;) {
       final instr = code[pc++];
       final op = instr & 0xFF;
 
       switch (op) {
-        // ── Load/Store (0x00-0x0B) ──
+        // ── Load/Store (0x00-0x0D) ──
 
         case Op.nop: // NOP
           break;
@@ -2462,34 +2466,51 @@ class DarticInterpreter {
         // ── Control Flow (0x40-0x4F) ──
 
         case Op.jump: // JUMP sBx — PC += sBx (A unused)
-          pc += decodesBx(instr);
+          {
+            final offset = decodesBx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
+          }
 
         case Op.jumpIfTrue: // JUMP_IF_TRUE A, sBx — if valueStack[A] != 0
           if (vs.readInt(vBase + (decodeA(instr))) != 0) {
-            pc += decodesBx(instr);
+            final offset = decodesBx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
           }
 
         case Op.jumpIfFalse: // JUMP_IF_FALSE A, sBx — if valueStack[A] == 0
           if (vs.readInt(vBase + (decodeA(instr))) == 0) {
-            pc += decodesBx(instr);
+            final offset = decodesBx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
           }
 
         case Op.jumpIfNull: // JUMP_IF_NULL A, sBx — if refStack[A] == null
           if (rs.read(rBase + (decodeA(instr))) == null) {
-            pc += decodesBx(instr);
+            final offset = decodesBx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
           }
 
         case Op.jumpIfNnull: // JUMP_IF_NNULL A, sBx — if refStack[A] != null
           if (rs.read(rBase + (decodeA(instr))) != null) {
-            pc += decodesBx(instr);
+            final offset = decodesBx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
           }
 
         case Op.jumpAx: // JUMP_AX sAx — PC += sAx
-          pc += decodesAx(instr);
+          {
+            final offset = decodesAx(instr);
+            pc += offset;
+            if (offset < 0 && !_checkFuel()) return;
+          }
 
         // ── Call/Return (0x50-0x5F) ──
 
         case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
+          if (!_checkFuel()) return;
           final a = decodeA(instr);
           final b = decodeB(instr);
           final raw = rs.read(rBase + b);
@@ -2725,6 +2746,7 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callStatic: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
+          if (!_checkFuel()) return;
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final callee = module.functions[bx];
@@ -2784,6 +2806,7 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callHost: // CALL_HOST A, Bx — host function call (no frame push)
+          if (!_checkFuel()) return;
           final a = decodeA(instr);
           final bx = decodeBx(instr);
 
@@ -2984,6 +3007,7 @@ class DarticInterpreter {
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
+          if (!_checkFuel()) return;
           final a = decodeA(instr); // result register
           final b = decodeB(instr); // receiver register
           final c = decodeC(instr); // IC table index
@@ -3295,6 +3319,7 @@ class DarticInterpreter {
           }
 
         case Op.callSuper: // CALL_SUPER A, Bx — call super method functions[Bx], result→reg A
+          if (!_checkFuel()) return;
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final callee = module.functions[bx];
@@ -5404,9 +5429,17 @@ class DarticInterpreter {
           );
       }
     }
-    // Fuel exhausted — track cumulative consumption and check limits.
+    } // end for (;;)
+  }
+
+  /// Check fuel at backward jumps and CALL instructions.
+  /// Returns true if execution should continue, false if fuel is exhausted
+  /// and the caller should return (non-sandboxed async round scheduling).
+  /// Throws [FuelExhaustedError] or [ExecutionTimeoutError] if limits exceeded.
+  bool _checkFuel() {
+    if (--_fuel > 0) return true;
     _totalFuelConsumed += fuelBudget;
-    _fuel = fuelBudget; // refill for next round
+    _fuel = fuelBudget;
 
     if (maxTotalFuel != null && _totalFuelConsumed >= maxTotalFuel!) {
       throw FuelExhaustedError(_totalFuelConsumed, maxTotalFuel!);
@@ -5416,15 +5449,12 @@ class DarticInterpreter {
       throw ExecutionTimeoutError(
           _executionStopwatch!.elapsed, executionTimeout!);
     }
-
-    // If no resource limits are active and not inside a HOST_BOUNDARY nested
-    // dispatch, silently return on fuel exhaustion (Phase 1 behavior for async
-    // round scheduling). Nested dispatches are synchronous host callbacks that
-    // must run to completion — returning early would corrupt stack pointers.
-    if (!hasResourceLimits && _hostBoundaryDepth == 0) return;
-
-    // Otherwise, continue the outer loop for the next fuel round.
-    } // end for (;;)
+    if (_hostBoundaryDepth == 0 &&
+        maxTotalFuel == null &&
+        executionTimeout == null) {
+      return false; // async round scheduling: yield
+    }
+    return true;
   }
 
   /// Builds a [DarticInvocation] for a CALL_VIRTUAL noSuchMethod fallback.
