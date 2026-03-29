@@ -7,6 +7,8 @@ export 'src/bytecode/constant_pool.dart';
 export 'src/bytecode/encoding.dart';
 export 'src/bytecode/format.dart';
 export 'src/bytecode/module.dart';
+export 'src/bytecode/op_metadata.dart';
+export 'src/bytecode/op_reg_meta.dart';
 export 'src/bytecode/opcodes.dart';
 export 'src/bytecode/serializer.dart';
 export 'src/bytecode/deserializer.dart';
