@@ -16,6 +16,7 @@ import 'package:dartic/dartic_internal.dart'
         ExceptionHandler,
         InstrFormat,
         Op,
+        RangeInfo,
         RegOp,
         encodeABC,
         encodeABx,
@@ -167,7 +168,7 @@ int _remap(int vreg, RegOp kind, Map<int, int> valMap, Map<int, int> refMap) {
 int _remapIfNotRange(
   int current,
   RegOp kind,
-  dynamic range, // RangeInfo?
+  RangeInfo? range,
   int operandIndex, // 0=A, 1=B
   Map<int, int> valMap,
   Map<int, int> refMap,
@@ -186,7 +187,7 @@ int _remapIfNotRange(
 /// flag from the bytecode even when raw operands provide the register value).
 /// [rawOps] indicates whether raw operand arrays are in use.
 void _rewriteRangeBase(
-  dynamic range, // RangeInfo
+  RangeInfo range,
   int a,
   int b,
   int encodedInstr,
@@ -194,9 +195,9 @@ void _rewriteRangeBase(
   bool rawOps,
   void Function(int newA, int newB) apply,
 ) {
-  final baseOpIdx = range.baseFromOperand as int;
+  final baseOpIdx = range.baseFromOperand;
   final rawBase = baseOpIdx == 0 ? a : b;
-  final hasBit15 = range.baseMaskBit15 as bool;
+  final hasBit15 = range.baseMaskBit15;
 
   // Extract virtual base register:
   // - rawOps: raw value IS the pure base (compiler strips const flag before storing)
@@ -204,7 +205,7 @@ void _rewriteRangeBase(
   final virtualBase = (hasBit15 && !rawOps
           ? (rawBase & ~0x8000)
           : rawBase) +
-      (range.baseOffset as int);
+      range.baseOffset;
 
   final physBase = refMap[virtualBase] ?? virtualBase;
 
@@ -215,7 +216,7 @@ void _rewriteRangeBase(
     final encodedB = baseOpIdx == 0 ? decodeA(encodedInstr) : decodeB(encodedInstr);
     constFlag = encodedB & 0x8000;
   }
-  final newRaw = (physBase - (range.baseOffset as int)) | constFlag;
+  final newRaw = (physBase - range.baseOffset) | constFlag;
 
   if (baseOpIdx == 0) {
     apply(newRaw, b);

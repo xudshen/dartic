@@ -3987,7 +3987,7 @@ extension on DarticCompiler {
       }
 
       _emitter.emitABC(Op.createMap, destReg, baseReg, entries.length);
-      _emitter.rawB[_emitter.currentPC - 1] = baseReg;
+      _emitter.overrideRawB(_emitter.currentPC - 1, baseReg);
     }
 
     // Always tag with Map<K, V> type for precise generic type checks.
@@ -4138,7 +4138,7 @@ extension on DarticCompiler {
 
     _emitter.emitABC(op, destReg, baseReg, elements.length);
     // Store pure base register in rawB for LSRA (no const flag here).
-    _emitter.rawB[_emitter.currentPC - 1] = baseReg;
+    _emitter.overrideRawB(_emitter.currentPC - 1, baseReg);
     return (destReg, ResultLoc.ref);
   }
 
@@ -4190,22 +4190,31 @@ extension on DarticCompiler {
       // B=0x8000 signals const (bit15 set, base=0).
       _emitter.emitABC(Op.createMap, destReg, 0x8000, 0);
     } else {
-      // Compile each key/value constant, box to ref if needed.
-      final kvRegs = <int>[];
-      for (final entry in entries) {
-        var (keyReg, keyLoc) = entry.key.accept(_constantVisitor);
-        keyReg =
-            _boxToRefIfValue(keyReg, keyLoc, _inferConstantType(entry.key));
-        kvRegs.add(keyReg);
+      // Interleaved compilation: allocate consecutive block first, then
+      // compile each key/value pair and immediately move into position.
+      final slotCount = entries.length * 2;
+      final baseReg = _refAlloc.allocConsecutive(slotCount);
 
-        var (valReg, valLoc) = entry.value.accept(_constantVisitor);
+      for (var i = 0; i < entries.length; i++) {
+        var (keyReg, keyLoc) = entries[i].key.accept(_constantVisitor);
+        keyReg = _boxToRefIfValue(
+            keyReg, keyLoc, _inferConstantType(entries[i].key));
+        if (keyReg != baseReg + i * 2) {
+          _emitter.emitABC(Op.moveRef, baseReg + i * 2, keyReg, 0);
+        }
+
+        var (valReg, valLoc) = entries[i].value.accept(_constantVisitor);
         valReg = _boxToRefIfValue(
-            valReg, valLoc, _inferConstantType(entry.value));
-        kvRegs.add(valReg);
+            valReg, valLoc, _inferConstantType(entries[i].value));
+        if (valReg != baseReg + i * 2 + 1) {
+          _emitter.emitABC(Op.moveRef, baseReg + i * 2 + 1, valReg, 0);
+        }
       }
 
-      _emitCreateCollection(Op.createMap, destReg, kvRegs, entries.length,
-          isConst: true);
+      final bOperand = baseReg | 0x8000;
+      _emitter.emitABC(Op.createMap, destReg, bOperand, entries.length);
+      // Override rawB with the pure base register (without const flag).
+      _emitter.overrideRawB(_emitter.currentPC - 1, baseReg);
     }
 
     // Always tag with Map<K, V> type for precise generic type checks.
@@ -4404,15 +4413,24 @@ extension on DarticCompiler {
       return (destReg, ResultLoc.ref);
     }
 
-    final elementRegs = <int>[];
-    for (final entry in entries) {
-      var (reg, loc) = entry.accept(_constantVisitor);
-      reg = _boxToRefIfValue(reg, loc, _inferConstantType(entry));
-      elementRegs.add(reg);
+    // Interleaved compilation: allocate consecutive block first, then
+    // compile each constant and immediately move into position.
+    final baseReg = _refAlloc.allocConsecutive(entries.length);
+
+    for (var i = 0; i < entries.length; i++) {
+      var (reg, loc) = entries[i].accept(_constantVisitor);
+      reg = _boxToRefIfValue(reg, loc, _inferConstantType(entries[i]));
+      if (reg != baseReg + i) {
+        _emitter.emitABC(Op.moveRef, baseReg + i, reg, 0);
+      }
     }
 
-    _emitCreateCollection(op, destReg, elementRegs, entries.length,
-        isConst: isConst);
+    final bOperand = isConst ? (baseReg | 0x8000) : baseReg;
+    _emitter.emitABC(op, destReg, bOperand, entries.length);
+    // Override rawB with the pure base register (without const flag at bit 15).
+    // The encoded instruction carries the flag for the interpreter, but LSRA
+    // needs the unmasked base register for correct range computation.
+    _emitter.overrideRawB(_emitter.currentPC - 1, baseReg);
     return (destReg, ResultLoc.ref);
   }
 

@@ -101,7 +101,7 @@ class LiveRangeResult {
 /// Pending arg move record from the compiler (placeholder MOVE instructions
 /// that will be patched after LSRA). The srcReg is alive until the placeholder
 /// PC, but the LSRA can't see this from the bytecode (it's a NOP).
-typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
+typedef PendingArgMove = ({int pc, int srcReg, int argIdx, bool isValue});
 
 ({LiveRangeResult val, LiveRangeResult ref}) computeLiveRanges({
   required List<int> bytecode,
@@ -165,15 +165,13 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, dynamic loc});
   // The LSRA can't see them as register reads during forward scan.
   // Extend srcReg's lastUse to the placeholder's PC to keep it alive.
   for (final move in pendingArgMoves) {
-    // ResultLoc is from the compiler — check .name to determine which stack.
-    final isValue = move.loc.toString().contains('value');
-    final intervals = isValue ? valIntervals : refIntervals;
+    final intervals = move.isValue ? valIntervals : refIntervals;
     final iv = intervals[move.srcReg];
     if (iv != null && move.pc > iv.lastUse) {
       iv.lastUse = move.pc;
     }
     // Also extend consecutive groups containing this srcReg.
-    if (!isValue) {
+    if (!move.isValue) {
       for (final g in refGroups) {
         if (move.srcReg >= g.baseVreg &&
             move.srcReg < g.baseVreg + g.count &&

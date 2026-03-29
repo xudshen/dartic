@@ -4,9 +4,11 @@
 **设计文档:** `docs/plans/2026-03-28-lsra-register-allocation.md`
 **实施计划:** `docs/tasks/lsra/plan.md`
 
-## Commits (7 个)
+## Commits (9 个)
 
 ```
+d4da3095 fix(compiler): emit(encodeABC) → emitABC for LOAD_ABSENT raw operand tracking
+7221231e fix(compiler): LSRA 16-bit operand overflow + interleaved element compilation
 872f6324 fix(compiler): LSRA CALL_HOST consecutive group must include result register
 7bec9361 feat(compiler): integrate LSRA into compilation pipeline
 8298f541 feat(compiler): LSRA bytecode rewriter with range base and HALT handling
@@ -26,70 +28,49 @@ bae4c1e3 feat(compiler): LSRA live range computation with back-edge extension
 | 4 | 线性扫描分配 | **完成** ✓ | `lsra/linear_scan.dart` |
 | 5 | Bytecode 重写 | **完成** ✓ | `lsra/bytecode_rewriter.dart` |
 | 6 | 编译器集成 | **完成** ✓ | `compiler.dart` (`_runLSRAAndPatch`) |
-| 7 | Co19 验证 | **进行中** — ref 栈仍溢出 | 需修复活跃区间计算 |
+| 7 | Co19 验证 | **完成** ✓ — 零回归，co19 验证通过 | dart test + co19 baseline 对比 |
 
 ## 测试状态
 
 - 全量 `dart test`: **3385 pass / 3 known fail**（与 baseline 一致）
 - LSRA 单元测试: **79 pass**（op_reg_meta 34 + live_range 12 + linear_scan 12 + rewriter 21）
-- `ListMixin_class_A01_t02`: **仍 Stack Overflow**
+- co19: **零回归**（对比 pre-LSRA 父提交 fd3aa518 验证）
 
-## 当前阻塞：Ref 栈活跃区间过长
+## 最终结果
 
-### 现象
+### 压缩效果（sort_A01_t04 `test()` 函数）
 
-sort_A01_t04 的 `test()` 函数（130 次 check() 调用，每次 2 个 list literal）：
+| 栈 | 虚拟寄存器 | LSRA 后物理寄存器 | 压缩比 |
+|----|-----------|------------------|--------|
+| Ref | 75,866 | **241** | **315:1** |
+| Value | 54,166 | **9** | 6018:1 |
 
-| 栈 | 虚拟寄存器 | LSRA 后物理寄存器 | 默认容量 | 状态 |
-|----|-----------|------------------|---------|------|
-| Value | 54,166 | **9** | 40,960 | ✅ 已解决 |
-| Ref | 75,866 | **23,037** | 20,480 | ❌ 仍溢出 |
+### 验证结果
 
-### 诊断数据
+- `dart test`: 3385 pass / 3 known fail（与 baseline 完全一致）
+- co19: 零回归（验证基准为 pre-LSRA 父提交 fd3aa518）
 
-```
-[LSRA] ref=65536 intervals, 760 groups (25501 member vregs)
-[LSRA] 40035 individual intervals
-[LSRA] interval lengths: short(<=100)=29324, medium(101-1000)=14791, long(>1000)=21421
-[LSRA] max length=131546 (nearly entire function), median=137
-```
+## Bug Fixes During Implementation
 
-**21,421 个 ref 区间长度 >1000 PC**，导致峰值同时活跃 ~23K 寄存器。函数无循环，理论上应只有短命临时寄存器。
+实施过程中发现并修复了 3 个编译器 bug：
 
-### 已排除的原因
+### Bug 1: ABC 编码 16-bit 截断
 
-1. ✅ CALL_HOST 连续组已修复（result register 包含在 group 内）
-2. ✅ Pending arg move 源寄存器已补充到活跃区间
-3. ✅ Back-edge extension 无影响（函数无循环）
+**现象**: 虚拟寄存器编号 > 65535 时，`encodeABC` 的 16-bit 操作数字段发生截断，导致不同虚拟寄存器映射到同一物理寄存器（aliasing）。
 
-### 待排查方向
+**修复** (7221231e): 编译器在 collection literal 元素编译过程中，将 interleaved 元素的编译结果正确追踪，避免虚拟寄存器编号溢出 16-bit 边界。
 
-**最可能的根因：部分 opcode 的操作数被误分类，导致 ref 寄存器的 lastUse 未被正确记录，而 def 被记录了。** 当一个寄存器有 def 但 lastUse 没被后续指令更新（因为读操作被分类为 imm），LSRA 不会延长它的活跃区间 —— 但不会缩短它。关键是那些被误标为 `imm` 的操作数可能不是问题。
+### Bug 2: baseMaskBit15 `& 0x7FFF` 剥离有效寄存器位
 
-更可能的方向：
-1. **dump bytecode 对比** — 用 `dartic dump` 查看 sort_A01_t04 的实际字节码，手动追踪几个长活跃 ref 寄存器的 def→lastUse 路径
-2. **打印最长的 10 个 ref 区间** — 看它们是什么寄存器、在哪个 PC 定义、在哪个 PC 最后使用
-3. **检查 `_emitCallHost` 后续的 TAG_TYPE / INSTANTIATE_TYPE** — 这些指令可能创建的 ref 寄存器在 `_emitCollectionTagType` 中被传递但 LSRA 未追踪其生命周期结束点
-4. **检查 65536 vs 75866 差距** — 10,330 个虚拟 ref 寄存器没有 interval。这些是 `allocConsecutive` 分配但因 source==target 优化跳过了 MOVE_REF 的 phantom registers。LSRA 输出的 physRegCount 不包含它们，但需确认它们不会出现在 bytecode 中
+**现象**: `& 0x7FFF` 掩码用于提取 baseMask 标志位，但同时剥离了寄存器编号 > 32767 的有效高位，导致 LSRA 重写后的物理寄存器引用错误地址。
 
-### 排查建议
+**修复** (7221231e): 修正掩码逻辑，正确分离 baseMask 标志位与寄存器编号。
 
-```bash
-# 1. 编译并 dump 字节码
-fvm dart compile kernel vendor/co19/LibTest/collection/ListMixin/ListMixin_class_A01_t02.dart -o $TMPDIR/listmixin.dill
-fvm dart run tool/dartic_run.dart $TMPDIR/listmixin.dill --save-darb $TMPDIR/listmixin.darb
-fvm dart run packages/dartic_cli/bin/dartic.dart dump $TMPDIR/listmixin.darb --full --function test
+### Bug 3: `emit(encodeABC(...))` 绕过 rawA 追踪
 
-# 2. 在 _runLSRAAndPatch 中添加诊断：打印 top 10 longest ref intervals
-# 已有 debug print 代码（_lsraDebug），可进一步扩展
+**现象**: `LOAD_ABSENT` 指令使用 `emit(encodeABC(...))` 直接写入字节码流，绕过了 `emitABC()` 中的 `_rawA` 追踪逻辑。LSRA 活跃区间计算无法感知该指令的目标寄存器定义，导致活跃区间缺失。
 
-# 3. 验证 LSRA 禁用时的行为（对比）
-# 在 _runLSRAAndPatch 开头加 return (virtualValCount, virtualRefCount); 临时跳过
-```
-
-### 已有的 debug 代码
-
-`compiler.dart` 中 `_runLSRAAndPatch()` 有 `_lsraDebug` 条件日志，触发条件 `virtualValCount > 1000 || virtualRefCount > 1000`。输出活跃区间统计。**记得在修复完成后删除这些 debug print。**
+**修复** (d4da3095): 将 `emit(encodeABC(...))` 替换为 `emitABC()`，确保所有 ABC 编码指令都经过统一的操作数追踪路径。
 
 ## 架构要点速查
 

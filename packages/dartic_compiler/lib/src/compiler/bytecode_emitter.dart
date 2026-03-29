@@ -44,6 +44,15 @@ class BytecodeEmitter {
   /// Current program counter (number of instructions emitted).
   int get currentPC => _buffer.length;
 
+  /// Overwrites the raw B operand at [pc] with [value].
+  ///
+  /// Used after emitting an instruction whose encoded B operand differs from
+  /// the pure virtual register (e.g., const flag in bit 15). LSRA needs the
+  /// unmasked base register for correct range computation.
+  void overrideRawB(int pc, int value) {
+    _rawB[pc] = value;
+  }
+
   /// Appends a 64-bit instruction word.
   void emit(int instruction) {
     _buffer.add(instruction);

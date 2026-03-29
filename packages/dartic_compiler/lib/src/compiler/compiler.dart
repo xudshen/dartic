@@ -1908,13 +1908,6 @@ class DarticCompiler {
       return (virtualValCount, virtualRefCount);
     }
 
-    // DEBUG: temporary logging for LSRA development
-    final _lsraDebug = virtualValCount > 1000 || virtualRefCount > 1000;
-    if (_lsraDebug) {
-      print('[LSRA] Function with virtual val=$virtualValCount ref=$virtualRefCount '
-          'bytecode=${_emitter.buffer.length} instructions');
-    }
-
     // Compute pinned register sets.
     final pinnedValRegs = <int>{
       for (var i = 0; i < _paramValRegEnd; i++) i,
@@ -1931,7 +1924,10 @@ class DarticCompiler {
       bytecode: _emitter.buffer,
       exceptionHandlers: _exceptionHandlers,
       bindingNames: _bindingNames,
-      pendingArgMoves: _pendingArgMoves,
+      pendingArgMoves: _pendingArgMoves.map((m) => (
+        pc: m.pc, srcReg: m.srcReg, argIdx: m.argIdx,
+        isValue: m.loc == ResultLoc.value,
+      )).toList(),
       constantPool: _constantPool,
       rawA: _emitter.rawA,
       rawB: _emitter.rawB,
@@ -1961,10 +1957,6 @@ class DarticCompiler {
       rawB: _emitter.rawB,
       rawC: _emitter.rawC,
     );
-
-    if (_lsraDebug) {
-      print('[LSRA] → physical val=${valResult.physRegCount} ref=${refResult.physRegCount}');
-    }
 
     // Rewrite exception handlers.
     final rewrittenHandlers = lsra.rewriteExceptionHandlers(
@@ -2044,34 +2036,6 @@ class DarticCompiler {
     final loc = _classifyType(type);
     final reg = loc == ResultLoc.ref ? _allocRefReg() : _allocValueReg();
     return (reg, loc);
-  }
-
-  /// Moves [srcRegs] into consecutive ref register slots and emits a
-  /// collection creation instruction.
-  ///
-  /// [op] is the opcode (createList/createMap/createSet).
-  /// [destReg] is the pre-allocated destination register.
-  /// [srcRegs] are the already-compiled element registers (all on ref stack).
-  /// [count] is the element/entry count for the C operand.
-  /// [isConst] sets B bit15 (0x8000) to signal the interpreter to produce
-  /// an unmodifiable collection (List/Map/Set.unmodifiable).
-  void _emitCreateCollection(
-      int op, int destReg, List<int> srcRegs, int count,
-      {bool isConst = false}) {
-    assert(count <= 0xFFFF,
-        'Collection literal too large: $count elements (max 65535)');
-    final baseReg = _refAlloc.allocConsecutive(srcRegs.length);
-    for (var i = 0; i < srcRegs.length; i++) {
-      if (srcRegs[i] != baseReg + i) {
-        _emitter.emitABC(Op.moveRef, baseReg + i, srcRegs[i], 0);
-      }
-    }
-    final bOperand = isConst ? (baseReg | 0x8000) : baseReg;
-    _emitter.emitABC(op, destReg, bOperand, count);
-    // Override rawB with the pure base register (without const flag at bit 15).
-    // The encoded instruction carries the flag for the interpreter, but LSRA
-    // needs the unmasked base register for correct range computation.
-    _emitter.rawB[_emitter.currentPC - 1] = baseReg;
   }
 
   // ── Host binding helpers ──
