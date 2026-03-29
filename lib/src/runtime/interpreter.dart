@@ -623,10 +623,8 @@ class DarticInterpreter {
     final wasExecuting = _isExecuting;
     _isExecuting = true;
     try {
-      // Args come from host → convert to VM representation.
-      // _runNestedDispatch also does _toVM on args internally, but
-      // invokeClosure receives a fresh list that may be reused by the caller,
-      // so convert here before passing.
+      // Host→VM boundary: args from host may contain bridges/proxies.
+      // _runNestedDispatch does NOT convert args (callers' responsibility).
       final vmArgs = [for (final a in args) _toVM(a)];
       final result = _runNestedDispatch(
         module: module,
@@ -3141,11 +3139,9 @@ class DarticInterpreter {
           if (receiver is DarticClosure) {
             final methodName = cp.getName(ic.methodNameIndex);
             if (methodName == 'call') {
-              // CALL_VIRTUAL arg layout: receiver at r[B], args at
-              // r[B+3], r[B+4], ... (skipping ITA/FTA/this slots).
-              // Use _runNestedDispatch directly (not invokeClosure) to
-              // avoid wrapping DarticClosure returns — result stays on
-              // the ref stack within the dispatch loop.
+              // VM-internal dispatch: args are already in VM form (from
+              // refStack), result stays in VM form. No _toVM/_toHost
+              // needed — this is NOT a boundary crossing.
               final argCount = ic.argCount;
               final closureArgs = List<Object?>.generate(
                 argCount,
