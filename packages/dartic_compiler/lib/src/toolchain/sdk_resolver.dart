@@ -111,14 +111,26 @@ class SdkResolver {
 
   String? _cachedDartSdk;
 
+  /// Optional callback for verbose diagnostic messages.
+  final void Function(String)? _onVerbose;
+
   SdkResolver({
     String? requiredDartSdk,
-  }) : _requiredDartSdk = requiredDartSdk ?? v.requiredDartSdk;
+    void Function(String)? onVerbose,
+  })  : _requiredDartSdk = requiredDartSdk ?? v.requiredDartSdk,
+        _onVerbose = onVerbose;
+
+  /// Emit a verbose diagnostic message (no-op if [onVerbose] is null).
+  void _verbose(String msg) => _onVerbose?.call(msg);
 
   /// Path to the `dart` executable, derived from the resolved SDK.
   ///
   /// Replaces all `Platform.resolvedExecutable` usage for dart invocation.
-  String get dartBin => '${resolveDartSdk()}/bin/dart';
+  String get dartBin {
+    final bin = '${resolveDartSdk()}/bin/dart';
+    _verbose('[sdk] dartBin: $bin');
+    return bin;
+  }
 
   /// Resolves the Dart SDK path.
   ///
@@ -126,6 +138,7 @@ class SdkResolver {
   /// Otherwise uses the discovery chain and caches the result.
   String resolveDartSdk({String? explicitPath}) {
     if (explicitPath != null) {
+      _verbose('[sdk] Dart SDK: explicit path → $explicitPath');
       return _validateDartSdk(explicitPath);
     }
 
@@ -133,6 +146,7 @@ class SdkResolver {
 
     final discovered = _discoverDartSdk();
     if (discovered == null) {
+      _verbose('[sdk] Dart SDK: not found');
       throw SdkNotFoundError(
         'Could not find Dart SDK. '
         'Tried: fvm, DART_SDK environment variable, '
@@ -154,6 +168,7 @@ class SdkResolver {
   /// Validates that the path exists and its embedded Dart SDK satisfies
   /// the version constraint.
   String resolveFlutterSdk({required String explicitPath}) {
+    _verbose('[sdk] Flutter SDK: explicit path → $explicitPath');
     final dir = Directory(explicitPath);
     if (!dir.existsSync()) {
       throw SdkNotFoundError(
@@ -179,6 +194,7 @@ class SdkResolver {
       );
     }
 
+    _verbose('[sdk] Flutter SDK: embedded Dart $dartVersion validated');
     return explicitPath;
   }
 
@@ -204,24 +220,37 @@ class SdkResolver {
       );
     }
 
+    _verbose('[sdk] Dart SDK: validated $version (satisfies $_requiredDartSdk)');
     return sdkPath;
   }
 
   /// Discovery chain for Dart SDK: FVM config → DART_SDK env → which/where.
   String? _discoverDartSdk() {
     // 1. Try FVM config: read Flutter version → derive embedded Dart SDK.
+    _verbose('[sdk] Dart SDK: trying FVM config...');
     final fvmDartSdk = _dartSdkFromFvm();
-    if (fvmDartSdk != null) return fvmDartSdk;
-
-    // 2. Try DART_SDK environment variable.
-    final dartSdk = Platform.environment['DART_SDK'];
-    if (dartSdk != null && Directory(dartSdk).existsSync()) {
-      return dartSdk;
+    if (fvmDartSdk != null) {
+      _verbose('[sdk] Dart SDK: FVM config → $fvmDartSdk');
+      return fvmDartSdk;
     }
 
+    // 2. Try DART_SDK environment variable.
+    _verbose('[sdk] Dart SDK: trying DART_SDK env...');
+    final dartSdk = Platform.environment['DART_SDK'];
+    if (dartSdk != null && Directory(dartSdk).existsSync()) {
+      _verbose('[sdk] Dart SDK: DART_SDK env → $dartSdk');
+      return dartSdk;
+    }
+    _verbose('[sdk] Dart SDK: DART_SDK not set');
+
     // 3. Try which/where dart on PATH.
+    _verbose('[sdk] Dart SDK: trying which dart...');
     final sdkPath = _dartSdkFromWhich('dart');
-    if (sdkPath != null) return sdkPath;
+    if (sdkPath != null) {
+      _verbose('[sdk] Dart SDK: which dart → $sdkPath');
+      return sdkPath;
+    }
+    _verbose('[sdk] Dart SDK: which dart failed');
 
     return null;
   }
@@ -240,8 +269,10 @@ class SdkResolver {
         final match = RegExp(r'"flutter"\s*:\s*"([^"]+)"')
             .firstMatch(fvmrc.readAsStringSync());
         if (match != null) {
+          _verbose('[sdk] Dart SDK: .fvmrc → Flutter ${match.group(1)}');
           final dartSdk = _fvmCacheDartSdk(match.group(1)!);
           if (dartSdk != null) return dartSdk;
+          _verbose('[sdk] Dart SDK: FVM cache miss for ${match.group(1)}');
         }
       }
 
@@ -251,8 +282,10 @@ class SdkResolver {
         final match = RegExp(r'"flutterSdkVersion"\s*:\s*"([^"]+)"')
             .firstMatch(config.readAsStringSync());
         if (match != null) {
+          _verbose('[sdk] Dart SDK: .fvm/fvm_config.json → Flutter ${match.group(1)}');
           final dartSdk = _fvmCacheDartSdk(match.group(1)!);
           if (dartSdk != null) return dartSdk;
+          _verbose('[sdk] Dart SDK: FVM cache miss for ${match.group(1)}');
         }
       }
 
