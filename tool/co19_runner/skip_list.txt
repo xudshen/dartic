@@ -661,6 +661,11 @@ LibTest/io/WebSocket/add_A01_t02  # WebSocket.add: dartic List<Object?> fails `i
 LibTest/io/WebSocket/add_A01_t04  # same
 LibTest/io/WebSocket/connect_A01_t01  # WebSocket connect: TypeError from closure/stream type erasure
 LibTest/io/WebSocket/connect_A01_t02  # same
+# ── Timeout (async event / datagram tests exceed 30s) ──
+LibTest/io/FileSystemMoveEvent/  # file system watcher event tests timeout
+LibTest/io/RawDatagramSocket/receive_A02_t01  # datagram receive timeout
+LibTest/io/RawDatagramSocket/send_A01_t01  # datagram send timeout
+LibTest/io/RawDatagramSocket/send_A02_t01  # datagram send timeout
 Language/Libraries_and_Scripts/Scripts/top_level_main_t01.dart  # uses Process.run (excluded)
 Language/Libraries_and_Scripts/Scripts/top_level_main_t06.dart  # uses Process.run (excluded)
 Language/Expressions/Instance_Creation/New/evaluation_t19.dart  # deferred import semantics not implemented
