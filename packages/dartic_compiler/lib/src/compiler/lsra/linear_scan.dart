@@ -90,7 +90,14 @@ LinearScanResult linearScan({
     }
   }
 
-  workItems.sort((a, b) => a.def.compareTo(b.def));
+  workItems.sort((a, b) {
+    final cmp = a.def.compareTo(b.def);
+    if (cmp != 0) return cmp;
+    // Stable tiebreaker: process groups before singles, then by vreg.
+    final aVreg = a.isGroup ? a.group!.baseVreg : a.interval!.vreg;
+    final bVreg = b.isGroup ? b.group!.baseVreg : b.interval!.vreg;
+    return aVreg.compareTo(bVreg);
+  });
 
   // ── Linear scan ───────────────────────────────────────────────────────
   var physCounter = initialOffset;
@@ -307,7 +314,7 @@ void _mergeAdjacentFreeBlocks(
     if (curr.base + curr.size == next.base) {
       // Verify no occupied slots in between.
       var hasOccupied = false;
-      for (var s = curr.base; s < next.base + next.size; s++) {
+      for (var s = curr.base + curr.size; s < next.base; s++) {
         if (occupied.contains(s)) {
           hasOccupied = true;
           break;

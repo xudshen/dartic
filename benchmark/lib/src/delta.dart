@@ -97,7 +97,7 @@ double geometricMeanDeltaRatio(List<DeltaEntry> entries) {
 
 double _geomean(List<double> pcts) {
   if (pcts.isEmpty) return 0;
-  final ratios = pcts.map((p) => 1 + p / 100);
+  final ratios = pcts.map((p) => (1 + p / 100).clamp(0.001, double.infinity));
   final product = ratios.fold(1.0, (a, b) => a * b);
   final geomean = math.pow(product, 1.0 / pcts.length);
   return (geomean - 1) * 100;

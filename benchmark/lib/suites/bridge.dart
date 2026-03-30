@@ -52,6 +52,10 @@ int main() {
 }
 ''',
       ),
+      // Host baseline intentionally uses a direct loop (no forEach) to isolate
+      // bridge callback dispatch overhead. The ratio measures the cost of
+      // crossing the bridge boundary per callback invocation, not algorithm
+      // parity between host and dartic.
       BenchmarkCase(
         name: 'bridge_callback',
         category: 'bridge',

@@ -221,7 +221,7 @@ Snapshot? _findLatestSnapshot(String mode) {
       .whereType<File>()
       .where((f) => f.path.endsWith('_$mode.json'))
       .toList()
-    ..sort((a, b) => b.path.compareTo(a.path));
+    ..sort((a, b) => b.statSync().modified.compareTo(a.statSync().modified));
   if (files.isEmpty) {
     print('\nNo previous snapshot found for $mode mode. Skipping delta report.');
     return null;

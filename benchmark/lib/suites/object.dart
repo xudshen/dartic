@@ -9,6 +9,9 @@ List<BenchmarkCase> objectSuites() => [
 
         dartSourceFile: 'lib/suites/sources/deltablue.dart',
       ),
+      // Host uses List<Object?> trees while dartic uses Node class objects.
+      // The ratio includes dartic's GET_FIELD dispatch overhead on top of the
+      // pure tree traversal cost.
       BenchmarkCase(
         name: 'storage',
         category: 'object',

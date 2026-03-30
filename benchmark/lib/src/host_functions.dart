@@ -252,6 +252,9 @@ Object? hostStorage() {
   return total;
 }
 
+// Host uses List<Object?> trees (no class allocation) while the dartic version
+// uses Node class objects. The structural difference means the ratio includes
+// dartic's GET_FIELD dispatch overhead on top of the pure tree traversal cost.
 List<Object?> _buildStorageTree(int depth) {
   if (depth == 0) return [null];
   return [
@@ -354,7 +357,10 @@ Object? hostBridgeCollectionIter() {
 
 @pragma('vm:never-inline')
 Object? hostBridgeCallback() {
-  // Direct loop (no forEach) — measures absolute bridge callback overhead
+  // Host baseline intentionally uses a direct loop (no forEach) to isolate
+  // bridge callback dispatch overhead. The dartic version uses forEach, so the
+  // ratio measures the cost of crossing the bridge boundary per callback
+  // invocation rather than comparing identical algorithms.
   int sum = 0;
   for (int round = 0; round < 100; round++) {
     for (int i = 0; i < 1000; i++) {
@@ -476,9 +482,11 @@ class _DBStrength {
   const _DBStrength(this.value);
 
   static const required_ = _DBStrength(0);
+  static const strongPreferred = _DBStrength(1);
   static const preferred = _DBStrength(2);
   static const strongDefault = _DBStrength(3);
   static const normal = _DBStrength(4);
+  static const weakDefault = _DBStrength(5);
   static const weakest = _DBStrength(6);
 
   bool stronger(_DBStrength s) => value < s.value;
