@@ -1900,7 +1900,7 @@ class DarticCompiler {
     final virtualValCount = _valueAlloc.maxUsed;
     final virtualRefCount = _refAlloc.maxUsed;
 
-    // Skip LSRA for small functions — no material benefit.
+    // Skip LSRA for small functions.
     if (virtualValCount < 64 && virtualRefCount < 64) {
       _patchPendingArgMovesRaw(virtualValCount, virtualRefCount);
       return (virtualValCount, virtualRefCount);
@@ -1946,6 +1946,11 @@ class DarticCompiler {
       initialOffset: 3, // ITA/FTA/this reserved
     );
 
+    // Save pre-LSRA state for rollback if validation fails.
+    final savedBytecode = Uint64List.fromList(_emitter.buffer);
+    final savedHandlers = List<ExceptionHandler>.from(_exceptionHandlers);
+    final savedMoves = List.of(_pendingArgMoves);
+
     // Rewrite bytecode using raw operands for correct virtual register reading.
     lsra.rewriteBytecode(
       _emitter.buffer,
@@ -1963,6 +1968,35 @@ class DarticCompiler {
     );
     _exceptionHandlers.clear();
     _exceptionHandlers.addAll(rewrittenHandlers);
+
+    // Post-rewrite validation: re-compute live ranges on the REWRITTEN bytecode
+    // and compare live register counts at each PC against the pre-LSRA ranges.
+    // If the post-rewrite bytecode has fewer distinct live intervals than
+    // the pre-rewrite (for the same stack), LSRA incorrectly merged two
+    // overlapping virtual registers to the same physical register.
+    final postRanges = lsra.computeLiveRanges(
+      bytecode: _emitter.buffer,
+      exceptionHandlers: _exceptionHandlers,
+      bindingNames: _bindingNames,
+      constantPool: _constantPool,
+    );
+    final preValCount = liveRanges.val.intervals.length;
+    final postValCount = postRanges.val.intervals.length;
+    final preRefCount = liveRanges.ref.intervals.length;
+    final postRefCount = postRanges.ref.intervals.length;
+    if (postValCount < preValCount || postRefCount < preRefCount) {
+      // Interval merge detected — LSRA produced incorrect allocation.
+      // Rollback to pre-LSRA bytecode and use virtual register counts.
+      for (var i = 0; i < savedBytecode.length; i++) {
+        _emitter.buffer[i] = savedBytecode[i];
+      }
+      _exceptionHandlers.clear();
+      _exceptionHandlers.addAll(savedHandlers);
+      _pendingArgMoves.clear();
+      _pendingArgMoves.addAll(savedMoves);
+      _patchPendingArgMovesRaw(virtualValCount, virtualRefCount);
+      return (virtualValCount, virtualRefCount);
+    }
 
     // Rewrite pending arg moves' srcReg.
     for (var i = 0; i < _pendingArgMoves.length; i++) {

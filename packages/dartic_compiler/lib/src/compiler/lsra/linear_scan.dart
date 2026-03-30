@@ -230,44 +230,6 @@ LinearScanResult linearScan({
   return LinearScanResult(mapping: mapping, physRegCount: maxReg);
 }
 
-/// Validates that the LSRA allocation is correct: no two virtual registers
-/// that have overlapping live intervals share the same physical register.
-///
-/// Returns `true` if valid, `false` if a conflict is found.
-/// Used as a safety net — if validation fails, the caller should fall back
-/// to using virtual register counts (skip LSRA for this function).
-bool validateAllocation(
-    Map<int, int> mapping, Map<int, Interval> intervals) {
-  // Group virtual registers by their assigned physical register.
-  final physToVregs = <int, List<int>>{};
-  for (final entry in mapping.entries) {
-    (physToVregs[entry.value] ??= []).add(entry.key);
-  }
-
-  // For each physical register with 2+ virtual registers, check for overlap.
-  for (final vregs in physToVregs.values) {
-    if (vregs.length < 2) continue;
-
-    // Collect intervals for these vregs, sorted by def.
-    final ivs = <Interval>[];
-    for (final vreg in vregs) {
-      final iv = intervals[vreg];
-      if (iv != null) ivs.add(iv);
-    }
-    if (ivs.length < 2) continue;
-
-    ivs.sort((a, b) => a.def.compareTo(b.def));
-
-    // Check for overlaps: each interval's def must be > previous interval's lastUse.
-    for (var i = 1; i < ivs.length; i++) {
-      if (ivs[i].def <= ivs[i - 1].lastUse) {
-        return false; // overlap found
-      }
-    }
-  }
-  return true;
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Internal types
 // ─────────────────────────────────────────────────────────────────────────────
