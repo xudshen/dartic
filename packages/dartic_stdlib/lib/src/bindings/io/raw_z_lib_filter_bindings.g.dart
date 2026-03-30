@@ -29,7 +29,7 @@ class _$RawZLibFilter implements RawZLibFilter, DarticObjectHolder {
 
   @override
   void process(List<int> data, int start, int end) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'process', [data, start, end]);
+    final _$r = _dispatch.invoke($darticObject, 'process', [data, start, end]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method process must be overridden in dartic code');
     }
@@ -37,7 +37,7 @@ class _$RawZLibFilter implements RawZLibFilter, DarticObjectHolder {
 
   @override
   List<int>? processed({bool flush = true, bool end = false}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'processed', [flush, end]);
+    final _$r = _dispatch.invoke($darticObject, 'processed', [flush, end]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method processed must be overridden in dartic code');
     }
@@ -46,21 +46,21 @@ class _$RawZLibFilter implements RawZLibFilter, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

@@ -26,77 +26,77 @@ class _$IndexError extends IndexError implements DarticObjectHolder {
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Object? get indexable {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'indexable');
+    final r = _dispatch.get($darticObject, 'indexable');
     if (identical(r, notOverridden)) return super.indexable;
     return r as Object?;
   }
 
   @override
   int get length {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
+    final r = _dispatch.get($darticObject, 'length');
     if (identical(r, notOverridden)) return super.length;
     return r as int;
   }
 
   @override
   int get invalidValue {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'invalidValue');
+    final r = _dispatch.get($darticObject, 'invalidValue');
     if (identical(r, notOverridden)) return super.invalidValue;
     return r as int;
   }
 
   @override
   int get start {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'start');
+    final r = _dispatch.get($darticObject, 'start');
     if (identical(r, notOverridden)) return super.start;
     return r as int;
   }
 
   @override
   int get end {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'end');
+    final r = _dispatch.get($darticObject, 'end');
     if (identical(r, notOverridden)) return super.end;
     return r as int;
   }
 
   @override
   String? get name {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'name');
+    final r = _dispatch.get($darticObject, 'name');
     if (identical(r, notOverridden)) return super.name;
     return r as String?;
   }
 
   @override
   dynamic get message {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'message');
+    final r = _dispatch.get($darticObject, 'message');
     if (identical(r, notOverridden)) return super.message;
     return r as dynamic;
   }
 
   @override
   StackTrace? get stackTrace {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stackTrace');
+    final r = _dispatch.get($darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

@@ -25,28 +25,28 @@ class _$Codec extends Codec<dynamic, dynamic> implements DarticObjectHolder {
 
   @override
   dynamic encode(dynamic input) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'encode', [input]);
+    final _$r = _dispatch.invoke($darticObject, 'encode', [input]);
     if (identical(_$r, notOverridden)) return super.encode(input);
     return _$r as dynamic;
   }
 
   @override
   dynamic decode(dynamic encoded) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'decode', [encoded]);
+    final _$r = _dispatch.invoke($darticObject, 'decode', [encoded]);
     if (identical(_$r, notOverridden)) return super.decode(encoded);
     return _$r as dynamic;
   }
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Converter get encoder {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'encoder');
+    final r = _dispatch.get($darticObject, 'encoder');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter encoder must be overridden in dartic code');
     }
@@ -55,7 +55,7 @@ class _$Codec extends Codec<dynamic, dynamic> implements DarticObjectHolder {
 
   @override
   Converter get decoder {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'decoder');
+    final r = _dispatch.get($darticObject, 'decoder');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter decoder must be overridden in dartic code');
     }
@@ -64,21 +64,21 @@ class _$Codec extends Codec<dynamic, dynamic> implements DarticObjectHolder {
 
   @override
   Codec get inverted {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'inverted');
+    final r = _dispatch.get($darticObject, 'inverted');
     if (identical(r, notOverridden)) return super.inverted;
     return r as Codec;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

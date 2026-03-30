@@ -29,7 +29,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   Future<InternetAddress> reverse() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reverse', const []);
+    final _$r = _dispatch.invoke($darticObject, 'reverse', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reverse must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   InternetAddressType get type {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'type');
+    final r = _dispatch.get($darticObject, 'type');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter type must be overridden in dartic code');
     }
@@ -47,7 +47,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   String get address {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'address');
+    final r = _dispatch.get($darticObject, 'address');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter address must be overridden in dartic code');
     }
@@ -56,7 +56,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   String get host {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'host');
+    final r = _dispatch.get($darticObject, 'host');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter host must be overridden in dartic code');
     }
@@ -65,7 +65,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   Uint8List get rawAddress {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'rawAddress');
+    final r = _dispatch.get($darticObject, 'rawAddress');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter rawAddress must be overridden in dartic code');
     }
@@ -74,7 +74,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   bool get isLoopback {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isLoopback');
+    final r = _dispatch.get($darticObject, 'isLoopback');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isLoopback must be overridden in dartic code');
     }
@@ -83,7 +83,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   bool get isLinkLocal {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isLinkLocal');
+    final r = _dispatch.get($darticObject, 'isLinkLocal');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isLinkLocal must be overridden in dartic code');
     }
@@ -92,7 +92,7 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   bool get isMulticast {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isMulticast');
+    final r = _dispatch.get($darticObject, 'isMulticast');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isMulticast must be overridden in dartic code');
     }
@@ -101,21 +101,21 @@ class _$InternetAddress implements InternetAddress, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

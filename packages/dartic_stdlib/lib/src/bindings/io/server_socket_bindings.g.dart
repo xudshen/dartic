@@ -29,7 +29,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<ServerSocket> close() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'close', const []);
+    final _$r = _dispatch.invoke($darticObject, 'close', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method close must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> asBroadcastStream({void Function(StreamSubscription<Socket>)? onListen, void Function(StreamSubscription<Socket>)? onCancel}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asBroadcastStream', [onListen, onCancel]);
+    final _$r = _dispatch.invoke($darticObject, 'asBroadcastStream', [onListen, onCancel]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method asBroadcastStream must be overridden in dartic code');
     }
@@ -47,7 +47,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   StreamSubscription<Socket> listen(void Function(Socket)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'listen', [onData, onError, onDone, cancelOnError]);
+    final _$r = _dispatch.invoke($darticObject, 'listen', [onData, onError, onDone, cancelOnError]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method listen must be overridden in dartic code');
     }
@@ -56,7 +56,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> where(bool Function(Socket) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'where', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'where', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method where must be overridden in dartic code');
     }
@@ -65,7 +65,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<S> map<S>(S Function(Socket) convert) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'map', [convert]);
+    final _$r = _dispatch.invoke($darticObject, 'map', [convert]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method map must be overridden in dartic code');
     }
@@ -74,7 +74,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<E> asyncMap<E>(FutureOr<E> Function(Socket) convert) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asyncMap', [convert]);
+    final _$r = _dispatch.invoke($darticObject, 'asyncMap', [convert]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method asyncMap must be overridden in dartic code');
     }
@@ -83,7 +83,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<E> asyncExpand<E>(Stream<E>? Function(Socket) convert) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asyncExpand', [convert]);
+    final _$r = _dispatch.invoke($darticObject, 'asyncExpand', [convert]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method asyncExpand must be overridden in dartic code');
     }
@@ -92,7 +92,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> handleError(Function onError, {bool Function(dynamic)? test}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleError', [onError, test]);
+    final _$r = _dispatch.invoke($darticObject, 'handleError', [onError, test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method handleError must be overridden in dartic code');
     }
@@ -101,7 +101,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<S> expand<S>(Iterable<S> Function(Socket) convert) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'expand', [convert]);
+    final _$r = _dispatch.invoke($darticObject, 'expand', [convert]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method expand must be overridden in dartic code');
     }
@@ -110,7 +110,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<dynamic> pipe(StreamConsumer<Socket> streamConsumer) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pipe', [streamConsumer]);
+    final _$r = _dispatch.invoke($darticObject, 'pipe', [streamConsumer]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method pipe must be overridden in dartic code');
     }
@@ -119,7 +119,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<S> transform<S>(StreamTransformer<Socket, S> streamTransformer) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'transform', [streamTransformer]);
+    final _$r = _dispatch.invoke($darticObject, 'transform', [streamTransformer]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method transform must be overridden in dartic code');
     }
@@ -128,7 +128,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> reduce(Socket Function(Socket, Socket) combine) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reduce', [combine]);
+    final _$r = _dispatch.invoke($darticObject, 'reduce', [combine]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method reduce must be overridden in dartic code');
     }
@@ -137,7 +137,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<S> fold<S>(S initialValue, S Function(S, Socket) combine) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'fold', [initialValue, combine]);
+    final _$r = _dispatch.invoke($darticObject, 'fold', [initialValue, combine]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method fold must be overridden in dartic code');
     }
@@ -146,7 +146,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<String> join([String separator = ""]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'join', [separator]);
+    final _$r = _dispatch.invoke($darticObject, 'join', [separator]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method join must be overridden in dartic code');
     }
@@ -155,7 +155,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<bool> contains(Object? needle) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [needle]);
+    final _$r = _dispatch.invoke($darticObject, 'contains', [needle]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method contains must be overridden in dartic code');
     }
@@ -164,7 +164,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<void> forEach(void Function(Socket) action) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
+    final _$r = _dispatch.invoke($darticObject, 'forEach', [action]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method forEach must be overridden in dartic code');
     }
@@ -173,7 +173,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<bool> every(bool Function(Socket) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'every', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'every', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method every must be overridden in dartic code');
     }
@@ -182,7 +182,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<bool> any(bool Function(Socket) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'any', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'any', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method any must be overridden in dartic code');
     }
@@ -191,7 +191,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<R> cast<R>() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cast', const []);
+    final _$r = _dispatch.invoke($darticObject, 'cast', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cast must be overridden in dartic code');
     }
@@ -200,7 +200,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<List<Socket>> toList() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toList', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toList', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toList must be overridden in dartic code');
     }
@@ -209,7 +209,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Set<Socket>> toSet() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSet', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toSet', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toSet must be overridden in dartic code');
     }
@@ -218,7 +218,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<E> drain<E>([E? futureValue]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'drain', [futureValue]);
+    final _$r = _dispatch.invoke($darticObject, 'drain', [futureValue]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method drain must be overridden in dartic code');
     }
@@ -227,7 +227,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> take(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'take', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'take', [count]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method take must be overridden in dartic code');
     }
@@ -236,7 +236,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> takeWhile(bool Function(Socket) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takeWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'takeWhile', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method takeWhile must be overridden in dartic code');
     }
@@ -245,7 +245,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> skip(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skip', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'skip', [count]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skip must be overridden in dartic code');
     }
@@ -254,7 +254,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> skipWhile(bool Function(Socket) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skipWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'skipWhile', [test]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method skipWhile must be overridden in dartic code');
     }
@@ -263,7 +263,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> distinct([bool Function(Socket, Socket)? equals]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'distinct', [equals]);
+    final _$r = _dispatch.invoke($darticObject, 'distinct', [equals]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method distinct must be overridden in dartic code');
     }
@@ -272,7 +272,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> firstWhere(bool Function(Socket) test, {Socket Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'firstWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method firstWhere must be overridden in dartic code');
     }
@@ -281,7 +281,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> lastWhere(bool Function(Socket) test, {Socket Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'lastWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method lastWhere must be overridden in dartic code');
     }
@@ -290,7 +290,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> singleWhere(bool Function(Socket) test, {Socket Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'singleWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'singleWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method singleWhere must be overridden in dartic code');
     }
@@ -299,7 +299,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> elementAt(int index) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'elementAt', [index]);
+    final _$r = _dispatch.invoke($darticObject, 'elementAt', [index]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method elementAt must be overridden in dartic code');
     }
@@ -308,7 +308,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Stream<Socket> timeout(Duration timeLimit, {void Function(EventSink<Socket>)? onTimeout}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
+    final _$r = _dispatch.invoke($darticObject, 'timeout', [timeLimit, onTimeout]);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method timeout must be overridden in dartic code');
     }
@@ -317,7 +317,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   int get port {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'port');
+    final r = _dispatch.get($darticObject, 'port');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter port must be overridden in dartic code');
     }
@@ -326,7 +326,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   InternetAddress get address {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'address');
+    final r = _dispatch.get($darticObject, 'address');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter address must be overridden in dartic code');
     }
@@ -335,7 +335,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   bool get isBroadcast {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isBroadcast');
+    final r = _dispatch.get($darticObject, 'isBroadcast');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isBroadcast must be overridden in dartic code');
     }
@@ -344,7 +344,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<int> get length {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
+    final r = _dispatch.get($darticObject, 'length');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter length must be overridden in dartic code');
     }
@@ -353,7 +353,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<bool> get isEmpty {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
+    final r = _dispatch.get($darticObject, 'isEmpty');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isEmpty must be overridden in dartic code');
     }
@@ -362,7 +362,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> get first {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'first');
+    final r = _dispatch.get($darticObject, 'first');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter first must be overridden in dartic code');
     }
@@ -371,7 +371,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> get last {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'last');
+    final r = _dispatch.get($darticObject, 'last');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter last must be overridden in dartic code');
     }
@@ -380,7 +380,7 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   Future<Socket> get single {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'single');
+    final r = _dispatch.get($darticObject, 'single');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter single must be overridden in dartic code');
     }
@@ -389,21 +389,21 @@ class _$ServerSocket implements ServerSocket, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

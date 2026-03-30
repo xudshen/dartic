@@ -136,11 +136,13 @@ void main() {
             return null;
           },
           lateSentinel: _testLateSentinel,
+          toHost: (v) => v, // identity — tests don't need conversion
+          toVM: (v) => v,
         );
       });
 
       test('invoke calls method and returns result', () {
-        final result = dispatch.invoke(obj, obj, 'greet', ['Bob']);
+        final result = dispatch.invoke(obj, 'greet', ['Bob']);
 
         expect(result, equals('hello world'));
         expect(callLog, hasLength(1));
@@ -151,14 +153,14 @@ void main() {
       });
 
       test('invoke returns notOverridden for unknown method', () {
-        final result = dispatch.invoke(obj, obj, 'unknownMethod', []);
+        final result = dispatch.invoke(obj, 'unknownMethod', []);
 
         expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
       test('get calls getter and returns result', () {
-        final result = dispatch.get(obj, obj, 'name');
+        final result = dispatch.get(obj, 'name');
 
         expect(result, equals('Alice'));
         expect(callLog, hasLength(1));
@@ -169,14 +171,14 @@ void main() {
       });
 
       test('get returns notOverridden for unknown property', () {
-        final result = dispatch.get(obj, obj, 'unknownProperty');
+        final result = dispatch.get(obj, 'unknownProperty');
 
         expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
       });
 
       test('set calls setter method', () {
-        dispatch.set(obj, obj, 'name', 'Bob');
+        dispatch.set(obj, 'name', 'Bob');
 
         expect(callLog, hasLength(1));
         expect(identical(callLog[0].module, module), isTrue);
@@ -187,7 +189,7 @@ void main() {
 
       test('set silently ignores unknown property', () {
         // Should not throw and should not call the callback.
-        dispatch.set(obj, obj, 'unknownProperty', 42);
+        dispatch.set(obj, 'unknownProperty', 42);
 
         expect(callLog, isEmpty);
       });
@@ -196,7 +198,7 @@ void main() {
           'but not in class methods', () {
         // Add a name to the pool that the class does not have a method for.
         cp.addName('toString');
-        final result = dispatch.invoke(obj, obj, 'toString', []);
+        final result = dispatch.invoke(obj, 'toString', []);
 
         expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
@@ -205,7 +207,7 @@ void main() {
       test('get returns notOverridden when name exists in pool '
           'but not in class methods', () {
         cp.addName('hashCode');
-        final result = dispatch.get(obj, obj, 'hashCode');
+        final result = dispatch.get(obj, 'hashCode');
 
         expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
@@ -214,7 +216,7 @@ void main() {
       test('set ignores when setter name exists in pool '
           'but not in class methods', () {
         cp.addName('age=');
-        dispatch.set(obj, obj, 'age', 25);
+        dispatch.set(obj, 'age', 25);
 
         expect(callLog, isEmpty);
       });
@@ -325,12 +327,14 @@ void main() {
             return 'called:${method.name}';
           },
           lateSentinel: _testLateSentinel,
+          toHost: (v) => v, // identity — tests don't need conversion
+          toVM: (v) => v,
         );
       });
 
       test('invoke finds method in parent class via superClassId chain', () {
         final childObj = DarticObject(childInfo);
-        final result = dispatch.invoke(childObj, childObj, 'greet', ['arg']);
+        final result = dispatch.invoke(childObj, 'greet', ['arg']);
 
         expect(result, equals('called:greet'));
         expect(callLog, hasLength(1));
@@ -339,7 +343,7 @@ void main() {
 
       test('invoke prefers child method over parent method', () {
         final childObj = DarticObject(childInfo);
-        final result = dispatch.invoke(childObj, childObj, 'hello', ['arg']);
+        final result = dispatch.invoke(childObj, 'hello', ['arg']);
 
         expect(result, equals('called:hello'));
         expect(callLog, hasLength(1));
@@ -348,7 +352,7 @@ void main() {
 
       test('invoke returns notOverridden for truly missing method', () {
         final childObj = DarticObject(childInfo);
-        final result = dispatch.invoke(childObj, childObj, 'missing', []);
+        final result = dispatch.invoke(childObj, 'missing', []);
 
         expect(identical(result, notOverridden), isTrue);
         expect(callLog, isEmpty);
@@ -356,7 +360,7 @@ void main() {
 
       test('get finds getter in parent class via superClassId chain', () {
         final childObj = DarticObject(childInfo);
-        final result = dispatch.get(childObj, childObj, 'name');
+        final result = dispatch.get(childObj, 'name');
 
         expect(result, equals('called:name'));
         expect(callLog, hasLength(1));
@@ -365,7 +369,7 @@ void main() {
 
       test('set finds setter in parent class via superClassId chain', () {
         final childObj = DarticObject(childInfo);
-        dispatch.set(childObj, childObj, 'name', 'Bob');
+        dispatch.set(childObj, 'name', 'Bob');
 
         expect(callLog, hasLength(1));
         expect(identical(callLog[0].method, parentSetterProto), isTrue);

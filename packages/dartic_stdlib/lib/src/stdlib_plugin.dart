@@ -7,6 +7,7 @@ import 'plugins/collection_plugin.g.dart';
 import 'plugins/convert_plugin.g.dart';
 import 'plugins/math_plugin.g.dart';
 import 'plugins/io_plugin.g.dart';
+import 'plugins/_http_plugin.g.dart';
 import 'bindings/internal_type_bindings.dart';
 
 /// Standard library bindings plugin for dartic.
@@ -27,5 +28,6 @@ class DarticStdlibPlugin extends DarticPlugin {
     ConvertPlugin().register(context);
     MathPlugin().register(context);
     IoPlugin().register(context);
+    HttpPlugin().register(context);
   }
 }

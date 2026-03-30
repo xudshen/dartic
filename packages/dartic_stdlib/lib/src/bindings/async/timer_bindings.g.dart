@@ -24,7 +24,7 @@ class _$Timer implements Timer, DarticObjectHolder {
 
   @override
   void cancel() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'cancel', const []);
+    final _$r = _dispatch.invoke($darticObject, 'cancel', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method cancel must be overridden in dartic code');
     }
@@ -32,7 +32,7 @@ class _$Timer implements Timer, DarticObjectHolder {
 
   @override
   int get tick {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'tick');
+    final r = _dispatch.get($darticObject, 'tick');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter tick must be overridden in dartic code');
     }
@@ -41,7 +41,7 @@ class _$Timer implements Timer, DarticObjectHolder {
 
   @override
   bool get isActive {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isActive');
+    final r = _dispatch.get($darticObject, 'isActive');
     if (identical(r, notOverridden)) {
       throw UnsupportedError('Abstract getter isActive must be overridden in dartic code');
     }
@@ -50,21 +50,21 @@ class _$Timer implements Timer, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

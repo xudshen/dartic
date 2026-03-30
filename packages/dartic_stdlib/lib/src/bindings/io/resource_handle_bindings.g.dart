@@ -29,7 +29,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   RandomAccessFile toFile() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toFile', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toFile', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toFile must be overridden in dartic code');
     }
@@ -38,7 +38,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   Socket toSocket() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSocket', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toSocket', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toSocket must be overridden in dartic code');
     }
@@ -47,7 +47,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   RawSocket toRawSocket() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toRawSocket', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toRawSocket', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toRawSocket must be overridden in dartic code');
     }
@@ -56,7 +56,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   RawDatagramSocket toRawDatagramSocket() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toRawDatagramSocket', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toRawDatagramSocket', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toRawDatagramSocket must be overridden in dartic code');
     }
@@ -65,7 +65,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   ReadPipe toReadPipe() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toReadPipe', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toReadPipe', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toReadPipe must be overridden in dartic code');
     }
@@ -74,7 +74,7 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   WritePipe toWritePipe() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toWritePipe', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toWritePipe', const []);
     if (identical(_$r, notOverridden)) {
       throw UnsupportedError('Abstract method toWritePipe must be overridden in dartic code');
     }
@@ -83,21 +83,21 @@ class _$ResourceHandle implements ResourceHandle, DarticObjectHolder {
 
   @override
   String toString() {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(r, notOverridden)) return $darticObject.toString();
     return r as String;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return identityHashCode($darticObject);
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical($darticObject, other.$darticObject) : identical(this, other); }
     return r == true;
   }

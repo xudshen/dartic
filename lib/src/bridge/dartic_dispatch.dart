@@ -51,11 +51,12 @@ typedef InterpreterMethodCallback = Object? Function(
 /// Bridge dispatch for routing virtual method/property calls back to the
 /// interpreter.
 ///
-/// When a Bridge instance's overridden method is called from the VM side,
-/// [DarticDispatch] checks whether the dartic has overridden that method
-/// by looking up the method name in the [DarticClassInfo.methods] table.
-/// If overridden, it delegates to the interpreter via [_callMethod];
-/// otherwise it returns [notOverridden].
+/// Two dispatch APIs:
+/// - [invoke]/[get]/[set]: for **host callers** (bridge overrides, DarticObject
+///   methods). Applies [_toHost] on results so the host receives bridge objects.
+/// - [invokeFromVM]/[getFromVM]: for **VM callers** (CALL_HOST bridge
+///   interception). Returns raw VM values, no conversion. This avoids the
+///   wasteful _toHost→_toVM round trip.
 ///
 /// For property access, dispatch also checks the [DarticClassInfo.fields]
 /// table as a fallback. This handles the case where a dartic field overrides
@@ -66,9 +67,13 @@ class DarticDispatch {
     required DarticModule module,
     required InterpreterMethodCallback callMethod,
     required Object lateSentinel,
+    required Object? Function(Object?) toHost,
+    required Object? Function(Object?) toVM,
   })  : _module = module,
         _callMethod = callMethod,
-        _lateSentinel = lateSentinel;
+        _lateSentinel = lateSentinel,
+        _toHost = toHost,
+        _toVM = toVM;
 
   final DarticModule _module;
   final InterpreterMethodCallback _callMethod;
@@ -77,14 +82,56 @@ class DarticDispatch {
   /// Identity-compared: `identical(value, _lateSentinel)`.
   final Object _lateSentinel;
 
+  /// VM→Host conversion callback (DarticObject→bridge, DarticClosure→proxy).
+  final Object? Function(Object?) _toHost;
+
+  /// Host→VM conversion callback (bridge→DarticObject, proxy→DarticClosure).
+  final Object? Function(Object?) _toVM;
+
+  // ── Host-facing API (bridge overrides, DarticObject methods) ────────
+
   /// Dispatches a virtual method/operator call.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
+  /// Dispatches a virtual method/operator call from host context.
+  ///
+  /// [darticObject] is the embedded DarticObject (classId + method table).
   /// Returns [notOverridden] if the dartic has not overridden [method].
-  Object? invoke(Object receiver, DarticObject darticObject, String method,
+  /// Args are converted via [_toVM], result via [_toHost].
+  Object? invoke(DarticObject darticObject, String method,
       List<Object?> args) {
+    final vmArgs = [for (final a in args) _toVM(a)];
+    final result = invokeFromVM(darticObject, darticObject, method, vmArgs);
+    if (identical(result, notOverridden)) return result;
+    return _toHost(result);
+  }
+
+  /// Dispatches a property getter from host context.
+  ///
+  /// Result is converted via [_toHost] for host consumption.
+  /// Lookup order: getter method → field.
+  Object? get(DarticObject darticObject, String property) {
+    final result = getFromVM(darticObject, darticObject, property);
+    if (identical(result, notOverridden)) return result;
+    return _toHost(result);
+  }
+
+  /// Dispatches a property setter from host context.
+  ///
+  /// Args are converted via [_toVM] (host→VM boundary).
+  /// Returns `true` if the dartic has overridden [property], `false` otherwise.
+  bool set(DarticObject darticObject, String property,
+      Object? value) {
+    return setFromVM(darticObject, darticObject, property, _toVM(value));
+  }
+
+  // ── VM-facing API (CALL_HOST bridge interception) ──────────────────
+
+  /// Dispatches a virtual method/operator call from VM context.
+  ///
+  /// Returns raw VM values — no [_toHost] conversion.
+  /// Used by CALL_HOST bridge interception to avoid _toHost→_toVM round trip.
+  Object? invokeFromVM(Object receiver, DarticObject darticObject,
+      String method, List<Object?> args) {
     final nameIdx = _module.constantPool.lookupNameIndex(method);
     if (nameIdx < 0) return notOverridden;
     // Walk the superClassId chain to find inherited dartic methods.
@@ -106,17 +153,11 @@ class DarticDispatch {
     return notOverridden;
   }
 
-  /// Dispatches a property getter.
+  /// Dispatches a property getter from VM context.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
-  /// Returns [notOverridden] if the dartic has not overridden [property].
-  ///
-  /// Lookup order: getter method → field. This handles dartic fields that
-  /// override abstract getters from a host superclass (e.g.,
-  /// `late Iterator<int> iterator` on a class extending `IterableBase`).
-  Object? get(Object receiver, DarticObject darticObject, String property) {
+  /// Returns raw VM values — no [_toHost] conversion.
+  Object? getFromVM(
+      Object receiver, DarticObject darticObject, String property) {
     final nameIdx = _module.constantPool.lookupNameIndex(property);
     if (nameIdx < 0) return notOverridden;
     final classes = _module.classes;
@@ -124,7 +165,9 @@ class DarticDispatch {
     for (var cid = darticObject.classId; cid >= 0;
         cid = classes[cid].superClassId) {
       final proto = classes[cid].methods[nameIdx];
-      if (proto != null) return _callMethod(_module, proto, receiver, const []);
+      if (proto != null) {
+        return _callMethod(_module, proto, receiver, const []);
+      }
     }
     // Fall back to field lookup (fields are flattened into the leaf class).
     final classInfo = classes[darticObject.classId];
@@ -135,16 +178,10 @@ class DarticDispatch {
     return notOverridden;
   }
 
-  /// Dispatches a property setter.
+  /// Dispatches a property setter from VM context.
   ///
-  /// [receiver] is the Bridge instance (set as `this` in dartic methods).
-  /// [darticObject] is the embedded DarticObject (used for classId / method
-  /// lookup).
   /// Returns `true` if the dartic has overridden [property], `false` otherwise.
-  ///
-  /// Lookup order: setter method → field. This handles dartic fields that
-  /// override abstract setters from a host superclass.
-  bool set(Object receiver, DarticObject darticObject, String property,
+  bool setFromVM(Object receiver, DarticObject darticObject, String property,
       Object? value) {
     final setterName = '$property=';
     final nameIdx = _module.constantPool.lookupNameIndex(setterName);
@@ -172,10 +209,9 @@ class DarticDispatch {
     return false;
   }
 
+  // ── Field access helpers ────────────────────────────────────────────
+
   /// Reads a field value from [obj] according to [layout].
-  ///
-  /// Mirrors the interpreter's GET_FIELD_DYN field-read logic, including late
-  /// sentinel detection.
   Object? _readField(
       DarticObject obj, FieldLayout layout, String fieldName) {
     final value = switch (layout.kind) {
@@ -185,8 +221,6 @@ class DarticDispatch {
       StackKind.boolVal => obj.valueFields[layout.offset] != 0,
       StackKind.intVal => obj.valueFields[layout.offset],
     };
-    // Late field sentinel check: uninitialized late fields store null
-    // (non-nullable) or lateSentinel (nullable).
     if (layout.isLate &&
         (value == null || identical(value, _lateSentinel))) {
       throw DarticLateError(
@@ -196,17 +230,8 @@ class DarticDispatch {
   }
 
   /// Writes a field value to [obj] according to [layout].
-  ///
-  /// Mirrors the interpreter's SET_FIELD_DYN field-write logic. This method
-  /// is only reached from [set] when NO setter method exists for the field.
-  /// For `late final` fields, absence of a setter means the field has an
-  /// initializer — all runtime writes are forbidden (same as the interpreter's
-  /// "Cannot assign to late final field" path in SET_FIELD_DYN).
   void _writeField(
       DarticObject obj, FieldLayout layout, String fieldName, Object? value) {
-    // Late final fields without a setter have an initializer — all writes
-    // are forbidden. (set() already tried the setter-method path; reaching
-    // here means no setter exists.)
     if (layout.isLate && layout.isFinal) {
       throw DarticLateError(
           "Field '$fieldName' has already been initialized.");

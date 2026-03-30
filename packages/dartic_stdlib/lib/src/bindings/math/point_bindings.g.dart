@@ -22,77 +22,77 @@ class _$Point extends Point<num> implements DarticObjectHolder {
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   double distanceTo(Point<num> other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'distanceTo', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'distanceTo', [other]);
     if (identical(_$r, notOverridden)) return super.distanceTo(other);
     return _$r as double;
   }
 
   @override
   num squaredDistanceTo(Point<num> other) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'squaredDistanceTo', [other]);
+    final _$r = _dispatch.invoke($darticObject, 'squaredDistanceTo', [other]);
     if (identical(_$r, notOverridden)) return super.squaredDistanceTo(other);
     return _$r as num;
   }
 
   @override
   num get x {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'x');
+    final r = _dispatch.get($darticObject, 'x');
     if (identical(r, notOverridden)) return super.x;
     return r as num;
   }
 
   @override
   num get y {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'y');
+    final r = _dispatch.get($darticObject, 'y');
     if (identical(r, notOverridden)) return super.y;
     return r as num;
   }
 
   @override
   double get magnitude {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'magnitude');
+    final r = _dispatch.get($darticObject, 'magnitude');
     if (identical(r, notOverridden)) return super.magnitude;
     return r as double;
   }
 
   @override
   Point<num> operator +(Point<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '+', [other]);
+    final r = _dispatch.invoke($darticObject, '+', [other]);
     if (identical(r, notOverridden)) return super + other;
     return r as Point<num>;
   }
 
   @override
   Point<num> operator -(Point<num> other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '-', [other]);
+    final r = _dispatch.invoke($darticObject, '-', [other]);
     if (identical(r, notOverridden)) return super - other;
     return r as Point<num>;
   }
 
   @override
   Point<num> operator *(num other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '*', [other]);
+    final r = _dispatch.invoke($darticObject, '*', [other]);
     if (identical(r, notOverridden)) return super * other;
     return r as Point<num>;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

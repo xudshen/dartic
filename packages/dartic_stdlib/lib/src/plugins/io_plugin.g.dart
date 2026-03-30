@@ -38,6 +38,7 @@ import '../bindings/io/o_s_error_bindings.g.dart';
 import '../bindings/io/path_access_exception_bindings.g.dart';
 import '../bindings/io/path_exists_exception_bindings.g.dart';
 import '../bindings/io/path_not_found_exception_bindings.g.dart';
+import '../bindings/io/platform_bindings.g.dart';
 import '../bindings/io/process_exception_bindings.g.dart';
 import '../bindings/io/process_info_bindings.g.dart';
 import '../bindings/io/process_result_bindings.g.dart';
@@ -116,6 +117,7 @@ class IoPlugin extends DarticPlugin {
     PathAccessExceptionBindings.register(ctx);
     PathExistsExceptionBindings.register(ctx);
     PathNotFoundExceptionBindings.register(ctx);
+    PlatformBindings.register(ctx);
     ProcessExceptionBindings.register(ctx);
     ProcessInfoBindings.register(ctx);
     ProcessResultBindings.register(ctx);

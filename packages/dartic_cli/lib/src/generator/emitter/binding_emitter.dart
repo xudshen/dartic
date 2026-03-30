@@ -1820,7 +1820,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
       buf.writeln('  @override');
       buf.writeln('  String toString() {');
       buf.writeln(
-          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
+          "    final r = _dispatch.invoke(\$darticObject, 'toString', const []);");
       buf.writeln(
           '    if (identical(r, notOverridden)) return super.toString();');
       buf.writeln('    return r as String;');
@@ -1834,7 +1834,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
     buf.writeln('  @override');
     buf.writeln('  String toString() {');
     buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'toString', const []);");
+        "    final r = _dispatch.invoke(\$darticObject, 'toString', const []);");
     buf.writeln(
         '    if (identical(r, notOverridden)) return \$darticObject.toString();');
     buf.writeln('    return r as String;');
@@ -1850,7 +1850,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   buf.writeln('  @override');
   buf.writeln('  int get hashCode {');
   buf.writeln(
-      "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'hashCode');");
+      "    final r = _dispatch.get(\$darticObject, 'hashCode');");
   if (info.isInterface) {
     buf.writeln(
         '    if (identical(r, notOverridden)) return identityHashCode(\$darticObject);');
@@ -1865,7 +1865,7 @@ void _writeBridgeClass(StringBuffer buf, TypeInfo info, {Map<String, MethodOverr
   buf.writeln('  @override');
   buf.writeln('  bool operator ==(Object other) {');
   buf.writeln(
-      "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '==', [other]);");
+      "    final r = _dispatch.invoke(\$darticObject, '==', [other]);");
   if (info.isInterface) {
     buf.writeln(
         '    if (identical(r, notOverridden)) { return other is DarticObjectHolder ? identical(\$darticObject, other.\$darticObject) : identical(this, other); }');
@@ -2197,7 +2197,7 @@ void _writeBridgeMethodOverride(
   }
   final superCall = 'super.${method.name}(${superCallArgs.join(', ')})';
   final dispatchCall =
-      "_dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${method.name}', $argsListStr)";
+      "_dispatch.invoke(\$darticObject, '${method.name}', $argsListStr)";
 
   final typeParamDecl = method.typeParamDecl ?? '';
 
@@ -2393,7 +2393,7 @@ void _writeBridgeGetterOverride(StringBuffer buf, GetterInfo getter, {bool isInt
   buf.writeln('  @override');
   buf.writeln('  ${getter.returnType} get ${getter.name} {');
   buf.writeln(
-      "    final r = _dispatch.get(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${getter.name}');");
+      "    final r = _dispatch.get(\$darticObject, '${getter.name}');");
   if (getter.isAbstract || isInterfaceBridge) {
     buf.writeln('    if (identical(r, notOverridden)) {');
     buf.writeln(
@@ -2416,7 +2416,7 @@ void _writeBridgeSetterOverride(StringBuffer buf, SetterInfo setter,
   buf.writeln('  @override');
   buf.writeln('  set ${setter.name}(${setter.paramType} value) {');
   buf.writeln(
-      "    if (!_dispatch.set(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${setter.name}', value)) {");
+      "    if (!_dispatch.set(\$darticObject, '${setter.name}', value)) {");
   if (setter.isAbstract || isInterfaceBridge) {
     buf.writeln(
         "      throw UnsupportedError('Abstract setter ${setter.name} must be overridden in dartic code');");
@@ -2439,7 +2439,7 @@ void _writeBridgeOperatorOverride(
     if (op.name == '~') {
       buf.writeln('  ${op.returnType} operator ~() {');
       buf.writeln(
-          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '~', const []);");
+          "    final r = _dispatch.invoke(\$darticObject, '~', const []);");
       if (isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
@@ -2449,7 +2449,7 @@ void _writeBridgeOperatorOverride(
       // unary -
       buf.writeln('  ${op.returnType} operator -() {');
       buf.writeln(
-          "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, 'unary-', const []);");
+          "    final r = _dispatch.invoke(\$darticObject, 'unary-', const []);");
       if (isAbstract) {
         buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
       } else {
@@ -2461,7 +2461,7 @@ void _writeBridgeOperatorOverride(
   } else if (op.name == '[]') {
     buf.writeln('  ${op.returnType} operator [](${op.paramType} index) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]', [index]);");
+        "    final r = _dispatch.invoke(\$darticObject, '[]', [index]);");
     if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
@@ -2474,7 +2474,7 @@ void _writeBridgeOperatorOverride(
     buf.writeln(
         '  void operator []=(${op.paramType} index, dynamic value) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '[]=', [index, value]);");
+        "    final r = _dispatch.invoke(\$darticObject, '[]=', [index, value]);");
     if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {
@@ -2487,7 +2487,7 @@ void _writeBridgeOperatorOverride(
     buf.writeln(
         '  ${op.returnType} operator ${op.name}(${op.paramType} other) {');
     buf.writeln(
-        "    final r = _dispatch.invoke(\$darticObject.bridge ?? \$darticObject, \$darticObject, '${op.name}', [other]);");
+        "    final r = _dispatch.invoke(\$darticObject, '${op.name}', [other]);");
     if (isAbstract) {
       buf.writeln('    if (identical(r, notOverridden)) { $abstractThrow; }');
     } else {

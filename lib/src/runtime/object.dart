@@ -73,7 +73,7 @@ class DarticObject {
   String toString() {
     final d = dispatch;
     if (d != null) {
-      final result = d.invoke(this, this, 'toString', const []);
+      final result = d.invoke(this, 'toString', const []);
       if (!identical(result, notOverridden)) return result as String;
     }
     return 'DarticObject(cls=$classId, '
@@ -84,7 +84,7 @@ class DarticObject {
   int get hashCode {
     final d = dispatch;
     if (d != null) {
-      final result = d.get(this, this, 'hashCode');
+      final result = d.get(this, 'hashCode');
       if (!identical(result, notOverridden)) return result as int;
     }
     return identityHashCode(this);
@@ -104,20 +104,20 @@ class DarticObject {
     if (d != null) {
       final name = _symbolToName(invocation.memberName);
       if (invocation.isGetter) {
-        final result = d.get(this, this, name);
+        final result = d.get(this, name);
         if (!identical(result, notOverridden)) return result;
       } else if (invocation.isSetter) {
         // Setter symbol includes trailing '=', DarticDispatch.set strips it.
         final propName = name.endsWith('=')
             ? name.substring(0, name.length - 1)
             : name;
-        if (d.set(this, this, propName, invocation.positionalArguments.first)) {
+        if (d.set(this, propName, invocation.positionalArguments.first)) {
           return null;
         }
       } else {
         // Method call.
         final result = d.invoke(
-            this, this, name, invocation.positionalArguments);
+            this, name, invocation.positionalArguments);
         if (!identical(result, notOverridden)) return result;
       }
     }
@@ -134,7 +134,7 @@ class DarticObject {
     }
     final d = dispatch;
     if (d != null) {
-      final result = d.invoke(this, this, '==', [other]);
+      final result = d.invoke(this, '==', [other]);
       if (!identical(result, notOverridden)) return result as bool;
     }
     return false;

@@ -486,22 +486,8 @@ void main() {
       expect(identical(result, registry.objectType), isTrue);
     });
 
-    test('DarticObjectHolder extracts from embedded DarticObject classId', () {
-      final obj = DarticObject(classes[animalCid]);
-      final holder = _MockDarticObjectHolder(obj);
-      final result = extractType(holder, registry, null);
-      expect(result, isA<DarticInterfaceType>());
-      expect((result as DarticInterfaceType).classId, animalCid);
-    });
-
-    test('DarticObjectHolder with runtimeType_ uses runtimeType', () {
-      final obj = DarticObject(classes[listCid]);
-      final listIntType = registry.intern(listCid, [registry.intType]);
-      obj.runtimeType_ = listIntType;
-      final holder = _MockDarticObjectHolder(obj);
-      final result = extractType(holder, registry, null);
-      expect(identical(result, listIntType), isTrue);
-    });
+    // DarticObjectHolder tests removed: VM stack no longer holds bridges,
+    // so extractType never receives DarticObjectHolder in production.
 
     test('DarticRecord with runtimeType_ returns cached DarticRecordType', () {
       final record = DarticRecord([42, 'hello'], {});

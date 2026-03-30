@@ -12,6 +12,98 @@ libraries:
       - "dart:io::sleep"      # blocks host event loop
       # Classes with dangerous operations
       - "dart:io::Process"    # arbitrary command execution, killPid
-      - "dart:io::Platform"   # leaks host paths, env vars, executable args
       - "dart:io::IOOverrides"  # overrides global IO behavior
       - "dart:io::Pipe"       # creates OS-level pipes
+
+    overrides:
+      # Pseudo-enum classes: private const constructor + single field.
+      # Gen tool can't auto-derive _#fromFields, so hand-write here.
+      FileMode:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 0: return FileMode.read;
+                case 1: return FileMode.write;
+                case 2: return FileMode.append;
+                case 3: return FileMode.writeOnly;
+                case 4: return FileMode.writeOnlyAppend;
+                default: throw ArgumentError('Unknown FileMode: ${args[0]}');
+              }
+            }
+      FileLock:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 1: return FileLock.shared;
+                case 2: return FileLock.exclusive;
+                case 3: return FileLock.blockingShared;
+                case 4: return FileLock.blockingExclusive;
+                default: throw ArgumentError('Unknown FileLock: ${args[0]}');
+              }
+            }
+      FileSystemEntityType:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 0: return FileSystemEntityType.file;
+                case 1: return FileSystemEntityType.directory;
+                case 2: return FileSystemEntityType.link;
+                case 3: return FileSystemEntityType.notFound;
+                case 4: return FileSystemEntityType.pipe;
+                case 5: return FileSystemEntityType.unixDomainSock;
+                default: throw ArgumentError('Unknown FileSystemEntityType: ${args[0]}');
+              }
+            }
+      InternetAddressType:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 0: return InternetAddressType.IPv4;
+                case 1: return InternetAddressType.IPv6;
+                case 2: return InternetAddressType.unix;
+                case -1: return InternetAddressType.any;
+                default: throw ArgumentError('Unknown InternetAddressType: ${args[0]}');
+              }
+            }
+      RawSocketEvent:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 0: return RawSocketEvent.read;
+                case 1: return RawSocketEvent.write;
+                case 2: return RawSocketEvent.readClosed;
+                case 3: return RawSocketEvent.closed;
+                default: throw ArgumentError('Unknown RawSocketEvent: ${args[0]}');
+              }
+            }
+      SocketDirection:
+        extra_methods:
+          "_#fromFields#1": |
+            (args) {
+              switch (args[0] as int) {
+                case 0: return SocketDirection.receive;
+                case 1: return SocketDirection.send;
+                case 2: return SocketDirection.both;
+                default: throw ArgumentError('Unknown SocketDirection: ${args[0]}');
+              }
+            }
+      # Codec classes: const constructor exists but gen tool doesn't detect isConst.
+      # Fields sorted alphabetically: dictionary, gzip, level, memLevel, raw, strategy, windowBits
+      ZLibCodec:
+        extra_methods:
+          "_#fromFields#7": "(args) => ZLibCodec(dictionary: args[0] == null ? null : (args[0] as List).cast<int>(), gzip: args[1] as bool, level: args[2] as int, memLevel: args[3] as int, raw: args[4] as bool, strategy: args[5] as int, windowBits: args[6] as int)"
+      GZipCodec:
+        extra_methods:
+          "_#fromFields#7": "(args) => GZipCodec(dictionary: args[0] == null ? null : (args[0] as List).cast<int>(), gzip: args[1] as bool, level: args[2] as int, memLevel: args[3] as int, raw: args[4] as bool, strategy: args[5] as int, windowBits: args[6] as int)"
+
+  - uri: dart:_http
+    discover: all
+    exclude:
+      - "dart:_http"                     # exclude all top-level functions (Testing$ internals)
+      - "dart:_http::HttpProfiler"       # not re-exported via dart:io
+      - "dart:_http::ServerSocketBase"   # not re-exported via dart:io

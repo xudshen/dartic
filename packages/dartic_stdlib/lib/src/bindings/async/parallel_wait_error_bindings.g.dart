@@ -24,42 +24,42 @@ class _$ParallelWaitError extends ParallelWaitError<dynamic, dynamic> implements
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   dynamic get values {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'values');
+    final r = _dispatch.get($darticObject, 'values');
     if (identical(r, notOverridden)) return super.values;
     return r as dynamic;
   }
 
   @override
   dynamic get errors {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errors');
+    final r = _dispatch.get($darticObject, 'errors');
     if (identical(r, notOverridden)) return super.errors;
     return r as dynamic;
   }
 
   @override
   StackTrace? get stackTrace {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'stackTrace');
+    final r = _dispatch.get($darticObject, 'stackTrace');
     if (identical(r, notOverridden)) return super.stackTrace;
     return r as StackTrace?;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

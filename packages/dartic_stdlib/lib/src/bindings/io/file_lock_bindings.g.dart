@@ -37,5 +37,14 @@ abstract final class FileLockBindings {
         'toString#0': (args) => (args[0] as FileLock).toString(),
         'hashCode#0': (args) => (args[0] as FileLock).hashCode,
         '==#1': (args) => (args[0] as FileLock) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 1: return FileLock.shared;
+              case 2: return FileLock.exclusive;
+              case 3: return FileLock.blockingShared;
+              case 4: return FileLock.blockingExclusive;
+              default: throw ArgumentError('Unknown FileLock: ${args[0]}');
+            }
+        },
       };
 }

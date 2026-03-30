@@ -150,9 +150,9 @@ Object? main() {
         printFn: (v) {
           // This runs while _isExecuting = true, so _callDarticMethod works.
           speakResult = capturedDispatch.invoke(
-              capturedDarticObj, capturedDarticObj, 'speak', []);
+              capturedDarticObj, 'speak', []);
           kindResult = capturedDispatch.get(
-              capturedDarticObj, capturedDarticObj, 'kind');
+              capturedDarticObj, 'kind');
         },
       );
 

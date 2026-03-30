@@ -40,5 +40,16 @@ abstract final class FileSystemEntityTypeBindings {
         'toString#0': (args) => (args[0] as FileSystemEntityType).toString(),
         'hashCode#0': (args) => (args[0] as FileSystemEntityType).hashCode,
         '==#1': (args) => (args[0] as FileSystemEntityType) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 0: return FileSystemEntityType.file;
+              case 1: return FileSystemEntityType.directory;
+              case 2: return FileSystemEntityType.link;
+              case 3: return FileSystemEntityType.notFound;
+              case 4: return FileSystemEntityType.pipe;
+              case 5: return FileSystemEntityType.unixDomainSock;
+              default: throw ArgumentError('Unknown FileSystemEntityType: ${args[0]}');
+            }
+        },
       };
 }

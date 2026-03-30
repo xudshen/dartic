@@ -24,224 +24,224 @@ class _$StreamView extends StreamView<dynamic> implements DarticObjectHolder {
 
   @override
   Stream asBroadcastStream({void Function(StreamSubscription)? onListen, void Function(StreamSubscription)? onCancel}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'asBroadcastStream', [onListen, onCancel]);
+    final _$r = _dispatch.invoke($darticObject, 'asBroadcastStream', [onListen, onCancel]);
     if (identical(_$r, notOverridden)) return super.asBroadcastStream(onListen: onListen != null ? (a) => onListen(a) : null, onCancel: onCancel != null ? (a) => onCancel(a) : null);
     return _$r as Stream;
   }
 
   @override
   StreamSubscription listen(void Function(dynamic)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'listen', [onData, onError, onDone, cancelOnError]);
+    final _$r = _dispatch.invoke($darticObject, 'listen', [onData, onError, onDone, cancelOnError]);
     if (identical(_$r, notOverridden)) return super.listen(onData != null ? (a) => onData(a) : null, onError: onError, onDone: onDone != null ? () => onDone() : null, cancelOnError: cancelOnError);
     return _$r as StreamSubscription;
   }
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   Stream where(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'where', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'where', [test]);
     if (identical(_$r, notOverridden)) return super.where((a) => test(a) as bool);
     return _$r as Stream;
   }
 
   @override
   Stream handleError(Function onError, {bool Function(dynamic)? test}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'handleError', [onError, test]);
+    final _$r = _dispatch.invoke($darticObject, 'handleError', [onError, test]);
     if (identical(_$r, notOverridden)) return super.handleError(onError, test: test != null ? (a) => test(a) as bool : null);
     return _$r as Stream;
   }
 
   @override
   Future<dynamic> pipe(StreamConsumer streamConsumer) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'pipe', [streamConsumer]);
+    final _$r = _dispatch.invoke($darticObject, 'pipe', [streamConsumer]);
     if (identical(_$r, notOverridden)) return super.pipe(streamConsumer);
     return _$r as Future<dynamic>;
   }
 
   @override
   Future reduce(dynamic Function(dynamic, dynamic) combine) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'reduce', [combine]);
+    final _$r = _dispatch.invoke($darticObject, 'reduce', [combine]);
     if (identical(_$r, notOverridden)) return super.reduce((a, b) => combine(a, b));
     return _$r as Future;
   }
 
   @override
   Future<String> join([String separator = ""]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'join', [separator]);
+    final _$r = _dispatch.invoke($darticObject, 'join', [separator]);
     if (identical(_$r, notOverridden)) return super.join(separator);
     return _$r as Future<String>;
   }
 
   @override
   Future<bool> contains(Object? needle) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'contains', [needle]);
+    final _$r = _dispatch.invoke($darticObject, 'contains', [needle]);
     if (identical(_$r, notOverridden)) return super.contains(needle);
     return _$r as Future<bool>;
   }
 
   @override
   Future<void> forEach(void Function(dynamic) action) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'forEach', [action]);
+    final _$r = _dispatch.invoke($darticObject, 'forEach', [action]);
     if (identical(_$r, notOverridden)) return super.forEach((a) => action(a));
     return _$r as Future<void>;
   }
 
   @override
   Future<bool> every(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'every', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'every', [test]);
     if (identical(_$r, notOverridden)) return super.every((a) => test(a) as bool);
     return _$r as Future<bool>;
   }
 
   @override
   Future<bool> any(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'any', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'any', [test]);
     if (identical(_$r, notOverridden)) return super.any((a) => test(a) as bool);
     return _$r as Future<bool>;
   }
 
   @override
   Future<List> toList() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toList', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toList', const []);
     if (identical(_$r, notOverridden)) return super.toList();
     return _$r as Future<List>;
   }
 
   @override
   Future<Set> toSet() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toSet', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toSet', const []);
     if (identical(_$r, notOverridden)) return super.toSet();
     return _$r as Future<Set>;
   }
 
   @override
   Stream take(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'take', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'take', [count]);
     if (identical(_$r, notOverridden)) return super.take(count);
     return _$r as Stream;
   }
 
   @override
   Stream takeWhile(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'takeWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'takeWhile', [test]);
     if (identical(_$r, notOverridden)) return super.takeWhile((a) => test(a) as bool);
     return _$r as Stream;
   }
 
   @override
   Stream skip(int count) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skip', [count]);
+    final _$r = _dispatch.invoke($darticObject, 'skip', [count]);
     if (identical(_$r, notOverridden)) return super.skip(count);
     return _$r as Stream;
   }
 
   @override
   Stream skipWhile(bool Function(dynamic) test) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'skipWhile', [test]);
+    final _$r = _dispatch.invoke($darticObject, 'skipWhile', [test]);
     if (identical(_$r, notOverridden)) return super.skipWhile((a) => test(a) as bool);
     return _$r as Stream;
   }
 
   @override
   Stream distinct([bool Function(dynamic, dynamic)? equals]) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'distinct', [equals]);
+    final _$r = _dispatch.invoke($darticObject, 'distinct', [equals]);
     if (identical(_$r, notOverridden)) return super.distinct(equals != null ? (a, b) => equals(a, b) as bool : null);
     return _$r as Stream;
   }
 
   @override
   Future firstWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'firstWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'firstWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) return super.firstWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return _$r as Future;
   }
 
   @override
   Future lastWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'lastWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'lastWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) return super.lastWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return _$r as Future;
   }
 
   @override
   Future singleWhere(bool Function(dynamic) test, {dynamic Function()? orElse}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'singleWhere', [test, orElse]);
+    final _$r = _dispatch.invoke($darticObject, 'singleWhere', [test, orElse]);
     if (identical(_$r, notOverridden)) return super.singleWhere((a) => test(a) as bool, orElse: orElse != null ? () => orElse() : null);
     return _$r as Future;
   }
 
   @override
   Future elementAt(int index) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'elementAt', [index]);
+    final _$r = _dispatch.invoke($darticObject, 'elementAt', [index]);
     if (identical(_$r, notOverridden)) return super.elementAt(index);
     return _$r as Future;
   }
 
   @override
   Stream timeout(Duration timeLimit, {void Function(EventSink)? onTimeout}) {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'timeout', [timeLimit, onTimeout]);
+    final _$r = _dispatch.invoke($darticObject, 'timeout', [timeLimit, onTimeout]);
     if (identical(_$r, notOverridden)) return super.timeout(timeLimit, onTimeout: onTimeout != null ? (a) => onTimeout(a) : null);
     return _$r as Stream;
   }
 
   @override
   bool get isBroadcast {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isBroadcast');
+    final r = _dispatch.get($darticObject, 'isBroadcast');
     if (identical(r, notOverridden)) return super.isBroadcast;
     return r as bool;
   }
 
   @override
   Future<int> get length {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'length');
+    final r = _dispatch.get($darticObject, 'length');
     if (identical(r, notOverridden)) return super.length;
     return r as Future<int>;
   }
 
   @override
   Future<bool> get isEmpty {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'isEmpty');
+    final r = _dispatch.get($darticObject, 'isEmpty');
     if (identical(r, notOverridden)) return super.isEmpty;
     return r as Future<bool>;
   }
 
   @override
   Future get first {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'first');
+    final r = _dispatch.get($darticObject, 'first');
     if (identical(r, notOverridden)) return super.first;
     return r as Future;
   }
 
   @override
   Future get last {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'last');
+    final r = _dispatch.get($darticObject, 'last');
     if (identical(r, notOverridden)) return super.last;
     return r as Future;
   }
 
   @override
   Future get single {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'single');
+    final r = _dispatch.get($darticObject, 'single');
     if (identical(r, notOverridden)) return super.single;
     return r as Future;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

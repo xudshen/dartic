@@ -29,49 +29,49 @@ class _$ProcessException extends ProcessException implements DarticObjectHolder 
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   String get executable {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'executable');
+    final r = _dispatch.get($darticObject, 'executable');
     if (identical(r, notOverridden)) return super.executable;
     return r as String;
   }
 
   @override
   List<String> get arguments {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'arguments');
+    final r = _dispatch.get($darticObject, 'arguments');
     if (identical(r, notOverridden)) return super.arguments;
     return r as List<String>;
   }
 
   @override
   String get message {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'message');
+    final r = _dispatch.get($darticObject, 'message');
     if (identical(r, notOverridden)) return super.message;
     return r as String;
   }
 
   @override
   int get errorCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'errorCode');
+    final r = _dispatch.get($darticObject, 'errorCode');
     if (identical(r, notOverridden)) return super.errorCode;
     return r as int;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

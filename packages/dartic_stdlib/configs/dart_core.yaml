@@ -186,14 +186,16 @@ libraries:
 
       # ── Pattern (String implements Pattern, Kernel may resolve to Pattern::) ──
 
-      - Pattern
+      - name: Pattern
+        bridge: true
 
       # ── RegExp / Match / RegExpMatch ─────────────────────────────────
 
       - name: RegExp
         extra_bindings:
           - "dart:core::RegExp::#5"
-      - Match
+      - name: Match
+        bridge: true
       - RegExpMatch
 
       # ── Runes / RuneIterator ─────────────────────────────────────────
@@ -212,13 +214,16 @@ libraries:
       - UriData
 
       # ── StringSink (abstract, needed by dart:convert ClosableStringSink) ──
-      - StringSink
+      - name: StringSink
+        bridge: true
 
       # ── Comparable (abstract interface for natural ordering) ──
-      - Comparable
+      - name: Comparable
+        bridge: true
 
       # ── Sink (abstract interface for data destinations) ──
-      - Sink
+      - name: Sink
+        bridge: true
 
       # ── WeakReference (weak reference to objects) ──
       - WeakReference

@@ -29,42 +29,42 @@ class _$PathExistsException extends PathExistsException implements DarticObjectH
 
   @override
   String toString() {
-    final _$r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, 'toString', const []);
+    final _$r = _dispatch.invoke($darticObject, 'toString', const []);
     if (identical(_$r, notOverridden)) return super.toString();
     return _$r as String;
   }
 
   @override
   String get message {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'message');
+    final r = _dispatch.get($darticObject, 'message');
     if (identical(r, notOverridden)) return super.message;
     return r as String;
   }
 
   @override
   String? get path {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'path');
+    final r = _dispatch.get($darticObject, 'path');
     if (identical(r, notOverridden)) return super.path;
     return r as String?;
   }
 
   @override
   OSError? get osError {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'osError');
+    final r = _dispatch.get($darticObject, 'osError');
     if (identical(r, notOverridden)) return super.osError;
     return r as OSError?;
   }
 
   @override
   int get hashCode {
-    final r = _dispatch.get($darticObject.bridge ?? $darticObject, $darticObject, 'hashCode');
+    final r = _dispatch.get($darticObject, 'hashCode');
     if (identical(r, notOverridden)) return super.hashCode;
     return r as int;
   }
 
   @override
   bool operator ==(Object other) {
-    final r = _dispatch.invoke($darticObject.bridge ?? $darticObject, $darticObject, '==', [other]);
+    final r = _dispatch.invoke($darticObject, '==', [other]);
     if (identical(r, notOverridden)) {
       if (other is DarticObjectHolder && identical($darticObject, other.$darticObject)) return true;
       return super == other;

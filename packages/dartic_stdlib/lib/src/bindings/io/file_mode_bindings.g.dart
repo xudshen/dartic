@@ -38,5 +38,15 @@ abstract final class FileModeBindings {
         'toString#0': (args) => (args[0] as FileMode).toString(),
         'hashCode#0': (args) => (args[0] as FileMode).hashCode,
         '==#1': (args) => (args[0] as FileMode) == (args[1] as Object),
+        '_#fromFields#1': (args) {
+            switch (args[0] as int) {
+              case 0: return FileMode.read;
+              case 1: return FileMode.write;
+              case 2: return FileMode.append;
+              case 3: return FileMode.writeOnly;
+              case 4: return FileMode.writeOnlyAppend;
+              default: throw ArgumentError('Unknown FileMode: ${args[0]}');
+            }
+        },
       };
 }
