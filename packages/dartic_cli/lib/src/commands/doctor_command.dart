@@ -20,10 +20,14 @@ class DoctorCommand extends Command<int> {
   @override
   int run() {
     var issues = 0;
+    final isVerbose = globalResults?['verbose'] ?? false;
+    void verbose(String msg) {
+      if (isVerbose) _logger.detail(msg);
+    }
 
     // 1. Dart SDK (via SdkResolver discovery chain)
     try {
-      final dartSdk = SdkResolver().resolveDartSdk();
+      final dartSdk = SdkResolver(onVerbose: verbose).resolveDartSdk();
       final version = readSdkVersion(dartSdk) ?? 'unknown';
       _logger.info('[\u2713] Dart SDK $version ($dartSdk)');
     } on SdkNotFoundError catch (e) {

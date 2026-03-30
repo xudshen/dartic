@@ -77,7 +77,12 @@ class CompileCommand extends Command<int> {
     final sdkPath = argResults!['sdk-path'] as String?;
 
     // Create pipeline if not injected.
-    final pipeline = _pipeline ?? CompilePipeline();
+    final isVerbose = globalResults?['verbose'] ?? false;
+    void verbose(String msg) {
+      if (isVerbose) _logger.detail(msg);
+    }
+
+    final pipeline = _pipeline ?? CompilePipeline(onVerbose: verbose);
 
     try {
       // Compile with progress.
