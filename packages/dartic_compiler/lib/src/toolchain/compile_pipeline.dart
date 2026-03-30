@@ -44,7 +44,7 @@ class CompilePipeline {
       : _dartBin = dartBin,
         _onVerbose = onVerbose;
 
-  void _verbose(String msg) => _onVerbose?.call(msg);
+  void _log(String msg) => _onVerbose?.call(msg);
 
   /// Full pipeline: `.dart → .darb`.
   ///
@@ -159,7 +159,7 @@ class CompilePipeline {
     void Function(String stderr)? onStderr,
   }) async {
     final dartBin = _dartBin ?? SdkResolver(onVerbose: _onVerbose).dartBin;
-    _verbose('[compile] dartBin: $dartBin');
+    _log('[compile] dartBin: $dartBin');
 
     final args = [
       'compile',
@@ -168,7 +168,7 @@ class CompilePipeline {
       '-o',
       outputDill,
     ];
-    _verbose('[compile] exec: $dartBin ${args.join(' ')}');
+    _log('[compile] exec: $dartBin ${args.join(' ')}');
 
     final result = await Process.run(dartBin, args);
 
@@ -197,9 +197,9 @@ class CompilePipeline {
         '$flutterSdkPath/bin/cache/dart-sdk/bin/snapshots/frontend_server_aot.dart.snapshot';
     final sdkRoot =
         '$flutterSdkPath/bin/cache/artifacts/engine/common/flutter_patched_sdk/';
-    _verbose('[compile] dartAotRuntime: $dartAotRuntime');
-    _verbose('[compile] frontendServer: $frontendServer');
-    _verbose('[compile] sdkRoot: $sdkRoot');
+    _log('[compile] dartAotRuntime: $dartAotRuntime');
+    _log('[compile] frontendServer: $frontendServer');
+    _log('[compile] sdkRoot: $sdkRoot');
 
     // Locate the project's package_config.json for --packages.
     String? packageConfigPath;
@@ -209,7 +209,7 @@ class CompilePipeline {
           File('${pubspec.parent.path}/.dart_tool/package_config.json');
       if (candidate.existsSync()) {
         packageConfigPath = candidate.absolute.path;
-        _verbose('[compile] packageConfig: $packageConfigPath');
+        _log('[compile] packageConfig: $packageConfigPath');
       }
     }
 
