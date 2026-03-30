@@ -230,10 +230,22 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, bool isValue});
     }
   }
 
-  // Exception handler implicit backward edges.
+  // Exception handler implicit backward edges + implicit register defs.
   for (final handler in exceptionHandlers) {
     if (handler.handlerPC < handler.endPC) {
       backEdges.add((handler.endPC - 1, handler.handlerPC));
+    }
+    // Exception handler registers are implicitly written by the VM at the
+    // handler entry point (handlerPC). They're not bytecode instruction
+    // operands, so the forward scan never sees them. We must create/extend
+    // their ref-stack intervals manually.
+    _processOperand(
+        RegOp.refW, handler.exceptionReg, handler.handlerPC,
+        valIntervals, refIntervals);
+    if (handler.stackTraceReg >= 0) {
+      _processOperand(
+          RegOp.refW, handler.stackTraceReg, handler.handlerPC,
+          valIntervals, refIntervals);
     }
   }
 
@@ -250,6 +262,21 @@ typedef PendingArgMove = ({int pc, int srcReg, int argIdx, bool isValue});
             group.lastUse = source;
           }
         }
+      }
+    }
+  }
+
+  // ── Pass 3: Synchronize consecutive group lastUse with member intervals ──
+  // Group lastUse was computed during the forward scan at the point the group
+  // was first encountered. Subsequent passes (forward scan continuations,
+  // pending arg moves, back-edge extension) may have extended individual
+  // member intervals BEYOND the group's recorded lastUse. Re-scan each group
+  // to pick up the actual maximum.
+  for (final group in refGroups) {
+    for (var i = 0; i < group.count; i++) {
+      final iv = refIntervals[group.baseVreg + i];
+      if (iv != null && iv.lastUse > group.lastUse) {
+        group.lastUse = iv.lastUse;
       }
     }
   }

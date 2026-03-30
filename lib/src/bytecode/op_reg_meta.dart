@@ -235,7 +235,7 @@ const Map<int, OpRegMeta> opRegTable = {
   Op.getFieldRef: _rwRrIm, // A=refW(dest), B=refR(obj), C=fieldOffset
   Op.setFieldRef: _rrRrIm, // A=refR(value), B=refR(obj), C=fieldOffset
   Op.getFieldVal: OpRegMeta(RegOp.valW, RegOp.refR, RegOp.imm), // cross: A=valW, B=refR
-  Op.setFieldVal: OpRegMeta(RegOp.valR, RegOp.refR, RegOp.imm), // cross: A=valR, B=refR
+  Op.setFieldVal: OpRegMeta(RegOp.refR, RegOp.valR, RegOp.imm), // cross: A=refR(obj), B=valR(value)
   Op.newInstance: _rwImm_, // ABx: A=refW, Bx=classId
   Op.instanceOf: _vwRrRr, // cross: A=valW(0/1), B=refR(obj), C=refR(type)
   Op.cast: OpRegMeta(RegOp.refW, RegOp.refR, RegOp.refR), // A=refW(dest), B=refR(src), C=refR(type)

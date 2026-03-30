@@ -81,10 +81,10 @@ void main() {
       expect(m.c, RegOp.imm);
     });
 
-    test('SET_FIELD_VAL: A=valR, B=refR, C=imm (cross-stack)', () {
+    test('SET_FIELD_VAL: A=refR, B=valR, C=imm (cross-stack)', () {
       final m = opRegTable[Op.setFieldVal]!;
-      expect(m.a, RegOp.valR);
-      expect(m.b, RegOp.refR);
+      expect(m.a, RegOp.refR); // A = object (ref stack)
+      expect(m.b, RegOp.valR); // B = value (value stack)
       expect(m.c, RegOp.imm);
     });
 
@@ -206,10 +206,10 @@ void main() {
   });
 
   group('opRegTable correctness — special cases', () {
-    test('CREATE_TYPE_ARGS: non-standard layout A=imm, B=refR, C=refW', () {
+    test('CREATE_TYPE_ARGS: non-standard layout A=imm, B=imm(range base), C=refW', () {
       final m = opRegTable[Op.createTypeArgs]!;
       expect(m.a, RegOp.imm); // count
-      expect(m.b, RegOp.refR); // start register
+      expect(m.b, RegOp.imm); // start register (handled by RangeInfo, not ABC path)
       expect(m.c, RegOp.refW); // dest register
     });
 

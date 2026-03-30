@@ -2649,48 +2649,48 @@ class DarticInterpreter {
           {
             final offset = decodesBx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         case Op.jumpIfTrue: // JUMP_IF_TRUE A, sBx — if valueStack[A] != 0
           if (vs.readInt(vBase + (decodeA(instr))) != 0) {
             final offset = decodesBx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         case Op.jumpIfFalse: // JUMP_IF_FALSE A, sBx — if valueStack[A] == 0
           if (vs.readInt(vBase + (decodeA(instr))) == 0) {
             final offset = decodesBx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         case Op.jumpIfNull: // JUMP_IF_NULL A, sBx — if refStack[A] == null
           if (rs.read(rBase + (decodeA(instr))) == null) {
             final offset = decodesBx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         case Op.jumpIfNnull: // JUMP_IF_NNULL A, sBx — if refStack[A] != null
           if (rs.read(rBase + (decodeA(instr))) != null) {
             final offset = decodesBx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         case Op.jumpAx: // JUMP_AX sAx — PC += sAx
           {
             final offset = decodesAx(instr);
             pc += offset;
-            if (offset < 0 && !_checkFuel()) return;
+            if (offset < 0 && !_checkFuelAtBackwardJump()) return;
           }
 
         // ── Call/Return (0x50-0x5F) ──
 
         case Op.call: // CALL A, B, C — call closure in refStack[B], result→reg A
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr);
           final b = decodeB(instr);
           final raw = rs.read(rBase + b);
@@ -2879,7 +2879,7 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callStatic: // CALL_STATIC A, Bx — call functions[Bx], result→reg A
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final callee = module.functions[bx];
@@ -2936,7 +2936,7 @@ class DarticInterpreter {
           pc = 0;
 
         case Op.callHost: // CALL_HOST A, Bx — host function call (no frame push)
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr);
           final bx = decodeBx(instr);
 
@@ -3126,7 +3126,7 @@ class DarticInterpreter {
           }
 
         case Op.callVirtual: // CALL_VIRTUAL A, B, C — virtual method dispatch
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr); // result register
           final b = decodeB(instr); // receiver register
           final c = decodeC(instr); // IC table index
@@ -3340,7 +3340,7 @@ class DarticInterpreter {
           }
 
         case Op.callSuper: // CALL_SUPER A, Bx — call super method functions[Bx], result→reg A
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr);
           final bx = decodeBx(instr);
           final callee = module.functions[bx];
@@ -4465,7 +4465,7 @@ class DarticInterpreter {
           continue;
 
         case Op.invokeDyn: // INVOKE_DYN A, B, C — dynamic method dispatch with named args
-          if (!_checkFuel()) return;
+          _checkFuelAtCall();
           final a = decodeA(instr);
           final rawB = decodeB(instr);
           final c = decodeC(instr);
@@ -5484,8 +5484,37 @@ class DarticInterpreter {
   /// Returns true if execution should continue, false if fuel is exhausted
   /// and the caller should return (non-sandboxed async round scheduling).
   /// Throws [FuelExhaustedError] or [ExecutionTimeoutError] if limits exceeded.
-  bool _checkFuel() {
+  /// Fuel check for backward jumps (loop heads).
+  /// Returns false when the interpreter should yield for async round
+  /// scheduling — caller must `return` from [_executeLoop].
+  bool _checkFuelAtBackwardJump() {
     if (--_fuel > 0) return true;
+    return _onFuelExhausted();
+  }
+
+  /// Fuel check for CALL instructions.
+  /// Only enforces hard limits (throws). Never yields — CALL instructions
+  /// must complete atomically (push callee frame → execute → return).
+  /// Yielding at a CALL site would abandon execution before the callee
+  /// frame is pushed, corrupting the call stack.
+  void _checkFuelAtCall() {
+    if (--_fuel > 0) return;
+    _totalFuelConsumed += fuelBudget;
+    _fuel = fuelBudget;
+
+    if (maxTotalFuel != null && _totalFuelConsumed >= maxTotalFuel!) {
+      throw FuelExhaustedError(_totalFuelConsumed, maxTotalFuel!);
+    }
+    if (_executionStopwatch != null &&
+        _executionStopwatch!.elapsed >= executionTimeout!) {
+      throw ExecutionTimeoutError(
+          _executionStopwatch!.elapsed, executionTimeout!);
+    }
+  }
+
+  /// Shared fuel-exhaustion handler. Refills budget, checks hard limits,
+  /// and returns whether execution should continue (true) or yield (false).
+  bool _onFuelExhausted() {
     _totalFuelConsumed += fuelBudget;
     _fuel = fuelBudget;
 
