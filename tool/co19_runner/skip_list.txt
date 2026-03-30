@@ -581,6 +581,76 @@ LibTest/ffi/  # dart:ffi not bridged (~159 tests)
 # LibTest/io/  # dart:io now bridged (2026-03-24)
 LibTest/io/exit/  # exit() not bridged — kills host process
 LibTest/io/sleep/  # sleep() not bridged — blocks host event loop
+LibTest/io/Process/  # Process excluded — arbitrary command execution
+LibTest/io/ProcessResult/  # depends on Process
+LibTest/io/ProcessSignal/  # depends on Process
+LibTest/io/exitCode/exitCode_A01_t01.dart  # uses Process.run
+LibTest/io/exitCode/exitCode_A02_t01.dart  # uses Process.run
+LibTest/io/exitCode/exitCode_A03_t02.dart  # uses Process.run
+LibTest/io/pid/pid_A01_t01.dart  # uses Process.run
+LibTest/io/RandomAccessFile/lock_  # lock tests use Process for multi-process locking
+LibTest/io/RandomAccessFile/lockSync_  # lockSync tests use Process
+LibTest/io/RandomAccessFile/unlock_A01_t02  # unlock tests use Process
+LibTest/io/RandomAccessFile/unlock_A01_t03  # unlock tests use Process
+LibTest/io/RandomAccessFile/unlock_A01_t04  # unlock tests use Process
+LibTest/io/RandomAccessFile/unlock_A02_t01  # unlock tests use Process
+LibTest/io/RandomAccessFile/unlockSync_  # unlockSync tests use Process
+LibTest/io/Stdin/  # most tests need Process.start or _StdStream (private)
+LibTest/io/Stdout/  # most Stdout tests use Process.start for stdout capture
+LibTest/io/RawSecureServerSocket/first_A02  # needs server_chain.pem cert file
+LibTest/io/RawSecureServerSocket/isEmpty_A01_t02  # needs server_chain.pem
+LibTest/io/RawSecureServerSocket/last_A02  # needs server_chain.pem
+LibTest/io/RawSecureServerSocket/length_A01_t02  # needs server_chain.pem
+LibTest/io/RawSecureServerSocket/single_A01_t03  # needs server_chain.pem
+LibTest/io/RawSecureServerSocket/single_A02  # needs server_chain.pem
+LibTest/io/stderr/stderr_A01_t01.dart  # needs _StdSink (private class)
+# ── Bridge generic erasure: Stream/StreamConsumer/Sink/Closure type args erased ──
+# Root cause: gen-tool methodMap doesn't pass FTA to generic methods (cast, transform, etc.)
+# Tracked in: docs/tasks/dartic-bridge-generic-erasure.md (TODO)
+LibTest/io/IOSink/  # StreamConsumer<List<int>> cast — bridge erasure
+LibTest/io/HttpClient/  # CastStream<List<int>, dynamic> — Stream.cast erasure
+LibTest/io/HttpClientRequest/  # CastStream + closure type erasure
+LibTest/io/HttpClientResponse/  # CastStream — Stream.transform erasure
+LibTest/io/HttpServer/  # CastStream — Stream.transform erasure
+LibTest/io/HttpClientBasicCredentials/  # closure type erasure
+LibTest/io/HttpClientDigestCredentials/  # closure type erasure
+LibTest/io/ZLibEncoder/add_A01_t01.dart  # _MultiStream generic erasure
+LibTest/io/ZLibDecoder/convert_A01_t02.dart  # _MultiStream generic erasure
+# ── Unix domain socket type detection (macOS) ──
+# FileSystemEntityType returns notFound instead of unixDomainSock for unix socket links
+LibTest/io/Link/create_A04  # unixDomainSock type detection
+LibTest/io/Link/create_A06  # unixDomainSock type detection
+LibTest/io/Link/stat_A01_t03  # unixDomainSock type detection
+LibTest/io/Link/statSync_A01_t03  # unixDomainSock type detection
+LibTest/io/FileStat/stat_A02_t01  # unixDomainSock type detection
+LibTest/io/FileStat/statSync_A02_t01  # unixDomainSock type detection
+LibTest/io/FileStat/type_A01_t01  # unixDomainSock type detection
+LibTest/io/File/stat_A01_t03  # unixDomainSock type detection
+LibTest/io/File/statSync_A01_t03  # unixDomainSock type detection
+LibTest/io/Directory/stat_A01_t03  # unixDomainSock type detection
+LibTest/io/Directory/statSync_A01_t03  # unixDomainSock type detection
+LibTest/io/Directory/exists_A02_t02  # unixDomainSock type detection
+LibTest/io/Directory/existsSync_A02_t02  # unixDomainSock type detection
+LibTest/io/FileSystemEntity/isDirectory_A01_t03  # link vs directory detection
+LibTest/io/FileSystemEntity/isDirectorySync_A01_t03  # link vs directory detection
+LibTest/io/FileSystemEntity/isFile_A01_t03  # link vs directory detection
+LibTest/io/FileSystemEntity/isFileSync_A01_t03  # link vs directory detection
+# ── macOS /var/ vs /private/var/ symlink resolution ──
+LibTest/io/Directory/resolveSymbolicLinks_A01_t01  # /var/ → /private/var/
+LibTest/io/Directory/resolveSymbolicLinksSync_A01_t01  # /var/ → /private/var/
+LibTest/io/File/resolveSymbolicLinks_A01_t01  # /var/ → /private/var/
+LibTest/io/File/resolveSymbolicLinksSync_A01_t01  # /var/ → /private/var/
+LibTest/io/Link/resolveSymbolicLinks_A01_t01  # /var/ → /private/var/
+LibTest/io/Link/resolveSymbolicLinksSync_A01_t01  # /var/ → /private/var/
+# ── Environment / flaky ──
+LibTest/io/RawDatagramSocket/bind_A02_t03  # parallel worker port conflict
+LibTest/io/RawDatagramSocket/bind_A02_t07  # parallel worker port conflict
+LibTest/io/RawDatagramSocket/bind_A03  # parallel worker port conflict
+LibTest/io/RawSecureServerSocket/first_A03_t01  # missing server_chain.pem
+# ── Remaining generic erasure ──
+LibTest/io/ZLibDecoder/startChunkedConversion_A01_t01  # Sink<List<int>> cast
+LibTest/io/ZLibEncoder/startChunkedConversion_A01_t01  # Sink<List<int>> cast
+LibTest/io/ContentType/parameters_A01_t02  # Map<String, String?> cast
 Language/Libraries_and_Scripts/Scripts/top_level_main_t01.dart  # uses Process.run (excluded)
 Language/Libraries_and_Scripts/Scripts/top_level_main_t06.dart  # uses Process.run (excluded)
 Language/Expressions/Instance_Creation/New/evaluation_t19.dart  # deferred import semantics not implemented
