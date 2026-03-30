@@ -38,8 +38,13 @@ class CompileError implements Exception {
 /// 3. `DarticModule → .darb` via [DarticSerializer]
 class CompilePipeline {
   final String? _dartBin;
+  final void Function(String)? _onVerbose;
 
-  CompilePipeline({String? dartBin}) : _dartBin = dartBin;
+  CompilePipeline({String? dartBin, void Function(String)? onVerbose})
+      : _dartBin = dartBin,
+        _onVerbose = onVerbose;
+
+  void _verbose(String msg) => _onVerbose?.call(msg);
 
   /// Full pipeline: `.dart → .darb`.
   ///
@@ -153,15 +158,19 @@ class CompilePipeline {
     String outputDill, {
     void Function(String stderr)? onStderr,
   }) async {
-    final dartBin = _dartBin ?? SdkResolver().dartBin;
+    final dartBin = _dartBin ?? SdkResolver(onVerbose: _onVerbose).dartBin;
+    _verbose('[compile] dartBin: $dartBin');
 
-    final result = await Process.run(dartBin, [
+    final args = [
       'compile',
       'kernel',
       File(sourcePath).absolute.path,
       '-o',
       outputDill,
-    ]);
+    ];
+    _verbose('[compile] exec: $dartBin ${args.join(' ')}');
+
+    final result = await Process.run(dartBin, args);
 
     if (result.exitCode != 0) {
       throw CompileError(
@@ -188,6 +197,9 @@ class CompilePipeline {
         '$flutterSdkPath/bin/cache/dart-sdk/bin/snapshots/frontend_server_aot.dart.snapshot';
     final sdkRoot =
         '$flutterSdkPath/bin/cache/artifacts/engine/common/flutter_patched_sdk/';
+    _verbose('[compile] dartAotRuntime: $dartAotRuntime');
+    _verbose('[compile] frontendServer: $frontendServer');
+    _verbose('[compile] sdkRoot: $sdkRoot');
 
     // Locate the project's package_config.json for --packages.
     String? packageConfigPath;
@@ -197,6 +209,7 @@ class CompilePipeline {
           File('${pubspec.parent.path}/.dart_tool/package_config.json');
       if (candidate.existsSync()) {
         packageConfigPath = candidate.absolute.path;
+        _verbose('[compile] packageConfig: $packageConfigPath');
       }
     }
 
